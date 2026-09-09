@@ -14679,7 +14679,7 @@
     {
       "id": "CVE-2026-9804",
       "published": "2026-05-28T09:16:49.500",
-      "lastModified": "2026-09-07T22:17:22.300",
+      "lastModified": "2026-09-08T16:18:38.643",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in KubeVirt's virt-exportserver component. An attacker with specific namespace-level access can exploit a path traversal vulnerability in the VMExport directory endpoint. By placing a symbolic link (symlink) within an exported filesystem Persistent Volume Claim (PVC) that points outside its designated mount root, the attacker can read arbitrary files from the exporter pod's filesystem. This leads to information disclosure, potentially exposing sensitive data.",
       "cvss": {
@@ -14697,7 +14697,7 @@
         "Red Hat Red Hat Container Native Virtualization 4.17",
         "Red Hat Red Hat Container Native Virtualization 4.18",
         "Red Hat Red Hat Container Native Virtualization 4.19",
-        "Red Hat Red Hat Container Native Virtualization 4.20",
+        "Red Hat Red Hat Container Native Virtualization 4.2",
         "Red Hat Red Hat Container Native Virtualization 4.21"
       ],
       "references": [
@@ -28000,7 +28000,7 @@
     {
       "id": "CVE-2026-7374",
       "published": "2026-05-26T14:16:40.717",
-      "lastModified": "2026-08-26T16:16:44.183",
+      "lastModified": "2026-09-08T17:18:31.723",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in KubeVirt's virt-handler component. This vulnerability allows an authenticated OpenShift user with edit permissions in a single namespace to exploit improper symlink validation when connecting to virtual machine console sockets. By replacing the console socket with a symlink to the host's container runtime (CRI-O) socket, an attacker can hijack virt-handler's privileged connection. This enables the attacker to access any Unix socket on the host, potentially leading to full con",
       "cvss": {
@@ -28714,9 +28714,9 @@
     {
       "id": "CVE-2026-8376",
       "published": "2026-05-26T00:16:57.150",
-      "lastModified": "2026-07-23T11:10:00.120",
+      "lastModified": "2026-09-08T22:19:18.373",
       "vulnStatus": "Modified",
-      "description": "Perl versions through 5.43.10 have a heap buffer overflow when compiling regular expressions with a repeated fixed string on 32-bit builds. Perl_study_chunk in regcomp_study.c checked the size of the joined substring buffer in characters rather than bytes. For a quantified fixed substring with a large minimum count, the byte length mincount * l could overflow SSize_t, producing an undersized SvGROW allocation; the subsequent copy writes past the end of the buffer. A caller that compiles an attac",
+      "description": "Perl versions before 5.40.5-RC1, from 5.41.0 before 5.42.3-RC1, from 5.43.0 before 5.43.11 have a heap buffer overflow when compiling regular expressions with a repeated fixed string on 32-bit builds. Perl_study_chunk in regcomp_study.c checked the size of the joined substring buffer in characters rather than bytes. For a quantified fixed substring with a large minimum count, the byte length mincount * l could overflow SSize_t, producing an undersized SvGROW allocation; the subsequent copy write",
       "cvss": {
         "score": 9.8,
         "version": "3.1",
@@ -28728,9 +28728,7 @@
           "name": "CWE-680"
         }
       ],
-      "vendors": [
-        "SHAY perl"
-      ],
+      "vendors": [],
       "references": [
         "https://github.com/Perl/perl5/commit/5e7f119eb2bb1181be908701f22bf7068e722f1c.patch",
         "http://www.openwall.com/lists/oss-security/2026/05/26/1"
@@ -104432,5 +104430,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-08T10:02:38.961352+00:00"
+  "updated_at": "2026-09-09T10:05:11.099314+00:00"
 }
