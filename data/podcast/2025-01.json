@@ -1,0 +1,1546 @@
+{
+  "month": "2025-01",
+  "episodes": [
+    {
+      "id": "stormcast-9304",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9304",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9304.mp3",
+      "title": "SANS ISC Stormcast Jan 31st 2025: Old Netgear Vuln in Depth; Lightning AI RCE; Canon Printer RCE; Deepseek Leak;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast Jan 31st 2025: Old Netgear Vuln in Depth; Lightning AI RCE; Canon Printer RCE; Deepseek Leak;",
+      "show_notes": [
+        {
+          "heading": "PCAPs or It Didn't Happen: Exposing an Old Netgear Vulnerability Still Active in 2025 [Guest Diary]",
+          "links": [
+            "https://isc.sans.edu/diary/PCAPs%20or%20It%20Didn%27t%20Happen%3A%20Exposing%20an%20Old%20Netgear%20Vulnerability%20Still%20Active%20in%202025%20%5BGuest%20Diary%5D/31638"
+          ]
+        },
+        {
+          "heading": "RCE Vulnerablity in AI Development Platform Lightning AI",
+          "links": []
+        },
+        {
+          "heading": "Noma Security discovered a neat remote code execution vulnerability in Lightning AI. This vulnerability is exploitable by tricking a logged in user into clicking a simple link.",
+          "links": [
+            "https://noma.security/noma-research-discovers-rce-vulnerability-in-ai-development-platform-lightning-ai/"
+          ]
+        },
+        {
+          "heading": "Canon Laser Printers and Small Office Multifunctional Printer Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Canon fixed three different vulnerablities affecting various laser and small office multifunctional printers. These vulnerabilities may lead to remote code execution, and there are some interesting exploit opportunities",
+          "links": [
+            "https://www.usa.canon.com/support/canon-product-advisories/service-notice-regarding-vulnerability-measure-against-buffer-overflow-for-laser-printers-and-small-office-multifunctional-printers"
+          ]
+        },
+        {
+          "heading": "Deepseek ClickHouse Database Leak",
+          "links": [
+            "https://www.wiz.io/blog/wiz-research-uncovers-exposed-deepseek-database-leak"
+          ]
+        }
+      ],
+      "published": "2025-01-31T02:00:02+00:00",
+      "duration_seconds": 340,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9304.mp3",
+      "audio_length_bytes": 5031335,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9304",
+      "categories": [
+        "deepseek",
+        "clickhouse",
+        "canon",
+        "ai",
+        "lightning",
+        "netgear"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9304",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, January 31st, 2025\n edition of the SANS Internet Storm Center's Stormcast. My\n edition of the SSANS Internet Storm Center's Stormcast. My\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. In today's diaries we have a deep\n dive by David Watson, one of our undergraduate interns,\n into an older Netgear vulnerability, good old DGN\n 2200 V1 and DGN 1000 versions. These routers are no longer\n supported but what's always surprising is how many attacks\n we're seeing for these particular vulnerabilities. So\n David took a closer look and actually did a real nice deep\n dive into these vulnerabilities, how they\n exactly work and how they are being exploited. Real neat\n here, even though the vulnerability itself of course\n is well known, still it's out there and a good reminder.\n Keep patching your routers, as I always say, once a month.\n Put a note in your calendar, check if your router firmware\n is up to date. And yes, the real big problem here is that\n some of these devices are end of life and that's sometimes\n actually real difficult to detect or even realize that\n your device no longer receives any updates. That's hopefully\n one of the things that this new cybersecurity label that's\n supposed to come out is going to fix because it's part of\n that specification. Routers are supposed to provide\n basically some kind of end of life date and indicator when\n the router will no longer be updated. And VMware patched\n five different vulnerabilities in VMware area operations as\n well as area operations for logs. The CVE numbers of some\n of them may be a little bit on the low side. In particular,\n one that's a broken access control vulnerability that\n does allow a normal user to execute commands as an\n administrator. Only has a 4.3. The highest CVSS score\n actually here is an information disclosure\n vulnerability. And that has a CVSS score of 8.5. Would\n certainly recommend patching it given some of the history\n with attackers targeting some of these VMware products. But\n at this point, there is no known exploit available. And\n the vulnerability was reported internally. So it's not\n already being exploited. And yes, we also have vulnerable\n security tools again. And this time, it's at least not the\n big enterprise one, but an open source one. So I'll give\n them a little bit of a pass here. NetAlert X suffers from\n an unauthenticated remote code execution vulnerability. This\n particular tool is often used as a Wi-Fi intrusion detection\n system. So trying to figure out users that are scanning or\n trying to penetrate your Wi-Fi network. There are lots of\n details available about this vulnerability. So it's\n certainly exploitable. No exploit seen in the while yet\n as far as I'm aware of. It also comes with an\n unauthenticated file read vulnerability that's being\n leveraged here. Definitely something that you do want to\n patch in particular given that this particular product is\n somewhat exposed in its role as a wireless IDS. And Canon\n released an update for its laser printers and small\n office multifunction printers fixing three different\n vulnerabilities with a CVS score of 9.8. Some of them\n leading to unauthenticated remote code execution. What\n does save the day here a little bit is that this is not\n necessarily something that's easily exploited sort of\n remotely. These printers are typically not exposed to the\n internet. So interesting vulnerabilities, however, like\n for example, in TIFF data EXIF tag processing. I could see\n where maybe it's being exploited by tricking the\n victim into printing a malicious document. Have to\n look a little bit closer at some of these vulnerabilities.\n But I think there are some neat sort of unique exploit\n opportunities here with these vulnerabilities. And well,\n then in closing, we do have an other AI related story, but\n it's really more a story about if you're developing new\n tools, you still have to worry about old vulnerabilities. And\n well, essentially, good old known best practices. With\n research uncovered and exposed DeepSeq database. DeepSeq, of\n course, has caused a lot of news this week. In this\n particular case, there is a ClickHouse database.\n ClickHouse being one of those NoSQL style databases. It's an\n open source database that they left completely exposed. And\n this database apparently was used to also store users' chat\n history. So essentially prior queries to DeepSeq and lots of\n additional details were able to be recovered from this\n database. This is really a flaw that's not at all related\n to AI. It's something that we had for years and years with\n similar database, whether it's MongoDB, whether it's S3\n buckets, it's all the same thing. Don't leave your crap\n exposed to the internet. And with that, thanks again for\n listening and talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9302",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9302",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9302.mp3",
+      "title": "SANS ISC Stormcast, Jan 30th 2025: Python vs. Powershell; Fortinet Exploits and Patch Policy; Voyager PHP Framework Vuln; Zyxel Targeted; VMWare AVI Patch",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 30th 2025: Python vs. Powershell; Fortinet Exploits and Patch Policy; Voyager PHP Framework Vuln; Zyxel Targeted; VMWare AVI Patch",
+      "show_notes": [
+        {
+          "heading": "From PowerShell to a Python Obfuscation Race!",
+          "links": []
+        },
+        {
+          "heading": "This information stealer not only emulates a PDF document convincingly, but also includes its own Python environment for Windows",
+          "links": [
+            "https://isc.sans.edu/diary/From%20PowerShell%20to%20a%20Python%20Obfuscation%20Race!/31634"
+          ]
+        },
+        {
+          "heading": "Alleged Active Exploit Sale of CVE-2024-55591 on Fortinet Devices",
+          "links": []
+        },
+        {
+          "heading": "An exploit for this week's Fortinet vulnerability is for sale on russian forums. Fortinet also requires patching of devices without cloud license within seven days of patch release",
+          "links": [
+            "https://x.com/MonThreat/status/1884577840185643345",
+            "https://community.fortinet.com/t5/Support-Forum/Firmware-upgrade-policy/td-p/373376"
+          ]
+        },
+        {
+          "heading": "The Tainted Voyage: Uncovering Voyager's Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Sonarcube identified vulnerabilities in the popular PHP package Voyager. One of them allows arbitrary file uploads.",
+          "links": [
+            "https://www.sonarsource.com/blog/the-tainted-voyage-uncovering-voyagers-vulnerabilities/"
+          ]
+        },
+        {
+          "heading": "Hackers exploit critical unpatched flaw in Zyxel CPE devices",
+          "links": []
+        },
+        {
+          "heading": "A currently unpatches vulnerablity in Zyxel devices is actively exploited.",
+          "links": [
+            "https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-unpatched-flaw-in-zyxel-cpe-devices/"
+          ]
+        },
+        {
+          "heading": "VMSA-2025-0002: VMware Avi Load Balancer addresses an unauthenticated blind SQL Injection vulnerability (CVE-2025-22217)",
+          "links": []
+        },
+        {
+          "heading": "VMWare released a patch for the AVI Load Balancer addressing an unauthenticated blink SQL injection vulnerability.",
+          "links": [
+            "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/25346"
+          ]
+        }
+      ],
+      "published": "2025-01-30T02:00:12+00:00",
+      "duration_seconds": 333,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9302.mp3",
+      "audio_length_bytes": 4936546,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9302",
+      "categories": [
+        "vmware",
+        "avi load balancer",
+        "sql injection",
+        "voyager",
+        "laravel",
+        "php",
+        "zyxel",
+        "fortinet",
+        "python",
+        "powershell",
+        "garmin"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9302",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, January 30th, 2025\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich and today I'm recording\n from Jacksonville, Florida. One of the comments we often\n get when we're talking about Python malware is that on\n Windows, usually there is no sort of full Python\n environment like you have it commonly on Linux. Well, today\n Xavier has an interesting piece of Python malware that\n actually includes the entire Python environment in the form\n of a fake document. Document .zip is being downloaded here\n with the Python environment. Also interesting and not\n really that terribly unusual, when you start the malware, a\n PDF will open. In this case, some sort of generic Garmin\n -related PDF. This is usually done to make the user feel\n like they opened a document. Probably the pretense here for\n delivering of the malware was that this attachment is\n supposed to include this PDF document. So if the user now\n clicks on the file, which really starts the malware, the\n PDF is opened for them, making them feel safe and sound.\n While in the background, all of their crypto coins and\n other sensitive information is being exfiltrated. Let me have\n two updates for Fortinet users. First of all, there is\n an exploit apparently for sale now. According to Threatmon,\n they posted on X that they saw an exploit for sale on a\n Russian forum. This exploit apparently takes advantage of\n the vulnerability I talked about yesterday. That's the\n interesting remote access via WebSocket bypassing\n authentication vulnerability. So definitely make sure that\n your devices are patched. It affects FortiOS version 7.0.0\n through 7.0.16. The second item is a little bit related maybe,\n but Fortinet also notified its users that if you are running\n a device without a FortiCloud license, if you don't have an\n active subscription, you must update the device within seven\n days or you essentially will lose access to the FortiCloud\n interface via the device. Interesting strategy here to\n really push users to update quickly. Again, this only\n affects devices without a subscription. So of course,\n the other motivation here is to get users to sign up for a\n subscription. The advisory also points out that you can\n use the auto update feature in order to make sure that you\n are complying with this particular rule. Seven days\n sounds a little bit short, but that's the time limit they\n give you here to update your devices. And SonarCube\n reviewed the open source Voyager package. This is a PHP\n package that's designed to manage Laravel applications.\n Laravel being the PHP framework. Both the Laravel\n framework and Voyager are extremely popular with\n millions of downloads. So nice for someone to look for\n vulnerabilities here. And they found three good ones. The\n first one, probably the most important one here, an\n arbitrary file write vulnerability. Next, there is\n also a reflected cross-site scripting vulnerability. And\n finally, an arbitrary file leak and deletion\n vulnerability. In particular, of course, arbitrary file\n writes are always critical since they often then lead to\n arbitrary code execution. This actually involves polyglot\n files, which is always an interesting issue. We covered\n that a little bit in class this week. Where it can be\n quite difficult to actually figure out the correct MIME\n type for a file. Sometimes there are files that identify\n as multiple MIME types. It's easy to then mislabel them.\n And attackers are apparently exploiting an unpatched\n vulnerability in Zyxel devices. This vulnerability\n was actually discovered, reported back in July. So it\n has been known, has also been publicly known for a while.\n Finally, attackers get around to exploit it. So no big\n surprise here. What's probably more surprising is that there\n is still no patch apparently available for this\n vulnerability. And talking about patches, VMware released\n a patch for a vulnerability in the AVI load balancer. This is\n an unauthenticated blind SQL injection vulnerability. And\n VMware assigned it a CVSS score of 8.6. Certainly\n something that you do want to patch. It was reported\n privately to VMware. So there are no additional details at\n this point available. And no known exploit at this point.\n Well, and this is it for today. So thanks again for\n listening. Thanks to everybody who is sending in links. In\n particular, for example, the FortiGate news came in from a\n listener. Thanks and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9300",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9300",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9300.mp3",
+      "title": "SANS ISC Stormcast, Jan 29th 2025: Python Crypto Stealer; SimpleHelp Exploited; Apple Silicon Vuln; Teamviewer Vuln; Odd QR Code",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 29th 2025: Python Crypto Stealer; SimpleHelp Exploited; Apple Silicon Vuln; Teamviewer Vuln; Odd QR Code",
+      "show_notes": [
+        {
+          "heading": "Learn about fileless crypto stealers written in Python, the ongoing exploitation of recent SimpleHelp vulnerablities, new Apple Silicon Sidechannel attacks a Team Viewer Vulnerablity and an odd QR Code",
+          "links": []
+        },
+        {
+          "heading": "Fileless Python InfoStealer Targeting Exodus",
+          "links": []
+        },
+        {
+          "heading": "This Python script targets Exodus crypto wallet and password managers to steal crypto currencies. It does not save exfiltrated data in files, but keeps it in memory for exfiltration",
+          "links": [
+            "https://isc.sans.edu/diary/Fileless%20Python%20InfoStealer%20Targeting%20Exodus/31630"
+          ]
+        },
+        {
+          "heading": "Campaign Exploiting SimpleHelp Vulnerablity",
+          "links": []
+        },
+        {
+          "heading": "Arcticwolf observed attacks exploiting SimpleHelp for initial access to networks. It has not been verified, but is assumed that vulnerabilities made public about a week ago are being exploited.",
+          "links": [
+            "https://arcticwolf.com/resources/blog-uk/arctic-wolf-observes-campaign-exploiting-simplehelp-rmm-software-initial-access/"
+          ]
+        },
+        {
+          "heading": "Two new Side Channel Vulnerabilities in Apple Silicon",
+          "links": []
+        },
+        {
+          "heading": "SLAP (Data Speculation Attacks via Load Address Prediction): This attack exploits the Load Address Predictor in Apple CPUs starting with the M2/A15, allowing unauthorized access to sensitive data by mispredicting memory addresses. FLOP (Breaking the Apple M3 CPU via False Load Output Predictions): This attack targets the Load Value Predictor in Apple's M3/A17 CPUs, enabling attackers to execute arbitrary computations on incorrect data, potentially leaking sensitive information.",
+          "links": [
+            "https://predictors.fail/"
+          ]
+        },
+        {
+          "heading": "Teamviewer Security Bulletin",
+          "links": []
+        },
+        {
+          "heading": "Teamviewer patched a privilege escalation vulnerability CVE-2025-0065",
+          "links": [
+            "https://www.teamviewer.com/en-us/resources/trust-center/security-bulletins/tv-2025-1001/"
+          ]
+        },
+        {
+          "heading": "Odd QR Code",
+          "links": []
+        },
+        {
+          "heading": "A QR code may resolve to a different URL if looked at at an angle.",
+          "links": [
+            "https://mstdn.social/@isziaui/113874436953157913"
+          ]
+        },
+        {
+          "heading": "Limited Discount for SANS Baltimore",
+          "links": [
+            "https://sans.org/u/1zQd"
+          ]
+        }
+      ],
+      "published": "2025-01-29T02:00:01+00:00",
+      "duration_seconds": 367,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9300.mp3",
+      "audio_length_bytes": 5421254,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9300",
+      "categories": [
+        "qr code",
+        "teamviewer",
+        "apple silicon",
+        "sidechannel",
+        "python",
+        "exodus"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9300",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, January 29th, 2025\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. In Diaries today, Xavier is\n talking about a new Python malware that Xavier came\n across. This one going after Exodus wallets. Exodus is a\n popular cryptocurrency wallet and in this case the malware\n is trying to exfiltrate secret keys. In case the wallet is\n password protected, it also is looking for passwords in\n common password managers. All is written in Python, not\n leaving much of a fingerprint on the file system. Like all\n the data is kept in memory and then directly exfiltrated. The\n keystroke logger is also kind of interesting in that it\n doesn't just simply record keystroke, but also has sort\n of special setups. For example, if something is\n copied to the clipboard, it will automatically then grab\n data from the clipboard and exfiltrate this as well.\n Cryptocurrencies keep coming up more and more, of course,\n lately with the increased value of cryptocurrencies. And\n that's probably just going to continue. Interesting to see\n Python sort of jumping in here with some malware. And yeah,\n Xavier has lots more details in his diary, including code\n snippets from the actual malware. And ArcticWolf is\n snippets from the actual malware. And Arctic Wolf is\n reporting that they are now seeing some compromised simple\n help server. No surprise, Horizon3.ai released about a\n help server. No surprise, Horizon 3 AI released about a\n help server. No surprise, Horizon3.ai released about a\n week ago details about a number of vulnerabilities.\n There was an unauthenticated path traversal vulnerability.\n There was an arbitrary file upload and remote code\n execution vulnerability, as well as a privilege escalation\n vulnerability. So no surprise that these systems are being\n exploited. There weren't a ton of exposed system out there,\n according to Shodan. I think a couple thousands, which I\n consider sort of a little bit average to low. Arctic Wolf is\n sadly a little bit light on details. They can't confirm\n which exact vulnerabilities were used in these\n compromises. But double check that all of your simple help\n installs are patched. And if they're not patched yet,\n assume compromise.\n Then we got new two side channel attacks to worry\n about. The first one is called slab for speculation attack\n via load address prediction. The second one, flop, false\n load output predictions. Both of these attacks specifically\n affect Apple silicon processors. The M2 or A15 on\n iPhone, iPad or the M3 and the A17 CPU. These\n vulnerabilities, like all the side channel vulnerabilities,\n violate the separation of different processes on the\n system. Where one process is able to access data and affect\n another process. What makes this one particular worrisome\n is a pretty impressive demo that they posted. Where a\n browser window can, JavaScript running in a browser window.\n Can be used to essentially read data from another browser\n window. In this case, they demoed it very effectively\n with ProtonMail. Where basically JavaScript running\n in the malicious window is able to read email from the\n ProtonMail window. These type of attacks, of course, are\n dangerous and real. In the sense that, well, you can't\n really predict what JavaScript is going to run on a\n particular website. All it takes is you visit one\n compromised slash malicious webpage in order for this\n particular vulnerability to be exploited. At this point, I\n haven't really seen anything specific about possible\n patches for these vulnerabilities. Or if they\n are even possible.\n We got two issues that I would consider not quite as\n critical. First of all, bridge escalation vulnerability in\n team viewer clients. Patch it. Get it over with. Kind of. The\n second one is really more sort of what I would consider a\n curiosity. An interesting QR code Christian Walther came up\n with. That depending on what angle you use to look at the\n QR code, it resolves into different URLs. Interesting\n little trick here. Now, initially, this was created\n with like little lenses. You may have sort of, you may\n remember these simple hologram kind of images that just show\n different images depending on the angle you're looking at.\n But this does actually not use any lens like that. It's just\n printed on a flat piece of paper. But by looking at an\n angle, some of the distances between the dots in the QR\n code are shrunk. That then makes them look slightly\n different. And as a result, present a different still\n valid URL. Interesting little party trick. I think I'm not a\n huge fan of sort of overemphasizing the dangers of\n QR codes. But this could certainly be abused in some\n circumstances. Well, and this is it for today. So thanks\n again for listening. Also, if you're interested in any class\n I'm teaching, I'll be teaching in Baltimore in March. SEC 503\n Packet Analysis. So intrusion detection. If you're\n interested in that subject, if you really like to sort of go\n in-depth on protocols, well, join me in Baltimore. That's\n it for today. Thanks and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9298",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9298",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9298.mp3",
+      "title": "SANS ISC Stormcast, Jan 28th 2025: Z-Shy Phishing; Apple Patches 0-Day; Fortinet Exploit Details; Github and Apache Solr Patches",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 28th 2025: Z-Shy Phishing; Apple Patches 0-Day; Fortinet Exploit Details; Github and Apache Solr Patches",
+      "show_notes": [
+        {
+          "heading": "This episode shows how attackers are bypassing phishing filter by abusing the \"shy\" softhyphen HTML entitiy. We got an update from Apple fixing a 0-day vulnerability in addition to a number of other issues. watchTowr show how to exploit an interesting FortiOS vulnerability and we have patches for Github Desktop and Apache Solr",
+          "links": []
+        },
+        {
+          "heading": "An unusal shy z-wasp phish",
+          "links": [
+            "https://isc.sans.edu/diary/An%20unusual%20%22shy%20z-wasp%22%20phishing/31626"
+          ]
+        },
+        {
+          "heading": "How the soft hyphen \"shy\" HTML entity can be abused to bypass e-mail filters",
+          "links": []
+        },
+        {
+          "heading": "Apple Patches",
+          "links": [
+            "https://support.apple.com/en-us/100100"
+          ]
+        },
+        {
+          "heading": "Apple released patches for all of its operating systems, fixing a 0-day vulnerability among many others issues",
+          "links": []
+        },
+        {
+          "heading": "Get Fortirekt I am the Super_admin now",
+          "links": [
+            "https://labs.watchtowr.com/get-fortirekt-i-am-the-super_admin-now-fortios-authentication-bypass-cve-2024-55591/"
+          ]
+        },
+        {
+          "heading": "Details about a recent FortiOS Vulnerability",
+          "links": []
+        },
+        {
+          "heading": "GitHub Desktop Vulnerability",
+          "links": [
+            "https://thehackernews.com/2025/01/github-desktop-vulnerability-risks.html"
+          ]
+        },
+        {
+          "heading": "Apache Solr Vulnerability",
+          "links": [
+            "https://solr.apache.org/security.html#cve-2024-52012-apache-solr-configset-upload-on-windows-allows-arbitrary-path-write-access"
+          ]
+        }
+      ],
+      "published": "2025-01-28T02:00:02+00:00",
+      "duration_seconds": 374,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9298.mp3",
+      "audio_length_bytes": 5509203,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9298",
+      "categories": [
+        "solr",
+        "github",
+        "desktop",
+        "fortinet",
+        "fortios",
+        "apple",
+        "shy",
+        "html",
+        "z-wasp"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9298",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, January 28, 2025\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich and today I'm recording\n from Jacksonville, Florida. Well, today we have a diary by\n Jan looking at one of his favorite topics and that's how\n attackers are bypassing fishing filters. The common\n trick being used here is often referred to as Z-wasp for\n zero width characters and there are a number of different\n spaces, non-breaking spaces and the like that are often\n used here that are invisible to the user. But a machine\n looking for keywords like password would not recognize\n those keywords because they are broken up with these\n special characters. A particular character that Jan\n is looking at in this example is the soft hyphen which is\n why Jan dubs this particular version of the attack the C\n -Shy attack where S-H-Y is the HTML entity being used for the\n Shy attack where S-H-Y is the HTML entity being used for the\n soft hyphen that is then included in these emails in\n order to obfuscate them and make them similar to these\n zero white space and other zero with characters. readable\n to the human but not readable to the machine. Interesting\n technique and what this really drives home is that yes, we\n have fancy filters for our email messages that try to\n identify spam but a sufficiently motivated\n attacker is probably going to figure out a way around this\n because there are just so many options to make a text look\n very different to the machine compared to the user. And\n Apple today released its usual updates for everything. So we\n got updates for Vision OS, iOS, iPad OS, we got updates\n for macOS going back three versions to Ventura or macOS\n 13. We also got updates for watch watchOS, tvOS and of\n course Safari for these older versions of macOS. Probably\n the highlight of this particular release is that\n there is one already exploited vulnerability that's being\n patched with this update. It's the first zero day of the year\n for Apple but of course it's just January. And I think this\n is the first or second update that we got the period this\n year. This particular already exploited vulnerability is a\n privilege escalation vulnerability in Apple's core\n media framework. This is essentially the library or the\n set of libraries that's a response for all kinds of\n media processing with that of course a common source of\n vulnerabilities. The Apple description is as usual fairly\n sparse. It says here and I'm reading from Apple a malicious\n application may be able to elevate privileges. Apple is\n aware of a report this issue may have been exploited\n against versions of iOS before iOS 17.2. So if you already\n ran a current version of iOS you should be good and should\n not be affected by this vulnerability. Still update\n and of course with that make sure that you also apply all\n these other updates that are included. For iOS and iPadOS\n and the other operating system other than macOS there is no\n update for prior versions yet. So with that of course you\n have to also accept any feature updates that you may\n receive with this particular operating system update.\n And watchTowr released its usual in-depth review and\n exploit instructions for the latest Fortinet FortiOS\n authentication bypass vulnerability. Pretty\n interesting vulnerability essentially what Fortinet did\n here is that it did provide a proxy to a local telnet\n session via WebSocket. And that essentially allows user\n to gain terminal access via HTTP requests. Authorication\n of course isn't really done properly. There is a race\n condition where you can authenticate before the\n authentication request comes in resulting in empty\n authentication succeeding. And that gives you then\n essentially full command line access via this WebSocket\n connection. Interesting vulnerability definitely\n something to look at if you are working with WebSockets\n and do similar things where you are proxying WebSocket\n connections and relying on some form of authentication\n across this connection. So you are not running into the same\n type of race issue that we had here with Fortinet. In other\n updates we got an update for GitHub Desktop that fixes four\n different vulnerabilities. There are some credential leak\n vulnerabilities. Actually the one vulnerability I thought is\n kind of interesting is not the most severe one. CVSS score\n only 6.6 but a malicious crafted remote URL could\n essentially lead to credential leaks. Interesting kind of\n exploitation options here and probably one that's a little\n bit hard to get a handle on how critical it's really in\n your particular environment. And Apache released a\n noteworthy update for Solr fixing two vulnerabilities.\n One of them is a directory traversal war on a billion and\n also an interesting one that allows untrusted users to\n overwrite trusted config sets. And in the end this could also\n end up with arbitrary code execution. So definitely apply\n the patch. And this is it for today this week teaching\n virtually here for our Cybersecurity East conference.\n Thanks for listening and talk to you again tomorrow. Bye.\n Bye. Bye. Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9296",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9296",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9296.mp3",
+      "title": "SANS ISC Stormcast, Jan 27, 2025: Access Brokers; Llama Stack Vuln; ESXi SSH Tunnels; Zyxel Boot Loops; Subary StarLeak",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 27, 2025: Access Brokers; Llama Stack Vuln; ESXi SSH Tunnels; Zyxel Boot Loops; Subary StarLeak",
+      "show_notes": [
+        {
+          "heading": "Guest Diary: How Access Brokers Maintain Persistence",
+          "links": []
+        },
+        {
+          "heading": "Explore how cybercriminals utilize access brokers to persist within networks and the impact this has on organizational security.",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Guest+Diary+How+Access+Brokers+Maintain+Persistence/31600/"
+          ]
+        },
+        {
+          "heading": "Critical Vulnerability in Meta's Llama Stack (CVE-2024-50050)",
+          "links": []
+        },
+        {
+          "heading": "A deep dive into CVE-2024-50050, a critical vulnerability affecting Meta's Llama Stack, with exploitation details and mitigation strategies.",
+          "links": [
+            "https://www.oligo.security/blog/cve-2024-50050-critical-vulnerability-in-meta-llama-llama-stack"
+          ]
+        },
+        {
+          "heading": "ESXi Ransomware and SSH Tunneling Defense Strategies",
+          "links": []
+        },
+        {
+          "heading": "Learn how to fortify your infrastructure against ransomware targeting ESXi environments, focusing on SSH tunneling and proactive measures.",
+          "links": [
+            "https://www.sygnia.co/blog/esxi-ransomware-ssh-tunneling-defense-strategies/"
+          ]
+        },
+        {
+          "heading": "Zyxel USG FLEX/ATP Series Application Signature Recovery Steps",
+          "links": []
+        },
+        {
+          "heading": "Addressing issues with Zyxel s USG FLEX/ATP Series application signatures as of January 24, 2025, with a detailed recovery guide.",
+          "links": [
+            "https://support.zyxel.eu/hc/en-us/articles/24159250192658-USG-FLEX-ATP-Series-Recovery-Steps-for-Application-Signature-Issue-on-January-24th-2025"
+          ]
+        },
+        {
+          "heading": "Subaru Starlink Vulnerability Exposed Cars to Remote Hacking",
+          "links": []
+        },
+        {
+          "heading": "Discussing how a vulnerability in Subaru s Starlink system left vehicles susceptible to remote exploitation and the steps taken to resolve it.",
+          "links": [
+            "https://www.securityweek.com/subaru-starlink-vulnerability-exposed-cars-to-remote-hacking/"
+          ]
+        }
+      ],
+      "published": "2025-01-27T00:20:09+00:00",
+      "duration_seconds": 388,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9296.mp3",
+      "audio_length_bytes": 5712795,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9296",
+      "categories": [
+        "subaru",
+        "starlink",
+        "zyxel",
+        "usg flex",
+        "atp",
+        "esci",
+        "meta",
+        "llama",
+        "access broker"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9296",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, January 27th, 2025\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich and today I'm recording\n from Jacksonville, Florida. At the Internet Storm Center we\n had another diary created by one of our undergraduate\n interns. This time it was Joseph Flint writing about how\n access brokers are maintaining persistence. Access brokers\n are just breaking the system and then selling access to\n these systems to others like for example ransomware actors\n or really whoever sort of needs a botnet for whatever.\n So it's really the initial phase of sort of your malware\n economy. One example that Joseph is pointing out here is\n SystemBC. That's a botnet that's often associated with\n these access brokers and well how it reflects itself in our\n honeypots. Some of the specific URLs related to\n SystemBC that people are scanning for. But then also\n how to prevent infection and how to detect infection. Which\n should not really be all that difficult. There are plenty of\n intrusion detection rules out there as Joseph points out. As\n well as of course usually these access brokers are using\n fairly low level and easy vulnerabilities. They're often\n using weak passwords, well -known web application\n vulnerabilities. So some basic system hardening and of course\n patching keeping your system up to date goes a long way to\n prevent these initial infections. And everything\n related to AI of course is still getting a lot of news.\n Should get a lot of news given the rapid adoption of AI tools\n everywhere. One way how you adopt these AI tools is well\n by using various frameworks to create applications around\n this. One example here is Meta-llama or the LLama stack. Of\n this. One example here is Meta-Llama or the Llama stack. Of\n course that comes from Meta who is behind the Llama AI\n model. Fairly popular model to include in your applications.\n The Meta-Llama part of this stack has a deserialization\n vulnerability that does allow the execution of arbitrary\n code. So if you're writing tools for these fancy new AI\n models. Please don't forget good old vulnerabilities like\n deserialization in particular. Since these tools often have\n to deal with large amounts of unstructured input. Which of\n course tends to be quite difficult to validate. Well as\n so often we have a little bit of controversy here around the\n severity of this vulnerability. Snyk rates it\n as a 9.3 so critical. While Meta only rates it as a 6.3 or\n medium. I think it really depends on how you're using\n these components. So definitely look at the\n vulnerability. See how it would possibly affect your\n software.\n Sygnia wrote up a blog post with some of their\n observations. From recent attacks against VMware ESXi.\n VMware has been a huge target in particular for ransomware\n gangs. Of course if you are able to access Hypervisor. You\n often essentially own the entire enterprise. Well what\n the blog post here by Signia is focusing on. Is the SSH\n backdoor being deployed by some of these ransomware\n gangs. Definitely worthwhile reading this. Just to look for\n indicators of compromise. And any sort of techniques that\n you should be looking for here. Just actually had last\n week a student with a research paper. That is looking into\n some of the detection of odd SSH traffic like this. Hope to\n get them on the podcast in the future. But either way pay\n attention to SSH connections. And this is certainly a good\n read if you're using VMware ESXi. And if you're worried\n about ransomware actors taking it over. Which is definitely\n something that you should be worried about. And if you are\n using a Zyxel firewall. Particularly the USG Flex and\n ATP series. You may be affected by a bad signature\n update. That causes these devices to get stuck in a\n reboot loop. In the show notes I'll link to the advisory. The\n sad part here is the only way you're going to recover the\n device. Is via a serial console cable. Which of course\n typically then requires on -site access. And then a\n couple listeners asked about the Subaru Starlink\n vulnerability. Haven't really covered it much. In part\n because the real vulnerability here. Is just a relatively\n straightforward password reset vulnerability. In their web\n portal. That then allows you to reset passwords. Meaning\n then access the account where you reset the password for.\n This is sort of a not very spectacular web application\n vulnerability. The real problem here is the amount of\n access you're getting to vehicle data. Apparently\n anyone with admin privileges to this application. Will have\n access to at least a year's worth of location data. And\n the like for the vehicles. So the problem here I think is\n more how much data is being collected. Versus the actual\n vulnerability. And just a little side note. Starlink\n just happens to be the name of this particular infotainment\n system. Not related to the satellite service provider.\n Starlink. Starlink. Well and this is it for today. Thanks\n for listening. And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9294",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9294",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9294.mp3",
+      "title": "SANS ISC Stormcast, Jan 24, 2025: XSS in Email, SonicWall Exploited; Cisco Vulnerablities; AI and SOAR (@sans_edu research paper by Anthony Russo)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 24, 2025: XSS in Email, SonicWall Exploited; Cisco Vulnerablities; AI and SOAR (@sans_edu research paper by Anthony Russo)",
+      "show_notes": [
+        {
+          "heading": "In today's episode, learn how an attacker attempted to exploit webmail XSS vulnerablities against us. Sonicwall released a critical patch fixing an already exploited vulnerability in its SMA 1000 appliance. Cisco fixed vulnerabilities in ClamAV and its Meeting Manager REST API. Learn from SANS.edu student Anthony Russo how to take advantage of AI for SOAR.",
+          "links": []
+        },
+        {
+          "heading": "XSS Attempts via E-Mail",
+          "links": [
+            "https://isc.sans.edu/diary/XSS%20Attempts%20via%20E-Mail/31620"
+          ]
+        },
+        {
+          "heading": "An analysis of a recent surge in email-based XSS attack attempts targeting users and organizations. Learn the implications and mitigation techniques.",
+          "links": []
+        },
+        {
+          "heading": "SonicWall PSIRT Advisory: CVE-2025-23006",
+          "links": []
+        },
+        {
+          "heading": "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0002 CVE-2025-23006",
+          "links": []
+        },
+        {
+          "heading": "Details of a critical vulnerability in SonicWall appliances (SNWLID-2025-0002) and what you need to do to secure your systems.",
+          "links": []
+        },
+        {
+          "heading": "Cisco ClamAV Advisory: OLE2 Parsing Vulnerability",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-ole2-H549rphA"
+          ]
+        },
+        {
+          "heading": "A DoS vulnerability in the popular open source anti virus engine ClamAV",
+          "links": []
+        },
+        {
+          "heading": "Cisco CMM Privilege Escalation Vulnerability",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-cmm-privesc-uy2Vf8pc"
+          ]
+        },
+        {
+          "heading": "A patch of a privilege escalation flaw in Cisco s CMM module.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-24T00:13:40+00:00",
+      "duration_seconds": 885,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9294.mp3",
+      "audio_length_bytes": 12664452,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9294",
+      "categories": [
+        "cisco",
+        "cmm",
+        "clamav",
+        "ole2",
+        "sonicwall",
+        "sma 1000",
+        "xss",
+        "email",
+        "webmail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9294",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, January 24th, 2025\n edition of the SANS Internet StormCenters Stormcast. My\n edition of the SANS and at StormCenters Stormcast. My\n edition of the SANS Internet StormCenters Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. In diaries today we got something\n a little bit different. It's for a change, not honeypot\n data, but emails that actually went to one of our Internet\n StormCenter email addresses that attempted to exploit\n cross-site scripting. It's not clear exactly which cross-site\n scripting vulnerability tried to exploit. They embedded\n JavaScript in particular in the subject and then also in\n the body of the email. But more likely than not they went\n after some kind of webmail systems vulnerability. I\n always point out when we're covering cross-site scripting\n in the Defending Web Application class that webmail\n systems is probably one of the most difficult systems to\n write when it comes to cross -site scripting, given that\n email is usually these days expressed in HTML.\n There are some tricks that you can use these days in modern\n browsers like sandboxed iframes and the like, but\n still recently we had, for example, this interesting\n vulnerability in ProtonMail. It's not easy to get this\n right. So no surprise that attackers are going after it.\n And in the past, if some open source systems had\n vulnerabilities like this, well, they were often very\n quickly exploited. So if anybody can help me out and\n figure out what exact vulnerability they're trying\n to exploit here, let me know. Also interesting, in order to\n detect whether or not the exploit worked, they used a\n website called XSS, so cross -site scripting, dot report.\n That website, it's a free website that you can then\n basically use to deliver additional JavaScript to the\n victim and record things like browser setting, cookies, and\n the like. Interesting website too. Something that you\n probably do want to keep an eye on. Maybe block access to\n the website. At the very least, record any DNS lookups\n for that fairly unique host name. So in case you do have a\n cross-site scripting vulnerability in one of your\n sites and someone uses this particular tool to exploit it,\n well, you'll be alerted. And SonicWall released a critical\n update for its SMA-1000 Appliance Management Console,\n or short AMC, and the Central Management Console, CMC. These\n appliances are already being exploited. The vulnerability\n is a desteralization vulnerability that allows\n arbitrary code execution without authentication. Quick\n check on Shodan showed only a handful of exposed appliances.\n There's really no good reason to expose these because\n they're really sort of more internal management\n appliances, not something your users would necessarily need\n to connect to. So this is not the SonicWall firewall or\n anything like this. Please patch quickly. Again, this is\n already being exploited according to SonicWall.\n And then we got a couple of updates from Cisco. First one\n I covered because, well, it's Clam AV, which is very\n popular. It's only a denial-of -service vulnerability, but\n Clam AV could often be found embedded in other open-source\n products or even some commercial products. The OLE2\n file format decryption suffers from this denial-of-service\n vulnerability. And, of course, as you probably have heard me\n mention a few times, OLE, that file format is still important\n and something that anti -malware tools have to parse.\n So definitely try to patch this vulnerability. Next, we\n do have a critical vulnerability. This one\n affects the Cisco meeting management REST API. This is a\n privilege escalation vulnerability, but Cisco still\n rates it as critical. So definitely make sure that you\n get this addressed. It's basically improper\n authorization in the REST API, which could allow any user to\n then escalate their privileges and send administrative\n requests to the API. Of course, a very common issue in\n APIs that they don't always treat authorization\n authorization as careful as some of the traditional web\n apps being a little bit more hidden from Vue. Hello, it's\n Friday again, and I have yet another Sans.edu student with\n me here, Anthony. Anthony, could you introduce yourself,\n please? Hi there. Yeah, my name is Anthony Russo. I'm\n joining y'all. I'm actually currently working for\n Atlassian. I'm our U.S. team lead for the security\n operations team. So a pleasure to be here. I'm trying to keep\n developers safe there as well. Your developers always close\n to my heart. Can you talk a little bit about your research\n paper? Like what it is about? Yeah, sure. I mean, I think it\n goes without saying that AI has been a big talk for\n cybersecurity as of late, especially with the recent\n rollout of ChatGPT and all the ways that AI has kind of\n seemed to make its way into our world. And so I, as a\n security operations person, have been particularly\n interested to see how we can incorporate that into our\n work. And one of the big things that we utilize for our\n team is a SOAR platform, which is just a way to make fairly\n straightforward automations without having to write full\n -blown applications or getting in-depth software engineering.\n So what I found that was ChatGPT and particularly the\n ChatGPT, the custom ChatGPTs and the abilities to connect\n it to APIs provided us a pretty intuitive and useful\n way to make automations as opposed to having to manually\n do this with Lerb platforms. So that was primarily the\n focus of my paper to explore that and to see what these\n LLMs are capable of doing. Yeah, that I thought was a\n real great sort of use of LLMs. And SOAR has been sort\n of a big thing, I would say like three, four years ago\n when people sort of first discovered it. And it's a\n fairly intuitive thing. Hey, we have the same instance over\n and over. Let's automate what we're doing. But I think has\n gotten, like with a lot of these technologies, people got\n a little bit disappointed by it, that it's so much work to\n set it up and get these automations working reliably.\n Do you find that these ChatGPTs or LLMs made this not\n just faster, but also led to some better result? Yeah,\n definitely. I mean, I don't think that we are in a state\n where they're perfectly right every time. It's not the\n silver bullet. But, you know, with SOARs, I mean, it's\n similar to writing code, right? And you have to account\n for many different factors. So if, let's say, we were writing\n a SOAR play to handle phishing, you know, we write\n it to handle a certain set of headers in a certain format.\n And then let's say somebody uses a different email\n platform that changes the headers. Well, then we now\n have to go back and change an account for that. What I have\n found with LLMs and ChatGPTs, it's very good at intuiting,\n you know, these different changes in these different\n formats so that a lot of these smaller scale bugs are handled\n on the fly without having to go in and to fix every little\n thing. So, yeah, I definitely think it's been great for that\n at that point. Yeah, I use a lot like Copilot and such for\n coding. And I think I have a similar experience where the\n prompts that some people sort of show us a demo, I think are\n overselling it a little bit where it says, you know, write\n the next great iOS game and it writes the game for you. That\n may work, but that's not really sort of how it works.\n It sort of helps a somewhat skilled developer to really\n code faster. And that's sort of what you found with the\n SOAR application. Yeah, exactly. Yeah, it's kind of\n like just that added benefit. It really leads the way for\n you and as opposed to you having to, you know, go and\n search Stack Overflow, you know, a lot of the answers are\n already there presented to you real time. Yeah, and I think\n that comparison is good. I actually did a little\n experiment a while ago where I sort of compared Copilot to\n just Googling for the result. And yeah, it's faster. In some\n cases, you actually end up with verbatim the same\n solution. Chat GPT or Copilot that I used in that case was\n actually a little bit more secure. I think it had one\n security, vulnerably less than I got just from Stack\n Overflow. Now with these SOAR scripts, anything that just\n didn't work or where it sort of could have potentially\n caused damage if you just would have used it blindly?\n Yeah, I mean, I think you can't be 100% reliant on these\n for, like you can't just write an automation with ChatGPT and\n just say, handle all of my security operations triage,\n right? You need to be specific and you need to\n compartmentalize it as much as you can. So maybe you have a\n custom LLM handling phishing -specific use cases and you\n have prompts specifically set up to handle those type of\n events. And that way you can avoid having any of these,\n what we're calling hallucinations for LLMs to\n just kind of go off and completely miss the mark,\n which is definitely capable of happening. So that's one way\n I've found to help reduce any sort of issues. But yeah, I\n mean, if you really were just to throw it at it, like a\n broad sense, I think it's pretty inconsistent, which I\n mean, would be right for many things. Like if you can't just\n throw it at a SOAR play, you'd have to write a SOAR\n automation to handle it. So in that sense, I don't think it's\n a bad thing. But yeah, like I was mentioning earlier, I\n don't think it's perfect in any other sense. It still has\n its quirks. Yeah. And I've seen people compare it to\n outsourcing software development where a lot of it\n depends on getting the specifications right and\n similar here. Oh, yeah, that's a good... ...with the prompt\n kind of, yeah. That's a good metaphor, yeah. Because even\n if you have skilled developers, if they don't know\n what you really want to do, then you end up with bad code\n usually. And you just have to explain it to ChatGPT, what\n you actually want. Yeah, and the benefit... Oh, sorry.\n Yeah, not to cut you off, but I think the benefit with\n ChatGPT is you get that real -time response, right? Where\n it doesn't do something right, and then so you go back and\n you just modify that prompt a bit or you tell it, oh, I\n didn't like that, and then it alters itself. How do you test\n those scripts when or not they're actually working? Do\n you have some test cases that you run them against or just\n try them out and see what happens? Yeah. In my paper, I\n used phishing and malware as two of the main test use\n cases. Fortunately for us, we live in a world where a lot of\n this stuff is on the internet, so you can find many sources\n of samples of phishing cases. There's a lot on GitHub where\n you can just find emails and then throw that at your LLM\n and see how it handles those. And same thing for malware.\n You can find many different examples of malware. So, yeah,\n that's kind of the way I approached it, was using a lot\n of that open source data that was available to us to run it\n through these cases and then see how it performed. Yeah,\n great. And are you using this now in your day-to-day work?\n Yeah, I will say we aren't using ChatGPT directly. We are\n using a store platform internally that does have\n integrations to LLMs, but we are hosting them locally. And\n a lot of that has to do with privacy concerns. You know,\n with these LLMs, especially when you're operating in a\n public space, like that ChatGPT, and you're not paying\n for any sort of private license, you know, your data\n is kind of out there. So when you're dealing with customer\n data and production data, it's probably smart to consider\n that whenever you're building out your automations. So,\n yeah, we're using a flavor of it. Matt Lazian actually has\n just recently released Rovo, which is one of the AI agents\n that we've been using, which has our own flavor of LLMs,\n which is pretty cool because you can write custom agents,\n which effectively is similar to just prompting it and build\n out instructions for it to handle specific use cases. And\n so that's been one of the ways we've been using it, you know,\n dogfooding our own work, our own product. So, yeah. Yeah,\n excellent. There will be a link to the paper in the show\n notes. Any final word, anything people should look\n particular for in the paper? No, yeah. I would just like to\n take a moment to say thank you for having me on here. I love\n the show and just love how consistently you have been\n uploading and providing information to the community.\n It's been great to be on here. Yeah, if you have any feedback\n or thoughts, you can find me on LinkedIn and just shout out\n the paper and I'd love to have a back and forth with you.\n Well, and that's it for today. Thanks for listening. By the\n way, if anybody's interested in any classes I teach, I'll\n be teaching in Baltimore in March, our Intrusion and\n Texting class, SEC 503. Link is always below the show notes\n for any upcoming classes I teach. Thanks and talk to you\n again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9292",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9292",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9292.mp3",
+      "title": "SANS ISC Stormcast, Jan 23, 2025: PFSync Protocol; Oracle CPU; Korean VPN Supply Chain Attack; Ivanti Guidance",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 23, 2025: PFSync Protocol; Oracle CPU; Korean VPN Supply Chain Attack; Ivanti Guidance",
+      "show_notes": [
+        {
+          "heading": "In today's episode, we start by talking about the PFSYNC protocol used to synchronize firewall states to support failover. Oracle released it's quarterly critical patch update. ESET is reporting about a critical VPN supply chain attack and CISA released guidance for victims of recent Ivanti related attacks.",
+          "links": []
+        },
+        {
+          "heading": "Catching CARP: Fishing for Firewall States in PFSync Traffic",
+          "links": [
+            "https://isc.sans.edu/diary/Catching%20CARP%3A%20Fishing%20for%20Firewall%20Stat%20es%20in%20PFSync%20Traffic/31616)**"
+          ]
+        },
+        {
+          "heading": "Discover how attackers exploit PFSync traffic to manipulate firewall states. This deep dive explores vulnerabilities and mitigation strategies in network defense.",
+          "links": []
+        },
+        {
+          "heading": "Oracle Critical Patch Update   January 2025",
+          "links": [
+            "https://www.oracle.com/security-alerts/cpujan2025.html)**"
+          ]
+        },
+        {
+          "heading": "Oracle's January 2025 patch release addresses numerous critical vulnerabilities across their product suite. Learn about key updates and how to secure your systems.",
+          "links": []
+        },
+        {
+          "heading": "PlushDaemon: Compromising the Supply Chain of a Korean VPN Service",
+          "links": [
+            "https://www.welivesecurity.com/en/eset-research/plushdaemon-compromises-supply-chain-korean-vpn-service/"
+          ]
+        },
+        {
+          "heading": "ESET Research uncovers PlushDaemon, a sophisticated supply chain attack targeting a Korean VPN provider. Understand the implications for supply chain security.",
+          "links": []
+        },
+        {
+          "heading": "CISA Cybersecurity Advisory: AA25-022A",
+          "links": [
+            "https://www.cisa.gov/news-events/cybersecurity-advisories/aa25-022a"
+          ]
+        },
+        {
+          "heading": "The latest advisory highlights active threats and mitigation strategies for critical infrastructure. Stay ahead with CISA s guidance on emerging cyber risks.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-22T23:45:03+00:00",
+      "duration_seconds": 469,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9292.mp3",
+      "audio_length_bytes": 6844299,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9292",
+      "categories": [
+        "cisa",
+        "ivanti",
+        "vpn",
+        "korea",
+        "oracle",
+        "carp",
+        "pfsync"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9292",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9290",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9290",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9290.mp3",
+      "title": "SANS ISC Stormcast, Jan 22, 2025: Geolocation via Starlink and Cloudflare; AI Prompt Risks; Homebrew Phishing",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 22, 2025: Geolocation via Starlink and Cloudflare; AI Prompt Risks; Homebrew Phishing",
+      "show_notes": [
+        {
+          "heading": "This episodes covers how Starlink users can be geolocated and how Cloudflare may help deanonymize users. The increased use of AI helpers leads to leaking data via careless prompts.",
+          "links": []
+        },
+        {
+          "heading": "Geolocation and Starlink",
+          "links": [
+            "https://isc.sans.edu/diary/Geolocation%20and%20Starlink/31612"
+          ]
+        },
+        {
+          "heading": "Discover the potential geolocation risks associated with Starlink and how they might be exploited. This diary entry dives into new concerns for satellite internet users.",
+          "links": []
+        },
+        {
+          "heading": "Deanonymizing Users via Cloudflare",
+          "links": [
+            "https://gist.github.com/hackermondev/45a3cdfa52246f1d1201c1e8cdef6117"
+          ]
+        },
+        {
+          "heading": "Deanonymizing users by identifying which cloudflare server cashed particular content",
+          "links": []
+        },
+        {
+          "heading": "Sage's AI Assistant and Customer Data Concerns",
+          "links": [
+            "https://www.theregister.com/2025/01/20/sage_copilot_data_issue/"
+          ]
+        },
+        {
+          "heading": "Examine how a Sage AI tool inadvertently exposed sensitive customer data, raising questions about AI governance and trust in business applications.",
+          "links": []
+        },
+        {
+          "heading": "The Threat of Sensitive Data in Generative AI Prompts",
+          "links": [
+            "https://www.darkreading.com/threat-intelligence/employees-sensitive-data-genai-prompts"
+          ]
+        },
+        {
+          "heading": "Analyze how employees  careless prompts to generative AI tools can lead to sensitive data breaches and the importance of awareness training.",
+          "links": []
+        },
+        {
+          "heading": "Homebrew Phishing",
+          "links": [
+            "https://x.com/ryanchenkie/status/1880730173634699393"
+          ]
+        }
+      ],
+      "published": "2025-01-22T02:15:02+00:00",
+      "duration_seconds": 556,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9290.mp3",
+      "audio_length_bytes": 8053444,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9290",
+      "categories": [
+        "phishing",
+        "homebrew",
+        "ai",
+        "prompts",
+        "leakage",
+        "gelocation",
+        "starlink",
+        "cloudflare"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9290",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9288",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9288",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9288.mp3",
+      "title": "SANS ISC Stormcast, Jan 21, 2025: Downloading Partial ZIP files; Remote Tools Used in Attakcs; Azure DevOps SSRF",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 21, 2025: Downloading Partial ZIP files; Remote Tools Used in Attakcs; Azure DevOps SSRF",
+      "show_notes": [
+        {
+          "heading": "In this episode, we talk about downloading and analyzing partial ZIP files, how legitimate remote access tools are used in recent compromises and how a research found an SSRF vulnerability in Azure DevOps",
+          "links": []
+        },
+        {
+          "heading": "Partial ZIP File Downloads",
+          "links": []
+        },
+        {
+          "heading": "A closer look at how attackers are leveraging partial ZIP file downloads to bypass file verification systems and plant malicious content.",
+          "links": [
+            "https://isc.sans.edu/diary/Partial%20ZIP%20File%20Downloads/31608"
+          ]
+        },
+        {
+          "heading": "Ukrainian CERT Advisory on AnyDesk Threat",
+          "links": []
+        },
+        {
+          "heading": "The Ukrainian CERT provides detailed guidance on identifying and mitigating recent cyber threats exploiting AnyDesk for unauthorized access.",
+          "links": [
+            "https://cert.gov.ua/article/6282069"
+          ]
+        },
+        {
+          "heading": "Finding SSRFs in Azure DevOps",
+          "links": []
+        },
+        {
+          "heading": "An in-depth analysis of how server-side request forgery (SSRF) vulnerabilities are discovered and exploited in Azure DevOps pipelines.",
+          "links": [
+            "https://binarysecurity.no/posts/2025/01/finding-ssrfs-in-devops"
+          ]
+        }
+      ],
+      "published": "2025-01-21T01:47:05+00:00",
+      "duration_seconds": 380,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9288.mp3",
+      "audio_length_bytes": 5596880,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9288",
+      "categories": [
+        "devops",
+        "azure",
+        "ssrf",
+        "ukraine",
+        "cert",
+        "anydesk",
+        "zip"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9288",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9286",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9286",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9286.mp3",
+      "title": "SANS ISC Stormcast, Jan 20, 2025: Honeypots for Offense; SimpleHelp and UEFI Secure Boot Vulnerabilities",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 20, 2025: Honeypots for Offense; SimpleHelp and UEFI Secure Boot Vulnerabilities",
+      "show_notes": [
+        {
+          "heading": "In this episode, we cover how to use honeypot data to keep your offensive infrastructure alive longer, three critical vulnerabilities in SimpleHelp that must be patched now, and an interesting vulnerability affecting many systems allowing UEFI Secure Boot bypass.",
+          "links": []
+        },
+        {
+          "heading": "Leveraging Honeypot Data for Offensive Security Operations [Guest Diary] A recent guest diary on the SANS Internet Storm Center discusses how offensive security professionals can utilize honeypot data to enhance their operations. The diary highlights the detection of scans from multiple IP addresses, emphasizing the importance of monitoring non-standard user-agent strings in web requests.",
+          "links": [
+            "https://isc.sans.edu/diary/Leveraging%20Honeypot%20Data%20for%20Offensive%20Security%20Operations%20%5BGuest%20Diary%5D/31596"
+          ]
+        },
+        {
+          "heading": "Security Vulnerabilities in SimpleHelp 5.5.7 and Earlier SimpleHelp has released version 5.5.8 to address critical security vulnerabilities present in versions 5.5.7 and earlier. Users are strongly advised to upgrade to the latest version to prevent potential exploits. Detailed information and upgrade instructions are available on SimpleHelp's official website.",
+          "links": [
+            "https://simple-help.com/kb---security-vulnerabilities-01-2025#send-us-your-questions"
+          ]
+        },
+        {
+          "heading": "Under the Cloak of UEFI Secure Boot: Introducing CVE-2024-7344 ESET researchers have identified a new vulnerability, CVE-2024-7344, that allows attackers to bypass UEFI Secure Boot on most UEFI-based systems. This flaw enables the execution of untrusted code during system boot, potentially leading to the deployment of malicious UEFI bootkits. Affected users should apply available patches to mitigate this risk.",
+          "links": [
+            "https://www.welivesecurity.com/en/eset-research/under-cloak-uefi-secure-boot-introducing-cve-2024-7344/"
+          ]
+        }
+      ],
+      "published": "2025-01-20T00:48:15+00:00",
+      "duration_seconds": 204,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9286.mp3",
+      "audio_length_bytes": 3134530,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9286",
+      "categories": [
+        "uefi",
+        "simplehelp",
+        "honeypots"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9286",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9284",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9284",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9284.mp3",
+      "title": "SANS ISC Stormcast, Jan 17, 2025: Analyzing Complex Datasets, Citrix Update Issues, Ivanti's Security Advisory, and the Future of Passkeys (@sans_edu)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 17, 2025: Analyzing Complex Datasets, Citrix Update Issues, Ivanti's Security Advisory, and the Future of Passkeys (@sans_edu)",
+      "show_notes": [
+        {
+          "heading": "In this episode, we explore the efficient storage of honeypot logs in databases, issues with Citrix's Session Recording Agent and Windows Update. Ivanti is having another interesting security event and our SANS.edu graduate student Rich Green talks about his research on Passkeys.",
+          "links": []
+        },
+        {
+          "heading": "Extracting Practical Observations from Impractical Datasets: A SANS Internet Storm Center diary entry discusses strategies for analyzing complex datasets to derive actionable insights.",
+          "links": [
+            "https://isc.sans.edu/diary/Extracting%20Practical%20Observations%20from%20Impractical%20Datasets/31582"
+          ]
+        },
+        {
+          "heading": "Citrix Session Recording Agent Update Issue: Citrix reports that Microsoft's January security update fails or reverts on machines with the 2411 Session Recording Agent installed, providing guidance on addressing this issue.",
+          "links": [
+            "https://support.citrix.com/s/article/CTX692505-microsofts-january-security-update-failsreverts-on-a-machine-with-2411-session-recording-agent?language=en_US"
+          ]
+        },
+        {
+          "heading": "Ivanti Endpoint Manager Security Advisory: Ivanti releases a security advisory for Endpoint Manager versions 2024 and 2022 SU6, detailing vulnerabilities and recommended actions.",
+          "links": [
+            "https://forums.ivanti.com/s/article/Security-Advisory-EPM-January-2025-for-EPM-2024-and-EPM-2022-SU6?language=en_US"
+          ]
+        },
+        {
+          "heading": "Revolutionizing Enterprise Security: The Exciting Future of Passkeys Beyond Passwords: A SANS.edu research paper explores the shift from traditional passwords to passkeys, highlighting the benefits and challenges of adopting passwordless authentication methods.",
+          "links": [
+            "https://www.sans.edu/cyber-research/revolutionizing-enterprise-security-exciting-future-passkeys-beyond-passwords/"
+          ]
+        }
+      ],
+      "published": "2025-01-17T00:39:29+00:00",
+      "duration_seconds": 770,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9284.mp3",
+      "audio_length_bytes": 11053957,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9284",
+      "categories": [
+        "passkeys",
+        "citrix",
+        "ivanti",
+        "honeypot"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9284",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9282",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9282",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9282.mp3",
+      "title": "SANS ISC Stormcast, Jan 16, 2025: Critical Vulnerabilities and Cybersecurity Updates You Need to Know",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 16, 2025: Critical Vulnerabilities and Cybersecurity Updates You Need to Know",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers an odd 12 year old Netgear vulnerability that only received a proper CVE number last year. Learn about how to properly identify OpenID connect users and avoid domain name resue. Good old rsync turns out to be in need of patching and Fortinet: Not sure if it needs patching. Probably it does. Go ahead and patch it.",
+          "links": []
+        },
+        {
+          "heading": "The Curious Case of a 12-Year-Old Netgear Router Vulnerability",
+          "links": []
+        },
+        {
+          "heading": "Outdated Netgear routers remain a security risk, with attackers actively exploiting a 2013 vulnerability to deploy crypto miners. Learn how to protect your network by updating or replacing legacy hardware.",
+          "links": []
+        },
+        {
+          "heading": "URL: https://isc.sans.edu/diary/The%20Curious%20Case%20of%20a%2012-Year-Old%20Netgear%20Router%20Vulnerability/31592",
+          "links": []
+        },
+        {
+          "heading": "Millions at Risk Due to Google s OAuth Flaw",
+          "links": []
+        },
+        {
+          "heading": "A flaw in Google s OAuth implementation enables attackers to exploit defunct domain accounts, exposing sensitive data. Tips on implementing MFA and domain monitoring to reduce risks.",
+          "links": []
+        },
+        {
+          "heading": "URL: https://trufflesecurity.com/blog/millions-at-risk-due-to-google-s-oauth-flaw",
+          "links": []
+        },
+        {
+          "heading": "Rsync 3.4.0 Security Release",
+          "links": []
+        },
+        {
+          "heading": "The latest rsync update fixes critical vulnerabilities, including buffer overflows and symbolic link issues. Upgrade immediately to protect your file synchronization processes.",
+          "links": []
+        },
+        {
+          "heading": "URL: https://download.samba.org/pub/rsync/NEWS#3.4.0",
+          "links": []
+        },
+        {
+          "heading": "Fortinet PSIRT Advisories: Stay Secure",
+          "links": []
+        },
+        {
+          "heading": "Fortinet's latest advisories address vulnerabilities in FortiOS, FortiProxy, and more. Review and apply patches promptly to secure your perimeter defenses.",
+          "links": []
+        },
+        {
+          "heading": "URL: https://www.fortiguard.com/psirt",
+          "links": []
+        }
+      ],
+      "published": "2025-01-16T00:48:36+00:00",
+      "duration_seconds": 542,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9282.mp3",
+      "audio_length_bytes": 7860214,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9282",
+      "categories": [
+        "fortinet",
+        "rsync",
+        "google",
+        "oauth",
+        "openid connect",
+        "netgear"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9282",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9280",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9280",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9280.mp3",
+      "title": "SANS ISC Stormcast, Jan 14 2025: Microsoft Patch Tuesday, FortiOS and FortiProxy Patches; Paessler PRTG Patches",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 14 2025: Microsoft Patch Tuesday, FortiOS and FortiProxy Patches; Paessler PRTG Patches",
+      "show_notes": [
+        {
+          "heading": "Today, Microsoft Patch Tuesday headlines our news with Microsoft patching 209 vulnerabilities, some",
+          "links": []
+        },
+        {
+          "heading": "of which have already been exploited. Fortinet suspects a so far unpatched Node.js authentication",
+          "links": []
+        },
+        {
+          "heading": "bypass to be behind some recent exploits of FortiOS and FortiProxy devices.",
+          "links": []
+        },
+        {
+          "heading": "Microsoft January 2025 Patch Tuesday",
+          "links": []
+        },
+        {
+          "heading": "This month's Microsoft patch update addresses a total of 209 vulnerabilities, including 12 classified as critical. Among these, 3 vulnerabilities have been actively exploited in the wild, and 5 have been disclosed prior to the patch release, marking them as zero-days.",
+          "links": [
+            "https://isc.sans.edu/diary/rss/31590"
+          ]
+        },
+        {
+          "heading": "Fortinet Security Advisory FG-IR-24-535 CVE-2024-55591",
+          "links": []
+        },
+        {
+          "heading": "An Authentication Bypass Using an Alternate Path or Channel vulnerability [CWE-288] affecting FortiOS and FortiProxy may allow a remote attacker to gain super-admin privileges via crafted requests to Node.js websocket module.",
+          "links": [
+            "https://fortiguard.fortinet.com/psirt/FG-IR-24-535"
+          ]
+        },
+        {
+          "heading": "PRTG Network Monitor Update:",
+          "links": []
+        },
+        {
+          "heading": "Update for an already exploited XSS vulnerability in Paesler PRTG Network Monitor CVE-2024-12833",
+          "links": [
+            "https://www.paessler.com/prtg/history/stable"
+          ]
+        }
+      ],
+      "published": "2025-01-15T00:33:59+00:00",
+      "duration_seconds": 468,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9280.mp3",
+      "audio_length_bytes": 6830373,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9280",
+      "categories": [
+        "prtg",
+        "fortinet",
+        "network monitor",
+        "paessler",
+        "access",
+        "microsoft",
+        "patches"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9280",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9278",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9278",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9278.mp3",
+      "title": "SANS ISC Stormcast, Jan 14, 2025: Brute-Forcing Hikvision Devices, macOS SIP Bypass, Linux Rootkits, Aviatrix Exploits, and AWS Ransomware Tactics",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 14, 2025: Brute-Forcing Hikvision Devices, macOS SIP Bypass, Linux Rootkits, Aviatrix Exploits, and AWS Ransomware Tactics",
+      "show_notes": [
+        {
+          "heading": "Episode Summary:",
+          "links": []
+        },
+        {
+          "heading": "This episode covers brute-force attacks on the password reset functionality of Hikvision devices, a macOS SIP bypass vulnerability, Linux rootkit malware, and a novel ransomware campaign targeting AWS S3 buckets.",
+          "links": []
+        },
+        {
+          "heading": "Topics Covered:",
+          "links": []
+        },
+        {
+          "heading": "Hikvision Password Reset Brute Forcing",
+          "links": []
+        },
+        {
+          "heading": "URL: https://isc.sans.edu/diary/Hikvision%20Password%20Reset%20Brute%20Forcing/31586",
+          "links": []
+        },
+        {
+          "heading": "Hikvision devices are being targeted using old brute-force attacks exploiting predictable password reset codes.",
+          "links": []
+        },
+        {
+          "heading": "Analyzing CVE-2024-44243: A macOS System Integrity Protection Bypass",
+          "links": []
+        },
+        {
+          "heading": "URL: https://www.microsoft.com/en-us/security/blog/2025/01/13/analyzing-cve-2024-44243-a-macos-system-integrity-protection-bypass-through-kernel-extensions/",
+          "links": []
+        },
+        {
+          "heading": "Microsoft details a macOS vulnerability allowing attackers to bypass SIP using kernel extensions.",
+          "links": []
+        },
+        {
+          "heading": "Rootkit Malware Controls Linux Systems Remotely",
+          "links": []
+        },
+        {
+          "heading": "URL: https://cybersecuritynews.com/rootkit-malware-controls-linux-systems-remotely/",
+          "links": []
+        },
+        {
+          "heading": "A sophisticated rootkit targeting Linux systems uses zero-day vulnerabilities for remote control.",
+          "links": []
+        },
+        {
+          "heading": "Abusing AWS Native Services: Ransomware Encrypting S3 Buckets with SSE-C",
+          "links": []
+        },
+        {
+          "heading": "URL: https://www.halcyon.ai/blog/abusing-aws-native-services-ransomware-encrypting-s3-buckets-with-sse-c",
+          "links": []
+        },
+        {
+          "heading": "Attackers are using AWS s SSE-C encryption to lock S3 buckets during ransomware campaigns. We cover how the attack works and how to protect your AWS environment.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-13T22:59:28+00:00",
+      "duration_seconds": 471,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9278.mp3",
+      "audio_length_bytes": 6868245,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9278",
+      "categories": [
+        "aws",
+        "sse-c",
+        "rootkit",
+        "malware",
+        "linux",
+        "macos",
+        "sip",
+        "hikvision",
+        "password reset"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9278",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9276",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9276",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9276.mp3",
+      "title": "SANS ISC Stormcast, Jan 13, 2025: Defender Updates, Ivanti RCE, Apple USB-C Hack and more",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 13, 2025: Defender Updates, Ivanti RCE, Apple USB-C Hack and more",
+      "show_notes": [
+        {
+          "heading": "In today's episode, we cover the latest updates in cybersecurity:",
+          "links": []
+        },
+        {
+          "heading": "Windows Defender Enhances Chrome Extension Detection",
+          "links": []
+        },
+        {
+          "heading": "Microsoft's Defender now catalogs Chrome extensions to identify malicious ones. Learn how this improves enterprise security.",
+          "links": [
+            "https://isc.sans.edu/diary/Windows%20Defender%20Chrome%20Extension%20Detection/31574"
+          ]
+        },
+        {
+          "heading": "Multi-OLE Analysis in Malicious Documents",
+          "links": []
+        },
+        {
+          "heading": "A look at how attackers embed OLE files in Office documents to evade detection and the tools to combat it.",
+          "links": [
+            "https://isc.sans.edu/diary/Multi-OLE/31580"
+          ]
+        },
+        {
+          "heading": "Ivanti Connect Secure RCE Vulnerability (CVE-2025-0282)",
+          "links": []
+        },
+        {
+          "heading": "Details of a critical vulnerability affecting Ivanti products and the patching timelines.",
+          "links": [
+            "https://labs.watchtowr.com/exploitation-walkthrough-and-techniques-ivanti-connect-secure-rce-cve-2025-0282/"
+          ]
+        },
+        {
+          "heading": "Apple USB-C Controller Compromised",
+          "links": []
+        },
+        {
+          "heading": "Researchers hacked Apple s ACE3 USB-C controller, highlighting hardware security challenges.",
+          "links": [
+            "https://cybersecuritynews.com/apples-new-usb-c-controller-hacked/"
+          ]
+        },
+        {
+          "heading": "IRS Pushes for IP PIN Enrollment",
+          "links": []
+        },
+        {
+          "heading": "Protect yourself from tax-related identity theft by securing your IP PIN for the 2025 tax season.",
+          "links": [
+            "https://www.irs.gov/newsroom/irs-encourages-all-taxpayers-to-sign-up-for-an-ip-pin-for-the-2025-tax-season"
+          ]
+        }
+      ],
+      "published": "2025-01-13T01:42:35+00:00",
+      "duration_seconds": 403,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9276.mp3",
+      "audio_length_bytes": 5917754,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9276",
+      "categories": [
+        "irs",
+        "ip",
+        "pin",
+        "apple",
+        "usb-c",
+        "ivanty",
+        "rce",
+        "ole",
+        "ooxml",
+        "extensions",
+        "chrome",
+        "defender"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9276",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9274",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9274",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9274.mp3",
+      "title": "SANS ISC Stormcast: Cryptomining Malware, Fake PoC Exploit, Malicious Browser Extensions, and Palo Alto Vulnerabilities. Jan 9th 2024",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Cryptomining Malware, Fake PoC Exploit, Malicious Browser Extensions, and Palo Alto Vulnerabilities",
+      "show_notes": [
+        {
+          "heading": "In this episode, we explore the following stories:",
+          "links": []
+        },
+        {
+          "heading": "\"Examining Redtail: Analyzing a Sophisticated Cryptomining Malware and its Advanced Tactics\"",
+          "links": []
+        },
+        {
+          "heading": "Overview of Redtail's multi-architecture cryptomining malware exploiting vulnerabilities and deploying persistence techniques.",
+          "links": []
+        },
+        {
+          "heading": "URL: Examining Redtail: Analyzing a Sophisticated Cryptomining Malware and its Advanced Tactics",
+          "links": []
+        },
+        {
+          "heading": "\"Information Stealer Masquerades as LDAPNightmare PoC Exploit\"",
+          "links": []
+        },
+        {
+          "heading": "A malware disguised as a PoC exploit targets users seeking to test vulnerabilities like LDAPNightmare.",
+          "links": []
+        },
+        {
+          "heading": "URL: Information Stealer Masquerades as LDAPNightmare PoC Exploit",
+          "links": []
+        },
+        {
+          "heading": "\"How Extensions Trick CWS Search\"",
+          "links": []
+        },
+        {
+          "heading": "Research reveals how malicious browser extensions manipulate Chrome Web Store search to appear legitimate.",
+          "links": []
+        },
+        {
+          "heading": "URL: How Extensions Trick CWS Search",
+          "links": []
+        },
+        {
+          "heading": "\"Palo Alto Networks' Expedition Vulnerabilities (PAN-SA-2025-0001)\"",
+          "links": []
+        },
+        {
+          "heading": "Multiple vulnerabilities in the deprecated Expedition tool can expose credentials and lead to unauthorized file and command execution.",
+          "links": []
+        },
+        {
+          "heading": "URL: Palo Alto Networks' Expedition Vulnerabilities (PAN-SA-2025-0001)",
+          "links": []
+        }
+      ],
+      "published": "2025-01-10T01:26:17+00:00",
+      "duration_seconds": 439,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9274.mp3",
+      "audio_length_bytes": 6418303,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9274",
+      "categories": [
+        "palo alto",
+        "chrome web store",
+        "extensions",
+        "chrome",
+        "google",
+        "fake exploits",
+        "ldap",
+        "cryptomining",
+        "redtail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9274",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9272",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9272",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9272.mp3",
+      "title": "SANS ISC Stormcast, Jan 9, 2025: Critical Vulnerabilities in Ivanti, Aviatrix, and Hijacked Backdoors in Compromised Systems",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 9, 2025: Critical Vulnerabilities in Ivanti, Aviatrix, and Hijacked Backdoors in Compromised Systems",
+      "show_notes": [
+        {
+          "heading": "In this episode, we discuss critical vulnerabilities in Ivanti Connect Secure and Policy Secure, command injection risks in Aviatrix Network Controllers, and the risks posed by hijacked abandoned backdoors.",
+          "links": []
+        },
+        {
+          "heading": "Episode Links and Topics:",
+          "links": []
+        },
+        {
+          "heading": "More Governments Backdoors in Your Backdoors",
+          "links": [
+            "https://labs.watchtowr.com/more-governments-backdoors-in-your-backdoors/"
+          ]
+        },
+        {
+          "heading": "Researchers reveal how expired domains linked to abandoned backdoors can be hijacked, exposing systems to further compromise.",
+          "links": []
+        },
+        {
+          "heading": "Security Update: Ivanti Connect Secure, Policy Secure, and Neurons for ZTA Gateways",
+          "links": [
+            "https://www.ivanti.com/blog/security-update-ivanti-connect-secure-policy-secure-and-neurons-for-zta-gateways"
+          ]
+        },
+        {
+          "heading": "Ivanti addresses critical vulnerabilities (CVE-2025-0282, CVE-2025-0283) in their secure gateway products, with active exploitation in the wild.",
+          "links": []
+        },
+        {
+          "heading": "CVE-2024-50603: Aviatrix Network Controller Command Injection Vulnerability",
+          "links": [
+            "https://www.securing.pl/en/cve-2024-50603-aviatrix-network-controller-command-injection-vulnerability/"
+          ]
+        },
+        {
+          "heading": "A command injection vulnerability in Aviatrix Network Controllers allows unauthenticated code execution, posing severe risks to network environments.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-09T01:32:18+00:00",
+      "duration_seconds": 364,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9272.mp3",
+      "audio_length_bytes": 5365523,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9272",
+      "categories": [
+        "aviatrix",
+        "ivanti",
+        "backdoors",
+        "domains",
+        "dumpster diving"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9272",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9270",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9270",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9270.mp3",
+      "title": "SANS ISC Stormcast, Jan 8, 2025: Critical Vulnerabilities in SonicWall, Moxa, and Windows BitLocker \u2013 Plus, Malware Targets PHP Servers and the Launch of U.S. Cyber Trust Mark",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast, Jan 8, 2025: Critical Vulnerabilities in SonicWall, Moxa, and Windows BitLocker \u2013 Plus, Malware Targets PHP Servers and the Launch of U.S. Cyber Trust Mark",
+      "show_notes": [
+        {
+          "heading": "In this episode, we dive into active exploitation of a zero-day in SonicWall SSL-VPN, privilege escalation vulnerabilities in Moxa devices, and a BitLocker bypass in Windows 11. We also cover cryptocurrency mining malware hitting PHP servers and the White House's launch of the U.S. Cyber Trust Mark to secure connected devices.",
+          "links": []
+        },
+        {
+          "heading": "Episode Links and Topics:",
+          "links": []
+        },
+        {
+          "heading": "PacketCrypt Classic Cryptocurrency Miner on PHP Servers",
+          "links": [
+            "https://isc.sans.edu/diary/PacketCrypt%20Classic%20Cryptocurrency%20Miner%20on%20PHP%20Servers/31564"
+          ]
+        },
+        {
+          "heading": "Malware exploiting PHP servers to mine PacketCrypt Classic cryptocurrency.",
+          "links": []
+        },
+        {
+          "heading": "SonicOS Affected By Multiple Vulnerabilities",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0003"
+          ]
+        },
+        {
+          "heading": "A zero-day vulnerability in SonicWall SSL-VPN devices is under active attack.",
+          "links": []
+        },
+        {
+          "heading": "Privilege Escalation and OS Command Injection Vulnerabilities in Moxa Devices",
+          "links": [
+            "https://www.moxa.com/en/support/product-support/security-advisory/mpsa-241155-privilege-escalation-and-os-command-injection-vulnerabilities-in-cellular-routers,-secure-routers,-and-netwo"
+          ]
+        },
+        {
+          "heading": "Critical vulnerabilities in Moxa routers and security appliances allow privilege escalation and OS command injection.",
+          "links": []
+        },
+        {
+          "heading": "White House Launches U.S. Cyber Trust Mark",
+          "links": [
+            "https://www.whitehouse.gov/briefing-room/statements-releases/2025/01/07/white-house-launches-u-s-cyber-trust-mark-providing-american-consumers-an-easy-label-to-see-if-connected-devices-are-cybersecure/"
+          ]
+        },
+        {
+          "heading": "A new cybersecurity labeling program for connected devices aims to help consumers choose secure products.",
+          "links": []
+        },
+        {
+          "heading": "Windows BitLocker: Screwed without a Screwdriver",
+          "links": [
+            "https://media.ccc.de/v/38c3-windows-bitlocker-screwed-without-a-screwdriver#t=761"
+          ]
+        },
+        {
+          "heading": "(video in English)",
+          "links": []
+        },
+        {
+          "heading": "A two-year-old vulnerability in Windows 11 allows bypassing BitLocker encryption.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-08T01:31:58+00:00",
+      "duration_seconds": 399,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9270.mp3",
+      "audio_length_bytes": 5860069,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9270",
+      "categories": [
+        "bitlocker",
+        "windows",
+        "cyber trust mark",
+        "moxa",
+        "sonicos",
+        "packetcrypt",
+        "php"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9270",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "darknetdiaries-153",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "153",
+      "guid": "prx_7057_34b4ea03-f266-43c4-a1a3-99b68d18b55c",
+      "title": "153: Bike Index",
+      "summary": "Have you ever got your bike stolen? In this episode we dive into the world of stolen bikes. Who does it and where do the bikes go? We talk with Bryan from Bike Index who investigates this. https://bikeindex.org Sponsors Support for this show comes from ThreatLocker\u00ae . ThreatLocker\u00ae is a Zero Trust Endpoint Protection Platform that strengthens your infrastructure from the ground up. With ThreatLocker\u00ae Allowlisting and Ringfencing\u2122, you gain a more secure approach to blocking exploits of known and unknown vulnerabilities. ThreatLocker\u00ae provides Zero Trust control at the kernel level that enables you to allow everything you need and block everything else, including ransomware! Learn more at www.threatlocker.com . This show is sponsored by Flashpoint . As one of the largest private providers of threat intelligence, Flashpoint delivers what security teams need most: clarity. By combining cutting-edge technology with the expertise of world-class analyst teams, their Ignite platform gives organizations instant access to critical data, expertly analyzed insights, and real-time alerts \u2014all in one seamless platform. To access one of the industry\u2019s best threat data and threat intelligence, visit flashpoint.io today.",
+      "show_notes": [
+        {
+          "heading": "Sponsors",
+          "links": [
+            "https://www.threatlocker.com/",
+            "https://flashpoint.io/"
+          ]
+        }
+      ],
+      "published": "2025-01-07T08:00:00+00:00",
+      "duration_seconds": 3868,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/34b4ea03-f266-43c4-a1a3-99b68d18b55c/darknet-diaries-ep153-bike-index.mp3",
+      "audio_length_bytes": 67149299,
+      "episode_link": "https://darknetdiaries.com/episode/153/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/34b4ea03-f266-43c4-a1a3-99b68d18b55c/images/0e3738d8-b95a-42ae-873e-d3a4945702a4/bikepedal.jpg",
+      "transcript_url": "https://f.prxu.org/7057/34b4ea03-f266-43c4-a1a3-99b68d18b55c/transcripts/88ec9cdf-d6a8-4fb7-9428-4f45c537d2fb/153_fixed.vtt",
+      "transcript_format": "vtt",
+      "transcript": "<v JACK>I visited the Facebook campus once. It\u2019s in the Bay Area near San Francisco, California. Yeah, I just showed up unannounced and walked around the place. My friend was with me and he had to pee, so we looked for a way in, but we couldn\u2019t find any way into the buildings. We were just curious what it was like inside, though. But while I was walking around the Facebook campus, I saw a bunch of bicycles painted in the Facebook blue with the Facebook logo on them. Apparently it\u2019s a thing in Silicon Valley that tech giants like Google and Facebook have these bikes around their campus for anyone to use, for when you need to get to a meeting in another building. Just hop on one of the company bikes and take it where you want. It makes it super convenient to get around their large campuses. Well, since I was there and I saw these bikes, I decided to hop on one and go for a ride. They aren\u2019t locked or have any code or anything. They\u2019re just sitting there for anyone to use. Dozens of them are all over the campus. So, I hopped on one and I rode it around, zooming down sidewalks, ripping around corners, and for a brief moment, I felt like a Facebook employee, whizzing by other people I presumed to be employees. Nobody said anything, and I left the bike on the other side of the campus. As I spent more time in Silicon Valley, I saw more and more of these bikes all over the place. People had ridden bikes from the Google campus over to the HP campus, or you\u2019d see Facebook bikes over at the Cisco offices. The bikes were scattered all over town, and I presume it\u2019s because people ride them from office to office, and maybe they\u2019re inside doing some meeting or something, and they\u2019ll ride back later. But the thing I couldn\u2019t understand was \u2014 this being so close to San Jose and the Bay Area and these bikes just sitting right out front with no chain or lock \u2014 why aren\u2019t these bikes stolen the very moment someone walks away from it? I mean, I didn\u2019t just ride one; I rode a handful. It became a thing. Every time I saw one around, I\u2019d hop on it for a little joyride. So, if I could jump on them so easily and ride off wherever I wanted, what\u2019s stopping anyone from just stealing them all? (INTRO): [INTRO MUSIC] These are true stories from the dark side of the internet. I\u2019m Jack Rhysider. This is Darknet Diaries. [INTRO MUSIC ENDS] <v JACK>Content warning; since a lot of you appreciate me telling you that there are swear words, this episode has a lot of swear words in it. So, maybe, I don\u2019t know, listen with headphones or whatever it is you do when swear words come on the show. You ready? <v BRYAN>Mm-hm. <v JACK>What kind of \u2014 what name should we use for you? <v BRYAN>You can call me Bryan. It\u2019s okay. I don\u2019t \u2014 I\u2019m not cool enough to have a nom de guerre. <v JACK>Bryan, have you ever got your bike stolen? <v BRYAN>I have indeed, yes. <v JACK>Tell me about it. <v BRYAN>[Music] The worst one, the one that I remember with the most pain, was a Cannondale M300. It was a mountain bike. It was one of the first I\u2019d really spent a decent amount of money on. This is back when I was at the University of Arizona and I had this crappy little shotgun apartment where everything was stored in the front. The shower was all the way in the back. I came home one day, I went and took a shower, and I walk out into the front of my apartment. I\u2019m like, something is different. Somebody had come in the front door while I was in the shower\u2026 <v JACK>What? <v BRYAN>\u2026and robbed me, and then taken the bike and taken off on the bike. <v JACK>While you were showering? <v BRYAN>While I was showering. <v JACK>How is this possible? <v BRYAN>I don\u2019t know, but it was \u2014 that\u2019s the one \u2014 that was one of many, but that\u2019s the one that finally broke my brain, and I just \u2014 to this day, whenever I see a Cannondale M300 going down the road and I\u2019m like, son of a bitch. I remember \u2014 like, it really sticks with me. <v JACK>I can\u2019t believe somebody came in your apartment to do it while you were showering. <v BRYAN>But yeah, that one hurt. <v JACK>So, did you try looking for that bike? <v BRYAN>I did, I did. <v JACK>Where\u2019d you look? <v BRYAN>I mean, you look around. You physically look around. We kinda knew where the dodgy spots were, and every single \u2014 if you\u2019ve ever had something like that stolen from you, any time you\u2019re out, if you see one that\u2019s even remotely the shade of \u2014 the hairs on the back of your neck stand up and you\u2019re always thinking, is that it? Is that it? You go scope it out, like \u2014 but there wasn\u2019t much. You watched \u2014 back then, it was Craigslist. You watched Craigslist, you could talk to local bike shops, and you could physically just go run around looking for the damn thing, but\u2026 <v JACK>What about the police? <v BRYAN>That wasn\u2019t really a thing, and that was sort of \u2014 you know, college towns \u2014 there\u2019s campus police and there\u2019s city police, and I did report it with the campus police, but it was like \u2014 and I asked somebody; I was like, so, what happens if the city picks it up? They\u2019re like, oh no, you\u2019re on your own. You have to go report to them, too. You could see this sort of \u2014 there were two silos, you know? They\u2019re two systems that didn\u2019t talk to each other. This is stupid. <v JACK>Bryan was frustrated that there was little to no help for him, and he knew it wasn\u2019t just him who had a stolen bike. Lots of people must feel frustrated like this, too. Like, what do you do, go to every bike and pawn shop in town, give them the serial number and say, hey, call me if anyone tries to sell you this bike here, and then call the police and the campus police and put up posters around town? It\u2019s really hard to spread the word that your bike got stolen, and here\u2019s what it looks like in case you see it. [Music] Surely there\u2019s gotta be a better solution to this problem. <v BRYAN>So, in a way, that bike was kinda the impetus for this whole thing. It was like, that\u2019s my origin story, right? \u2018Cause this is like, \u201898, \u201899, 2000-ish, that era. I was lucky enough to be in computer science. It was right when text messaging was still a new \u2014 it was like you could \u2014 all this tech \u2014 like, a lot of free databases were out, a lot of people were getting into web development, PHP was \u2014 it was this perfect storm time of like \u2014 some shmuck like me could be like, you know what I\u2019m gonna do? I\u2019m gonna create a bike database for stolen bikes, and I\u2019m gonna tackle this thing. For once, all that technology was actually there, and anybody with half a brain could see in five years from now that phones are gonna be a way to \u2014 and like. You knew, even if you had this crappy little website at the start. So, I started this site called Stolen Bicycle Registry. <v JACK>What was it \u2014 what did it do? <v BRYAN>It literally just let you put in make, model, color, serial, add some photos and add a description, and it was the first sort of free open database of stolen bikes at that point. I only cared about stolen. I never cared about what happened to them before they were stolen. It was purely, everything in this database is stolen. <v JACK>His idea is that if your bike is stolen, let him know, and he\u2019ll try to tell everyone around town that, hey, before you buy or sell or repair a bicycle, look it up in this database first. Basically, it\u2019s a place that\u2019s easy to report a stolen bike to, and one that\u2019s easy to search for stolen bikes, too. So, bike shops and pawn shops started appreciating this site, to be able to easily check if this bike has been reported stolen. It\u2019s kind of impossible to ask every police department in the nation if this bike is stolen. But when there\u2019s a nice, simple site online that will tell you, well, that made it easier to check. But really, is this going to work? Is anyone actually going to use the site to check if a bike is stolen before buying it? <v BRYAN>Somebody was trying to buy a bike off Craigslist, and they ran the serial number, and it was listed on my site. <v JACK>He was able to tell the victim, hey, someone found your bike. It\u2019s for sale right now on Craigslist. Look. [Music] From there, the victim was able to go get their bike back. <v BRYAN>We got a recovered bike. <v JACK>It worked. The site got a stolen bike back to the owner. Sure enough, not long after that happened, another stolen bike was found and recovered. This was a good idea. The site was working. This gave Bryan fresh energy to work harder at spreading the word. He was pumped that he helped two people recover their bikes. <v BRYAN>It\u2019s pretty \u2014 it\u2019s amazing. It was pretty great. I mean, there\u2019s no money in it, but it\u2019s high karma. It feels really good to just have built something that people want to use, and it works well. <v JACK>He made it so if you found a stolen bike, you could directly contact the person who lost it. <v BRYAN>At that point, in that site, you could just basically click a button and be like, hey dude, I\u2019ve got your bike, and it would shoot an e-mail off to the owner and then it would put them in touch. I\u2019m not gonna handle every single one of these. It\u2019s just like, finder meet owner. You guys work it out. <v JACK>He kept the site going and was helping more and more people find their bikes. After a while, it became a lot to keep up with. The site wasn\u2019t making any money. It was just a labor of love, and he kinda needed some help. <v BRYAN>Yeah, so, I only ever cared about stolen, and in 2013 \u2014 2012, 2013, this bike mechanic in Chicago named Seth Herr ran a Kickstarter that was sort of the opposite. He was working in bike shops and he was sick of \u2014 they\u2019d sell a bunch of bikes, they\u2019d get stolen, people would come back, they\u2019d have to go through physical paper \u2014 it just sucked. It was a really bad process. He was learning Ruby, and he was sort of coming at it from the other angle, which is like, let\u2019s just get these things registered the moment \u2014 like, the moment I swipe your credit card and go \u2018boop\u2019 on my point-of-sale system, I want that bike registered. That just solves everybody\u2019s problem. You don\u2019t have to do any work. I don\u2019t have to do any work. It just goes into this thing. So, here \u2014 I was like, oh, that\u2019s a really cool idea. Then he ran a Kickstarter and raised like, fifty grand. I was like, son \u2014 motherfucker, I\u2019ve been doing this for ten years and no one\u2019s ever donated to me. So, I reached out to him and we met and we chatted, and we just realized we\u2019re working on the same thing. You\u2019re doing the first part, which is the annoying \u2018let\u2019s get humans to do something new\u2019 part, but you\u2019re being cool about it by putting it in the point-of-sale systems, and it just makes people participate. I\u2019m doing all the weird, nitty-gritty, terrible, black-bag, let\u2019s chase bad guy \u2014 [music] and neither one of us really gave a shit about our other \u2014 like, he didn\u2019t want to do stolen stuff, and I didn\u2019t want to do pre-registration stuff. So, we joined forces, and it was just \u2014 from day one after that, it was just, pew, just success, success, success, and we just iteratively built it into a much better system. <v JACK>Together, they created the website bikeindex.org, and with the combined forces, their reach got a lot wider, which meant more people were using the site and more stolen bikes were being recovered. As people were learning about this site, they would go on there and check to see if this bike was stolen before buying it off of someone, and if there was a hit, they\u2019d tell the bike owner, hey, I think I found your bike. <v BRYAN>You know, we spent ten years just begging people, please use this thing. We\u2019re non-profit. It\u2019s free. We love helping people. You love helping your customers. Victims love getting their bikes back. Everybody wins. There\u2019s no \u2018gotcha\u2019 here, right? You know, writing blog posts, doing prep, it was just \u2014 \u2018cause it only works if a ton of people use it. <v JACK>Is it specific cities, or\u2026? <v BRYAN>It\u2019s all \u2014 it\u2019s universal. It\u2019s all over the world. I mean, it\u2019s US and Canada-focused, but we\u2019ve recovered bikes in Australia and Belgium. There was a real tipping point, though, where \u2014 I want to say it was maybe 2018, 2019 where it no longer became \u2018please, please, please use the service\u2019. It became, for me \u2014 we have so much data and so much information coming our way about \u2014 I\u2019m chasing bad guys now. I can tell you \u2014 if you come to me and say, I got my bike stolen in Seattle, beforehand, it was like, please use Bike Index. Now it\u2019s like, no, these are the four motherfuckers you need to keep an eye on. Watch this \u2014 these are the bad guys in your zipcode, and I know this because we\u2019ve just been looking at these guys for so long. We just had so much data about where stuff was getting stolen, where it was popping up, who it was popping up with, which ones were going cross \u2014 [music] it just switched from like, \u2018please use my service\u2019 to like, I\u2019m actually now able to discern patterns and do sort of \u2014 I really can identify some of the flows. The scenario I always tell people is like \u2014 so, say somebody robs your house on Monday. By Monday night, before you can even make a police report, probably, depending on what city you\u2019re in, especially during the pandemic, all that shit is already for sale somewhere, typically online. It\u2019s on OfferUp, it\u2019s on Facebook Marketplace, it\u2019s on any of these other dodgy sales apps. What happens a lot is they take your computers, they take your bikes, they take everything. Somebody is scrolling through OfferUp, and it\u2019s like, Joesleazebag420bongmaster7 has all this brand-new shit for sale. I think that\u2019s your bike. So, they go to Bike Index, they send in a message and says, hey, I was just looking at this super-sketchy dude on OfferUp. He\u2019s got your bike. I think he\u2019s \u2014 it looks like he has your bike, \u2018cause you had listed this bike and it looks unique. I was thinking about buying it, but I see that it might be stolen, so I just want to give you a heads up. Then the victim pulls up OfferUp and is like, oh, yeah, that\u2019s my bike, but not only is that my bike, that\u2019s all my other shit. Like, this is the guy. This is the guy who robbed me. This is all my stuff, and it\u2019s \u2014 you haven\u2019t even had time to make a police report. Over time, you start \u2014 sometimes you get help, sometimes you don\u2019t. Sometimes you win, sometimes you lose. Sometimes the victims call the cops, and the cops are like, yeah, let\u2019s go get this guy. Boom, it\u2019s \u2014 everybody wraps up and wraps for dinner, and it\u2019s a great day, and then\u2026 <v JACK>What a great feeling that must be to be like \u2014 you come home, you realize your stuff\u2019s been stolen, and you\u2019re like, oh my gosh, oh my gosh, what do I do? You look at your phone and it\u2019s like, hey, I think I found it. It\u2019s like, I didn\u2019t even tell anybody. <v BRYAN>Well, the crazier ones are like \u2014 so, we\u2019ve had people pop burglars before the victims knew they had been robbed. <v JACK>Wow. <v BRYAN>Because \u2014 so, the one that \u2014 the one I\u2019m thinking about was out of Seattle. It was a Colnago, a fairly \u2014 it was a pretty high-end bike for sale with this sketch ball, and it had been listed on Bike Index but not stolen, not marked stolen. It had just\u2026 <v JACK>So, just registered. <v BRYAN>\u2026before, and the guy who \u2014 the bike-chaser who was kinda chasing this thing starts looking into the guy, and it\u2019s getting more interesting and more interesting and more interesting. He\u2019s like, man, just call this dude up. So, we call this guy up, and he\u2019s in Hawaii. He\u2019s on vacation. He\u2019s like, can you send me that link? So, we send him that link. He\u2019s like, that\u2019s all my shit. I\u2019m not even home. I didn\u2019t even \u2014 call the cops. So, he didn\u2019t even know he had been robbed. These guys had literally done it the night before and they were just trying to get rid of the stuff as fast as they could. That\u2019s a great feeling. [Music] That\u2019s a slam dunk. I could live off that for a week. It\u2019s such a good \u2014 I have a day gig and I like my day gig, but it\u2019s not a pretty soul-enriching day gig. But I get one or two bikes back and I\u2019m on Cloud 9, \u2018cause you\u2019re pulling complete needles out of haystacks. <v JACK>After spending a decade spreading the word, bikeindex.org now has its own energy and momentum. It\u2019s got the critical mass it deserves to help hundreds and even thousands of people recover their stolen bikes. <v BRYAN>That\u2019s every bike mechanic that uses us, and it\u2019s every bike shop that uses us, and it\u2019s every big brand \u2014 we basically tried to put ourselves in every place here a stolen thing could wind up, either getting serviced or trying to get sold or trying to get marked for sale or like \u2014 we tie into this pawn-search system, that if you \u2014 if I rob you and take your bike to New York and try to pawn it, it\u2019s gonna pop up because we partnered with this pawn-search system. We just took everybody in the cycling community and we\u2019re like, here\u2019s this free thing. Please be a node in our network to keep an eye out for these things and help recover these \u2014 and this happens all the time. It\u2019s like, thieves will literally get a flat and roll into a bike shop and be like, can you help me with this flat? They\u2019re like, cool, and they just pull up their phone and like, doo, doo, doo, Bike Index. It\u2019s stolen. Get out of my shop. We built the thing for the community, right? We\u2019re the glue guys. We built the thing that every single person in this ecosphere could \u2014 if everybody wants to help with this thing, you can use this thing. We\u2019re not getting paid. We\u2019re not making money. We just want to keep the bikes safe and not let crackheads sell bikes and make thousands of dollars. <v JACK>But even though they\u2019d sometimes find stolen bikes, they couldn\u2019t always get it back. For instance, calling the cops didn\u2019t work every time. Even if you could prove that that\u2019s your bike and here\u2019s the person selling it, it wasn\u2019t enough for the cops to go get your bike back for you. So, the victims were telling Bryan, man, what the hell? How do I get my bike back? <v BRYAN>Can\u2019t get anybody to help me, it\u2019s the middle of a pan \u2014 we have no choice. We just have to let this go. What I tell those people is always like, we didn\u2019t get them this time. We\u2019ll get that motherfucker next time. That\u2019s where the patterns start coming in, because what happens is the next guy that he robs, we can say \u2014 we can tell that victim, oh, when you call your cops, tell him also he\u2019s associated with these other \u2014 the first couple people. It just sort of builds a case on them, but it also lets us sort of surveil tactics and methodologies. Like, how soon do you post this stuff after you rob somebody? Are you showing stuff in the background that betrays where you\u2019re at? Can we dig into who you are and find some information about where you might be? Are you dumb enough to take pictures in a location that betrays your actual location? Those have been super fun, where they say \u2014 they take a picture of this bike for sale in front of their house \u2014 this happened in Vancouver \u2014 and they inadvertently just put the house number in the back of the thing, and when they said \u2014 so, we get ahold of the victim. The victim calls the cops. The cops call a setup and meet, and they meet at a Dairy Queen or \u2014 they want to meet a block away. <v JACK>Who is meeting? <v BRYAN>The thief \u2014 the bad guy that has the bike. <v JACK>Is selling it. <v BRYAN>Is selling it, puts it online, doesn\u2019t realize that he\u2019s taken a selfie, but he\u2019s showed his house number in the background. We tell the victim this guy\u2019s got your stuff. The victim\u2019s like, absolutely, that\u2019s my stuff. But so, they\u2019re sort of fake-baiting this guy. He\u2019s like, man, I\u2019m really interested in this bike. It looks great. I would love my wife to come \u2014 just some bullshit story, right? What will happen is the seller, not wanting to have you \u2014 he\u2019s like, oh, we\u2019ll go meet near my home, at a Walmart or some shit. But instead, what we have the victims do is go forty minutes early and just go right up to his front door and knock on the door and just spook him, \u2018cause he\u2019s like, how the fuck do you know where I live? But they never put \u2014 they never realize. You catch them off guard. You catch them off their footing. They haven\u2019t had time to sort of look around and see, and it just scares the shit out of them. They typically are just like, here you go. The vast majority of them are within twenty miles. They don\u2019t really leave the same state or city. A lot of them just get \u2014 they just get moved a couple zipcodes away and they try to sell them online or fence them to their friends, or\u2026 <v JACK>So, where\u2019s the classic places you see them for sale? <v BRYAN>I mean, OfferUp, without a doubt. Fuck those guys. They\u2019re just a chronic, terrible \u2014 they\u2019re horrible. <v JACK>Why? Why are you saying fuck those guys? <v BRYAN>Fuck those guys? \u2018Cause we have tried for a decade to try to get them to care about the huge amount of stolen \u2014 we have free data, we have open data, we have this whole system. We\u2019ve demonstrated to them that your platform is abused left and right. Look at all these bad guys. This guy killed somebody in the eighties and he\u2019s selling stuff on your site. If you put something in place for bikes, like you do for cars, you assholes \u2014 \u2018cause you have the Van numbers where people can get a Vanfax, and it\u2019s like, some of these bikes are worth 10k now, and you\u2019re letting Methlord472 sell \u2014 you just have \u2014 they have \u2014 there\u2019s no \u2014 there\u2019s just no vetting. It\u2019s just such a rampantly abused place, and it has been for so long, and they just do not care, and I know they do not care because we have interfaced with them for years trying to get them to care. So, that \u2014 OfferUp, Facebook Marketplace, and then there\u2019s a whole sort of crappy constellation of knock-offs of OfferUp that are much lesser players, but it\u2019s exactly the same idea. It\u2019s just an app where you can be like, I\u2019m cleaning out my garage. There are a couple physical markets, but that\u2019s fewer and far between. Like, in Oakland, there\u2019s a couple swap meets that are sort of classically known as being real super-crazy hotbeds. The vast majority of them pop up pretty close to home. <v JACK>He learned there\u2019s a whole supply chain network for the stolen bike market. Like, a lot of stolen bikes are not resold by the person who steals them. They\u2019re stolen and then they\u2019re taken to a person who can buy it off them real quick, no questions asked. <v BRYAN>We\u2019ve had people literally \u2014 they break into an apartment building downtown, they literally just ride to the waterfront, and they sell it. It\u2019s been maybe twelve minutes. We also have them take it out, stash it, sell it in the next couple days, or ride the thing to South Portland \u2014 go to that house, \u2018cause that guy will give you drugs in exchange for the bike, not even converting to money. Just like, here\u2019s drugs. Thanks for the bike. That\u2019s the guy that knows \u2014 you just gave me a $3,000 bike. I just gave you $30 for the drugs. I can sell this for a grand. I still win. So, all those scenarios are true. <v JACK>It\u2019s not just druggies selling stolen bikes, though. Some people are just naive. <v BRYAN>Have you ever taken the deep rabbit hole into flipper culture, like r/flipping? <v JACK>No. <v BRYAN>[Music] Flipping is basically \u2014 you find an item that maybe you can buy in Portland. Let\u2019s say they\u2019re these cute little sweaters that have cats on them or something, and there\u2019s one lady who makes them in Portland, and they\u2019re really cute and they\u2019re really amazing. You\u2019re like, I want to buy ten of those, and I spent $200 on \u2014 you put them on Etsy and pretend they\u2019re yours, and you make $2,000. There\u2019s all these people that sort of \u2014 it\u2019s just like arbitrage as a sport. So, they\u2019re like, I found these stupid doll things at Walmart for whatever, and I sold one online and I made twenty-eight bucks on it. So, there\u2019s this whole culture around flipping, buying a thing, just immediately listing it on some market, \u2018cause it\u2019s not on that market or whatever, and making some money. Buy low, sell high. That\u2019s it. That\u2019s all flipper culture is. But what sucks is they\u2019ve gotten really into bikes. So, we have these sixteen, seventeen-year-old kids who don\u2019t understand that some crackhead puts a $3,000 bike on OfferUp, and it\u2019s like, need to go ASAP. Hit me up next five hours, and it\u2019s $200. That kid\u2019s like, I\u2019m gonna buy that for $200, \u2018cause I just researched it and I can sell it for $3,000 \u2014 and they just don\u2019t \u2014 they\u2019re naive enough or dumb enough that they don\u2019t care. All they know is, I spent $200 on this thing. I\u2019m pretty damn sure I can sell it for 3k. <v JACK>Time and time again, Bryan would spot patterns that reveals exactly who the bike thieves are in a certain town. <v BRYAN>What typically ends up happening is you get robbed, you put your bike on my system, somebody eventually finds it and says, hey, Jack, I think I found your bike. It\u2019s with this guy. I, ten minutes \u2014 say, oh yeah, we\u2019ve seen this guy a million times. I can\u2019t call the cops up and say, hey, XYZ. The victim has to do it. They\u2019re the ones that have suffered the crime. They\u2019re the ones with the police report number. But I can give them all this information that says, look, when you call, mention this name. Tell me \u2014 we can sort of give them the information that tips it from \u2014 we\u2019re just gonna take your report to like, oh no, we actually have warrants on that guy. Let\u2019s go get him. As we found with the services, we \u2014 there\u2019s \u2014 I could show you dudes right now that we\u2019ve caught with multiple stolens, and they just don\u2019t fucking care. Nobody cares. <v JACK>This is so frustrating to be \u2014 to have all this evidence, to have all this proof that these are the guys and this is exactly where they live and all this sort of thing, and then for the cops to be like\u2026 <v BRYAN>Here\u2019s all their selfies with all the incriminating stuff in the background. Here\u2019s a giant neon sign that says \u2018Let\u2019s do crime\u2019. Yeah, it\u2019s \u2014 they\u2019re not smart. It\u2019s like fish in a barrel, but it\u2019s just really aggravating. <v JACK>Why is there a problem here? <v BRYAN>I don\u2019t know. The answer is because there\u2019s no system in place to do anything about it. <v JACK>There\u2019s a police system. <v BRYAN>Yeah, but it\u2019s\u2026 <v JACK>There\u2019s a law system. <v BRYAN>Yeah, there is a police system. There is a law system. They\u2019ll all tell you we\u2019re swamped. This lower stuff is not important. But also, if we tip off a cop and say this guy has hundreds of thousands of dollars of stolen shit, go get him \u2014 and they decide, yeah, hey, this is a guy we actually want. He\u2019s in our \u2014 we\u2019ve actually been looking for him. Let\u2019s go do a raid. Let\u2019s go see everything. He still has his OfferUp account. The police don\u2019t call OfferUp and say, fuck this guy. He\u2019s a bad guy. Don\u2019t let him on your \u2014 there\u2019s no mechanism there. We gave up. We completely just said, fuck it. It\u2019s clear that these people are operating in bad faith. They make money off of all the stolen goods. So, we just started routing every single victim to the state attorney general. We\u2019re like, file a complaint. We get thousands of people filing complaints, eventually maybe this fucking attorney general will get off his ass and actually do something about it. But do not engage with OfferUp or Facebook Marketplace or wherever your stolen stuff is listed. Do not engage with their systems, because all they will do is nothing, or maybe they\u2019ll disable the account for a little while. We found a dude here selling drugs, and he had a stolen bike that was taken from a cancer victim, a sixty-five year old cancer victim with a blue Tern \u2014 that I went and did a repo with some of the local guys here. That guy\u2019s account was still active. He was selling drugs on the platform and had the stolen bike, and we popped it back from him, and we sent in things saying, this is a bad guy. He had this thing. He stole from a fucking cancer victim. His account\u2019s still there. He still sells stuff. There is no mechanism in place to take these bad guys off. It\u2019s like, you know, I get it. There\u2019s bigger problems in the world, right? This is a pretty \u2014 it just sucks when we\u2019re doing them a favor, you know? It\u2019s like, you\u2019d think you would want to take the arsonist, rapist, murderer, thieving \u2014 those super, super bad guys that we are encountering and telling you about, you\u2019d think you\u2019d want to do something about that. The answer is, no, we don\u2019t. <v JACK>What\u2019s crazy is when somebody reports a stolen bike to the police, the police will often say, go register your bike at bikeindex.org. But then, when Bike Index tells the police, hey, we found the thief, the police just ignore them. <v BRYAN>So, we have some Canadian partners that are phenomenal, and I \u2014 not to stereotype, but they\u2019re super nice. They do their job and they\u2019re just really great and they\u2019re really engaged, and they\u2019re really nice people. Then we deal with unnamed American cities here that just don\u2019t give a fuck. They can\u2019t be bothered. It\u2019s night and day. So, we do have some people, and we do have some \u2014 we do have some specific officers who are typically bike people themselves who are triathletes or they ride competitively or they were downhill guys. So, you get these little onesie, twosies, but organizationally, yeah, no, nobody cares. <v JACK>So, this is where your service becomes even more important, \u2018cause it\u2019s like, this is vigilante shit. <v BRYAN>Yeah. I mean, some of it is not. Some of it is super easy. Some of it is just like, hey, this idiot kid bought your bike thinking he could make a profit off of it. We feel fine telling you, go meet up with this kid and just kinda verbally smack him around a little bit and tell him not to be an idiot and get your bike back. But then we also advise people, like, no, we looked this guy up; he murdered someone. You should let this bike go. This is one that you should just take the L on and take your insurance. But like, you do not want to go meet up with this dude and knock on his front door, because he killed somebody. <v JACK>The way the site works is victims will put the details of their bike in the database, like the color, the description, the serial number, anything you got. Photos of it are even good, too. Then they\u2019ll leave the contact details, e-mail and sometimes phone to text, \u2018if you see my bike, let me know.\u2019 But the system is set up so Bryan can see all the e-mails that get sent through the site. So, he can just chime in every now and then and add anything he might know about this. <v BRYAN>So, I\u2019m sitting in my basement in 2020. I\u2019m working, I\u2019m riding out Covid. I\u2019m kinda bored. There\u2019s a lot of time to kill in the summer of 2020. This e-mail comes in. [Music] Hello, my name is blank. I\u2019m a cyclist from Mexico. I\u2019m truly sorry to inform you that your bike is in Mexico. The bike is being sold with a Facebook page, and they link this [inaudible] Mark guy. Here you will find your bike with the FOX Transfer seat posted in a recent post. So, I hope this information helps you. I sent lots of messages to other reports on this page. This mofo sell only stolen bikes, and all are from your area. Hope you can recover. <v JACK>The victim had their bike stolen in the Bay Area, which is near San Francisco, California. His stolen bike was for sale in Mexico on Facebook. That wasn\u2019t the only e-mail. Bryan saw five other e-mails from the same guy messaging different victims, letting them all know their bike was now for sale in Mexico. This was strange for Bryan. He hasn\u2019t seen these things go across the border like that before. <v BRYAN>You know, we\u2019ve seen them go across the border every now and then, but to have five of them, like boom, boom, boom, all from the same place, all from the same area \u2014 and the minute we looked at this guy, it was just, match, match, match. <v JACK>What he means is he looked at the guy\u2019s other listings. He had other bikes for sale, too, and as Bryan searched Bike Index, he found hit after hit. It wasn\u2019t just five bikes. There were a lot of stolen bikes for sale on this Facebook page, and they were all stolen from the Bay Area. So, one of the people who had their bikes stolen messaged this Facebook seller in Mexico. Like, hey, jerk, you have my stolen bike. Give it back. <v BRYAN>The seller did this thing on Facebook where you can region-lock your \u2014 you can basically say, I only want to let people in these countries be able to see my page. So, this guy was like, crap, I\u2019ve got these Americans pissed off at me. He region-locked it to Mexico. <v JACK>So, for a while, Bryan thought the guy shut the listing down, because they weren\u2019t viewable anymore. But then someone got the idea to use a VPN, connect into Mexico, and see if they can still see the listings. Yes, the bikes were still listed for sale, and they saw there were even more bikes listed at this point, and those were stolen from the Bay Area, too. <v BRYAN>We were just getting our heads around \u2014 like, what is this? Like, is this guy the \u2014 is he actually coming up here and robbing these people? Is he\u2026? Like, who is this guy? Why does he have so many? It just kicked off this whole series of dominoes that just \u2014 the next four years of my life was \u2014 that\u2019s what I did. <v JACK>I\u2019m gonna pause here for an ad break, but stay with us, because this is where Bryan locks in and gets serious. Bryan is tuned into this guy on Facebook selling all these stolen bikes. He wants to know more. <v BRYAN>So, we\u2019re looking at this guy, and we\u2019re looking at his web page, and it\u2019s tons and tons and tons of bikes, but we can also see tons and tons and tons of prior sales. <v JACK>Okay, so, that\u2019s a Facebook Marketplace? <v BRYAN>[Music] No, it\u2019s just a Facebook page. It is not a business page. It\u2019s just like you and I would have our own page, but it\u2019s the name of this guy\u2019s business, which is called Constru-Bikes. <v JACK>The page had thousands of posts, most of which were bicycles, and so many of them were coming back as stolen, all from the Bay Area. This was going to be a lot of data to go through. <v BRYAN>There was me and there were some of the victims, and there were some people in the Bay Area that also work in stolen bikes. So, we threw up a Google Doc and we started just tracking like, here\u2019s his Facebook post. Here\u2019s his social media. Here\u2019s his Instagram. One of the guys was able to sneak into his Instagram by pretending to be somebody else, and we now have access to that. It\u2019s just basically getting our heads around like, who is this dude? Where does he operate? What\u2019s his name? Where is he advertising? Is it all stolen? Is it all from the same place? Just sort of doing some initial \u2014 and we had done a real small dossier where we took I think his first fifty bikes, and we matched twelve or fifteen of them to the Bay Area. We were like, we\u2019re pretty sure the rest of these are also stolen. They\u2019re just not in Bike Index. But can we\u2026? We made this zip file in a Google link. We passed it around to a bunch of people in the Bay Area who \u2014 shop owners and people that run stolen bike Google groups and other people who kinda chase bad guys. They were able to pull out more of it. Like, yeah, this one was from Oakland. Yeah, shit, this \u2014 they were able to get a bunch of matches we didn\u2019t know about. So, it just kept getting more and more \u2014 like, everything this dude has is stolen. It sort of painted this picture of like, this isn\u2019t a one-off. This is like, hit, hit, hit, and oh, we didn\u2019t know about that one, but later on, it turned out that was a hit, too. It just sort of fleshed out the picture for us of like, whoever this fucking dude is, he\u2019s the Keyser Soze of stolen bikes, \u2018cause everything he has is stolen from one place. But it is like \u2014 draw a hundred-mile radius around San Francisco. It wasn\u2019t just Oakland. It wasn\u2019t just Marin. It wasn\u2019t just San Jose. It was Santa \u2014 it was this very big footprint, which we typically \u2014 that\u2019s kinda nuts. <v JACK>You sold thousands on there. <v BRYAN>I think \u2014 yeah, there was like, eight-hundred-something a week. The thing is is we \u2014 so, we looked from 2020 on. <v JACK>Yeah. <v BRYAN>Going back, you could see he\u2019d been operating since 2015. But we basically had to say, like, we can\u2019t care about this stuff. We gotta care about the stuff that\u2019s current, that we can call victims right now, that we can try to get cops engaged on. We can\u2019t \u2014 but we can see all this shit. We can see how big of an operation this guy has had for so long, which is alarming. <v JACK>As they start to piece this together, they\u2019re seeing that this guy sometimes lists a dozen bikes for sale a day in Mexico. They could tie it back to there being a dozen bikes stolen in the Bay Area. So, what\u2019s going on here? This guy probably isn\u2019t the one going to San Francisco, robbing people there, and then taking the bikes all the way to Mexico to sell it to people there. They thought he must be the tail end of some operation, but what operation? Who were the people stealing bikes, and where do they go after that, and how do they end up in Mexico? Is there some big-ass truck driving across the border every day loaded with stolen bikes? They want to be careful in their investigation, too, so they can have a good chance of catching the right guys. If they simply call up the Mexican police to say, hey, arrest this guy down here, it might not stop the thefts happening in the Bay Area, or those thieves might get away. So, the plan was to figure out everyone involved and to build an airtight case against them all to hopefully get the police to take them all down at once. <v BRYAN>So, every day I would wake up and I would \u2014 we had basically archived as much as we could at that point. So, what we were interested in was the new stuff, like, what\u2019s he got that\u2019s new, and that was kinda hard to tell because he\u2019s a very \u2014 he\u2019s very good at marketing and he\u2019s very \u2014 he\u2019ll post ten things a day, and sometimes they\u2019re repeats. It\u2019s sort of like, you see a bike that you\u2019ve seen for four or five weeks that he\u2019s not getting rid of, but then this brand-new one pops up, and you say, okay, well, that\u2019s the one we care about. [Music] That\u2019s the one we haven\u2019t already tried to investigate. He would post the bike. We would find it in Bike Index. We would call the owner, we\u2019d back-and-forth with them a little bit and say, tell me about this. Was this a robbery? Was there footage? Was there cameras? Was it \u2014 was anybody assaulted? Was this one of those\u2026? Oakland had this series of armed bike-jackings where they would literally pull in front of guys on bikes with guns and say, get off the fucking bike, and rob them and take the bike and throw it in the car and leave. So, some of these were violent crimes. The reason we\u2019re asking is because if a bike gets stolen off the street, nobody cares. Somebody sticks a gun in your face and takes a bike, you\u2019re gonna get police assistance. So, we were trying to sort of cherry pick. Like, let\u2019s find the ones where there\u2019s surveillance. Let\u2019s find the ones where it\u2019s high-dollar. Let\u2019s find the one that there was an assault. Let\u2019s find the ones that you can actually pick up the phone and get somebody to care about. So, we call the \u2014 these calls sucked because I could see it and I wanted to tell them about it, but I didn\u2019t want them to deal with the first guy \u2014 which was confront this guy and blow it up again. So, I would just tell them, look, I\u2019m with Bike Index. I think I\u2019m looking at a picture of your stolen bike being sold online, and what I want to know is some more information. <v JACK>I\u2019m curious about timing. How long does it take between when a bike gets stolen and when it goes up for sale? <v BRYAN>We would see bikes that were stolen within a day or two getting advertised on this shithead\u2019s Facebook page, and \u2014 but we would see it in a visual setting that looked like America. It just \u2014 and it\u2019s hard to explain this. Not that there\u2019s apple pie and flags in the background, but the ground looks a certain way, the buildings look a certain way, and if you look next \u2014 kinda like it\u2019s shitty concrete, and it \u2014 there\u2019s a feel to it. <v JACK>Yeah, absolutely. I watch a lot of the GeoGuessers. <v BRYAN>Yes, yes. We would see a place that just looked like an American setting, and we knew that it had only been a day, so we were like, it\u2019s probably still in America. But then two weeks later, he\u2019d be advertising the same bike for sale, but it would be in a very Mex \u2014 it would be in his front lawn, and with \u2014 Mexico \u2014 very, very obviously clear with people\u2019s fucking license plates with the crazy different \u2014 so, it was like, robbery, already appears for sale, but it\u2019s in America. Two, three weeks later, it\u2019s advertised again, but it\u2019s clearly in Mexico. Rinse, cycle, repeat. <v JACK>GeoGuessing is really fun. I sometimes find myself playing it for hours. Basically, it\u2019s a game where you\u2019re dropped in a random Google Street View somewhere in the world, and you need to look around to try to guess where you are in the world. I watch other GeoGuessers, and some are insanely good. They seem to know what every mountain and river looks like in the world, but they use a lot of well-known clues. Like, how power poles look is different from country to country, and the soil color, and the types of plants, and the shapes of the street signs, and mile markers look different in every country. These all seem to be dead giveaways to determine where that photo was taken in the world. So, while it seems strange to think a photo is American or Mexican, it\u2019s actually not. There\u2019s a lot of clues that you can use to figure it out. They tried examining the metadata of the photos posted to Facebook, too. See, when you take a photo, your camera often adds a ton of identifying information in the photo. It\u2019ll list the type of camera, the time of day it was taken, and if your camera is GPS-enabled, it might include GPS coordinates in the photo\u2019s metadata. But all these photos were posted to Facebook, and Facebook learned pretty quickly to scrub all the metadata out of photos to avoid stalking. So, there was really nothing to look at there. Now, as Bryan talked with people who were getting their bikes stolen in the Bay Area, he was telling them, hey, open a police report, but give the police my contact information so I can show them some evidence that I\u2019m seeing on my side. <v BRYAN>I got a very small handful of phone calls, and it was some sergeant somewhere, some poor shmuck who had eight hundred other burglary cases, and he\u2019s like, your victim says you know where this is? I\u2019m like, yes, it\u2019s in La Barca, Jalisco, Mexico. You go, ha, ha, ha! And that would be the end of that phone call. They would like \u2014 they weren\u2019t dicks. They were cordial about it, but it was like, that\u2019s gone, that\u2019s out of my league, that\u2019s like \u2014 we\u2019re not Interpol. It\u2019s not a huge surprise. Pretty cool service you got there. Thanks for calling. It was that for like, a fucking year. <v JACK>But Bryan knew it was just a numbers game. If he kept getting victims to report their stolen bikes and attach Bryan\u2019s name and number, at some point, some cop who might have had their own bike stolen or something like that would want to get this case solved. So, he kept trying to get victims to get cops to call him. <v BRYAN>[Music] Eventually it landed with the right \u2014 there\u2019s a guy who\u2019s pretty keen on this, this San Francisco police burglary-detective guy, who was like, your name came across my desk that you know where all these bikes are going. I have all these burglary cases. Can you tell me about this a little bit? That is what kicked off at least a discussion with someone who actually cared, who was like, yeah, I have an interest in knowing, \u2018cause he was also kinda plugged into the bad guys in the Bay Area, and he had an interest in \u2014 just tell me what you see. <v JACK>So, he told the police everything he knew at the time, and this time, they were listening and wanted to stay in touch and continue feeding them information. Bryan kept looking for more information about the guy selling bikes in Mexico. <v BRYAN>This guy \u2014 I refer to this guy as the OSINT pinata, \u2018cause the minute you poke at him, literally everything falls out. He\u2019s a cyclist, so his name is all over the place. One of the cycling places lists his birthday, so we know his birthday. He is very \u2014 I almost said vain, but he just posts a lot on social media. He would include a lot of interior shots of his place, he would include pictures of his car, his license plates. The way he was selling this bike \u2014 these bikes on his Facebook page were just \u2014 he would just put up his banking numbers, \u2018cause that\u2019s how he\u2019d get paid. So, he\u2019s like, oh, yeah, I\u2019m on HSBC. Here\u2019s my routing number. Here\u2019s my phone number. Here\u2019s my WhatsApp. It was like, because he was so good at promotion, he just gave us fucking everything. He has a construction business, so he\u2019s \u2014 he\u2019s like, into bikes, but he\u2019s running this construction business. So, there\u2019s OSINT on the construction business, there\u2019s OSINT on the bike thing. He\u2019s putting his phone numbers out there, he\u2019s putting his WhatsApps out there, he\u2019s blogging about his sister\u2019s store, and it\u2019s just very open. If you look at something long enough and hard enough, especially for years, and you have an interest in picking it apart and finding the little details in the background \u2014 so, we would see things like \u2014 he had somebody bring a truckload of stuff to his house once, and it was bikes. They were advertising it and they took pictures of all the bikes, but there were reflections on the windshield. So, you could see the guy who drove the car. We\u2019re like, okay, who\u2019s this fucking guy? He has a lot of women associated with him. He\u2019s got a wife and he\u2019s got some sisters and he\u2019s got some other \u2014 they\u2019re big families. We\u2019re like, who the hell are all these women? We don\u2019t know. We just know first names. Then they went to Disneyland and they all bought shirts that said, \u2018Mother\u2019, \u2018Father\u2019, \u2018Uncle\u2019, \u2018Aunt\u2019, and they stood in this big family picture, and it was like, oh, thank you, you moron. You just gave me your family tree. Now we know who these women are, \u2018cause they have the same last name, but we don\u2019t know if it\u2019s because of marriage or it\u2019s because of familial \u2014 and then they all got in this big photo together, and it was like, aunt, uncle, brother, mom, grandma, and I was like, oh, thank you. So, we did a little work on that. At a certain point we knew, okay, the way the system works \u2014 stolen in America, stashed somewhere in America, advertised in Mexico, somebody sticks them on a truck, then they go to Mexico and he\u2019s advertising them there. So, all these pictures we were seeing in the American space, we were scrutinizing. They would screw up and they would sort of shoot it at such an angle that you kinda see down the street. So, we were like, what kind of trees are we seeing? Is it westward-facing? Is this\u2026? They would screw up and they would put pictures of \u2014 there was some industrial crap like paint, paint thinner, just shit that you would have in a really industrial-type setting. But we were like, okay, what is this brand? Is it in Spanish? We\u2019re trying to pick apart every little detail. <v JACK>So, after a year of investigating this guy, they knew everything about him. His name was Ricardo Estrada Zamora, and they seemed to know a lot about what\u2019s going on in Mexico, but still very little about what\u2019s going on in the US. They could see sort of the edges and the outline of it, but not the details. They thought thieves must be stealing bikes, and then it would end up in some central place in the Bay Area where some photos were taken, and the bikes would initially get listed, and then someone would run the truck of bikes down to Ricky in Mexico. By this point, there are more victims joining the investigation, an army of helpers, practically, people putting trackers on bikes and letting them get stolen to see where they\u2019d end up, and people trying to find truckloads of bikes crossing the border, which is actually still a mystery to Bryan. How did the bikes get to Mexico, and how often were they driven down there? <v BRYAN>That\u2019s an unknown to me. I know there\u2019s a ton of services that do \u2014 so, there\u2019s like \u2014 once you start digging into this, there\u2019s a billion-and-one little regional shipping \u2014 there\u2019s one in Sonora, there\u2019s one in Baja, there\u2019s one in \u2014 there\u2019s all these weird, little regional shippers. I know from having personally driven through the San Diego border. It\u2019s like, you don\u2019t even stop. It\u2019s a four-lane highway that you just blow through, and you\u2019re supposed to pull into the tax thing, but you don\u2019t have to, \u2018cause a lot of Americans go down to Baja to go to Rosarito. They go to whatever. I\u2019ve driven that border through Tijuana for work, and it is literally just \u2014 you\u2019re like, do I have to stop at a check\u2026? Oh shit, I\u2019m in Mexico. You just \u2014 boom. In. So, you see people taking stuff in there. So, I \u2014 that\u2019s an unknown to me, and I hope it actually comes out in this legal process, but \u2014 \u2018cause I do have some questions. But what we surmised was every two to three weeks, a truckload, and a truckload\u2019s about fifteen to twenty bikes. So, at one point, after watching and watching and waiting and watching and not really getting any breaks, we got one stupid break. [Music] He posted a bike, and it was the usual thirty crop of pictures. In one of those pictures was \u2014 and this took me a while to pick apart. When you put \u2014 when you organize things on your iPhone and you make folders \u2014 and so, I have a folder that\u2019s like, Dogs, a folder that\u2019s like, Running, a folder that\u2019s like, Bikes, and you classify the stuff in there. If you look at it in that folder, it puts the name of the folder at the top of the phone. So, we saw this weird picture that didn\u2019t look like the rest, and it looked like he had accidentally taken a screenshot of the phone, not the picture itself, and it had a name, a very unique name at the top of that phone, that picture, which meant he had a folder that had that very unique name, which meant there\u2019s probably one of his followers that has a name like that. So, we looked at his followers. We found a guy with that name. That guy was located in San Jose. He ran a \u2014 I think he still runs a transmission shop, like a car shop. The first thing I see when I open up this car shop\u2019s Facebook page is this San Jose asshole with a bunch of bikes and the same visual settings that we had been seeing in all these American ads, wondering where the hell it is. We see this \u2014 and it wasn\u2019t immediate, but it was, hey, it\u2019s an industrial setting. Then we went to Bing Maps, Google Maps, and we\u2019re looking at this metal, shitty corrugated siding. I\u2019m like, that looks like the thing. The color is right. The setting is right. The angles are right. Then he had a bunch of interior shots of his shop. So, transmissions are these big, heavy \u2014 they\u2019re the size of golden retrievers and they weight 380 pounds, and they\u2019re these big \u2014 so, he has these big industrial orange racks that are made for \u2014 they\u2019re very distinct-looking. They just \u2014 they\u2019re not something you and I would have in our house, \u2018cause they\u2019re big. They\u2019re meant to carry these big, heavy, scary things. They\u2019re painted this bright, fire-engine orange. Similarly, we had seen one other photo fuck-up in a crop of one of the bikes that was advertised in America. They shot \u2014 instead of putting it against a wall and shooting it so it was sort of blank and you couldn\u2019t see anything, they put it up against this completely weird-looking orange industrial rack that had this metal thing on it that I did not realize at the time was a transmission. But once you started looking, it was like, boom, boom. Same guy, same visual setting, same corrugated walls, same color scheme. He\u2019s got all these bikes. We found pictures of him with the Mexican kingpin guy having lunch in San Jose. Here we are riding in Allan Park. It was just domino, domino, domino. That was this guy. <v JACK>This was the US contact that was collecting and staging stolen bikes before loading them up and sending them to Mexico. Finally the US side of the operation was revealing itself. They even had someone go to the site at 2:00 a.m. to verify this is the place that all the US photos are coming from. <v BRYAN>This is our guy. This is the guy. This is where they\u2019re going, this is where they\u2019re being kept, this is where they\u2019re being packaged, this is where they\u2019re being photographed. We don\u2019t know what happens in-between the other two, but this is his guy. Forty minutes later, he had realized what he had done and he removed that one single photo from his listing. So, it was just this tiny window of time that if I had not eaten my bagel faster that morning and not logged in at that exact point and not \u2014 if my day had panned out any differently, I probably would have missed it. \u2018Cause we were in the middle of talking about it. We were excited. We\u2019re on Slack. We\u2019re talking like, this is the guy. We go back and we\u2019re like, oh yeah, go here; he has this picture. They would go back and reload it, and they reloaded it, and that picture was gone, but I had already screenshot it. So, it was this very small, very lucky \u2014 complete OSINT win, right? Like, complete \u2014 just human error. Look at it long enough, somebody\u2019s gonna trip up, and he did. <v JACK>Well, this new piece of information was absolutely something the California police could work with. <v BRYAN>They executed a search warrant on that guy in San Jose, found everything they were expecting to find, and according to the indictment, also 206 grand in a bag. So, they found bikes packaged up for sale, they found \u2014 I think they listed nine specific bikes or something like that. They caught him completely redhanded. It was sort of a slam dunk. We think, yay, go us. Awesome. [Music] This is where the story kinda bifurcates, \u2018cause now you have this guy in San Jose who\u2019s fucked. The case got kicked up to the FBI, I think because of the cross-border nature of the crime or maybe because of the money, but it went into federal hands, not local PD hands. So, now it becomes a federal case, and you can read the indictments, and they\u2019re bananas. But the second sort of winding path is it does not even touch this guy in Mexico. He just switches his supply to San Diego. He\u2019s got another one of those guys somewhere else. <v JACK>What? How is this operation still going on? Ricky Zamora was still getting stolen bikes, but now they\u2019re getting sourced from San Diego. Looking back at all the stolen bikes Ricky was selling before, none of them were coming from San Diego before. So, whatever is going on here now is a new operation, and US police don\u2019t have a way to arrest him in Mexico, and for some reason, they can\u2019t get him kicked off Facebook, either. So, the operation still goes on, now with bikes being stolen from San Diego. <v BRYAN>So, we do exactly the same exercise but we do it in San Diego, and we don\u2019t get any traction whatsoever. They tightened up at that point. They realized \u2014 blank wall, blank setting, no slip-ups, no OSINT mess-ups. We try for four months to get police there involved, including sending them Excel sheets of like, here\u2019s the $90,000 worth of bikes that we see that he has. Here are the police report numbers for your jurisdiction. Here are the victim names. Can you please subpoena Facebook? Just do your job. We just never got any traction. It just never happened. Then we saw his focus \u2014 this is where I absolutely lost my shit. We start seeing bikes from Bend, Oregon. We start seeing bikes from Salem, Oregon. I start seeing bikes from Portland. <v JACK>Bryan lives in Portland, Oregon, a very bike-friendly city, and since Bryan is so involved with the bike scene, he has a lot of cyclist friends, and now he\u2019s seeing some of his friends or people his friends know as becoming victims in this investigation. Is there a new operation somewhere in Portland, in his backyard? <v BRYAN>I start seeing bikes with stickers of bike shops that I have friends at, that I\u2019ve been to, that I\u2019ve bought bikes from. There was a victim that lost a titanium Lynskey that \u2014 I talked to her a little bit, and it wound up with this prick in Mexico. I friended her on Facebook. We have friends in common. <v JACK>I have a question about San Francisco, still. When these guys got busted there, did that result in fewer bikes getting stolen? <v BRYAN>The way it works is there\u2019s all these burglary crews in the Bay Area, and they\u2019re typically younger guys that are run by an older captain. The captain\u2019s got the car. He handles the money. He does the recon. They just run around robbing shit. They\u2019re not robbing just for bikes. They\u2019re robbing for whatever. So, they\u2019re robbing stores, they\u2019re robbing homes, they\u2019re robbing businesses, they\u2019re robbing commercial, they\u2019re robbing \u2014 they\u2019re just burglars. That\u2019s what they do. They\u2019re not targeting any specific thing. But they know \u2014 okay, so, we\u2019ve done our robbing. We\u2019re back at our Alibaba\u2019s cave, which is some shitty hotel that they\u2019re renting with all our stolen stuff in it. If you get jewelry, it goes to this guy. If you get guns, we fence it with this guy. If you get electronics, we fence it over here, and if you get bikes, you go to this guy. That\u2019s the guy that we found. So, it was multiple different burglary crews whose job is not \u2018go get bikes\u2019; it\u2019s just go steal whatever the hell you can steal, and we\u2019ll put it on the black market. But if they had bikes, this is the guy that they went to. We actually have some fucking hilarious surveillance where we actually \u2014 one of these guys scales a fence, drops down the other side of the fence, and he stands up and he brushes himself off, and he makes the sign of the cross as a good luck charm, and then he goes in and he robs the house, all caught on camera. But we would see it\u2019s fat guy, short guy, little guy. It\u2019s 101 different dudes, and it\u2019s not the dude that is running this transmission shop. So, we \u2014 and we had some other means by which we pieced some of this together. <v JACK>So, the bike thieves had to just find a different place to sell their bikes to, and they can continue their operation. It sounds like they were just a bunch of random burglars who all knew that if they had bikes, they could just sell it to this guy real quick. Another pipeline of stolen bikes they saw pop up during this time was between Colorado and Juarez, Mexico. Apparently there were thieves in Colorado who would steal bikes and then ship them to Juarez to sell. But this was a totally different group compared to what Bryan was tracking with the San Francisco and San Diego thieves. <v BRYAN>At one point, Ricky Estrada Zamora, kingpin of the La Barca fencing operation, is now listing bikes from guys that I see in Juarez that I know are bad guys that are involved in this Colorado pipeline, meaning his supply went from Bay Area to San Diego to Oregon all the way back to Colorado through these guys in Juarez. So, the way this manifested was \u2014 I was talking to a guy in Colorado who got robbed, and I\u2019m like, yeah, there\u2019s these five dicks down in Juarez that sell a lot of stolen bikes. Like, oh look, he\u2019s got it. Here\u2019s your bike. Call your guy, and this is a bad guy, and he\u2019s \u2014 I know that he\u2019s a bad guy, and it\u2019s this very specific setting that he takes a picture of them in. More OSINT work. Here\u2019s his name. We\u2019re trying to get Lar-edo PD to give a shit about him, but \u2014 just like, go \u2014 here\u2019s your information packet. Good luck. I open up Ricky\u2019s page and I\u2019m looking at the same photo, \u2018cause he\u2019s doing consignment sales. He\u2019s using these guys \u2014 so, it\u2019s like he\u2019s \u2014 his reach is amazing. I really hand it to the guy. He\u2019s got a endless well of supply. So, now, as we sit here, October 17 of 2024, the vast majority of what he\u2019s sourcing is Colorado. It\u2019s all coming out of Colorado, \u2018cause there\u2019s just endless supply there. <v JACK>[Music] It\u2019s frustrating that the biggest seller of stolen US bicycles has been operating since 2015 without getting into any trouble. The FBI indictment only listed the name of the US guy who owned the transmission shop. It didn\u2019t list Ricky Zamora\u2019s name in it at all. It just says \u2018an unindicted co-conspirator in Mexico\u2019. The Mexican authorities haven\u2019t arrested him. He continues to sell stolen bikes on Facebook. After the FBI published their indictment, Wired published an article telling the story as well, and shout out to Christopher Solomon, the reported for Wired, for doing such a great job on that story. <v BRYAN>Then other outlets \u2014 LA Times, NPR, Planet Money, it got a lot of coverage, and every step of the way, we thought, surely, at some point now, someone in Facebook will get it together and just nuke this guy\u2019s page. Surely after a federal indictment, this will stick a fork in this guy. No. Surely after a Wired article. No. Surely after the LA Times. No. Surely after Planet Money. No. Maybe fucking Darknet Diaries will do it. My god. But like\u2026 <v JACK>He still has his Facebook page going? <v BRYAN>Yeah, he\u2019s selling yesterday. He\u2019s still listing bikes. He\u2019s still making a profit. No one has touched him. He posted \u2014 there\u2019s \u2014 I can send you a screenshot of it. He posted this big blanket denial that was sort of \u2014 are you familiar with the term DARVO? <v JACK>Mm-hm. <v BRYAN>It\u2019s the deny, accuse, reverse-victim offender. He basically said, this journalist and liar gets $5 every time someone reads the article. He\u2019s made millions of dollars. It\u2019s completely fucking unhinged. It makes no sense. But it\u2019s basically like, he denies everything. He says it\u2019s bullshit, but he provides no proof, and all these people that were showing up in his comments saying, well, what about this bike? That one was stolen. He just deletes them. He just white-washes the whole thing. So, it \u2014 I get it. I can\u2019t buy a cruise missile and take this dude out. I can\u2019t \u2014 I\u2019m not Rambo. I\u2019m not gonna go down there. He\u2019s gonna do what he\u2019s gonna do. I just \u2014 we just wanted him to stop, right? We wanted him to not have a platform that actively turns a blind eye to this guy being the most colossal fencing dick of all time making millions of dollars, and we know that \u2018cause we clocked it. We just thought \u2014 and we had many conversations. We tried the stupid Facebook reporting, which does nothing. Because a lot of the Bike Index people are in the Bay Area, they work \u2014 they know a lot of Meta people. They ride with them. We had personal contacts, personal friends. Our schtick has always been, we can find the cyclists that we can talk to in this organization. We\u2019re Sympatico. You, me, you, me, same, same. We\u2019re all friends. That\u2019s how we get shit done. Every single person that we talked at either officially or unofficially was just like, we are completely incapable of doing anything about this. There is no mechanism \u2014 or they would say something like, I put it up the chain internally. Thanks. It was not only Meta; it was companies that had been picked up by Meta that are now part of the Meta fold. I had an engineer \u2014 I sort of ranted about this in one of my talks \u2014 who was basically \u2014 I had this long back-and-forth with this guy. Here\u2019s my proof, here\u2019s my Excel sheets. Download a zip file. Here\u2019s the fucking indict \u2014 like, proof, proof, proof. Can you please just kick this guy off your platform? He said, no. I said, why? I\u2019m like, what \u2014 is the bar really that high? He\u2019s like, yes. I\u2019m like, then I don\u2019t understand. Does he have to shoot someone in the face? What\u2019s it gonna take? We sort of got \u2014 we were cordial. We were sort of talking about the problem, and it was like \u2014 he\u2019s like, you know, we have all this AI-generated crap, we have these cell phone \u2014 we have \u2014 there\u2019s just so much fraud, there\u2019s just so much badness. We\u2019re really hoping to tackle this with artificial intelligence. I was like, fuck you, buddy. We\u2019re giving you actual priceless intelligence that is backed by proof, that is backed by indictments, that is backed by screenshots, that is backed by \u2014 I could put you on a conference call with 150 victims right now. I\u2019m giving you actual intelligence. Just do your job. He\u2019s like, well, we\u2019re really hoping to tackle this with AI. It\u2019s an insult. It\u2019s just a complete joke. Nobody\u2019s driving that bus. <v JACK>Hasn\u2019t Google\u2026? \u2018Cause Google has all these bikes on campus and Facebook has all these \u2014 you could just borrow them and then use them and leave them. Haven\u2019t \u2014 why don\u2019t these guys just get wiped out every day that they\u2026? <v BRYAN>They do, they do. We\u2019ve actually talked to some of those corporate systems. They\u2019re run \u2014 I\u2019m not gonna go down this rabbit hole, but other companies that have the same thing in \u2014 they do. They get half their fleet stolen. <v JACK>So, you\u2019d think, hey, you know all those bikes that just got stolen from your campus\u2026? <v BRYAN>Yeah. <v JACK>This is the guy on your page that\u2019s reselling them\u2026 <v BRYAN>Yeah. You\u2019d think they would care. <v JACK>At least\u2026 <v BRYAN>I say this a lot; on the list of bad things that we could be sitting here talking about Facebook, ranging from psychological manipulation, illegal data, voter manipulation, child sexual abuse, drug dealing \u2014 bikes is pretty low on that totem pole, right? And I get that. <v JACK>[Music] Bike index has recovered over $27 million worth of bicycles, which means they recovered around 15,000 stolen bicycles, and it continues to serve as a wonderful tool to help people when no one else seems to want to help. Personally, I think it\u2019s a great place to practice OSINT skills. I went on OfferUp in my area and saw which bikes were for sale, and I tried to go on bikeindex.org to see if any of them matched. Serials often aren\u2019t listed in the listing, but as your eyes adjust to the place, you start to notice things; listings with sketchy-looking photos, descriptions lacking specifics, or if the description says \u2018missing battery\u2019 or \u2018missing key\u2019, it\u2019s kind of a clue. You take the description of the bike and see if you can find a similar bike on Bike Index. I spent an hour doing this, and I found a bike that I thought was a match. It was the same color, same model, same year, and the seller said they bought it at an auction and don\u2019t know anything about the bike. So, I e-mailed the victim, but they wrote back and said, no, that one\u2019s not exactly mine. He had some way of indentifying it, I guess. But there is something exciting about this process of bike hunting. The reward is you could help someone find their stolen bike, which is a great feeling, and all the info is out there. It\u2019s just up to someone to go find it, and it helps your community if you stop a bike thief in your area. You could take this to another level, too, and start looking at other listings that user might have and try to pinpoint exactly where they are or who they are and see if they\u2019re selling a ton of stolen stuff. You might find a bunch of other stolen bikes and learn about that person\u2019s identity. Facebook-stalking a bike thief is a wild ride. If you want to get into OSINT and like a challenge, this is a fertile space. Try to search Facebook Marketplace, Craigslist, or OfferUp for bikes for sale, and then cross-reference that with Bike Index, and you might help someone recover their own bike. While this story\u2019s about bicycles, it could easily be about standup paddleboards or guitars or anything that\u2019s high-value which has a serial number. I\u2019m not sure if those sites exist, but if they don\u2019t, someone needs to make one. <v BRYAN>It\u2019s still incredible to have this reputation that you\u2019ve done all this good in the world. It is a zero-billion-dollar-a-year industry. It is. It is not putting food on the table. Karmically, it feels really good, but it is exhausting and I got super burned out. At the end of the day, this guy\u2019s still doing his thing. So, did I really change anything? Yes or no? <v JACK>Oh, and if you\u2019re wondering what\u2019s a good bike lock to keep your bike safe these days, Bryan says it doesn\u2019t even matter. If a thief wants it, they\u2019ll get it. <v BRYAN>They either use a giant prybar to pop the lock, or down here in Portland, you\u2019ll see those blue \u2014 there\u2019s tubes that \u2014 they\u2019re called staple racks. They\u2019re just the racks that go in the ground. They don\u2019t even bother with a bike lock. They cut the rack in two, \u2018cause the rack steel is only that thin. So, you can basically go to Home Depot and get a tool or a saw that just goes brrt, right through the rack. So, they don\u2019t bother defeating the lock. They don\u2019t defile it. They just cut \u2014 they just go down a line of the racks, go, bip, bip, bip, move the tube, pull the bike out, throw it in the truck. <v JACK>So, I guess the advice is to really just take your bike with you wherever you go. Some apartments have bike rooms where it\u2019s in a parking garage somewhere, and they tell you, hey, store your bike in there. But even there that\u2019s not safe, because at 2:00 a.m., thieves could break into the bike room and spend hours unloading bikes and cutting locks, because sometimes those bike rooms are so far deep in the parking garage or so far away that they can make as much noise as they want, and nobody will hear it. So, parking your bike inside your home or apartment is the best option. But even there, it\u2019s not entirely safe. The current situation sucks, and all I can say is fuck bike thieves. Outro: [Outro music] Thanks to Bryan Hance for sharing this story with us. Bikeindex.org is a nonprofit and ran by volunteers. So, if you think it\u2019s a good service, maybe donate to them to show your appreciation. This episode was created by me, the spoke joker, Jack Rhysider. Our editor is the ghost rider, Tristan Ledger, mixing by Proximity Sound, intro music by the mysterious Breakmaster Cylinder. What do Linux users and cyclists have in common? They both worry about drivers. This is Darknet Diaries.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9268",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9268",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9268.mp3",
+      "title": "ISC StormCast for Tuesday, January 7th, 2025",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS ISC Stormcast Jan 7th 2025: Make Malware Happy and Critical Vulnerabilities in OpenSSH, BeyondTrust, and Nuclei",
+      "show_notes": [
+        {
+          "heading": "In this episode of the SANS Internet Storm Center's Stormcast, we cover critical vulnerabilities affecting OpenSSH, BeyondTrust, and Nuclei, including the newly discovered \"RegreSSHion\" flaw and a bypass vulnerability in Nuclei. We also discuss how malware evasion techniques can impact analysis environments and highlight the dangers of fake exploits targeting researchers. Tune in for insights on patching, mitigation strategies, and staying ahead of emerging threats.",
+          "links": []
+        },
+        {
+          "heading": "Topics Covered:",
+          "links": []
+        },
+        {
+          "heading": "Make Malware Happy",
+          "links": [
+            "https://isc.sans.edu/diary/Make%20Malware%20Happy/31560"
+          ]
+        },
+        {
+          "heading": "A look at how malware adapts and detects analysis environments, and why replicating operational settings is critical during malware analysis.",
+          "links": []
+        },
+        {
+          "heading": "Nuclei Signature Verification Bypass (CVE-2024-43405)",
+          "links": [
+            "https://www.wiz.io/blog/nuclei-signature-verification-bypass"
+          ]
+        },
+        {
+          "heading": "A critical vulnerability in Nuclei allows malicious templates to bypass signature verification, risking arbitrary code execution.",
+          "links": []
+        },
+        {
+          "heading": "Critical Vulnerability in BeyondTrust (CVE-2024-12356)",
+          "links": [
+            "https://censys.com/cve-2024-12356/"
+          ]
+        },
+        {
+          "heading": "A high-risk flaw in BeyondTrust products allows unauthenticated OS command execution, posing a significant threat to privileged access systems.",
+          "links": []
+        },
+        {
+          "heading": "RegreSSHion Code Execution Vulnerability (CVE-2024-6387)",
+          "links": [
+            "https://cybersecuritynews.com/regresshion-code-execution-vulnerability/"
+          ]
+        },
+        {
+          "heading": "OpenSSH vulnerability \"RegreSSHion\" enables remote code execution, and fake exploits targeting security researchers are in circulation.",
+          "links": []
+        }
+      ],
+      "published": "2025-01-07T01:26:19+00:00",
+      "duration_seconds": 292,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9268.mp3",
+      "audio_length_bytes": 4359513,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9268",
+      "categories": [
+        "openssh",
+        "regresshion",
+        "beyondtrust",
+        "nuclei",
+        "malware",
+        "evasion",
+        "rce"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9268",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9266",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9266",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9266.mp3",
+      "title": "ISC StormCast for Monday, January 6th, 2025",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Stormcast for Jan 6th 2024: Python SweatRAT, Goodware Hash Sets, SSL/TLS Updates and more.",
+      "show_notes": [
+        {
+          "heading": "In this episode of the SANS Internet Storm Center's Stormcast, we cover the latest cybersecurity threats and defenses, including Python-delivered malware, goodware hash sets, SSL/TLS protocol updates, and critical vulnerabilities in ASUS routers and Paessler PRTG. Stay informed and secure your systems!",
+          "links": []
+        },
+        {
+          "heading": "Full details and links to all stories:",
+          "links": []
+        },
+        {
+          "heading": "SwaetRAT via Python: https://isc.sans.edu/diary/SwaetRAT%20Delivery%20Through%20Python/31554",
+          "links": []
+        },
+        {
+          "heading": "Goodware Hash Sets: https://isc.sans.edu/diary/Goodware%20Hash%20Sets/31556",
+          "links": []
+        },
+        {
+          "heading": "SSL/TLS Updates: https://isc.sans.edu/diary/Changes%20in%20SSL%20and%20TLS%20support%20in%202024/31550",
+          "links": []
+        },
+        {
+          "heading": "Cyberhaven Extension Compromise: https://secureannex.com/blog/cyberhaven-extension-compromise/",
+          "links": []
+        },
+        {
+          "heading": "PRTG Vulnerability: https://www.zerodayinitiative.com/advisories/ZDI-24-1736/",
+          "links": []
+        },
+        {
+          "heading": "ASUS Router Vulnerabilities: https://cybersecuritynews.com/asus-router-vulnerabilities/",
+          "links": []
+        }
+      ],
+      "published": "2025-01-06T02:37:57+00:00",
+      "duration_seconds": 497,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9266.mp3",
+      "audio_length_bytes": 7228051,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9266",
+      "categories": [
+        "cyberhaven",
+        "chrome",
+        "extensions",
+        "asus",
+        "prtg",
+        "goodware",
+        "swaetrat",
+        "python"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9266",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": true
+    }
+  ]
+}

@@ -1,0 +1,1233 @@
+{
+  "month": "2019-04",
+  "episodes": [
+    {
+      "id": "darknetdiaries-37",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "37",
+      "guid": "c283aff8-4847-11e9-a63d-afb0b2bc5914",
+      "title": "37: LVS",
+      "summary": "The Venetian casino in Las Vegas Nevada was the largest hotel in the world until 2015. The parent company is Las Vegas Sands (LVS) which owns 10 properties around the world. And the CEO and founder of LVS is Sheldon Adelson. One day the CEO said something which sparked quite a firestorm. This episode was sponsored by Nucleus. Visit nucleussec.com to start your free trial. This episode was sponsored by CMD. Securing Linux systems is hard, let CMD help you with that. Visit https://cmd.com/dark to get a free demo. For more show notes visit DarknetDiaries.com .",
+      "show_notes": [],
+      "published": "2019-04-30T07:00:00+00:00",
+      "duration_seconds": 1703,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/99a71ff6-4a3f-4534-ac39-c412dd61a320/darknet-diaries-ep37-lvs.mp3",
+      "audio_length_bytes": 27382608,
+      "episode_link": "https://darknetdiaries.com/episode/37/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/99a71ff6-4a3f-4534-ac39-c412dd61a320/images/0e426e9d-a4a0-47f4-a279-091413070157/uploads_2F1556569478057-3vymtnj3t7-9ba1e93ae4f4107f6ee1fed4ce24a9e6_2Flvs.jpg",
+      "transcript_url": "https://f.prxu.org/7057/99a71ff6-4a3f-4534-ac39-c412dd61a320/transcripts/0161629e-78a1-46cd-8194-378be3ddbfb9/Ep37.vtt",
+      "transcript_format": "vtt",
+      "transcript": "JACK: Imagine being at work in the office and all of a sudden the server you\u2019re working on goes down, the phones stop working, the screens go blank, and as you investigate you realize the company has been hacked. [MUSIC] The virus is so bad and it\u2019s spreading so fast that you frantically start unplugging Ethernet cables in an attempt to stop the attack. You\u2019re forced to sever your connection to the internet altogether. Yeah, that did happen and I want to tell you about it. JACK (INTRO): [INTRO MUSIC] These are true stories from the dark side of the internet. I\u2019m Jack Rhysider. This is Darknet Diaries. [INTRO MUSIC ENDS] JACK: Imagine you\u2019re taking a nice gondola ride through a canal. [MUSIC] This is one of those boats where you hire someone to stand up on it and paddle for you. It\u2019s nice and slow, relaxing, something you do as a tourist and it can be romantic; except, you\u2019re not in Italy. You\u2019re in the middle of the desert. This is the scene from within the Venetian, a hotel casino in Las Vegas, Nevada. But it\u2019s not just any hotel. It\u2019s a luxury resort, a massive resort with over 4,000 rooms. In fact, it was the largest hotel in the world up until 2015. If you go to Vegas you can\u2019t miss it. The Venetian looks just like Italy. It\u2019s amazing to look at and explore. On top of it being a hotel, they have a 120,000 square foot casino, a monster of a gaming hall which is where they make a ton of their money. In 1988 Sheldon Adelson bought the Sands Hotel and Casino in Vegas. Three years later he got married to his second wife and took a honeymoon to Venice, Italy. There\u2019s where he got the inspiration to bring Italy to Las Vegas, so he did. He came back home and spent 1.5 billion dollars building the Venetian and then imploded the Sands Hotel and built more Venetian hotel rooms on top of it. Sheldon had a strong desire to succeed as a hotel casino investor and he did succeed. His casino was very successful and now he controls ten different properties. The parent company of this empire is the Las Vegas Sands which is what I\u2019m going to refer to as LVS a lot in this episode. LVS is the company that owns The Venetian and Palazzo in Vegas, and another Venetian in China, and the Marina Bay Sands in Singapore. That\u2019s the one that looks like it has a cruise ship on the top of the buildings, and another Sands Casino Resort in Bethlehem. The Las Vegas Sands has over 50,000 employees worldwide and is ranked 418th on The Fortune 500 list. It\u2019s a massive corporation today and its founder, owner, and CEO Shelden Adelson. We\u2019re going to learn a lot more about Sheldon in a minute but I\u2019m fascinated with the IT infrastructure of a major global business like this. [MUSIC] You may have seen Ocean\u2019s Eleven at this point so you can probably take a guess as to how secure their physical infrastructure is to protect those millions of dollars that are transacted each night in the casinos. But those are all physical securities. I want to know what their IT security looks like so I did some snooping. If you want to know what\u2019s in a company\u2019s network and they\u2019re not really telling you what\u2019s in there, there\u2019s two easy ways to figure this out. First is their career page and the job openings. On the Las Vegas Sands website, you see job openings for things like Network Security Engineer 1, Network Security Engineer 2, Network Security Engineer 3. To qualify for these roles you have to be proficient in Sysco routers, Aruba wireless controllers, Checkpoint firewalls, Paulo Alto firewalls, Blue Coat web proxies, and F5 load [00:05:00] balancers, and VPN servers. You know what? These are all the technologies that I would expect to see in a large Fortune 500 company\u2019s network so nothing\u2019s really out of ordinary here. The second place I look to get a good idea of what\u2019s in their network is LinkedIn. A couple of simple searches here and I\u2019m finding hundreds of IT people claiming that they work at the Las Vegas Sands, ranging everywhere from cyber security project manager to a whole army of cyber security engineers, and analysts, and administrators. I think this paints a good enough picture for me. With a few other Google searches, I\u2019ve got a pretty good idea what their internal network is like and what their staff is like. The IT security team at Las Vegas Sands seems to be pretty big. I\u2019m guessing somewhere between 200 and 1,000 engineers, technicians, analysts, investigators, directors, and more. The IT security peoples\u2019 job is to understand, find, detect, stop, and remove threats from the network. You know what? These are the good guys in our story, the people who work tirelessly to keep that network up and safe, to keep the company running smoothly in the middle of any kind of cyber-attack. Las Vegas Sands has multiple data centers and it houses hundreds and hundreds of servers in each. The network of these casinos is huge. There are like, thousands of slot machines that all need Ethernet connections and then there\u2019s public WiFi for the guests, there\u2019s retail sales networks, there\u2019s online booking servers for their ten different properties, each guest room has an electronic door lock; that\u2019s gotta be connected to something. Then there\u2019s the hotel reservation systems and the television network in each room, and a whole bunch of security cameras everywhere. That\u2019s a lot of stuff in their network to keep up and operational. It\u2019s a massive and complex network but this is typical for what I\u2019d expect a Fortune 500 company to have. Now, I outlined their network to you because I really want you to get a sense of who\u2019s working there. These IT and security people have a lot at stake to secure. Of course, there\u2019s millions of dollars of actual cash to secure but there\u2019s also thousands of customers to keep happy every minute of the day, 24/7. Las Vegas never sleeps. The IT and security team has to work their butt off to keep the network up and operating effectively and they can never sleep, either. Someone\u2019s always there 24/7, 365 in the security operation center watching threats in the network. They\u2019re just looking for packing threats and then a whole other team monitoring the surveillance cameras; all 24/7. A network this big comes with a lot of hazards of things breaking. It\u2019s just the nature of having a large network. Cables go bad, upgrades fail, patches introduce new bugs, yadda, yadda, yadda. Of course, there\u2019s network attackers, hackers that are trying to push malware onto the network and through their websites and under the wireless network to maybe try to figure out a way in getting some of that casino cash. I\u2019m sure that running a casino attracts thieves like garbage attracts flies. The security team at Las Vegas Sands has done a great job. They\u2019ve deployed state-of-the-art infrastructure and hired top-notch talent to keep the place secure. It seems like they\u2019ve thought of everything that can possibly go wrong and they have a plan in case that happens. But as you might guess, something does go wrong that they didn\u2019t expect. [MUSIC] Alright, let\u2019s go back to Sheldon now. What do we know about to Sheldon Adelson? Well, the man has money, lots of money. Las Vegas Sands is the biggest casino operator in the world and this CEO owns over half of it. The Bloomberg Billionaires Index has Sheldon with a net worth of 36 billion dollars. That\u2019s the kind of money I can\u2019t even wrap my head around. He\u2019s a self-made billionaire whose wealth just keeps growing. Sheldon started young, growing up in a low-income family in Boston and he had his eyes on making money and he set out to do just that. He created business after business; some were more successful than others. Then he found gold. In the 1970s when personal computers started to become popular, he created Comdex. This is a computer trade show which brought all the top tech companies together to showcase their latest technologies. The Comdex Tech Conference was a major success. To give you an idea of how well it did, in 1979 Sheldon held Comdex at the MGM Grand Hotel in Vegas, the most famous and luxurious hotel casino in the world at the time. Within ten years, business had exploded for Comdex and became the largest trade show in Las Vegas, earning an excess of 20 million dollars each year. Listen to this reporter coming at you live from the 1993 Comdex Trade Show. REPORTER: There may be a recession going on out there somewhere but you certainly couldn\u2019t tell here in Las Vegas as over 2,000 exhibitors, more than 140,000 attendees are here at a bigger-than-ever fall Comdex. Lots of new product introductions from the big guys like Microsoft and Intel. Also new products from smaller companies with names you\u2019ve probably never even heard of. JACK: 140,000 attendees. That\u2019s mindboggling. I mean, the E3 Convention that was in Las Vegas last year only brought in 69,000 attendees. The success of Comdex made Sheldon Adelson a multi-millionaire. He sold Comdex in 1995 for 860 million dollars to focus his attention and wealth on the Las Vegas Sands. The Venetian in Las Vegas, his mega-project that he developed to replicate Venice, Italy, was soon the first privately-owned and largest convention facility space in the US, not to mention [00:10:00] a casino heaven for gamblers. You can see how Sheldon has emerged as a dominant figure and behind his businesses he\u2019s outspoken and not shy at all about using his money to bolster up the causes he believes in. The sheer scale of donations to the Republican Party in the US alone has kept him in the spotlight. We\u2019re talking donations of 120 million dollars in the 2012 Presidential Campaign and 82 million dollars in the 2016 Presidential Campaign. All this went to the Republican Party. These are colossal amounts to us but small change to Sheldon. Considering he\u2019s a mega-donor, some question what kind of influence that sort of money buys you. But he\u2019s not just interested in US policy. He\u2019s also very concerned with the rising online gambling phenomenon. He wants to protect his casino empire. His reach doesn\u2019t stop there, though. He\u2019s a strong and vocal supporter of Israel and a good friend to the Israeli Prime Minister Benjamin Netanyahu. Sheldon also owns two Israeli newspapers; the Israel Today and Makor Rishon. He also owns a newspaper in Las Vegas, The Review Journal, so Sheldon has a fair share of the media market in both Israel and Nevada, right where he wants it. Hearing this, I\u2019m reminded of the great newspaper mogul, William Randolph Hearst, who once said, \u201cYou furnish the pictures, I\u2019ll furnish the war.\u201d Meaning a newspaper has a powerful way to shape general opinion and belief. But I\u2019m not gonna go into whether or not Sheldon\u2019s newspapers are slanted one way or another, but for a person who\u2019s so involved in politics, it certainly wouldn\u2019t be a surprise. In his private life Sheldon has a powerhouse of a wife who\u2019s equally supportive of Israel. Israeli-born Miriam Adelson says her heart remains in Israel and is clearly an influence on Sheldon\u2019s strong pro-Israel stance. Miriam is a medical doctor who specializes in drug addiction, research, and treatment, and has a very nice career of her own. This husband and wife team stand firmly together when it comes to donating their money and supporting political candidates and Israeli causes. Direct, confident, and a little arrogant, Sheldon Adelson is a man with money, influence, and connections, and he\u2019s not a figure who sits quietly in the background. When a CEO of a large corporation like this has such strong political character traits, it can sometimes lead to trouble. In October 22, 2013, Sheldon Adelson was the guest of honor at the prominent Jewish Yeshiva University in New York. The rabbi who led the panel questioned Sheldon on his thoughts on whether America should negotiate with Iran. Here\u2019s what Sheldon\u2019s response was. RABBI: Alright, so you would support negotiations with Iran currently so long as they first seized all enrichment of uranium? SHELDON: No. What do you mean support negotiations? What are we negotiating about? What I would say is listen, you see that desert out there? I want to show you something. You pick up your cell phone and you call somewhere in Nebraska and you say okay, let it go. There\u2019s an atomic weapon goes over ballistic missiles in the middle of the desert that doesn\u2019t hurt a soul, maybe a couple of rattlesnakes and scorpions or whatever. Then you say see? The next one is in the middle of Tehran. JACK: The CEO of Las Vegas Sands, a multi billion-dollar company, just casually suggests that the US should send nuclear weapons into the Iranian desert as a warning shot, following up with a message that the next one will be aimed straight for Tehran, the capital. [BACKGROUND CONV.] [APPLAUSE] It\u2019s bold, blunt, unashamed. Sheldon had just dropped a verbal bombshell. While the collection of students at the talk seemed to respond warmly to his comments, Philip Weiss was in the audience recording the response on video. Philip runs a website called Mondoweiss which some say is controversial. Many critics have said the stories posted to Mondoweiss are anti-sematic and cause controversy. It\u2019s possible that if Philip wasn\u2019t there recording this, this story would have ended right here. But because Philip was there and he caught this on video and he\u2019s a popular journalist, the story does not stop here. [MUSIC] He posted his video to his website Mondoweiss the following day. The national media ate it right up. The Washington Post, Huffington Post, The Atlantic, Mother Jones, and Buzzfeed news all picked up this story and had it up on their website within hours. Most reports featured the full video, enabling readers to listen for themselves. It turned out it wasn\u2019t just the general public who were listening. A month after the comments aired, the Supreme Leader of Iran responded directly and he told students in Tehran that America should quote, \u201cSlap these parading people and crush their mouths.\u201d Unquote. The Iranians were not happy with Sheldon Adelson. One of Sheldon\u2019s properties is called Sands Bethlehem but this is not the Bethlehem that\u2019s in Palestine. Sands Bethlehem is in Pennsylvania, United States. It\u2019s about two hours north of Philadelphia. This casino is nowhere near the Las Vegas mega resorts but it still has 300 rooms and 3,000 slot machines. Two months after Sheldon\u2019s comments about Iran were broadcast, the IT team in the Sands [00:15:00] Bethlehem resort saw some worrying activity on their computer network. [MUSIC] Someone had scanned their network to see what Sands Bethlehem had on the internet. They found the usual stuff that you\u2019d see a company has; web access to e-mail, and external websites for customers, and a VPN. This VPN was for remote workers who could securely connect into the network and then they\u2019d get access to the internal network. If a hacker could get into this VPN, they\u2019d have inside access to the network. The hackers started trying to guess the passwords to some VPN users. They tried route, admin, password1, Sands, and a bunch of common passwords. When that didn\u2019t work they tried more complicated passwords like using special characters and numbers. They tried hundreds and hundreds of password combinations to try to get into this VPN but so far they were unsuccessful. The Sands IT security team is good, top-notch. Like hawks, okay; they saw this, they noticed the brute-force password attack and they took action. They enabled two factor authentication for VPN users. This would completely remove the ability for a brute force attack to be successful because you need not only the password but you also need that token code that only the VPN users would have on their phone. This brute-force attack went on for a while and eventually died down. The attackers weren\u2019t done. They looked to see what else Sands Bethlehem had on the internet. They found a curious server was online. When new updates would go onto the official website for Sands Bethlehem, they\u2019d first pass through a staging server. This looks like an exact replica of the live site but it\u2019s where new changes can be staged and is there for testing purposes. The attackers found this server and they attempted to see if that staging server was vulnerable to some exploits. The hackers exploited that server and gained access to it. They were in. [MUSIC] But just getting into one server usually isn\u2019t enough; you now need to figure out how to laterally move or escalate your privileges and find something else. The hackers saw some other servers to try to get into but they didn\u2019t have any usernames or passwords to try to log in. They used a tool called Mimikatz. Mimikatz is an incredible hacking tool and here\u2019s how it works. On a Windows computer, when you log into it, it stores your password in clear text in the RAM. That\u2019s just by design. That\u2019s Windows normal behavior and Mimikatz knows exactly where to look to dig that password out of memory. What this means is that if you run Mimikatz on a vulnerable Windows computer you will get a list of all users and their clear text passwords that have ever logged into that computer since it\u2019s been rebooted. This is huge. I don\u2019t know why but for some reason Microsoft refused to fix this vulnerability for years. There was literally nothing you could do about it so these hackers ran Mimikatz on this web development server and from there they were able to see the usernames and passwords of web developers and IT admins for Sands Bethlehem. These are the people who probably have access to a lot of IT infrastructure within the network. This gave the hackers access to a lot of the network. They quickly discovered that Sands Bethlehem was completely isolated from the main Las Vegas Sands network in Nevada. They could not find any tunnels or connectivity between the two locations. The hackers were on some kind of mission and access to the Sands Bethlehem network was just not good enough. They needed access to the main data center for all of Las Vegas Sands. They looked at the usernames and passwords that they harvested through Mimikatz and started trying to see what they had. They found that for remote users to get in the Las Vegas data center, there was a VPN for them to connect to. The hackers tried these usernames and passwords they had from the staging server to try to connect to the main data center VPN in Vegas. Sure enough, one worked. [MUSIC] A senior Sands IT administrator had visited the Bethlehem site and did some work there recently. Now that the hackers had that person\u2019s login information, they were able to use it to get into the main Las Vegas network. From here the hackers analyzed the network and established a firm foothold in it. They gave themselves a persistent connection to it in case that password was to change. The hackers continued to analyze the network in building a map of what was there, and they were very quiet the whole time and were careful not to raise any alarms. A few weeks later on February 10th, 2014 the hackers made their move. Inside the LVS network they set off a piece of code custom-written in visual basic, a wiper code with the goal of destruction. [MUSIC] It worked its way through the network, accessing, copying, and deleting all the data as it went. The data wiped from the hard drive was replaced with useless nonsense code, making it almost impossible to recover. While the wiper code silently crept through the network, staff computers started crashing. Phone systems stopped working and IT teams were flooded with calls telling them the same thing from frantic staff members. For a network the size of LVS where they had thousands of staff and computers and communication systems, this was probably the absolute worst nightmare [00:20:00] for the IT security team. Computer systems at LVS were in total chaos. The cyber incident responders who worked at LVS kicked into action. The analysts were sent off to figure out where the attack was coming from and how to block its path. Hundreds of IT staff at Las Vegas Sands were working together try to try to protect the valuable servers, the data centers, the networks, and LVS itself. By the afternoon of February 10th, IT security staff realized that hackers were in the network. File logs told them that sensitive files were being compressed and downloaded. Not only had the networks been breached and firewalls been knocked through and servers exposed, but hackers were now actively downloading the data on customers and guests and staff and gamblers, like the exclusive Invitation Only members list; it was stolen. Social security numbers were stolen, drivers license details were stolen. The list goes on and on. But while sensitive data was being stolen, what the IT security engineers had to focus on was keeping those critical systems up so that the casino and hotel could stay operational. The gaming tables and slot machines and access to hotel rooms and electronic door codes and the retail outlets and the elevators leading to the fifty different floors, payment stations, card machines, and all that relies on a stable and functioning network. But the network was crumbling away like a sand castle falling over. Las Vegas Sands, the biggest casino operator in the world, had to consider that they might have to stop everything and tell their visitors to leave and close the doors. At this point, realizing the scale of the hack and the seriousness of it, Sands President Michael Leven ordered IT systems staff to sever LVS from the internet entirely. This was a desperate bid to stop the attack and limit the damage. The ten websites owned by LVS did not escape the hackers\u2019 attention. In the blink of an eye the Las Vegas Sands websites were morphed into something entirely more sinister. The LVS websites had a message emblazoned across it saying, \u201cEncouraging the use of weapons of mass destruction under any condition is a crime.\u201d Another website said, \u201cDamn, eh? Don\u2019t let your tongue cut your throat.\u201d By now there was no question that this cyber-attack was personal. While all this was happening behind the scenes, the functioning of the Venetian and Palazzo in Vegas did continue with guests in and gamblers blissfully unaware of what was going on. Because the determined efforts of the security IT staff and the fact that hackers missed the IBM mainframe, guests were able to continue gaming, access their hotel rooms, and purchase things from the retail stores. But the IT staff made a strategic move to go to the data center and start unplugging key servers entirely to stop this wiper virus from spreading to them. The network engineers began frantically pulling Ethernet cables from servers. This wiper virus was on a mission to infect and spread to as many systems as it could and delete the data on those computers, targeting just Windows machines. This meant that user\u2019s computers were going down and servers that run Windows like SharePoint and e-mail and shared drives were probably going down. Early on in this attack the wiper virus hit the active directory server in Las Vegas and completely wiped it out. It then tried to spread to the Sands properties in China and Singapore to wipe them out too but by knocking out the active directory server in Las Vegas, it completely severed the connections to China and Singapore. By complete accident it made those networks safe from this attack. This destruction was confined to just Sands Bethlehem and the main network in Las Vegas. The next day the Las Vegas Sands websites were just offline entirely. Physical hardware had been disconnected, cables were pulled out of machines, and the LVS servers were compromised. It took the IT security team which might be as high as 1,000 members strong almost a full week to re-establish connection securely to get Las Vegas back up and running fully. This outage was noticed by some people so publically the company spokesperson had to say something to reassure their customers if nothing else. They chose to play down the attack by announcing it was just vandalism targeted at their websites and some damage to the background office systems and e-mails. But when the hackers heard this it didn\u2019t sit well with them. The hackers responded with a ten-minute long YouTube video highlighting Sheldon\u2019s exact comments and showing a number of files, and folders, and passwords, and details that they had accessed and stolen during the attack. They wanted the world to know that what they were doing is much more than mere vandalism and the reasons why they were doing it but that video was removed by law enforcement very soon after it was uploaded, but not before it had been viewed a few thousand times. The cyber-attack on LVS was clearly designed to immobilize and destroy as much of their server and network capacity as possible. The goal here was to hit Sheldon Adelson right where it hurt the most. So who did it? The messages left on the defaced LVS website provide the first obvious clue. Sheldon\u2019s comments about nuclear weapons in Iran clearly provoked some anger there. In 2015, a year after the attack, US Director of National Intelligence, James Clapper, addressed this exact hack in a senate hearing. Here he is. JAMES: 2014 saw for the first time destructive cyber-attacks carried out on [00:25:00] US soil by nation state entities marked first by the Iranian attack against the Las Vegas Sands Casino Corporation a year ago this month, and a North Korean attack against Sony in November. These destructive attacks demonstrate that Iran and North Korea are motivated and unpredictable cyber-actors. JACK: Whoa, whoa, this is crazy. While LVS itself refused to address that this cyber-attack even occurred publicly, here we have through an official channel that not only was LVS a victim to a cyber-attack but James Clapper is saying that the people who did it was the Iranian government itself. Not just some activists, but this was carried out by the Iranian military or something. This raises all kinds of new questions; why would a government spend resources to attack a private company? Was this the same wiper virus that Iran used to attack Saudi Aramco? Why didn\u2019t the Iranian government take credit for this attack? But then on top of that, Director Clapper said that this was the first ever destructive cyber-attack on US soil that was conducted by a nation state actor. I think the keyword here must be destructive. In Episode 19 I go over an attack that China did on Google back in 2009. You can even go back thirty years ago to an attack called Moonlight Maze which was Russia hacking into a US Air Force base. But I guess those weren\u2019t destructive in nature. Maybe this was the first ever destructive cyber-attack on US soil done by a nation state actor. But if the Iranian government is behind this, it\u2019s interesting because Stuxnet was a US attack on Iranian soil. Maybe this is Iran kind of flexing a little, showing that they have cyber-attack capabilities and this is kind of a response to Stuxnet. But if that\u2019s the case, it\u2019s really troubling that a private company has to face the wrath of a nation state actor. But it\u2019s really hard to know exactly what the motives are behind this attack. Was it just a simple provocation that Sheldon did? Was there something more to this? For LVS, even though we know where the hack came from, I still can\u2019t get over the fact that the CEO of a Fortune 500 company managed to talk himself into this huge amount of destruction and damage. The attack on Las Vegas Sands wiped out almost 75% of the company\u2019s networks and servers, rendering much of their equipment and workstations useless and valuable data was just wiped. But the damage went deeper than some crashed computers; Sands President Michael Leven confirmed it took more than forty million dollars to fix the damage by building new systems and recovering from the data lost. This was no small cyber-attack and if the hackers\u2019 intention was to disrupt and destroy, they achieved their aim. Las Vegas Sands were keen to keep the details of this attack under wraps which they managed to do so for almost a year. But there was an article in Bloomberg Businessweek that exposed the hack and laid bare the true scale of this attack, but neither Sheldon Adelson or any LVS spokesperson commented on this article at all. People kept pressuring LVS to say something about the remarks that Sheldon said about Iran, so a spokesperson did say something in the Las Vegas Review Journal which is a newspaper that Sheldon owns. The spokesperson said that Adelson\u2019s comments were not meant to be taken literally; he was simply trying to say that actions speak louder than words. But I think the moral of the story here is that words matter. Las Vegas Sands did eventually confirm that they suffered a large-scale cyber-attack in February 2014 and named its computer networks in the US as the target. In their annual report of 2014 it said both the FBI and the US government were investigating this sophisticated cyber-attack and were working with IT system experts to investigate what had happened. In the year since this hack, LVS has made no further comments. The IT security teams like the one at the Las Vegas Sands have their work cut out for them for battling against such sophisticated threats and hackers who seek to destroy rather than steal. When the CEO of a company speaks publically and gives such incendiary remarks, there are risk assessors within the company that might tip off the security team to let them know the risk profile is higher than normal and they need to secure the networks and servers to be a little bit more tighter and protected. But when the hackers are playing the long game, watching and monitoring and lying in wait, and when they do get in and wreak the kind of destruction and havoc they did here, it leaves an almighty mess for even the biggest and best IT security teams to clean up. JACK (OUTRO): [OUTRO MUSIC] You\u2019ve been listening to Darknet Diaries. If this show brings value to you please consider donating to it through Patreon. There you can get a bonus episode, an ad-free feed, and stickers. This episode was created by me, just a plain old sock monkey, Jack Rhysider. I got some writing and research help this episode from Fiona Guy, and the theme music is created by the beat farmer, Breakmaster Cylinder. See you in two weeks.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-6476",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6476",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6476.mp3",
+      "title": "ISC StormCast for Tuesday, April 30th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. iLnkP2P Weakness; iFrame Tech Support Scam; Window 10 Users Avoiding October 2018 Update",
+      "show_notes": [
+        {
+          "heading": "iLnkP2P Allows Access To Millions of Security Cameras",
+          "links": [
+            "https://hacked.camera"
+          ]
+        },
+        {
+          "heading": "Windows 10 Users Not Applying October Update",
+          "links": [
+            "https://reports.adduplex.com/#/r/2019-04"
+          ]
+        },
+        {
+          "heading": "iFrame \"Ransom Support\" Attacks",
+          "links": [
+            "https://blog.trendmicro.com/trendlabs-security-intelligence/tech-support-scam-employs-new-trick-by-using-iframe-to-freeze-browsers/"
+          ]
+        }
+      ],
+      "published": "2019-04-30T01:30:02+00:00",
+      "duration_seconds": 351,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6476.mp3",
+      "audio_length_bytes": 4924649,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6476",
+      "categories": [
+        "ilnkp2p",
+        "cameras",
+        "windows 10",
+        "updates",
+        "iframe",
+        "ransom"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6476",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6474",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6474",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6474.mp3",
+      "title": "ISC StormCast for Monday, April 29th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. WebLogic Update; Docker Hub Breach;",
+      "show_notes": [
+        {
+          "heading": "WebLogic Update",
+          "links": [
+            "https://isc.sans.edu/diary.html?storyid=24890"
+          ]
+        },
+        {
+          "heading": "Docker Hub Breach",
+          "links": [
+            "https://success.docker.com/article/docker-hub-user-notification"
+          ]
+        }
+      ],
+      "published": "2019-04-29T02:40:01+00:00",
+      "duration_seconds": 318,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6474.mp3",
+      "audio_length_bytes": 4474453,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6474",
+      "categories": [
+        "docker",
+        "docker hub",
+        "weblogic"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6474",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6472",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6472",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6472.mp3",
+      "title": "ISC StormCast for Friday, April 26th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Windows Service Acccounts; Weblogic Flaw; Confluence Exploited; New Windows 10/Server Security Baseline",
+      "show_notes": [
+        {
+          "heading": "Unpatched Vulnerablity in WebLogic Exploited",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Unpatched+Vulnerability+Alert+WebLogic+Zero+Day/24880/"
+          ]
+        },
+        {
+          "heading": "Collecting Windows Service Accounts",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Service+Accounts+Redux+Collecting+Service+Accounts+with+PowerShell/24882/"
+          ]
+        },
+        {
+          "heading": "Confluence Vulnerablity Exploited by GandGrab",
+          "links": [
+            "https://blog.alertlogic.com/active-exploitation-of-confluence-vulnerability-cve-2019-3396-dropping-gandcrab-ransomware/"
+          ]
+        },
+        {
+          "heading": "New Micrsoft Security Baseline for Windows 10 / Windows Server",
+          "links": [
+            "https://blogs.technet.microsoft.com/secguide/2019/04/24/security-baseline-draft-for-windows-10-v1903-and-windows-server-v1903/"
+          ]
+        }
+      ],
+      "published": "2019-04-26T03:15:02+00:00",
+      "duration_seconds": 325,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6472.mp3",
+      "audio_length_bytes": 4568807,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6472",
+      "categories": [
+        "microsoft",
+        "windows",
+        "security baseline",
+        "confluence",
+        "ransomware",
+        "gandgrab",
+        "serivce accounts",
+        "weblogic"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6472",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6470",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6470",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6470.mp3",
+      "title": "ISC StormCast for Thursday, April 25th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Finding Domain Admins; X-Protect Covering PE Files; Hotspot Password Leak; Github Hosting Phishing Pages",
+      "show_notes": [
+        {
+          "heading": "Rooting Out Unwanted Domain Admins With Powershell",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Where+have+all+the+Domain+Admins+gone+Rooting+out+Unwanted+Domain+Administrators/24874/"
+          ]
+        },
+        {
+          "heading": "Mac OS X-Protect Now Covering Windows Malware",
+          "links": [
+            "https://twitter.com/patrickwardle/status/1120771284286103552"
+          ]
+        },
+        {
+          "heading": "Wifi Finder Leaks Hotspot Passwords",
+          "links": [
+            "https://techcrunch.com/2019/04/22/hotspot-password-leak/"
+          ]
+        },
+        {
+          "heading": "Github Hosting Phishing Pages",
+          "links": [
+            "https://www.proofpoint.com/us/threat-insight/post/threat-actors-abuse-github-service-host-variety-phishing-kits"
+          ]
+        },
+        {
+          "heading": "RSA Webinar: The Five Most Dangerous New Attack Techniques and How to Counter Them",
+          "links": [
+            "https://www.rsaconference.com/videos/rsac-2019-the-five-most-dangerous-new-attack-techniques-and-how-to-counter-them-continued"
+          ]
+        }
+      ],
+      "published": "2019-04-25T03:15:02+00:00",
+      "duration_seconds": 448,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6470.mp3",
+      "audio_length_bytes": 6286571,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6470",
+      "categories": [
+        "rsa",
+        "heather",
+        "ed",
+        "alan",
+        "webinar",
+        "github",
+        "phishing",
+        "wifi finder",
+        "hotspot",
+        "password",
+        "x-protect",
+        "domain admins",
+        "powershell"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6470",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6468",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6468",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6468.mp3",
+      "title": "ISC StormCast for Wednesday, April 24th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. VBA Macro Wtihout Source Code; More Shadowhammer Victims; Malicous Google Sites",
+      "show_notes": [
+        {
+          "heading": "Decoding Malicious VBA Office Document Without Source Code",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Malicious+VBA+Office+Document+Without+Source+Code/24870/"
+          ]
+        },
+        {
+          "heading": "More Updates on \"ShadowHammer\" Supply Chain Attack",
+          "links": [
+            "https://securelist.com/operation-shadowhammer-a-high-profile-supply-chain-attack/90380/"
+          ]
+        },
+        {
+          "heading": "A Malicious Sight in Google Sites",
+          "links": [
+            "https://www.netskope.com/blog/malicious-google-sites"
+          ]
+        }
+      ],
+      "published": "2019-04-24T02:10:02+00:00",
+      "duration_seconds": 347,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6468.mp3",
+      "audio_length_bytes": 4872356,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6468",
+      "categories": [
+        "google sites",
+        "shadowhammer",
+        "vba",
+        "p-code",
+        "macro",
+        "decompiling"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6468",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6466",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6466",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6466.mp3",
+      "title": "ISC StormCast for Tuesday, April 23rd 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. ACE Exploit; Younger Malware Senders; McAfee vs. Windows Update; Blocking Azure Blob Phishing",
+      "show_notes": [
+        {
+          "heading": ".rar Files Exploiting ACE Vulneraiblity CVE-2018-20250",
+          "links": [
+            "https://isc.sans.edu/forums/diary/rar+Files+and+ACE+Exploit+CVE201820250/24864/"
+          ]
+        },
+        {
+          "heading": "Malware Senders Become Younger and Less Sophisticated (in German)",
+          "links": [
+            "https://www.heise.de/security/meldung/Malware-Verteiler-werden-immer-juenger-infizieren-sich-oft-selbst-4403823.html"
+          ]
+        },
+        {
+          "heading": "McAfee Antivirus Affected by April Windows Update Crashes",
+          "links": [
+            "http://kc.mcafee.com/corporate/index?page=content&id=KB91465"
+          ]
+        },
+        {
+          "heading": "Rules to Protect Against Azure Blog Phishing in Outlook 365",
+          "links": [
+            "https://malware-research.org/simple-rule-to-protect-against-spoofed-windows-net-phishing-attacks/"
+          ]
+        },
+        {
+          "heading": "Windows 7 End of Support Messages",
+          "links": [
+            "https://www.windowslatest.com/2019/04/20/windows-7-users-are-now-receiving-the-end-of-support-notifications/"
+          ]
+        }
+      ],
+      "published": "2019-04-22T23:10:02+00:00",
+      "duration_seconds": 344,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6466.mp3",
+      "audio_length_bytes": 4829564,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6466",
+      "categories": [
+        "ace",
+        "rar",
+        "winrar",
+        "malware",
+        "age",
+        "mcafee",
+        "windows update",
+        "azure",
+        "windows 7",
+        "blog storage",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6466",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6464",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6464",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6464.mp3",
+      "title": "ISC StormCast for Monday, April 22nd 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Analyzing UDF Files; HTML Link Ping; Edge User Agents; French Govt Chat User Managment",
+      "show_notes": [
+        {
+          "heading": "Analyzing UDF Files Using Python",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Analyzing+UDF+Files+with+Python/24860/"
+          ]
+        },
+        {
+          "heading": "HTML Ping To Be Adopted By All Major Browsers",
+          "links": [
+            "https://webkit.org/blog/8821/link-click-analytics-and-privacy/"
+          ]
+        },
+        {
+          "heading": "Microsoft to Modify Edge User Agent for Some Sites",
+          "links": [
+            "https://www.onmsft.com/news/new-edge-insider-browser-can-change-user-agent-strings-based-on-what-website-youre-visiting"
+          ]
+        },
+        {
+          "heading": "French Government Chat System Used Weak User Management",
+          "links": [
+            "https://m.heise.de/security/meldung/Tchap-Frankreichs-nicht-so-exklusiver-Regierungschat-4403961.html"
+          ]
+        }
+      ],
+      "published": "2019-04-22T03:35:02+00:00",
+      "duration_seconds": 413,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6464.mp3",
+      "audio_length_bytes": 5799802,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6464",
+      "categories": [
+        "france",
+        "government",
+        "chat",
+        "microsoft",
+        "edge",
+        "user-agent",
+        "ping",
+        "html",
+        "udf",
+        "python"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6464",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6462",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6462",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6462.mp3",
+      "title": "ISC StormCast for Friday, April 19th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Malicious UDF Files; Facebook Clear Text Passwords; Iranian Hackers Hacked; Win8 Live Tiles Takeover",
+      "show_notes": [
+        {
+          "heading": "Malware Delivered As a UDF .img file",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Malware+Sample+Delivered+Through+UDF+Image/24854/"
+          ]
+        },
+        {
+          "heading": "Facebook Stored Passwords in Plain Text",
+          "links": [
+            "https://newsroom.fb.com/news/2019/03/keeping-passwords-secure/"
+          ]
+        },
+        {
+          "heading": "Iranian Statesponsored Malware and Data Leaked",
+          "links": [
+            "https://misterch0c.blogspot.com/2019/04/apt34-oilrig-leak.html"
+          ]
+        },
+        {
+          "heading": "Windows 8 Live Tiles Domain Takeover",
+          "links": [
+            "https://www.golem.de/news/subdomain-takeover-microsoft-verliert-kontrolle-ueber-windows-kacheln-1904-140709.html"
+          ]
+        }
+      ],
+      "published": "2019-04-19T03:45:03+00:00",
+      "duration_seconds": 410,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6462.mp3",
+      "audio_length_bytes": 5758110,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6462",
+      "categories": [
+        "windows 8",
+        "live tiles",
+        "iran",
+        "facebook",
+        "passwords",
+        "malware",
+        "udf",
+        "img"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6462",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6460",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6460",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6460.mp3",
+      "title": "ISC StormCast for Thursday, April 18th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Sea Turtle; Broadcom Drivers; NamPoHyu, Confluence Attacks",
+      "show_notes": [
+        {
+          "heading": "DNS Hijacking by Sea Turtle",
+          "links": [
+            "https://blog.talosintelligence.com/2019/04/seaturtle.html"
+          ]
+        },
+        {
+          "heading": "Broadcom Wifi Driver Vulnerabilities",
+          "links": [
+            "https://www.kb.cert.org/vuls/id/166939/"
+          ]
+        },
+        {
+          "heading": "NamPoHyu Virus Infects Samba Servers",
+          "links": [
+            "https://www.bleepingcomputer.com/news/security/nampohyu-virus-ransomware-targets-remote-samba-servers/"
+          ]
+        },
+        {
+          "heading": "Increased Attacks on Confluence",
+          "links": [
+            "https://twitter.com/DFNCERT/status/1118468599230943233"
+          ]
+        }
+      ],
+      "published": "2019-04-18T03:05:02+00:00",
+      "duration_seconds": 328,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6460.mp3",
+      "audio_length_bytes": 4612697,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6460",
+      "categories": [
+        "altassian",
+        "confluence",
+        "nampohyu",
+        "ransomware",
+        "samba",
+        "broadcom",
+        "dns",
+        "sea turtle"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6460",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6458",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6458",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6458.mp3",
+      "title": "ISC StormCast for Wednesday, April 17th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. CVE-2019-0726 (Win DHCP Client) PoC; Oracle CPU; WiPro Hacked; GHydra Tips",
+      "show_notes": [
+        {
+          "heading": "PoC Exploit for Windows 10 DHCP Client Vulnerability CVE-2019-0726 (russian)",
+          "links": [
+            "https://habr.com/ru/company/pt/blog/448378/"
+          ]
+        },
+        {
+          "heading": "Oracle April 2019 Critical Patch Update",
+          "links": [
+            "https://www.oracle.com/technetwork/security-advisory/cpuapr2019-5072813.html"
+          ]
+        },
+        {
+          "heading": "WiPro Breached Via Phishing Attacks",
+          "links": [
+            "https://krebsonsecurity.com/2019/04/experts-breach-at-it-outsourcing-giant-wipro/"
+          ]
+        },
+        {
+          "heading": "IDA and GHydra Part 2 (Strings And Parameters)",
+          "links": [
+            "https://isc.sans.edu/forums/diary/A+few+Ghidra+tips+for+IDA+users+part+2+strings+and+parameters/24848/"
+          ]
+        }
+      ],
+      "published": "2019-04-17T03:20:03+00:00",
+      "duration_seconds": 334,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6458.mp3",
+      "audio_length_bytes": 4699739,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6458",
+      "categories": [
+        "ida",
+        "gyhdra",
+        "wipro",
+        "phishing",
+        "oracle",
+        "cpu",
+        "dhcp",
+        "windows",
+        "cve-2019-0726"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6458",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "darknetdiaries-36",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "36",
+      "guid": "89cf0784-4847-11e9-9cd0-7fd6e459b91b",
+      "title": "36: Jeremy from Marketing",
+      "summary": "A company hires a penetration tester to pose as a new hire, Jeremy from Marketing, to see how much he can hack into in his first week on the job. It doesn't go as planned. Thanks to @TinkerSec for telling us this story. This episode was sponsored by Nord VPN. Visit https://nordvpn.com/darknet and use promo code \"DARKNET\". This episode was sponsored by IT Pro TV. Get 65 hours of free training by visiting ITPro.tv/darknet . For more show notes visit https://darknetdiaries.com/episode/36 .",
+      "show_notes": [],
+      "published": "2019-04-16T07:00:00+00:00",
+      "duration_seconds": 3674,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/4a133a28-0ca5-4635-ab23-b192f0e02909/darknet-diaries-ep36-jeremyfrommarketing.mp3",
+      "audio_length_bytes": 58903047,
+      "episode_link": "https://darknetdiaries.com/episode/36/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/4a133a28-0ca5-4635-ab23-b192f0e02909/images/ddeb03d3-7d3c-4c32-9b83-eb662e8cad25/uploads_2F1563861803254-xnd56uzgnqn-c870d0b870512f317dfe9e9ace1cf4f7_2Ftinkersec.jpg",
+      "transcript_url": "https://f.prxu.org/7057/4a133a28-0ca5-4635-ab23-b192f0e02909/transcripts/76e515c4-150b-4ef3-842b-a9b78d5ddb3b/Ep36.vtt",
+      "transcript_format": "vtt",
+      "transcript": "JACK: Hey, my name\u2019s Jack, the host of the show. Before making this podcast my job was looking at my clients\u2019 networks to try to find ways to make them more secure. In other words I was on defense locking things down, hardening systems, securing applications, and trying to turn off everything that didn\u2019t need to be on. The defense team is sometimes known as the Blue Team. I\u2019m on the Blue Team. But one day we paid an attacker to come into our office and see how well I did at securing the network. He was a professional penetration tester and I made him sit right next to me. Attackers like this are said to be on the Red Team and this whole Red Team/Blue Team thing is just a term borrowed from the military where they had drills with attackers and defenders. Here I am, the Blue Team, and there he was in the desk right next to me, the Red Team. The adversary, the enemy, a hacker. What do I do? Do I sabotage him so he can\u2019t do his job? Do I block his IP from getting anywhere? It wasn\u2019t that I didn\u2019t trust him \u2018cause he came from a very trusted company but it was that I was extremely curious at how he works. I wheeled my chair right over to his desk and I watched over his shoulder for the whole week. I was amazed at what he can do. I learned so much that it forever made a permanent impact on the way I see how attackers work. I want to give you that experience so in this episode we\u2019re going to get geeky. We\u2019re going to get really nerdy and crazy technical at times as we watch over the shoulder of a penetration tester to see exactly how they do their work and how they try to get the crown jewels of a company. PROX (INTRO): [INTRO MUSIC] These are true stories from the dark side of the internet. Presented by Jack Rhysider, this is Darknet Diaries. [INTRO MUSIC ENDS] JACK: The penetration tester we\u2019re going to watch over the shoulder of goes by the name Tinker. He has a background in the US Marines and has been doing penetration testing for a long time, years. When you do penetration testing for that long you end up knowing a lot about computers, like far, far, far more than the average person and even more than the average IT person. Tinker really is top-notch at knowing how computers work in general so I called him up. [SKYPE CALLING] Hello? Tinker, you there? Hello? TINKER: The cable just wasn\u2019t pushed in all the way, that\u2019s alright. It\u2019s the nature of all \u2013 most issues are cable-related. JACK: Okay, sounds like we\u2019re gonna be in for a ride here. So let\u2019s start out with just tell us your name and what do you do. TINKER: Sure. My name is Tinker Secor. I am a penetration tester or Red Teamer, depending on the nature of the engagement. But generally speaking I hack into computers and I break into buildings in order to test my client\u2019s security. JACK: He\u2019s a typical penetration tester and it\u2019s amazing to me that this job even exists. There are a lot of people who do this as a career. I mean imagine if a brick and mortar-type store tested their security like this too. You\u2019d have paid shoplifters trying to test how good the LP is. LP is loss prevention for those non-criminals out there. You\u2019d pay cat burglars to try to steal paintings from museums and you\u2019d have reformed street gangsters trying to quietly rob a casino. Maybe some of these jobs exist but [00:05:00] in the online world it\u2019s actually very common. Like, I\u2019m pretty sure that if you want to process credit cards at all, you need an audit done on your network which usually requires a penetration tester to come act like a criminal to see if they can hack into your credit card machines. Anyway, Tinker\u2019s been doing this for a long time and he\u2019s really successful at getting into networks. Today, we\u2019re gonna follow along with him on his assignment. TINKER: It was a large national client within the United States but it kind of stretched within North America and a bit in some other continents. JACK: Often what a penetration tester will do is try to find a way into the network from the internet, the outside, basically posing as just a rogue hacker online who\u2019s trying to find something open or a website that\u2019s like, exposing data. Tinker had already done some of that for this client and they were happy with the results and they wanted to take this to the next level. TINKER: They said look, we want to assume that a threat actor has breached the perimeter. We want to assume a threat actor has either broken into the facilities, implanted a rogue device, or maybe an insider threat kind of thing. Generally speaking, this test would cover all of it. JACK: There\u2019s a term in information security called Defense in Depth and this Chief Information Security Officer, their CISO, felt like their Defense in Depth was so good that they wanted to put it to the test. Basically this concept means you create many layers of security which makes it redundant, even. TINKER: I started inside. [MUSIC] That\u2019s what we call an internal pen test. The idea is okay, if you plan to fail and fail gracefully you want to see okay, what happens once somebody gets in? A lot of people say it\u2019s game-over but there are so many different ways to breach. JACK: Again, I want to give a warning here that we\u2019re going to get nerdy and technical in this episode because this story he has paints a perfect picture of what a penetration tester does. I want to get technical because I think it will be a fun opportunity to see exactly how all this works. Oh and there\u2019s also a few cuss words in this one, too. So this company wants Tinker to do a security assessment from the inside of the company. To do that they need to set him up with a temporary job in Marketing. TINKER: They set me up basically to do content. I went in within the Marketing Department. I assumed the name Jeremy and I was Jeremy from Marketing. JACK: You get it, right? This Jeremy from Marketing is actually a very good hacker and his goal is to see how much he can hack into in his first week on the job in the marketing department. The IT team and security team and even the marketing team have absolutely no idea that this new guy, Jeremy from Marketing, is an extremely trained hacker who\u2019s highly motivated to just hack into the network and get everything. This isn\u2019t a far-fetched scenario; sometimes you have temps or interns or new hires that get turned into spies to work for another government to see what\u2019s in that network while they\u2019re working there and can you really trust Jeremy from Marketing? Yeah, suppose he did all the interviews but still, I mean he really just did walk right off the street and sit down in your office. Are you gonna give him all the passwords to file servers and logins and to the company\u2019s Facebook account? Ideally your hiring process should vet him but it\u2019s really hard to know if that person is actually trustworthy. TINKER: There\u2019s really only two people in the entire company who knew who I was and that was the CISO and one of his assistants. JACK: The CISO is the Chief Information Security Officer and he reports directly to the CEO. He basically got everything sorted out with HR to hire this Jeremy from Marketing. TINKER: They said look, I can bring in anything I wanted. I could bring in all my hacking gear if I wanted to but I needed to make sure that I didn\u2019t get caught. JACK: Without being caught is the tricky part. If he had a bunch of antennas sticking out of his desk or even extra laptops all around, it would surely look suspicious. Alright, so he\u2019s all set for his new job. It\u2019s Monday morning and he\u2019s off to work. On the drive into the office he starts to go over his methodology and plan of attack. TINKER: Get in and do password reconnaissance, active reconnaissance, vulnerability, and misconfigurations that are in numeration, initial breach, lateral movement, pivot, escalation privileges, actions and target, exfiltration, and persistence may be in there if you need to, right. That\u2019s kind of the standard approach. JACK: That\u2019s his plan of attack. [MUSIC] He drives into the office, parks the car. It\u2019s a typical-looking office building; multiple floors. His office is just one of the floors. TINKER: I showed up dressed in a button-up with a tie. JACK: Shows his badge to get in and asks where the Marketing Department is. They introduce him to his new team. TINKER: They said look, here\u2019s your cubicle, here\u2019s your team. The team was told that I was a contractor. This company used a decent amount of contractors so my being there, my role was fairly normal. I think there might have been another person who\u2019d started a week earlier as an actual content creator within Marketing. JACK: He takes a look at the computer that was given to him. TINKER: I came in as an employee, as a contractor, but it was the same thing. They gave me a laptop that had a very [00:10:00] standard \u2013 their standard work station image, right. I could use that. It was fairly locked down and they did that on purpose \u2018cause they wanted to say hey, what\u2019s available to someone else or what happens if one of their employees clicks on a phish and they have that user-level starting point? They gave me that. JACK: That\u2019s another good point. When a phish or phishing e-mail is successful, often the hacker will then have access to that person\u2019s computer who opened the phishing e-mail. If somebody in marketing did get phished, this is a great scenario to test whether or not they could get further into the network. I think it\u2019s a good idea to test this. TINKER: The very first day I came in with just the laptop that they gave me and maybe a Kali image burnt on a USB that I could maybe mount. I had in my backpack my own hack box, just a little Dell laptop loaded with Ubuntu as a base image with some Kali VMs, etc. That\u2019s kind of the rogue device. I had a standard set of equipment starting off. Not a lot was expected of me within the first couple weeks is what my team told me but it was very much watch the security videos, I\u2019m not supposed to click on a phish, that sort of thing. There was a couple things that they wanted me to start working on like an internal SharePoint. Again, nothing major. The culture was hey, we\u2019ll get you spun up over the next two weeks and starting on week three and four you\u2019ll start shadowing people and getting into it. JACK: This gave him a lot of time to himself to see what was in the network. TINKER: [MUSIC] The very, very first thing I did was plugged in their standard laptop and just get a feel for it. I wanted to know what\u2019s the username schema. Is it first initial, last name? Does it match the e-mail? It doesn\u2019t always match the e-mail. JACK: One thing that companies do is give certain IT admins a second username, something like -adm at the end or -admin. A username like this gives you a clue that that person probably has extra access than others. TINKER: The very first thing I can do is run \u2013 pull up command.exe on the workstation. I\u2019m using their tools. I\u2019m not using any malware. Just type in netspaceusers/domain and it will dump out the entire list of all users within that domain. I can do netgroupsdomain/admins, and dump all the domain admins. I can do netgroupsdomaincontrollers/domain and dump out the host names of all the domain controllers. JACK: These commands spit out a ton of data, giving a list of all usernames, all admins, all domains, and he\u2019s compiling this data to have it handy later in case he needs it. These commands he\u2019s typing aren\u2019t even hacker tools. They\u2019re just standard Windows commands there to help IT administrators do their job. This is all part of the reconnaissance phase. TINKER: Me running these commands as a user against the domain controller, that\u2019s how a lot of default Active Directory environments are set up. I did this raw just so I could have it offline at night. JACK: Active Directory is the mechanism that Windows computers authenticate to each other. Hackers love attacking this because it has so much data. It has information on all the users and all the passwords and it has tons of stuff that a hacker can use to escalate their privileges or move on to other systems. It\u2019s a great place to start looking. There\u2019s a lot of standard things to look for which are like low-hanging fruit; known vulnerabilities, best practices that the IT team didn\u2019t follow. One such bad practice is to set the admin password for Jeremy\u2019s laptop through a group policy because this means that the hashed password would be in the group policy and since Jeremy can see the policy he could grab that hash and try to crack it. TINKER: This place didn\u2019t have that so I tried a lot of the very standard things. Went through and checked some shares just using my own credentials, using guest credentials, no credentials, and did a lot of that stuff, just basic enumeration. [MUSIC] Got a feel for internal SharePoint, internal intranet, that sort of thing. What is available to the user? JACK: During this time he\u2019s also learning what kind of tools this company may be running internally. This is helpful because if you know for instance, that they\u2019re running SAP then you can start looking up vulnerabilities in SAP. He started building a map of the network. TINKER: The very first day I\u2019m just \u2013 the idea is just sit very still, find out what\u2019s going on in the environment. I kind of learned what\u2019s going around. JACK: Something a good penetration tester will do is try to be quiet as they can and not do anything to raise suspicion just so that they aren\u2019t detected early and they know what normal looks like. He was careful at what commands he was typing into the computer so that he wouldn\u2019t raise any sort of alarms. TINKER: The workstation had a bit of antivirus and Endpoint protection. It wasn\u2019t as robust as it could have been but it was definitely there. Endpoint protection is one of two things or both; it either prevents what it deems as malicious software but it can also do a lot of logging. JACK: Next he took a look at what tasks and services were running on his laptop. TINKER: Just doing CTRL + ALT + DEL and looking at Task Manager. Notice specific software solution that did a lot of heavy logging. JACK: This means the computer he was on was sending [00:15:00] all kinds of messages to the log-collector telling it what was going on on that system. If he was doing bad things on that computer, chances are that was going to be logged and someone else could see that and catch him. He didn\u2019t want to raise any suspicions so he stopped pulling data from Active Directory thinking someone might catch him doing it. Another thing he liked to do on his first day is be very visible around the office. He wanted people to know he belonged there and he was part of the Marketing team. He\u2019d take walks around frequently, get some water, go to the bathroom, chat with people. This also let him look around the office a little and scope the place out, see what normal office behavior looks like. He comes back to his desk and sits down and starts to pull out his rogue laptop which is full of all kinds of hacker tools. After the break we\u2019ll see what kind of fun he can have with this, what kind of trouble he can get into. Jeremy from Marketing pulls out a rogue laptop and boots it up. TINKER: When I did plug in my actual laptop, my hack laptop, the first thing I did is run Wireshark. JACK: [MUSIC] Wireshark captures all packets coming to that computer. It\u2019s sort of like sitting on the front porch of your house and watching all the traffic going up and down the street. But you really only get to see what\u2019s on your street, not the whole neighborhood. In fact you really only get to see what\u2019s coming in and out of your own driveway. But still, it gives you a good sense of what kind of traffic is going around. TINKER: I spun up Wireshark and started trapping a lot of \u2013 sniffing a lot of the packets. JACK: Primarily he was looking for\u2026 TINKER: What sort of hardware is on the system; laptop-wise or even server wise. What\u2019s the host\u2019s name schema? JACK: Because while Wireshark generally only picks up traffic to that computer, it also picks up broadcast traffic, too. These are packets that are intended for everyone on that subnet and computers make a lot of broadcast traffic. By capturing these MAC addresses it will also tell you what kind of systems are on the network because a MAC address contains information on what manufacturer made that device. Again, knowing this lets him blend in better. Now he\u2019s starting to know what kind of exploits he might be able to use. TINKER: Again, the very first day, especially right at the beginning, all I\u2019m really trying to do is just sit very, very still and listen to what\u2019s going on around me, get a feel for the environment. JACK: This reminds me of the quote from the spiritual teacher Ram Dass which goes like this, \u201cThe quieter you become the more you can hear.\u201d TINKER: One thing struck me is that they didn\u2019t have a very good NAC Solution. JACK: NAC is Network Access Control and it\u2019s a technology that gives each individual computer network access. With proper NAC, only computers that the company has authorized are allowed on the network and everything else gets no access at all. TINKER: It\u2019s to prevent this very specific type of attack where you plug in rogue devices. You should only plug in devices that you know are yours. The problem is having to manage all those assets especially when you come from an open environment where bring your own device and that kind of thing can get into the internal network. Implementing a NAC solution is a simple concept but it\u2019s very, very difficult and typically takes several months to roll out. They did not have network access control so I could plug in my rogue device. But as soon as I got done with the passive sniffing, I want to know what MAC addresses are associated with servers, with laptops, and whatever else I could find. There was sometimes even phones, right. What were the host names for each? I changed my host name to match their schema and I changed the first three octets of my MAC address to match their hardware, then I randomized the last three. I did do that in order to blend in. JACK: He\u2019s like Rambo now, painting himself with mud to avoid being detected. TINKER: The long and short is I tried a couple different things and ended up in a position where I was confident that I could start doing more active reconnaissance without being found out. JACK: Day one is over. Jeremy from Marketing quietly loads up his laptops and heads home for the day. He\u2019s feeling confident at this point. He\u2019s collected a lot of data and starts to get the feel for the environment and starting to think about what kind of attacks he can use. The next day he comes in, fires up Responder. [MUSIC] In my opinion Responder is an amazing tool. It\u2019s like cheating almost for hackers. Here\u2019s how I think it works. Okay, so if you have an office job and you use a computer, do you have shared drives on that computer? If you\u2019re on a Windows machine you might have the M: drive or the I: drive or the Z: drive. This is some shared network folder that other people in the office can access, too. Okay, so suppose your Windows computer needs to connect to this shared network drive. There\u2019s a number of things it has to do. Usually the shared drive is like a host name. It\u2019s not always an IP address so the first thing your computer needs to do to connect to that drive is to resolve the host name. That\u2019s what DNS is for. Now, there\u2019s a DNS order of operation here. Your computer will first check the internal host file to see if it has a hard-coded IP address for that server. If not it\u2019ll then go to the DNS server to see if it knows what the IP address is. Normally the DNS server knows the IP but sometimes it fails. It fails [00:20:00] because maybe you\u2019re on the wrong network, you\u2019re not VPN\u2019d in, the shared server might be offline. If you ask the DNS servers what\u2019s the IP address for this host name and the DNS server doesn\u2019t know, then what does your computer do next? It asks everyone on the subnet hey; does anyone here know what IP address is for this shared drive? That\u2019s when Responder kicks in. Responder is a lying, cheating, sneaky, ugly-looking guy who says yeah, I know exactly what IP address is for that server. Your computer says oh great, what is it? Responder says it\u2019s me, I\u2019m that shared drive even though it\u2019s not. Your computer says oh, okay. Great, let me in then. The Responder says okay sure, no problem but first I want to make sure you\u2019re allowed so tell me your password. Your computer then gives Responder the password. TINKER: You\u2019re not gonna send your raw password in clear. You\u2019re going to send your authentication hash. This sent its typically Net-NTLMv2 or v1 and that\u2019s a salted hash. JACK: Do you see what happened here? Responder is a hacker tool that just lies and tricks a computer on the local subnet into giving computers the hashed password to that computer. It\u2019s unbelievably good at this too, and it\u2019s almost impossible to detect since you have to have sensors on that local subnet to spot it. TINKER: Generally speaking I will run Responder twice a day for maybe fifteen to twenty minutes and even intermittently at that. I run it right in the morning and right at noon when people are logging into their computers. They\u2019re logging in the morning, they\u2019re logging in back from lunch. That\u2019s when a lot of that traffic comes that you can track. Generally speaking, depending on how big the environment is, I\u2019ll pull down ten, twenty hashes quite easily. JACK: He fires up Responder in the morning and waits for hashes to come in. TINKER: I pulled down maybe five to fifteen hashes total. JACK: [MUSIC] Nice. With this, if he can crack a few of these, he can then work his way into the network and get some more privileges from someone else. TINKER: I pulled down these hashes. Again, they\u2019re Net-NTLMv2 hashes. JACK: He loads these up into his GPU password-cracking rig which is offsite at his own office. TINKER: It was eight Nvidia GTX 1080 TIs mounted in a 4U Rack server. JACK: Whoa, what a monster. That\u2019s like an $8,000 computer. Basically what it\u2019ll do is take those hashes he picked up from Responder and load them up into this computer. Then he runs a tool called Hashcat to cycle through billions of passwords a second to try to find the matching password. A computer like that can try every word in the dictionary in like, under a second. Then it will go and try adding numbers to the ends of words, or special symbols like a dollar sign instead of an S. It will keep trying passwords more random and more complex over time until it finds a match. This is brute force password-cracking. TINKER: The lowest I\u2019ve ever gotten is like, a 20% crack rate, one in five. Somebody is statistically \u2013 I\u2019m gonna get that much. Usually on those immediate standard stuff I\u2019ll get anywhere from 50% to 75% crack rate. NTLM, I think at that time we could do something like 300 billion guesses per second. I want to say with Net-NTLMv2 it was only and I say only, it was only somewhere between I don\u2019t know, six to twelve billion guesses per second. So not too many. I ran it against our standard dictionaries and our rule sets and I didn\u2019t crack any. JACK: His monster of a cracking station tried billions and billions of passwords and found absolutely no matches on any of the hashes. This was a big surprise. This never happens. TINKER: Usually when that happens it means my tools are broken, like an update broke it or something. I went and checked all my tools, put in known hashes. I test hashes to make sure my tools work and those cracked just fine. I did troubleshooting on my own stuff and it was working. That\u2019s when I stopped and went back into the intranet and looked up a security policy. JACK: The security policy is going to tell you the minimum length of what a password must be and how many special characters and digits that have to be in it. TINKER: Sure enough, I believe they had a minimum of twelve character passwords. At that point started to become passphrases. I\u2019m a big advocate of passphrases. Password you can crack fairly easily but a passphrase, ideally four or five different words, completely random, that\u2019s much more robust that what we have today. I said okay, alright, that\u2019s fine. It\u2019s still upper lower number and symbol, three out of four, and it still changes every ninety days. That means that people aren\u2019t gonna create a really hard-to-figure-out passphrase. They\u2019re gonna create something that they can remember and then iterate on it. I changed a little bit of my attack settings to [00:25:00] account for a minimum twelve character and basically just picked longer words and longer numbers at the end. I did four digit numbers so you usually get the last four digits of somebody\u2019s Social Security Number, the current year, something along those lines. I just picked longer words. I went onto the website and did a full word scrape from all their stuff including a lot of stuff from the internal internet to get the cultural thing. You get local sports teams, you get local schools, you get local street addresses, and any kind of mascots or what have you that they really identify with. You also get cultural phrases. I finally did that and I finally got, I want to say a good tidy handful. I finally got a couple of clear text passwords. But let me tell you, my equipment was sweating after that. JACK: [MUSIC] Okay, now Jeremy from Marketing has a few other employees\u2019 passwords and really, getting this was not that difficult. Running Responder is really simple to do and he\u2019s using off-the-shelf parts to build a computer to crack these hashes. It sounds amazing but if you know what you\u2019re doing it\u2019s really not that hard. Now that he has a few usernames and passwords, he cracks a small smile because it feels like a big win but he doesn\u2019t want to let the other people in Marketing know that he\u2019s doing something. He begins to try to figure out what he can do with these accounts. TINKER: There\u2019s a couple things that you can do. You can immediately try to log into a workstation. I know their laptop is on the subnet and I do a very targeted spray with their username and their password against all of it. JACK: What targeted spray means is that he\u2019s subtly trying to remotely log into a computer using these passwords he found. But none of the logins worked. TINKER: The error message amounted to good password but not authorized to log in, not within the group that can do remote logins which is fascinating, right? That is absolutely something that you can do but I very rarely see. By default that\u2019s not set up which to me, that was kind of my first shock to the system. Aside from the fact \u2013 I\u2019m like, here I am. They require twelve character passphrases and they don\u2019t allow common users to do remote logins for their own boxes. I\u2019m starting to go okay, something\u2019s going on here. What sort of place have they put me in? JACK: [MUSIC] Okay, these users cannot log in remotely but they have to be able to log in normally like when they\u2019re at a workstation. He logs out of his company-issued workstation and he tries to log in with one of these usernames. Earlier he was pulling stuff from Active Directory but because there was so much logging enabled in his laptop, he had to stop because he didn\u2019t want to bring attention to himself. But now that he has someone else\u2019s password and he can act like someone else for a little while, he can use that to gather more information with. TINKER: What I did with these credentials \u2013 \u2018cause I didn\u2019t want to use my own credentials. I didn\u2019t want anything to be tied back to me as a person. I used these stolen credentials and at that point I logged into SYSVOL on the main controller, pulled all of Active Directory. You can mount SYSVOL and get all the group post preference. You get scripts in there that the domain admins will run and other IT will run. You can sometimes pull hardcoded credentials out of those. I pulled all the users, usernames, and host names, and a myriad of other things. With the domain controller I pulled out all the information of all the users including the groups and had a lot of recon at that point. It was rather successful, that first go. That\u2019s just users. Even though I wasn\u2019t able to log into the user laptop, I was able to at least interact with the domain controller in the way that Windows allows for. But still at this point I don\u2019t have much, right. JACK: Right. So now we\u2019re nearing the end of the second day and Jeremy from Marketing is really struggling to get anywhere in this network. Sure, he has a few passwords but he\u2019s very limited at what he can do with them. Usually by now he\u2019s deep in the network with starting to get access to Active Directory servers, something, something bigger than this. But he\u2019s got nothing so far. TINKER: At this point I\u2019m like okay well, I still have good user credentials. What am I gonna do? The first thing I tried to do is just log into their e-mail using either OWA or Office 365 or whatever single sign-on that they were using. I was able to get in. [MUSIC] They did not have multi-factor authentication set up on e-mail. As luck would have it though, one of the very first e-mails that I read just rifling through someone else\u2019s e-mail was an e-mail saying hey, be advised next week we\u2019re implementing multi-factor authentication in e-mail so be prepared to set that up. I\u2019m like woo! I got in early enough to where I didn\u2019t have to do that. JACK: Now he starts looking through the e-mails to see if he can find anything of importance; maybe IT e-mailed them passwords at one point or something else that might be [00:30:00] helpful. He found a password but it was for a third-party tool like a tax-assessor\u2019s website or something. Really, that\u2019s it. He even looked for internal nodes that Outlook sometimes stores for users to see if they just wrote their passwords down on that or something but there was nothing there. No help. He tried a new approach. TINKER: Get into their single sign-on, their internet. JACK: What I see companies doing today is they create a single portal for employees to log into which then provides them access to all the tools. This is a called single sign-on because you log in once and gets you access to many things. TINKER: Single sign-on that\u2019s not set up properly or securely is a hacker\u2019s dream. All of the things are in one tidy little group and you have full access to it. I\u2019ve taken down entire organizations where single sign-on was there, like a hub of applications, if you will. One of them gave me a whole lot of access. This place though, I got in from the outside which I tried to do because I didn\u2019t want it to originate from the inside. From the outside it required multi-factor authentication just to log in. JACK: When he says from the outside he means from outside the company. The single sign-on portal can be accessed from anywhere in the world. It\u2019s right on the internet but ah, multi-factor authentication makes it much harder to log in. This is where you need both a password and a six-digit token code generated on your phone or something to get in. He tried to get into the portal from his laptop on the inside of the company and it didn\u2019t require a multi-factor authentication. Yeah, now he\u2019s in. He looks to see what\u2019s there. A bunch of different apps, payroll stuff, client databases, control panels, okay. He\u2019s feeling like he\u2019s getting somewhere now. TINKER: [MUSIC] I clicked on one of the apps and each individual app required its own separate multi-factor authentication login. I was like what? What kind of lockdown prison is this place, right? JACK: It\u2019s the opposite of single sign-on. TINKER: Well exactly, and so what they\u2019ve done is they set it up properly. They had one place for everybody to go to but man, you better have your soft token or something set up. At this point I\u2019m getting kind of heated. I\u2019m like Tinker, you\u2019re losing time. You better hack into something. I had gotten a couple of things; I hacked into e-mail but it didn\u2019t give me much. I already have some findings. I\u2019ve got a report here that\u2019s building of things they can tighten up but nothing significant. Pen testers, your dopamine, your adrenaline is going off those really big hacks, right. I still at this point have not gained access to another workstation beyond my own. JACK: He takes a little break, gets a drink of water, resets himself, and sits back down. TINKER: I need to lat move. I need to start getting onto some servers. I need to start going and at least targeting some crown jewels here but I\u2019ve got nothing. One thing caught my eye though, in the single sign-on, was Citrix. I, as an attacker, I love Citrix \u2018cause what Citrix is, is it amounts to Remote Desktop through the browser. Generally if there\u2019s something from Citrix, generally it\u2019s a server of some sort that\u2019s hosting internal applications or something else it\u2019s serving up. But I see Citrix and I usually go for it \u2018cause I can really get a good thing there, maybe dump some memory. I click on Citrix and it asks me for multi-factor authentication and it says it\u2019s gonna send it via SMS to this user\u2019s cell phone. But it only gives the last four digits of the cell phone. JACK: While yes, it\u2019s possible to hijack the cell phone, do SIM swapping or something, that\u2019s technically illegal and he\u2019s not allowed to do illegal things as a penetration tester. All he knows about this person is their name, their username, their password, and the last four digits of their cell phone. TINKER: But I have their e-mail so I type in the last four of their phone number into the search bar within this person\u2019s e-mail and I pull up one of their signatures that has their full phone number. Okay, I have their full phone number, I have their name, I have who they are, I have everything that amounts to them within this environment. Let\u2019s bypass multi-factor authentication. JACK: [MUSIC] Okay, so here\u2019s what he\u2019s gotta do. He\u2019s gotta click on that login to Citrix which will then send a text message to the phone of that user and he\u2019s gotta somehow get that text message, enter it into this website all within sixty seconds before the code expires. This isn\u2019t gonna be easy. TINKER: I have this phone number. I called the person. I gotta make sure none of the people around me are hearing me at this point, right? But I put on my headset, put on my own phone, and I called this person. They answer; Jane from Accounting. I lie to them and then I say hey, I\u2019m somebody [00:35:0] else from IT and we\u2019re gonna migrate your Citrix since it\u2019s within single sign-on. This person has no idea what I\u2019m talking about. They\u2019re not IT and so they\u2019re like, all they hear is computer gobbly gook. They\u2019re like yeah, that sounds fine. Why are you calling me? I\u2019m like well, I\u2019m gonna send you a pin number that I need you to read back to me that authenticates that it is your account but I need you to know as your IT, I will never ask for your password. Again, this gives them a sense of security. I obviously already had their password but it gives them a sense of security and says okay, well they\u2019re not gonna ask for my password. That\u2019s what matters so I\u2019ll read off this pin. I said okay, I\u2019m about to send you a text message. You\u2019ll receive it from my server, Citrix, right, and they go okay. I go ahead and click Send MFA and they go okay, I got the text. You just need me to read this to you? I go yup, just read it to me. She read it to me. I typed it in within the minute \u2018cause you only have about sixty seconds and it logged me in. I go okay, well just letting you know, and this is right before lunch, go out and take a long lunch or don\u2019t interact with Citrix for at least two hours while we do the migration. She said okay, great, sounds good. I go okay, sounds good. Bye. I\u2019m like okay great, finally. I\u2019ve got into Citrix. I log into Citrix and there\u2019s no applications. There\u2019s no computers. It\u2019s an empty Citrix instance. I\u2019ve hacked my way into a broom closet. There\u2019s nothing here. I just bypassed multi-factor authentication through a solid social engineering exploit after cracking this person\u2019s password which was hard to crack to begin with. A day and a half has arrived up to this very point and I\u2019ve got nothing, absolutely nothing. JACK: At this point if you were to look over at Jeremy from Marketing you\u2019d see him sweating and shaking. TINKER: I found that generally when I\u2019m doing a soc eng or social engineering attack or when I\u2019m doing a physical break-in or what have you, when I\u2019m doing it I\u2019m calm, cool, and collected. I\u2019m usually sweating like you wouldn\u2019t believe but my demeanor is on point. Afterwards though, man, that adrenaline rush, it comes crashing down and I will, I shit you not, I will physically shake. I\u2019m probably one of the most loud, outspoken introverts you\u2019ve ever met. I am confident in front of people. I used to be a Sergeant in the Marine Corps and when you got a platoon full of trained killers and you\u2019re trying to get them to do what you want them to do you have to develop confidence, or at least a projection of confidence. You gotta lie through your teeth, right. I will have confidence; I\u2019m socially adept but it still drains me, especially when I\u2019m doing something like this that I have to put on a heavy mask and so yeah, I get out of that. I\u2019m sweating. It took me probably about a full hour to prepare for it as I did an in-depth research on this person. I\u2019ve got nothing. JACK: Usually he\u2019s a lot further along at this point on his penetration test and it\u2019s just making him really worry that he\u2019s not gonna find anything. TINKER: I go screw it; I\u2019m gonna go all out at this point. As people start leaving to head home I say hey, I\u2019m gonna stay back and finish trying to knock out some more of these onboarding videos and nobody seemed to mind. JACK: [MUSIC] He sits and waits, sitting in his cubicle watching everyone leave the office. He keeps peering over and seeing if anyone has left. He sits back down and waits some more. TINKER: I waited until the cleaning crew came. I waited until the cleaning crew left. I think I was the only one on that floor. I believe there was maybe a couple other people working on different floors but I was the only one on that floor. JACK: He starts walking by every cubicle looking to see if any computers were logged in while that person went home. No computers were left logged in but he does see some people did leave their computers behind. TINKER: I said you know what, I\u2019m just gonna steal laptops. I don\u2019t even care at this point. I go start plugging into my colleague\u2019s laptops that left their laptop there but two things kind of jumped out. The biggest thing was they had encrypted hard drives so even if I mount and boot from USB which I was able to do, I couldn\u2019t mount their hard drive. It was encrypted and so I couldn\u2019t pull off any kind of local admin hash. JACK: Ah, again blocked. All these little safeguards in place are really giving him a hard time to get anywhere. Even when nobody is in the office he still can\u2019t access people\u2019s laptops. He\u2019s tired, he\u2019s hungry, he\u2019s nervous, and his frustration is just building. TINKER: I said screw it, I\u2019m gonna go after the IT shack. JACK: Okay, so the IT shack is the room where the IT help desk keeps all the computers. Like, they probably have ten, twenty, a hundred computers in there. If he can get into this room he\u2019d have access to a lot of workstations and he thinks maybe if he gets his hands on these he can get somewhere. TINKER: Going up to the IT shack, during the previous [00:40:00] couple days, whenever I\u2019d get up and walk I\u2019d try to make people see me so that they know I\u2019m supposed to be there. I\u2019m doing kind of reconnaissance on where everything was. By that time I knew where the break room was, I knew where the guards hung out, I knew where the IT shack was. First thing I had done previously was check where all the cameras were and there was not a camera looking at the door to the IT shack. I knew that visually I was fine but when I went to the IT shack I wanted to make sure there was no one around the corner. I wanted to sit there and pause. JACK: He stands and waits right around the corner from the IT shack door and he tries to listen to see if anyone is around. TINKER: In order to really cast your hearing out to hear as best you can, there\u2019s a couple things that you can do. One is slow down your own breathing to slow your heart down \u2018cause if your heart\u2019s beating that\u2019ll actually fill your ears with a pump, pump, pump of blood so you need to calm yourself completely down. I tilt my head down. I looked down because I want to focus. I\u2019m not necessarily closing my eyes but I want to focus on my hearing so I\u2019m making sure that I\u2019m not looking at anything in particular. Then I open my mouth slightly and the reason why you do that is you have your jaw muscles; when you have a clenched or closed mouth, your jaw muscles will actually come right up near your ear canal and kind of close it off slightly. You can try this even at home. Get to a place where you have your jaw closed and just listen for a while. You can do this at night and then open your mouth comfortably wide open. You don\u2019t want to strain yourself but comfortably open to move your jaw bone away from your ear canal. You\u2019ll find that that opens your ear canal wide open and you can hear a lot more. I say get context; not only can you hear further but you can hear more things. Does that make sense? JACK: Yeah, I love pen testers. It\u2019s like you\u2019re Felix the Cat; you have a bag full of tricks and you never know when you need it but you just have them ready to go. TINKER: That\u2019s the thing, we try to be Jacks of all trades and you try to study as many things as possible. I\u2019ve pulled that trick out of being in the Marine Corps when you have to do night missions. Little things that you pick up along the way that I tell you, they come into play. JACK: After standing around the corner from the IT shack door for a good thirty seconds listening for anything, it seems like the coast is clear. Time to move in. He gets his lock picks ready and is prepared to move to the door and start picking the lock. He turns the corner and to his surprise a door stopper is stuck in the door which is just barely keeping the door open slightly. Alright, lucky break. He won\u2019t have to pick the lock now. But this gave him a totally different sensation. Was someone in there? If so, is he gonna have to wait even longer for them to leave? He tries to look through the crack but he can\u2019t see much. Screw it, he\u2019s going in. TINKER: [MUSIC] I walk in real quick and I see stacks and stacks of laptops. JACK: Nobody was in the room. Someone accidentally left the door open all night. TINKER: I come to find out later on it was literally a person had forgotten their keys and so they left it propped open to go to the restroom and never came back to shut the door. JACK: He\u2019s standing in the IT shack in front of like, seventy-five laptops or more. TINKER: I\u2019ve got an option here. I can stay in the shack and do all my things there or I can take what I need and move over to my desk or conference room, whatever, and do it elsewhere. There\u2019s a give and take of both. If I stay in the shack no one will see me hacking into these computers and so if I stay in there I protect myself against the bulk majority of people that will be walking through in the middle of the night if they came in after hours for whatever reason. But if I stay in there and an IT person comes in, which plenty of IT people work overnight or have to come in for a call or something, I\u2019m caught red-handed. I\u2019ve got no excuse for being in there. I make a call that I\u2019m gonna start hauling as many of these computers to my desk and then from my desk, bring them up and if someone comes by hopefully I\u2019ve got them tucked away or whatever and I can pretend that it\u2019s mine or whatever. I can hear them coming, I can hide it and go back to work. I start taking armloads, like full handfuls of these laptops to my cubicle area and stacking them underneath my desk. I ended up grabbing \u2013 I made, I don\u2019t know, three or four trips and ended up grabbing about thirty laptops before I said you know what, this is probably enough. I went back to my cubicle at this point, shut the door, and just started trying to boot from USB and mount as many hard drives as possible. JACK: He starts going through each laptop one by one, spending hours on them trying to find if any of them have an unencrypted drive. He finds two in the whole stack that were either old images or didn\u2019t get encrypted. Now that he has an unencrypted hard drive he dumps the local administrator hash from that laptop. Once he has this hash he starts running it through that monster password cracking station he has and he tries to crack the admin password. TINKER: I crack it rather quickly. It was actually the company name and the year with a capital first letter on the company name, a very weak password. [00:45:00] I was like are you kidding me? Everything else I\u2019ve found has been amazing and this is it? JACK: Just to test the password he tries logging into his own workstation with it and the admin password worked. Bingo. This means the admin password that he just found is likely the admin password for all the user\u2019s laptops in the office which should allow him to log into any user\u2019s laptop. Finally he\u2019s making progress. This is a big break. He starts putting the laptops back in the IT shack. TINKER: I took pictures of where they were so that \u2013 they were out of order by this point but I put them, I mean, stacked about as precisely as I possibly could. Anything I touch, I put it back as closely as I found it so that it doesn\u2019t look like it\u2019s been disturbed. I\u2019m like okay, well great. I got a lucky break. I can now use this to spray everything, right? At this point I\u2019m beat and I go home and I sleep. JACK: Feeling rested and happy that he has an admin hash and a password, he comes back into the office finally ready to dig deep into the network. TINKER: I come back in and okay, I\u2019ve got the best thing that I have; I\u2019ve got a local admin hash. First thing I try to do is pass the hash which just uses the actual hash as a password. JACK: Which is a great technique. Often when you\u2019re logging into another computer your computer hashes your password and gives it to that other computer to log into so if you have the hash, just give him that and that could authenticate you. But in this case it wasn\u2019t working. There was some kind of error but last night he cracked the local admin password. IT administrators will often reuse this password so this local admin password might actually work on every laptop in the whole company. He tries to remotely log into another computer using this local admin and password. TINKER: But it wasn\u2019t working. The local admin hash was not letting me log into \u2013 again, it comes up as valid credential but you\u2019re not allowed to log in. I\u2019m like, this is asinine. Even the local admin needs to be able to log in. It\u2019s not letting me. JACK: He logs into his own laptop again as local admin to try to figure out what\u2019s going on. TINKER: When I log in with the local admin password they don\u2019t have access to the full computer. [MUSIC] The local admin, the local administrator, does not have full access to the rest of the hard drive. It doesn\u2019t have access to the user level which \u2013 this doesn\u2019t make sense \u2018cause that\u2019s how it\u2019s set up. That admin has access to everything. Again, I\u2019m punching myself in the face. It turned out that they were using a third-party non-Microsoft tool to do access control and user control, etc. JACK: This is quite impressive. While the password was probably used for everyone\u2019s laptop the admin user doesn\u2019t have that many rights at all. I\u2019ve never heard of this myself. But yet, this is another safeguard that this company has put in place in case this password got leaked which was really hard to find to begin with. This would stop them even further. TINKER: Now I\u2019m angry. At this point I can pop a shell from my computer but \u2013 to my rogue computer. With this pass I can log in anywhere and get a shell if I have physical access to somewhere but it doesn\u2019t give me any rights. I don\u2019t have anything. I\u2019ve got this tiny little niche. JACK: I would be angry too. So many of his exploits and techniques should have given him access to the whole company by now but this company was foiling his every single move and all his techniques. Now he\u2019s tired of trying to fly under the radar. He\u2019s ready to try an exploit on another computer that might make a little noise. From there, if he can get into a computer he can see if there\u2019s anything good on that and move around to another computer. He scans his own computer to see if it has a vulnerability that he can exploit. TINKER: I tried a variety of them but the one that worked was unquoted service path which the way Windows works, is if say you want to run a program at startup and it\u2019s designed to run this program at startup. But one of the folders that you run this program in has spaces in it. If you don\u2019t put quotes around that full path, what Windows will do is attempt to run up to the space as if that word, say it was something that said Citrix space Server. That\u2019s a BS one. It would try to run Citrix as an executable first before it tried to run Citrix server as a directory. If you go in there, if you have ReadWrite and you can create a program, a malicious program that\u2019s named Citrix as opposed to Citrix space Server, it will run your program as in this sense, system because this system was calling it. I found a directory that let me do this. It wasn\u2019t Citrix space Server but I\u2019m like okay, great. But I ran a check to see if I had ReadWrite and it said I didn\u2019t. At this point I\u2019m like well, fuck it. I\u2019m done. This is horrible. JACK: [MUSIC] Without the ability to write to the remote computer, he\u2019s unable to exploit that thing. Because it said he didn\u2019t have the ability to write, he just gave up at this point, totally out of ideas. He put his elbows on his desk and he put his head in his hands, completely [00:50:00] dumbfounded. He\u2019s now on day three and still has not gained access to any computer outside his own and a couple of powered-off ones in the IT shack. His report and findings so far looked dismal. This has been the hardest assignment he\u2019s ever had. Now day three is over and he heads home. Morning comes. It\u2019s now Thursday and he\u2019s getting ready to go into the office. TINKER: I call up an associate of mine. I told him here\u2019s everything I did, but I ran the check to see if I had privs and it said I did not have writability. He goes well, did you try it anyways? I\u2019m like oh, goddammit. No, I didn\u2019t. I just assumed. I went ahead and tried to write to it and I could. [MUSIC] Even though Windows came back and told me I couldn\u2019t, I was allowed to write. This kind of tells you don\u2019t listen to the output of the tools that you\u2019re trying to hack into. Turned out again, this third party software that ran all the access control, the third party allowed them to write even though the native Windows didn\u2019t. Third party superseded native Windows. At this point I now have a meaningful way to escalate privileges to system level and I tried it out. I went with my colleague; he wrote a stager and I wrote the malware for it. He wrote an executable that will then call my PowerShell, reverse shell. I think it was just a tweaked version of Veil or some sort of PowerShell, remote shell. We tested on my own workstation, unplugged from the domain. At this point I\u2019m getting kind of gutsy here and it worked. JACK: Okay, so for this exploit here\u2019s what needs to happen. First he has to put the exploit on a USB drive and then physically take it to another computer. He would do this while a person wasn\u2019t at their desk. TINKER: Log out of their user, log in as the local admin, drop two sets of malware. JACK: Drop it in as in copy it from the USB to the computer and then log out as admin. Then when the user comes back and logs in, his malware should give him remote access to that computer. TINKER: Even though I found this way to do it, it\u2019s still under \u2013 a person has to break in by this point to have physical control. I\u2019m like you know what? Screw it. We\u2019re gonna do this. JACK: He thinks over this plan. This is a risky move but if done right could get him access to that person\u2019s computer. So whose laptop would be worth getting into? Maybe the CEO\u2019s. Hm, yeah, but they weren\u2019t at this office. Who else? The IT team. [MUSIC] Perfect. TINKER: I\u2019m gonna go straight for IT. I\u2019m gonna hit IT and I\u2019m gonna take them down. I\u2019m gonna get system level remote access. JACK: With this remote access you\u2019d be able to do everything including reading the CEO\u2019s e-mails. The plan was to wait until lunch when he could go over to the IT team\u2019s computers and put this malware on it. He waits and waits, peering over his cubicle from time to time. He watches a few more of those onboarding videos for Marketing and waits until lunch. The Marketing team asks him to go to lunch and he\u2019s like no, no, I\u2019m fine but they kept insisting and he\u2019s like no, really, I want to stay so his team leaves him behind. He thinks okay, now\u2019s a good time. TINKER: I set up a listener on my rogue machine and I go start walking. I\u2019ve got a little thumb drive with my malware on it and their antivirus didn\u2019t detect it \u2018cause we kept it very low level. I go over to the IT area and I shit you not, the bulk majority of IT are sitting there eating lunch at their desk. I\u2019m like a) that\u2019s not healthy. That\u2019s not good work. You need to get away from your computer. You need to stand up. You need to walk. But are you kidding me? This is not saying this is a valid defense technique, seriously. One person can be there if they really need to but people need to get up and move away from their computers, even IT. I\u2019m frustrated. I start walking and pacing around. At this point I\u2019m getting kind of heated. I\u2019m losing my cool. I go around a corner; I finally find an area that doesn\u2019t have anybody and sure enough it\u2019s Finance. I\u2019m gonna take down Finance. I go up there. As I\u2019m up there I see one lady sitting down next to one of these cubicles and I\u2019m just gonna go for it. I tell her; I go look, I\u2019m IT. I\u2019m about to do some updates. She goes okay, sounds great. I go ahead and do it. I pop it up and about thirty seconds it takes me to log out, log back in, drop the malware into the correct folder, log out again, and then leave. JACK: He goes back to his desk and waits. Now what he\u2019s waiting for is that lady from Finance to finish her lunch and to log back into her computer. He pulls Metasploit up and waits and watches. Metasploit is like a hacker\u2019s tool bag. It contains hundreds of exploits and tools to hack into stuff. He\u2019s got this hack all set up. He\u2019s staring at his screen and it says the listener is running and waiting for mode activity or something like that. If everything is set up right, when she comes back and logs into her computer he\u2019ll then have remote access to that lady\u2019s computer in Finance. The screen will say Meterpreter Session One [00:55:00] Open. He waits for activity. Nothing. Nothing. He peeks over the cubicle wall sometimes to see if he can see her but he can\u2019t see anything. He waits longer, longer. He just keeps waiting. Come on, lady. The wait is killing him. It\u2019s now been forty-five minutes at this point and he\u2019s starting to think it didn\u2019t work. She had to be back by now and for some reason, whatever reason, the malware just didn\u2019t work. TINKER: I\u2019m about to give up. I see Meterpreter Session One Open, right, and I\u2019m like oh yeah, there it is. Then I see Meterpreter Session Two, Session Three, Session \u2013 it popped eight shells. It tried to call this thing eight different times. I\u2019m like yes, I\u2019m in, alright! [MUSIC] I start rifling through this person\u2019s computer. I get persistence. I actually get a couple passwords for finance, some small ones. Right as I\u2019m about to start dumping memory I lose my connection. The session closed. I\u2019m like oh, no. No, no, no. I have been without sleep, I\u2019ve gone too far. What the hell happened to my shell? I get up and I make a beeline right to that lady\u2019s laptop \u2018cause I\u2019m gonna go pop another shell, you know. I\u2019m like get out of my way! As I go, I round this corner and this precious little old lady reminds me of my grandmother; she\u2019s looking up at this IT guy and she\u2019s like no, I don\u2019t understand. They told me you guys were updating my computer. Right as I come around heated, she turned and kind of glances at me and goes him! It was him! I\u2019m like oh, fuck! I let out this high-pitched seventh-grade girl scream, you know, and I turned around and right as I turned around there\u2019s two more IT guys right there. I\u2019m like oh, shit. [LAUGHING] And they\u2019re looking right at me like who the fuck are you and why are you calling yourself IT? They sat me down and they said who are you? What are you doing with these computers? Kind of thing. JACK: When a penetration tester gets caught like this, they have to think. Should I try to escape this situation or should I just tell them I\u2019m here working for the CISO? In this case he decided to say I\u2019m working for the CISO. TINKER: At this point I\u2019m at the end of my rope. I\u2019ve done a very thorough test even more than what I\u2019ve gone into here over a good week. I\u2019ve stayed late, I\u2019ve done everything I can think of and even learned some new tricks along the way. While I was able to find several different things, an easy password on local admin, even a shared password even though they used the other ones, some clear text credentials here and there. A lady gave me her pin over the phone. A lot of these things they could tighten up. Long and short, they stopped me and we brought in the CISO. He said hey, good job. Here\u2019s the situation. He\u2019s okay. We went into an initial debrief with what I had done and how they found me. I asked them; I go look, I ran the safest frickin\u2019 shell that I could run. I even tested it against your antivirus and your antivirus didn\u2019t catch it. I was only there for thirty minutes. How did you find me? They said you were running PowerShell from a finance computer and finance doesn\u2019t run PowerShell. The only people that run PowerShell are IT and maybe some of our Devs, you know, DevSecOps or DevOps. JACK: Power Shell is kind of like a super command line tool in Windows and yeah, only technical people ever use it or need it. The Finance Department would never run it so this sort of behavior is like anomaly-detection. That lady in Finance has never, in all the years she\u2019s ever worked there ran Power Shell. But this exploit did and since it was so out of the ordinary is how he got caught. TINKER: But yeah, it was one of the toughest places and I like telling that story when Blue Team kicked Red Team\u2019s ass because it showed what worked. Like I said, I still found a lot of different things that they could tighten up. They weren\u2019t perfect by any stretch of the imagination but they had such robust security that they were able to not only detect me but act on it. It\u2019s not enough to detect an attack. You have to do proper response and containment and I tell you what, they had all three. JACK: I imagine the IT team was proud of what they did to stop him but they remained focused and serious as Tinker went over the report. TINKER: They were taking ready notes. They didn\u2019t gloat. They didn\u2019t rub it in and they also didn\u2019t take offense of the things that I found. They were very professional and they said they appreciated it and looked forward to my full report. It was the epitome of professionalism. JACK: I like this story because not only do we get to see what a penetration tester does but we also get to see what steps a company can take to make it really hard for hackers to get in. Because the harder it is, the more resource a hacker has to have. They have to have more time or more processing power or more people or more exploits or something. The harder you make it for them the more motivated [01:00:00] they have to be to get through it. They\u2019ll probably just give up and move onto something else if it\u2019s too hard. Just to recap what worked here for this company, they had multiple layers of security, defense and depth. They had a minimum of twelve character password policy which made passwords hard to crack. They had two-factor authentication almost everywhere. They limited access to each user which made it hard to do any remote logins. The local admin had very limited access and the logging that was on everyone\u2019s computer allowed them to detect and find this hacker within minutes of him doing an exploit. All this added up creates a nightmare scenario for Tinker and will probably be enough to create a nightmare scenario for any other hacker. TINKER: The CISO was very \u2013 it was just professionalism from the top down. You could tell that this was a culture of continual self-introspection and self-awareness as it related to their environment and continual improval. He went in with the idea that at a certain point, you can\u2019t have a perfectly secure system or no one\u2019s going to be able to use it. If someone can use it you can \u2013 an attacker can emulate that user in some form or fashion. He\u2019s like, we\u2019re getting to the point where we have risk acceptance. If you have to break into my place and physically access a computer and do all this kind of stuff, at that point the only people I\u2019m really worried about are really high-end criminal groups; the NSA in Mossad. If it takes the NSA in Mossad to hack into my place, fine. We\u2019ll accept that. JACK: Thank you so much for sharing this story with us. TINKER: Cheers, cheers. Thank you for having me here to tell that story. A quick shout out to the Dallas Hackers Association. I\u2019ve never met a more vile bunch of criminals, thieves, con artists, and hackers in my life but there\u2019s some good folks. JACK (OUTRO): [OUTRO MUSIC] You\u2019ve been listening to Darknet Diaries. Thank you to Tinker for telling us this amazing story and teaching us about pen testing. You should follow him on Twitter because he tells a lot more stories like this. His name there is @TinkerSec. Also thanks to Proximity Sound for doing that voice intro. That was really cool. Darknet Diaries is going to do a bit of a rebrand in the next few weeks with a new logo, web page, shirts, stickers. I\u2019m super excited to roll it out so look for that soon. This show is made by me, the President of D-Corp, Jack Rhysider. Intro music is by Breakmaster Cylinder who you could always find hanging out at the Red Wheelbarrow BBQ.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-6456",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6456",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6456.mp3",
+      "title": "ISC StormCast for Tuesday, April 16th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. DNS False Positives; Adblock Code Injection; Executables in DICOM Images; Misleading VPN Ads",
+      "show_notes": [
+        {
+          "heading": "Common \"False Positives\" in DNS Query Logs",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Odd+DNS+Requests+that+are+Normal/24844/"
+          ]
+        },
+        {
+          "heading": "Adblock Plus Allows Filter List Providers to Inject Code in Pages",
+          "links": [
+            "https://armin.dev/blog/2019/04/adblock-plus-code-injection/"
+          ]
+        },
+        {
+          "heading": "Executables in Polyglot DICOM Images",
+          "links": [
+            "https://github.com/d00rt/pedicom/blob/master/doc/Attacking_Digital_Imaging_and_Communication_in_Medicine_(DICOM)_file_format_standard_-_Markel_Picado_Ortiz_(d00rt).pdf"
+          ]
+        },
+        {
+          "heading": "Malicious/Misleading VPN Ads",
+          "links": [
+            "https://www.bleepingcomputer.com/news/security/mobile-vpns-promoted-by-you-are-infected-or-hacked-ads/"
+          ]
+        }
+      ],
+      "published": "2019-04-16T04:40:02+00:00",
+      "duration_seconds": 424,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6456.mp3",
+      "audio_length_bytes": 5954866,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6456",
+      "categories": [
+        "vpn ads",
+        "polyglot",
+        "dicom",
+        "pedicom",
+        "adblock",
+        "dns",
+        "query logs"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6456",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6454",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6454",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6454.mp3",
+      "title": "ISC StormCast for Monday, April 15th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. MTA-STA; AirBNB Cameras; VPN Credentials; MSIE XXE Vulnerability",
+      "show_notes": [
+        {
+          "heading": "Configuring MTA-STS",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Configuring+MTASTS+and+TLS+Reporting+For+Your+Domain/24840/"
+          ]
+        },
+        {
+          "heading": "How to Find Hidden Cameras in Your AirBNB",
+          "links": [
+            "https://isc.sans.edu/forums/diary/How+to+Find+Hidden+Cameras+in+your+AirBNB/24834/"
+          ]
+        },
+        {
+          "heading": "Insecure Storage of VPN Credentials",
+          "links": [
+            "https://www.kb.cert.org/vuls/id/192371/"
+          ]
+        },
+        {
+          "heading": "Microsoft Patch Problems",
+          "links": [
+            "https://support.microsoft.com/en-us/help/4493472/windows-7-update-kb4493472",
+            "https://support.microsoft.com/en-us/help/4493446/windows-8-1-update-kb4493446"
+          ]
+        },
+        {
+          "heading": "Internet Explorer XML External Entity Vulnerability",
+          "links": [
+            "http://hyp3rlinx.altervista.org/advisories/MICROSOFT-INTERNET-EXPLORER-v11-XML-EXTERNAL-ENTITY-INJECTION-0DAY.txt"
+          ]
+        }
+      ],
+      "published": "2019-04-15T04:35:03+00:00",
+      "duration_seconds": 384,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6454.mp3",
+      "audio_length_bytes": 5396053,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6454",
+      "categories": [
+        "internet explorer",
+        "msie",
+        "xml",
+        "xee",
+        "airbnb",
+        "cameras",
+        "vpn",
+        "mta-sts"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6454",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6452",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6452",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6452.mp3",
+      "title": "ISC StormCast for Friday, April 12th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. GMail Supporting MTA-STS; Juniper Patch; Uniden IP Camera Site Hosting Malware",
+      "show_notes": [
+        {
+          "heading": "GMail Will Be Supporting MTA-STS and SMTP TLS Reporting",
+          "links": [
+            "https://tools.ietf.org/html/rfc8461",
+            "https://tools.ietf.org/html/rfc8460",
+            "https://www.zdnet.com/article/gmail-becomes-first-major-email-provider-to-support-mta-sts-and-tls-reporting/"
+          ]
+        },
+        {
+          "heading": "Juniper Patch Fixes Static Password in Junos OS",
+          "links": [
+            "https://kb.juniper.net/InfoCenter/index?page=content&id=JSA10923&actp=METADATA"
+          ]
+        },
+        {
+          "heading": "Uniden Commercial IP Camera Site Hosting Malware",
+          "links": [
+            "https://twitter.com/JayTHL/status/1116200014630596609"
+          ]
+        }
+      ],
+      "published": "2019-04-12T00:55:02+00:00",
+      "duration_seconds": 376,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6452.mp3",
+      "audio_length_bytes": 5277562,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6452",
+      "categories": [
+        "uniden",
+        "wordpress",
+        "malware",
+        "juniper",
+        "junos",
+        "password",
+        "grpc",
+        "gmail",
+        "mta-sts",
+        "smtp tls reporting"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6452",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6450",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6450",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6450.mp3",
+      "title": "ISC StormCast for Thursday, April 11th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. WPA3 Dragonblood Vulnerablity; HOPLIGHT Trojan; SneakyPastes",
+      "show_notes": [
+        {
+          "heading": "WPA3 Dragonblood Vulnerability",
+          "links": [
+            "http://papers.mathyvanhoef.com/dragonblood.pdf"
+          ]
+        },
+        {
+          "heading": "North Korean Trojan: HOPLIGHT",
+          "links": [
+            "https://www.us-cert.gov/ncas/analysis-reports/AR19-100A"
+          ]
+        },
+        {
+          "heading": "Gaza Cybergang Group1 \"SneakyPastes\"",
+          "links": [
+            "https://securelist.com/gaza-cybergang-group1-operation-sneakypastes/90068/"
+          ]
+        }
+      ],
+      "published": "2019-04-11T00:50:02+00:00",
+      "duration_seconds": 457,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6450.mp3",
+      "audio_length_bytes": 6420057,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6450",
+      "categories": [
+        "gaza",
+        "cybergang",
+        "sneakypastes",
+        "pastebin",
+        "north korea",
+        "hoplight",
+        "wpa3"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6450",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6448",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6448",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6448.mp3",
+      "title": "ISC StormCast for Wednesday, April 10th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Microsoft/Adobe Patches; Food Poisoning Malspam; Axis Vulnerability; Golang Vuln",
+      "show_notes": [
+        {
+          "heading": "Microsoft and Adobe Patches",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Microsoft+April+2019+Patch+Tuesday/24826/",
+            "https://helpx.adobe.com/security.html"
+          ]
+        },
+        {
+          "heading": "Fake \"Food Poisoning\" emails in Germany (in german)",
+          "links": [
+            "https://www.polizei-praevention.de/aktuelles/erneut-mails-mit-schadsoftware-gegen-gewerbetreibende-im-umlauf.html"
+          ]
+        },
+        {
+          "heading": "Vulnerability in Apache Axis",
+          "links": [
+            "https://rhinosecuritylabs.com/application-security/cve-2019-0227-expired-domain-rce-apache-axis/"
+          ]
+        },
+        {
+          "heading": "Golang DLL Injection Vulnerability",
+          "links": [
+            "https://www.openwall.com/lists/oss-security/2019/04/09/1"
+          ]
+        }
+      ],
+      "published": "2019-04-09T23:20:02+00:00",
+      "duration_seconds": 401,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6448.mp3",
+      "audio_length_bytes": 5634505,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6448",
+      "categories": [
+        "golang",
+        "go",
+        "axis",
+        "soap",
+        "axis2",
+        "food poisoning",
+        "north korea",
+        "microsoft",
+        "adobe",
+        "patch tuesday"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6448",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6446",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6446",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6446.mp3",
+      "title": "ISC StormCast for Tuesday, April 9th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. TrendMicro Patch; Dovecot Patch; Apache Exploit; Using Javascript in Exploits; Ghidra vs. IDA",
+      "show_notes": [
+        {
+          "heading": "GHidra vs. IDA",
+          "links": [
+            "https://isc.sans.edu/forums/diary/A+few+Ghidra+tips+for+IDA+users+part+1+the+decompilerunreachable+code/24822/"
+          ]
+        },
+        {
+          "heading": "TrendMicro Patch",
+          "links": [
+            "https://success.trendmicro.com/solution/1122250"
+          ]
+        },
+        {
+          "heading": "Dovecot Patch",
+          "links": [
+            "https://dovecot.org/list/dovecot-news/2019-March/000403.html"
+          ]
+        },
+        {
+          "heading": "Apache CVE-2019-0211 Exploit",
+          "links": [
+            "https://github.com/cfreal/exploits/tree/master/CVE-2019-0211-apache"
+          ]
+        },
+        {
+          "heading": "Using JavaScript in Exploits",
+          "links": [
+            "https://www.youtube.com/watch?v=HfpnloZM61I"
+          ]
+        }
+      ],
+      "published": "2019-04-09T01:30:03+00:00",
+      "duration_seconds": 333,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6446.mp3",
+      "audio_length_bytes": 4673404,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6446",
+      "categories": [
+        "trendmicro",
+        "dovecot",
+        "apache",
+        "javascript"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6446",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6444",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6444",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6444.mp3",
+      "title": "ISC StormCast for Monday, April 8th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Fake Office365 Invoices; \"well-known\" hiding place; Altering CT Data; QT Framework Bug",
+      "show_notes": [
+        {
+          "heading": "Fake Office 365 Invoices Spread Ransomware",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Fake+Office+365+Payment+Information+Update/24818/"
+          ]
+        },
+        {
+          "heading": "Malware Hiding in .well-known directory",
+          "links": [
+            "https://www.zscaler.com/blogs/research/abuse-hidden-well-known-directory-https-sites"
+          ]
+        },
+        {
+          "heading": "Altering CT Images to Manipulate Diagnosis",
+          "links": [
+            "https://arxiv.org/pdf/1901.03597.pdf"
+          ]
+        },
+        {
+          "heading": "QT Framework RCE Vulnerability",
+          "links": [
+            "https://www.zerodayinitiative.com/blog/2019/4/3/loading-up-a-pair-of-qt-bugs-detailing-cve-2019-1636-and-cve-2019-6739"
+          ]
+        }
+      ],
+      "published": "2019-04-07T23:00:03+00:00",
+      "duration_seconds": 407,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6444.mp3",
+      "audio_length_bytes": 5717882,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6444",
+      "categories": [
+        "qt rce",
+        "ct images",
+        "well-known",
+        "office365",
+        "fake invoice"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6444",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6442",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6442",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6442.mp3",
+      "title": "ISC StormCast for Friday, April 5th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Old Rule Triggers on New Exploit; Xiaomi Guardapp; Xwo Scanner; SmartWatches Pwned",
+      "show_notes": [
+        {
+          "heading": "New Waves of Scans Detected By An Old Rule",
+          "links": [
+            "https://isc.sans.edu/forums/diary/New+Waves+of+Scans+Detected+by+an+Old+Rule/24812/"
+          ]
+        },
+        {
+          "heading": "Xiaomi GuardApp Vulnerable to Man in the Middle",
+          "links": [
+            "https://blog.checkpoint.com/2019/04/04/xiaomi-vulnerability-when-security-is-not-what-it-seems/"
+          ]
+        },
+        {
+          "heading": "Xwo Web Scanner Hunting for MongoDB",
+          "links": [
+            "https://www.alienvault.com/blogs/labs-research/xwo-a-python-based-bot-scanner"
+          ]
+        },
+        {
+          "heading": "Vulnerable SmartWatches \"Defaced\"",
+          "links": [
+            "https://api.heise.de/svc/embetty/tweet/1112326532939374593-images-0",
+            "https://www.heise.de/newsticker/meldung/Vidimensio-Smartwatches-Der-Sicherheits-Alptraum-geht-weiter-4359967.html"
+          ]
+        }
+      ],
+      "published": "2019-04-04T23:35:02+00:00",
+      "duration_seconds": 347,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6442.mp3",
+      "audio_length_bytes": 4873813,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6442",
+      "categories": [
+        "smartwatch",
+        "xwo",
+        "xiaomi",
+        "guardapp",
+        "shellshock"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6442",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6440",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6440",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6440.mp3",
+      "title": "ISC StormCast for Thursday, April 4th 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Ghidra vs. IDA; IRS Phishing; Large Facebook Data Leak; PostgreSQL \"COPY\" Command",
+      "show_notes": [
+        {
+          "heading": "Ghidra tips for IDA users: Automatic Comments for API Call Parameters",
+          "links": [
+            "https://isc.sans.edu/forums/diary/A+few+Ghidra+tips+for+IDA+users+part+0+automatic+comments+for+API+call+parameters/24806/"
+          ]
+        },
+        {
+          "heading": "Security Awareness Newsletter: Making Passwords Simple",
+          "links": [
+            "https://www.sans.org/security-awareness-training/resources/making-passwords-simple"
+          ]
+        },
+        {
+          "heading": "IRS Themed Phishing Emails",
+          "links": [
+            "https://www.proofpoint.com/us/threat-insight/post/tax-themed-email-campaigns-target-2019-filers"
+          ]
+        },
+        {
+          "heading": "Large Leak of Facebook User Data via 3rd Party App",
+          "links": [
+            "https://www.upguard.com/breaches/facebook-user-data-leak"
+          ]
+        },
+        {
+          "heading": "Arbitrary Command Execution in PostgreSQL",
+          "links": [
+            "https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5"
+          ]
+        }
+      ],
+      "published": "2019-04-04T00:10:03+00:00",
+      "duration_seconds": 347,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6440.mp3",
+      "audio_length_bytes": 4876377,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6440",
+      "categories": [
+        "postgres",
+        "postgresql",
+        "facebook",
+        "amazon",
+        "s3",
+        "irs",
+        "phishing",
+        "ouch",
+        "passwords",
+        "ghidra",
+        "ida"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6440",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-6438",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6438",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6438.mp3",
+      "title": "ISC StormCast for Wednesday, April 3rd 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. LaCie Drives Spread Fake AV; Unpatched IE/Edge SOP Bug; Apache Patch; Verzion Phish",
+      "show_notes": [
+        {
+          "heading": "Compromised LaCie Drive Spread Fake AntiVirus",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Fake+AV+is+Back+LaCie+Network+Drives+Used+to+Spread+Malware/24802/"
+          ]
+        },
+        {
+          "heading": "Unpatched SOP Vulnerability in Internet Explorer/Edge",
+          "links": [
+            "https://thehackernews.com/2019/03/microsoft-edge-ie-zero-days.html"
+          ]
+        },
+        {
+          "heading": "Apache Fixes Privilege Escalation Flaw",
+          "links": [
+            "https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2019-0211"
+          ]
+        },
+        {
+          "heading": "Verizon Users Phished for Credentials",
+          "links": [
+            "https://blog.lookout.com/mobile-phishing-verizon"
+          ]
+        }
+      ],
+      "published": "2019-04-03T01:25:02+00:00",
+      "duration_seconds": 321,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6438.mp3",
+      "audio_length_bytes": 4511762,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6438",
+      "categories": [
+        "verizon",
+        "phish",
+        "apache",
+        "privilege escalation",
+        "sop",
+        "edge",
+        "internet explorer",
+        "msie",
+        "lacie",
+        "eset",
+        "fakeav"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6438",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "darknetdiaries-35",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "35",
+      "guid": "5f89d648-4847-11e9-b3ec-dfd225282585",
+      "title": "35: Carbanak",
+      "summary": "ATM hacking. Hollywood has been fantasizing about this since the 1980's. But is this a thing now? A security researcher named Barnaby Jack investigated ATMs and found them to be vulnerable. Once he published his data the ATM hacking scene rose in popularity and is is a very serious business today. One of the first big ATM robberies was done with the malware called Carbanak. Jornt v.d. Wiel joins us to discuss what this malware is. This episode was sponsored by Nucleus. Visit nucleussec.com to start your free trial. This episode was sponsored by IT Pro TV. Get 65 hours of free training by visiting ITPro.tv/darknet . For more show notes and links visit darknetdiaries.com .",
+      "show_notes": [],
+      "published": "2019-04-02T07:00:00+00:00",
+      "duration_seconds": 2414,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/978c1763-8388-4e79-ba9b-c4cb4a86cec2/darknet-diaries-ep35-carbanak.mp3",
+      "audio_length_bytes": 38797630,
+      "episode_link": "https://darknetdiaries.com/episode/35/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/978c1763-8388-4e79-ba9b-c4cb4a86cec2/images/7e1d24d4-bf73-4674-98dc-b492262b9cd3/uploads_2F1563861836394-4b8klaywv8l-fa64670117984cdcb4cd7829f32f5226_2Fcarbanak.jpg",
+      "transcript_url": "https://f.prxu.org/7057/978c1763-8388-4e79-ba9b-c4cb4a86cec2/transcripts/b19d24ec-bcc2-40be-9980-dc073cf95c66/Ep35.vtt",
+      "transcript_format": "vtt",
+      "transcript": "JACK: Hey, what\u2019s up? DADE: Not much, just reading. JACK: Cool. What are you reading? DADE: I\u2019m reading Exploding the Phone. It\u2019s about phone phreaking, kind of the history of it. JACK: Sounds interesting. DADE: Yeah. JACK: This is Dade. That\u2019s not his real name; that\u2019s just his online name. I met him at a BSides conference once and was just really impressed with his knowledge of security and hacking. So I\u2019d chat him up sometimes and ask him questions on things that I\u2019m researching. Hey, I\u2019m calling \u2018cause I want \u2013 I\u2019m trying to think. Are there any old movies that have like a hacker getting into an ATM and dispensing cash? DADE: Yeah, so there\u2019s a couple. It\u2019s kind of a trope in hacking movies, most prominently I think in Hackers. They\u2019re all sitting around the table at Cyberdelia and Joey\u2019s really trying to get all of his friends\u2019 attention. He\u2019s talking about how he hacked this bank. JOEY: Right? Okay wait, okay, so it\u2019s a bank. So this morning, look at the paper. Some cash machine in Bumsville, Idaho spits out $700 into the middle of the street. CEREAL: That\u2019s kind of cool. JOEY: That was me. That was me. I did that. DADE: Then Joey takes credit for it and he\u2019s really bragging. JACK: Wait, wait, hold on. How do you know this much about that one scene in Hackers? DADE: I watched it a lot. I picked my hacker handle because of that movie. It\u2019s what inspired me to get into computers in the first place. JACK: Do you know every scene of Hackers? DADE: I know almost every scene of Hackers. I can find myself quoting it unintentionally quite frequently. JACK: That\u2019s impressive. That\u2019s really crazy. Alright, so what year was Hackers? DADE: That was 1995. There was actually a couple of ATM hacks before that as well. In 1985 a movie called Prime Risk was basically all about finding out ways to rip off ATM machines. TONI: Got over twenty frequency codes today. LEE: What is that? TONI: It\u2019s a spectrum analyzer. It reads the electromagnetic environment and creates magnitude readings for the proper frequencies. LEE: Oh. What are you doing with it in your car? TONI: Well, it\u2019s just an experiment for now but if we\u2019re lucky we should be able to pick up oh, $200 from each account. LEE: You know you can get into a lot of trouble fooling around with the banks. TONI: Would you relax? LEE: I\u2019m relaxed. You\u2019re talking about ripping people off. TONI: Look, it\u2019s a banking system. We aren\u2019t stealing from people. DADE: Then again in 1991 a young John Connor in Terminator 2 hooks up his little laptop into the card reader slot of an ATM. JOHN: [BEEPS] Please insert your stolen card now. DADE: He hits a couple buttons. Some Hollywood hacking appears on screen, you know, numbers flying down the screen, changing really fast. JOHN: Go baby, go baby, go baby. Alright. Pin number\u2026 DADE: Eventually he\u2019s cracked the pin. JOHN: Withdraw 3-0-0 bucks. Come on baby, come on, come on. Yes! TIM: Hey, it worked. JOHN: Easy money. JACK: Huh. Alright. So if Hollywood is doing this in the 80s and 90s I think I\u2019m gonna look into where we are with ATM hacking today and do an episode on that. DADE: Yeah, that sounds great. JACK: Alright, this information has been great. Thanks so much. DADE: Yeah, no problem. Thanks for reaching out. JACK: Alright, see you later. DADE: Hack the planet. JACK (INTRO): [INTRO MUSIC] These are true stories from the dark side of the internet. I\u2019m Jack Rhysider. This is Darknet Diaries. [INTRO MUSIC ENDS] JACK: ATMs are an obvious target for criminals. It\u2019s just a hunk of metal holding a bunch of cash. There can be anywhere from $3,000 all the way up to $250,000 in each ATM. Getting into one of these could be a big win for someone. At its core an ATM is just a computer, often a Windows computer with an input device like a touch screen or buttons. Then there\u2019s the cassettes that hold the cash. The cassettes are the crown jewels of the ATM since they hold all the money. One tactic is to steal the cassettes. [MUSIC] Smash and grab is still a common ATM hacking technique. This is a simple as smashing a window of the store, running in, grabbing the whole ATM, drag it outside, throw it in your truck, and drive off. To defend against this shop owners and banks have securely fastened the ATM to the ground, often with huge bolts right into the concrete. But criminals will still smash the window, throw a rope around the ATM, attach it to their truck and pull it out with the truck to knock it loose and then grab the whole ATM and drive off. But then there are ATMs built right into the walls of the bank where you can\u2019t knock it over or pull it loose. What some criminals do here is they\u2019ll run up to it, create a hole in the ATM [00:05:00] somehow like jamming a crowbar right into it or under it, and then they\u2019ll load up that hole with explosives and blow up the ATM itself. Usually the cash box that holds the money is knocked loose from the explosion and a thief can run off with just that box of money. But all these techniques are messy and very destructive. There\u2019s even one video of a guy driving a forklift right through a convenience store window, knocking over all the shelves, and making a ton of damage just to get the ATM loose and out of there. It\u2019s shocking and there\u2019s just much more elegant ways of stealing money out of an ATM. A little over a decade ago, a story came out that said a master admin password was configured for many ATMs. Some thieves got ahold of this password and used it to access the ATM. However, the admin access didn\u2019t let them dispense money so they couldn\u2019t just steal the money. The hackers poked around at what they had access to. Inside the ATM are a number of cassettes with different denominations. Maybe there are three cassettes with $5 bills, $10 bills, and $20 bills. With admin access you could assign which cassette was which denomination. The hackers told the ATMs that all the cassettes have just $1 bills in them. When they went to withdraw $20, it gave them twenty $20 bills. Their balance only went down by twenty bucks but they actually got $400. These criminals did this a few times and got a whopping $1,540 from this attack. The admin password has since been fixed and that attack is no longer valid. Around 2009 a security researcher named Barnaby Jack was interested in seeing what kind of hacks he could do on ATMs. He bought a few and had them delivered to his house. BARNABY: I remember when one of the ATM delivery guys came in. He wheeled the ATM into my place and he\u2019s just like why on earth do you need an ATM in your house for? [LAUGHTER] I was feeling a bit cheeky that day so I just looked at him and was like oh, I just don\u2019t like the transaction fees, mate. [LAUGHTER] JACK: This is Barnaby Jack speaking at Defcon 18, the largest hacker convention in the world. Once he got the ATMs into his house he took them apart and analyzed how they worked. [MUSIC] He started looking for vulnerabilities in the ATM he had. He found the ATM had two different keys; one key opens a door to the cassettes where the cash is but these were high-security keys and each ATM had a different key. But there was another key which opened up the cabinet. The cabinet holds the computer that controls the ATM. He found a serious problem with this key. BARNABY: One key will open all the models from that same manufacturer, the cabinet. JACK: Yeah, that\u2019s right. One key opens the ATM up for all ATMs that that manufacturer makes. This only gave you access to the motherboard in the ATM, not the cash. But Barnaby Jack being a security researcher, he tried to figure out how he could attack the motherboard to dispense cash. Sure enough, he found a way. He was able to load a custom firmware onto a USB flash drive. Now that he has access to the motherboard he can plug that USB drive into the motherboard, reboot the ATM, and it would load his custom firmware. This firmware pretty much let him do anything. BARNABY: I placed hooks at the card reader, the pin pad, and the parts of the handles the remote configuration commands. With those hooks we can add some fairly handy features, save the track data, capture the pin pads, and a few customer commands. The track data remotely saw remote jackpot and might as well. JACK: With the USB drive plugged into the motherboard and new firmware installed, he closed up the lid and the ATM looked and operated just like normal except he had programmed a hidden menu to let him control it however he wanted. He could read and store any cards that were swiped on that machine and the pins that were entered. The most astonishing thing he could do was dispense all of the cash from all the cassettes which he called jackpotting. He demonstrated how he could do this live, right there on the stage at Defcon 18. BARNABY: [BEEPING] Okay so it pops up my hidden menu there. It will let me dispense fifty notes from A, B, C, or D which are the four cassettes on the ATM. Let\u2019s just try dump fifty bills from the first cassette. [MUSIC] [LAUGHING, APPLAUSE] JACK: This is unbelievable. I was there for that and I\u2019m still blown away by how crazy this was to see this live on stage. It just blew my mind. But physical attacks on ATMs might seem a little too risky. I mean, you\u2019ve gotta actually go there and lift the cover up to get into it. There may be cameras watching you, too. But ATMs are sometimes found in gas stations or bars and they\u2019re often tucked away, sometimes hidden like by the bathrooms or cigarette machine. And we give people privacy when they\u2019re using the ATMs so it\u2019s entirely possible to do this in broad daylight and nobody would notice. [MUSIC] But Barnaby wanted to take this a step further and see if he could figure out a way to gain remote access to an ATM over the network. He plugged in the ATMs to his home network and began trying to see what he could get into. Well, there was a remote login to the ATM but it had a username and password. But Barnaby found a [00:10:00] vulnerability in the software to let him bypass that authentication altogether, allowing him to get right into the ATM. From there he couldn\u2019t do much other than check the system, see how much cash was there, and basic troubleshooting. No way to actually dispense cash, but Barnaby had already made a custom firmware that could give him extra access. He was able to connect all these exploits together which allowed him to\u2026 BARNABY: Upload rootkit. That\u2019s not a bad feature; bypasses authentication, initiates the software upload which lets me replace the firmware so, awesome. JACK: Awesome it was. Barnaby could now remote-control an ATM with his own custom firmware that allowed him to do whatever he\u2019d want such as dispensing cash out of an ATM on the other side of the world without even touching it. [MUSIC, LAUGHING] Again, unbelievable. The research that Barnaby Jack did with ATMs was just amazing. He didn\u2019t stop there. He had a passion for finding vulnerabilities in embedded devices. There are electronic imbedded devices in so many products we interact with, devices like a washing machine, your thermostat, a refrigerator, dishwasher, your phone, video games, printers, and medical devices. After Barnaby demonstrated to the world how you can hack into ATMs live on stage at Defcon, he turned to researching the electronics within medical devices. He found that he could gain remote access to insulin pumps that were actually strapped onto people and worn about. On stage at the RSA convention in 2012 he demonstrated what he found. BARNABY: From a hundred meters away I can scan for any insulin pumps in the vicinity. I will return those insulin pump IDs and then I can have them dispense their entire 300 units of insulin which for a Type 1 diabetic, will easily prove fatal. JACK: This guy really wasn\u2019t messing around. I mean, first robbing banks, now killing people? The point he was trying to make is that medical device manufacturers really need to take security a lot more seriously than they already were. BARNABY: I\u2019m trying to go as public with this research as I can just to show how easily these pumps can actually be attacked and hopefully change the mind of the FDA and of Medtronic, and of the public that maybe a recall could be in order. JACK: Barnaby then began looking to see if he could remote-control a pacemaker. This is a device used to keep your heart beating regularly. Sure enough, he figured out a way in. See, Barnaby was an amazingly good security researcher. He had a keen ability to find weaknesses and security holes in so many systems. When he found a way to remote-control a pacemaker implanted into a human, he took his findings on the road to a security conference in Melbourne, Australia. He demonstrated this hack live on stage to show how someone could send a lethal shock to a human through hacking a pacemaker. This news of this vulnerability, again, was a big deal. Barnaby refined his demonstrations and was accepted to speak at Black Hat, the security conference in Las Vegas to demonstrate this medical device hacking live on stage. But he never did give that talk because he died a week before the conference. His girlfriend found him lying on the floor in their San Francisco apartment. [MUSIC] The coroner examined his body and ruled that the cause of death was an overdose of drugs. He was thirty-five years old. Barnaby had a lot of talent and potential and opened our eyes to a lot of things. Losing him was a tragedy and he will be missed immensely. Alright, so if you could start out by telling me your name and what do you do. JORNT: My name is Jornt v.d. Wiel. I\u2019m a security researcher within the Kaspersky Lab. JACK: [BACKGROUND CONV.] Kaspersky Lab is based in Moscow, Russia and makes antivirus software amongst many other things. They need to keep their finger on the pulse of what the security threats are in the world so they can develop ways to detect and defend against these threats. Okay, so Jornt, what were you saying after Barnaby Jack demonstrated how to hack into ATMs? JORNT: Yeah, so he introduced it and he showed that it was possible. What we saw after that was people started copying him, [MUSIC] especially in Russia and the surrounding countries. JACK: Surely Barnaby Jack wasn\u2019t the first person to have figured out how to hack an ATM. But he was the first to demonstrate it live on stage. After he did demonstrate it, banks and ATM vendors did improve the security of their machines but ATM hacking started gaining in popularity after the talk. There was an ATM hack in particular that Jornt will always remember. JORNT: Yeah, it\u2019s one of our colleagues. He got a call or an e-mail from somebody that he knew. JACK: It was an e-mail. It was from an IT guy working at a bank in Ukraine. JORNT: He told us that he had a problem and he didn\u2019t really want to disclose what it was. He said that you guys just have to come. JACK: Jornt and his team were like well, going to Kiev is far and it\u2019s not easy to get to. Just tell us what the problem is. We\u2019ve probably seen it before and we\u2019ll just tell you how to fix it. But the bank was insistent on telling [00:15:00] them they must fly to Ukraine to see the problem themselves. Jornt and his team hopped on a plane and flew to Kiev to visit this bank. [MUSIC] They took him into a room which had all the surveillance footage for the bank. JORNT: We went there and then they showed us video footage. JACK: Okay, so the scene in the video is this; there\u2019s a bank with ATMs. Okay, but it\u2019s three a.m. so the bank is closed. The ATMs are in this little foyer lobby something of the bank. JORNT: Like a portal, kind of. JACK: Yeah, but the doors are locked so you have to swipe your debit card on the door in order to get into that portal to use the ATMs. But you can\u2019t get into the rest of the bank. Jornt watches this video footage. JORNT: In the video you see a guy walking towards the bank. JACK: This guy is wearing a big black hoodie, he\u2019s got a long scarf but he wraps it around his face so you can\u2019t see what he looks like, and he\u2019s holding a big black duffel bag. He opens up his jacket, takes out his debit card, and swipes it on the doors, which lets him into the lobby where the ATMs are. JORNT: As soon as he got in the ATMs started to blink. He walked towards the first ATM and then this whole pack of money came out. JACK: Literally the moment he enters the lobby the ATMs suddenly start spitting out all kinds of cash in all of the cassettes. He didn\u2019t even touch a single button on the ATM. JORNT: Then the money just kept on coming out so he just kept on filling his sports bag. Then he went to the next ATM and to the next one, and to the next one. JACK: There were four ATMs in this lobby and all four of them are blinking wildly and they\u2019re spewing out thousands of Hryvnia, the Ukrainian money. As fast as they\u2019re popping out of the ATM, this guy is shoving them into his duffel bag. The operation seemed very precise and was done very quick. JORNT: When all four ATMs were empty he left and without even touching the ATMs he was able to rob them. JACK: The bank said there was around $250,000 in each of the ATMs he just stole from which meant he took about a million US dollars in just a few minutes, [MUSIC] somehow magically emptying all the ATMs without even touching them. This isn\u2019t a hack; this is a superpower of some kind. Forget about the team at Kaspersky to solve this. You need Batman or someone on this one. JORNT: Yeah but come on, it\u2019s not something that is\u2026 JACK: Hollywood movie magic? But seriously, no matter how weird a hack may seem there is always an explanation for it. Jornt and his team began trying to think of what this could be. JORNT: First we thought that this was a modified version of another malware that we already knew about that was called Toucan. JACK: Yeah, Toucan is pretty slick. It first requires hackers to remotely access the ATM over the network. JORNT: For your information an ATM is just a computer running Windows so it\u2019s possible to install malware on it. JACK: Once a hacker gets into the ATM over the network they plant this Toucan malware on it. JORNT: This malware, it was active between twelve o\u2019clock and three o\u2019clock in the night. When you entered a special code\u2026 JACK: This is a special code you just put right on the pin pad of the ATM, then you get access to the Trojans menu. From here you can see how many cassettes there are and how many bills are in each one. Then there\u2019s a little special code at the bottom of the screen which is called a challenge. JORNT: Then you get the challenge. You send it to your boss and he calculates response. You enter the response. JACK: Whoever is at the ATM sends this code back to the hacker and then they generate another code so that you enter it back into the ATM. JORNT: Then you basically get into the god-mode menu because you can choose from which cassettes you want the money. JACK: Then you literally get to say \u2018give me the money from cassette one\u2019 and money just comes right out. It\u2019s a pretty slick attack and it works really well when set up correctly. JORNT: Back at the time it was one of the first ATM malware versions that was there, you know? Now there are dozens, way more, but back then it was one of the first. Because of the modus operandi, you enter in the middle of the night. We thought that this was a modified version so we asked the bank for hard disks of the ATM so we could search for malware. JACK: Jornt took these disks back to the lab and investigated them thoroughly. JORNT: We couldn\u2019t find anything. JACK: [MUSIC] The trail went cold. Jornt was stumped. He had absolutely no clue how this attack happened. There was no sign of any malware or suspicious activity on the ATMs. How could this be? Months go by; no progress. Jornt just stopped investigating, thinking it was just some really weird anomaly. Maybe magic, who knows. But then out of nowhere\u2026 JORNT: We got a call from one of an account manager. JACK: But this wasn\u2019t an ordinary call. The account manager was calling him at three a.m. JORNT: It was in the middle of the night and the guy just said that we have to call this number. We were like man, it\u2019s in the middle of the night. We\u2019re sleeping. JACK: Jornt was like can\u2019t you just tell me what this is for? But the account manager was insistent that he just call this number. Jornt and a few of his colleagues [00:20:00] got out of bed, splashed some water on their face to wake up a little, and called the number.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-6436",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "6436",
+      "guid": "https://traffic.libsyn.com/securitypodcast/6436.mp3",
+      "title": "ISC StormCast for Tuesday, April 2nd 2019",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. OpenOffice PDFs; Android Updates; Android Malware Redirects Phonecalls; Google Extends WebAuthn Support",
+      "show_notes": [
+        {
+          "heading": "Common \"OpenAction\" False Positive in PDFs Created by OpenOffice",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Analysis+of+PDFs+Created+with+OpenOfficeLibreOffice/24798/"
+          ]
+        },
+        {
+          "heading": "Android Monthly Update",
+          "links": [
+            "https://source.android.com/security/bulletin/2019-04-01#2019-04-01-details"
+          ]
+        },
+        {
+          "heading": "Malicious Android App Forwards Banking Calls to Attacker",
+          "links": [
+            "https://www.blackhat.com/asia-19/briefings/schedule/index.html#when-voice-phishing-met-malicious-android-app-13419"
+          ]
+        },
+        {
+          "heading": "Google Allowing WebAuthn Login from Firefox/Edge",
+          "links": [
+            "https://twitter.com/christiaanbrand/status/1111430192596025347"
+          ]
+        },
+        {
+          "heading": "All Your Data Are Belong to Us: Defending Against Credential Stuffing Attacks",
+          "links": [
+            "https://www.sans.org/webcasts/data-belong-us-defend-credential-stuffing-110340"
+          ]
+        }
+      ],
+      "published": "2019-04-02T01:45:02+00:00",
+      "duration_seconds": 278,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/6436.mp3",
+      "audio_length_bytes": 3910889,
+      "episode_link": "https://isc.sans.edu/podcastdetail/6436",
+      "categories": [
+        "credential stuffing",
+        "webcast",
+        "webauthn",
+        "google",
+        "firefox",
+        "edge",
+        "android",
+        "patches",
+        "phone redirect",
+        "openaction",
+        "pdf",
+        "openoffice",
+        "libreoffice"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=6436",
+      "transcript_format": "text",
+      "transcript": null,
+      "transcript_checked": false
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE SIGNAL — Weekly Report 2026-W36</title>
+<style>
+  :root {
+    --ink: #0a0e14; --ink-raised: #10151d; --ink-input: #0d1219; --line: #1e2733;
+    --text: #d7dde5; --text-dim: #7d8998;
+    --amber: #ffb020; --red: #ff5c5c; --blue: #5ac8ff; --green: #4fd58a;
+    --purple: #c792ea; --teal: #2dd4bf; --orange: #ff9f4a; --indigo: #7c8cff;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* No @page margin declared here — render_pdf.js passes the real margin
+     (20mm/16mm top/bottom) to Playwright's page.pdf(), and that's the ONLY
+     margin declaration that should exist. A conflicting CSS `@page {
+     margin }` here previously caused body content to render underneath the
+     (blank, color-filled) header instead of below it — CSS @page and
+     Playwright's JS margin option are two different systems, and only one
+     of them gets to decide where the page starts.
+     Left/right are still 0 in that JS option and simulated via .doc's own
+     padding below, same as before — there's no header/footer-equivalent
+     mechanism for a page's LEFT/RIGHT margins, only top/bottom, so a real
+     left/right margin would just be unpainted white with nothing able to
+     fill it. Top/bottom get the real, colored margin the header/footer
+     trick provides; left/right keep the padding-based simulation that only
+     ever worked for those two edges to begin with. */
+  html, body { margin: 0; padding: 0; background: var(--ink); color: var(--text); font-family: var(--font-sans); font-size: 11.5px; }
+  .doc { padding: 0 16mm; }
+
+  /* 261mm = A4's 297mm minus the 20mm/16mm top/bottom margins render_pdf.js
+     reserves — the cover's real per-page content height once those margins
+     are accounted for, so its vertical centering lines up with the printed
+     page rather than assuming the full untrimmed A4 height. */
+  .cover {
+    min-height: 261mm; display: flex; flex-direction: column; justify-content: center;
+    page-break-after: always;
+  }
+  .cover-kicker { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; }
+  .cover-title { font-size: 64px; font-weight: 700; margin: 10px 0 14px; letter-spacing: 0.01em; color: var(--indigo); }
+  .cover-subtitle { font-family: var(--font-mono); font-size: 14px; color: var(--text-dim); margin-bottom: 36px; }
+  .cover-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 34px; }
+  .cover-kpis .kpi { background: var(--ink-raised); padding: 18px 8px; text-align: center; }
+  .kpi-value { font-size: 22px; font-weight: 700; }
+  .kpi-label { font-family: var(--font-mono); font-size: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 5px; }
+  .cover-footer { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); border-top: 1px solid var(--line); padding-top: 14px; }
+  .cover-disclaimer { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); margin-top: 18px; opacity: 0.75; line-height: 1.5; }
+  .cover-nav { font-family: var(--font-mono); font-size: 10px; margin-top: 14px; }
+  .cover-nav a { color: var(--text-dim); text-decoration: none; }
+  .cover-nav a:hover { color: var(--indigo); }
+
+  .toc-section { page-break-after: always; }
+  .toc-title { border-bottom: 2px solid var(--indigo); padding-bottom: 10px; margin-bottom: 4px; font-size: 18px; }
+  .toc-list { list-style: none; padding: 0; margin: 10px 0 0; }
+  .toc-list li { display: flex; gap: 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .toc-num { font-family: var(--font-mono); color: var(--indigo); font-weight: 700; font-size: 12px; width: 22px; flex: 0 0 auto; }
+
+  .section { margin-top: 10mm; }
+  /* The closing changelog table is short but sits right at the tail of a long
+     multi-page flow — verified by hand that page-break-inside:avoid (row-level
+     and container-level both) isn't reliably honored for it there regardless,
+     a Chromium print-fragmentation quirk that resisted several CSS-only
+     fixes. Forcing this one section to start on its own fresh page sidesteps
+     the problem entirely and is a normal, common choice for a closing
+     "revision history" section in a real report anyway. */
+  #sec-7 { page-break-before: always; break-before: always; }
+  /* The heading plus at least its first paragraph/table move together —
+     letting a heading land alone at the bottom of a page (with everything
+     it introduces pushed to the next) is exactly the "few lines, then a
+     page break, then most of the content" look this is here to prevent. */
+  .section-head { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--indigo); padding-bottom: 9px; margin-bottom: 14px; page-break-after: avoid; break-after: avoid; }
+  .section-num { font-family: var(--font-mono); font-size: 13px; color: var(--indigo); font-weight: 700; }
+  .section-title { font-size: 18px; font-weight: 700; margin: 0; }
+  .subhead { font-size: 12.5px; font-weight: 700; margin: 20px 0 8px; color: var(--text); page-break-after: avoid; break-after: avoid; }
+  .analysis { font-size: 12px; line-height: 1.75; margin: 0 0 6px; }
+
+  .exec-box { background: var(--ink-raised); border: 1px solid var(--line); border-left: 3px solid var(--indigo); padding: 16px 18px; page-break-inside: avoid; }
+  .exec-box p { margin: 0 0 12px; font-size: 12px; line-height: 1.75; }
+  .exec-box p:last-child { margin-bottom: 0; }
+
+  /* A short subhead + its small (<=8-row) supporting table, kept together as
+     one page-break-inside:avoid unit — safe here specifically because these
+     blocks are short; the same rule on a block taller than a page is what
+     broke pagination entirely earlier in this feature's development (see
+     the CVE/ransomware FULL tables below, which are intentionally NOT
+     wrapped this way and rely on <thead> repeating + per-row avoidance
+     instead, since they can legitimately run several pages long). */
+  .mini-block { page-break-inside: avoid; break-inside: avoid; margin-bottom: 4px; }
+
+  /* Deliberately plain block flow, NOT flex/grid — verified by hand that
+     Chromium's print engine does not reliably honor page-break-inside:avoid
+     on flex/grid children when siblings need different break outcomes (one
+     fits in the remaining space, one doesn't): the one that doesn't fit got
+     split mid-table instead of moving to the next page as instructed. Plain
+     block children respect break-inside:avoid correctly, confirmed
+     throughout this report (entry-cards, highlight-cards) — worth the
+     traded-off two-column density for pagination that's actually reliable. */
+  .table-grid-2 { margin-bottom: 4px; }
+  .table-grid-2 table.data-table { font-size: 9.5px; }
+
+  /* overflow-x:auto turns this div into a scroll container, and per the CSS
+     fragmentation spec a scroll container is "monolithic" — Chromium refuses
+     to paginate its contents across printed pages at all. For short tables
+     that's invisible, but the CVE/ransomware FULL tables run several pages
+     long, so under print media Chromium was rendering that whole box as one
+     giant unbreakable unit: no <thead> repeat on continuation pages, and the
+     content ignoring each page's normal top-margin reservation entirely
+     (confirmed by rasterizing the real PDF and comparing a table-continuation
+     page against a fresh-section page). Playwright's page.pdf() uses print
+     media by default (no emulateMedia call in render_pdf.js), so this
+     override only affects the PDF; the browsable -full.html keeps the
+     horizontal scroll fix for narrow viewports (see data_table()/.table-scroll
+     comment above) when actually viewed on screen. */
+  .table-scroll { overflow-x: auto; margin: 6px 0 4px; }
+  @media print { .table-scroll { overflow-x: visible; } }
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin: 0; }
+  table.data-table thead { display: table-header-group; }
+  table.data-table th {
+    text-align: left; font-family: var(--font-mono); font-size: 8.5px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-dim); border-bottom: 2px solid var(--indigo);
+    padding: 7px 8px; background: rgba(124,140,255,0.07);
+  }
+  table.data-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.data-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  table.data-table tr { page-break-inside: avoid; }
+  table.data-table a { color: var(--blue); text-decoration: none; }
+  table.data-table a:hover { text-decoration: underline; }
+  .nowrap { white-space: nowrap; }
+
+  .badge { font-size: 8.5px; font-weight: 700; padding: 2px 6px; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; }
+  .badge.critical { background: rgba(255,92,92,0.2); color: var(--red); }
+  .badge.high { background: rgba(255,176,32,0.2); color: var(--amber); }
+  .badge.medium { background: rgba(90,200,255,0.2); color: var(--blue); }
+  .badge.low, .badge.info, .badge.unrated { background: rgba(125,137,152,0.2); color: var(--text-dim); }
+  .badge.kev { background: rgba(255,92,92,0.26); color: var(--red); border: 1px solid var(--red); }
+
+  /* Plain block flow — see the .table-grid-2 comment above for why. */
+  .highlight-grid { margin: 8px 0 18px; }
+  .highlight-card { border: 1px solid var(--line); border-left: 3px solid var(--red); background: var(--ink-raised); padding: 10px 12px; margin-bottom: 8px; page-break-inside: avoid; break-inside: avoid; }
+  .highlight-card:last-child { margin-bottom: 0; }
+  .hc-meta { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); }
+  .hc-id { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+  .hc-id a { color: var(--text); text-decoration: none; }
+  .highlight-card p { margin: 0; font-size: 10.5px; color: var(--text-dim); line-height: 1.5; }
+
+  ul.source-list { padding-left: 18px; margin: 10px 0; }
+  ul.source-list li { margin-bottom: 9px; font-size: 11px; line-height: 1.6; color: var(--text-dim); }
+  ul.source-list b { color: var(--text); }
+
+  .more-note, .empty-note { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); margin: 4px 0 0; }
+</style>
+</head>
+<body>
+  <div class="doc">
+    
+    <div class="cover">
+      <div class="cover-kicker">Weekly Threat Intelligence Report</div>
+      <h1 class="cover-title">THE SIGNAL</h1>
+      <div class="cover-subtitle">Week 2026-W36 &middot; 31 Aug 2026 &ndash; 6 Sep 2026 (UTC)</div>
+      <div class="cover-kpis"><div class="kpi"><div class="kpi-value">98</div><div class="kpi-label">Feed Articles</div></div><div class="kpi"><div class="kpi-value">936</div><div class="kpi-label">CVEs Published</div></div><div class="kpi"><div class="kpi-value">259</div><div class="kpi-label">Critical CVEs</div></div><div class="kpi"><div class="kpi-value">3</div><div class="kpi-label">KEV CVEs</div></div><div class="kpi"><div class="kpi-value">7</div><div class="kpi-label">Research Write-ups</div></div><div class="kpi"><div class="kpi-value">175</div><div class="kpi-label">Ransomware Victims</div></div><div class="kpi"><div class="kpi-value">2</div><div class="kpi-label">Breaches Disclosed</div></div><div class="kpi"><div class="kpi-value">10,075,866</div><div class="kpi-label">Records Exposed</div></div></div>
+      <div class="cover-footer">
+        <div>Generated 8 September 2026, 22:45 UTC</div>
+        <div>Template v1.2</div>
+      </div>
+      <div class="cover-disclaimer">Compiled automatically from THE SIGNAL's live threat-intelligence datasets — see Section 06, Methodology &amp; Sources.</div>
+      <div class="cover-nav"><a href="../reports.html">‹ Reports Archive</a> &nbsp;&nbsp; <a href="../index.html">‹ Home</a></div>
+    </div>
+    
+    <div class="section toc-section"><h2 class="section-title toc-title">Contents</h2><ol class="toc-list"><li><span class="toc-num">01</span><span class="toc-label">Executive Summary</span></li><li><span class="toc-num">02</span><span class="toc-label">Threat Feed Overview</span></li><li><span class="toc-num">03</span><span class="toc-label">Vulnerability Intelligence (CVE)</span></li><li><span class="toc-num">04</span><span class="toc-label">Research &amp; Analysis Coverage</span></li><li><span class="toc-num">05</span><span class="toc-label">Ransomware &amp; Data Breach Activity</span></li><li><span class="toc-num">06</span><span class="toc-label">Methodology &amp; Sources</span></li><li><span class="toc-num">07</span><span class="toc-label">Report Versioning</span></li></ol></div>
+    
+    <section class="section" id="sec-1">
+      <div class="section-head"><span class="section-num">01</span><h2 class="section-title">Executive Summary</h2></div>
+      <div class="exec-box"><p>This report covers the period 31 Aug 2026 to 6 Sep 2026 (UTC). THE SIGNAL's automated collection captured 98 threat-feed articles across 9 monitored sources, 936 new CVE records from NVD, 7 deep-dive research write-ups, 175 ransomware victim postings, and 2 newly disclosed breaches.</p><p>936 new CVE records were published this week, including 259 rated Critical and 677 rated High severity (100% of the week's total). 3 are listed in CISA's Known Exploited Vulnerabilities (KEV) catalog, confirming active exploitation in the wild — these warrant immediate patching priority regardless of CVSS score. Google Chrome was the most represented vendor among this week's Critical/KEV disclosures (11 records). The most common weakness category was Improper Access Control, appearing in 72 records.</p><p>175 new ransomware victim postings were logged across 43 active groups, led by qilin (16 postings). 2 newly disclosed breaches were added to the tracker this week, together exposing approximately 10,075,866 records.</p></div>
+    </section>
+    
+    
+    <section class="section" id="sec-2">
+      <div class="section-head"><span class="section-num">02</span><h2 class="section-title">Threat Feed Overview</h2></div>
+      
+      <p class="analysis">98 articles were captured across 9 sources this week, of which 35 were flagged Critical or High severity by keyword-based triage (36% of the week's total). The Hacker News was the most active source, contributing 25 articles.</p>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Severity breakdown</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Severity</th><th>Count</th><th>% of total</th></tr></thead><tbody><tr><td>Critical</td><td>24</td><td>24%</td></tr><tr><td>High</td><td>11</td><td>11%</td></tr><tr><td>Medium</td><td>9</td><td>9%</td></tr><tr><td>Info</td><td>54</td><td>55%</td></tr></tbody></table></div></div>
+        <div class="mini-block"><h3 class="subhead">Volume by source</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Source</th><th>Count</th><th>% of total</th></tr></thead><tbody><tr><td>The Hacker News</td><td>25</td><td>26%</td></tr><tr><td>Dark Reading</td><td>22</td><td>22%</td></tr><tr><td>BleepingComputer</td><td>15</td><td>15%</td></tr><tr><td>SANS ISC</td><td>10</td><td>10%</td></tr><tr><td>SecurityWeek</td><td>10</td><td>10%</td></tr><tr><td>Microsoft Security Blog</td><td>7</td><td>7%</td></tr><tr><td>The Record</td><td>5</td><td>5%</td></tr><tr><td>Unit 42</td><td>3</td><td>3%</td></tr></tbody></table></div><div class="more-note">+ 1 more source(s) (1 article(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">Notable coverage (Critical / High severity)</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Severity</th><th>Source</th><th>Published</th><th>Headline</th></tr></thead><tbody><tr><td><span class="badge critical">CRITICAL</span></td><td>SANS ISC</td><td><span class="nowrap">Sun, 06 Sep 2026</span></td><td><a href="https://isc.sans.edu/diary/rss/33314" target="_blank" rel="noopener noreferrer">Critical MikroTik Vulnerability - Patch Now, (Sun, Sep 6th)</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Sun, 06 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/attackers-hijack-mikrotik-routers.html" target="_blank" rel="noopener noreferrer">Attackers Hijack MikroTik Routers Through Internet-Exposed SSH Without Authentication</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Sun, 06 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/unpatched-magento-and-adobe-commerce.html" target="_blank" rel="noopener noreferrer">Unpatched Magento and Adobe Commerce Zero-Day Exploited to Backdoor Online Stores</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Sat, 05 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/attackers-breached-jetbrains-cadence.html" target="_blank" rel="noopener noreferrer">Attackers Breached JetBrains Cadence via Unpatched TeamCity, Extracting AWS Credentials</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Sat, 05 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/critical-vmware-workstation-and-fusion.html" target="_blank" rel="noopener noreferrer">Critical VMware Workstation and Fusion Flaw Lets VM Admins Execute Host Code</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Sat, 05 Sep 2026</span></td><td><a href="https://www.securityweek.com/elementor-pro-wordpress-plugin-vulnerability-exploited-to-hack-sites/" target="_blank" rel="noopener noreferrer">Elementor Pro WordPress Plugin Vulnerability Exploited to Hack Sites</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Sat, 05 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/attackers-exploit-papercut-flaws-to.html" target="_blank" rel="noopener noreferrer">Attackers Exploit PaperCut Flaws to Steal Credentials From Schools and Universities</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/hpe-patches-critical-rce-vulnerabilities-in-aos-cx/" target="_blank" rel="noopener noreferrer">HPE Patches Critical RCE Vulnerabilities in AOS-CX</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/openai-pledges-1-billion-to-bring-frontier-ai-to-critical-infrastructure-defenders/" target="_blank" rel="noopener noreferrer">OpenAI Pledges $1 Billion to Bring Frontier AI to Critical Infrastructure Defenders</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/phishing-campaign-sends-millions-of.html" target="_blank" rel="noopener noreferrer">Phishing Campaign Sends Millions of Emails Using Invisible Unicode to Evade Filters</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/hackers-target-critical-citrix-netscaler-auth-bypass-in-attacks/" target="_blank" rel="noopener noreferrer">Critical Citrix NetScaler auth bypass now leveraged in attacks</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/new-ted-backdoor-hides-inside-victims.html" target="_blank" rel="noopener noreferrer">New Ted Backdoor Hides Inside Victims&#x27; Own HAProxy Builds to Intercept Web Traffic</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/sangoma-switchvox-vulnerabilities-exploited-in-the-wild/" target="_blank" rel="noopener noreferrer">Sangoma Switchvox Vulnerabilities Exploited in the Wild</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/new-crowdstrike-falconflank-zero-day-grants-system-privileges/" target="_blank" rel="noopener noreferrer">New CrowdStrike &#x27;FalconFlank&#x27; zero-day grants SYSTEM privileges</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/google-warns-of-new-chrome-zero-day-flaw-exploited-in-attacks/" target="_blank" rel="noopener noreferrer">Google warns of new Chrome zero-day flaw exploited in attacks</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/vmware-workstation-and-fusion-updates-patch-critical-vulnerability/" target="_blank" rel="noopener noreferrer">VMware Workstation and Fusion Updates Patch Critical Vulnerability</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/google-patches-6th-chrome-zero-day-of-2026/" target="_blank" rel="noopener noreferrer">Google Patches 6th Chrome Zero-Day of 2026</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://www.securityweek.com/nvidia-is-buying-ai-platform-hugging-face-for-13-billion/" target="_blank" rel="noopener noreferrer">Nvidia Is Buying AI Platform Hugging Face for $13 Billion</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/over-440000-exploit-attempts-target.html" target="_blank" rel="noopener noreferrer">Over 440,000 Exploit Attempts Target Super Forms and Elementor Pro RCE Flaws</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/google-releases-chrome-update-to-patch.html" target="_blank" rel="noopener noreferrer">Google Releases Chrome Update to Patch Actively Exploited V8 Zero-Day</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/gpt-6-astra-scores-100-on-exploitbench.html" target="_blank" rel="noopener noreferrer">GPT-6 Astra Scores 100% on ExploitBench as OpenAI Blocks PoC Exploit Requests</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Record</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td><td><a href="https://therecord.media/us-reward-amir-yaryab-iran-irgc-cyberattacks" target="_blank" rel="noopener noreferrer">US offers $10 million for info on Iranian allegedly behind cyberattacks on critical infrastructure</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>BleepingComputer</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/hpe-patches-critical-arubaos-cx-remote-code-execution-flaw/" target="_blank" rel="noopener noreferrer">HPE patches critical ArubaOS-CX remote code execution flaw</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>Dark Reading</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://www.darkreading.com/cyberattacks-data-breaches/ai-warning-letter-missed-people" target="_blank" rel="noopener noreferrer">What the AI Warning Letter Completely Missed</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/critical-cisco-nexus-9000-flaw-lets.html" target="_blank" rel="noopener noreferrer">Critical Cisco Nexus 9000 Flaw Lets Unauthenticated Remote Attackers Run Code as Root</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/brazetsu-malware-turns-compromised.html" target="_blank" rel="noopener noreferrer">BraZetsu Malware Turns Compromised Windows Hosts Into Criminal Marketplace Inventory</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/pegasus-zero-click-spyware-exploit.html" target="_blank" rel="noopener noreferrer">Pegasus Zero-Click Spyware Exploit Infects Serbian Student Movement Member&#x27;s iPhone</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/researcher-releases-falconflank-poc.html" target="_blank" rel="noopener noreferrer">Researcher Releases FalconFlank PoC Showing Privilege Escalation in CrowdStrike Falcon</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 03 Sep 2026</span></td><td><a href="https://thehackernews.com/2026/09/cisa-adds-seven-exploited-flaws-as.html" target="_blank" rel="noopener noreferrer">CISA Adds Seven Exploited Flaws as Attackers Deploy Reverse Shells and Crypto Miners</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>Dark Reading</td><td><span class="nowrap">Wed, 02 Sep 2026</span></td><td><a href="https://www.darkreading.com/vulnerabilities-threats/sonicwall-sma-1000-zero-days-unauthenticated-rce" target="_blank" rel="noopener noreferrer">SonicWall SMA 1000 Zero-Days Enable Unauthenticated RCE</a></td></tr></tbody></table></div>
+      <p class="more-note">+ 5 more Critical/High item(s) not shown — see index.html for the full archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-3">
+      <div class="section-head"><span class="section-num">03</span><h2 class="section-title">Vulnerability Intelligence (CVE)</h2></div>
+      
+      <p class="analysis">936 new CVE records were published this week, including 259 rated Critical and 677 rated High severity (100% of the week's total). 3 are listed in CISA's Known Exploited Vulnerabilities (KEV) catalog, confirming active exploitation in the wild — these warrant immediate patching priority regardless of CVSS score. Google Chrome was the most represented vendor among this week's Critical/KEV disclosures (11 records). The most common weakness category was Improper Access Control, appearing in 72 records.</p>
+      <h3 class="subhead">Highlighted disclosures</h3>
+      <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 10.0</span>
+        <span class="badge kev">KEV</span>
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83548" target="_blank" rel="noopener noreferrer">CVE-2026-83548</a></div>
+      <p>A Pre-authentication SSRF vulnerability exists in the SMA1000 Appliance Work Place interface due to an unintended alternate access path. A remote unauthenticated attacker could potentially exploit this vulnerability to g…</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge high">HIGH</span>
+        <span>CVSS 8.8</span>
+        <span class="badge kev">KEV</span>
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-85046" target="_blank" rel="noopener noreferrer">CVE-2026-85046</a></div>
+      <p>Type confusion in V8 in Google Chrome prior to 152.0.7977.82 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: High)</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge high">HIGH</span>
+        <span>CVSS 7.8</span>
+        <span class="badge kev">KEV</span>
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83549" target="_blank" rel="noopener noreferrer">CVE-2026-83549</a></div>
+      <p>Post-authentication Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) vulnerability has been identified in the SMA1000 Appliance Management Console (AMC) which in specific conditi…</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 10.0</span>
+        
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86152" target="_blank" rel="noopener noreferrer">CVE-2026-86152</a></div>
+      <p>A flaw has been found in Tenda CP3 27.5.57.101. The impacted element is the function CAutoAddWifi::ThreadProc of the file Functions/AutoAddWifi.cpp of the component Kylin. Executing a manipulation can lead to os command …</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 10.0</span>
+        
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83711" target="_blank" rel="noopener noreferrer">CVE-2026-83711</a></div>
+      <p>Authorization bypass through user-controlled key in Microsoft Azure Active Directory B2C allows an unauthorized attacker to elevate privileges over a network.</p>
+    </div>
+    </div>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Top affected vendors</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Vendor</th><th>Count</th></tr></thead><tbody><tr><td>Google Chrome</td><td>11</td></tr><tr><td>Mozilla Thunderbird</td><td>11</td></tr><tr><td>Mozilla Firefox</td><td>10</td></tr><tr><td>D-Link DNS-340L</td><td>7</td></tr><tr><td>moos-ivp moos-ivp</td><td>6</td></tr><tr><td>Tenda CP3</td><td>5</td></tr><tr><td>Hewlett Packard Enterprise (HPE) Fabric Composer</td><td>5</td></tr><tr><td>WWBN AVideo</td><td>5</td></tr></tbody></table></div><div class="more-note">+ 127 more vendor(s) (161 occurrence(s) not shown)</div></div>
+        <div class="mini-block"><h3 class="subhead">Top CWE categories</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>CWE</th><th>Count</th></tr></thead><tbody><tr><td>Improper Access Control</td><td>72</td></tr><tr><td>OS Command Injection</td><td>23</td></tr><tr><td>Missing Authentication for Critical Function</td><td>17</td></tr><tr><td>Command Injection</td><td>16</td></tr><tr><td>Improper Privilege Management</td><td>10</td></tr><tr><td>SQL Injection</td><td>10</td></tr><tr><td>Improper Authentication</td><td>9</td></tr><tr><td>Unrestricted Dangerous File Upload</td><td>8</td></tr></tbody></table></div><div class="more-note">+ 52 more CWE categor(ies) (130 occurrence(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">Critical &amp; known-exploited CVEs — full list</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>CVE ID</th><th>Severity</th><th>CVSS</th><th>KEV</th><th>Published</th><th>Vendor(s)</th><th>CWE(s)</th></tr></thead><tbody><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83548" target="_blank" rel="noopener noreferrer">CVE-2026-83548</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td><span class="badge kev">KEV</span></td><td><span class="nowrap">2026-09-01</span></td><td>SonicWall SMA1000</td><td>CWE-441, Server-Side Request Forgery (SSRF)</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-85046" target="_blank" rel="noopener noreferrer">CVE-2026-85046</a></td><td><span class="badge high">HIGH</span></td><td>8.8</td><td><span class="badge kev">KEV</span></td><td><span class="nowrap">2026-09-03</span></td><td>Google Chrome</td><td>Type Confusion</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83549" target="_blank" rel="noopener noreferrer">CVE-2026-83549</a></td><td><span class="badge high">HIGH</span></td><td>7.8</td><td><span class="badge kev">KEV</span></td><td><span class="nowrap">2026-09-01</span></td><td>SonicWall SMA1000</td><td>OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86152" target="_blank" rel="noopener noreferrer">CVE-2026-86152</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-06</span></td><td>Tenda CP3</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83711" target="_blank" rel="noopener noreferrer">CVE-2026-83711</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-03</span></td><td>Microsoft Entra</td><td>CWE-639</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-70352" target="_blank" rel="noopener noreferrer">CVE-2026-70352</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-03</span></td><td>Microsoft Azure AI Language Authoring</td><td>Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-85061" target="_blank" rel="noopener noreferrer">CVE-2026-85061</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-03</span></td><td>maplibre maplibre-gl-js</td><td>Cross-Site Scripting (XSS)</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-4357" target="_blank" rel="noopener noreferrer">CVE-2026-4357</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-02</span></td><td>Unknown Embed HTML5 Game</td><td>Unrestricted Dangerous File Upload</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-76658" target="_blank" rel="noopener noreferrer">CVE-2026-76658</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-01</span></td><td>Hewlett Packard Enterprise (HPE) Fabric Composer</td><td>Improper Authentication</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-76657" target="_blank" rel="noopener noreferrer">CVE-2026-76657</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-09-01</span></td><td>Hewlett Packard Enterprise (HPE) Fabric Composer</td><td>Improper Authentication</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82971" target="_blank" rel="noopener noreferrer">CVE-2026-82971</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>QVidium Opera11</td><td>CWE-74, Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-81780" target="_blank" rel="noopener noreferrer">CVE-2026-81780</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>hashthemes Hash Form</td><td>Unrestricted Dangerous File Upload</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-81779" target="_blank" rel="noopener noreferrer">CVE-2026-81779</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>Silk Themes Newspapers X</td><td>CWE-1284</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82970" target="_blank" rel="noopener noreferrer">CVE-2026-82970</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>WP Legal Pages WP Cookie Notice for GDPR, CCPA &amp; ePrivacy Consent</td><td>Unrestricted Dangerous File Upload</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82695" target="_blank" rel="noopener noreferrer">CVE-2026-82695</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>Tenda AC18</td><td>Improper Authentication, Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82694" target="_blank" rel="noopener noreferrer">CVE-2026-82694</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>Tenda AC1206</td><td>Improper Authentication, Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82693" target="_blank" rel="noopener noreferrer">CVE-2026-82693</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>Tenda AC1206</td><td>Improper Authentication, Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86167" target="_blank" rel="noopener noreferrer">CVE-2026-86167</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-09-06</span></td><td>Tenda HG10</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-85223" target="_blank" rel="noopener noreferrer">CVE-2026-85223</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-09-03</span></td><td>D-Link DNS-340L</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-85031" target="_blank" rel="noopener noreferrer">CVE-2026-85031</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-09-03</span></td><td>TOTOLINK CP450</td><td>Memory Buffer Boundary Violation, Buffer Overflow</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-77009" target="_blank" rel="noopener noreferrer">CVE-2026-77009</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-09-02</span></td><td>Unknown WatchMan-Site7</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83772" target="_blank" rel="noopener noreferrer">CVE-2026-83772</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-09-01</span></td><td>Cobham SATCOM VSAT7090 Maritime Satellite Router</td><td>CWE-74, Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83524" target="_blank" rel="noopener noreferrer">CVE-2026-83524</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>RedPort Optimizer wXa-203, RedPort Optimizer wXa-213</td><td>CWE-74, Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82954" target="_blank" rel="noopener noreferrer">CVE-2026-82954</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>Dokploy</td><td>Path Traversal</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-79748" target="_blank" rel="noopener noreferrer">CVE-2026-79748</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>samanhappy mcphub</td><td>Missing Authorization</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82692" target="_blank" rel="noopener noreferrer">CVE-2026-82692</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>D-Link DNS-340L, D-Link DNS-345</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82689" target="_blank" rel="noopener noreferrer">CVE-2026-82689</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>D-Link DNS-320L, D-Link DNS-327L</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82874" target="_blank" rel="noopener noreferrer">CVE-2026-82874</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>ToolJet ToolJet</td><td>CWE-639</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82616" target="_blank" rel="noopener noreferrer">CVE-2026-82616</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>TOTOLINK NR1800X</td><td>Memory Buffer Boundary Violation, CWE-121</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-82593" target="_blank" rel="noopener noreferrer">CVE-2026-82593</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td><span class="nowrap">2026-08-31</span></td><td>D-Link DIR-825M</td><td>Memory Buffer Boundary Violation, CWE-121</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86165" target="_blank" rel="noopener noreferrer">CVE-2026-86165</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-06</span></td><td>Tenda HG10</td><td>Memory Buffer Boundary Violation, Buffer Overflow</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-75816" target="_blank" rel="noopener noreferrer">CVE-2026-75816</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-06</span></td><td>shabti Frontend Admin by DynamiApps</td><td>Improper Authentication</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-16310" target="_blank" rel="noopener noreferrer">CVE-2026-16310</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-06</span></td><td>LearnDash MemberDash</td><td>CWE-639</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86189" target="_blank" rel="noopener noreferrer">CVE-2026-86189</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>WWBN AVideo</td><td>CWE-73</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86184" target="_blank" rel="noopener noreferrer">CVE-2026-86184</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>laradashboard laradashboard</td><td>Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-10196" target="_blank" rel="noopener noreferrer">CVE-2026-10196</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>getwpfunnels Mail Mint – Email Marketing, Newsletter, Email Automation &amp; WooCommerce Emails</td><td>Deserialization of Untrusted Data</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86124" target="_blank" rel="noopener noreferrer">CVE-2026-86124</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>HKUDS AutoAgent</td><td>Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86121" target="_blank" rel="noopener noreferrer">CVE-2026-86121</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>trycua cua-computer-server</td><td>Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2024-11080" target="_blank" rel="noopener noreferrer">CVE-2024-11080</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>pickplugins Post Grid</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-78362" target="_blank" rel="noopener noreferrer">CVE-2026-78362</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td><span class="nowrap">2026-09-05</span></td><td>Unknown SEO Flow by LupsOnline</td><td>Improper Privilege Management</td></tr></tbody></table></div>
+      <p class="more-note">+ 221 more Critical/KEV CVE(s) not shown in this table — see cve.html for the full archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-4">
+      <div class="section-head"><span class="section-num">04</span><h2 class="section-title">Research &amp; Analysis Coverage</h2></div>
+      
+      <p class="analysis">7 deep-dive write-ups were published across 3 specialist publications this week. Malware Technologies was the most common coverage category this week (3 articles).</p>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Volume by publication</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Publication</th><th>Count</th></tr></thead><tbody><tr><td>Securelist</td><td>3</td></tr><tr><td>Check Point Research</td><td>3</td></tr><tr><td>Elastic Security Labs</td><td>1</td></tr></tbody></table></div></div>
+        <div class="mini-block"><h3 class="subhead">Top categories</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody><tr><td>Malware Technologies</td><td>3</td></tr><tr><td>Malware</td><td>3</td></tr><tr><td>Malware descriptions</td><td>2</td></tr><tr><td>Targeted attacks</td><td>2</td></tr><tr><td>Backdoor</td><td>2</td></tr><tr><td>Check Point Research Publications</td><td>2</td></tr><tr><td>SOC, TI and IR posts</td><td>1</td></tr><tr><td>Microsoft Windows</td><td>1</td></tr></tbody></table></div><div class="more-note">+ 13 more categor(ies) (13 occurrence(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">All write-ups this week</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Publication</th><th>Title</th><th>Categories</th><th>Published</th></tr></thead><tbody><tr><td>Securelist</td><td><a href="https://securelist.com/toy-ghouls-new-hivemq-and-element-backdoors/121270/" target="_blank" rel="noopener noreferrer">Angry Birds: Toy Ghouls’ new toys</a></td><td>SOC, TI and IR posts, Malware descriptions, Malware Technologies</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td></tr><tr><td>Elastic Security Labs</td><td><a href="https://www.elastic.co/security-labs/blog/siem-data-export-comparison" target="_blank" rel="noopener noreferrer">Data access: the hidden cost of security vendor lock-in</a></td><td>Security Operations, SOC</td><td><span class="nowrap">Fri, 04 Sep 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/gaming-the-system-how-a-chinese-speaking-actor-turned-brazilian-government-sites-into-an-seo-weapon/" target="_blank" rel="noopener noreferrer">Gaming the system: how a Chinese-speaking actor turned Brazilian government sites into an SEO weapon</a></td><td>Check Point Research Publications</td><td><span class="nowrap">Wed, 02 Sep 2026</span></td></tr><tr><td>Securelist</td><td><a href="https://securelist.com/mirage-kitten-new-backdoors-noderabbit-pollcat/121244/" target="_blank" rel="noopener noreferrer">Mirage Kitten targeting aviation and FinTech sectors across the Middle East and Africa with a new malware set</a></td><td>GReAT research, APT reports, Malware Technologies</td><td><span class="nowrap">Tue, 01 Sep 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/breaking-the-seal-static-deobfuscation-of-jsceals-compiled-v8-bytecode/" target="_blank" rel="noopener noreferrer">Breaking the Seal: Static Deobfuscation of JSCeal’s Compiled V8 Bytecode</a></td><td>Check Point Research Publications</td><td><span class="nowrap">Mon, 31 Aug 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/31th-august-threat-intelligence-report/" target="_blank" rel="noopener noreferrer">31st August – Threat Intelligence Report</a></td><td>Global Cyber Attack Reports</td><td><span class="nowrap">Mon, 31 Aug 2026</span></td></tr><tr><td>Securelist</td><td><a href="https://securelist.com/valleyrat-backdoor-adware/121175/" target="_blank" rel="noopener noreferrer">ValleyRAT masquerading as adware</a></td><td>Malware descriptions, Malware Technologies, Adware</td><td><span class="nowrap">Mon, 31 Aug 2026</span></td></tr></tbody></table></div>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-5">
+      <div class="section-head"><span class="section-num">05</span><h2 class="section-title">Ransomware &amp; Data Breach Activity</h2></div>
+      
+      <p class="analysis">175 new ransomware victim postings were logged across 43 active groups, led by qilin (16 postings). 2 newly disclosed breaches were added to the tracker this week, together exposing approximately 10,075,866 records.</p>
+      <div class="mini-block">
+        <h3 class="subhead">Most active ransomware groups</h3>
+        <div class="table-scroll"><table class="data-table"><thead><tr><th>Group</th><th>Victim postings</th></tr></thead><tbody><tr><td>qilin</td><td>16</td></tr><tr><td>krybit</td><td>15</td></tr><tr><td>incransom</td><td>13</td></tr><tr><td>direwolf</td><td>10</td></tr><tr><td>Vexy Ransomware</td><td>10</td></tr><tr><td>thegentlemen</td><td>10</td></tr><tr><td>lockbit5</td><td>9</td></tr><tr><td>akira</td><td>9</td></tr></tbody></table></div>
+        <div class="more-note">+ 35 more group(s) (83 victim posting(s) not shown)</div>
+      </div>
+      <h3 class="subhead">Victim postings</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Group</th><th>Victim</th><th>Sector</th><th>Country</th><th>Date</th></tr></thead><tbody><tr><td>DYSPHOR1A</td><td>RTAD GOV MM</td><td>Government &amp; Defense</td><td>MM</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>direwolf</td><td>eAssist Dental Solutions</td><td>Healthcare</td><td>US</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>global</td><td>WHO IS NEXT?</td><td>Other</td><td>FR</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>Vexy Ransomware</td><td>Sancity</td><td>Not Found</td><td>IN</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>chaos</td><td>evergenbio.com</td><td>Healthcare</td><td>US</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>Panzer</td><td>KHALED ALFAGIH ENGINEERING CONSULTANCY</td><td>Professional Services</td><td>SA</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>direwolf</td><td>myLaurel</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>Panzer</td><td>Edacentrum</td><td>Not Found</td><td>SE</td><td><span class="nowrap">2026-09-06</span></td></tr><tr><td>direwolf</td><td>Mission Pet Health</td><td>Healthcare</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>kazu</td><td>Spirit Cultural Exchange - US</td><td>Education</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>Vexy Ransomware</td><td>Mega Velocity</td><td>Transportation</td><td>MX</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>thegentlemen</td><td>Lider Aviacao</td><td>Transportation</td><td>BR</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>DYSPHOR1A</td><td>CitizensPay</td><td>Financial Services</td><td>MM</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>Philippine Ports Authority</td><td>Transportation</td><td>PH</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>Bauman Law Group</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>G&amp;S Technologies</td><td>Technology</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>Nolan Consulting Group</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>Colonial Hyundai</td><td>Retail &amp; E-Commerce</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>The Big Table</td><td>Hospitality</td><td>GB</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>spacebears</td><td>D-MAX Engineering, Inc</td><td>Manufacturing</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>emperador</td><td>Judicial Branch of the Province of Jujuy</td><td>Government &amp; Defense</td><td>AR</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>qilin</td><td>Jouvet SAS</td><td>Manufacturing</td><td>FR</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>aurora</td><td>Metrea LLC/Commuter Air Technology, Inc.</td><td>Transportation</td><td>US</td><td><span class="nowrap">2026-09-05</span></td></tr><tr><td>SilentRansomGroup</td><td>H... C...</td><td>Not Found</td><td>—</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>direwolf</td><td>Wolfram Research</td><td>Technology</td><td>US</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>spacebears</td><td>Sports Endeavors</td><td>Retail &amp; E-Commerce</td><td>US</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>thegentlemen</td><td>Veradigm</td><td>Healthcare</td><td>US</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>thegentlemen</td><td>Zdrowit</td><td>Healthcare</td><td>PL</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>DYSPHOR1A</td><td>MBT Telecom</td><td>Technology</td><td>MM</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>everest</td><td>Negotiation Rules</td><td>Professional Services</td><td>—</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>lockbit5</td><td>huisartsencentrumkleiniterson.nl</td><td>Healthcare</td><td>NL</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>Vexy Ransomware</td><td>Sancity Soft Touch</td><td>Other</td><td>—</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>lockbit5</td><td>kalahealth.eu</td><td>Healthcare</td><td>DE</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>Vexy Ransomware</td><td>Annapurna Fashion</td><td>Retail &amp; E-Commerce</td><td>IN</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>Vexy Ransomware</td><td>Palsana Enviro (PEPL)</td><td>Manufacturing</td><td>IN</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>shinyhunters</td><td>Note to mr. databroker1 NEXUS DL Service</td><td>Other</td><td>—</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>qilin</td><td>AP CAPITAL PARTNERS LIMITED</td><td>Financial Services</td><td>—</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>qilin</td><td>Commission de la construction du Quebec (CCQ)</td><td>Government &amp; Defense</td><td>CA</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>lockbit5</td><td>pscindustries.com</td><td>Manufacturing</td><td>US</td><td><span class="nowrap">2026-09-04</span></td></tr><tr><td>dragonforce</td><td>Norwood Law Firm</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-09-04</span></td></tr></tbody></table></div>
+      <p class="more-note">+ 131 more posting(s) not shown — see leaktracker.html for the full archive.</p>
+      <h3 class="subhead">Disclosed breaches</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Organization</th><th>Domain</th><th>Records</th><th>Disclosed</th></tr></thead><tbody><tr><td><a href="https://haveibeenpwned.com/PwnedWebsites#ManchesterAirportsGroup" target="_blank" rel="noopener noreferrer">Manchester Airports Group</a></td><td>magairports.com</td><td>8,849,657</td><td><span class="nowrap">2026-09-02</span></td></tr><tr><td><a href="https://haveibeenpwned.com/PwnedWebsites#Questel" target="_blank" rel="noopener noreferrer">Questel</a></td><td>questel.com</td><td>1,226,209</td><td><span class="nowrap">2026-09-01</span></td></tr></tbody></table></div>
+      
+    
+    </section>
+    
+    
+    <section class="section" id="sec-6">
+      <div class="section-head"><span class="section-num">06</span><h2 class="section-title">Methodology &amp; Sources</h2></div>
+      
+      <p>This report is generated automatically by THE SIGNAL's data pipeline from the sources below,
+      with no independent analyst review of individual findings:</p>
+      <ul class="source-list">
+        <li><b>Threat Feed</b> — RSS from The Hacker News, Krebs on Security, BleepingComputer, Dark Reading,
+        SecurityWeek, The Record, SANS ISC, Microsoft Security Blog, Unit 42, and NCSC UK. Severity is a
+        keyword-based heuristic, not a scored assessment.</li>
+        <li><b>CVE Detail</b> — NVD CVE API 2.0, cross-referenced against CISA's Known Exploited Vulnerabilities
+        (KEV) catalog. Only Critical/High severity records, plus any KEV-listed CVE regardless of score, are
+        retained.</li>
+        <li><b>Research Detail</b> — The DFIR Report, Securelist, Elastic Security Labs, SentinelOne Labs, and
+        Check Point Research.</li>
+        <li><b>Ransomware</b> — leak-site postings tracked via ransomware.live.</li>
+        <li><b>Breaches</b> — Have I Been Pwned.</li>
+      </ul>
+      <p>Detail tables in this report are capped for length where a dataset's weekly volume is large; each
+      section links to the corresponding live page on THE SIGNAL for the complete, current archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-7">
+      <div class="section-head"><span class="section-num">07</span><h2 class="section-title">Report Versioning</h2></div>
+      
+      <p>This report format is under active development and is expected to change between editions — new
+      sections, refined statistics, and better attribution as the underlying data pipeline improves. This
+      edition was generated using <b>template v1.2</b>.</p>
+      <div class="mini-block">
+        <table class="data-table"><thead><tr><th>Version</th><th>Date</th><th>Notes</th></tr></thead><tbody><tr><td>v1.2</td><td><span class="nowrap">2026-09-08</span></td><td>Every page of the PDF now has a real, colored top/bottom margin — including where a table or paragraph continues right after a page break, not just the first page — via a blank (no title, no page numbers) header/footer used solely to paint that space; report files renamed to a descriptive the-signal-weekly-report-&lt;week&gt; pattern instead of the bare ISO week code. Fixed a real stats bug: breakdown tables (sources, CWEs, vendors, categories, ransomware groups) now disclose &quot;+N more&quot; when capped at their top-8 display instead of silently truncating, after one shipped with a total that didn&#x27;t reconcile. Ransomware victim postings are no longer linked (their source is a Tor .onion address, unsuitable for this report). The full report layout is now also published as its own HTML page, not just as a PDF-conversion input.</td></tr><tr><td>v1.1</td><td><span class="nowrap">2026-09-08</span></td><td>PDF is now a purpose-built print document (cover page, table of contents, numbered sections, real data tables with repeating headers, narrative analysis paragraphs) rendered from its own layout, not a screenshot of the web-view report — full-bleed dark theme to every page edge. Web-view dashboard panels no longer truncate long category/vendor names.</td></tr><tr><td>v1.0</td><td><span class="nowrap">2026-09-08</span></td><td>Initial report format: executive summary, dashboard view, and detail sections for CVEs, research articles, notable feed items, and ransomware/breach activity.</td></tr></tbody></table>
+      </div>
+    
+    </section>
+    
+  </div>
+</body>
+</html>

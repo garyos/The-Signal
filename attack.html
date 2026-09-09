@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE SIGNAL — ATT&amp;CK Explorer</title>
+<style>
+  :root {
+    --ink: #0a0e14;
+    --ink-raised: #10151d;
+    --ink-input: #0d1219;
+    --line: #1e2733;
+    --text: #d7dde5;
+    --text-dim: #7d8998;
+    --amber: #ffb020;
+    --red: #ff5c5c;
+    --blue: #5ac8ff;
+    --green: #4fd58a;
+    --purple: #c792ea;
+    --teal: #2dd4bf;
+    --orange: #ff9f4a;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+
+  /* entity-type categorical colors, distinct from severity semantics elsewhere on the site */
+  :root {
+    --c-groups: var(--amber);
+    --c-tactics: var(--teal);
+    --c-techniques: var(--blue);
+    --c-software: var(--purple);
+    --c-campaigns: var(--red);
+    --c-mitigations: var(--green);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overscroll-behavior-y: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .frame {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .masthead h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.02em; margin: 0 0 4px; }
+  .masthead .sub { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+  .masthead nav.page-nav { display: flex; align-items: center; gap: 8px; position: relative; }
+  .nav-home-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--text-dim); border: 1px solid var(--line); padding: 7px; text-decoration: none;
+  }
+  .nav-home-btn:hover, .nav-home-btn:focus-visible { color: var(--amber); border-color: var(--amber); }
+  .nav-toggle-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--text-dim); background: var(--ink-raised); border: 1px solid var(--line); padding: 7px; cursor: pointer;
+  }
+  .nav-toggle-btn:hover, .nav-toggle-btn[aria-expanded="true"] { color: var(--amber); border-color: var(--amber); }
+  .nav-dropdown { position: relative; }
+  .nav-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; z-index: 80;
+    background: var(--ink-raised); border: 1px solid var(--line); min-width: 168px;
+    display: flex; flex-direction: column; box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+  }
+  .nav-menu[hidden] { display: none; }
+  .nav-menu a {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); text-decoration: none;
+    padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .nav-menu a:last-child { border-bottom: none; }
+  .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--amber); background: var(--ink-input); }
+
+  /* domain switcher */
+  .domain-switcher {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(78px, 1fr)); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); margin-bottom: 10px;
+  }
+  .domain-btn {
+    background: var(--ink-raised); color: var(--text-dim); border: none;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.01em;
+    padding: 11px 4px; cursor: pointer; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .domain-btn.active { background: var(--ink); color: var(--amber); font-weight: 600; }
+  .domain-btn:disabled { opacity: 0.4; cursor: wait; }
+
+  /* entity tabs */
+  .entity-tabs {
+    display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; margin-bottom: 10px;
+    scrollbar-width: thin;
+  }
+  .entity-tab {
+    flex: 0 0 auto; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.03em;
+    color: var(--text-dim); background: var(--ink-raised); border: 1px solid var(--line);
+    padding: 8px 12px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px;
+  }
+  .entity-tab .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+  .entity-tab.active { color: var(--tab-color, var(--amber)); border-color: var(--tab-color, var(--amber)); }
+  .entity-tab.active .dot { opacity: 1; }
+
+  .view-toggle { display: flex; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .view-toggle[hidden] { display: none; }
+  .view-toggle button {
+    background: var(--ink-raised); color: var(--text-dim); border: none;
+    font-family: var(--font-mono); font-size: 11px; padding: 7px 10px; cursor: pointer;
+  }
+  .view-toggle button.active { background: var(--ink); color: var(--amber); }
+
+  .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .toolbar input {
+    flex: 1; min-width: 160px; font-family: var(--font-mono); font-size: 12.5px; padding: 10px 12px;
+    background: var(--ink-input); color: var(--text); border: 1px solid var(--line);
+  }
+  .toolbar input::placeholder { color: var(--text-dim); }
+  .reset-btn {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); background: none;
+    border: 1px solid var(--line); padding: 10px 12px; cursor: pointer; white-space: nowrap;
+  }
+  .reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+  .active-filter {
+    display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px;
+    color: var(--amber); border: 1px solid var(--amber); padding: 5px 9px; margin-bottom: 10px; cursor: pointer;
+  }
+
+  .stat-line { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin: 10px 0 16px; }
+
+  .filter-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  select.sub-filter, select#sort-select, select#page-size-select {
+    font-family: var(--font-mono); font-size: 11.5px; padding: 7px 10px; max-width: 45vw;
+    background: var(--ink-input); color: var(--text); border: 1px solid var(--line);
+  }
+
+  .pagination {
+    display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 18px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);
+  }
+  .pagination[hidden] { display: none; }
+  .pagination button {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--text); background: var(--ink-raised);
+    border: 1px solid var(--line); padding: 7px 14px; cursor: pointer;
+  }
+  .pagination button:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
+  .pagination button:disabled { color: var(--text-dim); cursor: default; opacity: 0.5; }
+
+  /* card grid, generic across entity types */
+  .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  .card {
+    background: var(--ink-raised); border: 1px solid var(--line);
+    border-left: 3px solid var(--card-color, var(--amber));
+    padding: 12px 14px; cursor: pointer; text-align: left; color: var(--text);
+    font-family: var(--font-sans); width: 100%; min-width: 0;
+    overflow-wrap: anywhere;
+    transition: background 0.15s ease;
+  }
+  .card:hover, .card:focus-visible { background: #141b26; }
+  .card .cid { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.04em; }
+  .card .cname { font-size: 15px; font-weight: 600; margin: 3px 0 5px; }
+  .card .csub {
+    font-size: 12px; color: var(--text-dim); line-height: 1.4; margin-bottom: 8px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card .cstats { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin-bottom: 6px; }
+  .card .cstats b { color: var(--text); }
+  .card .cflags { font-size: 12px; margin-bottom: 6px; }
+  .card .ctag {
+    display: inline-block; font-family: var(--font-mono); font-size: 9.5px; text-transform: uppercase;
+    color: var(--text-dim); border: 1px solid var(--line); padding: 1px 6px; margin-right: 6px;
+  }
+
+  .coverage-bar { display: flex; gap: 2px; height: 5px; }
+  .coverage-seg { flex: 1; background: rgba(255,255,255,0.08); }
+  .coverage-seg.filled { background: var(--amber); }
+
+  .empty-state {
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); padding: 40px 0;
+    text-align: center; border: 1px dashed var(--line);
+  }
+
+  /* country cloud */
+  .country-cloud { display: flex; flex-wrap: wrap; gap: 10px; padding: 8px 0; }
+  .country-chip {
+    font-family: var(--font-mono); color: var(--text); background: var(--ink-raised);
+    border: 1px solid var(--line); padding: 6px 12px; cursor: pointer; line-height: 1.3;
+  }
+  .country-chip:hover { border-color: var(--amber); }
+  .country-chip .n { color: var(--text-dim); font-size: 0.75em; }
+  .country-chip.unattributed { opacity: 0.6; font-style: italic; }
+
+  /* flyout */
+  .flyout-backdrop {
+    position: fixed; inset: 0; background: rgba(5,7,10,0.6); backdrop-filter: blur(1px);
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 40;
+  }
+  .flyout-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .flyout {
+    position: fixed; background: var(--ink-raised); border-left: 1px solid var(--line);
+    z-index: 41; display: flex; flex-direction: column;
+    top: 0; right: 0; bottom: 0; width: min(440px, 100%);
+    transform: translateX(100%); transition: transform 0.25s ease;
+  }
+  .flyout.open { transform: translateX(0); }
+  @media (max-width: 680px) {
+    .flyout {
+      top: auto; left: 0; right: 0; bottom: 0; width: auto; height: 88vh;
+      border-left: none; border-top: 1px solid var(--line);
+      transform: translateY(100%);
+    }
+    .flyout.open { transform: translateY(0); }
+  }
+
+  .flyout-handle { display: none; justify-content: center; padding: 9px 0 3px; cursor: grab; touch-action: none; }
+  .flyout-handle:active { cursor: grabbing; }
+  .flyout-handle .handle-bar { width: 38px; height: 4px; border-radius: 3px; background: var(--line); }
+  @media (max-width: 680px) { .flyout-handle { display: flex; } }
+  .flyout-head {
+    display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+    padding: 10px 14px; border-bottom: 1px solid var(--line); flex: 0 0 auto;
+  }
+  .flyout-close {
+    font-family: var(--font-mono); font-size: 16px; color: var(--text-dim); background: none;
+    border: none; cursor: pointer; padding: 0 4px; line-height: 1;
+  }
+  .flyout-close:hover { color: var(--red); }
+  .flyout-body { padding: 16px; overflow-y: auto; flex: 1 1 auto; }
+
+  /* back/breadcrumb nav lives at the bottom — thumb-reachable on mobile */
+  .flyout-nav {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-top: 1px solid var(--line); background: var(--ink-raised);
+  }
+  .flyout-back {
+    flex: 0 0 auto; font-family: var(--font-mono); font-size: 11.5px; color: var(--text);
+    background: var(--ink-input); border: 1px solid var(--line); padding: 8px 12px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .flyout-back:hover:not(:disabled) { color: var(--amber); border-color: var(--amber); }
+  .flyout-back:disabled { opacity: 0.3; cursor: default; }
+  .flyout-crumbs {
+    flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 5px;
+    overflow-x: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+    scrollbar-width: none;
+  }
+  .flyout-crumbs::-webkit-scrollbar { display: none; }
+  .flyout-crumbs button {
+    flex: 0 0 auto; background: none; border: none; color: var(--text-dim); font-family: var(--font-mono);
+    font-size: 11px; cursor: pointer; padding: 2px; white-space: nowrap; max-width: 110px;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .flyout-crumbs button:last-child { color: var(--amber); cursor: default; }
+  .flyout-crumbs button:not(:last-child):hover { color: var(--text); text-decoration: underline; }
+  .flyout-crumbs .sep { flex: 0 0 auto; opacity: 0.5; }
+
+  .flyout-body .fid {
+    font-family: var(--font-mono); font-size: 11px; color: var(--card-color, var(--text-dim));
+  }
+  .flyout-body h2 { font-size: 20px; margin: 4px 0 8px; }
+  .alias-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .alias-chip { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); border: 1px solid var(--line); padding: 3px 8px; }
+  .flyout-summary { font-size: 13.5px; line-height: 1.6; color: var(--text-dim); margin-bottom: 14px; white-space: pre-line; overflow-wrap: anywhere; }
+  .flyout-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
+
+  .section-title {
+    font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-dim); margin: 18px 0 10px; padding-top: 14px; border-top: 1px solid var(--line);
+  }
+  .technique-group { margin-bottom: 14px; }
+  .technique-group h4 {
+    font-family: var(--font-mono); font-size: 11px; color: var(--blue); margin: 0 0 8px;
+    text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-size: 12px; padding: 5px 10px; background: var(--ink-input); border: 1px solid var(--line);
+    color: var(--text); cursor: pointer; text-align: left;
+  }
+  .chip:hover { border-color: var(--chip-color, var(--amber)); color: var(--chip-color, var(--amber)); }
+
+  .spotlight-btn {
+    margin-top: 20px; width: 100%; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em;
+    color: var(--ink); background: var(--amber); border: none; padding: 12px; cursor: pointer;
+    text-transform: uppercase; font-weight: 600; text-align: center; text-decoration: none; display: block;
+  }
+  .spotlight-btn:hover { filter: brightness(1.1); }
+
+  footer { margin-top: 32px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+  footer #domain-line { display: block; margin-bottom: 6px; }
+  a.footer-link { color: var(--text-dim); }
+  a.footer-link:hover { color: var(--amber); }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  /* ---------- stormcast player (3-stage bottom sheet) ----------
+     Stage 1 = mini bar, stage 2 = standard controls, stage 3 = + notes/transcript.
+     This whole block, plus its HTML and the "sp-player.js"-equivalent script
+     section, is intentionally identical across every page on the site (see
+     the shared player docs in README) so a session started on one page can
+     be restored — same look, same behavior — on any other. */
+  body { transition: padding-bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .sp-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; max-width: 920px; margin: 0 auto;
+    background: linear-gradient(180deg, #141b26 0%, var(--ink-raised) 40%);
+    border-top: 1px solid var(--line); border-radius: 14px 14px 0 0;
+    box-shadow: 0 -12px 32px rgba(0,0,0,0.5);
+  }
+  .sp-bar[hidden] { display: none; }
+
+  /* The handle IS the expand/collapse control — a full-width tap/drag strip
+     with a deliberately large chevron button, not just a decorative pill, so
+     there's always an obvious click target even where dragging isn't wired
+     (desktop) or someone would rather not drag at all. */
+  .sp-handle { display: flex; justify-content: center; align-items: center; height: 34px; cursor: grab; touch-action: none; }
+  .sp-handle:active { cursor: grabbing; }
+  .sp-chevron {
+    width: 44px; height: 26px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); border-radius: 8px; background: var(--ink-input); border: 1px solid var(--line);
+    pointer-events: none; /* the whole .sp-handle row is the target, not just the icon */
+  }
+  .sp-handle:hover .sp-chevron { color: var(--orange); border-color: var(--orange); }
+  .sp-chevron svg { display: block; }
+
+  /* Stage 2/3 content is always in the DOM; height (driven by JS, in px
+     during a drag for 1:1 tracking, then handed back to this transition to
+     ease-settle on release) is what actually shows/hides it — smooth by
+     construction, unlike toggling [hidden] which just pops. */
+  .sp-reveal { overflow: hidden; height: 0; transition: height 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  .sp-header { display: flex; align-items: center; gap: 12px; padding: 2px 18px 8px; }
+  .sp-art {
+    width: 44px; height: 44px; border-radius: 9px; flex: 0 0 auto; object-fit: cover;
+    border: 1px solid var(--line); background: var(--ink-input);
+  }
+  .sp-info { flex: 1 1 auto; min-width: 0; }
+  .sp-title {
+    font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sp-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .sp-icon-btn {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text-dim); border: 1px solid var(--line); cursor: pointer; padding: 0;
+  }
+  .sp-icon-btn:hover { color: var(--orange); border-color: var(--orange); }
+  .sp-icon-btn.active { color: var(--orange); border-color: var(--orange); background: rgba(255,159,74,0.12); }
+  .sp-icon-btn svg { display: block; }
+  .sp-icon-btn[hidden] { display: none; }
+
+  .sp-mini-progress-wrap { height: 3px; background: var(--line); margin: 0 18px 10px; border-radius: 2px; }
+  .sp-mini-progress-wrap[hidden] { display: none; }
+  .sp-mini-progress-fill { height: 100%; width: 0%; background: var(--orange); border-radius: 2px; }
+
+  .sp-seek { display: flex; align-items: center; gap: 10px; padding: 0 18px 4px; }
+  .sp-time { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); flex: 0 0 auto; min-width: 34px; }
+  #sp-time-duration { text-align: right; }
+  #sp-seek-bar {
+    flex: 1 1 auto; appearance: none; height: 5px; border-radius: 3px; background: var(--line); outline: none; accent-color: var(--orange);
+  }
+  #sp-seek-bar::-webkit-slider-thumb {
+    appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--orange); cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+  #sp-seek-bar::-moz-range-thumb {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--orange); border: none; cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+
+  .sp-transport { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 18px 14px; }
+  .sp-transport-btn {
+    flex: 0 0 auto; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text); border: 1px solid var(--line); cursor: pointer; padding: 0;
+    width: 40px; height: 40px; position: relative;
+  }
+  .sp-transport-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .sp-transport-btn svg { display: block; }
+  .sp-transport-btn.sp-primary {
+    width: 54px; height: 54px; background: var(--orange); border-color: var(--orange); color: var(--ink);
+    box-shadow: 0 4px 18px rgba(255,159,74,0.35);
+  }
+  .sp-transport-btn.sp-primary:hover { filter: brightness(1.08); color: var(--ink); border-color: var(--orange); }
+  .sp-skip-label {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; padding-top: 2px; pointer-events: none;
+  }
+  #sp-speed-select {
+    font-family: var(--font-mono); font-size: 10.5px; color: var(--text); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 8px 7px; cursor: pointer; flex: 0 0 auto; min-width: 0;
+  }
+  #sp-speed-select:hover { border-color: var(--orange); color: var(--orange); }
+
+  .sp-details { border-top: 1px solid var(--line); max-height: 46vh; overflow-y: auto; padding: 4px 18px 16px; }
+  .sp-details-tabs { display: flex; gap: 6px; margin: 10px 0 12px; }
+  .sp-details-tab {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; cursor: pointer;
+  }
+  .sp-details-tab.active { color: var(--orange); border-color: var(--orange); }
+  .sp-note-item { margin-bottom: 12px; }
+  .sp-note-heading { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .sp-note-link { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--blue); text-decoration: none; word-break: break-all; margin-bottom: 2px; }
+  .sp-note-link:hover { text-decoration: underline; }
+  .sp-transcript-text { font-size: 13px; line-height: 1.7; color: var(--text-dim); white-space: pre-line; overflow-wrap: anywhere; }
+  .sp-empty-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); padding: 10px 0; }
+
+  @media (max-width: 380px) {
+    .sp-transport { gap: 6px; }
+    #sp-speed-select { padding: 8px 5px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <header class="masthead">
+      <div>
+        <h1>ATT&amp;CK EXPLORER</h1>
+      </div>
+      <nav class="page-nav">
+        <a class="nav-home-btn" href="index.html" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <button class="nav-toggle-btn" id="nav-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-menu" aria-label="More pages">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          </button>
+          <div class="nav-menu" id="nav-menu" hidden>
+            <a href="cve.html">CVE</a>
+            <a href="leaktracker.html">Ransomware</a>
+            <a href="breaches.html">Breaches</a>
+            <a href="podcast.html">Podcast</a>
+            <a href="research.html">Research</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="reports.html">Reports</a>
+            <a href="spotlight.html">Spotlight</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <script>
+      (function () {
+        const btn = document.getElementById("nav-toggle");
+        const menu = document.getElementById("nav-menu");
+        if (!btn || !menu) return;
+        const closeMenu = () => { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); };
+        const openMenu = () => { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); };
+        btn.addEventListener("click", (e) => { e.stopPropagation(); menu.hidden ? openMenu() : closeMenu(); });
+        document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && e.target !== btn) closeMenu(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+      })();
+    </script>
+
+    <div class="domain-switcher" id="domain-switcher">
+      <button class="domain-btn" data-domain="enterprise">Enterprise</button>
+      <button class="domain-btn" data-domain="mobile">Mobile</button>
+      <button class="domain-btn" data-domain="ics">ICS</button>
+      <button class="domain-btn" data-domain="sparta">SPARTA</button>
+      <button class="domain-btn" data-domain="atlas">ATLAS</button>
+    </div>
+
+    <div class="entity-tabs" id="entity-tabs"></div>
+
+    <div class="toolbar">
+      <input id="search-input" type="text" placeholder="search…" />
+      <div class="view-toggle" id="group-view-toggle" hidden>
+        <button data-view="grid" class="active">grid</button>
+        <button data-view="country">by country</button>
+      </div>
+      <button class="reset-btn" id="reset-btn">reset</button>
+    </div>
+    <div class="filter-row" id="filter-row">
+      <select class="sub-filter" id="sub-filter-1" hidden></select>
+      <select class="sub-filter" id="sub-filter-2" hidden></select>
+      <select id="sort-select">
+        <option value="default">sort: default</option>
+        <option value="modified">sort: recently modified</option>
+        <option value="name">sort: name (A–Z)</option>
+      </select>
+      <select id="page-size-select">
+        <option value="40">40 / page</option>
+        <option value="100" selected>100 / page</option>
+        <option value="250">250 / page</option>
+      </select>
+    </div>
+    <div id="active-filter-slot"></div>
+    <div class="stat-line" id="stat-line"></div>
+
+    <div id="view-root">
+      <div class="empty-state">Loading…</div>
+    </div>
+    <div class="pagination" id="pagination" hidden>
+      <button id="page-prev">‹ prev</button>
+      <span id="page-indicator"></span>
+      <button id="page-next">next ›</button>
+    </div>
+
+    <footer>
+      <div id="domain-line">loading…</div>
+      <div id="attribution-line"></div>
+    </footer>
+  </div>
+
+  <div class="flyout-backdrop" id="flyout-backdrop"></div>
+  <aside class="flyout" id="flyout">
+    <div class="flyout-handle" id="flyout-handle"><span class="handle-bar"></span></div>
+    <div class="flyout-head">
+      <button class="flyout-close" id="flyout-close">✕</button>
+    </div>
+    <div class="flyout-body" id="flyout-body"></div>
+    <div class="flyout-nav">
+      <button class="flyout-back" id="flyout-back">‹ back</button>
+      <div class="flyout-crumbs" id="flyout-crumbs"></div>
+    </div>
+  </aside>
+
+  <!-- Stormcast player — identical block on every page of the site, see README. -->
+  <div class="sp-bar" id="sp-bar" data-stage="2" hidden>
+    <audio id="sp-audio" preload="metadata"></audio>
+
+    <div class="sp-handle" id="sp-handle" role="button" tabindex="0" aria-label="expand or collapse player">
+      <span class="sp-chevron" id="sp-chevron"></span>
+    </div>
+
+    <div class="sp-header" id="sp-header">
+      <img class="sp-art" id="sp-art" alt="" />
+      <div class="sp-info">
+        <div class="sp-title" id="sp-title">—</div>
+        <div class="sp-meta" id="sp-meta">—</div>
+      </div>
+      <button class="sp-icon-btn" id="sp-mini-play" title="play" aria-label="play"></button>
+      <button class="sp-icon-btn" id="sp-notes-btn" title="show notes &amp; transcript" aria-label="show notes and transcript"></button>
+      <button class="sp-icon-btn" id="sp-close" title="close player" aria-label="close player"></button>
+    </div>
+
+    <div class="sp-mini-progress-wrap" id="sp-mini-progress-wrap"><div class="sp-mini-progress-fill" id="sp-mini-progress-fill"></div></div>
+
+    <div class="sp-reveal" id="sp-reveal-2">
+      <div class="sp-seek" id="sp-seek-row">
+        <span class="sp-time" id="sp-time-current">0:00</span>
+        <input type="range" id="sp-seek-bar" min="0" max="1000" value="0" step="1" aria-label="seek">
+        <span class="sp-time" id="sp-time-duration">0:00</span>
+      </div>
+
+      <div class="sp-transport" id="sp-transport-row">
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-back" title="back 15 seconds" aria-label="back 15 seconds">
+          <span class="sp-skip-label">15</span>
+        </button>
+        <button class="sp-transport-btn sp-primary" id="sp-play-pause" title="play" aria-label="play"></button>
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-fwd" title="forward 30 seconds" aria-label="forward 30 seconds">
+          <span class="sp-skip-label">30</span>
+        </button>
+        <select id="sp-speed-select" title="playback speed" aria-label="playback speed">
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+          <option value="1.75">1.75×</option>
+          <option value="2">2×</option>
+        </select>
+        <button class="sp-icon-btn" id="sp-mute-btn" title="mute" aria-label="mute"></button>
+      </div>
+    </div>
+
+    <div class="sp-reveal" id="sp-reveal-3">
+    <div class="sp-details" id="sp-details">
+      <div class="sp-details-tabs">
+        <button class="sp-details-tab active" data-tab="notes">Show notes</button>
+        <button class="sp-details-tab" data-tab="transcript">Transcript</button>
+      </div>
+      <div id="sp-notes-panel"></div>
+      <div id="sp-transcript-panel" hidden></div>
+    </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const SKIP_BACK_S = 15;
+  const SKIP_FWD_S = 30;
+
+  // Stormcast player — a self-contained bottom-sheet component. This exact
+  // block (CSS class prefix "sp-", JS identifier prefix "sp"/"SP_") is
+  // duplicated verbatim on every page of the site so a listening session
+  // started on one page keeps its player visible (and its localStorage-saved
+  // position restorable) after navigating to any other — see README for the
+  // one real limitation that comes with a static multi-page site: playback
+  // itself can't survive an actual page navigation, only its *position* can,
+  // so resuming after a nav takes a tap (or, on browsers whose autoplay
+  // heuristics allow it, resumes on its own).
+  // =====================================================================
+
+  const SP_ARTWORK_URL = "https://isc.sans.edu/images/podcast3000.jpg";
+  const SP_EPISODE_KEY = "signal-podcast-session-episode";
+  const SP_STATE_KEY = "signal-podcast-session-state";
+  const SP_SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+  const SP_ICON = {
+    play: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
+    pause: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>`,
+    volume: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16.3 12a4.3 4.3 0 0 0-2.4-3.85v7.7A4.3 4.3 0 0 0 16.3 12z"/></svg>`,
+    muted: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19.4 8.5 18 7.1l-2.1 2.1-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1z"/></svg>`,
+    notes: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>`,
+    close: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>`,
+    skipBack: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    skipFwd: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX(-1)"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    chevronUp: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg>`,
+    chevronDown: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+  };
+
+  const spState = { episode: null };
+  let spStage = 2;
+  let spLastSaveAt = 0;
+  let spReveal2H = 0; // natural (rendered) height of the seek+transport block, in px
+  let spReveal3H = 0; // natural (rendered, already capped at 46vh by .sp-details) height of the notes/transcript block
+  let spChromeH = 0;  // handle + header height — present at every stage, so measured separately from the reveals
+  const SP_MINI_PROGRESS_H = 13; // fixed by CSS (3px bar + 10px bottom margin) — stage-1-only, cheap enough to hardcode rather than measure
+
+  function spEl(id) { return document.getElementById(id); }
+
+  function spFmtDate(iso) {
+    if (!iso) return "unknown date";
+    const d = new Date(iso);
+    return isNaN(d) ? "unknown date" : d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+
+  function spFmtDuration(seconds) {
+    if (seconds == null || !isFinite(seconds)) return "0:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+    const ss = String(s).padStart(2, "0");
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  function spCleanTranscript(text) {
+    return text.replace(/\s+/g, " ").trim();
+  }
+
+  function spEscapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  // ---------- stage (1 = mini, 2 = standard controls, 3 = + notes/transcript) ----------
+
+  // The bar's rendered height is *always* computed analytically from these
+  // independently-measured, stage-invariant pieces — never read live off the
+  // bar itself. A live getBoundingClientRect() taken right after changing a
+  // transitioning element's height reflects wherever the animation happens
+  // to be at that exact instant (in practice: still ~the pre-change value,
+  // since the transition hasn't advanced yet) — that's what made
+  // --sp-bar-height/body padding get stuck a step behind on every stage
+  // change. Computing it from spChromeH/spReveal2H/spReveal3H sidesteps the
+  // race entirely: the target is known the instant a stage change is
+  // requested, with no dependency on animation timing.
+  function spBarHeightForProgress(p) {
+    const h2 = spReveal2H * Math.max(0, Math.min(1, p));
+    const h3 = spReveal3H * Math.max(0, Math.min(1, p - 1));
+    const mini = p < 0.5 ? SP_MINI_PROGRESS_H : 0;
+    return spChromeH + mini + h2 + h3;
+  }
+
+  function spSyncBodyPadding(progress) {
+    const bar = spEl("sp-bar");
+    const p = progress == null ? spStage - 1 : progress;
+    const h = bar.hidden ? 0 : spBarHeightForProgress(p);
+    document.body.style.paddingBottom = bar.hidden ? "" : `${h}px`;
+    // A page can optionally key its own absolutely-positioned chrome off this
+    // (e.g. spotlight.html's floating pause/speed buttons, which aren't in
+    // normal document flow so body padding alone wouldn't move them).
+    document.documentElement.style.setProperty("--sp-bar-height", `${h}px`);
+  }
+
+  // Stage 2/3 content (#sp-reveal-2/#sp-reveal-3) never actually hides — its
+  // wrapper's height animates between 0 and its natural rendered height, so
+  // "expanding" is a real, smooth, continuously-trackable size change rather
+  // than a pop between hidden/visible. Measuring means briefly flipping to
+  // height:auto, reading the box, then restoring — the standard technique for
+  // animating to/from a size CSS can't itself transition. spChromeH (handle +
+  // header) doesn't need this trick since it's never zeroed/hidden.
+  function spMeasureReveals() {
+    const r2 = spEl("sp-reveal-2"), r3 = spEl("sp-reveal-3");
+    const h2 = r2.style.height, h3 = r3.style.height;
+    const t2 = r2.style.transition, t3 = r3.style.transition;
+    r2.style.transition = "none"; r3.style.transition = "none";
+    r2.style.height = "auto"; r3.style.height = "auto";
+    spReveal2H = r2.getBoundingClientRect().height;
+    spReveal3H = r3.getBoundingClientRect().height;
+    r2.style.height = h2; r3.style.height = h3;
+    void r2.offsetHeight; // force reflow before re-enabling the transition
+    r2.style.transition = t2; r3.style.transition = t3;
+    spChromeH = spEl("sp-handle").getBoundingClientRect().height + spEl("sp-header").getBoundingClientRect().height;
+  }
+  let spResizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(spResizeTimer);
+    spResizeTimer = setTimeout(() => { spMeasureReveals(); spApplyStage(spStage); }, 200);
+  });
+
+  function spUpdateChevron() {
+    spEl("sp-chevron").innerHTML = spStage === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+  }
+
+  // The continuous, real-time visual (progress 0=stage1 .. 1=stage2 .. 2=stage3)
+  // driven straight off pointer position during a drag — this is what makes
+  // dragging feel smooth/1:1 instead of "drag, nothing, then a sudden jump,"
+  // and (via spSyncBodyPadding(p)) keeps body padding / --sp-bar-height
+  // tracking the finger in real time too, not just settling correctly at
+  // the end.
+  function spSetRevealProgress(p) {
+    spEl("sp-reveal-2").style.height = `${spReveal2H * Math.max(0, Math.min(1, p))}px`;
+    spEl("sp-reveal-3").style.height = `${spReveal3H * Math.max(0, Math.min(1, p - 1))}px`;
+    const near = p < 0.5 ? 1 : (p < 1.5 ? 2 : 3);
+    spEl("sp-mini-play").hidden = near !== 1;
+    spEl("sp-mini-progress-wrap").hidden = near !== 1;
+    spEl("sp-notes-btn").hidden = near === 1;
+    spEl("sp-chevron").innerHTML = near === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+    spSyncBodyPadding(p);
+  }
+
+  // The authoritative "settle here" call — sets the exact target heights for
+  // a stage and lets the CSS transition on .sp-reveal ease into them. Used
+  // both for plain stage changes (click/tap) and to finish a drag once
+  // released, at which point spSetRevealProgress has already been driving
+  // the same two heights directly (transitions disabled) for 1:1 tracking.
+  function spApplyStage(n) {
+    spStage = Math.max(1, Math.min(3, n));
+    const bar = spEl("sp-bar");
+    bar.dataset.stage = String(spStage);
+    spEl("sp-reveal-2").style.height = `${spStage >= 2 ? spReveal2H : 0}px`;
+    spEl("sp-reveal-3").style.height = `${spStage >= 3 ? spReveal3H : 0}px`;
+    spEl("sp-mini-play").hidden = spStage !== 1;
+    spEl("sp-mini-progress-wrap").hidden = spStage !== 1;
+    spEl("sp-notes-btn").hidden = spStage === 1;
+    spEl("sp-notes-btn").classList.toggle("active", spStage === 3);
+    spUpdateChevron();
+    spSyncBodyPadding();
+    spSaveState(true);
+  }
+
+  // Drag the handle up/down for continuous, real-time stage tracking (mobile
+  // bottom-sheet layout only — on desktop the bar isn't a sheet sliding up
+  // from the screen edge, so a vertical drag has no obvious meaning there).
+  // A plain tap/click — no real movement — toggles stage 1 ⇄ 2 from *any*
+  // device, and doubles as the "good sized expand/collapse button" the
+  // handle's big chevron visually promises: dragging is a bonus, not the
+  // only way in.
+  function spWireStageGesture() {
+    const handle = spEl("sp-handle");
+    let startY = 0, dragging = false, moved = false, baseP = 1, rafId = null, pendingP = null;
+    const isSheetLayout = () => window.matchMedia("(max-width: 680px)").matches;
+    const DRAG_RANGE = 130; // px of drag == one full stage step
+
+    function flushFrame() {
+      rafId = null;
+      if (pendingP == null) return;
+      spSetRevealProgress(pendingP);
+    }
+
+    handle.addEventListener("pointerdown", (e) => {
+      dragging = true; startY = e.clientY; moved = false; baseP = spStage - 1;
+      try { handle.setPointerCapture(e.pointerId); } catch {}
+    });
+    handle.addEventListener("pointermove", (e) => {
+      if (!dragging || !isSheetLayout()) return;
+      const dy = startY - e.clientY;
+      if (Math.abs(dy) > 6 && !moved) {
+        moved = true;
+        spEl("sp-reveal-2").style.transition = "none";
+        spEl("sp-reveal-3").style.transition = "none";
+      }
+      if (!moved) return;
+      pendingP = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      if (rafId == null) rafId = requestAnimationFrame(flushFrame);
+    });
+    const release = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+      if (!moved) { spApplyStage(spStage === 1 ? 2 : 1); return; }
+      const dy = startY - e.clientY;
+      const p = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      spApplyStage(Math.round(p) + 1);
+    };
+    handle.addEventListener("pointerup", release);
+    handle.addEventListener("pointercancel", () => {
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+    });
+    handle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); spApplyStage(spStage === 1 ? 2 : 1); }
+    });
+  }
+
+  // ---------- session persistence (localStorage, shared across pages) ----------
+
+  function spSaveEpisodeRecord(ep) {
+    try { localStorage.setItem(SP_EPISODE_KEY, JSON.stringify(ep)); } catch {}
+  }
+
+  function spSaveState(immediate) {
+    if (!spState.episode) return;
+    const now = Date.now();
+    if (!immediate && now - spLastSaveAt < 4000) return;
+    spLastSaveAt = now;
+    const audio = spEl("sp-audio");
+    try {
+      localStorage.setItem(SP_STATE_KEY, JSON.stringify({
+        episodeId: spState.episode.id,
+        currentTime: audio.currentTime || 0,
+        playing: !audio.paused,
+        stage: spStage,
+        updatedAt: new Date().toISOString(),
+      }));
+    } catch {}
+  }
+
+  function spClearSession() {
+    try { localStorage.removeItem(SP_EPISODE_KEY); localStorage.removeItem(SP_STATE_KEY); } catch {}
+  }
+
+  function spRestoreSession() {
+    let ep, state;
+    try {
+      ep = JSON.parse(localStorage.getItem(SP_EPISODE_KEY) || "null");
+      state = JSON.parse(localStorage.getItem(SP_STATE_KEY) || "null");
+    } catch { return; }
+    if (!ep || !state || ep.id !== state.episodeId) return;
+    const ageMs = Date.now() - new Date(state.updatedAt || 0).getTime();
+    if (!isFinite(ageMs) || ageMs > SP_SESSION_MAX_AGE_MS) { spClearSession(); return; }
+    spOpenEpisode(ep, { resumeAt: state.currentTime || 0, autoplay: !!state.playing, initialStage: 1 });
+  }
+
+  // ---------- rendering ----------
+
+  function spSetPlayIcon(isPlaying) {
+    const icon = isPlaying ? SP_ICON.pause : SP_ICON.play;
+    spEl("sp-play-pause").innerHTML = icon;
+    spEl("sp-mini-play").innerHTML = icon;
+  }
+
+  function spSetMuteIcon(muted) {
+    spEl("sp-mute-btn").innerHTML = muted ? SP_ICON.muted : SP_ICON.volume;
+  }
+
+  function spRenderDetails(ep) {
+    const notesPanel = spEl("sp-notes-panel");
+    const transcriptPanel = spEl("sp-transcript-panel");
+    notesPanel.innerHTML = (ep.show_notes && ep.show_notes.length)
+      ? ep.show_notes.map(n => `
+          <div class="sp-note-item">
+            <div class="sp-note-heading">${spEscapeHtml(n.heading)}</div>
+            ${(n.links || []).map(u => `<a class="sp-note-link" href="${spEscapeHtml(u)}" target="_blank" rel="noopener noreferrer">${spEscapeHtml(u)}</a>`).join("")}
+          </div>`).join("")
+      : `<div class="sp-empty-note">No show notes recorded for this episode.</div>`;
+    transcriptPanel.innerHTML = ep.transcript
+      ? `<div class="sp-transcript-text">${spEscapeHtml(spCleanTranscript(ep.transcript))}</div>`
+      : `<div class="sp-empty-note">Transcript ${ep.transcript_checked ? "is not available for this episode." : "hasn't been backfilled yet — check back soon."}</div>`;
+    document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "notes"));
+    notesPanel.hidden = false;
+    transcriptPanel.hidden = true;
+  }
+
+  function spSetupMediaSession(ep) {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: ep.title,
+      artist: ep.show_name || "SANS ISC Stormcast",
+      album: ep.show_name || "Stormcast",
+      // "sizes" is just a hint for choosing among multiple artwork options —
+      // harmless to leave generic since only one image is ever provided here,
+      // and actual per-episode art (Darknet Diaries has its own per episode)
+      // isn't a fixed, knowable dimension the way Stormcast's fixed image is.
+      artwork: [{ src: ep.artwork_url || SP_ARTWORK_URL, sizes: "512x512", type: "image/jpeg" }],
+    });
+    const audio = spEl("sp-audio");
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+    navigator.mediaSession.setActionHandler("seekbackward", (d) => {
+      audio.currentTime = Math.max(0, audio.currentTime - (d.seekOffset || SKIP_BACK_S));
+    });
+    navigator.mediaSession.setActionHandler("seekforward", (d) => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + (d.seekOffset || SKIP_FWD_S));
+    });
+    try {
+      navigator.mediaSession.setActionHandler("seekto", (d) => {
+        if (d.fastSeek && "fastSeek" in audio) { audio.fastSeek(d.seekTime); return; }
+        audio.currentTime = d.seekTime;
+      });
+    } catch {}
+    // The lock screen / notification "stop" control is one of the two
+    // explicit ways this player is allowed to fully close (the other is the
+    // ✕ in the bar itself) — everything else (navigating away, a drag down
+    // to stage 1) only ever collapses it, never ends the session.
+    navigator.mediaSession.setActionHandler("stop", () => spCloseFully());
+  }
+
+  function spUpdatePositionState() {
+    const audio = spEl("sp-audio");
+    if ("mediaSession" in navigator && "setPositionState" in navigator.mediaSession && audio.duration && isFinite(audio.duration)) {
+      try {
+        navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime });
+      } catch {}
+    }
+  }
+
+  function spOpenEpisode(ep, { resumeAt = 0, autoplay = true, initialStage = 2 } = {}) {
+    spState.episode = ep;
+    const audio = spEl("sp-audio");
+    audio.src = ep.audio_url;
+
+    const savedRate = parseFloat(localStorage.getItem("signal-podcast-rate") || "1");
+    audio.playbackRate = isNaN(savedRate) ? 1 : savedRate;
+    spEl("sp-speed-select").value = String(audio.playbackRate);
+    audio.muted = localStorage.getItem("signal-podcast-muted") === "1";
+    spSetMuteIcon(audio.muted);
+
+    spEl("sp-bar").hidden = false;
+    spEl("sp-art").src = ep.artwork_url || SP_ARTWORK_URL;
+    spEl("sp-title").textContent = ep.title;
+    spEl("sp-meta").textContent =
+      `${ep.show_name ? ep.show_name + " · " : ""}${ep.episode_number ? "#" + ep.episode_number + " · " : ""}${spFmtDate(ep.published)}`
+      + `${(ep.categories || []).length ? " · " + ep.categories.slice(0, 4).join(", ") : ""}`;
+    spRenderDetails(ep);
+    spMeasureReveals();
+    spApplyStage(initialStage);
+    spSetupMediaSession(ep);
+    spSaveEpisodeRecord(ep);
+
+    const onMeta = () => {
+      if (resumeAt > 0) audio.currentTime = resumeAt;
+      if (autoplay) audio.play().catch((err) => console.warn("stormcast player: autoplay blocked", err));
+      spSaveState(true);
+      audio.removeEventListener("loadedmetadata", onMeta);
+    };
+    audio.addEventListener("loadedmetadata", onMeta);
+
+    if (typeof render === "function") render();
+  }
+
+  function spCloseFully() {
+    const audio = spEl("sp-audio");
+    audio.pause();
+    audio.src = "";
+    spState.episode = null;
+    spEl("sp-bar").hidden = true;
+    spSyncBodyPadding();
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = null;
+      try { navigator.mediaSession.playbackState = "none"; } catch {}
+    }
+    spClearSession();
+    if (typeof render === "function") render();
+  }
+
+  function spWirePlayer() {
+    const audio = spEl("sp-audio");
+    const seekBar = spEl("sp-seek-bar");
+    const playBtn = spEl("sp-play-pause");
+    const miniPlayBtn = spEl("sp-mini-play");
+    const muteBtn = spEl("sp-mute-btn");
+    const speedSelect = spEl("sp-speed-select");
+    const notesBtn = spEl("sp-notes-btn");
+    const closeBtn = spEl("sp-close");
+
+    spEl("sp-skip-back").insertAdjacentHTML("afterbegin", SP_ICON.skipBack);
+    spEl("sp-skip-fwd").insertAdjacentHTML("afterbegin", SP_ICON.skipFwd);
+    playBtn.innerHTML = SP_ICON.play;
+    miniPlayBtn.innerHTML = SP_ICON.play;
+    notesBtn.innerHTML = SP_ICON.notes;
+    closeBtn.innerHTML = SP_ICON.close;
+
+    const togglePlay = () => { if (audio.paused) audio.play(); else audio.pause(); };
+    playBtn.addEventListener("click", togglePlay);
+    miniPlayBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePlay(); });
+
+    spEl("sp-skip-back").addEventListener("click", () => {
+      audio.currentTime = Math.max(0, audio.currentTime - SKIP_BACK_S);
+    });
+    spEl("sp-skip-fwd").addEventListener("click", () => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + SKIP_FWD_S);
+    });
+    speedSelect.addEventListener("change", (e) => {
+      const rate = parseFloat(e.target.value);
+      audio.playbackRate = rate;
+      try { localStorage.setItem("signal-podcast-rate", String(rate)); } catch {}
+    });
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      spSetMuteIcon(audio.muted);
+      try { localStorage.setItem("signal-podcast-muted", audio.muted ? "1" : "0"); } catch {}
+    });
+    seekBar.addEventListener("input", () => {
+      if (audio.duration) audio.currentTime = (seekBar.value / 1000) * audio.duration;
+    });
+    notesBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      spApplyStage(spStage === 3 ? 2 : 3);
+    });
+    document.querySelectorAll(".sp-details-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t === tab));
+        spEl("sp-notes-panel").hidden = tab.dataset.tab !== "notes";
+        spEl("sp-transcript-panel").hidden = tab.dataset.tab !== "transcript";
+        // Notes vs. transcript content is rarely the same height — re-measure
+        // and re-apply so stage 3's reveal height (and body padding) matches
+        // whichever panel is now showing, instead of leaving a gap or clip.
+        spMeasureReveals();
+        if (spStage === 3) spApplyStage(3);
+      });
+    });
+    closeBtn.addEventListener("click", (e) => { e.stopPropagation(); spCloseFully(); });
+
+    spWireStageGesture();
+
+    audio.addEventListener("play", () => { spSetPlayIcon(true); spSaveState(true); });
+    audio.addEventListener("pause", () => { spSetPlayIcon(false); spSaveState(true); });
+    audio.addEventListener("ended", () => spCloseFully());
+    audio.addEventListener("timeupdate", () => {
+      spEl("sp-time-current").textContent = spFmtDuration(audio.currentTime);
+      if (audio.duration) {
+        seekBar.value = String((audio.currentTime / audio.duration) * 1000);
+        spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+        spEl("sp-mini-progress-fill").style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+      }
+      spUpdatePositionState();
+      spSaveState(false);
+    });
+    audio.addEventListener("loadedmetadata", () => {
+      spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+      spUpdatePositionState();
+    });
+
+    window.addEventListener("pagehide", () => spSaveState(true));
+  }
+
+  function spInit() {
+    spWirePlayer();
+    spRestoreSession();
+  }
+
+  // =====================================================================
+  // end Stormcast player — page-specific code (episode list, filters,
+
+  const DOMAINS = ["enterprise", "mobile", "ics", "sparta", "atlas"];
+  const NO_GROUPS_DOMAINS = new Set(["sparta", "atlas"]); // technique/countermeasure matrices — no actor-tracking data
+  const DOMAIN_ATTRIBUTION = {
+    enterprise: "MITRE ATT&CK® data · country tags are inferred from public descriptions, not authoritative",
+    mobile: "MITRE ATT&CK® data · country tags are inferred from public descriptions, not authoritative",
+    ics: "MITRE ATT&CK® data · country tags are inferred from public descriptions, not authoritative",
+    sparta: "Aerospace Corporation SPARTA data · no group/software tracking in this dataset",
+    atlas: "MITRE ATLAS™ data · case studies are real incidents/exercises, not group profiles",
+  };
+  const TYPES = ["groups", "techniques", "tactics", "software", "campaigns", "mitigations"];
+  const TYPE_LABEL = { groups: "Groups", techniques: "Techniques", tactics: "Tactics", software: "Software", campaigns: "Campaigns", mitigations: "Mitigations" };
+  const PAGE_SIZES = [40, 100, 250];
+
+  // Secondary category filters — only defined where the underlying dataset
+  // actually carries that field; the two <select> slots hide themselves when
+  // the current domain/type combination has nothing to offer.
+  const SECONDARY_FILTERS = {
+    enterprise: { techniques: [{ field: "platforms", label: "platform", multi: true }] },
+    mobile: { techniques: [{ field: "platforms", label: "platform", multi: true }] },
+    ics: { techniques: [{ field: "platforms", label: "platform", multi: true }] },
+    sparta: {
+      techniques: [
+        { field: "did_layer", label: "defense layer" },
+        { field: "threat_tier", label: "threat tier" },
+      ],
+      mitigations: [
+        { field: "category", label: "category" },
+        { field: "deployment", label: "deployment" },
+      ],
+    },
+    atlas: {
+      techniques: [
+        { field: "platforms", label: "AI system type", multi: true },
+        { field: "maturity", label: "maturity" },
+      ],
+      mitigations: [
+        { field: "categories", label: "category", multi: true },
+        { field: "lifecycle_phases", label: "lifecycle phase", multi: true },
+      ],
+      campaigns: [{ field: "case_type", label: "type" }],
+    },
+  };
+  function getSubFilterDefs() {
+    return (SECONDARY_FILTERS[currentDomain] && SECONDARY_FILTERS[currentDomain][currentType]) || [];
+  }
+  const DOMAIN_KEY = "signal-attack-domain-v2";
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const urlParams = new URLSearchParams(location.search);
+
+  const cache = {};
+  // A domain named in the URL (e.g. a dashboard deep link) wins over the
+  // last-used domain remembered in localStorage.
+  let currentDomain = urlParams.get("domain") || localStorage.getItem(DOMAIN_KEY) || "enterprise";
+  if (!DOMAINS.includes(currentDomain)) currentDomain = "enterprise";
+  let currentType = "groups";
+  let groupView = "grid";
+  let searchTerm = "";
+  let countryFilter = null; // {code, name} | {code:"__none__", name:"Unattributed"}
+  let flyoutStack = []; // [{type, id}]
+  let subFilterValues = ["all", "all"]; // one per sub-filter select, reset on domain/type switch
+  let sortMode = localStorage.getItem("signal-attack-sort") || "default"; // "default" | "modified" | "name"
+  let pageSize = PAGE_SIZES.includes(Number(localStorage.getItem("signal-attack-pagesize"))) ? Number(localStorage.getItem("signal-attack-pagesize")) : 100;
+  let currentPage = 1;
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  // Native-app-style "drag the handle down to dismiss" — only meaningful in
+  // the mobile bottom-sheet layout (the CSS breakpoint that slides the panel
+  // up from the bottom instead of in from the side), so it's a no-op on desktop.
+  function wireDragToDismiss(handleEl, panelEl, onDismiss, { breakpoint = 680, threshold = 90 } = {}) {
+    let dragging = false, startY = 0, dy = 0;
+    const isSheetLayout = () => window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+    handleEl.addEventListener("pointerdown", (e) => {
+      if (!isSheetLayout()) return;
+      dragging = true; startY = e.clientY; dy = 0;
+      panelEl.style.transition = "none";
+      try { handleEl.setPointerCapture(e.pointerId); } catch {}
+    });
+    handleEl.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      dy = Math.max(0, e.clientY - startY);
+      panelEl.style.transform = `translateY(${dy}px)`;
+    });
+    const release = () => {
+      if (!dragging) return;
+      dragging = false;
+      panelEl.style.transition = "";
+      panelEl.style.transform = "";
+      if (dy > threshold) onDismiss();
+      dy = 0;
+    };
+    handleEl.addEventListener("pointerup", release);
+    handleEl.addEventListener("pointercancel", release);
+  }
+
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return "🏳";
+    return [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join("");
+  }
+
+  // ---------- data loading ----------
+
+  async function loadDomain(domain) {
+    if (cache[domain]) return cache[domain];
+    const res = await fetch(`data/attack/${domain}.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    data.byId = {};
+    for (const type of TYPES) {
+      data.byId[type] = Object.fromEntries((data[type] || []).map(e => [e.id, e]));
+    }
+    cache[domain] = data;
+    return data;
+  }
+
+  function getEntity(data, type, id) {
+    return data.byId[type] && data.byId[type][id];
+  }
+
+  function techniquesForTactic(data, tacticId) {
+    return data.techniques.filter(t => t.tactics.includes(tacticId));
+  }
+
+  function groupsUsingSoftware(data, softwareId) {
+    return data.groups.filter(g => g.software.includes(softwareId));
+  }
+
+  function techniqueLabel(t, data) {
+    if (t.parent && data.byId.techniques[t.parent]) {
+      return `${data.byId.techniques[t.parent].name}: ${t.name}`;
+    }
+    return t.name;
+  }
+
+  // ---------- entity tabs / domain switcher ----------
+
+  function renderTabs() {
+    const el = document.getElementById("entity-tabs");
+    el.innerHTML = TYPES.map(type => `
+      <button class="entity-tab" data-type="${type}" style="--tab-color: var(--c-${type})">
+        <span class="dot"></span>${TYPE_LABEL[type]}
+      </button>
+    `).join("");
+    el.querySelectorAll(".entity-tab").forEach(btn => {
+      btn.addEventListener("click", () => switchType(btn.dataset.type));
+    });
+    syncTabsActive();
+  }
+
+  function syncTabsActive() {
+    document.querySelectorAll(".entity-tab").forEach(b => b.classList.toggle("active", b.dataset.type === currentType));
+    document.getElementById("group-view-toggle").hidden = currentType !== "groups";
+    document.querySelectorAll("#group-view-toggle button").forEach(b => b.classList.toggle("active", b.dataset.view === groupView));
+    document.getElementById("search-input").placeholder =
+      currentType === "groups" ? "search actor name or alias…" : `search ${TYPE_LABEL[currentType].toLowerCase()}…`;
+  }
+
+  function renderSubFilters() {
+    const data = cache[currentDomain];
+    const defs = getSubFilterDefs();
+    for (let i = 0; i < 2; i++) {
+      const sel = document.getElementById(`sub-filter-${i + 1}`);
+      const def = defs[i];
+      if (!def || !data) {
+        sel.hidden = true;
+        sel.innerHTML = "";
+        continue;
+      }
+      const counts = {};
+      data[currentType].forEach(e => {
+        const raw = e[def.field];
+        const values = def.multi ? (raw || []) : (raw ? [raw] : []);
+        values.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+      });
+      const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      if (entries.length === 0) {
+        sel.hidden = true;
+        sel.innerHTML = "";
+        continue;
+      }
+      sel.hidden = false;
+      const current = subFilterValues[i];
+      const stillValid = entries.some(([v]) => v === current);
+      sel.innerHTML = `<option value="all">all ${escapeHtml(def.label)}</option>` +
+        entries.map(([v, n]) => `<option value="${escapeHtml(v)}">${escapeHtml(v)} (${n})</option>`).join("");
+      sel.value = stillValid ? current : "all";
+      subFilterValues[i] = sel.value;
+    }
+  }
+
+  function switchType(type) {
+    if (type === currentType) return;
+    currentType = type;
+    searchTerm = "";
+    countryFilter = null;
+    subFilterValues = ["all", "all"];
+    currentPage = 1;
+    document.getElementById("search-input").value = "";
+    if (type !== "groups") groupView = "grid";
+    closeFlyout();
+    syncTabsActive();
+    renderSubFilters();
+    render();
+  }
+
+  async function switchDomain(domain) {
+    currentDomain = domain;
+    countryFilter = null;
+    subFilterValues = ["all", "all"];
+    currentPage = 1;
+    if (currentType === "groups" && NO_GROUPS_DOMAINS.has(domain)) {
+      currentType = "techniques";
+    }
+    closeFlyout();
+    localStorage.setItem(DOMAIN_KEY, domain);
+    document.querySelectorAll(".domain-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.domain === domain);
+      b.disabled = true;
+    });
+    document.getElementById("view-root").innerHTML = `<div class="empty-state">Loading ${escapeHtml(domain)} data…</div>`;
+    try {
+      const data = await loadDomain(domain);
+      document.querySelectorAll(".domain-btn").forEach(b => b.disabled = false);
+      document.getElementById("domain-line").textContent =
+        `${data.name} · ${data.groups.length} groups · ${data.software.length} software · ${data.techniques.length} techniques · `
+        + `${data.campaigns.length} campaigns · ${data.mitigations.length} mitigations · fetched ${new Date(data.fetched_at).toLocaleDateString()}`;
+      document.getElementById("attribution-line").textContent = DOMAIN_ATTRIBUTION[domain] || "";
+      syncTabsActive();
+      renderSubFilters();
+      render();
+    } catch (err) {
+      document.querySelectorAll(".domain-btn").forEach(b => b.disabled = false);
+      document.getElementById("view-root").innerHTML =
+        `<div class="empty-state">Couldn't load ${escapeHtml(domain)} data. Has scripts/fetch_attack.py been run yet?</div>`;
+      console.error(err);
+    }
+  }
+
+  // ---------- search / filtering ----------
+
+  function matchesSearch(type, e, term) {
+    if (!term) return true;
+    const t = term.toLowerCase();
+    if (e.name && e.name.toLowerCase().includes(t)) return true;
+    if (e.id && e.id.toLowerCase().includes(t)) return true;
+    if (e.aliases && e.aliases.some(a => a.toLowerCase().includes(t))) return true;
+    return false;
+  }
+
+  // ---------- coverage bar (groups + techniques tactic membership) ----------
+
+  function coverageBar(data, techniqueIds) {
+    return `<div class="coverage-bar">` + data.tactics.map(t => {
+      const has = techniqueIds.some(tid => (data.byId.techniques[tid]?.tactics || []).includes(t.id));
+      return `<div class="coverage-seg ${has ? "filled" : ""}" title="${escapeHtml(t.name)}"></div>`;
+    }).join("") + `</div>`;
+  }
+
+  // ---------- card rendering ----------
+
+  function cardHtml(type, e, data) {
+    const color = `var(--c-${type})`;
+    switch (type) {
+      case "groups": {
+        const flags = e.countries.length
+          ? `<div class="cflags">${e.countries.map(c => flagEmoji(c.code)).join(" ")} <span style="color:var(--text-dim); font-family:var(--font-mono); font-size:10px;">${e.countries.map(c=>c.name).join(", ")}</span></div>`
+          : "";
+        return `
+          <button class="card" data-type="groups" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id}</div>
+            <div class="cname">${escapeHtml(e.name)}</div>
+            <div class="csub">${e.aliases.filter(a => a !== e.name).slice(0, 5).join(" · ") || "no known aliases"}</div>
+            ${flags}
+            <div class="cstats"><b>${e.techniques.length}</b> techniques · <b>${e.software.length}</b> software</div>
+            ${coverageBar(data, e.techniques)}
+          </button>`;
+      }
+      case "techniques": {
+        const tacticNames = e.tactics.map(id => data.byId.tactics[id]?.name).filter(Boolean);
+        return `
+          <button class="card" data-type="techniques" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id}${e.is_subtechnique ? " · sub-technique" : ""}</div>
+            <div class="cname">${escapeHtml(techniqueLabel(e, data))}</div>
+            <div class="csub">${tacticNames.map(n => `<span class="ctag">${escapeHtml(n)}</span>`).join("") || "—"}</div>
+            <div class="cstats"><b>${e.groups.length}</b> groups · <b>${e.software.length}</b> software · <b>${e.mitigations.length}</b> mitigations</div>
+          </button>`;
+      }
+      case "tactics": {
+        const count = techniquesForTactic(data, e.id).length;
+        return `
+          <button class="card" data-type="tactics" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id}</div>
+            <div class="cname">${escapeHtml(e.name)}</div>
+            <div class="csub">${escapeHtml(e.description || "")}</div>
+            <div class="cstats"><b>${count}</b> techniques</div>
+          </button>`;
+      }
+      case "software": {
+        return `
+          <button class="card" data-type="software" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id} <span class="ctag">${e.type}</span></div>
+            <div class="cname">${escapeHtml(e.name)}</div>
+            <div class="csub">${e.aliases.filter(a => a !== e.name).slice(0, 5).join(" · ") || "no known aliases"}</div>
+            <div class="cstats"><b>${e.techniques.length}</b> techniques · <b>${e.campaigns.length}</b> campaigns</div>
+          </button>`;
+      }
+      case "campaigns": {
+        const span = [e.first_seen, e.last_seen].filter(Boolean).map(d => d.slice(0, 4));
+        const range = span.length ? (span[0] === span[1] ? span[0] : span.join("–")) : "date unknown";
+        return `
+          <button class="card" data-type="campaigns" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id} · ${range}</div>
+            <div class="cname">${escapeHtml(e.name)}</div>
+            <div class="csub">${escapeHtml(e.description || "")}</div>
+            <div class="cstats"><b>${e.groups.length}</b> groups · <b>${e.techniques.length}</b> techniques</div>
+          </button>`;
+      }
+      case "mitigations": {
+        return `
+          <button class="card" data-type="mitigations" data-id="${e.id}" style="--card-color:${color}">
+            <div class="cid">${e.id}</div>
+            <div class="cname">${escapeHtml(e.name)}</div>
+            <div class="csub">${escapeHtml(e.description || "")}</div>
+            <div class="cstats">mitigates <b>${e.techniques.length}</b> techniques</div>
+          </button>`;
+      }
+    }
+    return "";
+  }
+
+  // ---------- grid / country cloud ----------
+
+  function render() {
+    if (!cache[currentDomain]) return;
+    const isCountryView = currentType === "groups" && groupView === "country";
+    document.getElementById("filter-row").hidden = isCountryView;
+    if (isCountryView) {
+      document.getElementById("pagination").hidden = true;
+      renderCountryCloud();
+    } else {
+      renderGrid();
+    }
+  }
+
+  function renderActiveFilter() {
+    const slot = document.getElementById("active-filter-slot");
+    if (currentType === "groups" && countryFilter) {
+      slot.innerHTML = `<div class="active-filter" id="clear-country">${flagEmoji(countryFilter.code)} ${escapeHtml(countryFilter.name)} ✕</div>`;
+      document.getElementById("clear-country").addEventListener("click", () => {
+        countryFilter = null;
+        render();
+      });
+    } else {
+      slot.innerHTML = "";
+    }
+  }
+
+  function renderGrid() {
+    const data = cache[currentDomain];
+    let list = data[currentType].slice();
+
+    if (currentType === "groups" && countryFilter) {
+      list = countryFilter.code === "__none__"
+        ? list.filter(g => g.countries.length === 0)
+        : list.filter(g => g.countries.some(c => c.code === countryFilter.code));
+    }
+
+    const defs = getSubFilterDefs();
+    defs.forEach((def, i) => {
+      const val = subFilterValues[i];
+      if (!val || val === "all") return;
+      list = list.filter(e => {
+        const raw = e[def.field];
+        return def.multi ? (raw || []).includes(val) : raw === val;
+      });
+    });
+
+    const term = searchTerm.trim();
+    list = list.filter(e => matchesSearch(currentType, e, term));
+
+    if (sortMode === "modified") {
+      list.sort((a, b) => new Date(b.modified || 0) - new Date(a.modified || 0));
+    } else if (sortMode === "name") {
+      list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+    }
+
+    renderActiveFilter();
+    document.getElementById("stat-line").textContent = `showing ${list.length} of ${data[currentType].length} ${TYPE_LABEL[currentType].toLowerCase()}`;
+
+    const root = document.getElementById("view-root");
+    const pagination = document.getElementById("pagination");
+    if (list.length === 0) {
+      root.innerHTML = `<div class="empty-state">Nothing matches${term ? ` "${escapeHtml(term)}"` : ""}.</div>`;
+      pagination.hidden = true;
+      return;
+    }
+
+    const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+    currentPage = Math.min(Math.max(1, currentPage), totalPages);
+    const pageStart = (currentPage - 1) * pageSize;
+    const pageItems = list.slice(pageStart, pageStart + pageSize);
+
+    pagination.hidden = list.length <= pageSize;
+    document.getElementById("page-indicator").textContent = `page ${currentPage} of ${totalPages}`;
+    document.getElementById("page-prev").disabled = currentPage <= 1;
+    document.getElementById("page-next").disabled = currentPage >= totalPages;
+
+    root.innerHTML = `<div class="grid">` + pageItems.map(e => cardHtml(currentType, e, data)).join("") + `</div>`;
+    root.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => openFlyout(card.dataset.type, card.dataset.id, { push: false, reset: true }));
+    });
+  }
+
+  function renderCountryCloud() {
+    const data = cache[currentDomain];
+    renderActiveFilter();
+    document.getElementById("stat-line").textContent = `${data.groups.length} groups, grouped by inferred country of origin`;
+
+    const counts = {};
+    let unattributed = 0;
+    data.groups.forEach(g => {
+      if (g.countries.length === 0) { unattributed++; return; }
+      g.countries.forEach(c => {
+        counts[c.code] = counts[c.code] || { name: c.name, count: 0 };
+        counts[c.code].count++;
+      });
+    });
+    const entries = Object.entries(counts).sort((a, b) => b[1].count - a[1].count);
+    const max = Math.max(1, ...entries.map(([, v]) => v.count));
+
+    const root = document.getElementById("view-root");
+    root.innerHTML = `<div class="country-cloud">` +
+      entries.map(([code, v]) => {
+        const size = (13 + (v.count / max) * 15).toFixed(1);
+        return `<button class="country-chip" data-code="${code}" data-name="${escapeHtml(v.name)}" style="font-size:${size}px">
+          ${flagEmoji(code)} ${escapeHtml(v.name)} <span class="n">${v.count}</span>
+        </button>`;
+      }).join("") +
+      (unattributed ? `<button class="country-chip unattributed" data-code="__none__" data-name="Unattributed">🏳 Unattributed <span class="n">${unattributed}</span></button>` : "") +
+      `</div>`;
+
+    root.querySelectorAll(".country-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        countryFilter = { code: chip.dataset.code, name: chip.dataset.name };
+        groupView = "grid";
+        syncTabsActive();
+        render();
+      });
+    });
+  }
+
+  // ---------- flyout ----------
+
+  function relatedSection(title, type, ids, data, opts = {}) {
+    if (!ids || ids.length === 0) return "";
+    const color = `var(--c-${type})`;
+    const items = ids.map(id => getEntity(data, type, id)).filter(Boolean);
+    const label = (e) => type === "techniques" ? techniqueLabel(e, data) : e.name;
+    return `
+      <div class="section-title">${escapeHtml(title)} (${items.length})</div>
+      <div class="chip-row">
+        ${items.map(e => `<span class="chip" style="--chip-color:${color}" data-type="${type}" data-id="${e.id}">${escapeHtml(label(e))}</span>`).join("")}
+      </div>`;
+  }
+
+  function flyoutBodyHtml(type, e, data) {
+    switch (type) {
+      case "groups": {
+        const byTactic = data.tactics.map(tactic => {
+          const techs = e.techniques.map(id => data.byId.techniques[id]).filter(t => t && t.tactics.includes(tactic.id));
+          return { tactic, techs };
+        }).filter(g => g.techs.length > 0);
+
+        return `
+          <div class="fid" style="--card-color:var(--c-groups)">${e.id}</div>
+          <h2>${escapeHtml(e.name)}</h2>
+          <div class="alias-row">
+            ${e.countries.map(c => `<span class="alias-chip">${flagEmoji(c.code)} ${escapeHtml(c.name)}</span>`).join("")}
+            ${e.aliases.filter(a => a !== e.name).map(a => `<span class="alias-chip">${escapeHtml(a)}</span>`).join("")}
+          </div>
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          <a class="spotlight-btn" href="spotlight.html?domain=${encodeURIComponent(currentDomain)}&group=${encodeURIComponent(e.id)}">⌁ Spotlight this actor</a>
+          ${relatedSection("Campaigns", "campaigns", e.campaigns, data)}
+          ${relatedSection("Software &amp; tools", "software", e.software, data)}
+          <div class="section-title">Techniques by tactic (${e.techniques.length})</div>
+          ${byTactic.map(({ tactic, techs }) => `
+            <div class="technique-group">
+              <h4>${escapeHtml(tactic.name)} <span style="color:var(--text-dim)">(${techs.length})</span></h4>
+              <div class="chip-row">
+                ${techs.map(t => `<span class="chip" style="--chip-color:var(--c-techniques)" data-type="techniques" data-id="${t.id}">${escapeHtml(techniqueLabel(t, data))}</span>`).join("")}
+              </div>
+            </div>`).join("") || `<div style="color:var(--text-dim); font-size:12px;">none recorded</div>`}
+        `;
+      }
+      case "techniques": {
+        const tacticNames = e.tactics.map(id => data.byId.tactics[id]).filter(Boolean);
+        return `
+          <div class="fid" style="--card-color:var(--c-techniques)">${e.id}${e.is_subtechnique ? " · sub-technique" : ""}</div>
+          <h2>${escapeHtml(techniqueLabel(e, data))}</h2>
+          <div class="alias-row">
+            ${tacticNames.map(t => `<span class="alias-chip" data-type="tactics" data-id="${t.id}" style="cursor:pointer">${escapeHtml(t.name)}</span>`).join("")}
+            ${e.platforms.map(p => `<span class="alias-chip">${escapeHtml(p)}</span>`).join("")}
+          </div>
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          ${relatedSection("Used by groups", "groups", e.groups, data)}
+          ${relatedSection("Used by software", "software", e.software, data)}
+          ${relatedSection("Seen in campaigns", "campaigns", e.campaigns, data)}
+          ${relatedSection("Mitigations", "mitigations", e.mitigations, data)}
+        `;
+      }
+      case "tactics": {
+        const techs = techniquesForTactic(data, e.id);
+        return `
+          <div class="fid" style="--card-color:var(--c-tactics)">${e.id}</div>
+          <h2>${escapeHtml(e.name)}</h2>
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          ${relatedSection(`Techniques in this tactic`, "techniques", techs.map(t => t.id), data)}
+        `;
+      }
+      case "software": {
+        const usedBy = groupsUsingSoftware(data, e.id).map(g => g.id);
+        return `
+          <div class="fid" style="--card-color:var(--c-software)">${e.id} · ${e.type}</div>
+          <h2>${escapeHtml(e.name)}</h2>
+          <div class="alias-row">
+            ${e.aliases.filter(a => a !== e.name).map(a => `<span class="alias-chip">${escapeHtml(a)}</span>`).join("")}
+            ${e.platforms.map(p => `<span class="alias-chip">${escapeHtml(p)}</span>`).join("")}
+          </div>
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          ${relatedSection("Used by groups", "groups", usedBy, data)}
+          ${relatedSection("Techniques", "techniques", e.techniques, data)}
+          ${relatedSection("Seen in campaigns", "campaigns", e.campaigns, data)}
+        `;
+      }
+      case "campaigns": {
+        const span = [e.first_seen, e.last_seen].filter(Boolean).map(d => d.slice(0, 10));
+        return `
+          <div class="fid" style="--card-color:var(--c-campaigns)">${e.id}</div>
+          <h2>${escapeHtml(e.name)}</h2>
+          ${span.length ? `<div class="flyout-meta">active ${span.join(" – ")}</div>` : ""}
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          ${relatedSection("Attributed to", "groups", e.groups, data)}
+          ${relatedSection("Techniques", "techniques", e.techniques, data)}
+          ${relatedSection("Software &amp; tools", "software", e.software, data)}
+        `;
+      }
+      case "mitigations": {
+        return `
+          <div class="fid" style="--card-color:var(--c-mitigations)">${e.id}</div>
+          <h2>${escapeHtml(e.name)}</h2>
+          <p class="flyout-summary">${escapeHtml(e.description) || "No description available."}</p>
+          ${relatedSection("Mitigates techniques", "techniques", e.techniques, data)}
+        `;
+      }
+    }
+    return "";
+  }
+
+  function flyoutStackLabel(hop, data) {
+    const e = getEntity(data, hop.type, hop.id);
+    if (!e) return hop.id;
+    return hop.type === "techniques" ? techniqueLabel(e, data) : e.name;
+  }
+
+  function renderFlyoutCrumbs() {
+    const data = cache[currentDomain];
+    const el = document.getElementById("flyout-crumbs");
+    el.innerHTML = flyoutStack.map((hop, i) => {
+      const isLast = i === flyoutStack.length - 1;
+      const label = escapeHtml(flyoutStackLabel(hop, data));
+      return (i > 0 ? `<span class="sep">›</span>` : "") + `<button data-i="${i}" ${isLast ? "disabled" : ""}>${label}</button>`;
+    }).join("");
+    el.querySelectorAll("button:not([disabled])").forEach(b => {
+      b.addEventListener("click", () => {
+        const i = Number(b.dataset.i);
+        const hop = flyoutStack[i];
+        flyoutStack = flyoutStack.slice(0, i + 1);
+        openFlyout(hop.type, hop.id, { push: false });
+      });
+    });
+    el.scrollLeft = el.scrollWidth;
+  }
+
+  function openFlyout(type, id, opts = {}) {
+    const data = cache[currentDomain];
+    const entity = getEntity(data, type, id);
+    if (!entity) return;
+
+    if (opts.reset) {
+      flyoutStack = [{ type, id }];
+    } else if (opts.push !== false) {
+      flyoutStack.push({ type, id });
+    }
+    // else: opts.push === false and not resetting — caller already put the
+    // stack in the right shape (e.g. flyoutBack popped it), just re-render.
+
+    document.getElementById("flyout-body").innerHTML = flyoutBodyHtml(type, entity, data);
+    document.getElementById("flyout-back").disabled = flyoutStack.length <= 1;
+    renderFlyoutCrumbs();
+    document.getElementById("flyout").classList.add("open");
+    document.getElementById("flyout-backdrop").classList.add("open");
+
+    document.getElementById("flyout-body").querySelectorAll("[data-type][data-id]").forEach(el => {
+      el.addEventListener("click", () => openFlyout(el.dataset.type, el.dataset.id));
+    });
+
+    document.getElementById("flyout-body").scrollTop = 0;
+  }
+
+  function flyoutBack() {
+    if (flyoutStack.length <= 1) return;
+    flyoutStack.pop();
+    const prev = flyoutStack[flyoutStack.length - 1];
+    openFlyout(prev.type, prev.id, { push: false });
+  }
+
+  function closeFlyout() {
+    flyoutStack = [];
+    document.getElementById("flyout").classList.remove("open");
+    document.getElementById("flyout-backdrop").classList.remove("open");
+  }
+
+  document.getElementById("flyout-back").addEventListener("click", flyoutBack);
+  document.getElementById("flyout-close").addEventListener("click", closeFlyout);
+  document.getElementById("flyout-backdrop").addEventListener("click", closeFlyout);
+  wireDragToDismiss(document.getElementById("flyout-handle"), document.getElementById("flyout"), closeFlyout);
+
+  // ---------- wiring ----------
+
+  document.querySelectorAll(".domain-btn").forEach(btn => {
+    btn.addEventListener("click", () => { if (btn.dataset.domain !== currentDomain) switchDomain(btn.dataset.domain); });
+  });
+
+  document.querySelectorAll("#group-view-toggle button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      groupView = btn.dataset.view;
+      countryFilter = null;
+      syncTabsActive();
+      render();
+    });
+  });
+
+  document.getElementById("search-input").addEventListener("input", (e) => {
+    searchTerm = e.target.value;
+    currentPage = 1;
+    if (groupView !== "country" || currentType !== "groups") render();
+  });
+
+  document.getElementById("sub-filter-1").addEventListener("change", (e) => {
+    subFilterValues[0] = e.target.value;
+    currentPage = 1;
+    render();
+  });
+  document.getElementById("sub-filter-2").addEventListener("change", (e) => {
+    subFilterValues[1] = e.target.value;
+    currentPage = 1;
+    render();
+  });
+  document.getElementById("sort-select").value = sortMode;
+  document.getElementById("sort-select").addEventListener("change", (e) => {
+    sortMode = e.target.value;
+    localStorage.setItem("signal-attack-sort", sortMode);
+    currentPage = 1;
+    render();
+  });
+  document.getElementById("page-size-select").value = String(pageSize);
+  document.getElementById("page-size-select").addEventListener("change", (e) => {
+    pageSize = Number(e.target.value);
+    localStorage.setItem("signal-attack-pagesize", String(pageSize));
+    currentPage = 1;
+    render();
+  });
+  document.getElementById("page-prev").addEventListener("click", () => {
+    currentPage--;
+    render();
+    window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+  });
+  document.getElementById("page-next").addEventListener("click", () => {
+    currentPage++;
+    render();
+    window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+  });
+
+  document.getElementById("reset-btn").addEventListener("click", () => {
+    searchTerm = "";
+    countryFilter = null;
+    groupView = "grid";
+    subFilterValues = ["all", "all"];
+    sortMode = "default";
+    pageSize = 100;
+    currentPage = 1;
+    document.getElementById("search-input").value = "";
+    document.getElementById("sort-select").value = "default";
+    document.getElementById("page-size-select").value = "100";
+    localStorage.setItem("signal-attack-sort", sortMode);
+    localStorage.setItem("signal-attack-pagesize", String(pageSize));
+    syncTabsActive();
+    renderSubFilters();
+    render();
+    window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+  });
+
+  // Deep-link support (used by dashboard.html's click-through cards):
+  // ?domain=enterprise&type=groups&id=G0035 opens that entity's flyout directly;
+  // ?domain=enterprise&country=RU&countryName=Russia applies the country filter.
+  // Runs once, after the initial domain data has finished loading.
+  function applyUrlParams() {
+    const type = urlParams.get("type");
+    const id = urlParams.get("id");
+    const country = urlParams.get("country");
+    const subfilter1 = urlParams.get("subfilter1");
+    const subfilter2 = urlParams.get("subfilter2");
+    if (type && id && TYPES.includes(type)) {
+      currentType = type;
+      groupView = "grid";
+      subFilterValues = [subfilter1 || "all", subfilter2 || "all"];
+      currentPage = 1;
+      syncTabsActive();
+      renderSubFilters();
+      render();
+      openFlyout(type, id, { reset: true });
+    } else if (type && TYPES.includes(type)) {
+      currentType = type;
+      groupView = "grid";
+      subFilterValues = [subfilter1 || "all", subfilter2 || "all"];
+      currentPage = 1;
+      syncTabsActive();
+      renderSubFilters();
+      render();
+    } else if (country) {
+      currentType = "groups";
+      groupView = "grid";
+      countryFilter = { code: country, name: urlParams.get("countryName") || country };
+      subFilterValues = ["all", "all"];
+      currentPage = 1;
+      syncTabsActive();
+      renderSubFilters();
+      render();
+    }
+  }
+
+spInit();
+    renderTabs();
+  switchDomain(currentDomain).then(applyUrlParams);
+})();
+</script>
+</body>
+</html>

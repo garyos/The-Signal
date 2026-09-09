@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE SIGNAL — Research</title>
+<style>
+  :root {
+    --ink: #0a0e14;
+    --ink-raised: #10151d;
+    --ink-input: #0d1219;
+    --line: #1e2733;
+    --text: #d7dde5;
+    --text-dim: #7d8998;
+    --amber: #ffb020;
+    --red: #ff5c5c;
+    --blue: #5ac8ff;
+    --green: #4fd58a;
+    --purple: #c792ea;
+    --teal: #2dd4bf;
+    --orange: #ff9f4a;
+    --indigo: #7c8cff;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .frame {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* The tagline here is much longer than other pages' one-liners — without
+     this, the title block's text-driven content width crowds the nav off
+     the row entirely (flexbox's default min-width:auto refuses to let it
+     shrink below its own max-content width). Letting it shrink/wrap keeps
+     the home + hamburger buttons on the same row at normal widths; nav
+     stays a fixed size so it's never the thing that gets squeezed. */
+  header.masthead > div:first-child { flex: 1 1 260px; min-width: 0; }
+  header.masthead nav.page-nav { flex: 0 0 auto; }
+
+  .masthead h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+  }
+
+  .masthead .tagline {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+  }
+
+  .masthead nav.page-nav { display: flex; align-items: center; gap: 8px; position: relative; }
+  .nav-home-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--text-dim); border: 1px solid var(--line); padding: 7px; text-decoration: none;
+  }
+  .nav-home-btn:hover, .nav-home-btn:focus-visible { color: var(--indigo); border-color: var(--indigo); }
+  .nav-toggle-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--text-dim); background: var(--ink-raised); border: 1px solid var(--line); padding: 7px; cursor: pointer;
+  }
+  .nav-toggle-btn:hover, .nav-toggle-btn[aria-expanded="true"] { color: var(--indigo); border-color: var(--indigo); }
+  .nav-dropdown { position: relative; }
+  .nav-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; z-index: 80;
+    background: var(--ink-raised); border: 1px solid var(--line); min-width: 168px;
+    display: flex; flex-direction: column; box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+  }
+  .nav-menu[hidden] { display: none; }
+  .nav-menu a {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); text-decoration: none;
+    padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .nav-menu a:last-child { border-bottom: none; }
+  .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--indigo); background: var(--ink-input); }
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--indigo);
+    box-shadow: 0 0 0 0 rgba(124, 140, 255, 0.6);
+    animation: pulse 2.4s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(124, 140, 255, 0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(124, 140, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(124, 140, 255, 0); }
+  }
+
+  .analytics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 26px;
+  }
+
+  .analytics-panel {
+    background: var(--ink-raised);
+    padding: 14px 16px 16px;
+  }
+
+  .analytics-panel h3 {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 26px;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    margin-bottom: 7px;
+  }
+
+  .bar-row .label { color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-row .count { text-align: right; color: var(--text-dim); }
+
+  .bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .bar-fill { height: 100%; background: var(--indigo); opacity: 0.85; }
+  .bar-fill.category { background: var(--teal); opacity: 0.85; }
+
+  .sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 46px;
+  }
+  .spark-bar {
+    flex: 1;
+    background: var(--indigo);
+    opacity: 0.75;
+    min-height: 2px;
+  }
+  .spark-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .archive-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+  select#scope-select, select#page-size-select, select#source-filter, select#category-filter {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 6px 10px;
+    background: var(--ink-input);
+    color: var(--text);
+    border: 1px solid var(--line);
+    max-width: 220px;
+  }
+
+  .pagination {
+    display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 18px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);
+  }
+  .pagination[hidden] { display: none; }
+  .pagination button {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--text); background: var(--ink-raised);
+    border: 1px solid var(--line); padding: 7px 14px; cursor: pointer;
+  }
+  .pagination button:hover:not(:disabled) { border-color: var(--indigo); color: var(--indigo); }
+  .pagination button:disabled { color: var(--text-dim); cursor: default; opacity: 0.5; }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+  }
+  #search-input {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 7px 10px;
+    background: var(--ink-input);
+    color: var(--text);
+    border: 1px solid var(--line);
+  }
+  #search-input::placeholder { color: var(--text-dim); }
+
+  .clear-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .clear-btn:hover { color: var(--indigo); border-color: var(--indigo); }
+
+  .result-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .feed { display: flex; flex-direction: column; }
+
+  .entry {
+    border-left: 3px solid var(--src-color, var(--line));
+    padding: 14px 0 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .entry .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .entry .src-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border: 1px solid var(--src-color, var(--line));
+    color: var(--src-color, var(--text));
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .entry h2 {
+    font-size: 15.5px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .entry h2 a { color: var(--text); text-decoration: none; }
+  .entry h2 a:hover, .entry h2 a:focus-visible { color: var(--indigo); text-decoration: underline; }
+
+  .entry p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .category-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .category-chip {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--teal);
+    background: none;
+    border: 1px solid var(--teal);
+    padding: 2px 8px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+  }
+  .category-chip:hover { background: var(--teal); color: var(--ink); }
+
+  .entry.new { animation: reveal 0.6s ease; }
+  @keyframes reveal {
+    from { background: rgba(124, 140, 255, 0.1); }
+    to   { background: transparent; }
+  }
+
+  .empty-state {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 40px 0;
+    text-align: center;
+    border: 1px dashed var(--line);
+  }
+
+  footer {
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  :focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+  @media (max-width: 680px) {
+    .analytics { grid-template-columns: 1fr; }
+  }
+  /* ---------- stormcast player (3-stage bottom sheet) ----------
+     Stage 1 = mini bar, stage 2 = standard controls, stage 3 = + notes/transcript.
+     This whole block, plus its HTML and the "sp-player.js"-equivalent script
+     section, is intentionally identical across every page on the site (see
+     the shared player docs in README) so a session started on one page can
+     be restored — same look, same behavior — on any other. */
+  body { transition: padding-bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .sp-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; max-width: 920px; margin: 0 auto;
+    background: linear-gradient(180deg, #141b26 0%, var(--ink-raised) 40%);
+    border-top: 1px solid var(--line); border-radius: 14px 14px 0 0;
+    box-shadow: 0 -12px 32px rgba(0,0,0,0.5);
+  }
+  .sp-bar[hidden] { display: none; }
+
+  .sp-handle { display: flex; justify-content: center; align-items: center; height: 34px; cursor: grab; touch-action: none; }
+  .sp-handle:active { cursor: grabbing; }
+  .sp-chevron {
+    width: 44px; height: 26px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); border-radius: 8px; background: var(--ink-input); border: 1px solid var(--line);
+    pointer-events: none;
+  }
+  .sp-handle:hover .sp-chevron { color: var(--orange); border-color: var(--orange); }
+  .sp-chevron svg { display: block; }
+
+  .sp-reveal { overflow: hidden; height: 0; transition: height 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  .sp-header { display: flex; align-items: center; gap: 12px; padding: 2px 18px 8px; }
+  .sp-art {
+    width: 44px; height: 44px; border-radius: 9px; flex: 0 0 auto; object-fit: cover;
+    border: 1px solid var(--line); background: var(--ink-input);
+  }
+  .sp-info { flex: 1 1 auto; min-width: 0; }
+  .sp-title {
+    font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sp-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .sp-icon-btn {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text-dim); border: 1px solid var(--line); cursor: pointer; padding: 0;
+  }
+  .sp-icon-btn:hover { color: var(--orange); border-color: var(--orange); }
+  .sp-icon-btn.active { color: var(--orange); border-color: var(--orange); background: rgba(255,159,74,0.12); }
+  .sp-icon-btn svg { display: block; }
+  .sp-icon-btn[hidden] { display: none; }
+
+  .sp-mini-progress-wrap { height: 3px; background: var(--line); margin: 0 18px 10px; border-radius: 2px; }
+  .sp-mini-progress-wrap[hidden] { display: none; }
+  .sp-mini-progress-fill { height: 100%; width: 0%; background: var(--orange); border-radius: 2px; }
+
+  .sp-seek { display: flex; align-items: center; gap: 10px; padding: 0 18px 4px; }
+  .sp-time { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); flex: 0 0 auto; min-width: 34px; }
+  #sp-time-duration { text-align: right; }
+  #sp-seek-bar {
+    flex: 1 1 auto; appearance: none; height: 5px; border-radius: 3px; background: var(--line); outline: none; accent-color: var(--orange);
+  }
+  #sp-seek-bar::-webkit-slider-thumb {
+    appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--orange); cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+  #sp-seek-bar::-moz-range-thumb {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--orange); border: none; cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+
+  .sp-transport { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 18px 14px; }
+  .sp-transport-btn {
+    flex: 0 0 auto; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text); border: 1px solid var(--line); cursor: pointer; padding: 0;
+    width: 40px; height: 40px; position: relative;
+  }
+  .sp-transport-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .sp-transport-btn svg { display: block; }
+  .sp-transport-btn.sp-primary {
+    width: 54px; height: 54px; background: var(--orange); border-color: var(--orange); color: var(--ink);
+    box-shadow: 0 4px 18px rgba(255,159,74,0.35);
+  }
+  .sp-transport-btn.sp-primary:hover { filter: brightness(1.08); color: var(--ink); border-color: var(--orange); }
+  .sp-skip-label {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; padding-top: 2px; pointer-events: none;
+  }
+  #sp-speed-select {
+    font-family: var(--font-mono); font-size: 10.5px; color: var(--text); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 8px 7px; cursor: pointer; flex: 0 0 auto; min-width: 0;
+  }
+  #sp-speed-select:hover { border-color: var(--orange); color: var(--orange); }
+
+  .sp-details { border-top: 1px solid var(--line); max-height: 46vh; overflow-y: auto; padding: 4px 18px 16px; }
+  .sp-details-tabs { display: flex; gap: 6px; margin: 10px 0 12px; }
+  .sp-details-tab {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; cursor: pointer;
+  }
+  .sp-details-tab.active { color: var(--orange); border-color: var(--orange); }
+  .sp-note-item { margin-bottom: 12px; }
+  .sp-note-heading { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .sp-note-link { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--blue); text-decoration: none; word-break: break-all; margin-bottom: 2px; }
+  .sp-note-link:hover { text-decoration: underline; }
+  .sp-transcript-text { font-size: 13px; line-height: 1.7; color: var(--text-dim); white-space: pre-line; overflow-wrap: anywhere; }
+  .sp-empty-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); padding: 10px 0; }
+
+  @media (max-width: 380px) {
+    .sp-transport { gap: 6px; }
+    #sp-speed-select { padding: 8px 5px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <header class="masthead">
+      <div>
+        <h1>RESEARCH</h1>
+        <div class="tagline">Deep-dive attack-chain, malware-analysis &amp; DFIR write-ups — filtered to just title, source &amp; summary, linking straight through to the original.</div>
+      </div>
+      <nav class="page-nav">
+        <a class="nav-home-btn" href="index.html" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <button class="nav-toggle-btn" id="nav-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-menu" aria-label="More pages">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          </button>
+          <div class="nav-menu" id="nav-menu" hidden>
+            <a href="attack.html">ATT&amp;CK</a>
+            <a href="cve.html">CVE</a>
+            <a href="leaktracker.html">Ransomware</a>
+            <a href="breaches.html">Breaches</a>
+            <a href="podcast.html">Podcast</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="reports.html">Reports</a>
+            <a href="spotlight.html">Spotlight</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <script>
+      (function () {
+        const btn = document.getElementById("nav-toggle");
+        const menu = document.getElementById("nav-menu");
+        if (!btn || !menu) return;
+        const closeMenu = () => { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); };
+        const openMenu = () => { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); };
+        btn.addEventListener("click", (e) => { e.stopPropagation(); menu.hidden ? openMenu() : closeMenu(); });
+        document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && e.target !== btn) closeMenu(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+      })();
+    </script>
+
+    <div class="analytics">
+      <div class="analytics-panel">
+        <h3>Volume by feed</h3>
+        <div id="source-bars"></div>
+      </div>
+      <div class="analytics-panel">
+        <h3>Top categories</h3>
+        <div id="category-bars"></div>
+      </div>
+      <div class="analytics-panel">
+        <h3>Activity, last 14 days</h3>
+        <div class="sparkline" id="sparkline"></div>
+        <div class="spark-labels"><span>-14d</span><span>today</span></div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <select id="source-filter"><option value="all">all feeds</option></select>
+
+      <select id="category-filter"><option value="all">all categories</option></select>
+
+      <div class="search-wrap">
+        <input id="search-input" type="text" placeholder="search title or summary…" />
+      </div>
+
+      <button class="clear-btn" id="clear-filters">reset</button>
+    </div>
+
+    <div class="archive-row" id="archive-row">
+      <span>viewing:</span>
+      <select id="scope-select">
+        <option value="live">live feed</option>
+        <option value="all">all history</option>
+      </select>
+      <span>·</span>
+      <span>show</span>
+      <select id="page-size-select">
+        <option value="40">40</option>
+        <option value="100" selected>100</option>
+        <option value="250">250</option>
+      </select>
+      <span>per page</span>
+    </div>
+
+    <div class="result-count" id="result-count"></div>
+
+    <div class="feed" id="feed">
+      <div class="empty-state">Waiting for first data pull…</div>
+    </div>
+
+    <div class="pagination" id="pagination" hidden>
+      <button id="page-prev">‹ prev</button>
+      <span id="page-indicator"></span>
+      <button id="page-next">next ›</button>
+    </div>
+
+    <footer>
+      <div class="footer-status"><span class="pulse-dot"></span> live · <span id="source-line">sources: —</span> · <span id="updated-line">last update: —</span></div>
+    </footer>
+  </div>
+
+    <!-- Stormcast player — identical block on every page of the site, see README. -->
+  <div class="sp-bar" id="sp-bar" data-stage="2" hidden>
+    <audio id="sp-audio" preload="metadata"></audio>
+
+    <div class="sp-handle" id="sp-handle" role="button" tabindex="0" aria-label="expand or collapse player">
+      <span class="sp-chevron" id="sp-chevron"></span>
+    </div>
+
+    <div class="sp-header" id="sp-header">
+      <img class="sp-art" id="sp-art" alt="" />
+      <div class="sp-info">
+        <div class="sp-title" id="sp-title">—</div>
+        <div class="sp-meta" id="sp-meta">—</div>
+      </div>
+      <button class="sp-icon-btn" id="sp-mini-play" title="play" aria-label="play"></button>
+      <button class="sp-icon-btn" id="sp-notes-btn" title="show notes &amp; transcript" aria-label="show notes and transcript"></button>
+      <button class="sp-icon-btn" id="sp-close" title="close player" aria-label="close player"></button>
+    </div>
+
+    <div class="sp-mini-progress-wrap" id="sp-mini-progress-wrap"><div class="sp-mini-progress-fill" id="sp-mini-progress-fill"></div></div>
+
+    <div class="sp-reveal" id="sp-reveal-2">
+      <div class="sp-seek" id="sp-seek-row">
+        <span class="sp-time" id="sp-time-current">0:00</span>
+        <input type="range" id="sp-seek-bar" min="0" max="1000" value="0" step="1" aria-label="seek">
+        <span class="sp-time" id="sp-time-duration">0:00</span>
+      </div>
+
+      <div class="sp-transport" id="sp-transport-row">
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-back" title="back 15 seconds" aria-label="back 15 seconds">
+          <span class="sp-skip-label">15</span>
+        </button>
+        <button class="sp-transport-btn sp-primary" id="sp-play-pause" title="play" aria-label="play"></button>
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-fwd" title="forward 30 seconds" aria-label="forward 30 seconds">
+          <span class="sp-skip-label">30</span>
+        </button>
+        <select id="sp-speed-select" title="playback speed" aria-label="playback speed">
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+          <option value="1.75">1.75×</option>
+          <option value="2">2×</option>
+        </select>
+        <button class="sp-icon-btn" id="sp-mute-btn" title="mute" aria-label="mute"></button>
+      </div>
+    </div>
+
+    <div class="sp-reveal" id="sp-reveal-3">
+    <div class="sp-details" id="sp-details">
+      <div class="sp-details-tabs">
+        <button class="sp-details-tab active" data-tab="notes">Show notes</button>
+        <button class="sp-details-tab" data-tab="transcript">Transcript</button>
+      </div>
+      <div id="sp-notes-panel"></div>
+      <div id="sp-transcript-panel" hidden></div>
+    </div>
+    </div>
+  </div>
+
+<script>
+  const SKIP_BACK_S = 15;
+  const SKIP_FWD_S = 30;
+
+  // Stormcast player — a self-contained bottom-sheet component. This exact
+  // block (CSS class prefix "sp-", JS identifier prefix "sp"/"SP_") is
+  // duplicated verbatim on every page of the site so a listening session
+  // started on one page keeps its player visible after navigating to any
+  // other — see README.
+  // =====================================================================
+
+  const SP_ARTWORK_URL = "https://isc.sans.edu/images/podcast3000.jpg";
+  const SP_EPISODE_KEY = "signal-podcast-session-episode";
+  const SP_STATE_KEY = "signal-podcast-session-state";
+  const SP_SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+  const SP_ICON = {
+    play: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
+    pause: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>`,
+    volume: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16.3 12a4.3 4.3 0 0 0-2.4-3.85v7.7A4.3 4.3 0 0 0 16.3 12z"/></svg>`,
+    muted: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19.4 8.5 18 7.1l-2.1 2.1-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1z"/></svg>`,
+    notes: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>`,
+    close: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>`,
+    skipBack: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    skipFwd: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX(-1)"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    chevronUp: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg>`,
+    chevronDown: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+  };
+
+  const spState = { episode: null };
+  let spStage = 2;
+  let spLastSaveAt = 0;
+  let spReveal2H = 0;
+  let spReveal3H = 0;
+  let spChromeH = 0;
+  const SP_MINI_PROGRESS_H = 13;
+
+  function spEl(id) { return document.getElementById(id); }
+
+  function spFmtDate(iso) {
+    if (!iso) return "unknown date";
+    const d = new Date(iso);
+    return isNaN(d) ? "unknown date" : d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+
+  function spFmtDuration(seconds) {
+    if (seconds == null || !isFinite(seconds)) return "0:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+    const ss = String(s).padStart(2, "0");
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  function spCleanTranscript(text) {
+    return text.replace(/\s+/g, " ").trim();
+  }
+
+  function spEscapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  function spBarHeightForProgress(p) {
+    const h2 = spReveal2H * Math.max(0, Math.min(1, p));
+    const h3 = spReveal3H * Math.max(0, Math.min(1, p - 1));
+    const mini = p < 0.5 ? SP_MINI_PROGRESS_H : 0;
+    return spChromeH + mini + h2 + h3;
+  }
+
+  function spSyncBodyPadding(progress) {
+    const bar = spEl("sp-bar");
+    const p = progress == null ? spStage - 1 : progress;
+    const h = bar.hidden ? 0 : spBarHeightForProgress(p);
+    document.body.style.paddingBottom = bar.hidden ? "" : `${h}px`;
+    document.documentElement.style.setProperty("--sp-bar-height", `${h}px`);
+  }
+
+  function spMeasureReveals() {
+    const r2 = spEl("sp-reveal-2"), r3 = spEl("sp-reveal-3");
+    const h2 = r2.style.height, h3 = r3.style.height;
+    const t2 = r2.style.transition, t3 = r3.style.transition;
+    r2.style.transition = "none"; r3.style.transition = "none";
+    r2.style.height = "auto"; r3.style.height = "auto";
+    spReveal2H = r2.getBoundingClientRect().height;
+    spReveal3H = r3.getBoundingClientRect().height;
+    r2.style.height = h2; r3.style.height = h3;
+    void r2.offsetHeight;
+    r2.style.transition = t2; r3.style.transition = t3;
+    spChromeH = spEl("sp-handle").getBoundingClientRect().height + spEl("sp-header").getBoundingClientRect().height;
+  }
+  let spResizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(spResizeTimer);
+    spResizeTimer = setTimeout(() => { spMeasureReveals(); spApplyStage(spStage); }, 200);
+  });
+
+  function spUpdateChevron() {
+    spEl("sp-chevron").innerHTML = spStage === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+  }
+
+  function spSetRevealProgress(p) {
+    spEl("sp-reveal-2").style.height = `${spReveal2H * Math.max(0, Math.min(1, p))}px`;
+    spEl("sp-reveal-3").style.height = `${spReveal3H * Math.max(0, Math.min(1, p - 1))}px`;
+    const near = p < 0.5 ? 1 : (p < 1.5 ? 2 : 3);
+    spEl("sp-mini-play").hidden = near !== 1;
+    spEl("sp-mini-progress-wrap").hidden = near !== 1;
+    spEl("sp-notes-btn").hidden = near === 1;
+    spEl("sp-chevron").innerHTML = near === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+    spSyncBodyPadding(p);
+  }
+
+  function spApplyStage(n) {
+    spStage = Math.max(1, Math.min(3, n));
+    const bar = spEl("sp-bar");
+    bar.dataset.stage = String(spStage);
+    spEl("sp-reveal-2").style.height = `${spStage >= 2 ? spReveal2H : 0}px`;
+    spEl("sp-reveal-3").style.height = `${spStage >= 3 ? spReveal3H : 0}px`;
+    spEl("sp-mini-play").hidden = spStage !== 1;
+    spEl("sp-mini-progress-wrap").hidden = spStage !== 1;
+    spEl("sp-notes-btn").hidden = spStage === 1;
+    spEl("sp-notes-btn").classList.toggle("active", spStage === 3);
+    spUpdateChevron();
+    spSyncBodyPadding();
+    spSaveState(true);
+  }
+
+  function spWireStageGesture() {
+    const handle = spEl("sp-handle");
+    let startY = 0, dragging = false, moved = false, baseP = 1, rafId = null, pendingP = null;
+    const isSheetLayout = () => window.matchMedia("(max-width: 680px)").matches;
+    const DRAG_RANGE = 130;
+
+    function flushFrame() {
+      rafId = null;
+      if (pendingP == null) return;
+      spSetRevealProgress(pendingP);
+    }
+
+    handle.addEventListener("pointerdown", (e) => {
+      dragging = true; startY = e.clientY; moved = false; baseP = spStage - 1;
+      try { handle.setPointerCapture(e.pointerId); } catch {}
+    });
+    handle.addEventListener("pointermove", (e) => {
+      if (!dragging || !isSheetLayout()) return;
+      const dy = startY - e.clientY;
+      if (Math.abs(dy) > 6 && !moved) {
+        moved = true;
+        spEl("sp-reveal-2").style.transition = "none";
+        spEl("sp-reveal-3").style.transition = "none";
+      }
+      if (!moved) return;
+      pendingP = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      if (rafId == null) rafId = requestAnimationFrame(flushFrame);
+    });
+    const release = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+      if (!moved) { spApplyStage(spStage === 1 ? 2 : 1); return; }
+      const dy = startY - e.clientY;
+      const p = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      spApplyStage(Math.round(p) + 1);
+    };
+    handle.addEventListener("pointerup", release);
+    handle.addEventListener("pointercancel", () => {
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+    });
+    handle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); spApplyStage(spStage === 1 ? 2 : 1); }
+    });
+  }
+
+  function spSaveEpisodeRecord(ep) {
+    try { localStorage.setItem(SP_EPISODE_KEY, JSON.stringify(ep)); } catch {}
+  }
+
+  function spSaveState(immediate) {
+    if (!spState.episode) return;
+    const now = Date.now();
+    if (!immediate && now - spLastSaveAt < 4000) return;
+    spLastSaveAt = now;
+    const audio = spEl("sp-audio");
+    try {
+      localStorage.setItem(SP_STATE_KEY, JSON.stringify({
+        episodeId: spState.episode.id,
+        currentTime: audio.currentTime || 0,
+        playing: !audio.paused,
+        stage: spStage,
+        updatedAt: new Date().toISOString(),
+      }));
+    } catch {}
+  }
+
+  function spClearSession() {
+    try { localStorage.removeItem(SP_EPISODE_KEY); localStorage.removeItem(SP_STATE_KEY); } catch {}
+  }
+
+  function spRestoreSession() {
+    let ep, state;
+    try {
+      ep = JSON.parse(localStorage.getItem(SP_EPISODE_KEY) || "null");
+      state = JSON.parse(localStorage.getItem(SP_STATE_KEY) || "null");
+    } catch { return; }
+    if (!ep || !state || ep.id !== state.episodeId) return;
+    const ageMs = Date.now() - new Date(state.updatedAt || 0).getTime();
+    if (!isFinite(ageMs) || ageMs > SP_SESSION_MAX_AGE_MS) { spClearSession(); return; }
+    spOpenEpisode(ep, { resumeAt: state.currentTime || 0, autoplay: !!state.playing, initialStage: 1 });
+  }
+
+  function spSetPlayIcon(isPlaying) {
+    const icon = isPlaying ? SP_ICON.pause : SP_ICON.play;
+    spEl("sp-play-pause").innerHTML = icon;
+    spEl("sp-mini-play").innerHTML = icon;
+  }
+
+  function spSetMuteIcon(muted) {
+    spEl("sp-mute-btn").innerHTML = muted ? SP_ICON.muted : SP_ICON.volume;
+  }
+
+  function spRenderDetails(ep) {
+    const notesPanel = spEl("sp-notes-panel");
+    const transcriptPanel = spEl("sp-transcript-panel");
+    notesPanel.innerHTML = (ep.show_notes && ep.show_notes.length)
+      ? ep.show_notes.map(n => `
+          <div class="sp-note-item">
+            <div class="sp-note-heading">${spEscapeHtml(n.heading)}</div>
+            ${(n.links || []).map(u => `<a class="sp-note-link" href="${spEscapeHtml(u)}" target="_blank" rel="noopener noreferrer">${spEscapeHtml(u)}</a>`).join("")}
+          </div>`).join("")
+      : `<div class="sp-empty-note">No show notes recorded for this episode.</div>`;
+    transcriptPanel.innerHTML = ep.transcript
+      ? `<div class="sp-transcript-text">${spEscapeHtml(spCleanTranscript(ep.transcript))}</div>`
+      : `<div class="sp-empty-note">Transcript ${ep.transcript_checked ? "is not available for this episode." : "hasn't been backfilled yet — check back soon."}</div>`;
+    document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "notes"));
+    notesPanel.hidden = false;
+    transcriptPanel.hidden = true;
+  }
+
+  function spSetupMediaSession(ep) {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: ep.title,
+      artist: ep.show_name || "SANS ISC Stormcast",
+      album: ep.show_name || "Stormcast",
+      artwork: [{ src: ep.artwork_url || SP_ARTWORK_URL, sizes: "512x512", type: "image/jpeg" }],
+    });
+    const audio = spEl("sp-audio");
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+    navigator.mediaSession.setActionHandler("seekbackward", (d) => {
+      audio.currentTime = Math.max(0, audio.currentTime - (d.seekOffset || SKIP_BACK_S));
+    });
+    navigator.mediaSession.setActionHandler("seekforward", (d) => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + (d.seekOffset || SKIP_FWD_S));
+    });
+    try {
+      navigator.mediaSession.setActionHandler("seekto", (d) => {
+        if (d.fastSeek && "fastSeek" in audio) { audio.fastSeek(d.seekTime); return; }
+        audio.currentTime = d.seekTime;
+      });
+    } catch {}
+    navigator.mediaSession.setActionHandler("stop", () => spCloseFully());
+  }
+
+  function spUpdatePositionState() {
+    const audio = spEl("sp-audio");
+    if ("mediaSession" in navigator && "setPositionState" in navigator.mediaSession && audio.duration && isFinite(audio.duration)) {
+      try {
+        navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime });
+      } catch {}
+    }
+  }
+
+  function spOpenEpisode(ep, { resumeAt = 0, autoplay = true, initialStage = 2 } = {}) {
+    spState.episode = ep;
+    const audio = spEl("sp-audio");
+    audio.src = ep.audio_url;
+
+    const savedRate = parseFloat(localStorage.getItem("signal-podcast-rate") || "1");
+    audio.playbackRate = isNaN(savedRate) ? 1 : savedRate;
+    spEl("sp-speed-select").value = String(audio.playbackRate);
+    audio.muted = localStorage.getItem("signal-podcast-muted") === "1";
+    spSetMuteIcon(audio.muted);
+
+    spEl("sp-bar").hidden = false;
+    spEl("sp-art").src = ep.artwork_url || SP_ARTWORK_URL;
+    spEl("sp-title").textContent = ep.title;
+    spEl("sp-meta").textContent =
+      `${ep.show_name ? ep.show_name + " · " : ""}${ep.episode_number ? "#" + ep.episode_number + " · " : ""}${spFmtDate(ep.published)}`
+      + `${(ep.categories || []).length ? " · " + ep.categories.slice(0, 4).join(", ") : ""}`;
+    spRenderDetails(ep);
+    spMeasureReveals();
+    spApplyStage(initialStage);
+    spSetupMediaSession(ep);
+    spSaveEpisodeRecord(ep);
+
+    const onMeta = () => {
+      if (resumeAt > 0) audio.currentTime = resumeAt;
+      if (autoplay) audio.play().catch((err) => console.warn("stormcast player: autoplay blocked", err));
+      spSaveState(true);
+      audio.removeEventListener("loadedmetadata", onMeta);
+    };
+    audio.addEventListener("loadedmetadata", onMeta);
+
+    if (typeof render === "function") render();
+  }
+
+  function spCloseFully() {
+    const audio = spEl("sp-audio");
+    audio.pause();
+    audio.src = "";
+    spState.episode = null;
+    spEl("sp-bar").hidden = true;
+    spSyncBodyPadding();
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = null;
+      try { navigator.mediaSession.playbackState = "none"; } catch {}
+    }
+    spClearSession();
+    if (typeof render === "function") render();
+  }
+
+  function spWirePlayer() {
+    const audio = spEl("sp-audio");
+    const seekBar = spEl("sp-seek-bar");
+    const playBtn = spEl("sp-play-pause");
+    const miniPlayBtn = spEl("sp-mini-play");
+    const muteBtn = spEl("sp-mute-btn");
+    const speedSelect = spEl("sp-speed-select");
+    const notesBtn = spEl("sp-notes-btn");
+    const closeBtn = spEl("sp-close");
+
+    spEl("sp-skip-back").insertAdjacentHTML("afterbegin", SP_ICON.skipBack);
+    spEl("sp-skip-fwd").insertAdjacentHTML("afterbegin", SP_ICON.skipFwd);
+    playBtn.innerHTML = SP_ICON.play;
+    miniPlayBtn.innerHTML = SP_ICON.play;
+    notesBtn.innerHTML = SP_ICON.notes;
+    closeBtn.innerHTML = SP_ICON.close;
+
+    const togglePlay = () => { if (audio.paused) audio.play(); else audio.pause(); };
+    playBtn.addEventListener("click", togglePlay);
+    miniPlayBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePlay(); });
+
+    spEl("sp-skip-back").addEventListener("click", () => {
+      audio.currentTime = Math.max(0, audio.currentTime - SKIP_BACK_S);
+    });
+    spEl("sp-skip-fwd").addEventListener("click", () => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + SKIP_FWD_S);
+    });
+    speedSelect.addEventListener("change", (e) => {
+      const rate = parseFloat(e.target.value);
+      audio.playbackRate = rate;
+      try { localStorage.setItem("signal-podcast-rate", String(rate)); } catch {}
+    });
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      spSetMuteIcon(audio.muted);
+      try { localStorage.setItem("signal-podcast-muted", audio.muted ? "1" : "0"); } catch {}
+    });
+    seekBar.addEventListener("input", () => {
+      if (audio.duration) audio.currentTime = (seekBar.value / 1000) * audio.duration;
+    });
+    notesBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      spApplyStage(spStage === 3 ? 2 : 3);
+    });
+    document.querySelectorAll(".sp-details-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t === tab));
+        spEl("sp-notes-panel").hidden = tab.dataset.tab !== "notes";
+        spEl("sp-transcript-panel").hidden = tab.dataset.tab !== "transcript";
+        spMeasureReveals();
+        if (spStage === 3) spApplyStage(3);
+      });
+    });
+    closeBtn.addEventListener("click", (e) => { e.stopPropagation(); spCloseFully(); });
+
+    spWireStageGesture();
+
+    audio.addEventListener("play", () => { spSetPlayIcon(true); spSaveState(true); });
+    audio.addEventListener("pause", () => { spSetPlayIcon(false); spSaveState(true); });
+    audio.addEventListener("ended", () => spCloseFully());
+    audio.addEventListener("timeupdate", () => {
+      spEl("sp-time-current").textContent = spFmtDuration(audio.currentTime);
+      if (audio.duration) {
+        seekBar.value = String((audio.currentTime / audio.duration) * 1000);
+        spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+        spEl("sp-mini-progress-fill").style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+      }
+      spUpdatePositionState();
+      spSaveState(false);
+    });
+    audio.addEventListener("loadedmetadata", () => {
+      spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+      spUpdatePositionState();
+    });
+
+    window.addEventListener("pagehide", () => spSaveState(true));
+  }
+
+  function spInit() {
+    spWirePlayer();
+    spRestoreSession();
+  }
+
+  // =====================================================================
+  // end Stormcast player — page-specific code (research article list,
+  // filters, pagination) below.
+
+    const FEED_PATH = "data/research/latest.json";
+    const ARCHIVE_INDEX_PATH = "data/research/index.json";
+    // These blogs post at most a few times a week, some far less — no point
+    // polling every 30s the way the news feed does; 5 minutes is plenty
+    // responsive for data that only actually changes once a day (see
+    // fetch-research.yml) while still picking up a manual workflow_dispatch
+    // run without a full page reload.
+    const POLL_INTERVAL_MS = 5 * 60 * 1000;
+    const STORAGE_KEY = "signal-research-filters-v1";
+
+    const SOURCE_COLORS = {
+      "The DFIR Report": "var(--amber)",
+      "Securelist": "var(--blue)",
+      "Elastic Security Labs": "var(--teal)",
+      "SentinelOne Labs": "var(--purple)",
+      "Check Point Research": "var(--red)",
+    };
+
+    let knownIds = new Set();
+    let latestData = { sources: [], entries: [] };
+    let currentScope = "live";
+    let archiveEntries = [];
+    let currentPage = 1;
+
+    const PAGE_SIZES = [40, 100, 250];
+
+    const defaultFilters = { source: "all", category: "all", search: "", pageSize: 100 };
+
+    function loadFilters() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultFilters };
+        const parsed = JSON.parse(raw);
+        return {
+          source: parsed.source || "all",
+          category: parsed.category || "all",
+          search: parsed.search || "",
+          pageSize: PAGE_SIZES.includes(parsed.pageSize) ? parsed.pageSize : 100,
+        };
+      } catch {
+        return { ...defaultFilters };
+      }
+    }
+
+    function saveFilters() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(filters));
+    }
+
+    let filters = loadFilters();
+
+    async function loadFeed() {
+      try {
+        const res = await fetch(`${FEED_PATH}?t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        latestData = data;
+        renderHeader(data);
+        renderFilterControls(data);
+        renderAnalytics(data);
+        applyFiltersAndRender();
+      } catch (err) {
+        console.error("Failed to load research feed:", err);
+        document.getElementById("feed").innerHTML = `<div class="empty-state">Couldn't load research data. Run scripts/fetch_research.py or wait for the next scheduled pull.</div>`;
+      }
+    }
+
+    function renderHeader(data) {
+      const sources = data.sources || [];
+      document.getElementById("source-line").textContent =
+        sources.length ? `feeds: ${sources.join(" · ")}` : "feeds: —";
+      document.getElementById("updated-line").textContent = data.fetched_at
+        ? `last update: ${new Date(data.fetched_at).toLocaleString()}`
+        : "last update: —";
+    }
+
+    function renderFilterControls(data) {
+      const select = document.getElementById("source-filter");
+      const sources = data.sources || [];
+      select.innerHTML = `<option value="all">all feeds</option>` +
+        sources.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+      if (!sources.includes(filters.source) && filters.source !== "all") filters.source = "all";
+      select.value = filters.source;
+
+      renderCategoryFilterOptions(data.entries || []);
+    }
+
+    function renderCategoryFilterOptions(entries) {
+      const select = document.getElementById("category-filter");
+      const counts = new Map();
+      entries.forEach(e => (e.categories || []).forEach(c => counts.set(c, (counts.get(c) || 0) + 1)));
+      const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+      const prev = filters.category;
+      select.innerHTML = `<option value="all">all categories</option>` +
+        sorted.map(([cat, count]) => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)} (${count})</option>`).join("");
+      select.value = sorted.some(([cat]) => cat === prev) ? prev : "all";
+      if (select.value !== prev) filters.category = select.value;
+    }
+
+    function renderAnalytics(data) {
+      const entries = data.entries || [];
+
+      const sourceCounts = {};
+      for (const e of entries) sourceCounts[e.source] = (sourceCounts[e.source] || 0) + 1;
+      const sortedSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]);
+      const maxSrc = Math.max(1, ...Object.values(sourceCounts));
+      document.getElementById("source-bars").innerHTML = sortedSources.map(([name, count]) => `
+        <div class="bar-row">
+          <span class="label" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${(count/maxSrc*100).toFixed(0)}%"></div></div>
+          <span class="count">${count}</span>
+        </div>
+      `).join("") || `<div class="bar-row"><span class="label">—</span></div>`;
+
+      const catCounts = new Map();
+      for (const e of entries) (e.categories || []).forEach(c => catCounts.set(c, (catCounts.get(c) || 0) + 1));
+      const sortedCats = [...catCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+      const maxCat = Math.max(1, ...sortedCats.map(([, c]) => c));
+      document.getElementById("category-bars").innerHTML = sortedCats.map(([name, count]) => `
+        <div class="bar-row">
+          <span class="label" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+          <div class="bar-track"><div class="bar-fill category" style="width:${(count/maxCat*100).toFixed(0)}%"></div></div>
+          <span class="count">${count}</span>
+        </div>
+      `).join("") || `<div class="bar-row"><span class="label">—</span></div>`;
+
+      // Daily buckets, not hourly — these feeds post at most a few times a
+      // week, so a 24-hourly-bucket sparkline (right for the 30s-polled news
+      // feed) would be almost entirely empty here.
+      const DAYS = 14;
+      const now = new Date();
+      const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+      const buckets = new Array(DAYS).fill(0);
+      for (const e of entries) {
+        const ps = e.published_sort;
+        if (!ps || ps.length < 3) continue;
+        const entryDayUTC = Date.UTC(ps[0], ps[1] - 1, ps[2]);
+        const daysAgo = Math.round((todayUTC - entryDayUTC) / (1000 * 60 * 60 * 24));
+        if (daysAgo >= 0 && daysAgo < DAYS) buckets[DAYS - 1 - daysAgo]++;
+      }
+      const maxBucket = Math.max(1, ...buckets);
+      document.getElementById("sparkline").innerHTML = buckets.map(count => `
+        <div class="spark-bar" style="height:${Math.max(4, (count/maxBucket*100))}%" title="${count} articles"></div>
+      `).join("");
+    }
+
+    async function loadArchiveIndex() {
+      try {
+        const res = await fetch(`${ARCHIVE_INDEX_PATH}?t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const select = document.getElementById("scope-select");
+        select.innerHTML = `<option value="live">live feed</option><option value="all">all history</option>` +
+          data.months.map(m => `<option value="${escapeHtml(m.key)}">${escapeHtml(m.key)} (${m.count})</option>`).join("");
+      } catch (err) {
+        console.error("Failed to load research archive index:", err);
+      }
+    }
+
+    async function loadJson(path) {
+      const res = await fetch(`${path}?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    async function switchScope(scope) {
+      currentScope = scope;
+      currentPage = 1;
+      if (scope === "live") { applyFiltersAndRender(); return; }
+
+      document.getElementById("feed").innerHTML = `<div class="empty-state">Loading…</div>`;
+      try {
+        if (scope === "all") {
+          const indexData = await loadJson(ARCHIVE_INDEX_PATH);
+          const monthDocs = await Promise.all(
+            indexData.months.map(m => loadJson(`data/research/${m.key}.json`).catch(() => ({ entries: [] })))
+          );
+          archiveEntries = monthDocs.flatMap(d => d.entries || []);
+          archiveEntries.sort((a, b) => (b.published_sort || []).join(",").localeCompare((a.published_sort || []).join(",")));
+        } else {
+          const data = await loadJson(`data/research/${scope}.json`);
+          archiveEntries = data.entries || [];
+        }
+      } catch (err) {
+        document.getElementById("feed").innerHTML = `<div class="empty-state">Couldn't load that archive data.</div>`;
+        console.error("Failed to load research archive:", err);
+        return;
+      }
+      renderCategoryFilterOptions(archiveEntries);
+      applyFiltersAndRender();
+    }
+
+    function applyFiltersAndRender() {
+      const entries = currentScope === "live" ? (latestData.entries || []) : archiveEntries;
+      const searchTerm = filters.search.trim().toLowerCase();
+
+      const filtered = entries.filter(e => {
+        if (filters.source !== "all" && e.source !== filters.source) return false;
+        if (filters.category !== "all" && !(e.categories || []).includes(filters.category)) return false;
+        if (searchTerm) {
+          const hay = `${e.title} ${e.description}`.toLowerCase();
+          if (!hay.includes(searchTerm)) return false;
+        }
+        return true;
+      });
+
+      const pageSize = filters.pageSize;
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      currentPage = Math.min(Math.max(1, currentPage), totalPages);
+      const pageStart = (currentPage - 1) * pageSize;
+      const pageItems = filtered.slice(pageStart, pageStart + pageSize);
+
+      const scopeLabel = currentScope === "live" ? "live feed" : currentScope === "all" ? "all history" : currentScope;
+      document.getElementById("result-count").textContent = filtered.length === 0
+        ? `showing 0 of ${entries.length} articles (${scopeLabel})`
+        : `showing ${pageStart + 1}–${Math.min(pageStart + pageSize, filtered.length)} of ${filtered.length} articles (${scopeLabel})`;
+
+      const pagination = document.getElementById("pagination");
+      pagination.hidden = filtered.length <= pageSize;
+      document.getElementById("page-indicator").textContent = `page ${currentPage} of ${totalPages}`;
+      document.getElementById("page-prev").disabled = currentPage <= 1;
+      document.getElementById("page-next").disabled = currentPage >= totalPages;
+
+      renderFeed(pageItems);
+    }
+
+    function renderFeed(entries) {
+      const feedEl = document.getElementById("feed");
+
+      if (entries.length === 0) {
+        feedEl.innerHTML = `<div class="empty-state">No articles match the current filters.</div>`;
+        return;
+      }
+
+      feedEl.innerHTML = "";
+      for (const entry of entries) {
+        const isNew = currentScope === "live" && !knownIds.has(entry.id);
+        const el = document.createElement("article");
+        el.className = "entry" + (isNew && knownIds.size > 0 ? " new" : "");
+        const color = SOURCE_COLORS[entry.source];
+        if (color) el.style.setProperty("--src-color", color);
+        el.innerHTML = `
+          <div class="meta">
+            <span class="src-tag">${escapeHtml(entry.source || "")}</span>
+            <span>${entry.published || ""}</span>
+          </div>
+          <h2><a href="${entry.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(entry.title)}</a></h2>
+          <p>${escapeHtml(entry.description || "")}</p>
+          ${(entry.categories || []).length ? `
+            <div class="category-chip-row">
+              ${entry.categories.map(c => `<button type="button" class="category-chip" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join("")}
+            </div>
+          ` : ""}
+        `;
+        feedEl.appendChild(el);
+      }
+
+      feedEl.querySelectorAll(".category-chip").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          filters.category = btn.dataset.category;
+          document.getElementById("category-filter").value = filters.category;
+          saveFilters();
+          applyFiltersAndRender();
+        });
+      });
+
+      knownIds = new Set((latestData.entries || []).map(e => e.id));
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str || "";
+      return div.innerHTML;
+    }
+
+    document.getElementById("source-filter").addEventListener("change", (e) => {
+      filters.source = e.target.value;
+      currentPage = 1;
+      saveFilters();
+      applyFiltersAndRender();
+    });
+
+    document.getElementById("category-filter").addEventListener("change", (e) => {
+      filters.category = e.target.value;
+      currentPage = 1;
+      saveFilters();
+      applyFiltersAndRender();
+    });
+
+    document.getElementById("search-input").value = filters.search;
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      filters.search = e.target.value;
+      currentPage = 1;
+      saveFilters();
+      applyFiltersAndRender();
+    });
+
+    const pageSizeSelect = document.getElementById("page-size-select");
+    pageSizeSelect.value = String(filters.pageSize);
+    pageSizeSelect.addEventListener("change", (e) => {
+      filters.pageSize = parseInt(e.target.value, 10);
+      currentPage = 1;
+      saveFilters();
+      applyFiltersAndRender();
+    });
+
+    document.getElementById("page-prev").addEventListener("click", () => {
+      currentPage--; applyFiltersAndRender(); window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    document.getElementById("page-next").addEventListener("click", () => {
+      currentPage++; applyFiltersAndRender(); window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("clear-filters").addEventListener("click", () => {
+      filters = { source: "all", category: "all", search: "", pageSize: 100 };
+      currentPage = 1;
+      document.getElementById("source-filter").value = "all";
+      document.getElementById("category-filter").value = "all";
+      document.getElementById("search-input").value = "";
+      pageSizeSelect.value = "100";
+      saveFilters();
+      applyFiltersAndRender();
+    });
+
+    document.getElementById("scope-select").addEventListener("change", (e) => switchScope(e.target.value));
+
+    loadArchiveIndex();
+    loadFeed();
+  spInit();
+    setInterval(loadFeed, POLL_INTERVAL_MS);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") loadFeed();
+    });
+
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) loadFeed();
+    });
+  </script>
+</body>
+</html>

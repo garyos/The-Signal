@@ -1,0 +1,1072 @@
+{
+  "month": "2026-02",
+  "episodes": [
+    {
+      "id": "stormcast-9828",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9828",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9828.mp3",
+      "title": "SANS Stormcast Friday, February 27th, 2026: Finding Singal (@sans_edu intern); Google API Keys and Gemini; AirSnitch Breaking Client Isolation",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, February 27th, 2026: Finding Singal (@sans_edu intern); Google API Keys and Gemini; AirSnitch Breaking Client Isolation",
+      "show_notes": [
+        {
+          "heading": "Finding Signal in the Noise: Lessons Learned Running a Honeypot with AI Assistance [Guest Diary]",
+          "links": [
+            "https://isc.sans.edu/diary/Finding%20Signal%20in%20the%20Noise%3A%20Lessons%20Learned%20Running%20a%20Honeypot%20with%20AI%20Assistance%20%5BGuest%20Diary%5D/32744"
+          ]
+        },
+        {
+          "heading": "Google API Keys Weren't Secrets. But then Gemini Changed the Rules.",
+          "links": [
+            "https://trufflesecurity.com/blog/google-api-keys-werent-secrets-but-then-gemini-changed-the-rules"
+          ]
+        },
+        {
+          "heading": "AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks",
+          "links": [
+            "https://www.ndss-symposium.org/ndss-paper/airsnitch-demystifying-and-breaking-client-isolation-in-wi-fi-networks/"
+          ]
+        }
+      ],
+      "published": "2026-02-27T02:00:02+00:00",
+      "duration_seconds": 562,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9828.mp3",
+      "audio_length_bytes": 7869025,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9828",
+      "categories": [
+        "airsnitch",
+        "wifi",
+        "api",
+        "google",
+        "maps",
+        "gemini",
+        "noise",
+        "honeypot",
+        "sans.edu"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9828",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, February 27th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I am recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's degree program in Applied\n Cybersecurity. Well, talking about our Bachelor's program,\n today we have another guest diary by Austin Bodolay. Austin\n looked into, well, one of our Internet Storm Center honeypots.\n That's a part also of the Internet Storm Center internship\n that these students participate in. And, well, he\n struggled with a very common challenge, information\n security, and that's too many alerts. Now, you wouldn't\n really think so, but even for a simple honeypot connected to\n a random home IP address, you still have this problem. And\n Austin now turned to, well, who else? ChatGPT to AI for\n help to try to understand these alerts better and is\n here documenting some of the challenges. One of the\n conclusions here that is something that people often\n like recognize at this point is that in order to really\n better understand alerts, you can't just rely on just\n looking at inbound data and seeing what gets stuck in your\n firewall or what inbound requests trigger certain IDS\n rules or in this case just honeypot hits. But what's\n going back is sometimes as important, if not more\n important, to really figure out what a particular attack\n is trying to accomplish. And Joe Leon with Truffle Security\n has published an interesting blog post about some\n unintended consequences with Google API keys once Google\n started offering Gemini, their AI system. Joe works with\n Truffle Security and Truffle Security, of course, is famous\n for the software they're creating that helps you find\n stray and leaked API keys. Now, the problem with the\n original Google API keys was that Google didn't consider\n them a secret. You may have seen them, for example, being\n used for Google Maps. And the fundamental problem there was\n that you basically, if you wanted to use the Google Maps\n API from a web application, you often had to deliver that\n API key as part of JavaScript to the client. So the client\n would be able to see these API keys. And Google did offer a\n couple of weak ways how you could constrain those keys,\n for example, by using a specific refer. But\n ultimately, the idea was, hey, this API key can only be used\n to access public data from the Google Maps API. You put some\n sort of billing constraints around it, so someone can just\n steal the key and then run up your Google Maps bill. And\n well, if it leaks and it's being abused, you may just\n rotate the key. That was sort of a little bit the idea here\n with these Google Maps API keys. But what sort of\n happened was that by default, when you're setting up an API\n key like this, it's unconstrained, meaning that it\n has access to all the APIs that this particular project\n has access to. And now you enabled Gemini and well, the\n same API keys that you published your website for\n Google Maps can now be used to query Gemini. And well, Gemini\n now does in some cases have access to sensitive data. And\n that's the problem that's happening now here. And then\n they're literally sort of GitHub repos, Pastebin and\n such with thousands of Google Map keys that have been leaked\n in the past. Like I said, really leaking them wasn't\n sort of avoidable the way you're supposed to use them.\n And even if you're creating a new key now, it's still being\n created by default as of an unconstrained API key. So what\n you have to do now is double check how your API keys are\n configured, maybe set up different projects or such to\n better isolate them from each other. Google has not yet\n fixed this problem. They're working on a fix for it.\n Initially, actually, they sort of considered, well, it's the\n way it's supposed to work. So they weren't initially even\n sort of suggesting a fix here, but apparently they're working\n on it now. But there's no timeline when a fix will be\n released. And the fix may even not be retroactive, given\n that, you know, that may break sort of some behavior that\n people are expecting from these API keys.\n So we're going to get to the next step. And if you thought\n we were done with Wi-Fi related vulnerabilities, well,\n we got a new tool and a new paper here from researchers at\n the University of California Riverside. The tool is\n AirSnitch. And what they're going after is client\n isolation in Wi-Fi networks. If you're setting up a modern\n Wi-Fi network, you often enable a feature called client\n isolation, which means that clients can't talk to each\n other. And the idea is also that even though they may use\n the same credentials to actually connect to the\n network, each client gets unique keys. And with that,\n the clients cannot sort of sniff each other's traffic,\n even if they basically just have a good old Wi-Fi sniffer\n way, just collect all of the Wi-Fi traffic. At least that's\n the idea with client isolation. What they're\n showing here in the paper, and I can't really do it justice\n here in this podcast, there's a lot going on here. But the\n fundamental idea behind this paper is that an attacker can\n play tricks, well, similar to what you find in wired\n networks, where you sort of, you know, connect to different\n ports in a switch and then are able to sort of impersonate a\n host that's connected to one switch, port by connecting to\n another switch port. That's a little bit the idea here. And\n part of the abuse here also comes from broadcast traffic.\n Broadcast traffic, of course, has to be readable by\n everybody on the network. And well, that, of course, is then\n encrypted with group keys. So these are some of the basic\n ideas here. But the way this is usually then implemented is\n where an attacker may, for example, connect to the 2.4\n gigahertz network, while the victim is on the 5 gigahertz\n network. And by using these two different networks,\n impersonating MAC address, basically it comes back down\n to just a good old MAC spoofing in the end, at least\n for some of these attacks. The attacker is able to not just\n intercept, but also inject traffic and doing that bi\n -directional in this. Now, a couple of architectures, the\n particular vulnerable here is if you have an access point\n and you have two SSIDs defined, a guest one and an\n internal one. So in order to exploit this, the attacker\n still needs access to the network. So this does not work\n completely passively like some of the older attacks. The\n attacker needs to connect to the network, so they need to\n have credentials to connect to the network. But if one access\n point has both guest and internal network, then a user\n on the guest network may actually be able to inspect\n traffic and inject traffic into the internal network. So\n I think that's one of the most concerning vulnerabilities\n here. One workaround is to use different VLANs for these two\n networks, which in enterprise networks is usually, I would\n think, best practice. But of course, if you have more of a\n home style router and access point, then often they don't\n have VLAN capability. And they just rely on the two different\n SSIDs to essentially separate these two networks. And they\n all sort of use the same sort of IP address range, which\n further complicates kind of keeping them separate. So\n interesting paper here. If you're looking into like, you\n know, what devices are vulnerable and how to mitigate\n some of this, please refer to the full paper. Like I said,\n there's a lot more to it here, a lot of details, a couple\n different sort of ways this attack can work. But assumed\n at this point, pretty much any sort of access point, even a\n lot of enterprise networks are vulnerable to at least one of\n the attacks presented here. Well, and that's it for today.\n A little bit different content today with these two bigger\n stories and skipped some of the new vulnerabilities here.\n But anyway, hope you liked it. Hope you'll subscribe to it.\n And I hope you leave a good review in your favorite\n podcast platform and talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9826",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9826",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9826.mp3",
+      "title": "SANS Stormcast Thursday, February 26th, 2026: CLAIR Model; Cisco SD-WAN 0-Day; Cortex XDR Abuse; OpenSSL Vuln;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, February 26th, 2026: CLAIR Model; Cisco SD-WAN 0-Day; Cortex XDR Abuse; OpenSSL Vuln;",
+      "show_notes": [
+        {
+          "heading": "The CLAIR Model: A Synthesized Conceptual Framework for Mapping Critical Infrastructure Interdependencies [Guest Diary]",
+          "links": [
+            "https://isc.sans.edu/diary/The+CLAIR+Model+A+Synthesized+Conceptual+Framework+for+Mapping+Critical+Infrastructure+Interdependencies+Guest+Diary/32748"
+          ]
+        },
+        {
+          "heading": "Cisco Catalyst SD-WAN Controller Authentication Bypass Vulnerability CVE-2026-20127",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk"
+          ]
+        },
+        {
+          "heading": "Abusing Cortex XDR Live",
+          "links": [
+            "https://labs.infoguard.ch/posts/abusing_cortex_xdr_live_response_as_c2/"
+          ]
+        },
+        {
+          "heading": "OpenSSL Vulnerability CVE-2025-15467",
+          "links": [
+            "https://seclists.org/oss-sec/2026/q1/220"
+          ]
+        }
+      ],
+      "published": "2026-02-26T02:00:03+00:00",
+      "duration_seconds": 408,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9826.mp3",
+      "audio_length_bytes": 5712396,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9826",
+      "categories": [
+        "openssl",
+        "cortex",
+        "xdr",
+        "cisco",
+        "catalyst",
+        "sd-wan",
+        "clair",
+        "ics"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9826",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, February 26, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ulrich, recording today in\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Our diary today comes from\n Claire Perry, a graduate of our bachelor's degree program.\n And this diary presents the CLARE model. What this is\n about is it's about critical infrastructure. And typically\n when you're dealing with critical infrastructure, one\n of the big security models and frameworks that's often being\n used is the Purdue model. The Purdue model is well\n -established and extremely useful to sort of talk about\n some of these infrastructure security threats. But as\n Claire Perry here points out, the model is very insular in\n that it's great for you like as an operator, as a utility\n to talk about the security of an individual plant. But it\n kind of ignores the interdependencies because\n well, you don't control many of them. So it just considers\n them sort of as inputs to your plant. Well, that's sort of\n what this is attempting to fix here. So this model, this\n framework is looking very much at interdependencies like no\n external things, like all the way to policies and such that\n may affect the security of your cradle infrastructure\n systems. It's a proposal at this point. So if you have any\n feedback or such, I'm sure CLARE is happy to hear about\n it. And Cisco today published an advisory regarding\n vulnerability affecting Catalyst SD-WAN controllers.\n Also, I guess, formerly known as SD-WAN vSmart. This\n vulnerability CVSS score of 10 allows an attacker without\n authentication to gain admin privileges on the device. What\n makes this even worse is that apparently it has been\n exploited since 2023. So two or three years already out\n there and being exploited, now discovered and finally being\n patched. Cisco's advisory also lists some indicators of\n compromise. Definitely pay attention to them and make\n sure that you are not already compromised, given how long\n this particular vulnerability has already been used. There's\n also an interesting Talus blog post for this vulnerability.\n I'll link in the show notes to both. And yet another\n defensive product being abused by attackers, InfoGuard Labs,\n is talking about how the life terminal, which is part of\n Cortex-XDR, can be used as a command control channel.\n Nothing really surprising here in that sense that, you know,\n you have seen this with so many similar defensive\n products in the past where you get command execution,\n powershell execution and the like just by using this\n trusted product, which of course then much more easily\n flies under the radar and is not being detected. As I\n mentioned before, you must control these command control\n channels that you are using defensively to manage your\n systems to make sure they're not being app used, which\n means you need the audit logs and the like to be able to\n review who is doing what with these systems and well, set up\n necessarily alerts to constrain any malicious\n behavior. So if you're using Cortex-XDR, take a look at\n this particular post here to figure out, you know, how this\n applies to your particular installation. Well, and\n OpenSSL published another update, fixing a vulnerability\n that OpenSSL ranks high. It's a stack-based buffer overflow\n that could be exploited via SMIME, for example, like if\n you have some authenticated envelope data and such, and\n particularly if you're using AS-GCM as a cipher, which of\n course is not that unlikely. And essentially it happens\n when you are parsing untrusted CMS or PK-CS7 data. The\n exploitability here is a little bit more tricky. It's\n definitely exploitable for a denial of service, basically\n it crashes the process that is doing the parsing, but could\n potentially lead to code execution. The stack-based\n buffer overflows of course, exploitability depends a lot\n on what kind of like safeguards the operating\n system, the compilers and so put in place. So that varies\n depending on the system you're working on and typically is\n not easily exploitable these days if modern best practices\n were used. Well, and the good old idea of tarpitting is\n back. These days when it comes to AI companies spidering and\n collecting data from various websites. The problem right\n now of course is that AI companies are building their\n models using data that's not necessarily supposed to be\n used for building AI models. So they're bypassing some of\n the copyright protections and such that you may have applied\n to your site. But well, tarpitting still works and\n what tarpitting usually refers to is where you basically\n just, well, clog a particular attacker with more or less\n invalid data in this case. So you're basically just throwing\n noise at the agent that is collecting data from your\n website, hoping that it will be built to the AI model and\n render it less useful. And essentially just, well, create\n more work for the AI companies trying to figure out your\n data. This is a blog post by Portspoof that was published\n yesterday. And well, if you want to look at some of their\n methods, definitely take a look. And yes, you know, some\n websites already deployed similar ideas. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing to this podcast. And as\n always, special thanks to anybody leaving a good comment\n in your favorite podcast. platform. Thanks and talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9824",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9824",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9824.mp3",
+      "title": "SANS Stormcast Wednesday, February 25th, 2026: Open Redirects; setHTML in Firefox; telnetd issues",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, February 25th, 2026: Open Redirects; setHTML in Firefox; telnetd issues",
+      "show_notes": [
+        {
+          "heading": "Open Redirects: A Forgotten Vulnerability?",
+          "links": [
+            "https://isc.sans.edu/diary/Open%20Redirects%3A%20A%20Forgotten%20Vulnerability%3F/32742"
+          ]
+        },
+        {
+          "heading": "Goodbye innerHTML, Hello setHTML: Stronger XSS Protection in Firefox 148",
+          "links": [
+            "https://hacks.mozilla.org/2026/02/goodbye-innerhtml-hello-sethtml-stronger-xss-protection-in-firefox-148/"
+          ]
+        },
+        {
+          "heading": "More telnetd issues",
+          "links": [
+            "https://seclists.org/oss-sec/2026/q1/199"
+          ]
+        }
+      ],
+      "published": "2026-02-25T02:00:02+00:00",
+      "duration_seconds": 449,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9824.mp3",
+      "audio_length_bytes": 6289170,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9824",
+      "categories": [
+        "redirects",
+        "innerhtml",
+        "telnet",
+        "sethtml",
+        "xss"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9824",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, February 25th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ulrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in cloud\n security. One thing I noticed today was that our honeypots\n have been seeing recently a big increase in the number of\n scans looking for open redirects. An open redirect is\n a feature in a web application where the web application\n redirects you to another site without any regard as to where\n the user is really being redirected to. And it often\n happens as per login pages where you would like to, for\n example, direct a user to the page they originally attempted\n to visit. And well, also click through counters and similar\n features that often use redirects and with that are\n susceptible to creating open redirects. There are a couple\n of problems with open redirects. So open redirects\n is basically a redirect where you're not really filtering\n what page you're redirecting the user to. The receiving\n page may then, for example, receive URL parameters, but\n could also be used for phishing. One spot where this\n has been particularly a little bit of problem lately is with\n OAuth 2 where during the initial credential flow where\n you are authorizing a site to use a particular service.\n Well, the site is being redirected back to the client\n that's attempting to use these credentials. But if an\n attacker is able to swap that redirect URI for a URI that is\n vulnerable for an open redirect, the attacker may\n obtain credentials. And that sort of bypasses some of the\n protections that sites have put in place to prevent these\n changes of the redirect URI. So it's certainly an important\n vulnerability. It's not currently sort of part of the\n OWASP top 10, but OWASP has a great sort of cheat sheet\n about open redirects and how to prevent them and why they\n are a problem. Also interesting here, pretty much\n all of the requests that sort of responsible for that peak\n over the last few days, they came from one IP address\n associated with IP volume. IP volume is often referred to as\n a bulletproof hoster, meaning that they're not really all\n that eager to follow up on abuse requests and are often\n providing shelter to some illegal activity. So you may\n want to take a look at whether or not it's appropriate for\n you to block their AS. And talking a little bit about web\n application security, we do have an interesting new\n development here from Mozilla, from the Firefox team, and\n that's support for SetHTML. SetHTML is part of the\n sanitizer API, and that's a standard that's supposed to\n make it easier to prevent some cross-site scripting attacks.\n In particular, so some of these DOM-based cross-site\n scripting attacks that have been particularly difficult to\n sort of prevent in some modern applications. The problem here\n is that we often use JavaScript in order to insert\n unsanitized text into an HTML page, and then of course you\n are opening yourself up for cross-site scripting. What the\n sanitizer API in SetHTML does is that it basically doesn't\n allow you to insert unsafe HTML, and that's in particular\n anything that's related to JavaScript. It comes with a\n default configuration that's pretty good, but you can\n basically define also your own configuration and which\n particular HTML tags and attributes you are allowing.\n Pretty easy standard to implement in my opinion, and\n it sort of tries to basically balance the two ends we had so\n far. We had innerHTML, which of course was horribly unsafe,\n and that led to a lot of these problems. We had innerText,\n which didn't allow any HTML at all. So with SetHTML you still\n are able to use markup, just no JavaScript. There's also\n the idea of trusted types that's also supported. SetHTML\n at this point in the SantaHaser API appears to be\n only supported in Firefox and Chrome. So Safari is still\n holding out here. Haven't really found anything quickly\n sort of when Safari, if Safari is going to implement this.\n Once I think Safari does, then this becomes a real usable\n standard to actually integrate in your web applications. You\n know how it sometimes goes if there's a vulnerability in a\n particular piece of software. We then have people look\n closer and find additional vulnerabilities. There's a\n second pretty bad and interesting telnetd\n vulnerability. Remember we had like a couple months ago the\n one with the dash F, where basically command line\n parameters were easily passed to the login shell. And then\n you could essentially bypass authentication. This second\n one isn't quite as bad. It's really more approach\n escalation vulnerability. But the root cause here is that\n Telnet also is able to set environment variables. And\n some environment variables can be used for authentication. In\n particular one pointed out here in the bug report by Ron\n Ben Yizhak is the credentials directory. Credentials\n directory is basically where you find credentials. And if\n an attacker is able to create a file essentially anywhere on\n the system, they're then able to log in as any user,\n including root. So that's the problem here. Pretty\n interesting vulnerability as I said. The workaround,\n apparently some versions of Telnet have implemented this.\n But the workaround here is that you only allow very\n specific environment variables to be set. There are couples\n that are useful like no language and things like that\n and encoding parameters and such that are useful and that\n Telnet does routinely set. And the solution is to just limit\n it to these specific environment variables.\n Apparently others have just basically set up block lists\n of environment variables they don't allow. And then of\n course, people just come up with a different way to set\n the same environment variable or another environment\n variable that they may have missed that some systems are\n using. Well, and that's it for today. Thanks for listening.\n Thanks for liking. Thanks for subscribing. And special\n thanks to anybody leaving a good comment with your\n favorite podcast platform. And talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9822",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9822",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9822.mp3",
+      "title": "SANS Stormcast Tuesday, February 24th, 2026: Malicious JPEG Analysis; Calibre Vuln; jsPDF object injection; Roundcube Exploited",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, February 24th, 2026: Malicious JPEG Analysis; Calibre Vuln; jsPDF object injection; Roundcube Exploited",
+      "show_notes": [
+        {
+          "heading": "Another day, another malicious JPEG",
+          "links": [
+            "https://isc.sans.edu/diary/Another%20day%2C%20another%20malicious%20JPEG/32738"
+          ]
+        },
+        {
+          "heading": "Calibre Path Traversal Leading to Arbitrary File Write and Potentially Code Execution CVE-2026-26064 CVE-2026-26065",
+          "links": [
+            "https://github.com/kovidgoyal/calibre/security/advisories/GHSA-72ch-3hqc-pgmp",
+            "https://github.com/kovidgoyal/calibre/security/advisories/GHSA-vmfh-7mr7-pp2w"
+          ]
+        },
+        {
+          "heading": "CVE-2026-25755: PDF Object Injection in jsPDF (addJS Method)",
+          "links": [
+            "https://github.com/ZeroXJacks/CVEs/blob/main/2026/CVE-2026-25755.md"
+          ]
+        },
+        {
+          "heading": "Roundcube Webmail Exploited  CVE-2025-49113 https://roundcube.net/news/2025/06/01/security-updates-1.6.11-and-1.5.10",
+          "links": [
+            "https://www.openwall.com/lists/oss-security/2025/06/02/3"
+          ]
+        }
+      ],
+      "published": "2026-02-24T02:00:02+00:00",
+      "duration_seconds": 424,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9822.mp3",
+      "audio_length_bytes": 5945082,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9822",
+      "categories": [
+        "roundcube",
+        "webmail",
+        "jspdf",
+        "calibre",
+        "jpeg"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9822",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, February 24, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well, in diaries today, we have a\n malware analysis diary from Jan. Jan looked at, well, as\n he calls it, yet another malicious JPEG file. An image\n in this case, but what actually arrived initially,\n and Jan focused a little bit more on the downloader here,\n it was, well, a good old compressed, zip-compressed\n JavaScript file. Once decompressed, there was over a\n megabyte of data. However, most of data was garbage. So\n first obfuscation technique here, where the attacker is\n just adding some random garbage to the file in order\n to extend its size, make it a little bit more difficult to\n sort of analyze it. Sometimes also, you know, fool then anti\n -malware engines into not actually looking at the file.\n Well, once all of that was removed, there were only a\n couple kilobytes left. Actually, in the end, only\n about a dozen or so lines that Jan actually had to de\n -obfuscate further. And, well, that's where he ended up with\n your standard downloader that would then download an image\n with attached scripts that would then, in the end, end up\n installing the Remco RAD, well, remote access tool. So\n overall, fairly standard malware. A couple lessons here\n from this one. The from was actually faked and would not\n make it past properly configured. DMARC, DKIM,\n SPF. So those techniques are definitely very useful. Often,\n even simple stuff like this gets missed by some anti\n -malware engines. So having that extra layer of basically\n fairly straightforward and simple defenses like DMARC\n certainly can make a difference here. And if you're\n using Calibre in order to read e-books, well, pay attention.\n There are two critical vulnerabilities that were\n patched a couple days ago that allow for arbitrary path\n transversal and with that also for code execution. The way\n this would be exploited is by someone tricking you into\n opening a crafted malicious e -book and that would then save\n files in arbitrary directories as you're opening it. And with\n that, of course, you easily then have arbitrary code\n execution if these files are then being saved in the right\n directories. This is a very common issue we've talked\n about is a lot with sort of various compressed formats. Of\n course, e-books are often distributed in these\n compressed formats that then extract into multiple files.\n And that's exactly sort of what's here happening where\n Calibre isn't careful enough as to where it actually\n extracts those files. And then you have sort of a standard\n path traversal. Again, there are two distinct\n vulnerabilities, but they're very similar and both same CSS\n score of 9.3. And then we have a little bit e-book related to\n a vulnerability in jsPDF. jsPDF is a JavaScript library\n to create, read, parse PDFs. Of course, the problem with\n PDFs is that they may include JavaScript and that sort of\n know where you have that good old problem, data code being\n mixed, not properly sort of separated from each other. And\n yes, if a particular JavaScript segment is open,\n but they're not properly closed, you may have this\n execution of the JavaScript happening. This vulnerability\n is a little bit tricky in the sense that yes, it's something\n patch available, exploit is available as well for it. But\n whether or not there's a problem for you depends a\n little bit on how you're using jsPDF, like what kind of PDFs\n you're rendering, what PDFs you're creating with it, where\n the data is coming from. So lots of dependencies here. So\n how risky this is in your particular use case, of\n course, all depends then on what untrusted data is really\n being fed here to jsPDF. I would still plead with you to\n just get it updated. The next vulnerability that I was a\n little bit contemplating when I should cover it. And the\n reason I do cover it is that, well, it's in a webmail\n system. And I have the utmost respect for people who dare to\n create webmail systems. I think it's a very difficult\n thing to do securely given the complexities and of course the\n attack surface of email. But most people don't really use\n webmail systems that much that they created themselves or\n that are open sourced. So many people are going cloud these\n days for email and with that also for their webmail. The\n problem is that these systems are often used by people,\n well, that deal with more sensitive data that they don't\n just want to put in possibly an adversary's cloud. So\n that's why I think these probably these kind of\n vulnerabilities are more important than one would sort\n of think offhand. Latest example here is RoundCube.\n There was a PHP, this cellularization vulnerability,\n was patched last June. It's now actively being exploited.\n We also had a couple of weeks ago, I didn't cover it back\n then, probably should have, in SmarterMail, another sort of\n open source and commercial webmail system that also is\n actively being exploited. Actually a more recent\n vulnerability that got hit there. So if you're running\n your own webmail system on -prem, make sure it's up to\n date. These vulnerabilities are often exploited fairly\n soon after they have been made public. Well, and this is it\n for today. So thanks for listening. Thanks for liking\n and thanks for subscribing to this podcast. And just a\n reminder, if you're interested in any classes, the next class\n I'll be teaching is in April in Orlando and then end of\n April in Amsterdam. So take a look on the United Storm\n Center's website just below the show notes for the\n podcast. Thanks and talk to you again tomorrow. Bye. volt\n at\u524d\n away Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9820",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9820",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9820.mp3",
+      "title": "SANS Stormcast Monday, February 23rd, 2026: Japanese Phishing; AI Agents Ignoring Instructions; Starkiller MFA Phishing",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, February 23rd, 2026: Japanese Phishing; AI Agents Ignoring Instructions; Starkiller MFA Phishing",
+      "show_notes": [
+        {
+          "heading": "Japanese-Language Phishing Emails",
+          "links": [
+            "https://isc.sans.edu/diary/Japanese-Language%20Phishing%20Emails/32734"
+          ]
+        },
+        {
+          "heading": "'God-Like' Attack Machines: AI Agents Ignore Security Policies",
+          "links": [
+            "https://www.darkreading.com/application-security/ai-agents-ignore-security-policies"
+          ]
+        },
+        {
+          "heading": "Starkiller: New Phishing Framework Proxies Real Login Pages to Bypass MFA",
+          "links": [
+            "https://abnormal.ai/blog/starkiller-phishing-kit"
+          ]
+        }
+      ],
+      "published": "2026-02-23T02:45:11+00:00",
+      "duration_seconds": 393,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9820.mp3",
+      "audio_length_bytes": 5509740,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9820",
+      "categories": [
+        "starkiller",
+        "phishing",
+        "mfa",
+        "mitm",
+        "japanese",
+        "ai",
+        "agents"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9820",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, February 23rd, 2026\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ulrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Brad on\n Friday published a diary talking about some Japanese\n phishing emails. Now Brad doesn't speak Japanese, he\n does not reside in Japan, but still for some reason got on a\n mailing list of a particular threat actor that's sending\n out phishing emails in Japanese. Now Brad is talking\n a little bit about why he believes that all of the\n emails that he received at part of these campaigns come\n from the same group, the same threat actor. But the real, I\n think the lesson here is that the threat actors, they are\n not just sending emails in English. And this can\n particularly be a problem for multinational companies where\n your normal business language is English. And as a result,\n often when you're talking about phishing, when you're\n doing phishing tests, you're sending these tests in\n English. A few years back, we had a sans.edu student who\n looked into, for example, how to figure out what languages\n are actually being used in your environment based on\n emails that are being sent, and then somewhat tailoring\n some of the phishing tests based on it. I know phishing\n testing and such is a controversial subject in\n itself, but if you're doing it, you may as well want to\n try to do it as well as possible. And I think part of\n this should be that you are looking at, well, phishing\n emails in different languages. Also, when you're looking at\n your spam and phishing filters, you have to make sure\n that they don't have similar biases and are going to\n capture these non-English phishing emails, which could\n be missed if, well, your phishing filter basically is\n only looking for English emails. And considers those as\n potential phishing emails. And the last couple weeks, we had\n a couple of incidents where security was breached by AI\n tools not following instructions, in particular\n when it comes to security guardrails that the AI was\n supposed to obey. I think what's happening here is very\n similar to what you have in humans, where humans often try\n to get work done and in the process ignore things like\n code phrases or not being supposed to use certain data\n or not supposed to be using certain tools. Well, as AI\n becomes more intelligent, well, it's adapting also to\n some of these behaviors that, of course, are often\n associated with intelligence. On the other hand, well, it's\n not quite that intelligent yet, so sometimes it doesn't\n make the right decision. There have been a number of these\n incidents and I'm going to link to an article by Robert\n Lemus on dark reading. He summarized some of this where,\n for example, and that was one that I almost included last\n week in the podcast, but didn't because that was just\n another story. But the Microsoft's co-pilot did\n apparently index some confidential emails, even\n though being told not to. There were other issues, like\n I mentioned, where AI agents made changes, even though they\n were told not to make any changes and the like. So\n definitely, this is a recurring problem. And in the\n end, the only way I believe that you're going to sort of\n safely use some of these tools is where you're actually\n preventing access by not providing them with the\n necessary credentials to, for example, make changes to your\n code, unless you actually want them to make changes to your\n code. There's also a story, and I haven't 100% verified it\n yet, but looks like it came from Amazon itself, where\n Amazon stated that they had a couple of outages that were\n caused by AI tools essentially overstepping their bounds and\n making changes they weren't supposed to make. Well, it\n wasn't the big Amazon outage, but some smaller sort of tools\n within the AWS ecosystem were down for multiple hours as a\n result. And going back to a phishing for another story,\n Starkiller. That is a new phishing framework that\n Abnormal did document in one of their blog posts. It's yet\n another improvement on a phishing framework that allows\n you to actually play machine in the middle attacks with\n multi-factor authentication interceptions. I think the\n real thing that I sort of try to keep through also, and I'm\n teaching about this in class and such, that not all multi\n -factor authentication schemes are the same. There are\n phishing resistant ones, and there are ones that are non\n -phishing resistant. The vast majority that's currently\n being implemented is not phishing resistant. If you're\n relying on some kind of one -time password or something\n like this, like the famous Google Authenticator, even\n some of the little bit more sophisticated varieties like\n Microsoft authentication with the code that you need to\n acknowledge. Well, pretty much anything like this, where the\n user decides whether or not they should enter a particular\n credential, whether that's a one-time password, whether\n that's acknowledging a number or whether that's a regular\n password, well, if the user is in charge and deciding what\n credentials to submit, then your authentication is not\n phishing resistant. So if you want to be phishing resistant,\n the machine needs to decide what credential to send. And\n that pretty much comes down to things like pass keys, other\n FIDO2 variants and such, that are somewhat phishing\n resistant. And that's really what you should try to\n implement these days. Well, and that's it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing to this podcast and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9818",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9818",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9818.mp3",
+      "title": "SANS Stormcast Friday, February 20th, 2026: DynoWiper Analysis; Vibe Passwords; IDE Extension Vulns; Gransstream GXP 1600 Vuln and PoC",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, February 20th, 2026: DynoWiper Analysis; Vibe Passwords; IDE Extension Vulns; Gransstream GXP 1600 Vuln and PoC",
+      "show_notes": [
+        {
+          "heading": "Under the Hood of DynoWiper",
+          "links": [
+            "https://isc.sans.edu/diary/Under%20the%20Hood%20of%20DynoWiper/32730"
+          ]
+        },
+        {
+          "heading": "Vibe Password Generation: Predictable by Design",
+          "links": [
+            "https://www.irregular.com/publications/vibe-password-generation"
+          ]
+        },
+        {
+          "heading": "Vulnerabilities (CVE-2025-65715, CVE-2025-65716, CVE-2025-65717) in four popular IDE Extensions",
+          "links": [
+            "https://www.ox.security/blog/four-vulnerabilities-expose-a-massive-security-blind-spot-in-ide-extensions/"
+          ]
+        },
+        {
+          "heading": "Grandstream GXP1600 VoIP Phones",
+          "links": [
+            "https://www.rapid7.com/blog/post/ve-cve-2026-2329-critical-unauthenticated-stack-buffer-overflow-in-grandstream-gxp1600-voip-phones-fixed/"
+          ]
+        }
+      ],
+      "published": "2026-02-20T02:00:02+00:00",
+      "duration_seconds": 379,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9818.mp3",
+      "audio_length_bytes": 5317253,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9818",
+      "categories": [
+        "grandstream",
+        "gxp1600",
+        "vibe",
+        "password",
+        "vs code",
+        "extensions",
+        "dynowiper"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9818",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, February 20th, 2026\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the sans.edu graduate certificate program in\n incident response. Today's diary is from one of our\n science.edu graduates, and in this diary, John Muthers is\n talking about DynoWiper. DynoWiper was recently in the\n news for being found attacking various power plants in\n Poland. It's a wiper, so what wipers usually do is they just\n delete data. They're sometimes claiming to be ransomware, but\n their real goal is just to disrupt the systems. And John\n is going into detail here how to reverse analyze this\n particular sample and, well, what he learned from it. So in\n this particular case, it actually turned out that the\n malware wasn't really all that complex, even though it was\n attributed to a nation state actor. But, well, you know,\n whatever works. It's not that just because the nation state\n actor that we have some super complex malware. In this case,\n it's not really obfuscated, which of course makes analysis\n fairly easy. It just uses then a pseudo-random number\n generator in order to create essentially noise that's being\n used to overwrite files. More details you can see in John's\n diary and also some of the tools and the sort of other\n findings that he came across as he was looking at this\n particular sample. And with the next story, well, I'm\n including it because, well, I'm surprised that anybody\n would actually even think of this. And that's using LLMs to\n generate passwords. Security company Irregular looked at\n that and basically asked various LLMs to create\n passwords that sort of matched certain requirements, like\n upper lowercase special characters and such. And what\n came back looked like a reasonable password. But when\n they redid the test, well, they ended up often with\n exactly the same password again, which sort of makes\n sense. And that's really one problem with LLMs that their\n output is deterministic, at least to some extent, whatever\n randomness, noise, temperature is sort of being added to the\n output is usually in no ways meant to be cryptographically\n random and sometimes actually specifically not meant to be\n completely random. Back in the day, and well, as far as AI is\n concerned, it was sort of a month or so ago, people were\n also experimenting by just asking LLMs to produce a\n random number, which even across different LLMs often\n ended up with the same number that they preferred for\n whatever reason. So no surprise here. But, and that's\n the other part here of Irregular's finding, some of\n the passwords that these LLMs commonly suggest have been\n found in the wild. So people are definitely doing it using\n LLMs in this bad way. And well, what you're ending up\n with is interesting passwords that you will likely find\n across different users. Well, in the past, I've often talked\n about malicious extensions for IDs like Visual Studio Code.\n The story I have here from Ox Research is not about\n malicious extensions, but vulnerable extensions. And one\n sort of common denominator here is that some of these\n extensions are setting up an HTTP API on localhost, and\n they're not properly protecting it against any\n requests being sent by JavaScript from a third-party\n website. So the issue here is that a developer who is\n running Visual Studio Code has the extension loaded, is\n visiting a malicious website, and then as a result, this\n malicious website now has access to the extension, and\n with that access to the developer's code. So this is\n not easily sort of prevented and likely the four extensions\n that they have here are really such as the tip of the\n iceberg. Now, two of the vulnerabilities they\n identified are not sort of these local server\n vulnerabilities, but they actually require changes like\n to settings.json and to open like a malicious readme\n .markdown file. But in my opinion, like the most\n important ones here are those loopback web servers we have.\n Many issues with that concept in the past where support\n tools and the like did not properly protect those APIs,\n and ended up vulnerable as a result. And if you're using\n Grandstream GXP 1600 voice over IP phones, well, you\n probably should get them updated quickly. Rapid7 has\n released details regarding a just patched vulnerability in\n these phones that is relatively easy to exploit.\n It's a stack-based buffer overflow and of course there's\n lots and lots of prior work how to exploit these type of\n overflows. Rapid7 had no problem coming up with a\n fairly simple exploit for it. It does not require any\n authentication and does allow full root access to the\n affected phone. So definitely something you do want to take\n care of. Remember these phones are essentially Linux device\n or Unix devices so once one of these phones is compromised it\n could easily be used then to leverage it to attack other\n systems on your network. Well and that's it for today.\n Thanks for liking. Thanks for subscribing to this podcast\n and talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9816",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9816",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9816.mp3",
+      "title": "SANS Stormcast Thursday, February 19th, 2026: Malware Image Resuse; Dell RecoveryPoint; Admin Center Vuln; DNS-PERSIST-01",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, February 19th, 2026: Malware Image Resuse; Dell RecoveryPoint; Admin Center Vuln; DNS-PERSIST-01",
+      "show_notes": [
+        {
+          "heading": "Tracking Malware Campaigns With Reused Material",
+          "links": [
+            "https://isc.sans.edu/diary/Tracking%20Malware%20Campaigns%20With%20Reused%20Material/32726"
+          ]
+        },
+        {
+          "heading": "From BRICKSTORM to GRIMBOLT: UNC6201 Exploiting a Dell RecoverPoint for Virtual Machines Zero-Day",
+          "links": [
+            "https://cloud.google.com/blog/topics/threat-intelligence/unc6201-exploiting-dell-recoverpoint-zero-day"
+          ]
+        },
+        {
+          "heading": "Windows Admin Center Elevation of Privilege Vulnerability CVE-2026-26119",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-26119"
+          ]
+        },
+        {
+          "heading": "DNS-PERSIST-01: A New Model for DNS-based Challenge Validation",
+          "links": [
+            "https://letsencrypt.org/2026/02/18/dns-persist-01.html"
+          ]
+        },
+        {
+          "heading": "Defending Web Apps",
+          "links": [
+            "https://www.sans.org/cyber-security-courses/application-security-securing-web-apps-api-microservices"
+          ]
+        }
+      ],
+      "published": "2026-02-19T02:00:02+00:00",
+      "duration_seconds": 424,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9816.mp3",
+      "audio_length_bytes": 5944993,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9816",
+      "categories": [
+        "windows",
+        "admin center",
+        "dns-persist-01",
+        "brickstorm",
+        "grimpbolt",
+        "dell",
+        "recoverypoint",
+        "malware"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9816",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, February 19th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Industrial Control System Security. Well, Xavier\n continues to be on a roll this week with yet another piece of\n malware to analyze. And in this case, it's actually a\n nice example on how to combine different pieces of malware\n with certain actors. A week or so ago, Xavier did already\n talk about a piece of malware that used an MSI wallpaper as\n part of its payload. Now, in that particular case, it was\n really just used sort of to basically have an image to\n attach a code to. So the image itself, that wallpaper could\n have been any other image. But what Xavier found is that\n there's other malware that uses exactly the same image,\n suggesting that it was created by the same actor. Also uses\n some other similar techniques and such as the malware that\n Xavier covered in the past. And overall, Xavier found a\n few hundred of pieces of submissions to VirusTotal that\n included this image, not all of them being labeled as\n malicious. And that's where it gets interesting whether or\n not you should add something benign like this image to some\n form of signature. Maybe it's interesting to sort of\n highlight certain samples and maybe look at them in more\n detail or include it as part of signature. Of course, not\n necessarily as the only signature to look for\n malicious activity. And yesterday, Dell released an\n update for Recovery Point for Virtual Machines. This update\n is fixing a fixed credential vulnerability. So nothing\n really all too special here, just your usual backdoor and\n enterprise software. But what makes it sort of even more\n interesting is that Google published a blog post stating\n that they have seen exploitation of this\n particular vulnerability for a few months now. So if you do\n have any exposed Dell Recovery Point for Virtual Machines\n systems out there, well, you definitely want to take a\n look. This system is Tomcat based, so attackers will\n typically then add web shells to it. Another interesting\n thing that Google has observed is that in order to evade\n detection, the attacker is setting up new network\n interfaces on the virtual machine and using that then to\n communicate and also do some lateral movement inside the\n network. Also some interesting IP tables rules that are being\n added to the system in order to sort of provide simple semi\n -authenticated access to the vulnerable system for an\n attacker even after the vulnerability should be\n patched. So definitely take a look at the system if you have\n them. Make sure they're not already compromised. So don't\n just blindly patch and move on. Another little bit odd\n security update from Microsoft. This one sort of\n came out of order. It's for Windows Admin Center and fixes\n an elevation of privilege vulnerability. Apparently not\n yet exploited, but Microsoft does suggest that exploitation\n of this vulnerability would be likely. Now elevation of\n privileges here doesn't mean necessarily that you get\n access to like system or administrator, but you get\n access to whatever user is executing the application. And\n I believe they're referring here to the Windows Admin\n Center application. So updated patch is available, but not\n 100% sure why this was sort of released as a special patch.\n And let's encrypt is going to introduce a new method in\n order to update your certificates. This one is\n interesting. It's DNS space. Now you may be familiar with\n DNS01. That's the method that I personally prefer. You\n basically publish a specific DNS record and well then you\n use that to authenticate that you have control over the\n domain. This is only like short-lived. Each time you\n need a new certificate, you must again update that DNS\n record. And of course that leads often to complications,\n trying to keep your DNS zone updated and also distributing\n necessary API key material that you may need in order to\n keep everything up to date. The Certificate Authority\n Browser Forum and other standard bodies like IETF have\n now published a variation of this method, DNSpersist01.\n This method does allow you to publish a specific DNS record\n and it can then be used for long-term authentication in\n order to verify that you control the domain. It's\n linked to the particular account that you have set up\n with Let's Encrypt or whatever sort of authority you're\n using. This is not Let's Encrypt specific, but as far\n as I know, Let's Encrypt is the first one to actually use\n this method. So you don't have to constantly update your DNS\n zone. Now you may and as optional add some expiration\n date to the record. So that way it will only be valid for\n a certain limited time. You can also allow or not allow\n wildcard certificates to be issued based on that\n authentication. So that's supposed to make things a lot\n simpler. And remember, we are moving towards shorter and\n shorter certificate lifetimes. In particular, Let's Encrypt\n is pushing that fairly aggressively. So by reducing\n some of the friction and also fragility of the update\n process, things will probably become in the end more secure.\n Well, that's it for today. Thanks for liking. Thanks for\n recommending this podcast and sharing it on social media.\n And by the way, if you're interested still in the\n Orlando event where I'll be teaching our defending web\n application class, there is now a special where you\n actually get the free on demand version. So if you\n don't like me, you'll have then also Jason Lamb teach you\n the material as part of the online on demand version of\n the material that you'll get for free. So two instructor,\n one price. And that's it for today. Talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9814",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9814",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9814.mp3",
+      "title": "SANS Stormcast Wednesday, February 18th, 2026: IR Phishing; Neenadu Android Backdoor; NiFi Bugs; LLMs Phishing; Encrypted RCS",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, February 18th, 2026: IR Phishing; Neenadu Android Backdoor; NiFi Bugs; LLMs Phishing; Encrypted RCS",
+      "show_notes": [
+        {
+          "heading": "Fake Incident Report Used in Phishing Campaign",
+          "links": [
+            "https://isc.sans.edu/diary/Fake%20Incident%20Report%20Used%20in%20Phishing%20Campaign/32722"
+          ]
+        },
+        {
+          "heading": "Divide and conquer: how the new Keenadu backdoor exposed links between major Android botnets https://securelist.com/keenadu-android-backdoor/118913/",
+          "links": []
+        },
+        {
+          "heading": "CVE-2026-25903: Apache NiFi: Missing Authorization of Restricted Permissions for Component Updates https://seclists.org/oss-sec/2026/q1/166",
+          "links": []
+        },
+        {
+          "heading": "The Next Frontier of Runtime Assembly Attacks: Leveraging LLMs to Generate Phishing JavaScript in Real Time",
+          "links": [
+            "https://unit42.paloaltonetworks.com/real-time-malicious-javascript-through-llms/"
+          ]
+        },
+        {
+          "heading": "Encrypted RCS in iOS/iPadOS",
+          "links": [
+            "https://developer.apple.com/documentation/ios-ipados-release-notes/ios-ipados-26_4-release-notes"
+          ]
+        }
+      ],
+      "published": "2026-02-18T02:15:12+00:00",
+      "duration_seconds": 450,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9814.mp3",
+      "audio_length_bytes": 6304792,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9814",
+      "categories": [
+        "rcs",
+        "apple",
+        "nifi",
+        "android",
+        "backdoor",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9814",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, February 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu credit certificate program in\n incident response. Just a quick note for those of you\n who are watching this on YouTube, sorry, no camera\n today having some little technical issues. Today's\n diary is coming from Xavier again. He's on a roll lately\n and this latest one is a little bit of different\n phishing campaign. One of the goals of phishing campaigns is\n always to create some urgency to make you do something\n quickly because, well, there is some kind of emergency and\n what they're doing here is essentially pretending that\n there was an incident, some odd login to your crypto\n wallet that would cause you to now implement two-factor\n authentication. Not sure if they just assume that you\n didn't do it or if they think that you may ignore if you\n already have two-factor authentication enabled. This\n particular phishing email did affect MetaMask users. No\n indication here that MetaMask is at all involved in this. So\n this is not a MetaMask breach or anything like this. They're\n just sending this to random people on the internet hoping\n that they will get some actual MetaMask users that will then\n fall for this phishing email. And as usual, cryptocurrency\n wallets are still one of the top targets of these kind of\n phishing emails. And the Android ecosystem continues to\n be haunted by devices that come reinstalled with\n malicious firmware. Kaspersky has the latest document\n incident of this. They call it the Kinado Big Door and\n apparently it was reinstalled on these affected devices and\n was added during the build phase for the firmware. Now,\n we have seen sort of various picture frames and such with\n compromised firmware in the past. And what often happens\n is that systems on the production lines or so are\n getting infected and then being used to install these\n malicious back doors. The takedown here of this back\n door, I should rather say the reverse analysis of it is\n rather neat. So real good work here by Kaspersky, helping us\n understand what the particular back door does and also how\n they analyzed this malicious code. And then we have a new\n vulnerability in Apache's NiFi data processing service. This\n particular software, well, if you have seen it being\n attacked before, that's why I mentioned it here. It's one of\n those data processing pipelines. It's written in\n Java and presents a nice web -based admin interface that\n allows you to sort of, you know, to sort of, you know,\n add different components to extract data and then send it\n out in a standard format. So often used for things like\n machine learning or such in order to pre-prepare various\n data sets and such to be easily imported in your\n particular machine learning pipeline. Well, the problem\n here is that even if you did require permissions for\n particular components that you sort of have configured that\n may be bypassed and this restricted annotation that\n indicates that additional privileges are required, may\n be ignored. So I mentioned before with NiFi, it's not\n really one of those systems that you really want to expose\n to the internet. Where I do see it exposed to the internet\n is where you have data scientists and such that set\n it up on a cloud server without necessarily\n understanding the security implications of doing so. So\n definitely one of those things you want to get a handle on\n and if possible catalog these installs. And Palo Alto's Unit\n 42 came up with an interesting abuse case for large language\n models. The trick here is where you're actually using\n the large language model to create phishing pages. The way\n this works is where the victim is basically being tricked\n into sending a prompt to the large language model that will\n then return the javascript that is then being used to\n create the phishing page. The reason is interesting is that\n first of all the malicious javascript is now coming from\n an overall trusted site that basically is often whitelisted\n and as such you know not filtered and inspected that\n carefully. And secondly that the user also doesn't\n necessarily get sort of the usual warning messages that\n would accompany any phishing message and phishing webpage\n like that. So a pretty interesting trick. It's\n currently not used in the wild. This is really sort of\n just some threat research but they do show a proof of\n concept how this could happen and how this could be\n implemented. So probably not too long before we see\n something like this in the wild. And as so often you must\n sort of put some controls around data being sent to and\n from these large language models if it's not for\n phishing at least for things like data exfiltration that\n often happens accidentally with those sites. And then we\n have an interesting update from Apple for its next\n release of iOS and iPadOS. Apple just released iOS and\n iPadOS 26.3 and now released public betas for 26.4. 26.4.\n 26.4 introduces end-to-end encryption for RCS. RCS is\n well supposed to replace SMS at one point and essentially\n fixes some of the security problems that we had with SMS.\n SMS was in the clear not authenticated so not really\n suitable for anything of any security relevance. Well with\n RCS some of these issues are supposed to be fixed but this\n depends on vendors actually implementing these features in\n their operating systems. Apple has initially been a little\n bit slow in sort of jumping on the RCS bandwagon here. But\n they are supporting it currently however only some of\n the basic features like markup and other sort of more look\n and feel features of RCS. With this edition of end-to-end\n encryption there's a good chance that in the next\n version of iOS iPadOS, which will probably come out in a\n month or so, will see some of these more advanced security\n features show up in iOS iPadOS as well. And of course in\n order to actually use these features sort of in your\n applications you probably want at least iOS and Android\n support to get a good coverage for most of your users\n devices. Well and this is it for today so thanks again for\n listening. Sorry again for no camera today and hopefully\n I'll have it fixed tomorrow. So talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9812",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9812",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9812.mp3",
+      "title": "SANS Stormcast Tuesday, February 17th, 2026: 64Bit Malware; Password Manager Weaknesses; OpenClaw Config Theft;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, February 17th, 2026: 64Bit Malware; Password Manager Weaknesses; OpenClaw Config Theft;",
+      "show_notes": [
+        {
+          "heading": "2026 64-Bits Malware Trend",
+          "links": [
+            "https://isc.sans.edu/diary/2026%2064-Bits%20Malware%20Trend/32718"
+          ]
+        },
+        {
+          "heading": "A Comparative Security Analysis of Three Cloud-based Password Managers",
+          "links": [
+            "https://zkae.io"
+          ]
+        },
+        {
+          "heading": "Infostealer Infection Targeting OpenClaw Configurations",
+          "links": [
+            "https://www.infostealers.com/article/hudson-rock-identifies-real-world-infostealer-infection-targeting-openclaw-configurations/"
+          ]
+        }
+      ],
+      "published": "2026-02-17T02:00:02+00:00",
+      "duration_seconds": 312,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9812.mp3",
+      "audio_length_bytes": 4371878,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9812",
+      "categories": [
+        "openclaw",
+        "infostealer",
+        "password",
+        "managers",
+        "malware",
+        "64 bit"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9812",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, February 17th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate\n program in Applied Cybersecurity. Xavier today\n took a look at, well, some of the malware evolution over the\n last few years in particular when it comes to 32-bit versus\n 64-bit malware. Backwards compatibility can always be a\n little bit sort of an innovation hurdle in the sense\n that, well, if it still works, why change it? And that has\n been very true for malware in that most malware has for many\n years now been 32-bit, even though after 64-bit systems\n have become sort of common available and pretty much the\n default. But what Xavier noted was that lately there is about\n an even split between 64-bit and 32-bit malware. So it\n looks like there's a little bit of tipping point happening\n here where we will have more 64-bit malware than 32-bit. A\n little bit about the methodology here. Xavier used\n Malware Bazaar. Malware Bazaar offers a real nice sort of\n downloadable Malware repository with daily files.\n And Xavier looked at a terabyte worth of compressed Malware in\n order to compile the statistics. So it should be\n pretty good here and cover a pretty good percentage of the\n Malware ecosystem. And well, I've mentioned before that\n password managers are pretty much a must that you have to\n implement these days. The problem being that pretty much\n all of the big password managers, they opt for a cloud\n -based synchronization scheme in part, well, for economic\n reasons to be able to charge subscription fees. But the\n problem now becomes, well, how secure are those keys in the\n cloud? And of course, there's a lot of transparency as to\n how these keys are exactly stored. Now, given how you\n have to authenticate to the cloud and such, you can draw\n some conclusions. But now we have a real nice comprehensive\n paper by researchers at ETH Zurich and the Universit\u00e0\n della Sibirza Italiana, sorry for mispronouncing that,\n likely. The problem is, of course, that when you're\n dealing with cloud-based storage, you must store the\n keys somewhere. And in the case of these password\n managers, the keys themselves are then encrypted with\n secrets only known to the user. But there are still a\n couple of issues and some of them pretty much unfixable.\n One password sort of has an older document, paper, blog\n post where they talk a little bit about this. But for\n example, where it can be difficult to authenticate, in\n particular, when you're sharing passwords within this\n password manager ecosystem, whether or not you're\n authenticating or whether you're sharing these keys with\n the correct individual. That's sort of one of the issues\n they're pointing out here. They looked at a number of\n different attacks and looked at sort of the four, I think,\n biggest vendors of password managers. So, really a nice\n document and hopefully some of these issues can be fixed. And\n well, that may be down the road. There will eventually be\n a non-cloud-based option, which I think only one or two\n of the sort of commonly used password managers offer right\n now. So, without solid credential management, like\n provided by some of those password managers, well, you\n often end up with simple text -based configuration files\n that contain secrets like API keys. And of course, they're\n right for the taking. The latest example is an info\n stealer that was discovered that goes specifically after\n OpenClaw configurations. OpenClaw, the current sort of\n viral genetic AI tool that of course does interface with\n lots and lots of different APIs, in particular, some of\n these AI systems like, you know, Cloud and OpenAI, that\n these agents often have substantial access to credits\n that the user bought for them to use. So, no surprise here.\n Yes, the configuration file is easily found. It's in a\n standard location. I do believe that OpenClaw, at\n least as an option, adds support for things like\n 1Password that can serve as a more secure storage for these\n credentials. Well, and that's it for today. So, thanks for\n listening. Thanks for liking and thanks for subscribing to\n this podcast. Did I miss a story? Well, please let me\n know. And thanks and talk to you again tomorrow. Bye.\n So, for now, Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9810",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9810",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9810.mp3",
+      "title": "SANS Stormcast Monday, February 16th, 2026: Graph Generator; nslookup and clickfix; Chrome 0-Day; TURN Threats",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, February 16th, 2026: Graph Generator; nslookup and clickfix; Chrome 0-Day; TURN Threats",
+      "show_notes": [
+        {
+          "heading": "AI-Powered Knowledge Graph Generator & APTs",
+          "links": [
+            "https://isc.sans.edu/diary/AI-Powered%20Knowledge%20Graph%20Generator%20%26%20APTs/32712"
+          ]
+        },
+        {
+          "heading": "nslookup and ClickFix",
+          "links": [
+            "https://x.com/MsftSecIntel/status/2022456612120629742"
+          ]
+        },
+        {
+          "heading": "Google Chrome 0-Day Patch",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_13.html"
+          ]
+        },
+        {
+          "heading": "TURN Security Threats",
+          "links": [
+            "https://www.enablesecurity.com/blog/turn-server-security-threats/"
+          ]
+        }
+      ],
+      "published": "2026-02-16T02:00:02+00:00",
+      "duration_seconds": 360,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9810.mp3",
+      "audio_length_bytes": 5041625,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9810",
+      "categories": [
+        "turn",
+        "chrome",
+        "nslookup",
+        "clickfix",
+        "ai",
+        "graph"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9810",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, February 16th, 2026\n edition of the SANS, Internet Storm Sonners Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. and this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. In diaries we had one by Russ McRee from\n Friday about graph generators and APTs and how to automate\n creating these graphs with AI. There's a relatively new tool\n by Robert McDermott that Russ used for this diary and it\n also solves a couple different problems. First of all, often\n when you're looking at sort of threat intelligence, it comes\n in unstructured forms. Yes, there are probably more\n standards we need, but quite often you have articles and\n such that do describe particular threat. They may\n mention indicators of compromise and such. They may\n mention IP addresses, host names, and then also like what\n these systems are, who they belong to. And where this gets\n then really powerful is where this tool not only extracts\n these indicators, but it also then creates graphs displaying\n the relationship between them. I can see this in particular\n useful for the largest of aggregations of reports to\n sort of find a common sources of attacks, but also attack\n attribution. This may be helpful if you're into this\n kind of things. So certainly interesting tool and works\n here as Russ describes on commodity hardware. You don't\n need anything sort of special AI, but relatively modest, my\n opinion, laptop does work to create these graphs rather\n quickly. And Microsoft's threat intelligence team\n published a quick social media post about a new variety of\n the famous click fix attack that they're seeing. So click\n fix, the victim is being tricked into copy pasting a\n string from what looks like captcha into a command prompt\n and executing them. Now, a lot of defensive techniques then\n focus on sort of these living of the land binaries that are\n being executed here. What's sort of different here is that\n they're actually then retrieving the next level\n PowerShell script via NS lookup. And also the NS lookup\n kind of is a little bit tricky here. So the NS lookup is for\n example.com, which of course is the test domain and\n commonly considered harmless, but they're sending the\n request to a custom DNS server that will then return a CNAME,\n basically another host name. And that host name is the\n PowerShell script that's then being executed. Quite often\n when you're looking for DNS anomalies, you're looking\n basically for odd host names that people are looking up.\n And in this case, it will really just be initially at\n least the example.com. The odd CNAME coming back would\n certainly be a tip off then. And then of course, maybe if\n you're seeing any lookups then for the A record for that\n particular PowerShell script, that would certainly trigger\n some alerts. Also because the name being looked up here is\n fairly long and has odd characters in it. But probably\n the best sort of defensive technique here is to just\n eliminate lookups to unauthorized DNS servers,\n internal users should look up via an authorized recursive\n name server or forwarding name server that will then forward\n queries to both for example, a provider like Cloudflare or\n some filtering service like OpenDNS. And Google released a\n new version of Chrome on Friday. This version fixes one\n vulnerability, use after three vulnerability in cascading\n style sheets that is already being exploited in the wild or\n at least an exploit has been cited in the wild. So\n definitely keep Google Chrome updated as usual. Restart it\n once a day in at least once a week. Double check that you're\n running the latest version. And we have a good article by\n Sandro Gauji summarizing some of the issues with turn\n servers. And I don't really see people talk much about it.\n So that's why I add this as a reminder here. Estan, turn are\n both protocols meant to allow media streaming across NAT.\n Estan usually just helps you set up the connection, but\n then the connection works directly sort of end-to-end\n through NAT. Now if Estan doesn't work, then you can use\n turn, which also release the media traffic through a server\n that is reachable by both sites. The problem with this\n is that you're essentially introducing these proxies,\n these turn servers that can be used to more or less proxy a\n wide range of traffic and often sort of the inherent\n access control in these servers isn't all that great.\n They're really sort of focusing on making things\n work, which then often leads to abuse of these servers, in\n particular if they're hosted inside your infrastructure. So\n definitely something to be aware of and be cautious of\n that you are not really relaying here any traffic that\n you don't intend to relay. And yes, this is sort of a good\n sort of review of the different issues that can show\n up with turn. Well, and this is it for today. So thanks for\n listening, thanks for liking, and thanks for subscribing to\n this podcast. And as always, talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9808",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9808",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9808.mp3",
+      "title": "SANS Stormcast Friday, February 13th, 2026: SSH Bot; OpenSSH MacOS Change; Abused Employee Monitoring",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, February 13th, 2026: SSH Bot; OpenSSH MacOS Change; Abused Employee Monitoring",
+      "show_notes": [
+        {
+          "heading": "Four Seconds to Botnet - Analyzing a Self-Propagating SSH Worm with Cryptographically Signed C2 [Guest Diary]",
+          "links": [
+            "https://isc.sans.edu/diary/Four%20Seconds%20to%20Botnet%20-%20Analyzing%20a%20Self%20Propagating%20SSH%20Worm%20with%20Cryptographically%20Signed%20C2%20%5BGuest%20Diary%5D/32708"
+          ]
+        },
+        {
+          "heading": "OpenSSH Update on MacOS",
+          "links": [
+            "https://www.openssh.org/releasenotes.html"
+          ]
+        },
+        {
+          "heading": "Employee Monitoring and SimpleHelp Software Abused in Ransomware Operations",
+          "links": [
+            "https://www.huntress.com/blog/employee-monitoring-simplehelp-abused-in-ransomware-operations"
+          ]
+        }
+      ],
+      "published": "2026-02-13T02:00:02+00:00",
+      "duration_seconds": 343,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9808.mp3",
+      "audio_length_bytes": 4802804,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9808",
+      "categories": [
+        "monitoring",
+        "openssh",
+        "macos",
+        "botnet",
+        "ssh"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9808",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, February 13th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And today's episode is brought to\n you by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. In diaries today we have a diary\n by one of our undergraduate interns, Jonathan Husk, and he\n wrote about, well, a good old SSH worm. At least that's\n sort of what it looks like. But there are a couple of\n interesting things here. One is the use of IRC as a command\n control channel. Haven't seen this in a while, but I just\n last week sort of saw some news articles about some bots\n using it. So maybe that's an up-and-coming thing again, but\n maybe it really never went quite away. Anyway, it used to\n be the most common thing and, well, you know, maybe we\n should switch our Slack server back to IRC. I would be a big\n fan of that given some of the issues we had with Slack in\n the past. Another interesting issue here is one of the\n passwords that this particular bot attempts is\n raspberry993311. And apparently it's only trying\n two different passwords. One is just raspberry and that\n makes sense. That used to be a common default password for\n Raspberry Pis. But this 993311 password, apparently there are\n a couple of other bots using that, at least attempt to use\n it, but can't really find any record or so that this is for\n some reason a common default password. If anybody has any\n ideas here, please let me know. And then a quick\n postscript to yesterday's updates from Apple. Today I\n noticed connecting to older Linux systems, in particular\n Ubuntu 20.04, that I received a warning message that the\n server I'm connecting to does not support any quantum\n resistant or post quantum algorithms. Well, apparently\n that was a change was added in OpenSSH 10.1. This update by\n Apple for Mac OS moved from OpenSSH 10.0 to OpenSSH 10.2. So\n with that, this new warning came. It doesn't actually stop\n the connection or anything. So you don't have to acknowledge\n it. It's just being printed to the screen that the server\n you're connecting to does not support any quantum safe\n algorithms. And it also gives you a link to a website,\n explains a little bit more, and I guess is supposed to\n entice you to upgrade that particular server. And\n Huntress Labs came across an interesting, well, living off\n the land kind of variation. And this particular variation\n did take advantage of NetMonitor. NetMonitor is\n software that companies install on employee systems in\n order to monitor mostly productivity. But like many of\n these remote monitoring tools, of course, it comes with the\n ability to also execute code on any monitored systems. This\n is often necessary just for simple software updates and\n the like. But also, for example, to further\n investigate certain behavior and such. Many tools do offer\n this kind of functionality. If an attacker gets a hold of it,\n well, they probably won't even say thank you that you\n instrumented your network for them. You have seen this with\n other security tools in the past. I think Wazuh was, for\n example, abused that way. And yeah, other sort of pretty\n much any kind of remote management tool. Actually, I\n haven't seen something with Ansible. Maybe that's an idea\n in case any hackers are listening. If you sort of\n compromise a company's Ansible server. Great way to then, you\n know, push out malware and such to systems that are\n controlled by this particular server. So whenever you're\n building this kind of remote control infrastructure, make\n sure you're adding the necessary monitoring to really\n know what exactly is happening with that infrastructure. And\n of course, you're securing it correctly with the necessary\n passwords and access restrictions to any control\n plane within that infrastructure. And then we\n got an update from Palo Alto for PanOS. This fixes an\n interesting vulnerability. I don't think it's as severe as\n some of these vulnerabilities in firewalls we talked about\n in the past. But the reason I'm including it is because it\n does allow sort of a persistent denial of service.\n So in this case, if you have the advanced DNS protection\n feature enabled, an attacker would be able to trigger a\n restart of the firewall. Now that itself, of course,\n wouldn't be persistent. But if the restart is triggered a\n couple of times in a row, then the firewall enters its\n maintenance mode, which of course means, well, it will no\n longer reboot and will no longer route any packets. So\n definitely try to apply this. There's no exploit available\n for this at this point. But I doubt it will be terribly\n difficult to come up with an exploit once people reverse\n the patch. Well, that's it for today. Thanks for listening.\n Thanks for subscribing. Special thanks for Nick for\n the shout out today and talk to you again on Monday. Bye.\n Ch waist. We'll keep moving. Theyl net version of the\n screen. In Daniel Pink.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9806",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9806",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9806.mp3",
+      "title": "SANS Stormcast Thursday, February 12th, 2026: WSL in Malware; Apple and Adobe Patches",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, February 12th, 2026: WSL in Malware; Apple and Adobe Patches",
+      "show_notes": [
+        {
+          "heading": "WSL in the Malware Ecosystem https://isc.sans.edu/diary/32704",
+          "links": []
+        },
+        {
+          "heading": "Apple Patches Everything: February 2026",
+          "links": [
+            "https://isc.sans.edu/diary/Apple%20Patches%20Everything%3A%20February%202026/32706"
+          ]
+        },
+        {
+          "heading": "Adobe Updates",
+          "links": [
+            "https://helpx.adobe.com/security/security-bulletin.html"
+          ]
+        }
+      ],
+      "published": "2026-02-12T02:00:02+00:00",
+      "duration_seconds": 369,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9806.mp3",
+      "audio_length_bytes": 5162142,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9806",
+      "categories": [
+        "apple",
+        "adobe",
+        "wsl",
+        "malware"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9806",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, February 12, 2026\n edition of the SANS and the Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And today's episode is brought to\n you by the SANS.edu graduate certificate program in Purple\n Team Operations. In diaries today, the first one we have\n is Baik-Savier about the use of the Windows subsystem for\n Linux in Malware. Malware certainly has discovered this\n neat tool in newer Windows variants and well it's often\n sort of enabled, not necessarily used, or a user\n may not even be aware that this interesting tool is\n sitting there. So with the Windows subsystem for Linux,\n you essentially have a Linux container virtual machine,\n whatever you want to call it, that can easily be accessed\n from the Windows command line. You can also easily copy files\n into the file system accessible by this subsystem.\n And of course, Malware loves to use the ease of use of\n Linux and also the ability to, well, maybe easier hide some\n of the artifacts within this subsystem. The example that\n Xavier has is actually a JavaScript that checks if a\n particular system it is running on does have WSL\n available and then it takes advantage of it. And Apple\n today released its usual, well, update everything patch.\n Apple does not have a regular sort of patch cadence like\n Microsoft, so somewhat random that this came out the\n Wednesday after patch Tuesday. But this particular update was\n expected because, well, Apple sort of got ready to release\n the next increment in its operating systems. And with a\n couple new features, we of course also get a number of\n security fixes. In this case, 71 different vulnerabilities\n are being addressed. There is one vulnerability that is\n already being exploited, as Apple puts it, that this\n particular vulnerability was discovered by looking at a\n particular incident that was a fairly targeted and limited\n sort of impact incident. And there were two additional\n vulnerabilities that this particular incident that were\n already patched back in December. Not clear whether it\n just took longer to patch this last vulnerability or whether\n that wasn't initially discovered in the analysis of\n this incident. Definitely something that you do want to\n address. They're also covering some of the older versions of\n the operating systems. So you don't necessarily have to go\n all the way and update to the latest version of, for\n example, macOS 26. But macOS also the last two versions\n before that, 15 and 14, did receive updates. Now, one\n company that does always provide updates in sync with\n Microsoft's Patch Tuesday is Adobe. I usually cover them on\n Patch Tuesday itself. Didn't do it yesterday because I,\n well, didn't think and still don't think that this month's\n update are really that exciting. There are nine\n different products that are being patched, but sort of\n none of the big hitters that I'm considering usually like\n Acrobat or Magento. So the Adobe Commerce part or\n ColdFusion, those are the ones that I'm usually more worried\n about. Nevertheless, if you're running any of the Adobe\n applications that were patched yesterday, some of the\n vulnerabilities are certainly critical and do allow\n arbitrary remote code execution if a file is being\n opened by the user with malicious content. Well, and\n then talk about Microsoft's Patch Tuesday. We do have\n details regarding what I think is a pretty interesting and\n surprising vulnerability that was patched with yesterday's\n Patch Tuesday. And that's a vulnerability in Microsoft\n Notepad. Now, Microsoft Notepad did start out as,\n well, a simple text editor, maybe for some a little bit\n too simple. So Microsoft added more features to it. So in the\n later versions of Notepad, you're actually able to\n include links. And well, the idea is if you click on the\n link, the browser opens and displays the web page that\n you're linking to. The problem with this is, as a blog post\n here points out, that Notepad actually doesn't care what the\n actual protocol or schema is that's being used. So instead\n of HTTP or HTTPS, you could, for example, direct the\n Microsoft installer to pop up or any other software and then\n pass URLs to that software, which then may lead to\n arbitrary code execution. So this is a fairly easy to\n exploit scenario. And the proof of concept exploits are\n available for this particular vulnerability that was patched\n this week. So definitely pay attention to this. In order to\n be vulnerable, you must open a markdown file because the\n markdown may have things like URLs and, well, additional\n sort of markup in it. And that's sort of what's being\n exploited here. And notepad actually parsing markdown\n files. They don't have to have the .md extension. Other files\n that are marked out of files with other extensions may also\n be recognized as such. And the exploit will work. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing to this podcast. And as\n always, talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9804",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9804",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9804.mp3",
+      "title": "SANS Stormcast Wednesday, February 11th, 2026: Microsoft Patch Tuesday; Secure Boot Updates; Fake 7-Zip; FortiSlob",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, February 11th, 2026: Microsoft Patch Tuesday; Secure Boot Updates; Fake 7-Zip; FortiSlob",
+      "show_notes": [
+        {
+          "heading": "Microsoft Patch Tuesday - February 2026",
+          "links": [
+            "https://isc.sans.edu/diary/Microsoft%20Patch%20Tuesday%20-%20February%202026/32700"
+          ]
+        },
+        {
+          "heading": "Refreshing the root of trust",
+          "links": [
+            "https://blogs.windows.com/windowsexperience/2026/02/10/refreshing-the-root-of-trust-industry-collaboration-on-secure-boot-certificate-updates/"
+          ]
+        },
+        {
+          "heading": "Fake 7-Zip downloads are turning home PCs into proxy nodes",
+          "links": [
+            "https://www.malwarebytes.com/blog/threat-intel/2026/02/fake-7-zip-downloads-are-turning-home-pcs-into-proxy-nodes"
+          ]
+        },
+        {
+          "heading": "FortiNet Vulnerabilities",
+          "links": [
+            "https://fortiguard.fortinet.com/psirt/FG-IR-25-093"
+          ]
+        }
+      ],
+      "published": "2026-02-11T02:05:02+00:00",
+      "duration_seconds": 474,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9804.mp3",
+      "audio_length_bytes": 6644712,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9804",
+      "categories": [
+        "fortinet",
+        "7zip",
+        "fake",
+        "trojan",
+        "trust",
+        "boot",
+        "root",
+        "microsoft",
+        "patch",
+        "tuesday"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9804",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, February 11th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well, of course, top of the\n news today, Microsoft's Patch Tuesday and the number of\n patches was actually not that bad. We got patches for 59\n different Microsoft vulnerabilities. There were\n patches released earlier this month for Microsoft Edge.\n Those are the Chromium browser vulnerabilities that were sort\n of ported over to Microsoft Edge. But the big story is\n really that we have six vulnerabilities that are being\n addressed that were already exploited before today. And\n three of these vulnerabilities have been somewhat publicly\n known already. So those are, of course, those three are the\n ones that you need to pay most attention to. And a little bit\n lucky, I guess, these are actually three similar and\n related vulnerabilities. You may be familiar in Windows\n with technologies like smart screen and such, where if\n you're downloading some binary or some script and then you\n double click it, well, you'll get a warning that you're\n about to execute code that you downloaded from the internet.\n And these vulnerabilities allow to bypass exactly sort\n of these type of warnings. Now, it affects three\n different subsystems here, which is why we have three\n different vulnerabilities. One is Windows Shell, one is\n Microsoft Word, and then we also have a patch for MSHTML.\n That's the good old Internet Explorer HTML rendering\n engine. Of course, it has long been replaced with Microsoft\n Edge, which has its own rendering engine. But a lot of\n sort of other software still uses MSHTML, and that's why we\n need this patch. In addition, we got three more\n vulnerabilities that were already exploited. Two of them\n are privilege escalation vulnerabilities, one in remote\n desktop. And then we also do have a type confusion\n vulnerability in Windows Manager that also then results\n in privilege escalation. Now, the sixth vulnerability here\n is a denial of service vulnerability in the remote\n access connection manager. So, this is really sort of the\n big, big thing here. We also have critical vulnerabilities\n in Microsoft Azure. I already mentioned them, actually,\n because they were patched in Azure directly. So, I think\n last week I may have mentioned those vulnerabilities. And\n another sort of interesting critical vulnerability that\n affects Microsoft Windows Defender, but only on Linux.\n So, not on Windows. And it can lead to a remote code\n execution. We often have this in security software like\n this, that, you know, unpackers, decompression often\n leads to bad memory allocations and such. So,\n that's probably what's going on here. So, if you're running\n Windows Defender on Linux, well, definitely make sure you\n update that and patch that. That's certainly something\n that you have to pay attention to because, well, it's\n supposed to protect you and it's supposed to deal with\n sort of, you know, unfiltered input that it's inspecting.\n And that's sort of, you know, why this is important. But\n other than that, well, I wouldn't say there's sort of\n anything super critical here. Like all these vulnerabilities\n I mentioned earlier, they still require that the user\n downloads and then launches essentially a script. So, it\n really just makes these type of exploits, which are, of\n course, still very common and easier if an attacker takes\n advantage of these sort of security feature bypass\n vulnerabilities. And a little side note to the Microsoft\n patch Tuesday. There is also, well, actually has already\n started an effort underway by Microsoft to update\n certificates being used for secure boot. I think I\n mentioned that before, but secure boot was originally\n introduced in 2011. The CAs, the certificate authorities\n being used for it, they had a lifetime of 15 years and,\n well, 2011 plus 15 gets you to 2026. So, later this year,\n these root certificate authorities are going to\n expire. Over the last couple of years already, many new PCs\n that you may have purchased did come with these updated\n certificate authority, certificates. So, they should\n be all set. But as part of these monthly updates,\n Microsoft is now pushing out the certificates to any older\n PCs that don't have yet current certificates. If you\n miss these updates, well, your PC will continue to function.\n The problem is that any updates to the boot system\n will require current working certificates. So, you'll\n basically be stuck with whatever boot system you have.\n And if there are vulnerabilities that pop up,\n which has happened in the past, you won't be able to\n apply any patches to it. So, definitely make sure this\n happens. But if you are reasonably current on your\n Windows patches, this should automatically be taken care\n of. And there was actually a little bit of a similar thing\n happening with Apple last week, a couple of weeks ago,\n where they pushed updates to some of their older operating\n systems. Now, this wasn't anything about secure boot,\n but a couple of authorities that Apple uses for things\n like iMessage and such, they're about to expire. So,\n these certificates basically kept that working. And same\n thing there. If you don't update those certificates,\n then even future updates that may be released may not work\n or cannot be applied because, well, they wouldn't be\n properly signed for these old operating systems. Well, if\n you downloaded 7SIP lately, double-check that you got it\n from the right website. Apparently, there are some\n YouTube tutorials around that are redirecting users to a\n website that's very plausible, but is delivering a trojanized\n copy of the software. The malicious website here is 7\n -SIP.com. Very logic choice, actually, for someone to\n download the software from there. But the actual website\n is 7-SIP.org. So, not .com, it's .org. And there's also a\n dash between 7 and SIP. But, yeah, definitely make sure\n that you download your software from the correct\n source. And these things, of course, particular with the\n similarity here of the website, you would almost\n think that the fake website actually has kind of a better,\n more plausible domain name than the actual website. Well,\n that's it for today. We also had, of course, two Fortinet\n vulnerabilities, one in the sandbox and an authentication\n bypass in LDAP. But, well, too many of them. So, I'll just\n add the links to the show notes. And thanks for liking,\n subscribing, and talk to you again tomorrow. Bye.\n Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9802",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9802",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9802.mp3",
+      "title": "SANS Stormcast Tuesday, February 10th, 2026: Extracting URLs; Singal Phishing; Ivanti PoC; BeyondTrust RCE; Forticlient SQL Inection",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, February 10th, 2026: Extracting URLs; Singal Phishing; Ivanti PoC; BeyondTrust RCE; Forticlient SQL Inection",
+      "show_notes": [
+        {
+          "heading": "Quick Howto: Extract URLs from RTF files",
+          "links": [
+            "https://isc.sans.edu/diary/Quick%20Howto%3A%20Extract%20URLs%20from%20RTF%20files/32692"
+          ]
+        },
+        {
+          "heading": "German Agencies Warn of Signal Phishing Targeting Politicians, Military, Journalists",
+          "links": []
+        },
+        {
+          "heading": "German: https://thehackernews.com/2026/02/german-agencies-warn-of-signal-phishing.html English: https://www.verfassungsschutz.de/SharedDocs/publikationen/DE/praevention_wirtschafts-und_wissenschaftsschutz/2026-02-06-gemeinsame-warnmitteilung-phishing.pdf?__blob=publicationFile&v=3",
+          "links": []
+        },
+        {
+          "heading": "Someone Knows Bash Far Too Well, And We Love It - Pre-Auth RCEs",
+          "links": [
+            "https://labs.watchtowr.com/someone-knows-bash-far-too-well-and-we-love-it-ivanti-epmm-pre-auth-rces-cve-2026-1281-cve-2026-1340/"
+          ]
+        },
+        {
+          "heading": "Pre-Auth RCE in BeyondTrust Remote Support & PRA CVE-2026-1731",
+          "links": [
+            "https://www.hacktron.ai/blog/cve-2026-1731-beyondtrust-remote-support-rce",
+            "https://www.beyondtrust.com/trust-center/security-advisories/bt26-02"
+          ]
+        },
+        {
+          "heading": "Fortinet FortiClientEMS SQLi in the administrative interface",
+          "links": [
+            "https://fortiguard.fortinet.com/psirt/FG-IR-25-1142"
+          ]
+        }
+      ],
+      "published": "2026-02-10T02:00:02+00:00",
+      "duration_seconds": 270,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9802.mp3",
+      "audio_length_bytes": 3786928,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9802",
+      "categories": [
+        "urls",
+        "rtf",
+        "signal",
+        "phishing",
+        "ivanti",
+        "beyondtrust",
+        "fortinet"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9802",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, February 10th, 2026\n edition of the SANS and Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. And today, 17\n years ago, was, well, the first episode of this podcast.\n Since then, according to my counting, but it's probably\n not accurate with re -recordings and stuff like\n this, we published 4,160 individual episodes, a few\n days worth of audio material. And just, well, to celebrate\n this a little bit, if you were born after February 9th, 2009,\n well, drop me an email and I'll have some stickers for\n you. It's just interesting to hear how many listeners are\n actually younger than the podcast itself. And Didier has\n a diary today about an update and, well, way to better use\n his famous document analysis tools to extract URLs from RTF\n documents. And as an example, Didier here has a malicious\n document that's based out of a basic phishing email that came\n with an RTF attachment. Extracting URLs is always\n super useful because, well, that's often the next step\n that an attacker is trying to pursue. And of course, we had\n last week this story about well, malformed URLs. And that\n certainly fits in here too, that you're also then able to\n extract some of these malformed URLs that may not\n necessarily quite match standard patterns, but are\n still effective. And we got, well, a new blog post by\n Watchtower with details regarding the latest\n vulnerability in Avanti's Endpoint Manager Mobile. That\n product, always good for easy to exploit vulnerabilities.\n And this is not so different here. Now, it took Watchtower\n a little bit time here to actually walk through all the\n code. But in the end, it turns out to be a fairly\n straightforward OS command injection vulnerability.\n Essentially, as part of the URL, you can supply OS\n commands and they're then being executed by the system.\n So definitely something that you must patch, in particular,\n since this vulnerability is already being exploited. And\n with all these details being made public by Watchtower now,\n of course, the exploits are now very easily going to be\n delivered and expanded. And talking about OS command\n injection vulnerabilities in software that's supposed to\n make us more secure, we do have more of these. And this\n time it's beyond trust name that usually doesn't come up\n with these simple vulnerabilities and affects\n their remote support and privileged remote access\n solution. This is yet another vulnerability that was found\n via AI Haktron. AI is the company that's been credited\n with finding this vulnerability. So certainly AI\n is making an impact here. And as I said yesterday, used\n correctly, it can actually lead to some good and useful\n security vulnerability discoveries. And good old\n Fortinet. Not even sure if I haven't already mentioned that\n there were so many Fortinet vulnerabilities recently. This\n one is a SQL injection vulnerability in Forticlient\n EMS. They gave it a CVS score of 9.1. So it does allow\n the execution of unauthorized codes and it does not require\n authentication. So definitely there's something that you\n need to patch and probably better patch quickly. And\n well, with all the Fortinet stuff out in the last couple\n of weeks, definitely if you have any of their devices,\n double check that they're up to date and that you didn't\n miss one of the vulnerabilities. Well, and\n that's it for today. So thanks again for listening. Thanks\n for liking. Thanks for subscribing to this podcast.\n And as always, talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9800",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9800",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9800.mp3",
+      "title": "SANS Stormcast Monday, February 9th, 2026: Azure Vulnerabilties; AI Vulnerability Discovery; GitLab AI Gateway Vuln",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, February 9th, 2026: Azure Vulnerabilties; AI Vulnerability Discovery; GitLab AI Gateway Vuln",
+      "show_notes": [
+        {
+          "heading": "Microsoft Patches Four Azure Vulnerabilities (three critical)",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability"
+          ]
+        },
+        {
+          "heading": "Evaluating and mitigating the growing risk of LLM-discovered 0-days",
+          "links": [
+            "https://red.anthropic.com/2026/zero-days/"
+          ]
+        },
+        {
+          "heading": "Gitlab AI Gateway Vulnerability CVE-2026-1868",
+          "links": [
+            "https://about.gitlab.com/releases/2026/02/06/patch-release-gitlab-ai-gateway-18-8-1-released/"
+          ]
+        }
+      ],
+      "published": "2026-02-09T11:47:32+00:00",
+      "duration_seconds": 323,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9800.mp3",
+      "audio_length_bytes": 4527773,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9800",
+      "categories": [
+        "gitlab",
+        "ai gateway",
+        "llm",
+        "0-days",
+        "anthropic",
+        "claude",
+        "opus",
+        "microsoft",
+        "azure"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9800",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, February 9th, 2026\n edition of the SANS and the Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Let's start today with a couple of\n vulnerabilities in Microsoft's Azure Cloud. There were\n actually four vulnerabilities that were being addressed late\n last week and three of them are critical. So I do want to\n point them out here specifically. One is Azure\n Front Door. There is elevation of privilege vulnerability.\n Elevation of privilege vulnerability in cloud\n solution, of course, always means cross-tenant\n possibilities here. And yes, Front Door, that's Azure's CDN\n service. The next one we have is in Azure Functions. Azure\n Functions is the serverless feature in Azure Cloud. So\n again, here an information disclosure vulnerability. And\n then a second approach escalation vulnerability. This\n one is in Azure Arc. And that's sort of the cross-cloud\n admin platform. I think that's how it's best described that\n Microsoft offers to its customers. Good news, however,\n as typical for these kind of cloud software issues, you as\n a customer don't really have to do anything. Microsoft\n already mitigated these vulnerabilities. If you do run\n into any kind of... And one of the heavily debated topics\n these days is the usefulness of AI tools to find\n vulnerabilities. In particular, the open source\n space, there were a couple authors who sort of went on\n the record, basically complaining about all of the\n AI slob they're being bombarded with. Claud or\n Anthropic really has now released a paper looking into\n their latest model, Opus 4.6, and trying to figure out how\n useful it is in order to find vulnerabilities. Well, they,\n of course, well, work for Anthropic find it to be very\n useful. They did discover 500 different vulnerabilities that\n they describe as high impact and they reported them to the\n respective open source projects. They did build some\n safeguards in there to not just flood these open source\n projects with AI slob. They put some human, I assume,\n validation into the results. So hopefully these will be\n useful results. And as part of the paper, they're pointing\n out in particular GhostScript and OpenSC. GhostScript, the PDF\n postscript system or library that, of course, now has had\n quite a few vulnerabilities in the past. And OpenSC is used\n to read an interface with smart cards. Also, library,\n it's not, well, stranger to vulnerabilities. And of\n course, it has to deal with a lot of these difficult parsing\n issues like ASN.1 and such, which continue to be\n problematic. So certainly these are some worthwhile\n projects to look at for more vulnerabilities. But they also\n point out here that both of these projects had had a\n number of security reviews in the past and like I said,\n they're very high profile and known to have contained\n vulnerabilities in the past. But still, all the prior\n efforts, particularly fuzzing, did overlook a lot of issues\n that their AI model was able to identify. I think the big\n lesson learned here is that in order to get good results from\n these AI models, you also need somewhat skilled operators\n actually using them. A lot of the AI slop that the open\n source projects are complaining about, I think are\n not so much necessarily the AI tools themselves, but just\n sort of their unskilled and indiscriminatory usage of\n these AI tools that really gave them a little bit of bad\n rep. But of course, at this point, AI is also causing some\n vulnerabilities or better the adoption of AI tooling. The\n latest example is a vulnerability that GitLab\n addressed last week. It affects the GitLab AI gateway.\n This could lead to code execution, but only for\n authenticated users. So if you are doing an on-premise\n install of GitLab's AI gateway, make sure that you're\n up to date. Well, and this is it for today. So thanks again\n for listening. Thanks for liking. Thanks for subscribing\n this podcast. Remember, I have classes coming up end of\n March, early April in Orlando, and then end of April in\n Amsterdam. And just check the night storms on our website\n and at the bottom below the show notes, you should see\n links to upcoming classes. Thanks and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9798",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9798",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9798.mp3",
+      "title": "SANS Stormcast Friday, February 6th, 2026: Broken Phishing; n8n vulnerability; Android Update; Watchguard Firebox LDAP Injection",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, February 6th, 2026: Broken Phishing; n8n vulnerability; Android Update; Watchguard Firebox LDAP Injection",
+      "show_notes": [
+        {
+          "heading": "Broken Phishing URLs",
+          "links": [
+            "https://isc.sans.edu/diary/Broken+Phishing+URLs/32686/"
+          ]
+        },
+        {
+          "heading": "n8n command injection vulnerability",
+          "links": [
+            "https://github.com/n8n-io/n8n/security/advisories/GHSA-6cqr-8cfr-67f8"
+          ]
+        },
+        {
+          "heading": "Android February Update",
+          "links": [
+            "https://source.android.com/docs/security/bulletin/pixel/2026/2026-02-01?hl=en"
+          ]
+        },
+        {
+          "heading": "Watchguard Firebox LDAP Injection",
+          "links": [
+            "https://www.watchguard.com/wgrd-psirt/advisory/wgsa-2026-00001"
+          ]
+        }
+      ],
+      "published": "2026-02-06T02:05:02+00:00",
+      "duration_seconds": 282,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9798.mp3",
+      "audio_length_bytes": 3955864,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9798",
+      "categories": [
+        "watchguard",
+        "firebox",
+        "ldap",
+        "android",
+        "n8n",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9798",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, February 6, 2026\n edition of the SANS Internet Storm Sonners Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Cyber\n Security Fundamentals. Well, Xavier came across an\n interesting trick being rediscovered by phishing\n emails, and that's essentially invalid URLs that are, well,\n valid enough that they may actually work in a browser. So\n what they're taking advantage of here is, well, I wouldn't\n call it an ambiguity, but really browsers being able to\n deal with URLs that are technically not valid. In this\n particular case, at the end of the URL, instead of having\n like a question mark and then the URL parameters that are\n still limited by ampersands, well, they just have an\n ampersand and then a couple of random characters. This is not\n a valid URL. I actually looked it up in the RFC myself. RFC\n 3986 states that URLs should be limited by either white\n spaces, angle brackets, or double quotes. But we all know\n that, well, browsers are somewhat forgiving with these\n standards. And that's apparently what's being abused\n here, that a browser makes this URL work, while a\n security tool that inspects the document, well, doesn't\n recognize this as a valid URL, and as a result will then\n ignore it. So interesting little trick here. And you may\n want to test your security tool, how it deals with these\n kind of invalid URLs. Well, and today's AI vulnerability\n comes thanks of N8N. And it's really just a variation of a\n vulnerability that we had in December, and that caused a\n lot of news in December, because it does allow anybody\n who's able to create a workflow to essentially\n execute arbitrary system commands. So one of those good\n old sort of OS command injection style\n vulnerabilities. Well, apparently that vulnerability\n hadn't been patched properly back in December. So it's back\n in another variation of it. But better keep N8N updated.\n And like with all of these sort of emerging tools right\n now, you must be probably daily check for any updates,\n because I really can't get to all of the vulnerabilities\n that are popping up in these tools. And in case you're\n following Google's Android updates, we had the February\n release this week for Android and, well, it was something a\n little bit odd happening at first sight, and that's that\n there were no security fixes in this release. Turns out\n that Google changed a little bit how they're going to do\n security releases. In the monthly release, they'll only\n add vulnerabilities or only patch vulnerabilities that\n they rate high. And there was one, but it was a pixel\n specific. Also Samsung released ones that were\n Samsung specific. But there was nothing sort of for the\n base Android operating system. Every quarter, they'll now\n release sort of the security updates that are not high. So\n that's where you get all the, I guess, you know, minor or\n medium security vulnerabilities addressed then\n in these quarterly updates. And talking about high\n vulnerability, WatchGuard released an update for its\n Firebox appliance. This update fixes an LDAP injection. Since\n LDAP is used for authentication, this is\n certainly a problem. It does not require authentication to\n exploit the vulnerability. And they're stating here that,\n yes, it can be used to bypass authentication. But in order\n to do so, the attacker would need a partial identifier and\n then additionally have the user's valid passphrase. So\n the identifier is probably easier to get than the\n passphrase. And so far, this may not be that much of a\n vulnerability when it comes to authentication bypass. Well,\n and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for subscribing to this podcast.\n And talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9796",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9796",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9796.mp3",
+      "title": "SANS Stormcast Thursday, February 5th, 2026: Malicious Scripts; Synectix Vuln; Google Chrome; Google Looker;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, February 5th, 2026: Malicious Scripts; Synectix Vuln; Google Chrome; Google Looker;",
+      "show_notes": [
+        {
+          "heading": "Malicious Script Delivering More Maliciousness",
+          "links": [
+            "https://isc.sans.edu/diary/Malicious+Script+Delivering+More+Maliciousness/32682"
+          ]
+        },
+        {
+          "heading": "Synectix LAN 232 TRIO Unauthenticated Web Admin CVE-2026-1633",
+          "links": [
+            "https://www.cisa.gov/news-events/ics-advisories/icsa-26-034-04"
+          ]
+        },
+        {
+          "heading": "Google Chrome Patches",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop.html"
+          ]
+        },
+        {
+          "heading": "LookOut: Discovering RCE and Internal Access on Looker (Google Cloud & On-Prem)",
+          "links": [
+            "https://www.tenable.com/blog/google-looker-vulnerabilities-rce-internal-access-lookout"
+          ]
+        }
+      ],
+      "published": "2026-02-05T02:10:11+00:00",
+      "duration_seconds": 377,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9796.mp3",
+      "audio_length_bytes": 5285449,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9796",
+      "categories": [
+        "lookup",
+        "looker",
+        "google",
+        "chrome",
+        "patches",
+        "synectix",
+        "malicious script",
+        "infostealer",
+        "xworm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9796",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, February 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n penetration testing and ethical hacking. When you're\n dealing with an incident like you find an infected system,\n the problem, probably the hardest thing in instant\n response is always figuring out if you found everything\n that's wrong with the system. And let's have a little\n example here that Xavier posted about today. Initially,\n this looked well like an info stealer that is injected into\n Chrome in order to steal data. So nothing really all that\n fancy. And this is where someone may have stopped\n investigating, but not so Xavier. Xavier dove deeper\n into the script and found that at the end it actually then\n downloads another image. Now this image is at first sight a\n legitimate image. It looks like sort of one of those\n wallpapers for fans of MSI motherboards, I guess. But it\n does have additional code added at the end. And that\n then installs, well, more malware. So after the initial\n malware runs and keeps running, it then installs\n Xworm as an additional payload. The other reason why\n this sometimes happens is just in case antivirus would catch\n the first part. Well, maybe the second makes it through.\n So that's also one reason why an attacker may do that. In\n this case, I think it's probably more that they will\n try to get more out of the system and adding a couple\n lines to the existing script was sort of an easy way to\n expand the capabilities of their malware. And CISA warns\n of an interesting critical vulnerability in Synectix LAN\n 232 Trio 3 port serial to Ethernet adapters. I'm\n actually not sure why this is something that is actually\n being discovered because what it's all about is that the web\n admin interface just doesn't require any authentication. So\n without authentication, the hacker, of course, has full\n control over the device, may change settings, may reset the\n device to factory defaults. So pretty obvious vulnerability\n and sadly, no patch available as far as I know. These kind\n of Ethernet to serial adapters, I came first across\n in some sort of remote console access equipment. And they\n have been a problem. One of the issues here is that\n literally the entire device, including the web server,\n literally fits into an Ethernet RJ45 plug. So these\n are very minimal devices and as a result with often minimum\n security and even things like encryption protocols. So don't\n expose them is probably the best bet you have here. And\n Google also released updates for Google Chrome fixing two\n vulnerabilities. One of them is a heap buffer overflow in\n libvpx and the other one is well yet another type\n confusion in v8 Google's JavaScript engine. So keep\n Google Chrome updated. As I always say, keep restarting it\n at least once a day and once a week, double check that you\n are running the latest version. And then we do have\n two severe vulnerabilities that Tenable discovered in the\n Google Looker tool. Now, I wasn't familiar with the on\n -premise version. I've used the Looker Studio, which is\n the cloud version of the tool. But essentially, a tool allows\n you to create reports, graphs, and other sort of\n representations of business data. And it connects to a\n database to do that. Well, these vulnerabilities, first\n of all, there are some git path reversal issues. You can\n define various sort of graphs and reports and then import\n them via Git, but the path is not properly verified here. So\n additional Git repositories may be included. And then with\n Git hooks, you can, well, essentially execute arbitrary\n code. Update it if you're running it on-premise\n yourself. If you're using the cloud version, Google already\n took care of it for you. So nothing that you necessarily\n need to do here. And we got security updates for Django.\n Django is a Python web application framework. There\n are a number of vulnerabilities they\n addressed. The most severe one by far here is a SQL injection\n vulnerability. However, it only affects postGIS data. So\n if you're using Django to create some geographic\n information systems, then this may affect you or anything\n else that sort of deals with geographic coordinates.\n You one, for example, allows you to enumerate users. But\n again, those things are always a little bit hard to prevent\n in your application. And I wouldn't really consider sort\n of a severe must patch now type of vulnerability. Well,\n that's it for today. Just want to point out if you want to\n learn more about web applications like Django and\n some of the vulnerabilities around them, I'll be teaching\n our web application security class first week of April in\n Orlando, and then our network and distribution detection\n class in Amsterdam later in April. If you're interested in\n any classes I teach, I always have in the show notes on the\n SANS and Storm Center website. So not in the show notes\n itself, but below that on the podcast page, a list of\n classes that I'll be teaching in the near future. So both of\n them should be listed or just check the SANS.org website.\n That's it for today. Thanks for listening and talk to you\n again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9794",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9794",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9794.mp3",
+      "title": "SANS Stormcast Wednesday, February 4th, 2026: Detecting OpenClaw; Synology telnetd Patch; More GlassWorm",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, February 4th, 2026: Detecting OpenClaw; Synology telnetd Patch; More GlassWorm",
+      "show_notes": [
+        {
+          "heading": "Detecting and Monitoring OpenClaw (clawdbot, moltbot)",
+          "links": [
+            "https://isc.sans.edu/diary.html/Detecting+and+Monitoring+OpenClaw+%28clawdbot%2C+moltbot%29/32678/#comment"
+          ]
+        },
+        {
+          "heading": "Synology telnetd Patch",
+          "links": [
+            "https://www.synology.com/en-us/releaseNote/DSM"
+          ]
+        },
+        {
+          "heading": "GlassWorm Loader Hits Open VSX via Developer Account Compromise",
+          "links": [
+            "https://socket.dev/blog/glassworm-loader-hits-open-vsx-via-suspected-developer-account-compromise"
+          ]
+        }
+      ],
+      "published": "2026-02-04T02:00:02+00:00",
+      "duration_seconds": 296,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9794.mp3",
+      "audio_length_bytes": 4144396,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9794",
+      "categories": [
+        "vsx",
+        "glssworm",
+        "synology",
+        "telnetd",
+        "openclaw"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9794",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, February 4th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the sans.edu Graduate Certificate Program in Cyber\n Defense Operations. Well, yesterday I talked a lot about\n OpenClaw, so as a follow-up today, I wrote a quick post on\n how to detect, and also a little bit on how to secure\n OpenClaw. The detection comes thanks to Gnostic. Gnostic is\n a company that sort of works on products to secure AI\n usage. There are two scripts that they published. One is\n fairly straightforward. It just detects if OpenClaw is\n installed by looking for common locations associated\n with OpenClaw like configuration files and the\n like and the binary itself. The second part is, I think,\n more interesting, and that's OpenClaw telemetry. And what\n this does is if you have OpenClaw installed, OpenClaw\n telemetry will essentially log all the commands being\n executed by OpenClaw, all the prompts and basically all the\n interactions that the user may have with OpenClaw, but also\n interactions OpenClaw has with the various services\n connected to. And these can then be collected via Syslog\n and other tools. That's actually a plugin for Open\n Claw itself. So highly recommend this if you are\n using OpenClaw because it will give you more\n transparency in what actually happens. The remaining links\n are some links to OpenClaw documentation about how to\n secure it, how to run it in a sandbox, and then sort of some\n basic prompt hardening tricks that you can use to likely\n make it more difficult to exploit any prompt injection.\n Well, and remember, I think it was about a week or two ago\n where we had this critical flaw in Telnet D if it's\n installed with iNetD. Well, we now have a patch for a fairly\n popular system here, and that's Synology Network\n Storage Devices. So Synology released a new update of DSM,\n the operating system for its devices, and it addresses this\n flaw. Definitely install it and yes, make sure that Telnet\n is not actually running on the device. I'm not familiar\n enough with Synology at this point in time to know whether\n or not it is running by default, but I doubt it is\n running by default. Maybe something that you would have\n installed or at least configured manually. And well,\n we still have malicious Visual Studio Code extensions out\n there. The latest set was found by Socket.dev. They call\n it ClassWarm. Not sure how closely related to the\n original ClassWarm, but well, the approach is very similar.\n You basically have an existing extension from a respected\n developer who is then getting hijacked. Basically, the\n account is getting compromised. And these\n extensions are then, well, updated with malicious code.\n The developer in question here is called OORCZ. If I\n pronounce that, am I right? I'm just spelling the name\n here. There are four extensions at least that are\n affected here. Visual Studio Code Mind Map seems to be one\n of the more popular ones, but there's also an FTP, SFTP, SSH\n -SYNC extension that is affected by this. Luckily,\n they're not downloaded too frequently, sort of in the few\n thousand range here. But there's still something to be\n aware of that this is still an ongoing threat. Well, and\n Microsoft finally followed through on its initial\n announcement to disable TLS 10 and 11 for Azure Blob Storage.\n This was announced or scheduled many times before,\n well, at least two times before. But, well, now was the\n final deadline, February 3rd, and Microsoft actually pulled\n the switch. So if you're having problems connecting to\n Azure, you're probably using a very outdated TLS client.\n Well, and that's it for today. So thanks for listening.\n Thanks for liking and thanks for subscribing to this\n podcast. And as always, talk to you again tomorrow. Bye.\n May I End Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "darknetdiaries-170",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "170",
+      "guid": "prx_7057_02c8d2f1-68db-4edf-9e73-ca6f9ea40b72",
+      "title": "170: Phrack",
+      "summary": "Phrack is legendary. It is the oldest, and arguably the most prestigious, underground hacking magazine in the world. It started in 1985 and is still running today. In this episode we interview the Phrack staff to hear some stories about what it\u2019s like running a hacker magazine for 40 years. phrack.org Sponsors Support for this show comes from ThreatLocker\u00ae . ThreatLocker\u00ae is a Zero Trust Endpoint Protection Platform that strengthens your infrastructure from the ground up. With ThreatLocker\u00ae Allowlisting and Ringfencing\u2122, you gain a more secure approach to blocking exploits of known and unknown vulnerabilities. ThreatLocker\u00ae provides Zero Trust control at the kernel level that enables you to allow everything you need and block everything else, including ransomware! Learn more at www.threatlocker.com . Support for this show comes from Drata . Drata is the trust management platform that uses AI-driven automation to modernize governance, risk, and compliance, helping thousands of businesses stay audit-ready and scale securely. Learn more at drata.com/darknetdiaries . This episode is sponsored by Meter , the company building networks from the ground up. Meter delivers a complete networking stack - wired, wireless, and cellular - in one solution that\u2019s built for performance and scale. Alongside their partners, Meter designs the hardware, writes the firmware, builds the software, manages deployments, and runs support. Learn more at meter.com .",
+      "show_notes": [
+        {
+          "heading": "Sponsors",
+          "links": [
+            "https://www.threatlocker.com/",
+            "https://drata.com/darknetdiaries",
+            "https://www.meter.com/"
+          ]
+        }
+      ],
+      "published": "2026-02-03T08:00:00+00:00",
+      "duration_seconds": 2701,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/02c8d2f1-68db-4edf-9e73-ca6f9ea40b72/darknet-diaries-ep170-phrack.mp3",
+      "audio_length_bytes": 49621649,
+      "episode_link": "https://darknetdiaries.com/episode/170/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/02c8d2f1-68db-4edf-9e73-ca6f9ea40b72/images/7959df2b-4a68-4512-b274-2c1c5742293f/blownaway.jpg",
+      "transcript_url": "https://f.prxu.org/7057/02c8d2f1-68db-4edf-9e73-ca6f9ea40b72/transcripts/2c6f130c-5357-4bf7-93cb-875a5c48280b/Ep170.vtt",
+      "transcript_format": "vtt",
+      "transcript": "Hey, it's Jack, host of the show. So, the last two episodes talked about hacking in the 80s and 90s, which was primarily phone freaking. In those episodes, I talked about a digital magazine called Frack, which was incredibly influential to the hacking scene. It wasn't uncommon to be in a chat room and someone come in and ask, \"How do I get started as a hacker?\" And then someone else simply say, \"Go to Frack's site, start reading it at issue one, and by the time you're all caught up, you'll be a great hacker.\" It's probably good to go and listen to the two episodes before this before doing this one just to have the context, but you don't have to if you'd rather not. But the thing is is that in this episode I interview two of the Frack staff. The magazine just celebrated their 40th anniversary. And I'm pretty sure if you run a hacker magazine for 40 years, there's got to be some interesting stories in there somewhere. These are true stories from the dark side of the internet. I'm Jack Reider. This is Darknet Diaries. Okay. First, let's start out with some introductions. >> Hi, my name is Skyper. I used to be the editor um of the Frack magazine in the year 2000 to 2005 and um I've joined the Frack staff recently again as an adviser. >> Hey, I'm TMZ. I'm one of the current staff and editors of Frack magazine. >> In your words, can you tell us what is Frack Magazine? So frack stands for freaking and hacking and it's a combination of these two words and it used to be the manipulation of the phone lines. Effectively the main goal was to get you free phone calls that are very hard to trace. >> Frack magazine. This is all sorts of things hacking related to be honest. Uh I think there is the famous article on how to make a bomb as well from the past. Yeah, I mean that was I think I I I saw that even in uh issue one. There was a balloon that had acetylene in it that you put like snap caps or pop caps on it and throw some rocks together and you throw the balloon off like a roof and when it hits the ground the snap pops the pops the little popper snap and then it creates a little explosion. I think that was issue issue one. And so, um, it's it's interesting how anarchy kind of shows up in in frack like like bombs. What is this doing in a in a hacker magazine? >> I think we have to put this into um a different context of of where we were um 40 years ago. Terrorism didn't really happen, at least not in in most countries. And so building bombs was not seen as necessarily something evil or criminal, but was, you know, just young kids exploring things. What can they do? They they didn't mean to do any harm with them. They were just experimenting. In my opinion, frack seems to capture some kind of counterculture. It's notes from the underground type stuff because back in the '90s, cyber security wasn't quite a mainstream profession yet. Like schools didn't teach you how to secure networks or how to hack. But nowadays, almost every major university has a major in cyber security. So back in the 90s, there was just this underground group of people breaking computers basically and talking about it in chat rooms and on forums. You had freakers, hackers, rippers, crackers, cedars, which welcomed in artists and musicians who were making things on their computers. And this was collectively known as the scene back then. And I think it was this underground scene that Frack was born out of and has its roots in. >> So the scene was made by like largely people trying things out with their new hardware that they found or like trying to like make something do something that was not supposed to be uh doing or that was not engineered to do. So that's what the original hacker was all about. >> I think if you summarize it then frack contains condensed hardcore technical articles without any bullshit. the stuff works and it's practical. >> I'm fascinated by these two cultures, the cyber security professional and the scene hacker. One does it for money and it's their career and one does it for fun. It's their hobby, but they are both passionate about it. One tries to do it in the light, one wants to do it in the shadows, but they both like sharing what they know. What's the difference? Honestly, attitude, style. But as computers grew more mainstream, becoming more common in every house, more interest grew in hacking. I mean, I'm sure you've gotten some kind of new electronic at some point in your life, and you sat down and you said to yourself, \"What are all the cool things that this thing can do?\" So, imagine getting a computer and learning that it can print stuff and play games and make sounds, but then also hearing about some of the secret stuff it can do, like hack other people's computers. So more people got fascinated with hacking and were contributing to things like frack submitting articles on how to do cool secret stuff on your computer. But also along with the rise of computers, the cyber security profession became popular which sort of brought in a whole new culture of hackers. These weren't the rollerblading cargo pantswearing mohawk kids. The cyber security professional wears a collared shirt and sometimes a tie. You can see the stark contrast of these two cultures. When you go to conferences like Black Hat and Defcon. At Black Hat, you see people wearing suits and ties. They say they're geeks and nerds, but they don't look it. At Defcon, there's a lot of people wearing cargo shorts, black shirts, hoodies, having mohawks. At Black Hat, I feel like those people have to be there for work. But at Defcon, I feel like those people want to be there for the fun. And because I grew up in the scene, my heart is still there. We were the kids who tried stuff with no manual or tutorial. We built things that weren't possible. We did it without permission or rules. We pushed the boundaries and explored a new frontier, >> which also like a lot of those things, they actually pave the ground for like a lot of the the security industry exists now. So a lot of people's job, they exist because of some of the articles that were written there, which is very interesting. At this point, we're 40 years into Frack. And some of the articles have historical significance. >> Historical significance has the article of the E911 documentation that was released um in 1989, I believe. I think it was issue 24. And um it was a documentation that detailed how the emergency um 911 system works in America. And it was the first time that um FRA gone into some some legal problems with the with the authorities. Uh I think that has some significance um because it it happened right after operation sundevil uh with the secret service hunting hackers and it also sparked the creation of the electronic front because the the the frack person who released that article was so unfairly treated by the government and by the corporates. Yeah, I think that article solidified Frack as the coolest hacker magazine ever because the the the founder Night Lightning or one of the early early founders um got arrested for publishing that article and then fought the law and won. And so it's like I got arrested for hacking and I and I beat it and I got off scot-free. And that that was just such a such a middle finger to the to the establishment of like no we're we're hackers and we can beat you and and we did beat you in your core in your arena in your court of law. We still won and we didn't do anything wrong. Screw off and leave us alone. And that that must have been just like the most amazing epic moment for for for the time to to beat beat the law. and and I know there was some other Frack contributors who didn't weren't so successful um with that E911 article. They plead guilty before they could fight it. But the fact that that happened and it and one of the only times anyone ever has been arrested for a CFAA violation and got off uh it's only like I can count on my one hand I think how many times that's happened and frack was was one of them. So yeah, that was definitely quite an article. Yeah, Night Lightning um faces 60 years in prison and $122,000 in fine. >> That's a lot more money nowadays. I think >> another article which made big waves was titled Smashing the Stack for Fun and Profit. >> So, Smash the Stack Fun and Profit issue 49 um was the first article that told to the wider audience how buffer overflows work. So in the olden days, buffer overflows were used to trigger computer a target to execute a program that is not intended to execute to break into computer systems so to say. And this article detailed it um how to do it yourself, how you can do it. It was not the first time it was used on the internet. The first time was probably by Robert T. Morris um who wrote the the very first internet worm. And there were other articles around how to manipulate the the stack, but it was never that detailed in that clarity and reaching such a wide audience. When this article came out, buffer overflows became the new favorite way hackers would break a system and it was a favorite because of how successful it was to do. Programs just weren't designed to stop this from happening and so many things were vulnerable. I think the race just started with source code reviews and finding vulnerabilities, disclosing them, um, irresponsibly disclosing them in the olden days and then slowly getting an idea of what responsible disclosure is, that not every corporate is your enemy and trying to work together with them, trying to find common ground, how we can make the internet a better place for everybody. Yeah, this is one of those cases that this was like a very elite and underground technique known probably just by governments or things like this uh that when it hit the the when the article was written it just like it clicked in so many people's minds. So there was like this myriad of software that's like abundantly available and like most likely vulnerable. They can just fool around with it like everywhere. So yeah. So just to put this into perspective, when I started out with computer security and hacking, uh when I wanted to learn how to break a computer system, I've been told what you have to do is you have to go to the library. You have to find the book about Robert T. Morris. You have to find and read the articles, the news articles to piece together information how he did it. And then when Frack came out with Smashing Stack and Fun and Profit, it was all clear immediately. Back then, hackers weren't very respected. Companies would try to ignore the vulnerabilities that they were told about, almost with the audacity of being upset that somebody would buy their software and then try to break it as if hackers were the problems, like they were just some punk kids trying to jab their fingers in somebody's eye. I think that has flipped and I always like to compare it against the the early companies who who did safety assessment for for cars. Um the the car industry tried to tried to sue them and outlaw them and says what are you doing? You can't show the people how how dangerous is to drive without seat belt. Um but they did and now everybody has learned that it is right to have a seat belt. It's good to have a seat belt and the same thing happened with their with with this article and then with the exploit development. In the beginning they were hesitant. They were blaming the hackers for releasing such destructive technology. But if the hackers hadn't released it, then them other governments surely would have exploited these holes anyway. >> True. Now they don't they don't do this only for the fun. They do this mainly for the profit. And it 100% became a business uh and a career. People are hired now to hack companies to you know assess their security. Like uh you see this every day. There's a lot of episodes that you covered already that about like this like you know companies that they hire people to do like penetration testing and their physical security and all those things. This was unthinkable back then. I think >> there are so many good articles on frack. >> I think the um you know the end map one the port scanning the art of port scanning from issue 51 by fodor uh which followed the release of the uh end map tool. >> N MAPAP was the the grandfather of all port scanners out there. >> Oh wow. Yeah. N MAPAP is the de facto tool almost the standard for how we do port scanning today. It's a super simple command line tool and the person who made end mapap published how to effectively port scan using the tool on frack and that taught millions of people how to port scan even today end mapap is still highly used by just about everyone in cyber security and there's another article in frack which goes into detail of how to do GPS jamming >> I like that this article is in there because it shows that GPS jamming is not really cyber security But it is GPS in itself is a technology that everybody uses and that nobody ever really thought about how vulnerable it is. And because it is already a weak a very weak signal coming from the satellites. Of course you can jam it. But it was not apparent to everybody until we released the article and then you could buy jammers, you know, two years later you could jammers all over the place from China and whatnot for very low money. But it was was Frank first who released that article and got this idea out there that hey GPS is actually very easy to jam. No one ever thought about that. >> H that's a good point. I don't always know where the line is on whether something is a cyber security problem or not. I published an episode recently about a credit card skimmer and a lot of you complained and said that episode had nothing to do with cyber security and it made me wonder okay well if it's not a cyber security problem whose problem is it? I mean, if you've got articles on Frack Hacker magazine that shows you how to exploit a technology and compromise the integrity of it, then maybe that is a cyber security problem. And of course we had the hackers manifesto article as far from from 1986 that was like a >> for me this is the most significant article in in all of just because it it sets out the the baseline and the conduct how hackers should behave and what hackers >> should do and should not do and how we think. >> Oh yeah, I told you about the hacker manifesto in one of the previous episodes. One of the Legion of Doom members wrote it and published it first on Frack. And I'll give you a short excerpt from it. I'm reading from Frack here. This is our world now. The world of the Electron and the Switch, the beauty of the Baud. We explore and you call us criminals. We seek after knowledge and you call us criminals. We exist without skin color, without nationality, without religious bias and you call us criminals. You build atomic bombs. You wage wars. You murder. You cheat and lie to us and try to make us believe it's for our own good. Yet we're the criminals. Yes, I am a criminal. My crime is out of curiosity. My crime is that of judging people by what they say and think, not what they look like. I am a hacker, and this is my manifesto. You may stop this individual, but you cannot stop us all. After all, we're all alike. >> Yeah, these things are are still valid today. Maybe perhaps even more valid today than they were back then. that we all equal, that we don't care about skin color, religion, our nationality. And you know, a lot of a lot of criminals forget this. And that's why they are criminals. They are not hackers. If you hack for a nation, you're not a hacker. You're actually more concerned about your nationality than about the hacker manifesto where we don't care about that. We only care about skills. >> Correct. >> Yeah. I wrote a little bit about it um in the last Frack, Frack 72. We're going to take a quick ad break here, but stay with us because when we get back, we're going to get into my favorite frack stories. The first issue of Frack was published in 1985 before websites were popular. So, it was just hosted on a BBS and you had to like use your home phone and dial into it and read it that way. And they wanted the articles to spread. So, they encouraged people to mirror it on other people's BBS's and other towns. But eventually, when websites became popular, frack moved tofrack.com. and that became its new home. But it didn't stay that way. >> I think frack.com got hacked at least once. Uh the web server was often down, not reachable. >> Somewhere around 1998, frack.com went offline. It stopped publishing articles for 2 years and was down most of the time. I should also mention that Frack changed owners quite a bit. The original founders went off and did something else. New people came in and they were doing stuff, but it's a free magazine and they never tried to make money. So, it relied on volunteers to keep it going and they could only spend so many years of their life before going off and doing something else. By 2000, the site looked dead. The website had been mostly offline for the past few years and no new articles for 2 years. And at that point, it was ran by Mike Schiffman, aka Route. Skyper wasn't involved at all. And Mike didn't even know who Skyper was. But Skyper had a plan. He wanted to revive Frack and needed to do something epic to prove his worthiness. And so I decided to to steal a domain which was frack.org, which back then was not owned by the Frack staff. It was owned by somebody who probably didn't even know about Frack. >> What how did you steal a domain? Well, luckily in in the olden days, these things were rather easy. Uh, you would go to the domain register, in this example was a French one, gandi.net, and you would initiate a domain transfer, and it would ask you that you need the authorization code to transfer it. And you would right click on the web page and say few source code of the web page and the authorization code would be written there in a hidden HTML tag, in a form tag. And that was all you needed back then to to do hacking. >> Wow. So just by looking at the view source of a website, it would show you the authorization code that it was expecting in order to prove that you're the owner of the site. I mean, it has to compare the authorization code you type in with something, right? So there's some logic on the back end somewhere. It just happened to be right there in the source code of the site. It was as simple as just doing view source and then you could take over anyone's domain. But you also have to put this into perspective. Back then, not many browsers had a feature to actually view the source code. >> So, Skyper had frack.org and wanted to use it to revive frack.com. But he wasn't doing this alone. He actually was involved with a few hacking groups, specifically hurt and tesso. >> So, Hurt is stands for the hackers emergency response team. And Hurt was founded around the same time when the searchs were founded, the computer emergency response team. And it was meant to be a counterweight to the um C um because the community felt that often their the S the computer emergency response team didn't really know what they were doing and the publications were often not technically correct. And so the community created the hackers emergency response team where the hackers published their version of the vulnerability and their exploits and their assessment of the risk and um yeah that was was how it was and Tessle was um a German/Austrian um hacker group who later became more internationally um and went by the name of team Tesso. >> So with frack.org Oregon hand and with Tesso and Hurt behind him, Skyper got busy recreating the site to show he can manage a website like that. >> And then I I spent many days and many nights to recreate all the articles. I put them in an SQL database so it was searchable and copied all the data and created the web page and um then put it online and then called Mike Schiffman who was the editor-in chief back then. I caught him during breakfast. He's he was literally saying, \"I'm just having breakfast, but what you're saying sounds great, so let's do it.\" Uh there was no hesitation. And it was a combination of people from Tesso and Herd um who took over the Frack magazine in 2000 or revived the Frack magazine in the year 2000. So Skyper was now in control of Frack and it officially moved from frack.com to frack.org, which is where it remains today. And it was a whole new fresh team. Nobody from the old frack staff was around to write any articles or to help. So this new team got busy with a fresh new issue, issue 57. >> Yeah. Well, first one already was the first hardcover release ever. So we decided we want to land with a big bang and decided for our very first release. Not just are we going to write all the artics ourselves, we also create the first hard coverver release which we release at a at a hack conference, a physical copy. So in 2001 was the first time Frack had a hard copy created, elevating it to the next level. >> It was fantastic. It was a fantastic success. We I think we printed 800 hard copies or so. Uh we all picked them up with with a car with a rented car and these hard copies were heavy. We to picked them up in a printer in Netherland and the car almost crashed with all the with all the load in in the trunk on the back seats. Uh we drove to the conference and uh went to the main tent and announced that we are I'm going to distribute frack in half an hour and we had a great party and handed out the magazines and lots of alcohol and celebrating and talking about it. It was a fantastic time. >> So hackers trying to hack a hacker website is always going to be a thing and frack.org Borg had its fair share of attacks and uh there was a group that particularly was trying to take down frack and they called themselves the frack high council or PHC. >> Yeah. Around that time there was a movement called the anti-security movement and it was around the time when um hacking really got commercialized and many many many companies entered the community and started to sell cyber security technology and um hackers would start working for these companies and they would they would sell the secrets that they did not research and did not discover but that were given to them by the community and they were making lots of money from it and the community was not very happy about that because effectively these people stole from the community and so a movement emerged called the anti-security movement and uh which basically said well that's that's not okay we can't do that and out of that the PHC materialized and they were probably let's call them the their the radical form of anti-security movement they would do witch hunt and they would try to hunt down every hacker who would work for corporate. I call it hacker cannibalism where hackers ate other hackers and destroyed other hackers often unfairly and unjustified. It was really a witch hunt. Um and that went on for some time and PhD then tried to take over frack because they're not happy with the editorial staff that who was running frack. Of course, they tried to hack into the servers and things that you would do, but they also tried to to to steal articles or send out cold for papers and pretending that they were frack, but they never never owned the domain. Oh, how interesting. They tried to pretend to be frack by publishing lookalike articles that pretended to expose secrets, but they weren't actually secrets. A little war was breaking out between the corporate cyber security culture and the underground hacker culture. The Frack High Council thought if Frack publishes articles on how to hack that it'll be used by corporations to make money. So therefore, don't publish any articles at all or publish articles that would be detrimental to the cyber security professionals out there who are trying to profit from it. >> Yeah, they wanted to keep all the secrets among themselves and so that only um they can use them. Um it's very selfish. Um and it's also counterproductive in a in a in an intellectual society. You need to share your ideas um to inspire other people and for other people also to verify your ideas and to take your ideas further to the next step. Otherwise, it's a stagnation and you won't go anywhere. >> Okay, so they they tried to publish an article as frack just posing as them. What else? they actually stole some of the pre-release of frack and um so what happened is that and uh the frack staff always releases the upcoming frack release to the community to some trusted friends and um then after it's released to trusted friends then it's released to some lesser trusted friends and so on and so on and after a few days it ended up before the official web page release in the hands of a PHC guy so this PHC guy knows that we haven't released it publicly yet, that it's still a community release only. And he modifies the Frack articles, put some back doors in there, and then publish on his web page, the PHC web page, as a new frack release. And these back doors, they were not even clever back doors. They were just very destructive back doors. It would delete your entire computer. >> Wow. So, have you ever looked up a tutorial online and it had some some script or code or something and that's what you needed to do? That's the command you were looking for. And so you just copy and paste it into your computer, but you don't actually know what it does. Yeah. Well, if you would have tried to copy and paste this script, it had the command rm-rf, which would delete your whole hard drive. How funny is that? Obviously, Frack Staff didn't put that destructive command in their magazine, but that version of the article still existed out there somewhere. Skyper and his team had brought Frack back. They were publishing yearly issues of Frack. But then Skyper moved on to do other things. But there was enough momentum and there was enough people involved with Frack at that point for it to keep going on its own. But it was slow going. Yearly issues turned into every other year issues and then sometimes there'd be four years between issues. And in 2016, it seemed like that was the last issue of Frack. Frack staff just wasn't there anymore. And there were no issues coming out. But 5 years after that in 2021, to all our surprise, a new issue of Frack was released, we thought it was dead. But we were super happy to see a new issue. And I remember hearing people at Defcon tell me that year that they used an exploit that they saw in that new issue of Frack to make a bunch of money on bug bounties that year. So it still had teeth and grit and was hard-hitting. Well, at least until things got patched. But that seemed to be the last harrah for Frack. The internal Frack staff just sort of fizzled out. there wasn't support much for it. The people were just very loosely involved at that point and they decided to get together in 2023 to discuss the future of frack >> and we actually met in Spain to to discuss a bit the future about uh frack and we decided that's not just for for two or three people to decide that we should really ask Mike Schiffman again and some of the old staffers and previous staffers what their opinion is. And then eventually we had a big phone call with um maybe six or eight people of the old stuff and new stuff on there and we discussed what we should do and there were various options. Some people said, \"Hey, let's do one more frack and let's just call it. That's it.\" You know, the last frag. And then other people said, \"No, we can't even do that. The community is dead.\" And most importantly, there were the very few of us who said, \"No, no, the community is always there. There is still a community that deserves a magazine like this. There's always curiosity out there and always the need for for people to to publish articles and we have to provide a platform for them so they can do it. and Frack is the perfect platform for for these articles. Uh so we were brainstorming about um who we could contact out there who who has experience with running a magazine um who who would enjoy running magazine and who is also technically skilled because you know Frack in the end is a is a very technical magazine. So the the group that came to our minds were the people who were running already Tempout magazine. >> Temp out is very similar to Frack. It's an eene which posts articles on hacking. It has its own edgginess to it like there's a bunch of asy art and hard-hitting articles and it was TMZ here who co-ounded Tempout. >> So Temp is a group that uh is a research group that we formed maybe 5 years ago now. Uh we started as I three people we just wanted to like uh research uh ELF infection techniques or Linux viruses and things like this. We thought it was like a very niche area that we had like a people in common that wanted to do that and so we kind of you know brainstormed a little bit and then more people were joining and then eventually we had like a discord channel there's like 1,500 people there now and uh suddenly you know the community was like okay what if we make like a zen you know like in the old days uh people like oh yeah I wanted to write the script or whatever so we just give it a go like and we made four uh volumes already of it uh so far and it's been like really really nice >> and we contacted them and um we went had a phone call together and the rest is history. >> I was honestly like speechless when that happened. Like I was very very anxious. I remember that I was on vacation and I just ran to the uh I was actually to about to catch a flight. So, I just like found like a the quietest corner of the airport lounge that I could find and had the call with them and took notes of everything. Uh, essentially like the idea was like, \"Okay, uh, if you wanted to to give it a go, you know, trust you with that.\" The former staff also was saying like, \"Okay, we we maybe should, you know, do something different this time, like, uh, make Frock like well known again.\" The Tempout team had already established themselves as a group who was technical, smart, and could ship articles and immediately got busy reviving Frack. Once again, I had no idea that the teams behind Frack have shifted so much throughout the 40 years. But when is volunteer-driven, I suppose that's what happens. So, the Temp Out team was excited to be taking over Frack and wanted to make their first issue a big one. It was 2023 and in the 7 years before that, there had only been one Frack issue released. So, a lot of people just thought it was dead, but to show them that it wasn't dead. They wanted to make a physical copy and release it at Defcon. >> Yeah. Uh we just thought actually about doing only an online release. Uh we we didn't really thought about actually doing a physical release last year uh until kind of late uh in the process. And then we were just like, okay, what if we do it? you know, can we do it? Do we have like some budget? Can we like talk to some people? So, we're able to raise some funds. Uh, and we were able to get like 500 copies down to uh to Vegas. Yeah. Was the first very interesting for us to experience some logistics because, you know, releasing a physical copy of things, it's it's not as easy as it sounds like not only like you have to actually make the material uh but, you know, the distribution, especially at FCON. >> Wow. Okay. So, last year you actually reached out to me to uh you were looking for a place to to spread them or give them out. >> Yeah. Yeah. Yeah. Yeah. Yeah. So, we had a few of them uh downstairs, right? And then we're just like, \"Yeah, sure.\" But we kind of wanted like a place more centralized for that. And that uh it was very nice to to get some of the copies there at the party at the Dark in the Darkness party. People really liked it. And I remember like a lot of people were so happy and uh I think that's what made uh me feel like very realized. That's why I was like a lot of people they looked at it and they looked at it as the most precious thing that I ever touched like you know they they say yeah I I'm here and I like what I do now because of frock like 25 years ago 30 years ago. So you know that that's that's really like a very very nice to >> it. It's a special moment for me. I mean, the fact that the Frack staff came in and started handing out frack magazines at my party was I felt like, man, I I this is this is special. This is cool. I didn't I I I'm feel honored to have been one of the places to uh to spread it because I think you only you pick like three or four places to spread out the magazines there. >> Yeah, correct. >> And uh >> yeah, thank you for having us. It was really >> I I cherish my copy that I got from you. I wish I got it signed. As soon as I left that night, I was like, \"Oh no, how did I not get it signed by you?\" But um yeah, that's that feels like a very special um book to to own. It's it's more of a book. It's in my hand here. And my gosh, this thing is heavy. So, Frack 71. Um I'm just looking through it. It's very text. There's hardly any pictures at all. And I guess that's because you were saying, >> you know, we weren't even thinking about printing it. And then when you finally got around to printing it, it's like, okay, well, we'll just print the articles. >> Yeah. So editing this is already hard, you know, for somebody that doesn't have like, you know, that doesn't work with it, I guess. >> Um, but we also like, okay, we keep the style, right? Like that's what the first thought like also. So it's easier because it's, you know, less editing, but also like which is already pretty hard, but you know, we keep the the text plain text style, which a lot of people relate to and really really like. >> So Tempo proved themselves to be able to ship and issue a frack. Great. But Frack started in 1985. So with 2025 coming, it would mark the 40th anniversary of Frack, which got a lot of people excited to pitch in and help make a great new issue. If Frack 72, because it's marked our 40th anniversary, we we all wanted to to make something very special. So we the initial idea was to go back to the Netherland to release the magazine there again as a hard copy where we released the first hard copy 24 years before. Um but we got enough funding and we got enough community support to then be able to coordinate um a release at three different conferences at the same time which was in Netherland and at Defcon in Las Vegas and at Hope in in New York City and then very smaller conferences all around the world. Uh so that was that was beautiful how the community came together and everybody chipped in some dollars and helped us. The one that I have actually has a Defcon special edition written on the cover. So, were there multiple covers? >> Yes, we have three different covers. Actually, four. Uh, one of them is is going to be released later this year. >> I'd like to add something there. When TMZ says, um, there are four covers. um three that are already released and one of them that will be released at the end of the year, it's because we're going to release the PDF online for everybody to to print it at home or print it on a on a professional print shop and get it shipped to their home address. >> So, Frack issue 72 was released at Defcon in 2025, and I was there to get a copy of it. >> Yeah. This year, we turned it up a notch. This year, we didn't show up with 500 copies. turned up with close to 8,000 copies at Defcon. >> Most, if not all, articles of Frack are simply text files. There are no visuals or graphics at all. Well, I should say you can see some ASI art there, but that's just still text in the shape of a picture. But this 40th anniversary edition, man, does it pop. Every page has a graphic on it, and it's really cool. It feels like a highquality magazine at this point, and it's bulky and has a ton of articles in it. >> Yeah. So uh we got the opportunity uh to have the wonderful people at page from page out which is another magazine as well uh to do the graphics for us. I mean as you can as you know because you saw it already it just it's mindblowing. the quality is so so good. And I remember when I got the confirmation that they would do it, I was so relieved that I didn't have to do it myself because one, I mean, I know it's hard for me because I'm not an expert on this. And second, like I would never be able to match this quality or nobody at least that it's in the current staff. And they just like it's just incredible. And I think like Fra never looked that good. >> Yeah. It looks great. Yeah, you've uh it feels like you're um coming coming of age, but even 40 years later and it's like looking great. Uh I like that. That that makes me excited about the future. Um getting it getting you said 8,000 copies to Defcon. >> Yeah, we had I think around 15,000 copies spread amongst those three conferences. >> Yeah. I mean uh gosh, how how much does that even weigh? How do you even get that to DevCon? That's part of the problem as well. Um first uh to solve these issues, we tried to find like local printers, right? And uh it is it is very very challenging uh because the transportation is very costly. >> So we we found a Vegas printer and I think the for Defcon that was 10 tons or something. >> 10 tons of paper. >> Wow. >> Yeah. >> Yeah. So the logistical issue is is that you don't only have to deliver it by truck to Defcon, you also need manpower on the ground to >> hand carry 10 tons from the loading bay to the registration desk. So all these little details we had to learn and figure out. It was great to see Frack all over the place at Defcon this year. People were showing me how excited they were when they got their copy. Some got it signed by the frack staff. Some had me sign it for some reason. It was a wonderful time. But what surprised me is that this is such a high quality magazine. But then thousands of them were given out to everyone just for free. >> Frack is for the community always. It's always free. So uh somebody tries to sell you a frock, you know that it's not from us. >> You you say you're never going to charge for these things. >> We're never going to charge. >> No. No. It's so cool having >> people are welcome to help us in any way right the community is there for this people can help us with like article reviews with uh uh art as well and they people did which is very very nice to see like this year's uh there's a lot of people involved uh you know the artist that draw the covers for example as well so there's several ways that people can help us make this happen and and we do it for them and they do it for for the community as Well, it's uh impressive that you're able to make it happen and and have such a high quality print uh print magazine here. I mean, this what this thing is like 100 pages long. >> It needs to be said that of course these thing cost money to print. The printer still wants to be paid. He doesn't do a favor for frack. And so the the defcon print in its own was about um $55,000. So this is still money that we had to raise from the community. But good thing is that many of our friends who who were doing frack with us in the year 2000 and 2001 and who are reading frack with us and who are writing articles for us. Now 24 years later they have all made their fortunes. They're running big companies. Some of them are traded on the stock exchange. So these people came back to us and they were happy to support us financially and and help us with this immense cost. >> The magazine that launched 10,000 cyber security careers, huh? >> Exactly. >> Well, so that's where we're at today. 40th anniversary. Well, congrats on the on a 40 years of running a running a thing or keeping it going. And it's so fascinating that it's communitydriven almost like Dread Pirate Roberts, right? He he's his name lives on, but it's not always the same person that lives on, right? And so Frack continues to live on because the community keeps it going >> and the community is as strong as ever now. Uh and I think we it's going to grow even further. >> Yeah. Tell us about the future. >> Yeah. So I think we really want to keep the community uh growing. Uh we want to get a little bit better. So every time we do a release, we learn a lot about everything, right? logistics and article reviewings and you know project management and all those things. Um so we're not expressed on nothing on this. We also like have you know our day jobs and all those things. Um so we're learning as we go as well and uh the community I think uh we want to grow and have like more people involved to help us. uh we have a lot of people that sometimes they say yeah I don't have time to to write an article this year or something like this but you know they do have spare time to like help with the article reviews. So for example this is already like a very very good job. Um I think in the future we want to get more people involved like if you want to to say like in a very brief way uh we want like to be accessible. >> Okay. So I got a physical copy but that's just cuz I happen to be at the right time and right place. Is there a way to get a physical copy by ordering it? Yes. Uh like last year we made it available for self print at cost obviously so we don't profit. Uh and of course you can print anywhere you want. We have like just a recommended printer whatever it doesn't really matter uh because we released the the full high quality PDF as well. So you can print and edit if you want at your own local print shop. And this year is going to be the same. >> Brack is currently looking for new articles for their upcoming issue. If you've got a new hacking technique or thinking of researching a specific technology or protocol, reach out to the Frack staff with your draft or even just an idea. They are very helpful at giving you feedback to help you draft a great article. Even if your English is not very good, they can help co-author the article with you. And of course, you can still read every issue of Frack free of charge at frack.org. Here's to another 40 years of an awesome hacker magazine. A big thank you to Skyper and TMZ for coming on the show and sharing the history and stories of Frack. It really is looking better than ever, and I can't wait to see what they make next. In the show notes, you'll find links to where you can order a physical copy of issue 72, or just download the PDF and print it at home. The show is made by me, the packet tickler, Jack Recider. Editing by the control alt delight Tristan Ledger. Mixing by proximity sound. And our theme music is by the mysterious brake master cylinder. I named my dog Rejax because nobody understands him. Not even me. This is Darknet Diaries.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9792",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9792",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9792.mp3",
+      "title": "SANS Stormcast Tuesday, February 3rd, 2026: Scanning for AI; Notepad++ Compromise; OpenClaw Vulnerabilities",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, February 3rd, 2026: Scanning for AI; Notepad++ Compromise; OpenClaw Vulnerabilities",
+      "show_notes": [
+        {
+          "heading": "Scanning for exposed Anthropic Models https://isc.sans.edu/diary/Scanning%20for%20exposed%20Anthropic%20Models/32674",
+          "links": []
+        },
+        {
+          "heading": "Notepad++ Hijacked by State-Sponsored Hackers https://www.rapid7.com/blog/post/tr-chrysalis-backdoor-dive-into-lotus-blossoms-toolkit/",
+          "links": [
+            "https://notepad-plus-plus.org/news/hijacked-incident-info-update/"
+          ]
+        },
+        {
+          "heading": "Insecure Websockets in OpenClaw",
+          "links": [
+            "https://zeropath.com/blog/openclaw-clawdbot-credential-theft-vulnerability"
+          ]
+        },
+        {
+          "heading": "Malicious OpenClaw Skills",
+          "links": [
+            "https://www.koi.ai/blog/clawhavoc-341-malicious-clawedbot-skills-found-by-the-bot-they-were-targeting"
+          ]
+        },
+        {
+          "heading": "Exposed OpenClaw Instances",
+          "links": [
+            "https://censys.com/blog/openclaw-in-the-wild-mapping-the-public-exposure-of-a-viral-ai-assistant"
+          ]
+        }
+      ],
+      "published": "2026-02-03T02:00:02+00:00",
+      "duration_seconds": 385,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9792.mp3",
+      "audio_length_bytes": 5392240,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9792",
+      "categories": [
+        "openclaw",
+        "websockets",
+        "notpad++"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9792",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, February 3rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Incident Response. So today's episode will be a little bit\n AI heavy, sorry for that, but we'll start with some simple\n scanning for anthropic models. That's something that we\n detected over the weekend in our honeypots. Not honestly\n sure what they're going after, but I assume that they're\n looking for people who have installed some at least\n anthropic related models on their own system, then expose\n it. Maybe some system also exposed them via proxies. I've\n seen that. So here they may take advantage of any API keys\n or so that are preloaded and in the proxy that they can\n abuse. But either way, the scans came from a Tor exit\n node. And if you're doing anything like this, please\n just don't expose them to the internet. And Notepad++ today\n did release an advisory stating that their update\n website had been compromised at least since June 2025. Now\n this became sort of news in December last year, when\n people noticed that something is wrong here with certain\n files being downloaded from the website. According to this\n advisory now, it looks like there was a compromise of the\n hosting infrastructure. So nothing that Notepad++\n directly controlled. They have since also changed hosting\n providers. Sadly, not a lot of details about the exact nature\n of the compromise here, how it all unfolded. On the other\n hand, Rapid7 did release a detailed breakdown of the\n backdoor and how it worked and also indicators of compromise\n that you may want to use if you're using Notepad++ to\n check if you had been compromised by any of the\n malicious files downloaded from Notepad++. So now let's\n dive in a little bit into the AI topics I have for today.\n And they're all related to, well, OpenClaw, which also\n used to be known as ClawdBot and as MoldBot. This is\n essentially an AI assistant and people like it because\n it's very easy to connect to different websites, email and\n the like, and essentially automate sort of a lot of day\n -to-day workflows with OpenClaw. The problem with\n this is that, well, in order to function, OpenClaw needs\n access to all of these different services. And it\n appears that OpenClaw really sort of is really good in\n gaining publicity by having really outrageously bad\n security flaws. We always sort of wonder, you know, how\n companies' stock tends to go up after they had like a\n security breach and such. Well, I think OpenClaw really\n sort of perfected that kind of PR. So let's talk about a\n couple of the different vulnerabilities here. The\n first one I have here, and I'm not covering with any\n particular order, is the ability to steal credentials\n from OpenClaw. So OpenClaw listens by default on the\n loopback interface. It can also listen for other inbound\n connections. But here the loopback interface is\n particularly interesting. And if you're connecting via the\n loopback interface, it does not require any\n authentication, which usually tends to be a real bad idea,\n has caused a lot of problems for other tools as well. In\n OpenClaw, you connect to it then via a WebSocket. Now you\n can just run JavaScript in the user's browser and then\n connect to the WebSocket via loopback because, well, after\n all, it runs in the user's browser on the same system.\n And with that, gain authenticated access to all of\n the credentials that OpenClaw may have stored. So this was\n the first vulnerability here. The next issue, also sort of a\n known problem, and that's extensions. They call it\n skills that you may be loading into OpenClaw. There are a\n total of 2,800, according to Koi research, that are\n available right now. So with that limited kind of ecosystem\n at this point, they were able to actually audit all 2,800\n and found that, well, more than 10%, 340 of them are\n malicious. And most of them, something like 320 out of the\n 340 are actually part of one campaign installing\n InfoSteelers. This is a problem that we had before, of\n course, in all kinds of similar ecosystems, given that\n this ecosystem is still somewhat small. It is\n certainly plausible and not that difficult to do at least\n a basic audit of all of the skills that are available now.\n So double check with Koi Securities Research to check\n if any skills that you installed were on that\n malicious list. And Census did a quick survey of the internet\n for exposed OpenClaw installs. And yes, they found more than\n 20,000 of them. So again, their PR campaign here via\n vulnerabilities is certainly successful. We have lots of\n people installing them. Installing and directly\n exposing OpenClaw is not recommended by the\n instructions. And they recommend using something like\n an SH tunnel or so to connect from the outside to your\n OpenClaw instance. But apparently not all users are\n reading the instructions or, well, maybe the bot didn't\n read them right for them. Well, and this is it for\n today. So thanks for listening. Thanks for liking\n and subscribing to this podcast and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9790",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9790",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9790.mp3",
+      "title": "SANS Stormcast Monday, February 2nd, 2026: Google Presentation Abuse; Ivanti Vuln Exploited; Microsoft NTLM Strategy",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, February 2nd, 2026: Google Presentation Abuse; Ivanti Vuln Exploited; Microsoft NTLM Strategy",
+      "show_notes": [
+        {
+          "heading": "Google Presentation Abuse",
+          "links": [
+            "https://isc.sans.edu/diary/Google+Presentations+Abused+for+Phishing/32668/"
+          ]
+        },
+        {
+          "heading": "Security Advisory Ivanti Endpoint Manager Mobile (EPMM) (CVE-2026-1281 & CVE-2026-1340)",
+          "links": [
+            "https://forums.ivanti.com/s/article/Security-Advisory-Ivanti-Endpoint-Manager-Mobile-EPMM-CVE-2026-1281-CVE-2026-1340?language=en_US"
+          ]
+        },
+        {
+          "heading": "Microsoft NTLM Strategy",
+          "links": [
+            "https://techcommunity.microsoft.com/blog/windows-itpro-blog/advancing-windows-security-disabling-ntlm-by-default/4489526"
+          ]
+        }
+      ],
+      "published": "2026-02-02T02:00:02+00:00",
+      "duration_seconds": 435,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9790.mp3",
+      "audio_length_bytes": 6091172,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9790",
+      "categories": [
+        "microsoft",
+        "ntlm",
+        "ivanti",
+        "google",
+        "presentation",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9790",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, February 2nd, 2026\n edition of the SANS and that Storm Centers Stormcast. My\n name is Johannes Ullrich, recording day from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu under graduate certificate program in Applied\n Cybersecurity. Last week I started adding some CAPTCHAs\n to the Internet Storm Center website. I had to do it. I\n didn't really want to do with CAPTCHAs and such, but we did\n get a ton of requests. Let's just screen scrape some pages\n that are available via APIs and some of our public data\n feeds. So please use those if you need the data or let me\n know if you run into any problems with the CAPTCHAs. It\n did cut down the load on these particular pages by over 90%.\n So more than nine out of ten requests to those pages were\n created by bots. In Diaries today we had, well, one from\n Friday and that's about a little phishing trick that at\n least was new to me. So whenever any company is\n setting up a simple way to host free web pages, it's\n often being abused for phishing. Google Documents,\n not really an exception here. Google Docs, I think, is the\n official name. But what Google actually did to prevent some\n of this is to add a very obvious note to the bottom of\n each page that this is hosted by Google Docs and also links\n to report phishing pages. Well, one of our readers,\n Charlie, he observed a phishing email that redirected\n to a Google Docs page that did not have this notice. And\n there was a fairly simple trick that was played here. At\n first I thought maybe they played some HTML trick or such\n to hide it, some style sheet or whatever. Well, what they\n did in this case was they used Google Slides presentation.\n And these presentations, yes, also have sort of a very\n distinct footer by default, but you can publish these\n presentations. Once you publish the presentation,\n well, then they sort of work like a presentation that you\n would present to an audience. So this footer disappears and\n that's exactly what they used here. They used a link to a\n published presentation. Links still work in those\n presentations. So you can still click on the link. This\n one targeted users of Vivaldi webmail. Not really clear like\n the user sent it to us. I believe they are a user of\n Vivaldi webmail. I'm not sure if this was targeted to\n Vivaldi webmail users. There was a comment asking about\n that. And I think what may have happened, what often\n happens with phishing emails like this is that they were\n sent to a lot of people, not just Vivaldi webmail users,\n but those who don't use Vivaldi webmail. Well, they\n just discard email because they knew it's obviously bad.\n While Charlie here is a user of Vivaldi webmail, well, pay\n a little bit more attention and to a closer look at that\n particular email. So there's always that kind of\n confirmation bias here that plays a role when you're\n looking at phishing. And I guess it's time for another\n Ivanti vulnerability patch and exploit again. So we do have\n an already exploited vulnerability in Ivanti's\n endpoint manager mobile. This affects version 12.5, 12.6, 12\n .7, 0 as well as 1 for this particular product. The patch\n that's being released here is what they call an RPM patch.\n Basically, well, you know, the RPM package manager, just a\n file for that. Now, it's not a new version that you're\n getting here. You're just getting the patch. If you're\n now upgrading to a different version, well, you have to\n reapply the patch. They're calling this sort of a\n temporary patch, really. Now, when they're releasing a new\n version next time and they don't really state when that\n will happen, then the patch should be included in that new\n version. So it shouldn't really become an issue. It's\n really only if you would basically essentially\n downgrade or maybe upgrade to another vulnerable version.\n Like if you are currently on 12.6 and you're upgrading to a\n vulnerable 12.7 version, that could lead to this downgrade.\n So definitely pay attention then to the final patch being\n released in a new version. Another sort of advantage of\n this patch is also that it doesn't require any downtime.\n Now, if you do are sort of in a failover high availability\n configuration, you have to apply the patch to all cores.\n The cores, the patch does not automatically replicate to the\n other instances. And Microsoft has published an updated\n timeline on the removal and actually disabling of NTLM\n from future versions of Windows. Now, you may say,\n well, haven't they already had a timeline so far? They were\n so far talking about deprecating NTLM, which means\n it's no longer sort of used by default, doesn't receive any\n updates. And it's basically no longer of a maintained\n feature. It's just being kept around for people who still\n need it. What they started doing now already is add more\n logging, so basically enhanced auditing for NTLM. So it's\n easier to identify systems that still use it. And in the\n second half of 2026, they'll move to actually then\n preferring Kerberos. So always try Kerberos first before they\n would try NTLM. And then in the next version of Windows\n Server, they'll actually move to disable NTLM. So you\n probably have about a year or so to really deal with that\n issue and try to get rid of as much NTLM in your network as\n possible. NTLM will not be removed as far as I\n understand. You'll still be able to enable it, but it will\n require additional sort of administrative overhead to\n actually get NTLM to work in later versions or newer\n versions of Windows. Well, that's it for today. Two\n stories that didn't make sort of a cut are vulnerability in\n Johnson Control's MediSys. That's one of their sort of\n commercial automation systems. And then also lots of news\n with vulnerabilities and such about Moldbot. Yet another one\n of those AI tools. Well, almost feels like that sort of\n part of their PR campaign. But either way, if you're working\n with any of these systems, take a look. That's it for\n today. If I should have covered another news item, so\n please let me know and talk to you again tomorrow. Bye.\n Bye. Bye. Bye. Bye. Bye. Thank you.",
+      "transcript_checked": true
+    }
+  ]
+}

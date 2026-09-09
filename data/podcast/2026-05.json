@@ -1,0 +1,1032 @@
+{
+  "month": "2026-05",
+  "episodes": [
+    {
+      "id": "stormcast-9950",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9950",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9950.mp3",
+      "title": "SANS Stormcast Friday, May 29th, 2026: @sans_edu research; Honeypot Log; VPN \u201cToad\u201d; Silent Ransom Group",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, May 29th, 2026: @sans_edu research; Honeypot Log; VPN \u201cToad\u201d; Silent Ransom Group",
+      "show_notes": [
+        {
+          "heading": "Research Review Journal",
+          "links": [
+            "https://assets.contentstack.io/v3/assets/blt83c410d686aa5f84/blt3cff46f63887f83e/research-review-journal",
+            "https://www.sans.edu/cyber-research"
+          ]
+        },
+        {
+          "heading": "Analysis of a Year of Files Uploaded to DShield Sensors",
+          "links": [
+            "https://isc.sans.edu/diary/Analysis%20of%20a%20Year%20of%20Files%20Uploaded%20to%20DShield%20Sensors/33026"
+          ]
+        },
+        {
+          "heading": "The Word 'Toad' Gave Any Website Full Control of Chrome's Most Popular VPN",
+          "links": [
+            "https://amibeingpwned.com/blog/urban-vpn-postmessage-command-injection"
+          ]
+        },
+        {
+          "heading": "Silent Ransom Group Impersonating IT Personnel through Social Engineering",
+          "links": [
+            "https://www.ic3.gov/CSA/2026/260526.pdf"
+          ]
+        }
+      ],
+      "published": "2026-05-29T02:00:02+00:00",
+      "duration_seconds": 361,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9950.mp3",
+      "audio_length_bytes": 5058882,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9950",
+      "categories": [
+        "ransom ware",
+        "on site",
+        "toad",
+        "vpn",
+        "dshield",
+        "sensor",
+        "research",
+        "sans.edu",
+        "@sans_edu"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9950",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, May 29th, 2026 edition\n of the SANS International Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n cybersecurity engineering. At the beginning of each podcast,\n I always highlight one of the programs of our college, SANS\n .edu. Today, we also released another volume of our research\n review journal. This journal collects some of the best\n papers that students have written over the last year. So\n certainly something worthwhile browsing through, in\n particular, if you're interested, maybe in the\n program itself to see what our master's degree students are\n coming up with. And Guy today took a quick snapshot of his\n honeypot and looked at, well, what kind of activity there\n was this last year. And no surprise, there was plenty of\n activity. It sort of started for Guy in October, really for\n real, and part of course on some maintenance here on the\n honeypot. Guy is maintaining a little seam that actually can\n be installed on top of our honeypot, then can be used to\n create these kind of summaries. What kind of\n surprised me here in the summaries is that when we're\n looking at the file uploads that happen via Kauri. So\n these are people connecting via SSH or Telnet. Well,\n there's actually a non -negligible number of\n PowerShell scripts that were uploaded to these Linux,\n essentially honeybots. Not sure if this was just sort of,\n you know, by mistake, or if they're counting on Windows\n systems running SSH or maybe, well, a lot of the more modern\n Linux distributions also at least come optionally with\n PowerShell as well. So maybe they count on that. Not sure\n if the particular PowerShell scripts uploaded to these\n systems would work on default PowerShell installs on Linux.\n And then we got an interesting backdoor in a popular VPN\n extension for Google Chrome and Edge. This particular VPN,\n the urban VPN, as it's called according to the blog post, is\n the most popular VPN in Chrome's web store. A few\n million downloads are certainly not really\n unpopular. But what happened here was that first of all,\n the opt-out for data collection was implemented\n badly. So just inverse, if you opted out, you actually opted\n in and vice versa. The second part is actually a little bit\n verse. Like the first I can sort of see that happened by\n mistake. The second one actually is that this\n extension implemented a listener. And that's sort of\n how JavaScript can basically then send messages to the\n extension. This is a legitimate mechanism, but in\n this particular case, it allowed basically any a\n website to control the VPN and even silently drop it if a\n particular keyword code was sent to the VPN connection. So\n very easy to basically just turn off the VPN. Also, this\n VPN was dropping the connection silently. So there\n was really no obvious indication for the user that\n they were no longer protected. Be careful what VPNs you run.\n It's not the first time that we have sort of VPNs with\n backdoors or other sort of odd functionality. In particular,\n of course, if they are free. And the FBI this week\n published an interesting, a little bit odd flash alert,\n where they're stating that a group that they're identifying\n as the silent ransom group is actually sending people to the\n victim's location. So the way this usually works is\n basically starts out as of a tech support scam where\n they're attempting to gain remote access to systems. But\n if that fails, they may actually send someone to the\n victim's location to insert USB sticks and to gain access\n to the victim's system. Apparently law firms are sort\n of one of the top targets here for this kind of attack. What\n surprises me is that, of course, the big protection\n that cyber criminals usually have is the remoteness. So for\n them to actually send someone to a location is fairly\n brazen. And I guess the resultant must be worth the\n risk. And if anybody here is still working with Windows\n Server 2016, there's an interesting issue that came up\n with the most recent security update in that the Windows\n will no longer be able to discover hostname if it's 15\n characters long. 15 characters, so I guess just\n one byte less from a power of two. So that may be a little\n bit the reason here. But yes, if you're seeing like the\n error invalid parameter here for DC locator calls, then you\n may be affected by this. Check the Microsoft update page.\n I'll link to it in the show notes. At this point, there is\n no sort of fix for it. I guess there's a workaround in just\n renaming your systems to something not 15 character\n long. Well, and that's it for today. Thanks for listening.\n Thanks for liking. Thanks for recommending and thanks for\n commenting and talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9948",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9948",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9948.mp3",
+      "title": "SANS Stormcast Thursday, May 28th, 2026: Akira Ransomware; Vaultjacking; Poisoned Chatbot and Search Results;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, May 28th, 2026: Akira Ransomware; Vaultjacking; Poisoned Chatbot and Search Results;",
+      "show_notes": [
+        {
+          "heading": "Reconstructing an Akira Ransomware Kill Chain from Perimeter and Endpoint Logs",
+          "links": [
+            "https://isc.sans.edu/diary/Reconstructing%20an%20Akira%20Ransomware%20Kill%20Chain%20from%20Perimeter%20and%20Endpoint%20Logs/33024"
+          ]
+        },
+        {
+          "heading": "Vaultjacking: One Captured PIN, the Entire Google Password Manager Vault",
+          "links": [
+            "https://phishu.net/blogs/blog-vaultjacking-phishing-the-google-password-manager-vault-in-the-phishu-framework.html"
+          ]
+        },
+        {
+          "heading": "From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/"
+          ]
+        }
+      ],
+      "published": "2026-05-28T02:00:02+00:00",
+      "duration_seconds": 364,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9948.mp3",
+      "audio_length_bytes": 5101328,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9948",
+      "categories": [
+        "llm",
+        "seo",
+        "malware",
+        "vaultjacking",
+        "google",
+        "pin",
+        "phishing",
+        "akira",
+        "ransomware"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9948",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, May 28, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ulrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Undergraduate Certificate Program in Cybersecurity\n Fundamentals. Well, I assume nobody here likes ransomware,\n but one thing I do like is a great write-up explaining how\n to early detect ransomware. Manuel wrote up an Akira\n ransomware killchain, which essentially walks you through\n the about one week of activity that was conducted by this\n particular threat actor against a network from which\n Manuel was able to obtain logs. Now, what was\n interesting is that really there were some early signs\n that something wasn't right. And that was a large number of\n failed authentication events against the SSL VPN. As so\n often, well, the security device here, the SSL VPN did\n sort of cause or provide the initial access. Now, here in\n this case, it was basically just the credential brute\n forcing. The attacker eventually got lucky and was\n able to log in. So there was no specific exploit used here.\n Next, we then had the internal discovery where the attacker\n was essentially probing the network. So of trying to\n connect to window shares and doing the usual whoami and\n such. So all actually things that are relatively easy to\n detect if you are properly instrumented. And then of\n course, lateral movement via RDP. Also very typical\n very typical ransomware strategy. Well, in summary, it\n took them about a week to actually start the encryption.\n So there were actually quite a few sort of early indicators\n that may have helped to then prevent the actual encryption\n and exfiltration potentially here of the data. Manuel walks\n you through all the different indicators, all the log ids and\n such to look for in order to identify\n this activity hopefully before it gets encrypted\n by a similar attack.\n or citricule Launch. So this is a question of what you've\n discussed with. So your asana ,cturrent network\n \ubc29 da is 1.570,\n whether you're recently an example, our commit to the\n primate learning network is including neural duringess and\n authentication is, well, pass keys that have become more and\n more popular in recent years. Now the problem of course is\n still that the pass keys have to be stored somewhere and one\n of the usability features added to pass keys is the\n ability to synchronize them across different devices. So\n even if your pass keys are phishing resistant, well if\n the storage medium that you're using basically\n synchronization mechanism is not phishing resistant, well\n then that doesn't really matter how secure your pass\n keys are. And this is something that PhishU is\n exploiting and PhishU is a company that sort of does\n security awareness training and also these phishing as\n service testing engagements. Well and they documented now\n an interesting use of phishing in order to gain credentials\n for Google's password and pass key syncing mechanisms. It's\n all leveraged around the pin that's being used to\n authenticate a particular device and essentially the\n user is tricked into entering that pin into the PhishU\n dialogue. So it comes back down to phishing. If you're\n falling for phishing then you're possibly also going to\n enter your sync pin to unlock essentially a device to the\n adversary and the adversary is unable to add additional pass\n keys to your account which of course provides them with\n persistent access to your account and then also add\n their own device as a sync target for all of your\n password and pass key data. Interesting attack and again a\n phishing resistance is important and of course\n specifically important for things like password managers.\n Numerous times in the past I've talked about how Google\n Ads or in general Google search results are used to\n push malicious results and trick users into downloading\n malicious software. Well it turns out that chatbots and\n LLMs are not really exempt from this particular threats\n that the attackers are somewhat taking advantage of\n this now and are poisoning essentially the results here.\n So a user who may ask a chatbot a question like\n nowhere to download a particular piece of software\n such may then be fed malicious result and Microsoft\n documented a case of just that happening. Now once in this\n particular case the user installed the malware it\n actually turned out to be still a useful utility so it's\n not that the malware was obviously malicious but it\n still did what it was supposed to do it just side loaded a\n malicious DLL that was then used to well install a screen\n connect client on the user's system and essentially provide\n the attacker with access to the victim's system. Well and\n that's it for today thanks for listening thanks for liking\n and recommending this podcast thanks for subscribing and if\n you have any feedback please let me know thanks and talk to\n you again tomorrow bye\n on \ufffd\ufffd\uc694 Thank you.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9946",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9946",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9946.mp3",
+      "title": "SANS Stormcast Wednesday, May 27th, 2026: Fake Claude Ads; SharePoint Vuln; Angular Vulnerabilities",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, May 27th, 2026: Fake Claude Ads; SharePoint Vuln; Angular Vulnerabilities",
+      "show_notes": [
+        {
+          "heading": "Possible ACR Stealer From Page Impersonating Claude",
+          "links": [
+            "https://isc.sans.edu/diary/Possible%20ACR%20Stealer%20From%20Page%20Impersonating%20Claude/33018"
+          ]
+        },
+        {
+          "heading": "Microsoft SharePoint Remote Code Execution Vulnerability CVE-2026-45659",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-45659"
+          ]
+        },
+        {
+          "heading": "Multiple Vulnerabilities in Angular Language Service VS Code Extension",
+          "links": [
+            "https://github.com/angular/angular/security/advisories/GHSA-ccq4-xmxr-8hcq"
+          ]
+        }
+      ],
+      "published": "2026-05-27T02:00:02+00:00",
+      "duration_seconds": 374,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9946.mp3",
+      "audio_length_bytes": 5233280,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9946",
+      "categories": [
+        "angular",
+        "microsoft",
+        "sharepoint",
+        "stealer",
+        "claude"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9946",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, May 27, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n penetration testing and ethical hacking. Well, let's\n start today with a little bit of different spin on AI. In\n this case, it's actually, well, not really AI at all.\n It's just a fake Claude AI download page that is being\n used by attackers to install the ACR Stealer. ACR Stealer\n has been around for a while. It's sort of your standard\n info stealer stealing credentials and the like,\n often also considered sort of a malware as service where\n attackers will install it and then they provide also the\n malware and the credentials to the actual organization behind\n these attacks. Now, the organizations that are sort of\n renting or buying ACR Stealers, they have then to\n find a way for users to actually install it. And in\n this particular case, well, they went with Google Ads, the\n good old and proven method to trick users to install\n software. When you're searching for Claude, you may\n actually end up with a malicious code. In this case,\n with the info stealer, the download page, well, the\n domain looks nothing like cloud, like the one that Brad\n found here is fairpoint29.com. But there are likely many\n others similar ones out there as well. But the looking feel\n of the page, of course, does match the official Claude page.\n So unless someone looks at the URL, they may not necessarily\n notice that they are on a malicious page. And Microsoft\n actually surprised late last week with a surprise update\n for SharePoint. This SharePoint patch does patch a\n remote code execution vulnerability. It does affect\n all currently supported versions of SharePoint. And\n yes, it's another deserialization vulnerability.\n We had like the big one last year with the view state, not\n sure how this is exactly exploited, but Microsoft rates\n the exploitability as low complexity, so relatively\n easy. However, an attacker must have credentials to log\n in. So essentially what this means, any logged in user, any\n user with credentials is able to execute arbitrary code on\n the server. This is certainly not good in particular, since\n it only takes one user to lose their credentials. And you\n know, sometimes you also have sort of some read only users\n or such like external users that you provided with very\n limited access to your SharePoint site and don't\n necessarily completely trust them or trust them how they\n handle their credentials. Well, yet another sort of\n issue that Visual Studio Code users have to worry about this\n time, it's not malicious extensions, but\n vulnerabilities in existing extensions. There's also a\n little bit sort of a recurring issue when it comes to these\n extensions, that extensions are often able to execute code\n in some form. Well, if they're then being used to look at\n untrusted documents and such, that's sort of where the\n problem happens. In this particular example, the\n extension is the Angular Language Service Visual Studio\n Code extension. If you have this loaded and you're loading\n a project with a malicious settings file, or you're using\n it to look at a malicious JS doc file. Well, that's sort of\n where the remote code execution happens.\n Essentially, this extension is not properly escaping all of\n the special characters in files that it may load. And as\n a result, you have remote code execution. Like I said, this\n is not the first time we had sort of vulnerabilities like\n this in extensions. And it always sort of comes down to\n the same pattern that you have a vulnerable extension, then\n you're opening a project in Visual Studio Code that takes\n advantage of these vulnerabilities. One of the\n big things to be a little concerned about is if you're\n opening any projects in particular, sort of to just\n sort of blindly adopt whatever settings and such they're\n sending you. So you may want to review them or maybe just\n sort of start over from scratch and don't like import\n settings for Visual Studio Code that were configured by\n someone else that you may or may not trust. And then we\n also got patches for the DNS server bind. Now there are a\n number of vulnerabilities being addressed here. But one\n that I think is sort of interesting is heap use after\n free vulnerability. It can cause memory corruption. So\n there is a potential of remote code execution. But I don't\n think it's really likely that this is usually happening in\n situations like that. The root issue here is well, the\n support for DNS over HTTPS in more recent versions of bind,\n I think 9.18 was the first one where this was sort of\n officially introduced as a feature. And the 9.18 is\n actually not vulnerable. It's only 9.20 and 21. That's\n vulnerable here to this particular issue. And it does\n affect the HTTP 2 implementation here, which\n well, a lot of web servers such had also issues with HTTP\n 2.0. It's not an easy protocol to implement correctly. And\n I'm not sure if bind uses a standard library or something\n they created themself for HTTP 2.0. Well, and this is it for\n today. So thanks for listening. And thanks for\n liking this podcast. Thanks for recommending it. And if\n you have any feedback, anything I should have\n covered, anything I should not have covered, well, please let\n me know. Thanks and talk to you again tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9944",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9944",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9944.mp3",
+      "title": "SANS Stormcast Tuesday, May 26th, 2026: VBA in MSFT Access; NPM Stealer; PHP Laravel Compromise; Google API Key Lag;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, May 26th, 2026: VBA in MSFT Access; NPM Stealer; PHP Laravel Compromise; Google API Key Lag;",
+      "show_notes": [
+        {
+          "heading": "Microsoft Access VBA",
+          "links": [
+            "https://isc.sans.edu/diary/Microsoft%20Access%20VBA/33012"
+          ]
+        },
+        {
+          "heading": "An Example of Stack String in High Level Language",
+          "links": [
+            "https://isc.sans.edu/diary/An%20Example%20of%20Stack%20String%20in%20High%20Level%20Language/33008"
+          ]
+        },
+        {
+          "heading": "Cross-Platform NPM Stealer",
+          "links": [
+            "https://isc.sans.edu/diary/Cross-Platform%20NPM%20Stealer/33006"
+          ]
+        },
+        {
+          "heading": "Laravel Lang Compromised with RCE Backdoor Across",
+          "links": [
+            "https://socket.dev/blog/laravel-lang-compromise"
+          ]
+        },
+        {
+          "heading": "Google API keys keep working after you delete them",
+          "links": [
+            "https://www.aikido.dev/blog/google-api-keys-deletion"
+          ]
+        }
+      ],
+      "published": "2026-05-26T02:00:02+00:00",
+      "duration_seconds": 410,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9944.mp3",
+      "audio_length_bytes": 5749075,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9944",
+      "categories": [
+        "npm stealer",
+        "strack strings",
+        "microsoft",
+        "access",
+        "vba"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9944",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, May 26, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich and today I'm recording from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Cybersecurity Leadership.\n Microsoft Access, well, that's a database I had a couple of\n run-ins with in the past, in the distant past. Luckily, Didier\n got interested into Microsoft Access now because, well, it\n may be used to actually execute Visual Basic for\n application code. Yes, the .mdb files that Microsoft\n Access runs on may contain Visual Basic for applications\n and with that could be used to infiltrate systems, to\n basically execute malicious code, just like, you know,\n with any other Microsoft product that does execute VBA.\n So in order to help us out here and help us analyze some\n of these scripts that may contain, that may be contained\n in these .mdb files, Didier is offering here some help, a\n little bit sort of reverse analysis on the .mdb files,\n how to extract some of these Visual Basic for application\n scripts. Microsoft does not offer really any documentation\n here and Didier will also in the future present a couple more\n complex examples how to extract the VBA code from\n these Microsoft Access database files. Well, and then\n we got more reverse analysis tricks here over the weekend,\n this time from Xavier. Xavier looked at, well, decoding\n stack strings. Stack strings is an obfuscation technique\n that's often found in malware. In order to avoid using\n specific strings that, of course, could easily be\n identified with signatures, the attacker uses basically\n dynamically created strings where one byte at a time is\n copied into the stack in order to assemble a particular\n string. And that's, of course, a little bit of pain to\n analyze. So Xavier took a look at what the simplest possible\n way to sort of, you know, figure out these stack strings\n and came up with essentially a bash one-liner. Now, I say one\n -liner, but there is a secret tool here, object dump that\n will basically decompile the software that is being used\n here. And then some simple greps in order to basically\n filter out these instructions that copy individual bytes to\n the stack and then just reassemble the bytes that\n they're copying. Well, and in the example that Xavier\n prepared, this works just fine. So certainly one of\n those quick tricks that you can use before you are using\n more complex tools just to see if essentially there's\n something here for you to dive in further. And Xavier also\n used the long weekend, well, at least the long weekend here\n in the US in order to provide us with a quick reverse\n analysis of an NPM Steeler. So this particular Info Steeler\n is written in JavaScript. It uses the node infrastructure.\n One of those things that you would potentially find like in\n a supply chain attack, it's because it's written in\n JavaScript, also multi -platform. It runs on Windows,\n Mac OS, and Linux. And then, well, that's what Info Steeler\n do best. It steals your credentials, including things\n like crypto coin wallet information, which kind of\n fits the target IP address. The target IP address has been\n in prior campaign associated with some North Korean threat\n actors. And well, North Korea is really into stealing crypto\n coin information. And talking about supply chain issues, now\n the one language that we haven't really heard much from\n when it comes to supply chain issues is PHP. Well, don't\n worry, the threat actors haven't forgotten about PHP.\n Socket has come out with a blog post late last week that\n basically identified a number of Laravel packages that were\n compromised. Laravel is a framework that's commonly used\n with PHP. The packages being compromised here are in\n particular the Laravel lang packages. This is an extension\n to Laravel that you're using to basically provide\n localization. So translation of different languages for a\n particular site and yes, support something like 126\n different languages. So definitely a popular package\n and 700 plus versions were infected with a remote code\n execution backdoor. So better make sure that you're not\n using any of these packages. Potentially you're at risk if\n you have a PHP website that's coded using Laravel and does\n support multiple languages. And Joe Leon with Aikido has\n published a blog, a blog post, an issue that is actually not\n really new in cloud environments and that changes\n don't happen instantly. Now what Joe looked at was\n particular Google API keys and deleting them. Well,\n apparently it can take up to 23 minutes in order for the\n key to be no longer usable. We had a couple of SANS-EDU\n students also write research papers about the similar\n effects in the past, like when you're setting up firewall\n logs or any kind of configuration change in the\n cloud, that there is often a significant delay in these\n kind of changes. So definitely something to keep in mind that\n these things don't really act immediately. And if you're,\n for example, relying on any configuration change or\n something like this, well, before you actually use an\n application or so that relies on it, well, make sure that\n the application configuration change has propagated to your\n actual application. Well, and that's it for today. Thanks\n for listening. Thanks for liking and thanks for\n recommending this podcast. By the way, I'll be teaching also\n at SANS Fire mid-July in Washington, D.C. I'll be\n teaching our web application security class again. So if\n you're interested in that, please sign up or let me know\n if you have any questions about it. And that's it. Talk\n to you again tomorrow. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9942",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9942",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9942.mp3",
+      "title": "SANS Stormcast Friday, May 22nd, 2026: Selective HTTP Proxying; More GitHub Repo Trouble; MSFT Defender Patches;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, May 22nd, 2026: Selective HTTP Proxying; More GitHub Repo Trouble; MSFT Defender Patches;",
+      "show_notes": [
+        {
+          "heading": "Selective HTTP Proxying in Linux",
+          "links": [
+            "https://isc.sans.edu/diary/Selective%20HTTP%20Proxying%20in%20Linux/33002"
+          ]
+        },
+        {
+          "heading": "Megalodon: Mass GitHub Repo Backdooring via CI Workflows",
+          "links": [
+            "https://safedep.io/megalodon-mass-github-repo-backdooring-ci-workflows/"
+          ]
+        },
+        {
+          "heading": "MSFT Patches Recent Windows Defender Flaws CVE-2026-41091, CVE-2026-45498, CVE-2026-45584",
+          "links": [
+            "https://x.com/fabian_bader/status/2057198207243804881"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Workload Unauthorized API Access Vulnerability CVE-2026-20223",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-csw-pnbsa-g8WEnuy"
+          ]
+        }
+      ],
+      "published": "2026-05-22T02:00:02+00:00",
+      "duration_seconds": 395,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9942.mp3",
+      "audio_length_bytes": 5532418,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9942",
+      "categories": [
+        "cisco",
+        "microsoft",
+        "patches",
+        "api",
+        "rest",
+        "megalodon",
+        "github",
+        "linux",
+        "http",
+        "proxy"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9942",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, May 22, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. This episode is brought to you by the SANS.edu\n Graduate Certificate Program in Cyber Security Engineering.\n Last week, Rob wrote a diary about a tool called Proxifier.\n Proxifier is neat because it allows you to intercept\n traffic with a proxy from specific applications. Of\n course, that's great for reverse analysis and such.\n Yes, you could just proxy all traffic, but then of course\n you have to deal with all the noise that you're getting in\n addition to the traffic from the application you're\n interested in. The trick here is that Proxifier only works\n on Macs and on Windows. Yes, there is sort of an Android\n version, but those sort of generic Linux versions. I\n looked into, well, how do you do it in Linux? And as far as\n I know, there are really sort of three different ways of\n doing it. Number one, you can set specific environment\n variable, http_proxy and https_proxy.\n Many sort of HTTP libraries are looking for\n these environment variables and will use any proxy. So\n before starting the application, you just set\n these environment variables. You can do it a little bit\n with iptables, but with iptables, you're kind of only\n able to redirect traffic from a particular user. So you have\n to make sure that this application, well, it's the\n only application being run by a particular user. And then I\n think sort of the neatest and often overlooked feature in\n Linux is network namespaces, where you can define\n essentially sort of a custom network configuration for a\n particular application. And you essentially do this by\n defining which network interfaces, and then also like\n custom routing tables and so are being used in this\n namespace. And then you assign that namespace to the\n application, or the application to the namespace.\n And then the application basically sees a different\n network environment than the rest of the system. And that\n again, allows you to selectively intercept traffic\n that emerges from this namespace, or basically in\n this case, from this application. So yes, you can\n do it in Linux. Not sure if the Android version of\n Proxifier can somehow be used in Linux, but that may be\n probably the easiest solution if that is possible. Well, in\n case you thought that, well, you know, today, he's not\n going to talk about any supply chain issues again, sorry,\n still have to do it. We have another big attack against\n GitHub repositories, this time not against the GitHub itself,\n but against users of GitHub. Apparently, this attack is\n using harvested credentials from prior attacks in order to\n infiltrate specific repositories. Something like\n 5000 different repositories have so far been affected.\n Safedep.io has published a good blog post. And I think\n there's of the ones here that originally came across this\n attack in order to actually exfiltrate credentials. Well,\n it basically adds GitHub actions. And these GitHub\n actions, they have a couple different ways sort of to\n trigger them, some on each push and pull. So basically,\n these are fairly noisy GitHub actions. But they also have\n some more stealthy ones that can be triggered externally.\n And once well, you're affected by these, you will basically\n lose all of your environment variables, your AWS\n credentials, your Google credentials, your SSH private\n keys, keys, any kind of API keys, database connection\n strings, JWTs, PEM private keys, cloud tokens, well,\n pretty much everything sort of secret on your system. The\n data is then being exfiltrated to an IP address 216.126.225\n .129. And well, the author actually is pretty good in\n sort of disguising themselves by using names like auto-ci or\n ci-bot or pipeline bot, essentially, you know, names\n that kind of fit in with a CI city pipeline. And Microsoft\n released an update for its Windows and Havares platform\n fixing the recent privilege escalation vulnerabilities\n that have already been exploited. Red Sun and\n Undefend are the names for these users. There is nothing\n really that you have to do as a user. This is an update to\n the antivirus platform. And it's regularly updated, just\n like the rules being used by Windows Defender. So it should\n automatically be already installed on your system. This\n is not one of those patch Tuesday updates. And Cisco\n released some updates today. One interesting one affects\n the Cisco Secure Workload. Well, this is a system that\n essentially allows you to essentially sort of sandbox\n critical and possibly dangerous or vulnerable\n payloads. What better way to do it than use a vulnerable\n system like Secure Workload in order to accomplish this.\n Apparently, Secure Workload has an authentication bypassed\n vulnerability in the REST API, allowing an unauthorized user\n to get site admin access. This is a complete 10 on the CVSS\n scale. So definitely something that you probably want to\n address in particular, if that REST API that controls Cisco\n Secure Workload is somewhat exposed. Well, and this is it\n for today. So thanks for listening. Thanks for liking.\n Thanks for subscribing also to this podcast. And if you have\n any questions, please email me or if you have any feedback,\n please let me know. The next podcast will be on Tuesday\n because Monday is Memorial Day holiday here in the US. So\n we'll skip Monday. So talk to you again on Tuesday. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9940",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9940",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9940.mp3",
+      "title": "SANS Stormcast Thursday, May 21st, 2026: GitHub Breach; Agentic Threat Intel Feed; NGINX Vuln; YellowKey Fix; Incomplete SonicWall Patch",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, May 21st, 2026: GitHub Breach; Agentic Threat Intel Feed; NGINX Vuln; YellowKey Fix; Incomplete SonicWall Patch",
+      "show_notes": [
+        {
+          "heading": "GitHub Breach",
+          "links": [
+            "https://x.com/github/status/2056949168208552080"
+          ]
+        },
+        {
+          "heading": "Agentic Threat Intelligence Feed - VS Code Extensions",
+          "links": [
+            "https://agentmesh.knostic.ai/extensions"
+          ]
+        },
+        {
+          "heading": "More NGINX Vulnerabilities",
+          "links": [
+            "https://x.com/nebusecurity/status/2057071579876753643",
+            "https://my.f5.com/manage/s/article/K000161307"
+          ]
+        },
+        {
+          "heading": "Microsoft Publishes YellowKey Mitigation CVE-2026-45585",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-45585"
+          ]
+        },
+        {
+          "heading": "Incomplete Sonicwall Patch CVE-2024-12802",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0001"
+          ]
+        }
+      ],
+      "published": "2026-05-21T02:00:03+00:00",
+      "duration_seconds": 339,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9940.mp3",
+      "audio_length_bytes": 4748717,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9940",
+      "categories": [
+        "sonicwall",
+        "microsoft",
+        "yellowkey",
+        "bitlocker",
+        "nginx",
+        "agentic",
+        "vscode",
+        "extensions"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9940",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, May 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Well, today can't help it but to\n continue to talk about supply chain issues. And first one\n here is a breach of GitHub. I usually don't talk about\n breaches, as I mentioned before, but this has sort of\n an important impact to, of course, everybody using\n GitHub. And well, that's pretty much everybody probably\n listening to this podcast, even if you're not personally\n a user of GitHub, pretty much a large percentage, I have no\n idea what percentage, but it's very large of open source\n software is maintained via GitHub. Now, while these, of\n course, are often public GitHub repositories, any\n modifications, of course, these repositories would be\n devastating. At this point, there is no indication that\n anything other than GitHub's own internal repositories\n leaked. They're talking about something like 3,800 different\n repositories, which sounds about right, you know, for a\n company the size of GitHub. Of course, the second question is\n what leaked with all of those repositories? What kind of\n secrets? What kind of source code? What kind of, you know,\n maybe issues talking about bugs and security\n vulnerabilities have leaked here? GitHub promised more\n details as the investigation evolves. But at this point, it\n appears that the root cause was, well, an individual\n developer using a malicious Visual Studio code extension.\n And Knostic, a company that focuses on securing Agendic AI\n has open sourced their own database of VSX extensions,\n skills, and also MCP. These databases that they're\n publishing here are essentially scanned with\n multiple tools in order to figure out how likely a\n particular your Visual Studio code extension is malicious.\n So definitely something that you can use. They publish an\n API as well, and the data is free to use. Just don't scrape\n their page instead of just use their API. And if you don't\n know how to use an API, well, your AI agent may be able to\n figure it out for you. And AI tools continue to be used to\n find vulnerabilities. The latest there's announcement by\n Nebula Security that they found another vulnerability in\n Nginx. Now this they call Nginx a pool slip, and it's a\n remote code execution vulnerability. Apparently, it\n does work with ASLR enabled, and they're giving 30 days\n until they will release an exploit. No additional details\n at this point. There was also a second vulnerability that\n was announced by Nginx or F5, the company behind Nginx. That\n one only affects very specific configurations with the\n JavaScript modules enabled. That, of course, significantly\n increases also the attack surface of Nginx. So keep\n Nginx updated. No word yet when exactly a patch will be\n released, but for the Nginx pull slip vulnerability, we\n shouldn't see an exploit, at least by Nebula, until 30 days\n after the patch is released. And Microsoft published a\n mitigation for the BitLocker security feature bypass\n vulnerability, also known as Yellow Key. That came out last\n week and essentially allows anybody to reboot a system\n that is protected by BitLocker without locking the disk and\n with that mounting the disk to an arbitrary boot operating\n system. Now, this workaround, and that's what it really sort\n of is, is not all that trivial to implement, sort of reading\n the instructions that you have to enter a pin and then, you\n know, on reboot in order to activate this workaround. It's\n easier to do if you're not yet encrypted. So definitely for\n new systems that you're configuring, this is\n definitely something that you probably should add sort of to\n your setup scripts until sort of the final fix is released.\n Well, hopefully with the next patch Tuesday. And SonicWall\n is warning that they're seeing exploitation of a\n vulnerability that they originally patched in January.\n But, well, many organizations haven't fully deployed the\n patch. The problem here is that it's not sufficient to\n just update the operating system, it's just to the\n firmware upgrade. Instead, you must also update the LDAP\n configuration. That's a little bit of more manual process.\n They're walking you through it in the advisory. So definitely\n a double check that you applied this patch correctly.\n Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending.\n Thanks for letting me know what content you liked or\n didn't like in any particular episode and talk to you again\n tomorrow. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9938",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9938",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9938.mp3",
+      "title": "SANS Stormcast Wednesday, May 20th, 2026: Assume Supply Chain Compromise; GitHub Action Compromise;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, May 20th, 2026: Assume Supply Chain Compromise; GitHub Action Compromise;",
+      "show_notes": [
+        {
+          "heading": "TeamPCP Supply Chain Campaign: Activity Through 2026-05-17",
+          "links": [
+            "https://isc.sans.edu/diary/TeamPCP%20Supply%20Chain%20Campaign%3A%20Activity%20Through%202026-05-17/32994",
+            "https://slsa.dev/spec/v0.1/levels"
+          ]
+        },
+        {
+          "heading": "Github Action Compromise",
+          "links": [
+            "https://www.stepsecurity.io/blog/actions-cool-issues-helper-github-action-compromised-all-tags-point-to-imposter-commit-that-exfiltrates-ci-cd-credentials"
+          ]
+        },
+        {
+          "heading": "How Storm-2949 turned a compromised identity into a cloud-wide breach",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/05/18/storm-2949-turned-compromised-identity-into-cloud-wide-breach/"
+          ]
+        }
+      ],
+      "published": "2026-05-20T02:00:02+00:00",
+      "duration_seconds": 381,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9938.mp3",
+      "audio_length_bytes": 5338792,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9938",
+      "categories": [
+        "supply chain",
+        "github action",
+        "teampcp",
+        "github",
+        "azure"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9938",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, May 20th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Today's podcast, if everything goes to\n plan, and it's not that I'm starting to write down\n everything, but I'm hoping to do something a little bit more\n focused because there are a couple real important things\n that I want to talk about. And well, with that, maybe spend a\n little bit less time on it, but we'll see how it goes. So\n really, what it's all about is Ken Hartman put together a\n real good summary of what recently happened with the\n TeamPCP and all of these supply chain campaigns. I\n mentioned some in podcasts over the last couple of weeks.\n For example, Checkmarx getting compromised a couple\n of times. And with that, also some of their products. I\n think this sort of has reached a new quality, and Ken also\n points that out, is with the TanStack compromise. Now,\n TanStack actually had SLSA Level 3 verified components.\n So what this means is the software they produced was not\n only digitally signed, but also the systems being used to\n compile and basically run the build process were verified\n and were audited. So that's what SLSA Level 3 means. And\n well, it's sort of one of these software supply chain\n verification procedures. It used to be that you could say,\n hey, you know, if software is really verified to that level,\n well, you should probably trust it. But I think, and\n that's sort of really where my soapbox today a little bit\n starts is, you must assume compromise. We're living sort\n of with that on the network security level for quite a\n while, that we try to encrypt all of our data, even on\n internal networks, because we assume compromise that has\n been sort of introduced years ago. But I think developers,\n and when it comes to software components, we also at this\n point must assume a compromise, just because of\n the sheer number of credentials having been leaked\n with campaigns like the TeamPCP campaign recently. And\n this wasn't just the only real campaign like this. We had a\n number of different campaigns like this, that stole\n credentials, stole GitHub access for a large number of\n open source projects. And even, you know, with that,\n some more closed projects like Checkmarx and such, basically\n proprietary software is affected by this as well. This\n is no longer just an open source problem. It's, I think,\n also important to understand here, when it comes to, well,\n with that, what are you going to do about it? And I think\n one thing that's really, really important here is sort\n of that enterprise-wide credential management or\n secret management. It's not easy. Like, you know, a lot of\n these things, we're talking about things like inventory\n and such, they sound easy, but they're definitely not easy.\n I'm not understating this here, but it is something you\n definitely have to focus on. How are you managing your\n credentials? How are you able to quickly rotate them as\n needed? And also, well, how are you protecting them as\n they're being used as part of your own supply chain and\n build processes? Definitely something where you have to\n look for solutions here. And that's, I think, sort of what\n I'm getting out of these recent supply chain issues.\n Number one, assume compromise. Number two, protect your\n credentials, protect your secrets. In particular, if\n they're being used as some kind of CICD pipeline, because\n I think that's where, based on what we've seen currently,\n they're probably the most vulnerable. And just sticking\n with this here for one more topic, and that's compromised\n GitHub actions. So the latest example here is, as pointed\n out by Step Security, the issues helper action. And\n that's a very popular action. And what the attacker here did\n also is that they relabeled all the tags. So all the\n different tags for prior versions are now pointing to\n compromised versions of this GitHub action that, well, no\n surprise, exfiltrate secrets again. So be aware. And yep,\n like locking it in on a particular tag is not going to\n help you here. Talking more about credential theft,\n Microsoft has a good blog post about some recent more\n advanced targeted attacks that they have seen. And they all\n start out with the attacker abusing the self-service\n password reset feature in Azure. And if you have to\n factor authentication enabled, they'll be sending you some\n social engineering in order to get the victim to approve the\n change of passwords. So definitely user education may\n be an option here, but also some auditing of password\n reset requests may help a little bit here. And yes, then\n the goal of course is to gain access to the victim's cloud\n infrastructure and exfiltrate data. Well, that's it for\n today. So thanks for listening. Thanks for liking.\n Thanks for subscribing and special thanks for anybody\n leaving good comments in particular sort of on your\n favorite podcast platform. And remember this podcast should\n be available via sort of the standard podcast outlets, but\n also on YouTube. If you enjoy a little bit more video\n version and also like on systems like Alexa, it should\n be available. Thanks and talk to you again tomorrow. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9936",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9936",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9936.mp3",
+      "title": "SANS Stormcast Tuesday, May 19th, 2026: New libssh in Malware; Exchange 0-Day; MSFT Authenticator Update",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, May 19th, 2026: New libssh in Malware; Exchange 0-Day; MSFT Authenticator Update",
+      "show_notes": [
+        {
+          "heading": "New Malware Libraries means New Signatures",
+          "links": [
+            "https://isc.sans.edu/diary/%5BGuest%20Diary%5D%20%20New%20Malware%20Libraries%20means%20New%20Signatures/32986"
+          ]
+        },
+        {
+          "heading": "Addressing Exchange Server May 2026 vulnerability CVE-2026-42897",
+          "links": [
+            "https://techcommunity.microsoft.com/blog/exchange/addressing-exchange-server-may-2026-vulnerability-cve-2026-42897/4518498"
+          ]
+        },
+        {
+          "heading": "Microsoft Authenticator Update CVE-2026-41615",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-41615"
+          ]
+        },
+        {
+          "heading": "ssh-keysign-pwn (CVE-2026-46333) Patches Released",
+          "links": [
+            "https://almalinux.org/blog/2026-05-15-ssh-keysign-pwn-cve-2026-46333/"
+          ]
+        }
+      ],
+      "published": "2026-05-19T02:00:02+00:00",
+      "duration_seconds": 368,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9936.mp3",
+      "audio_length_bytes": 5162971,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9936",
+      "categories": [
+        "ssh-keysign-pwn",
+        "ssh",
+        "authenticator",
+        "exchange",
+        "malware"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9936",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, May 19th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. This episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Cybersecurity Leadership. Let's start out today with\n today's diary and that comes again from one of our SANS\n undergraduate interns, Gokul Prema Thangawell wrote this\n particular diary about the ever present SSH bots. Bots\n that are brute forcing usernames and passwords for\n SSH and then they often install modified authorized\n keys files which of course then act as a backdoor for the\n attacker. Now the one thing that Gokul here is looking at\n is a very well established chain of these SSH bots that\n always is leaving behind the same authorized keys files.\n It's sort of one of the indicators of compromise here.\n But Gokul notes some subtle modification to the binary\n being used to do the scanning in that it updated to a new\n lib SSH. Lib SSH is the base library that implements SSH\n and then we also have these hassh values. Now hassh is\n written here with two S's basically H A SSH which\n basically identifies the SSH connection details and with\n that often identifies the malware. But that now changed\n with the switch to the new lib SSH. And well, what this\n really means is don't be too specific on your indicators of\n compromise. If you're seeing a lot of outbound SSH\n connection, there is a good chance that you have a system\n in your network that is attempting to infect others\n via SSH no matter whether or not this particular hassh is\n present in the connections or whether it's not present and\n often goes undetected as pointed out in this diary. And\n late last week Microsoft disclosed a new unpatched\n vulnerability in Exchange Server affecting Exchange\n Server 2016-19 as well as the current subscription edition.\n Well, this is a cross-site scripting vulnerability but\n given that it's running in Exchange and then basically\n exposed via Outlook Web Access, there's quite a bit of\n damage that the hacker could do by exploiting this cross\n -site scripting vulnerability. Always an issue with cross\n -site scripting in webmail clients like Outlook Web\n Access. And as a result, well, definitely something that you\n want to address in particular since the reason that\n Microsoft sort of came forward and made this issue public is\n that it's already being exploited in the public. Now,\n Microsoft did publish a workaround and you can apply\n this workaround if your version of Exchange is\n reasonably up-to-date. So even for the older versions like\n 2016, you can apply it. You just must have applied some of\n the more recent updates to Exchange Server 2016. And this\n will block exploitation. This is not a patch yet and it\n apparently does have a couple of issues. And again, refer to\n Microsoft's write-up on it because that's something they\n have been adding to over the last couple of days. In\n particular, apparently with the calendar functionality\n like running calendars and such may have some problems\n here after you apply the workaround. But take a look at\n it. To me, they sound less severe, these issues, than\n getting exploited with cross -site scripting exploit here.\n And Microsoft also late last week did release an update for\n Microsoft Authenticator for iOS as well as for Android.\n This particular update fixes a vulnerability where an\n attacker could gain access to the authentication token being\n submitted by Microsoft Authenticator. In order to\n exploit this vulnerability, an attacker would have to\n essentially trick you to a website, then interact with\n the website. You'll see a pop -up on your authenticator\n asking you essentially to approve the login. And the\n attacker would then get access to the token that would allow\n the attacker to essentially bypass Microsoft Authenticator\n -based two-factor authentication. Something\n interesting, vulnerability, like I said, not a lot of\n details out there yet. And nothing being exploited yet on\n Android and iOS. The application should\n automatically update. Well, to all the Linux users that are\n smirking here about the Microsoft and Windows flaws,\n there's also a new bridge escalation vulnerability for\n Linux to worry about. This one in particular allows also\n access to private shkeys on the server as well as to the\n etsy shadow file. Now, the server shkeys typically don't\n allow you to actually log into the server, but they allow you\n to impersonate the server. So, still something that you want\n to take care of and make sure that your Linux system is,\n again, properly patched. And, of course, rebooted as for\n most kernel patches like this. And that's it for today.\n Thanks for listening. Thanks for liking. Thanks for\n recommending this podcast. And talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9934",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9934",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9934.mp3",
+      "title": "SANS Stormcast Friday, May 15th, 2026: Website Fraud; Outlook Link Preview Bug; NGINX Vuln; Cisco 0-Day",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, May 15th, 2026: Website Fraud; Outlook Link Preview Bug; NGINX Vuln; Cisco 0-Day",
+      "show_notes": [
+        {
+          "heading": "Tearing apart website fraud to see how it works. (@sans_edu)",
+          "links": [
+            "https://isc.sans.edu/diary/%5BGUEST%20DIARY%5D%20Tearing%20apart%20website%20fraud%20to%20see%20how%20it%20works./32958"
+          ]
+        },
+        {
+          "heading": "Simple bypass of the link preview function in Outlook Junk folder",
+          "links": [
+            "https://isc.sans.edu/diary/Simple%20bypass%20of%20the%20link%20preview%20function%20in%20Outlook%20Junk%20folder/32990"
+          ]
+        },
+        {
+          "heading": "NGINX Vulnerability",
+          "links": [
+            "https://depthfirst.com/nginx-rift"
+          ]
+        },
+        {
+          "heading": "Cisco SDWan 0-Day",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW"
+          ]
+        }
+      ],
+      "published": "2026-05-15T04:10:13+00:00",
+      "duration_seconds": 414,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9934.mp3",
+      "audio_length_bytes": 5805681,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9934",
+      "categories": [
+        "cisco",
+        "sdwan",
+        "nginx",
+        "outlook",
+        "fraud"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9934",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday May 15th, 2026 edition\n of the SANS Internet Stormcenter Stormcast. My name is\n Johannes Ullrich recording today from San Diego,\n California. And this episode is brought to you by the SANS\n .edu Graduate Certificate Program in Penetration Testing\n and Ethical Hacking. Well today we have actually two\n diaries to talk about. The first one comes again from one\n of our undergraduate interns. Joshua Nicholson is writing\n about how to inspect a website to see if it may be\n fraudulent. These are often these fairly cheap consumer\n goods websites that offer various items at a real good\n price but don't really look quite legit in part because of\n the design and the way the sites are created. So it's\n always a little bit difficult to figure out if they actually\n offer a valid product or if they are really just\n interested in scamming you. Well in this particular case\n Joshua offers a couple of hints that point to scam sites\n like for example where product images were stolen from eBay\n listings and the like. And also then sort of as the\n ultimate proof Joshua actually went ahead and got a specific\n credit card number with a very small limit of $5 and placed\n an order. And in some of these cases in some of these\n websites well the card was immediately multi charged\n multiple times from multiple vendors for various amounts\n that were not necessarily related to the cost of the\n item advertised on the site. So really good work and I\n think that's useful kind of a sort of test of quick sanity\n checks on a website to figure out if it may be legitimate or\n not. Now going all the way and actually trying to order\n something using some credit card number that's probably\n too much for most people but even the other hints are quite\n good in order to order to get a sort of do a quick triage on\n any deal that may look a little bit too good. And Jan\n came across an interesting bug or dare I say vulnerability in\n Outlook. Outlook if you are placing a message in the junk\n folder has the nice property of actually removing some of\n the formatting from the message making it a little bit\n easier to see what for example links are hiding. Now Jan did\n just that he had a spam message in the junk folder but\n apparently the links were not displaying at all basically\n the URL that the link linked to. The issue here apparently\n was that these links were missing the scheme or protocol\n so the HTTP colon slash slash prefix it just started with\n the hostname followed by the remainder of the URL. While\n these type of links are still working basically HTTPS is\n then used as a default protocol in this case when you\n click on the link. This does make a tagline invalid URL and\n it looks like Outlook in the junk folder will not display\n these URLs because they don't match the pattern that Outlook\n is expecting for the URLs. This could be a problem\n because users are getting used to looking at the junk folder\n to better figure out what a particular message may be\n attempting to accomplish whether it is a real message\n or spam or phishing as in this case. And without the URL\n being displayed correctly this of course is just getting more\n difficult. The researchers from AI code security company\n Depth First have released a blog post with details\n regarding four vulnerabilities in NGINX. These\n vulnerabilities were disclosed to F5 and today in sync with\n the release of the blog post F5 also released patches for\n NGINX. I already have seen some of these patches also hit\n major Linux distributions. There are four different\n vulnerabilities that Depth First has uncovered. One of\n them particular sticks out and this serves some attention.\n It's a heap based buffer overflow in the mod rewrite\n module and this vulnerability can lead to arbitrary code\n execution. One caveat here is that the proof of concept\n being released so far only works if ASLR, the address\n space layout randomization is not enabled. Usually for Linux\n distributions this is enabled so you have a little bit extra\n time left here until attackers are finding the actual exploit\n that also supports systems with ASLR. And Depth First\n stated that they believe this flaw is exploitable with ASLR\n enabled. It may however require a good number of\n requests to make the exploit work. So proof of concept is\n released. Proof of concept doesn't quite work with common\n Linux distributions but well only some changes are likely\n required to make it work with common Linux distributions.\n This is definitely one of those patches that you want to\n get a handle on probably before the weekend if\n possible. But I know it's not always that easy to update\n your web server but again major Linux distributions have\n patches available. And well if you're not running NGINX and\n you have some extra time this Friday there is also a new\n critical vulnerability that was patched by Cisco in the\n Catalyst SD-WAN controller. It's an off-vocation bypass\n vulnerability that got the distinction of a perfect 10.0\n CVSS score and yes it's already exploited in the wild.\n So definitely take a look at the advisory published by\n Cisco. They also have some guidance here as to what to do\n if you believe that you're compromised and no work around\n here other than applying the patch. Well this is it for\n today so thanks again for listening, thanks for liking,\n thanks for sharing this podcast with your friends. And\n there will be no podcast on Monday due to my travel\n schedule so talk to you again on Tuesday. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9932",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9932",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9932.mp3",
+      "title": "SANS Stormcast Thursday, May 14th, 2026: Flexbile Windows Proxy; News from Nightmare Eclipse; Adobe Patches",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, May 14th, 2026: Flexbile Windows Proxy; News from Nightmare Eclipse; Adobe Patches",
+      "show_notes": [
+        {
+          "heading": "Proxying the Unproxyable? Sending EXE traffic to a Proxy",
+          "links": [
+            "https://isc.sans.edu/diary/Proxying%20the%20Unproxyable%3F%20Sending%20EXE%20traffic%20to%20a%20Proxy/32982"
+          ]
+        },
+        {
+          "heading": "New Nightmare Eclipse Vulnerabilities Disclosed",
+          "links": [
+            "https://github.com/Nightmare-Eclipse/YellowKey",
+            "https://github.com/Nightmare-Eclipse/GreenPlasma"
+          ]
+        },
+        {
+          "heading": "Adobe Patches",
+          "links": [
+            "https://helpx.adobe.com/security.html"
+          ]
+        }
+      ],
+      "published": "2026-05-14T04:20:11+00:00",
+      "duration_seconds": 326,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9932.mp3",
+      "audio_length_bytes": 4564268,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9932",
+      "categories": [
+        "adobe",
+        "patches",
+        "nightmare",
+        "eclipse",
+        "bitlocker",
+        "yellowkey",
+        "greenplasma",
+        "proxy"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9932",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday May 14th, 2026\n edition of the SANS Internet StormCast. My name is Johannes\n Ullrich, recording today from San Diego, California. This\n episode is brought to you by the SANS.edu Graduate\n Certificate Program in Cybersecurity Engineering. In\n Diaries today we do have an interesting tool\n recommendation from Rob. Rob experimented with a tool\n called Proxifier. Now what Proxifier is good at is if you\n have a Windows system and you are trying to proxy the HTTP\n traffic from specific binaries. Now with network\n rules and such you are often able to direct traffic to\n particular destinations to a proxy. But what this tool\n allows you is to essentially isolate the traffic from a\n specific application that you are trying to test. And in the\n case of Rob, he directed the traffic to Burp Suite in order\n to better explore an API that a particular application was\n using. This approach is really kind of neat in order to cut\n down on the noise that you often get if you are just\n sending all traffic to a proxy. And it can be sometimes\n challenging to figure out what traffic is actually\n originating from a specific binary. This makes the entire\n process so much easier. And then we have two new\n vulnerabilities being disclosed by Nightmare\n Eclipse. The researcher who made a name for himself by\n releasing for example Bluehammer after their bug\n report was rejected by Microsoft's Bug Bounty\n Program. The first vulnerability being released,\n and I think that's the more serious one, is called Yellow\n Key. This particular vulnerability attacks\n BitLocker in a rather effective way. So BitLocker of\n course, well respected disk encryption by Microsoft, but\n it relies on BitLocker actually locking the disk as\n the system is being shut down. And that's the part where\n Yellow Key comes into place by attaching a USB stick to a\n Windows system. And that USB stick must contain very\n specific files. The disk is not locked as the system is\n shut down. And then a user may be able to reboot the system\n into rescue mode and access the still encrypted disk\n without being, well, sort of hindered by any kind of access\n control. Interesting vulnerability and also\n interesting find here. Apparently this was identified\n by reverse engineering some of the Windows binaries. The\n second vulnerability that was disclosed by Nightmare Eclipse\n is Green Plasma. And that's sort of a more universal\n remote privilege escalation vulnerability. It essentially\n just makes memory available to any user that can be used to\n inject DLLs and such. This particular vulnerability is\n not fully implemented in the proof of concept being\n released. So any attacker has to do a little bit more work\n here, but others have already kind of elaborated on how the\n exploit works and how it could mate work given the partial\n proof of concept. So Yellow Key disabled spitlocker and we\n have a full exploit available for it. And Green Plasma is,\n well, yet another privilege escalation flaw. And we only\n have a partial proof of concept, at least released by\n Nightmare Eclipse at this point. And then we'll talk a\n little bit about Adobe vulnerabilities that were\n patched yesterday. I didn't mention them for the patched\n Tuesday update because, well, we had all of these software\n supply chain vulnerabilities to talk about. First, Adobe\n Connect did receive an update that fixed a de-serialization\n vulnerability that can execute arbitrary code. So that one is\n certainly one to pay attention to. And then, well, one of my\n favorite Adobe products when it comes to vulnerabilities,\n Adobe Commerce. We have two critical vulnerabilities here\n that deserve some attention. One is an arbitrary code\n execution vulnerability via cross-site scripting, which is\n sort of interesting. And then we also do have an arbitrary\n file system, right? It says here, improper limitation of\n path name or restricted directory. Well, a path\n traversal vulnerability, which tends to be not that terribly\n difficult to exploit. So definitely get those patches\n out. We got a total of 10 Adobe products being patched\n in this Tuesday's patch Tuesday update from Adobe.\n Well, and that's all we have time for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing to the\n podcast. Remember, there's also a video version on\n YouTube if you prefer that format. That's it for today\n and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9930",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9930",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9930.mp3",
+      "title": "SANS Stormcast Wednesday, May 13th, 2026: Microsoft Patch Tuesday; Large npm/pypi Compromise; Rubygems Attack",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, May 13th, 2026: Microsoft Patch Tuesday; Large npm/pypi Compromise; Rubygems Attack",
+      "show_notes": [
+        {
+          "heading": "Microsoft Patch Tuesday",
+          "links": [
+            "https://isc.sans.edu/diary/32980"
+          ]
+        },
+        {
+          "heading": "Tanstack npm and others compromised",
+          "links": [
+            "https://socket.dev/blog/tanstack-npm-packages-compromised-mini-shai-hulud-supply-chain-attack"
+          ]
+        },
+        {
+          "heading": "Ruby Gems Attack",
+          "links": [
+            "https://x.com/maciejmensfeld/status/2054164602577940619"
+          ]
+        }
+      ],
+      "published": "2026-05-13T03:05:02+00:00",
+      "duration_seconds": 473,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9930.mp3",
+      "audio_length_bytes": 6628603,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9930",
+      "categories": [
+        "ruby",
+        "gems",
+        "tanstack",
+        "microsoft",
+        "patch",
+        "pypi",
+        "npm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9930",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, May 13, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from San\n Diego, California. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Cybersecurity Leadership. Well today, is Microsoft Patch\n Tuesday. So let's start with a quick summary here. We got a\n total of 137 vulnerabilities being addressed by Microsoft.\n Now this is quite a large number, but in addition to\n this, we actually also got 127 chromium vulnerabilities being\n addressed in Microsoft Edge. Now when it comes to the\n Microsoft vulnerability, so the 137, we had 30 critical\n ones here. That's a fairly large number compared to what\n we saw in the past, but 14 of these 30, so pretty much half\n of them, do not require any customer action because these\n vulnerabilities are vulnerabilities in Microsoft\n Cloud systems. And as such, of course, there's nothing you\n have to do. Microsoft already took care of these for you.\n Now among the remaining critical vulnerabilities,\n there are couples of that caught my eye. One actually\n that I haven't listed in the diary is one in Outlook.\n That's a remote code execution vulnerability that could be\n triggered by just previewing an email, so no attachment\n that you need to open. There is also a vulnerability in the\n Microsoft single sign-on plugin for Jira and\n Confluence. Given all the news we had about supply chain\n issues and such, that's certainly something to watch\n out for. The other one that I thought was kind of\n interesting was remote code execution vulnerability in\n NetLogon. Now the NetLogon service has always been sort\n of a big target, definitely something where, as I post a\n diary, it's worth to spend some AI tokens for, to come up\n with a good exploit, at least from an attacker's point of\n view. So definitely get them patched on sort of the good\n news side here. None of the vulnerabilities that were\n patched this round are already being exploited or disclosed.\n So essentially no zero days this month. Well, usually on\n Patch Tuesday we heavily focus on patches from various\n vendors and, well, the urgencies here always, so\n patch, patch quickly. Today's podcast is a little bit\n different because, well, supply chain attacks appear to\n be escalating. Socket.dev has a blog post with the latest\n series of what they call Mini Shai-Hulud, sort of part of\n that TeamPCP ecosystem. So these attacks have extremely\n escalated over the last couple days across both NPM and PyPi.\n So both JavaScript and Python are affected here. Initially\n there were 84 compromised packages of TanStack. TanStack\n has millions of downloads, so it's one of the very popular\n NPM packages. But sadly, well, it didn't stay with TanStack.\n We then immediately got additional packages being\n affected here. And I'm just scrolling through some of\n them. Mr. Alley and OpenSearch. OpenSearch is one\n of the real big ones here that got affected, particularly\n when it comes to NPM. Guardrails, AI, another big\n packages. A lot of AdSqualk packages got affected by this\n latest set of attacks. So we literally have dozens and\n dozens of packages being compromised and more being\n added all the time. Because, well, what the compromise does\n then is it does actually exfiltrate more credentials\n from more GitHub repositories. More GitHub accounts are being\n compromised. And, well, with that the attack is just\n spreading. Apparently, the initial entry point here when\n it comes to TanStack was a GitHub action where a\n malicious actor submitted a pull request. And then the\n GitHub action basically sort of ran through the usual\n checks of the pull request, which also included running\n the code. And in doing so, well, some of the credentials\n here were compromised and that then led to the compromise of\n TanStack. There are also some versions of these supply chain\n compromised in the last few days where the attacker\n exfiltrated or assigned himself malicious tokens. And\n with these credentials then, well, basically spread more\n malicious code. But they also then put a little time bomb\n into the developer systems that basically wipes the\n system if the developer does attempt to actually revoke\n those tokens. So be careful if you're affected by any of\n this. And I have seen some reputable sources recommend\n not to patch any in particular NPM packages for the next\n couple of days. Maybe should be extended to PyPi.\n Personally, I'm a little bit ambivalent about this, but you\n definitely have to be careful. And, well, basically read in\n particular the socket.dev blog post, which has a lot of hints\n on, first of all, how to secure yourself better and how\n to detect if you're affected. By this most recent\n compromise. But sadly, well, it's not just NPM and Python\n that is affected by these types of attacks. There's also\n a separate wave of attacks apparently hitting Ruby.\n RubyGems announced that they are currently pausing signups\n for new accounts because they're flooded as posts on\n XStates by hundreds of malicious packages. Some\n attacks against RubyGems, but also some just containing\n outright malicious codes and exploits. So that's why they\n basically just paused submissions, paused new\n signups for now in order to deal with filtering and\n basically defending against these attacks they're\n currently seeing.\n So in short, well, that's why you should be careful for at\n least the next couple of days, but probably going forward\n with updating software components. And for now, if\n there is no urgent vulnerability that you need to\n address, you should probably just stick with the version\n that you have right now. Again, this affects at least\n NPM and PyPi. But as we see with RubyGems, there are other\n languages also being affected by these types of attacks. And\n it's not just a TeamPCP and the Mini-Shai-Hulud kind of\n attacks, but there's a variety of different attacks going on.\n Those are just the big ones that sort of make the news.\n Well, this is it for today. So thanks for listening. Thanks\n for liking. Thanks for subscribing. And thanks for\n any feedback about the content that I've sort of received\n over the time for this podcast. Always really helpful\n and very much appreciated. So thanks and talk to you again\n tomorrow. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9928",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9928",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9928.mp3",
+      "title": "SANS Stormcast Tuesday, May 12th, 2026: Apple Patches; Encrypted RCS; CAPTCHAs; Checkmarx vs TeamPCP;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, May 12th, 2026: Apple Patches; Encrypted RCS; CAPTCHAs; Checkmarx vs TeamPCP;",
+      "show_notes": [
+        {
+          "heading": "Apple Patches Everything",
+          "links": [
+            "https://isc.sans.edu/diary/Apple%20Patches%20Everything/32976"
+          ]
+        },
+        {
+          "heading": "End-to-End Encrypted RCS Messages",
+          "links": [
+            "https://www.apple.com/newsroom/2026/05/end-to-end-encrypted-rcs-messaging-begins-rolling-out-today-in-beta/"
+          ]
+        },
+        {
+          "heading": "Why we use CAPTCHAs",
+          "links": [
+            "https://isc.sans.edu/diary/Why%20we%20use%20CAPTCHAs/32974"
+          ]
+        },
+        {
+          "heading": "Checkmarx Jenkins AST plugin compromise",
+          "links": [
+            "https://checkmarx.com/blog/ongoing-security-updates/"
+          ]
+        }
+      ],
+      "published": "2026-05-12T03:15:10+00:00",
+      "duration_seconds": 356,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9928.mp3",
+      "audio_length_bytes": 4983369,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9928",
+      "categories": [
+        "checkmarx",
+        "jenkins",
+        "captcha",
+        "rcs",
+        "apple",
+        "ios"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9928",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday May 12, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from San Diego,\n California. And this episode is brought to you by the SANS\n .edu graduate certificate program in penetration testing\n and ethical hacking. Today we got, well, one of Apple's\n typical patch days. And now Apple does not have a regular\n patch schedule. This particular update was kind of\n expected for this week. Not sure if anybody really\n predicted Monday as being the patch day for Apple. It again\n affects pretty much all of their operating system and\n fixes about 80 different flaws. The flaws are not\n really all that remarkable. It's your usual mix kind of\n for Apple. Also, based on sort of what we sort of\n historically get from Apple, the number of patches is just\n about average. So there is no sign of like any inflation as\n we have seen in some cases with AI generated patch\n vulnerability reports. For iOS, iPadOS, you'll get\n updates for the 26 as well as for the 18 version. So the\n current and the next to current version from macOS, it\n goes back to versions. So all the way to macOS Sonoma 14,\n tvOS, watchOS and VisionOS only get updates for the\n current version of the operating system. In addition\n to the security updates, there's of course always a\n number of features that are being updated with these sort\n of in-between operating system releases from Apple. There is\n one particular feature that is kind of interest from a\n security point of view, and that's end-to-end encrypted\n RCS messaging. RCS is the standard that's supposed to\n eventually replace SMS, and initial versions released by\n Apple and Google were more focusing on some of the\n usability issues, like for example markup and the like.\n But of course, one of the big problems with SMS from a\n security point of view is that there's no authentication and\n no encryption. While Apple is not fixing that with this\n update in iOS, now RCS messages can be end-to-end\n encrypted if you're either using two iPhones on the\n latest version of iOS, or if you're using iOS on one side\n and then an Android phone on the other side with the latest\n version of Google Messenger, which also supports this\n encrypted RCS standard. There should be a small lock icon\n and the word encrypted that you'll see sort of in your\n messaging window. From my point of view, this is a real\n nice feature to have, but usability of course is always\n kind of an issue here. How well it's communicated to the\n user, whether or not a particular connection is\n encrypted or not encrypted. And there's certainly a chance\n that things will sort of flip forth and back, in particular\n since not all carriers are supporting this feature. Both\n ends of the connection also must use a carrier that\n actually supports end-to-end encrypted RCS messages. And a\n few months ago, I did implement captchas on a couple\n of sort of data intense pages on our website, in part\n because bots really sort of caused some performance issues\n on the site. So I figured it's a good time now to go back to\n see how well the captchas worked. And well, no surprise,\n they do appear to block most, if not all, bots. And yes, as\n a result, out of 300 requests to some of these data intense\n pages like our IP info page, well, only one request\n actually passes the bot filter. There are a couple of\n IP addresses I list in the diary that sort of stick out\n for the number of requests we are receiving for them, given\n that even after several months now and these particular bots\n don't really get any results from the page, it kind of\n tells you that they're not really looking that closely,\n that if their bots are actually still working, which\n kind of also means that these bots are super cheap for them\n to run. And just as a side note here, we do of course\n offer our data for free for download. We just ask that you\n use the API. So another thing, well, it's easier for you if\n you use the API and don't screen scrape off our IP info\n page and the like. But well, it's also easier for us to\n actually give you the data via the API. So please use it.\n Checkmarx is continuing its battle with Team PCP this\n weekend. Team PCP apparently published a modified version\n of the Checkmarx Jenkins AST plugin to the Jenkins\n Marketplace. And well, this download was available from\n Saturday to Sunday. So if you downloaded it, definitely pay\n attention. And if you're using the Jenkins AST plugin, then\n please take a quick look at the Checkmarx Advisory\n because it has additional ways to identify any potential\n malicious download like checksums and the like in case\n you aren't sure when your particular version was\n downloaded. Well, this is it for today. Thanks for\n listening. Thanks for liking. Thanks for subscribing. And as\n always, special thanks for any feedback and good reviews on\n your favorite podcast platform. Thanks and talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9926",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9926",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9926.mp3",
+      "title": "SANS Stormcast Monday, May 11th, 2026: New Linux Priv Escalation; PAM Backdoors; CPanel Updates; Let\u2019s Encrypt",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, May 11th, 2026: New Linux Priv Escalation; PAM Backdoors; CPanel Updates; Let\u2019s Encrypt",
+      "show_notes": [
+        {
+          "heading": "Another Universal Linux Local Privilege Escalation (LPE) Vulnerability: Dirty Frag",
+          "links": [
+            "https://isc.sans.edu/diary/Another%20Universal%20Linux%20Local%20Privilege%20Escalation%20%28LPE%29%20Vulnerability%3A%20Dirty%20Frag/32968"
+          ]
+        },
+        {
+          "heading": "PAM Backdoors Steel Passwords",
+          "links": [
+            "https://flare.io/learn/resources/blog/pamdoora-new-linux-pam-based-backdoor-sale-dark-web"
+          ]
+        },
+        {
+          "heading": "CPanel Updates",
+          "links": [
+            "https://support.cpanel.net/hc/en-us/sections/360007088193-Security"
+          ]
+        },
+        {
+          "heading": "Let s Encrypt Briefly Halts Certificate Issuance",
+          "links": [
+            "https://letsencrypt.status.io"
+          ]
+        }
+      ],
+      "published": "2026-05-11T02:15:11+00:00",
+      "duration_seconds": 418,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9926.mp3",
+      "audio_length_bytes": 5852660,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9926",
+      "categories": [
+        "certificates",
+        "lets encrypt",
+        "cpanel",
+        "pam",
+        "backdoor",
+        "linux",
+        "privilege escalation",
+        "dirty frag",
+        "copy fail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9926",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday May 11th, 2026 edition\n of the SANS Internet Stormcenter StormCast. My name is Johannes\n Ullrich, recording today from San Diego, California. And\n today's episode is brought to you by the sans.edu\n undergraduate certificate program in Applied Cyber\n Security. Yes, and once people start looking for a certain\n type of flaw, well, we of course get more and more of\n them in the news. We now have a second Linux pro-watch\n escalation vulnerability that again affects pretty much any\n Linux distribution out there going back to 2017. So about\n nine years back, which pretty much covers everything at this\n point. The problem with this vulnerability is again a\n kernel driver, just like what we had with copy-fail.\n Actually, there are some similarities with this copy\n -fail vulnerability. This one has its own name, its own\n logo, dirty frag. And this vulnerability relies on two\n different vulnerable kernel modules. So both must be\n present in order for the vulnerability to be exploited.\n One is the RPCRX module. This module is used for some file\n systems like AFS, for example. The AFS implementation for\n Linux does use the RPCRX module. The second module is\n actually really two, but either one works. ESP4 and 6,\n well, they're part of the ESP protocol, so IPSec. In my\n opinion, it's probably safer to disable the ESP modules.\n You can just unload them and with that prevent\n exploitation, just because it's easier to figure out if\n you're using IPSec or not. While the RPCRX module could\n be a little bit more difficult to figure out which sort of\n other functionality on a particular system actually\n takes advantage of this module. So if you're not doing\n IPSec, you know, even if you're doing VPNs, if you're\n doing a VPN other than IPSec, you don't need the ESP\n modules. So in this case, just disable them or unload them.\n Probably just keep them unloaded. Who knows? There may\n be other vulnerabilities that have yet to be discovered. You\n know, always reduce your attack surface if you don't\n use IPSec. And researchers at Flare wrote up a blog post\n rediscovering that PAM, the Plugable Authorization Modules\n in Linux, can be used to introduce backdoors. Nothing\n fundamentally new, but still a good reminder that this\n happens. So with all these vulnerabilities in Linux we're\n talking about, of course, the next question is what is the\n attacker going to do next? And this may certainly be a point\n to attack once you have root access to a system where you\n are modifying some of the PAM drivers or even just the\n configurations to either introduce backdoors or in this\n case actually capture SSH passwords. This of course is\n not a problem if you are using SSH secret keys because, well,\n the secret keys are never sent to the system. So as a result\n any modification to PAM would not actually capture the\n secret keys. Well, it could still again, you know,\n introduce a backdoor and that can be really difficult to\n detect unless you recognize that these PAM modules have\n been tampered with. So take a look at the blog post and see\n what they have to say about the detection part in\n particular. And after you recently had a big issue with\n cPanel vulnerabilities, well, just a reminder that cPanel\n late last week released another update fixing three\n vulnerabilities. None of them is as critical as what we have\n seen a few weeks ago that was widely exploited. Here the\n worst one is an arbitrary code execution vulnerability, but\n it already does require some significant privileges in\n order to be able to actually execute and exploit this\n vulnerability. So I don't see this as something that you\n have to patch right now. But the probably another\n opportunity to make sure that you are patching cPanel if\n you're using this software and if possible have that somehow\n automated. And on Friday, Let's Encrypt did briefly stop\n issuing new certificates. And now in their status update,\n they called that this was due to a potential incident, which\n of course is often sort of code for breach. But that\n apparently is not what's happening here. Let's Encrypt\n is currently in the process of moving from generation X to\n generation Y. This is sort of how they identify the\n different versions of their environment. Well, this new\n version of course used then different signing certificates\n and apparently some of the cross signing wasn't done\n correctly, which led them to suspend the issuing of\n certificates until they basically could roll back or\n fix this particular problem. Now, this did currently not\n affect the environment that issues most certificates. It\n was more for the short lift and more experimental sort of\n environments and staging environments at this point.\n However, on May 13th, so I think that's Wednesday, they\n will switch over the life environment. So in case you\n see any hiccups there with Let's Encrypt, well, that may\n be part of the problem, but everything appears to be\n working fine right now, even for the sort of more short\n lift like a TLS server, TLS client environments. All of\n that seems to be working fine right now. Well, and this is\n it for today. So thanks for listening. Thanks for liking.\n I am, as I introduced in San Diego this week, I'll be\n giving a talk in the evening here if anybody's interested.\n I think it's Wednesday, but I'll have to double check when\n the talk will be. If you're interested, well, let me know.\n Don't just show up, but if you're in the area, we can\n probably arrange for you if you want to attend a talk. The\n talk is about Internet Storm Center. Well, and that's it\n for today. Thanks and talk to you again tomorrow. Bye. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9924",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9924",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9924.mp3",
+      "title": "SANS Stormcast Friday, May 8th, 2026: AI Generated Dashboard; Ivanti Patches; Redis Vuln; @sans_edu Marcio Enriquez",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, May 8th, 2026: AI Generated Dashboard; Ivanti Patches; Redis Vuln; @sans_edu Marcio Enriquez",
+      "show_notes": [
+        {
+          "heading": "An Adaptive Cyber Analytics UI for Web Honeypot Logs",
+          "links": [
+            "https://isc.sans.edu/diary/An%20Adaptive%20Cyber%20Analytics%20UI%20for%20Web%20Honeypot%20Logs%20%5BGuest%20Diary%5D/32962"
+          ]
+        },
+        {
+          "heading": "Ivanti May Patchday",
+          "links": [
+            "https://hub.ivanti.com/s/article/May-2026-Security-Advisory-Ivanti-Endpoint-Manager-Mobile-EPMM-Multiple-CVEs"
+          ]
+        },
+        {
+          "heading": "Redis Security advisory: [CVE 2026 23479] [CVE 2026 25243] [CVE-2026-25588] [CVE 2026 25589] [CVE-2026-23631]",
+          "links": [
+            "https://redis.io/blog/security-advisory-cve202623479-cve202625243-cve-2026-25588-cve202625589-cve-2026-23631/"
+          ]
+        },
+        {
+          "heading": "@sans_edu research paper: Marcio Enriquez",
+          "links": []
+        },
+        {
+          "heading": "[link will be added once the paper has been published]",
+          "links": []
+        }
+      ],
+      "published": "2026-05-08T02:00:02+00:00",
+      "duration_seconds": 894,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9924.mp3",
+      "audio_length_bytes": 12516572,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9924",
+      "categories": [
+        "redis",
+        "ivanti",
+        "honepot",
+        "ui",
+        "llm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9924",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, May 8, 2026 edition of\n the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Credit Certificate Program in Cybersecurity Engineering. In\n diaries today, we had another diary by one of our\n undergraduate interns, in this case, Eric Roldan wrote about\n how to create better sort of analytics UIs to analyze\n HoneyPod logs. And of course, this can be adopted to other\n types of logs too. A problem with all these dashboards and\n such is often that they're too static. You may have created\n them years ago or such for a particular problem you had\n back then, but they often aren't sort of adjusted very\n frequently to really sort of point out what's new and\n what's interesting in the data. So what Eric did here is\n Eric wrote a Python script that will first of all\n summarize all the data and create a summarized version in\n a standardized format. And then, well, Eric, as the kids\n do it these days, sent AI after the data and had AI\n Claude, in this case, create a dashboard to display the data.\n And I'm actually quite impressed with the different\n dashboards that Claude came up with here. So there are some\n generic security dashboards that have things that you\n would sort of expect. Things like, you know, how many ports\n scanned, how many requests we had, different time series and\n the like. But then there are also sort of some things like,\n you know, what are, for example, the big actors and\n then what are those actors doing? So essentially a\n dashboard that will just summarize the traffic for a\n particular actor or for a particular vulnerability\n that's being exploited. So yes, lots of classic\n dashboards have these kind of features, but of course having\n the simplicity of creating, essentially vibe coding these\n dashboards, I think makes a lot of sense. And like I said,\n kind of impressed by the output that was generated\n using this particular approach. Let's continue with\n some vulnerabilities. Ivanti had its monthly patch day, so\n for May, and it fixed a number of vulnerabilities. One I want\n to point out here is, and that's a vulnerability that's\n already exploited in the wild. However, in order to exploit\n it, an attacker must first have admin credentials. And as\n Ivanti points out here, that they patched some\n vulnerabilities in their January update that would gain\n access to those credentials. And back then they rightfully\n recommended that you swap and rotate your credentials. So if\n you haven't done that yet, well, this puts you at more\n risk of more persistent exploitation of your devices.\n So two things you should do here. Number one, apply the\n patches. And then of course, double check that you recently\n rotated your credentials on your Ivanti endpoint manager\n mobile devices. That's what's being affected here. Ivanti\n also published a blog post that sort of went with this\n security bulletin and stated that they're now, well, and\n everybody does really use more AI tools in order to find new\n vulnerabilities. They are having some initial success.\n And basically they're just highlighting that yes, in the\n next couple of months, you may see more vulnerabilities being\n patched. But in some ways, it's actually a good thing\n that Ivanti is using these tools and not just now waiting\n for some researchers kind of to report the vulnerabilities\n to them, but instead proactively is going out and\n trying to find as many vulnerabilities as they can in\n -house. I talked earlier this week about Google no longer\n really disclosing all the vulnerabilities. Sounds like\n Ivanti is going to disclose all vulnerabilities they find,\n even the ones they find internally using these AI\n tools. Well, users of Redis, be aware there is a patch for\n you. And this patch also fixes a remote code execution\n vulnerability. So definitely something that you want to pay\n attention to. You must have credentials in order to\n exploit it. So it's not a pre -authentication vulnerability.\n Still, in particular with Redis, I often see it exposed\n and sort of credentials being given to various users. So\n something that you should pay attention to as a result. They\n also have a couple of other recommendations which I think\n are really important for many of these NoSQL databases, like\n not allowing direct network access. Find the strongest\n authentication method that you can use for the particular\n database. So also read kind of these footnotes to the\n advisory in addition to patching the vulnerability.\n Well, and it's Friday again and we do have another sans\n .edu student to talk about a research project. Marcio,\n could you introduce yourself please? I'm Marcio Enriquez\n and currently a lead service manager over exposure\n management in one of the Fortune 500 companies and been\n doing cyber security for more than a decade now and IT even\n longer. So very excited to be here. So lots of changes over\n a decade and you sort of covered a cutting edge kind of\n topic, you know, AI and hacks around it. So can you explain\n a little bit what the paper was about? So I wanted to\n focus on something that was relevant and was important to\n what we're experiencing and seeing every day. And so we\n were having a meeting, actually, it was pretty\n interesting. We had a phishing alert come in from one of our\n SOC analyst teams and they're reviewing it and going\n through, but it quickly escalated when they noticed\n that the user that clicked on the phishing email were\n starting to see their identity across all the machines within\n the enterprise. That ultimately led up to the\n manager level. We got on a very important call with\n everybody, including VPs and directors. And we discovered\n that what occurred was Microsoft's automatic attack\n disruption tool. It's an autonomous AI tool that's\n enabled, took these actions without none of us knowing. We\n didn't even know it was enabled. We didn't even know\n that it was running. And we started to dig deeper and we\n noticed that the fidelity was actually pretty good because\n immediately the question from our VP and directors and us\n were, should we turn it off? Right. Because we had taken\n actions that are really disabling a user account. And\n it added the user across the enterprise under the deny\n interactive logon. And it did all this like in a short span\n time, which was really great. And one of our VPs had a\n question. He said, well, could this be used against us? And\n that question really provoked my thought process and thus\n the research topic. I really wanted to dig into that\n question. You know, from a defense perspective, we're\n leveraging IT or AI almost everywhere. Right. Artificial\n intelligence is like the key word to use in all your\n defense mechanism tools, especially autonomously to\n take automated action increases like your mean time\n to respond, mean time to closure or you name it. It\n increases everything that the speed because everything is\n functioning at machine speed. And so my research delve\n around, let's look at these defensive tools and see, could\n they be manipulated in a way that would cause a disruption?\n And thus the topic or the title of my paper, right, is\n introducing the autonomous defense induced disruption,\n ADID, kind of like a mouthful, and how AI driven automated\n response can be manipulated to disrupt enterprise operations.\n And so the experiment focused on that. Really, I worked hard\n on building out a really good lab as close to real as\n possible. E5 trial license, real domain connected to it, a\n bunch of identities, ran a ton of scripts to create personas,\n like a user who mimic a user who's barely logging onto the\n machine, mimic a user that does normal logins, web\n traffic and whatnot, and really made sure that the E5\n license had a lot of telemetry to kind of consume web\n analysis, traffic analysis, created virtual machines, and\n then created an attack network. So just a Kali Linux\n box completely isolated and segmented. And the whole\n purpose was not to check fidelity of the autonomous\n actions that were taken, but more importantly, can we hit\n the triggers that caused the automatic actions to take? Can\n we simulate that to make it force user containment? And\n how far would it go? Yeah, so that reminds me all of the\n good old account lockout after five missed logins. Exactly.\n Password spray is locking everybody up. I think Cisco\n had that feature where it would detect port scans\n internal to internal. Oh, yeah. And then automatically\n block systems. And one of the problems there was if you\n received an email with like lots of image tags that point\n back to an internal IP address with like colon 80, colon 81,\n colon 82, and so on. Yeah, you got it. You could trigger\n that. Oops. That's exactly right. So just by opening the\n email, you would trigger that because now your email client\n goes out to all these ports and that internal IP address\n and triggers it. So in the research, again, you know, in\n the lab environment wasn't focused on like, let's fully\n compromise a system and how to do that. It was more once an\n attacker gets a foothold into like one machine and, you\n know, through open source intelligence, they get a\n handle of usernames or targeting a few users.\n Ultimately, attack disruption, we had about 18 test accounts,\n disabled all 18 accounts. And once I enabled the password\n writeback tool for the hybrid environment, it also locked\n out my domain admin account on the local environment, which\n was a lot of fun to get back into. So, and this showed us\n the kind of like one of the big points, you know, the\n current form of artificial intelligence that we leverage\n today. And this is IBM did a really good job of kind of\n breaking this down was a artificial narrow\n intelligence, you know, meaning that the, all the\n language learning models that we're using, chat GPTs, clods,\n all that, every AI that's currently existing is really\n good at what it's specifically coded or designed to do.\n Meaning contextually, it may not fully comprehend the\n ramifications of its actions. Case in point, a normal\n analyst seeing that the domain admin account is doing\n something malicious may not so quickly disable that account\n without first making sure that we have access back into our\n network. So that contextual knowledge appears to be\n missing. And that was one of the biggest points, right? Is\n a call out to that, a call to action, so to speak, right?\n Let's, we have these tools that we're using, but let's\n make sure that we have the proper guardrails, break glass\n accounts, all the traditional things that we do for any type\n of runbooks that have automatic actions, just to\n ensure we don't get locked out. Yeah. Is there any kind\n of configurability in the tool where you can say, okay, don't\n lock out these accounts or? It was interesting. In the\n beginning of the research, we noticed that there was an\n option by Microsoft where you can input user identities that\n you did not want any actions taken on automatically. But an\n interesting call out is that it's not a requirement to fill\n in a user to have this enabled. So, you know, if you\n don't know to look for it, you would never know that it\n existed. And as my research increased later down the line,\n I noticed that they added a new feature, which was\n interesting for machines, add machines here that you don't\n want containment actions to be taken care of, like your crown\n jewels and things like that. So it's interesting that\n they're starting to exist, which is great. But if you\n don't know to configure them, they're not a requirement for\n having any automatic actions taken. And there's no easy\n undo button or anything like that. Actually, what I had to\n do in order to get back into the infrastructure, right,\n into my own lab environment was I had it. Luckily, I had a\n controlled cloud account in Azure. I had to go in there,\n log in through that and like leverage a live session to\n undo and disable all the actions that were taken by the\n autonomous agents. So the rollback can occur. But if I'm\n targeting anybody just for disruption, I might just\n target the main IT admin you have. What about sort of, you\n know, visibility into what happened? Is there some decent\n logging that will tell you? All the logging is extremely\n well documented. Everything within the XDR is really,\n really great. You'll be able to see all the actions that\n were taken specifically by the autonomous agent. And you can\n roll those back if you see them. And so the bigger point\n of the paper that I wanted to bring out was that you can see\n everything happening, right? Everything you can control\n even like, you know, if you let's say you want to roll a\n few actions back. Those are possible. But the bigger\n danger is that if an adversary were to know what, let's say,\n modern equipment you're using, imagine a Palo Alto or a\n Fortinet with some sort of autonomous blocking on the\n edge, right? And they know that how the system works.\n Documentation is great on how the AI works out there. They\n no longer are trying to hide themselves to cause\n disruption. They're more like, let's purposefully find these\n high yield triggers to make actions taken to force a\n containment that maybe a human would not do that would cause\n high severity disruption. Yeah, thanks for joining me\n here. And there should be a link then in the show notes if\n anybody's interested in the full paper. And yeah, thanks\n everyone for listening and talk to you again on Monday.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9922",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9922",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9922.mp3",
+      "title": "SANS Stormcast Thursday, May 7th, 2026: .DE DNSEC Fail; PAN OS 0-Day Patched;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, May 7th, 2026: .DE DNSEC Fail; PAN OS 0-Day Patched;",
+      "show_notes": [
+        {
+          "heading": "Technical issue with .de domains",
+          "links": [
+            "https://blog.denic.de/en/technical-issue-with-de-domains-resolved/"
+          ]
+        },
+        {
+          "heading": "CVE-2026-0300 PAN-OS: Unauthenticated user initiated Buffer Overflow Vulnerability in User-ID  Authentication Portal",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-0300"
+          ]
+        },
+        {
+          "heading": "Android Security Bulletin May 2026 CVE-2026-0073",
+          "links": [
+            "https://source.android.com/docs/security/bulletin/2026/2026-05-01"
+          ]
+        }
+      ],
+      "published": "2026-05-07T02:00:02+00:00",
+      "duration_seconds": 364,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9922.mp3",
+      "audio_length_bytes": 5103357,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9922",
+      "categories": [
+        "android",
+        "pan-os",
+        "dnssec",
+        ".de"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9922",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, May 7th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in\n cybersecurity fundamentals. Well, it's not DNS. There's no\n way it's DNS. And in the end, it was DNS. This good old DNS\n haiku again became true yesterday with the .de, the\n German country top level domain. Apparently what\n happened here was a DNSSEC issue. DNSSEC, as I have often\n said, is one of those protocols that, well, they\n actually let the security people develop the protocol.\n You always complain that, you know, protocols aren't secure\n enough because security people never sort of get a say in the\n development until it's too late. Well, DNSSEC, I think,\n is an example where it went the other way around. And as a\n result, it's a pretty complex protocol, lots of moving\n parts, lots of things that can go wrong. And then, well, in\n the sense of good security, if it goes wrong, it usually just\n stops working. So it's one of those, you know, fail closed\n kind of systems. And that's kind of what happened here\n with the .de zone. The problem apparently was key rotation.\n Like with all cryptographic systems, you need to rotate\n your keys ever so often, which then also means that you need\n to change signatures. Well, DNSSEC has a mechanism for\n this where you first basically make a new key live. You\n advertise a new key and the old key remains valid and also\n remains accessible. But then you update, start updating\n signatures. Apparently something here went wrong.\n They haven't really released any details yet as to what\n went wrong, whether they made the key live too late or\n whether they signed the new data too early with the new\n key. That's really not available yet. What exactly\n happened here. But the end result was that if you try to\n go to a .de website for several hours last night,\n well, you couldn't resolve it. Now, Cloudflare took an\n interesting step in disabling DNSSEC validation on its\n server. So they basically then flipped the fail open kind of\n switch here and decided that, well, DNSSEC is not really\n important enough that you rather want to go to the\n website and take the risk of maybe have some DNSSEC\n information or DNS information spoofed. Interesting event.\n And certainly here also Cloudflare's behavior, which\n is reasonable. It's understandable. But of course,\n you know, kind of tells you that one of the big problems\n with DNSSEC is that it easily results in denial of service.\n And that, yes, there are threats with spoofing of DNS\n responses, but they're in some ways a lesser issue. And then,\n well, back to sort of our normal diet of vulnerable\n enterprise security devices that are already being\n exploited. This time it's Palo Alto's PanOS that is\n vulnerable. It affects the user ID authentication portal,\n which makes this particular buffer overflow vulnerability\n specifically serious because, well, you go to the user ID\n authentication portal when you're not yet authenticated.\n So this is a pre-authication buffer overflow vulnerability\n that does allow for the execution of arbitrary code.\n They're rating it with a severity of 9.3 on the CVSS\n scale. Patches are available, but Palo Alto also states that\n this vulnerability has already been exploited in, as usual,\n some limited targeted attacks. So if you must expose your\n user ID authentication portal to the public, and there may\n be good reasons for it, after all, it is the authentication\n part of your enterprise sort of security stack here. Well,\n in that case, definitely patch quickly, assume compromise at\n this point, and well, consult with Palo Alto for any details\n like indicators of compromise or other help that they may be\n willing to provide you. And then we also got the monthly\n patches for Android from Google. Interestingly, only\n one critical vulnerability here listed, no other\n vulnerabilities at all. And if you wonder if that's because,\n well, Google took care of all the other vulnerabilities now,\n and we are left only with one vulnerability a month. Google\n actually stated a month or so ago that they're only going to\n list vulnerabilities that they consider, well, critical\n enough to be made known. So there may be other patches\n that are included in this update that are not publicly\n announced like this. Also, Android 13, as of two months\n ago, has officially reached sort of its end of life. So\n you'll no longer get any patches for Android 13 or any\n details on whether or not some of these vulnerabilities apply\n to Android 13. Well, and that's it for today. Thanks\n for listening. Thanks for liking. Thanks for any\n comments. And as always, talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9920",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9920",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9920.mp3",
+      "title": "SANS Stormcast Wednesday, May 6th, 2026: Cleartext Passwords in Edge; SSL.com Root Rotation; DAEMONTOOLS Backdoor;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, May 6th, 2026: Cleartext Passwords in Edge; SSL.com Root Rotation; DAEMONTOOLS Backdoor;",
+      "show_notes": [
+        {
+          "heading": "Cleartext Passwords in MS Edge? In 2026?",
+          "links": [
+            "https://isc.sans.edu/diary/Cleartext%20Passwords%20in%20MS%20Edge%3F%20In%202026%3F/32954"
+          ]
+        },
+        {
+          "heading": "SSL.com rotates its root certificate today",
+          "links": [
+            "https://isc.sans.edu/diary/SSL.com%20rotates%20their%20root%20certificate%20today/32956"
+          ]
+        },
+        {
+          "heading": "DEAMONTOOLS Compromise",
+          "links": [
+            "https://securelist.com/tr/daemon-tools-backdoor/119654/"
+          ]
+        }
+      ],
+      "published": "2026-05-06T02:00:02+00:00",
+      "duration_seconds": 493,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9920.mp3",
+      "audio_length_bytes": 6907336,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9920",
+      "categories": [
+        "daemontools",
+        "supply chain",
+        "ssl.com",
+        "ca",
+        "cleartext",
+        "password",
+        "edge"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9920",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, May 6, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Industrial Control System\n Security. Well, in diaries today, we got two kind of news\n items from Rob. First one affects Microsoft Edge.\n Microsoft Edge manages passwords like all browsers\n pretty much do these days. And well, it stores passwords in\n an encrypted file on your system. However, once you\n start Edge, it will load all of these passwords into the\n browser's memory and decrypt them. Even though you as a\n user have to sort of authenticate yourself for each\n password individually, as you use it to refill these\n passwords into a website, well, the passwords are\n already decrypted in memory. So as Rob points out, this is\n sort of more a little bit security theater. So what's\n the threat here? Well, at first you may say, well, it's\n not really a big deal, because in order to gain access to the\n memory, you have to be logged in as the user. If you are\n having all the privileges of the user, you can probably do\n things like capture keystrokes, load browser\n extensions, and things like this. So you would have access\n to the passwords as they're being used. But the big risk\n here is that attacker can get bulk access to all of your\n passwords, even with timely, very limited access to your\n system. The other problem, of course, is that any kind of\n memory leak and browser sadly are kind of known for them\n could be exploited in order to then gain access to these\n passwords, given the exact nature of the memory leak, of\n course. So that's the real risk here. That's why\n Microsoft probably should do something about it and fixed\n it, even though that they classified it as intended\n behavior as it was reported to Microsoft. Other browsers\n usually do a little bit different and your best bet\n still is to go with a third party password manager. Some\n of them had similar issues in the past, but fixed them\n because well, after all, keeping your password secure,\n that's of the primary mission of a password manager. So they\n tend to be a little bit more detail oriented when it comes\n to protecting your passwords. Second news item here is that\n a zel.com, one of the larger commercial certificate\n authorities is rotating their root certificates today.\n Ideally, nobody really should worry about this and should\n notice it. Typically, whenever you update your operating\n system and such, there are often updated root certificate\n authority files being loaded into your operating system.\n However, well, reality is it depends a little bit on how\n you're managing your root certificates. In particular,\n in the Unix world, there are sometimes several sort of\n certificate authority files that are on your system. Also,\n if you're doing things like mutual TLS or such, you may\n have very specific root certificates. And then in\n particular in mobile applications, many developers\n are these days using certificate pinning or at\n least certificate authority pinning, but they only allow\n certificates from a specific sort of authority to be used\n in order to protect themselves from rogue certificate\n authorities or well, attackers are good at social\n engineering, being able to obtain a certificate to\n impersonate a particular company. So that's why you\n probably should double check and make sure how you're using\n SSL.com certificates if you're using them at all. Again, if\n you're just using them in a browser and if not managing\n any servers using them, then nothing really to worry about.\n Another little site issue here that's not just SSL.com.\n Remember that certificate authorities will now, and I'm\n talking about public server authorities, will no longer\n issue certificates that are server and client certificate.\n Typically, you only get server certificates now. This has\n recently been changed and there's a particular issue if\n you are doing mutual TLS because then, well, if you're\n using the same certificate for the server as well as client\n function, well, you must have both of these properties set\n in your certificate. For mutual TLS, most people are\n using internal certificates, particularly if you're using\n it sort of in a between containers and such in like a\n microservices architecture. So again, shouldn't really worry\n too much. But if you're using any public server authorities\n for some externally exposed mutual TLS purposes, then this\n may be a problem for you. And today's supply chain\n compromise was found by Kaspersky and does affect\n Demon Tools. If you're not familiar with Demon Tools,\n well, the name already sounds a little bit malicious, but\n it's not. It's a set of usually legitimate tools that\n can be used to mount various disk images. They exist for\n Mac and Windows. Kaspersky talks about the Windows\n version. Not sure if the Mac version got compromised too.\n But if you're downloading a version of Demon Tools from\n the legitimate website, you will receive a malicious\n version of Demon Tools, basically a backdoored one\n that is also signed with a legitimate Demon Tools\n certificate. So it looks like a complete compromise of the\n website and their build architecture. Wouldn't be\n surprised if the Mac version has similar malicious code\n embedded, had had a chance to give it a try yet. Once you're\n running the malicious version, it will access a site called\n daemontools.cc. Now the legitimate website for Demon\n Tools is daemon-tools.cc. So very simple here, easy to mix\n up. And I think what's worse is that according to\n Kaspersky, the website and the tools were compromised for\n about a month now. I just before recording this went to\n the Daemon Tools website for any kind of notice update.\n Didn't see anything, but there was also like no news or blog\n or any sort of page like this, where you typically would find\n a notice like this. So not sure if they're aware, not\n sure if the tools have been replaced with safe versions at\n this point. I would treat them still as malicious. And if you\n downloaded Daemon Tools for the last month, sorry, you\n have to double check again. They're just downloading the\n command and the attacker could have then pretty much executed\n any command. Kaspersky is documenting in their blog some\n of the commands that they have seen. And they basically\n installs of the usual information stealer, backdoors\n and the like. So nothing too crazy here necessarily. Well,\n basically just your standard malware at this point. Well,\n that's it for today. Thanks for listening, for liking, for\n commenting on the podcast. And a couple of you also sent a\n little bit of feedback as to what content you would like to\n see more, less of what actually helped you. Always\n really useful. So, you know, also in the future, if there\n is a particular topic that really helped you, let me\n know. Or if there's a topic where you felt that really\n just wasted your time, let me know that too. And I can\n basically pick different topics. The goal here is\n really to make this short and impactful, really help you\n basically have a better day. So thanks and talk to you\n again tomorrow. Bye.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "darknetdiaries-174",
+      "show": "darknetdiaries",
+      "show_name": "Darknet Diaries",
+      "episode_number": "174",
+      "guid": "prx_7057_9912ef67-3bb3-4233-acb9-f9b3eb213180",
+      "title": "174: Pacific Rim",
+      "summary": "For six years, Sophos fought a secret cyber war against a state-backed hacking group targeting its firewalls. This forced Sophos to drastically change tactics to properly secure their firewalls. Was it ethical? Was it effective? They disrupted nine zero-day attacks, exposed who was hacking them, and forced the hackers to change tactics. But at what cost? You have to listen to one of the most audacious corporate cyber defenses ever conducted. Sponsors Support for this show comes from ThreatLocker\u00ae . ThreatLocker\u00ae is a Zero Trust Endpoint Protection Platform that strengthens your infrastructure from the ground up. With ThreatLocker\u00ae Allowlisting and Ringfencing\u2122, you gain a more secure approach to blocking exploits of known and unknown vulnerabilities. ThreatLocker\u00ae provides Zero Trust control at the kernel level that enables you to allow everything you need and block everything else, including ransomware! Learn more at www.threatlocker.com . This show is sponsored by Meter , the company building networks from the ground up. Meter delivers a complete networking stack - wired, wireless, and cellular - in one solution that\u2019s built for performance and scale. Alongside their partners, Meter designs the hardware, writes the firmware, builds the software, manages deployments, and runs support. Learn more at meter.com . Support for this show comes from Drata . Drata is the trust management platform that uses AI-driven automation to modernize governance, risk, and compliance, helping thousands of businesses stay audit-ready and scale securely. Learn more at drata.com/darknetdiaries . Sources https://news.sophos.com/en-us/2024/10/31/pacific-rim-timeline/ https://www.justice.gov/archives/opa/pr/seven-hackers-associated-chinese-government-charged-computer-intrusions-targeting-perceived https://www.fbi.gov/wanted/cyber/guan-tianfeng",
+      "show_notes": [
+        {
+          "heading": "Sponsors",
+          "links": [
+            "https://www.threatlocker.com/",
+            "https://www.meter.com/",
+            "https://drata.com/darknetdiaries"
+          ]
+        },
+        {
+          "heading": "Sources",
+          "links": [
+            "https://news.sophos.com/en-us/2024/10/31/pacific-rim-timeline/",
+            "https://www.justice.gov/archives/opa/pr/seven-hackers-associated-chinese-government-charged-computer-intrusions-targeting-perceived",
+            "https://www.fbi.gov/wanted/cyber/guan-tianfeng"
+          ]
+        }
+      ],
+      "published": "2026-05-05T07:00:00+00:00",
+      "duration_seconds": 5453,
+      "audio_url": "https://www.podtrac.com/pts/redirect.mp3/dovetail.prxu.org/7057/9912ef67-3bb3-4233-acb9-f9b3eb213180/darknet-diaries-ep174-pacific-rim.mp3",
+      "audio_length_bytes": 88912481,
+      "episode_link": "https://darknetdiaries.com/episode/174/",
+      "categories": [],
+      "artwork_url": "https://f.prxu.org/7057/9912ef67-3bb3-4233-acb9-f9b3eb213180/images/2961c3a7-eaf1-47b7-8b23-26a61dddee6e/pushfirewall.jpg",
+      "transcript_url": null,
+      "transcript_format": "vtt",
+      "transcript": null,
+      "transcript_checked": false
+    },
+    {
+      "id": "stormcast-9918",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9918",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9918.mp3",
+      "title": "SANS Stormcast Tuesday, May 5th, 2026: Honeypot Update; MOVEit Patches;  Apache http2 Vuln;",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, May 5th, 2026: Honeypot Update; MOVEit Patches; Apache http2 Vuln;",
+      "show_notes": [
+        {
+          "heading": "DShield Honeypot Update",
+          "links": [
+            "https://isc.sans.edu/diary/DShield%20Honeypot%20Update/32948"
+          ]
+        },
+        {
+          "heading": "MOVEit Automation Critical Security Alert Bulletin   April 2026   (CVE-2026-4670, CVE-2026-5174)",
+          "links": [
+            "https://community.progress.com/s/article/MOVEit-Automation-Critical-Security-Alert-Bulletin-April-2026-CVE-2026-4670-CVE-2026-5174"
+          ]
+        },
+        {
+          "heading": "Apache httpd http2 vulnerability",
+          "links": [
+            "https://seclists.org/oss-sec/2026/q2/387"
+          ]
+        }
+      ],
+      "published": "2026-05-05T02:00:02+00:00",
+      "duration_seconds": 305,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9918.mp3",
+      "audio_length_bytes": 4279213,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9918",
+      "categories": [
+        "http2",
+        "apache",
+        "progress moveit",
+        "honeypot"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9918",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, May 5th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Penetration Testing and\n Ethical Hacking. Well, in Diaries today, I gave a little\n update on the DShield honeypot. I released today a\n version that will actually allow you to run it on the\n latest version of Ubuntu 26.04. There was only one minor\n adjustment I have to make and it only affected the minimum\n install of Ubuntu. So if you have one of the normal server\n installs, well, it should just work out of the box. Before\n you upgrade to Ubuntu 26.04, I realized that some of the base\n utilities of Linux, like Move, RM and the like, they were\n rewritten in Rust in that version. And apparently it had\n actually led to some other vulnerabilities, like some\n time of check, time of use vulnerabilities. So not\n necessarily recommending that you're upgrading to 26.04. And\n for now, we definitely will still support 24.04 in\n particular, since they are so similar. But if you have a new\n 26.04 system, well, the honeypot should just work\n nicely on it. Also making some adjustments to Cowrie. That'll\n take a little bit longer. There was one odd sort of\n encoding issue where some of the API keys weren't used\n correctly. So if you do observe that your SSH and\n Telnet reports are not being reported to us, well, let me\n know and I can walk you through how to fix it. But\n that'll probably come in the next couple of days as an\n official update to the honeypot, including sort of a\n little bit of revamp of Cowrie itself. Cowrie, if you're not\n familiar with it, that's the Python script we're using to\n simulate Telnet and SSH, create a little honeypot and\n definitely a very useful tool for us. And Progress, the\n maker of the file management software, MOVEit, has released\n their April update, fixing two different vulnerabilities. One\n is rated high, one is rated critical. Well, the end result\n is that you have authentication bypass issues.\n Through the service backend command port interfaces, I\n don't think they need to be exposed. So that's something\n to look at to further maybe protect those interfaces,\n those IP addresses from external access. But please\n refer to the details here from Progress on how to properly\n configure MOVEit. I'm not that familiar with this particular\n piece of software. Either way, no real sort of additional\n items here from Progress as to what else you could do but\n patch. So go ahead and patch. The reason I cover this\n software is that in the past it has been used to deploy\n ransomware. So it's certainly on the radar of the bad guys\n and they may already be working on an exploit. And\n then we have an update for the Apache HTTP server. However,\n this update isn't so far significant that it fixes,\n yes, a number of vulnerabilities, but one in\n particular could possibly lead to a remote code execution.\n It's part of the HTTP 2 module. So something that's\n often enabled. However, and that's a big sort of\n constraint here is only one specific version is affected,\n 2466. That's the version prior to today's version, version\n 2467. So only if you downloaded this very specific\n version, which you probably then downloaded from the\n Apache website itself and compiled from source, only\n then you're vulnerable. Most distributions fix themselves\n sort of on a particular version and then just sort of\n apply some bug fixes, security fixes, so they don't appear to\n be vulnerable. Of course, obviously a little bit hard to\n tell what's being backported, not double check that there\n are no Apache updates for your particular Linux distribution.\n But so far, I haven't really seen that affect any\n particular Linux distribution. Well, and that's it for today.\n So thanks for listening and specifically thanks for\n anybody who is like sending me information about what you\n would like to hear more about or less about for that matter.\n It's always a little bit hard to tell what actually is\n actionable for you in these podcasts. So any feedback to\n that effect is highly welcome and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9916",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9916",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9916.mp3",
+      "title": "SANS Stormcast Monday, May 4th, 2026: Malicious Homebrew Ads; Wireshark Update; Digicert False Positive; cPanel Exploited",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, May 4th, 2026: Malicious Homebrew Ads; Wireshark Update; Digicert False Positive; cPanel Exploited",
+      "show_notes": [
+        {
+          "heading": "Malicious Ad for Homebrew Leads to MacSync Stealer",
+          "links": [
+            "https://isc.sans.edu/diary/Malicious%20Ad%20for%20Homebrew%20Leads%20to%20MacSync%20Stealer/32942"
+          ]
+        },
+        {
+          "heading": "Wireshark Update",
+          "links": [
+            "https://www.wireshark.org/docs/relnotes/wireshark-4.6.5.html"
+          ]
+        },
+        {
+          "heading": "Digicert Microsoft Defender False Positive",
+          "links": [
+            "https://www.reddit.com/r/cybersecurity/comments/1t2hfsh/mde_flagging_digi_cert_certificate_as_malicious/",
+            "https://bugzilla.mozilla.org/show_bug.cgi?id=2033170"
+          ]
+        },
+        {
+          "heading": "cPanel Exploited",
+          "links": [
+            "https://support.cpanel.net/hc/en-us/articles/40073787579671-Security-CVE-2026-41940-cPanel-WHM-WP2-Security-Update-04-28-2026"
+          ]
+        }
+      ],
+      "published": "2026-05-04T02:00:02+00:00",
+      "duration_seconds": 466,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9916.mp3",
+      "audio_length_bytes": 6529837,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9916",
+      "categories": [
+        "cpanel",
+        "digicert",
+        "microsoft",
+        "defender",
+        "false positive",
+        "wireshark",
+        "homebrew"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9916",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, May 4th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Industrial Control Systems\n Security. And in diaries today, we got one of the\n excellent malware analysis diaries from Brad. Brad walks\n us here through an infection with MacSync Steeler. Now,\n what makes this particular attack so successful likely is\n that, well, it takes full advantage of the entire Google\n ecosystem. It starts out with a paid ad on Google. If you're\n searching for Homebrew, you may be seeing links for this\n particular malicious version of Homebrew, which is then\n also hosted within Google's pages infrastructure. So the\n only URL you're seeing here is business.google.com, which of\n course is often not considered malicious. Now, if the user\n then clicks on this link, they're then being sent to a\n fake Homebrew page. Now, if you're not familiar with\n Homebrew, Homebrew is essentially a system that\n allows you to easily install various open source tools. So\n it's very commonly used by Mac users. And the page here looks\n very much like the real thing, only that this one, of course,\n is hosted within sites.google .com. Now, just like in the\n real Homebrew, you're then being asked to sort of copy\n paste shell script in order to execute the installer. Now,\n the real version is not obfuscated like the one here.\n Here, you're then basically pasting a base64 encoded\n string that then leads to execution and will then\n download additional tools, including the malware in the\n end. Now, there are a number of different warnings that you\n are probably getting. So definitely something that's\n not low friction, really. But then again, it's still fairly\n easy for a victim to overlook this and go through with the\n install of this MacSync Steeler. As often, Brad has\n released all the packet captures and, of course, links\n to various tools and such that are being downloaded here on\n VirusTotal. The initial script is not well detected. It may\n get detected by this sort of new click fix fixed that Apple\n has implemented. But of course, that depends on how\n you're using your system. If you're routinely copy pasting\n into the terminal, then this may not trigger here. Since\n these tools are particular for users that often use the\n terminal and such, it is probably not going to get\n detected here on many systems. And then, of course, many of\n the malware pieces that are being downloaded here are\n hosted on, well, legitimate websites that are just\n compromised. Well, then we have a new version of\n Wireshark 4.6.5. I usually don't sort of highlight new\n releases of Wireshark. They often do fix vulnerabilities.\n What's different about this release? Well, actually, two\n things are sort of different here. Number one, that this\n particular version does include fixes for\n vulnerabilities discovered recently by AI tools the\n developers used. So we have a total of 43 different\n vulnerabilities being addressed here. Some of these\n vulnerabilities may be exploitable for code\n execution. So definitely something that you want to\n take care of. Now, I usually don't like it when products\n release sort of a big security update like this. And then\n they also make some changes sort of to the UI. In this\n particular case, I sort of actually understand it. They\n changed the startup page a little bit and added sort of a\n more prominent ad for Shark Fest, which is sort of a\n conference that the Wireshark people are running, and also a\n donation button. And I have to admit, I've been using\n Wireshark probably just sort of since it came out, like in\n the late 90s, definitely when it was still called Etherreal\n back in the day, and wasn't even aware that they were\n looking for donations. And it's such a useful tool. So if\n you're using it regularly, well, give them a little bit\n money to support the development. And this weekend,\n there were multiple reports that Microsoft Defender for\n Endpoint did mark certain sort of authority certificates from\n DigiCert as malicious and removed them in some cases\n from systems. So these were pre-installed sort of\n authority certificates. And this was quickly dismissed\n sort of as false positive, which it was, but there is a\n little bit more to the story that I just want to point out.\n So in this particular case, DigiCert did file a bug report\n with the sort of authority program. Now, a bug report\n here is really just meant sort of to communicate any issues\n with the sort of authority program. It's not necessarily\n sort of a classic bug. In this case, it was actually a\n compromise of DigiCert. Some systems within DigiCert got\n compromised by malware, and the 60 different certificates\n were issued by the malicious actor and subsequently then\n revoked. All of these certificates were signed by\n these sort of authority certificates that are now\n being here marked as malicious. It's likely more\n sort of a mistake on Microsoft's and that they\n marked these sort of authority certificates as malicious, not\n the individual certificates. Again, the revocation, if it\n worked, should have taken care of these 60 certificates by\n now, hopefully anyway, even though the latest update here\n was just a couple days ago. Actually, a pretty good bug\n report because an interesting compromise here in that some\n of the endpoint defenses that DigiCert here had in place had\n failed. And for anybody running cPanel to manage their\n servers, be aware there is an already widely exploited\n vulnerability going around here, compromising cPanel.\n Patches have been released, so please now refer to the cPanel\n .net page for any details regarding the patch. cPanel,\n as far as I know, has an auto update feature that should\n protect you here, but please double check since, yes, the\n exploit is widely available. So definitely it's one of\n those cases where you want to assume compromise if you have\n cPanel exposed. cPanel is particular sort of problematic\n because it's often used by virtual hosting companies and\n such to provide customers access to servers. So a\n particular cPanel instance may have a large number of\n different websites behind and they are now all exposed due\n to this vulnerability. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing. And as always, talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
+      "id": "stormcast-9914",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "9914",
+      "guid": "https://traffic.libsyn.com/securitypodcast/9914.mp3",
+      "title": "SANS Stormcast Friday, May 1st, 2026: Libredtail; FreeBSD dhclient vuln; Linux Copy-Fail; @sans_edu Detecting AI Pickling",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, May 1st, 2026: Libredtail; FreeBSD dhclient vuln; Linux Copy-Fail; @sans_edu Detecting AI Pickling",
+      "show_notes": [
+        {
+          "heading": "Danger of Libredtail",
+          "links": [
+            "https://isc.sans.edu/diary/Danger%20of%20Libredtail%20%5BGuest%20Diary%5D/32936"
+          ]
+        },
+        {
+          "heading": "FreeBSD dhclient vulnerability",
+          "links": [
+            "https://www.freebsd.org/security/advisories/FreeBSD-SA-26:12.dhclient.asc"
+          ]
+        },
+        {
+          "heading": "Linux Copy-Fail Vulnerability CVE-2026-31431",
+          "links": [
+            "https://copy.fail"
+          ]
+        },
+        {
+          "heading": "Bryan Nice Research Paper",
+          "links": [
+            "https://www.linkedin.com/in/bryannice/",
+            "https://www.sans.edu/cyber-research/detecting-ai-pickling"
+          ]
+        }
+      ],
+      "published": "2026-05-01T02:00:02+00:00",
+      "duration_seconds": 882,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/9914.mp3",
+      "audio_length_bytes": 12351578,
+      "episode_link": "https://isc.sans.edu/podcastdetail/9914",
+      "categories": [
+        "sans.edu",
+        "linux",
+        "copy-fail",
+        "freebsd",
+        "danger",
+        "libredtail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9914",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday May 1st, 2026 edition\n of the SANS Internet Storm Centers Stormcast. My name is\n Johannes Ulrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Cybersecurity Leadership.\n Well, and we do have another diary by one of our\n undergraduate interns, James Roberts, is writing about\n Redtail. Now, Redtail is usually known as a malware\n that installs crypto coin miners via SSH. So typical\n password brute forcing, trying some weak passwords in order\n to figure out what gets them in. And then they're taking\n over various devices, servers and such to install their\n crypto miner. But what James is talking about is not so\n much the SH part of this malware. Well, they are also\n attempting to exploit web application vulnerabilities,\n in particular, some older web application vulnerabilities\n like PHP unit flaws or some older like PHP directory\n traversal and remote code execution flaws if PHP is run\n as a CGI on Windows. So a lot of these flaws are older or\n often only affect some home window systems, experimental\n systems, death systems and the like. This may a little bit be\n part of the strategy here where they are also going\n after these older vulnerabilities just because\n they typically happen in less monitored systems. So their\n malware is more likely going to survive. The problem with\n this, of course, is that they're probably not the first\n one to find these vulnerable systems. James is summarizing\n some of his findings here where these attacks are coming\n from and what particular vulnerabilities and such\n they're exploiting. If you do find a crypto coin miner of\n any kind on your system, remember, it typically\n indicates that you have an easily exploitable\n vulnerability and it's hardly ever the only malware that you\n find. Quite often you have multiple crypto coin miners\n kind of fighting for dominance. But of course,\n there may be other things running that are less visible\n as well. Then I want to point out a vulnerability that I\n think may not have gotten quite the attention it\n deserves. And that's a vulnerability in dhclient for\n FreeBSD. dhclient is the DHCP client in free BSD. It's\n a default component and this vulnerability allows for\n remote code execution. As part of DHCP, you're able to\n transmit a file name that has been used to basically\n bootstrap the operating system. And that value is then\n written to a lease file. So next time the system starts\n before it actually gets DHCP lease, it can use that lease\n file to basically get started with networking. The problem\n is that this boot file name is not escaped properly. So\n commands can be injected into the lease file that will then\n be executing once that file is being read. This\n vulnerability, of course, is only exploitable if you're on\n the same subnet because you have to basically be able to\n spoof the DHCP server. But once you are on the same\n subnet, this is not all that difficult to exploit. The one\n reason I think why this is more severe than it may look\n like after all, you know, free BSD is not that sort of one of\n the most used operating systems out there, but it is\n often used in, for example, firewall systems, routers and\n the like. That's where you often find free BSD and those\n devices are of course often also quite vulnerable to\n spoofed DHCP messages. So that's why I think this\n deserves some attention and as usual always make sure sort of\n once a week that you're still running the latest firmware\n for your favorite firewall or router. Well, let's move on to\n a vulnerability that a lot of people are talking about and\n that's the copy fail vulnerability in Linux. Now,\n this is a recently discovered privilege escalation flaw in\n Linux and what makes this particular vulnerability so\n interesting is that first of all, it's easy and reliable to\n exploit and secondly, it affects all recent Linux\n kernels and with that all recently published Linux\n distributions. On the other hand, it is just a privilege\n escalation of vulnerability and privilege escalation\n vulnerabilities tend to be always around and any sort of\n no pentester and particular more advanced attackers\n typically have a couple of privilege escalation\n vulnerabilities on hand that they tend to use. Also, many\n configuration errors being made on systems can lead to\n privilege escalation. So that's why I wouldn't sort of\n overrate this vulnerability. Where, however, it does become\n a much bigger deal is if you are for example running a\n shared hosting environments and you have well unrelated or\n worse competing users on one system then of course\n privilege escalation may become a bigger deal. Well,\n there is a working privilege escalation exploit out that\n takes advantage of this vulnerability. The XINT code\n has published the details about vulnerability including\n the proof of concept that works quite reliable. At this\n point, I haven't seen a lot of patches from major\n distributions yet but I assume they will be coming shortly. A\n patch has been committed to the Linux kernel but of\n course, well, not everybody compiles their own kernel and\n those who don't shouldn't definitely start doing so now\n but wait a couple days and hopefully it's not much longer\n for updated kernels to be offered for your favorite\n Linux distribution. The root cause here is a problem where\n an attacker is able to basically overwrite some of\n the cryptographic results. The vulnerable code here is in the\n crypto primitives for Linux and they of course are then\n used to do things like verify where requests come from and\n do authentication and access control decisions and that's\n sort of how this becomes a privilege escalation\n vulnerability. Well, and today is Friday and Fridays we do\n also have often some science edu students talk about their\n research. With me today I have Brian. Brian, could you\n introduce yourself please? Brian, my name is Brian Nice.\n I'm a technical leader that's been working in healthcare and\n life sciences space for over a decade and focused on security\n engineering and stuff with respects to AI you know is\n innovation being brought in to those kinds of organizations\n and how to do it safely without creating adverse\n events that may impact patients. Can you tell us a\n little bit about what your paper was about? So my paper\n was focused on looking at how organizations can pull AI from\n model hubs in order to reuse it inside the organizations\n that you know from a data science perspective trying to\n innovate you know interventions or treatments\n for potential you know patients and stuff like that\n inside organizations. One of the kind of problematic nature\n of like any kind of open source you have to think about\n the of the data science that we have to offer supply chain\n and respects if like an attacker maybe have pushed\n code or something malicious inside of the AI model that an\n organization like a healthcare organization may have\n inadvertently brought in and exposed kind of like a\n vulnerability that may cause an adverse event. And the\n language and one of the other reasons I come from prompted\n that was also because Python is predominantly a used\n language in this space as well which is also known for having\n kind of that attack surface. After all the supply chain\n events that we had recently in particular around Python of\n course this is a current topic. You dealing with\n healthcare of course are in a specifically challenging\n environment. Why Python? Why did you select Python here as\n the focus of your research? Well, well for one, I mean,\n you know, everything has a trade off on there, but like\n Python in general is an open source. It's an interpretive\n language on there. There's a lot of libraries that are\n produced on there. And kind of also one of the standards\n that's predominantly used for people who built AI models,\n you know, as a data scientist is using the pickle based\n format. Pickle based format, you know, has some\n vulnerabilities with kind of what they call the op codes\n that, you know, an attacker can hook in malicious code\n like a command and control or fire off something else on\n there. So it's not, it's not necessarily focusing on model\n weights, but the way that some backdoor process can get fired\n off from that, that's something that may not be\n detectable on there. And one of the other reasons that\n that's there is that because pickle files use what's called\n a pickle virtual machine. And then, and so how it\n instantiates, it starts to fire off all these things on\n there. So even if you inspect a pickle based file, you know,\n without kind of like really digging into it from like a\n forensics perspective, you may have actually much delicious\n code inside of that when you just spawned it up to, you\n know, run as a service to do inferences on. So in some way,\n it really comes down to the good old deserialization issue\n that an object isn't just data, it's also code. So\n similar pickle files. Now I've seen in some of these machine\n learning frameworks where you can import a model using the\n weights only option. Does this help you? Is this efficient to\n prevent any of these attacks? Well, that's the kind of the\n issue is like if weights are stored in a pickle based file,\n right? So it, you know, because it was originally made\n to kind of help, you know, make a part of artifacts\n reproducible kind of thing and to run it, right? And the\n model weights were packaged inside of this, which kind of\n compress it down. That's kind of the issue. It's not\n necessarily. So even if you separate it from like the\n algorithm or the code that the configuration, you still have\n how the weights are stored. And if you're using pickle\n based formats, that pickle based formats have hooks that\n you can put code inside of that that gets fired off. So\n is this why we do sometimes have these vulnerabilities in\n libraries like PyTorch, where even if you use weights only,\n code execution is still possible? Are there some\n models also where, well, it just won't work with weights\n only because they legitimately use some of the code? They're\n taking advantage of the fact that they can inject code that\n runs because, again, when it deserializes, it uses the\n pickle virtual machine that fires off on that. So you have\n to treat pickle based files, even though it's intended or\n was intended to be a way of storing data or the weights of\n a model. But it does code as well. So your research looked\n into detecting the malicious code in pickle files or what\n aspect of this problem did you tackle? So what I was more\n interested in is like, OK, you know, great. The whole\n ecosystem is there and we're aware of that. But how is the\n performance of like scanning tools from a static code\n analysis? Because I want to be, you know, the idea is if\n I'm bringing it into an organization, I want to do a\n sort of kind of a certification process. What\n are the current scanning tools that exist and what was the\n performance in relation for them to one, identify, you\n know, true positives versus false positives? And, you\n know, in true negatives versus false negatives kind of thing\n across these tools from a static perspective. So I want\n to be able to interrogate without instantiating and see\n if there is like a way of kind of from a gate control\n perspective, be able to detect that and be able to prevent\n from like a model with malicious code coming into an\n organization. Well, and of course, the obvious next\n question is, did it work or what did you find? Well, there\n was across four tools and at least my experiment, there was\n divergent results on that. So there was inconsistency like\n some of them. So the tools that I looked at were\n fickling, model scan, pickle tools, and I'm not recalling\n the fourth one, but they had divergent results. Some of\n them flagged false positives on, you know, models that were\n safe because I created baseline models. And other\n ones were flagging the poison models that I generated after\n I altered them as, you know, false negatives kind of thing.\n So it was like, oh, you know. And so the thing to be mindful\n of is like, you know, you can't just implement a tool.\n You have to be mindful of like making to verify that it is\n catching those things when you're doing a static\n perspective. But also it prompts to like potentially\n you may have to do like multi -tool verification just to\n kind of triangulate to make sure that you've got good\n coverage on that. So it sounds like you implement a little\n bit that virus total approach by combining the output of\n multiple scanning tools. Yeah. Are you implementing of this\n in your day job right now? Yes. It is a kind of\n reproducible framework for kind of playing, you know,\n some of the clients that we work with in public health and\n healthcare kind of clients on that. You know, especially\n since we had the rise of like, or, you know, the desire of\n like responsible AI, which I think this is like more of the\n physical controls that's associated to that. Again, in\n healthcare, you know, the thing that we want to be\n mindful of is like, yes, we want innovation because it's\n ultimately driving better outcomes for people. But also\n when we're leveraging innovation is that making sure\n the right kind of controls are there. So that way an adverse\n event from an attack that is prompted by an attacker\n doesn't actually manifest. Excellent talking to you,\n Brian. And thanks for joining me here. We will add a link to\n the paper to the show notes. So please refer to all the\n details here that Brian discusses in the full paper.\n Thanks and talk to you again on Monday. Bye. Bye. Bye.\n Thank you.",
+      "transcript_checked": true
+    }
+  ]
+}

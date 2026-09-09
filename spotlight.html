@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>THE SIGNAL — Spotlight Dossier</title>
+<style>
+  :root {
+    --ink: #05070a;
+    --ink-raised: #10151d;
+    --ink-input: #0d1219;
+    --line: #1e2733;
+    --text: #d7dde5;
+    --text-dim: #7d8998;
+    --amber: #ffb020;
+    --red: #ff5c5c;
+    --blue: #5ac8ff;
+    --green: #4fd58a;
+    --purple: #c792ea;
+    --teal: #2dd4bf;
+    --orange: #ff9f4a;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--ink); }
+  body { font-family: var(--font-mono); color: var(--text); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .stage {
+    position: fixed; inset: 0; overflow: hidden;
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 20%, #16202f 0%, #05070a 60%),
+      var(--ink);
+    -webkit-user-select: none; user-select: none;
+  }
+  .stage::before {
+    content: ""; position: absolute; inset: -20% 0; pointer-events: none; z-index: 30;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode: overlay;
+    animation: scandrift 9s linear infinite;
+  }
+  @keyframes scandrift { from { transform: translateY(0); } to { transform: translateY(24px); } }
+  .stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 31;
+    box-shadow: inset 0 0 140px rgba(0,0,0,0.75);
+  }
+
+  .progress-bar {
+    position: absolute; top: max(10px, env(safe-area-inset-top)); left: 12px; right: 12px; z-index: 22;
+    display: flex; gap: 4px;
+  }
+  .seg { flex: 1; height: 3px; background: rgba(255,255,255,0.15); border-radius: 1px; overflow: hidden; }
+  .seg-fill { height: 100%; width: 0%; background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+  .topbar {
+    position: absolute; top: calc(max(10px, env(safe-area-inset-top)) + 12px); left: 12px; right: 12px; z-index: 22;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  /* exit-link and stamp are fixed-size chrome; only the case-id block (which
+     already wraps its own text to 2 lines) should ever shrink for space —
+     without flex-shrink:0 here, a long case-id line squeezes exit-link down
+     to a sliver via the flex default instead of wrapping the middle column. */
+  .exit-link {
+    flex: 0 0 auto;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-decoration: none;
+    border: 1px solid var(--line); background: rgba(10,14,20,0.7); padding: 6px 10px; letter-spacing: 0.04em;
+    max-width: 34vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .exit-link:hover { color: var(--red); border-color: var(--red); }
+  .case-id-wrap { flex: 1 1 auto; min-width: 0; }
+  .case-id {
+    font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.08em; text-align: center;
+    text-transform: uppercase;
+  }
+  .paused-flag {
+    font-size: 9px; color: var(--amber); letter-spacing: 0.1em; margin-top: 3px; opacity: 0;
+    text-align: center; transition: opacity 0.2s ease;
+  }
+  .paused-flag.on { opacity: 1; }
+  .stamp {
+    flex: 0 0 auto;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; color: var(--red);
+    border: 2px solid var(--red); padding: 3px 7px; transform: rotate(-6deg); opacity: 0.75;
+    text-align: center; line-height: 1.3; white-space: nowrap;
+  }
+
+  .slides { position: absolute; inset: 0; z-index: 10; }
+  /* .slide is a plain block scroll container — NOT itself a flex box with
+     justify-content:center, which combined with overflow:auto makes the
+     start of overflowing content unreachable by scroll in most browsers.
+     Centering happens on .slide-inner instead, which has no fixed height
+     so it simply grows (no centering bug) once content exceeds one screen. */
+  .slide {
+    position: absolute; inset: 0; display: none;
+    padding: 92px 22px 64px; overflow-y: auto;
+  }
+  .slide.active { display: block; animation: slideIn 0.35s ease; }
+  /* Top-aligned, not centered: slide content heights vary a lot (a two-line
+     summary vs. a full CVE record with CWEs/vendors/references), and
+     vertical centering made the title jump to a different y-position on
+     every slide as the block's height changed. Fixing everything to the
+     top keeps the title anchored in the same place across the carousel. */
+  .slide-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: flex-start; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 0.14em; color: var(--amber); margin-bottom: 16px; opacity: 0.9;
+  }
+  .section-label::before { content: "// "; opacity: 0.6; }
+  .subhead {
+    font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 8px; text-transform: uppercase;
+  }
+
+  /* redaction-reveal motif for headline text */
+  .redact { position: relative; display: inline-block; }
+  .redact::after {
+    content: ""; position: absolute; inset: -2px -4px; background: #05070a; transform-origin: right;
+  }
+  .slide.active .redact::after { animation: declassify 0.55s ease forwards; animation-delay: 0.2s; }
+  @keyframes declassify { to { transform: scaleX(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .redact::after { transform: scaleX(0); }
+  }
+
+  /* --- digest slide-kind labels: the digest mixes feed items, CVEs, APT
+     group teasers and ransomware victims in one carousel, so each slide
+     needs an immediate, plain-language "what am I looking at" cue. --- */
+  .kind-tag {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); padding: 4px 9px; margin-bottom: 10px;
+  }
+  .kind-tag.feed { background: var(--blue); }
+  .kind-tag.cve { background: var(--red); }
+  .kind-tag.group { background: var(--purple); }
+  .kind-tag.victim { background: var(--teal); }
+  .kind-tag.negotiation-group { background: var(--green); }
+  .kind-tag.breach { background: var(--amber); }
+  .kind-tag.podcast { background: var(--orange); }
+
+  .claimed-by {
+    display: flex; align-items: center; gap: 8px; border: 1px solid var(--red); background: rgba(255,92,92,0.08);
+    color: var(--text); padding: 9px 12px; margin-bottom: 14px; font-size: 13px;
+  }
+  .claimed-by .cb-icon { color: var(--red); font-size: 15px; flex: 0 0 auto; }
+  .claimed-by b { font-family: var(--font-sans); font-weight: 700; }
+
+  /* --- title slide --- */
+  .case-number { font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .slide-inner h1 {
+    font-family: var(--font-sans); font-size: clamp(28px, 8vw, 44px); margin: 0 0 12px; line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag-chip {
+    font-size: 10.5px; color: var(--text-dim); border: 1px solid var(--line); padding: 4px 9px;
+    letter-spacing: 0.03em;
+  }
+  .flag-chip { font-size: 13px; }
+
+  .gauge-wrap { margin: 18px 0 16px; }
+  .gauge-label { font-size: 10.5px; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 6px; }
+  .gauge-label b { color: var(--gauge-color, var(--amber)); }
+  .gauge-track { height: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--line); position: relative; }
+  .gauge-track::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(10% - 1px), rgba(255,255,255,0.15) 10%);
+  }
+  .gauge-fill { height: 100%; width: 0%; background: var(--gauge-color, var(--amber)); box-shadow: 0 0 10px var(--gauge-color, var(--amber)); }
+  .gauge-caption { font-size: 9.5px; color: var(--text-dim); margin-top: 6px; opacity: 0.8; }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .badge {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--amber);
+    border: 1px solid var(--amber); padding: 5px 9px; background: rgba(255,176,32,0.08);
+  }
+
+  /* --- origin / profile slide --- */
+  .dossier-text {
+    font-family: var(--font-sans); font-size: 15px; line-height: 1.7; color: var(--text);
+    white-space: pre-line; max-width: 60ch;
+  }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+  .meta-cell { border: 1px solid var(--line); padding: 10px 12px; }
+  .meta-cell span { display: block; font-size: 9.5px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 4px; }
+  .meta-cell b { font-family: var(--font-sans); font-size: 14px; }
+
+  /* --- coverage / scan slide --- */
+  .scan-list { display: flex; flex-direction: column; gap: 4px; }
+  .scan-row {
+    display: grid; grid-template-columns: 1fr 34px; align-items: center; gap: 10px; font-size: 11px;
+    width: 100%; padding: 6px 0;
+  }
+  button.scan-row {
+    background: none; border: none; color: inherit; font-family: inherit; cursor: pointer; text-align: left;
+  }
+  .scan-row .sname { color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .scan-row.hit .sname { color: var(--text); }
+  button.scan-row.hit .sname::after { content: " ▾"; color: var(--teal); font-size: 9px; }
+  .scan-row .strack { height: 6px; background: rgba(255,255,255,0.06); margin-top: 3px; }
+  .scan-row .sfill { height: 100%; width: 0%; background: var(--teal); box-shadow: 0 0 6px var(--teal); transition: width 0.5s ease; }
+  .scan-row .scount { text-align: right; color: var(--text-dim); font-size: 10px; }
+  .scan-detail { padding: 2px 0 10px 2px; }
+  .scan-detail[hidden] { display: none; }
+
+  .chip {
+    font-size: 11px; padding: 5px 10px; background: var(--ink-input); border: 1px solid var(--line);
+    color: var(--text); text-decoration: none; display: inline-block;
+  }
+  .chip:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* --- arsenal slide --- */
+  .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .asset-card {
+    text-align: left; background: var(--ink-raised); border: 1px solid var(--line); border-left: 2px solid var(--purple);
+    color: var(--text); font-family: var(--font-mono); padding: 9px 10px; cursor: pointer;
+  }
+  .asset-card .aid { font-size: 9px; color: var(--text-dim); }
+  .asset-card .aname { font-size: 12px; font-weight: 600; margin-top: 2px; }
+  .asset-card .adesc { font-size: 10.5px; color: var(--text-dim); margin-top: 6px; line-height: 1.45; display: none; }
+  .asset-card.expanded .adesc { display: block; }
+  .asset-card.expanded { border-left-color: var(--amber); }
+  .zoom-link {
+    display: inline-block; margin-top: 8px; font-size: 10px; color: var(--amber); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .zoom-link:hover { text-decoration: underline; }
+  .zoom-link.stacked { display: block; }
+
+  /* --- campaigns / timeline slide --- */
+  .timeline { position: relative; padding-left: 18px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; }
+  .tl-entry { position: relative; }
+  .tl-entry::before {
+    content: ""; position: absolute; left: -22.5px; top: 3px; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red); box-shadow: 0 0 6px var(--red);
+  }
+  .tl-year { font-size: 10px; color: var(--red); letter-spacing: 0.08em; margin-bottom: 3px; }
+  .tl-name { font-family: var(--font-sans); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .tl-desc { font-size: 12px; color: var(--text-dim); line-height: 1.55; max-width: 56ch; }
+
+  /* --- connections / used-by slide --- */
+  .orbit-wrap { position: relative; height: 130px; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; }
+  .orbit-center {
+    width: 14px; height: 14px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 14px var(--amber); z-index: 1;
+  }
+  .orbit-ring { position: absolute; inset: 0; animation: spin 16s linear infinite; }
+  .orbit-ring.rev { animation-direction: reverse; animation-duration: 22s; }
+  .orbit-dot {
+    position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue); box-shadow: 0 0 6px var(--blue);
+    transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a)));
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .associate-list { display: flex; flex-direction: column; gap: 8px; }
+  .associate-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: var(--ink-raised); border: 1px solid var(--line); border-left: 2px solid var(--blue);
+    padding: 10px 12px; text-decoration: none; color: var(--text);
+  }
+  .associate-row:hover { border-left-color: var(--amber); }
+  .ar-name { font-family: var(--font-sans); font-size: 13.5px; font-weight: 600; }
+  .ar-score { font-size: 10px; color: var(--text-dim); white-space: nowrap; }
+
+  /* --- defense slide --- */
+  .counter-list { display: flex; flex-direction: column; gap: 14px; }
+  .counter-entry { display: grid; grid-template-columns: 30px 1fr; gap: 12px; }
+  .cnum { font-size: 16px; color: var(--green); font-weight: 700; opacity: 0.8; }
+  .cname { font-family: var(--font-sans); font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .cdesc { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; max-width: 56ch; }
+
+  /* --- CVE digest slide --- */
+  .kev-box { border: 1px solid var(--red); padding: 10px 12px; font-size: 12px; line-height: 1.55; color: var(--text); margin: 14px 0; }
+  .kev-box .kb-label { color: var(--red); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .ref-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .ref-list a { color: var(--blue); font-size: 11.5px; word-break: break-all; }
+
+  /* --- nav --- */
+  /* purely a visual/documentation region — pointer-events:none so it never
+     shadows interactive elements inside the active slide underneath it;
+     navigation is decided by tap x-position in the #stage pointer handler */
+  .tap-zone { position: absolute; top: 88px; bottom: 96px; z-index: 15; pointer-events: none; }
+  .tap-left { left: 0; width: 30%; }
+  .tap-right { right: 0; width: 70%; }
+  .hint {
+    position: absolute; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 56px); left: 0; right: 0; z-index: 22;
+    text-align: center; font-size: 10px; color: var(--text-dim); opacity: 0.7; pointer-events: none;
+    letter-spacing: 0.04em;
+  }
+  .hint.suppressed { display: none; }
+
+  /* A slide-specific outbound link (currently: feed items) — fixed in the
+     same footer slot .hint normally occupies (swapped in for it, see
+     updateReadArticleButton) rather than living inline in the slide's own
+     content flow. Inline was the original approach, but a summary's length
+     varies slide to slide, so the link landed at a different y-position
+     every time — easy to fat-finger while tapping through the carousel.
+     Anchoring it here fixes its position across every slide instead. */
+  .read-article-btn {
+    position: absolute; left: 50%; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 56px); z-index: 24;
+    transform: translateX(-50%);
+    display: none; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--blue);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--blue); padding: 8px 14px;
+    text-decoration: none; white-space: nowrap;
+  }
+  .read-article-btn.visible { display: inline-flex; }
+  .read-article-btn:hover { background: var(--blue); color: var(--ink); }
+
+  /* Explicit, persistent pause/resume control — takes precedence over every
+     touch/tap gesture (see manualPauseLock in the script). A big, unambiguous
+     target for readers who don't want to rely on landing a double-tap. */
+  .pause-btn {
+    position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 24;
+    transform: translateX(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(16,21,29,0.92); border: 2px solid var(--amber); color: var(--amber);
+    font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 0 16px rgba(255,176,32,0.25);
+  }
+  .pause-btn:hover { filter: brightness(1.15); }
+  .pause-btn.active { border-color: var(--red); color: var(--red); box-shadow: 0 0 16px rgba(255,92,92,0.35); }
+
+  /* Reading-speed control — cycles Normal / Slow / Slowest, adding 5s per
+     step to every slide's auto-advance duration. Persisted per-device so a
+     reader's chosen pace sticks across visits. */
+  .speed-btn {
+    position: absolute; right: 14px; bottom: max(18px, calc(env(safe-area-inset-bottom) + 6px)); z-index: 24;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--line); padding: 7px 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .speed-btn:hover { color: var(--text); border-color: var(--text-dim); }
+  .speed-btn.slow { color: var(--blue); border-color: var(--blue); }
+  .speed-btn.slowest { color: var(--teal); border-color: var(--teal); }
+
+  /* The shared Stormcast player (sp-bar, injected below) is fixed at the
+     true viewport bottom, but pause-btn/speed-btn/hint are positioned
+     relative to #stage rather than in normal document flow, so body padding
+     alone won't move them — shift them up using the --sp-bar-height custom
+     property the player's own JS keeps in sync (0px when the bar is hidden,
+     so this is a no-op until something's actually playing). */
+  .pause-btn { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .speed-btn { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .hint { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .read-article-btn { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  .podcast-listen-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--ink);
+    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+    border: none; padding: 12px 18px; cursor: pointer; margin-top: 6px;
+  }
+  .podcast-listen-btn:hover { filter: brightness(1.08); }
+  .podcast-listen-btn.playing { background: var(--ink-raised); color: var(--orange); border: 1px solid var(--orange); }
+
+  .empty-target {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 24px; z-index: 20;
+  }
+  .empty-target a { color: var(--amber); }
+
+  /* --- negotiation replay: a scrolling chat log instead of a slide deck.
+     Navigation here is browser scroll, not swipe, so tap-zones/hint are
+     hidden for this mode via .negotiation-mode on #stage. --- */
+  .negotiation-mode .tap-zone, .negotiation-mode .hint, .negotiation-mode .read-article-btn { display: none; }
+  /* Setting overflow-y without an explicit overflow-x lets the CSS overflow
+     spec compute overflow-x as "auto" too (not "visible"), so a bubble with
+     one long unbroken token (a hash, a URL) could open up a horizontal
+     scrollbar for the whole chat — overflow-x: hidden plus word-break on the
+     bubble text closes both ends of that. CONTROL_CLEARANCE_PX in the script
+     below must stay in sync with this padding-bottom — it's how far a
+     revealed message is kept clear of the pause/speed buttons, which float
+     on top of this scroll area rather than taking up their own layout space. */
+  .chat-scroll { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; z-index: 10; padding: 92px 16px 140px; }
+  .chat-msg {
+    display: flex; flex-direction: column; max-width: 82%; margin-bottom: 16px;
+    opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .chat-msg.visible { opacity: 1; transform: translateY(0); }
+  .chat-msg.them { align-items: flex-start; margin-right: auto; }
+  .chat-msg.victim { align-items: flex-end; margin-left: auto; }
+  .chat-bubble {
+    padding: 10px 13px; font-size: 13.5px; line-height: 1.55; white-space: pre-line;
+    font-family: var(--font-sans); overflow-wrap: anywhere; word-break: break-word;
+    border-radius: 16px;
+  }
+  .chat-msg.them .chat-bubble { background: rgba(255,92,92,0.1); border: 1px solid var(--red); color: var(--text); border-bottom-left-radius: 4px; }
+  .chat-msg.victim .chat-bubble { background: rgba(90,200,255,0.1); border: 1px solid var(--blue); color: var(--text); border-bottom-right-radius: 4px; }
+  .chat-meta {
+    font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); margin-top: 5px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .chat-end {
+    text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
+    letter-spacing: 0.1em; opacity: 0; transition: opacity 0.4s ease; padding: 8px 0 4px;
+  }
+  .chat-end.visible { opacity: 0.75; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  /* ---------- stormcast player (3-stage bottom sheet) ----------
+     Stage 1 = mini bar, stage 2 = standard controls, stage 3 = + notes/transcript.
+     This whole block, plus its HTML and the "sp-player.js"-equivalent script
+     section, is intentionally identical across every page on the site (see
+     the shared player docs in README) so a session started on one page can
+     be restored — same look, same behavior — on any other. */
+  body { transition: padding-bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .sp-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; max-width: 920px; margin: 0 auto;
+    background: linear-gradient(180deg, #141b26 0%, var(--ink-raised) 40%);
+    border-top: 1px solid var(--line); border-radius: 14px 14px 0 0;
+    box-shadow: 0 -12px 32px rgba(0,0,0,0.5);
+  }
+  .sp-bar[hidden] { display: none; }
+
+  /* The handle IS the expand/collapse control — a full-width tap/drag strip
+     with a deliberately large chevron button, not just a decorative pill, so
+     there's always an obvious click target even where dragging isn't wired
+     (desktop) or someone would rather not drag at all. */
+  .sp-handle { display: flex; justify-content: center; align-items: center; height: 34px; cursor: grab; touch-action: none; }
+  .sp-handle:active { cursor: grabbing; }
+  .sp-chevron {
+    width: 44px; height: 26px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); border-radius: 8px; background: var(--ink-input); border: 1px solid var(--line);
+    pointer-events: none; /* the whole .sp-handle row is the target, not just the icon */
+  }
+  .sp-handle:hover .sp-chevron { color: var(--orange); border-color: var(--orange); }
+  .sp-chevron svg { display: block; }
+
+  /* Stage 2/3 content is always in the DOM; height (driven by JS, in px
+     during a drag for 1:1 tracking, then handed back to this transition to
+     ease-settle on release) is what actually shows/hides it — smooth by
+     construction, unlike toggling [hidden] which just pops. */
+  .sp-reveal { overflow: hidden; height: 0; transition: height 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  .sp-header { display: flex; align-items: center; gap: 12px; padding: 2px 18px 8px; }
+  .sp-art {
+    width: 44px; height: 44px; border-radius: 9px; flex: 0 0 auto; object-fit: cover;
+    border: 1px solid var(--line); background: var(--ink-input);
+  }
+  .sp-info { flex: 1 1 auto; min-width: 0; }
+  .sp-title {
+    font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sp-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .sp-icon-btn {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text-dim); border: 1px solid var(--line); cursor: pointer; padding: 0;
+  }
+  .sp-icon-btn:hover { color: var(--orange); border-color: var(--orange); }
+  .sp-icon-btn.active { color: var(--orange); border-color: var(--orange); background: rgba(255,159,74,0.12); }
+  .sp-icon-btn svg { display: block; }
+  .sp-icon-btn[hidden] { display: none; }
+
+  .sp-mini-progress-wrap { height: 3px; background: var(--line); margin: 0 18px 10px; border-radius: 2px; }
+  .sp-mini-progress-wrap[hidden] { display: none; }
+  .sp-mini-progress-fill { height: 100%; width: 0%; background: var(--orange); border-radius: 2px; }
+
+  .sp-seek { display: flex; align-items: center; gap: 10px; padding: 0 18px 4px; }
+  .sp-time { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); flex: 0 0 auto; min-width: 34px; }
+  #sp-time-duration { text-align: right; }
+  #sp-seek-bar {
+    flex: 1 1 auto; appearance: none; height: 5px; border-radius: 3px; background: var(--line); outline: none; accent-color: var(--orange);
+  }
+  #sp-seek-bar::-webkit-slider-thumb {
+    appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--orange); cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+  #sp-seek-bar::-moz-range-thumb {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--orange); border: none; cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(255,159,74,0.18);
+  }
+
+  .sp-transport { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 18px 14px; }
+  .sp-transport-btn {
+    flex: 0 0 auto; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--ink-input); color: var(--text); border: 1px solid var(--line); cursor: pointer; padding: 0;
+    width: 40px; height: 40px; position: relative;
+  }
+  .sp-transport-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .sp-transport-btn svg { display: block; }
+  .sp-transport-btn.sp-primary {
+    width: 54px; height: 54px; background: var(--orange); border-color: var(--orange); color: var(--ink);
+    box-shadow: 0 4px 18px rgba(255,159,74,0.35);
+  }
+  .sp-transport-btn.sp-primary:hover { filter: brightness(1.08); color: var(--ink); border-color: var(--orange); }
+  .sp-skip-label {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; padding-top: 2px; pointer-events: none;
+  }
+  #sp-speed-select {
+    font-family: var(--font-mono); font-size: 10.5px; color: var(--text); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 8px 7px; cursor: pointer; flex: 0 0 auto; min-width: 0;
+  }
+  #sp-speed-select:hover { border-color: var(--orange); color: var(--orange); }
+
+  .sp-details { border-top: 1px solid var(--line); max-height: 46vh; overflow-y: auto; padding: 4px 18px 16px; }
+  .sp-details-tabs { display: flex; gap: 6px; margin: 10px 0 12px; }
+  .sp-details-tab {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); background: var(--ink-input);
+    border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; cursor: pointer;
+  }
+  .sp-details-tab.active { color: var(--orange); border-color: var(--orange); }
+  .sp-note-item { margin-bottom: 12px; }
+  .sp-note-heading { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .sp-note-link { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--blue); text-decoration: none; word-break: break-all; margin-bottom: 2px; }
+  .sp-note-link:hover { text-decoration: underline; }
+  .sp-transcript-text { font-size: 13px; line-height: 1.7; color: var(--text-dim); white-space: pre-line; overflow-wrap: anywhere; }
+  .sp-empty-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); padding: 10px 0; }
+
+  @media (max-width: 380px) {
+    .sp-transport { gap: 6px; }
+    #sp-speed-select { padding: 8px 5px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="topbar">
+      <a class="exit-link no-nav" id="exit-link" href="attack.html">‹ EXIT</a>
+      <div class="case-id-wrap">
+        <div class="case-id" id="case-id">SIGNAL // SPOTLIGHT</div>
+        <div class="paused-flag" id="paused-flag">‖ PAUSED — DOUBLE-TAP TO RESUME</div>
+      </div>
+      <div class="stamp">CLASSIFIED<br>EYES ONLY</div>
+    </div>
+
+    <div class="slides" id="slides"></div>
+    <div class="tap-zone tap-left" id="tap-left"></div>
+    <div class="tap-zone tap-right" id="tap-right"></div>
+    <div class="hint" id="hint">tap right to advance · left to go back · tap an item to inspect</div>
+    <a class="read-article-btn no-nav control-btn" id="read-article-btn" href="#" target="_blank" rel="noopener noreferrer">read full article ↗</a>
+    <button class="pause-btn no-nav control-btn" id="pause-btn" aria-label="Pause auto-advance">‖</button>
+    <button class="speed-btn no-nav control-btn" id="speed-btn" aria-label="Reading speed">◷ NORMAL</button>
+  </div>
+
+
+  <!-- Stormcast player — identical block on every page of the site, see README. -->
+  <div class="sp-bar" id="sp-bar" data-stage="2" hidden>
+    <audio id="sp-audio" preload="metadata"></audio>
+
+    <div class="sp-handle" id="sp-handle" role="button" tabindex="0" aria-label="expand or collapse player">
+      <span class="sp-chevron" id="sp-chevron"></span>
+    </div>
+
+    <div class="sp-header" id="sp-header">
+      <img class="sp-art" id="sp-art" alt="" />
+      <div class="sp-info">
+        <div class="sp-title" id="sp-title">—</div>
+        <div class="sp-meta" id="sp-meta">—</div>
+      </div>
+      <button class="sp-icon-btn" id="sp-mini-play" title="play" aria-label="play"></button>
+      <button class="sp-icon-btn" id="sp-notes-btn" title="show notes &amp; transcript" aria-label="show notes and transcript"></button>
+      <button class="sp-icon-btn" id="sp-close" title="close player" aria-label="close player"></button>
+    </div>
+
+    <div class="sp-mini-progress-wrap" id="sp-mini-progress-wrap"><div class="sp-mini-progress-fill" id="sp-mini-progress-fill"></div></div>
+
+    <div class="sp-reveal" id="sp-reveal-2">
+      <div class="sp-seek" id="sp-seek-row">
+        <span class="sp-time" id="sp-time-current">0:00</span>
+        <input type="range" id="sp-seek-bar" min="0" max="1000" value="0" step="1" aria-label="seek">
+        <span class="sp-time" id="sp-time-duration">0:00</span>
+      </div>
+
+      <div class="sp-transport" id="sp-transport-row">
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-back" title="back 15 seconds" aria-label="back 15 seconds">
+          <span class="sp-skip-label">15</span>
+        </button>
+        <button class="sp-transport-btn sp-primary" id="sp-play-pause" title="play" aria-label="play"></button>
+        <button class="sp-transport-btn sp-skip-btn" id="sp-skip-fwd" title="forward 30 seconds" aria-label="forward 30 seconds">
+          <span class="sp-skip-label">30</span>
+        </button>
+        <select id="sp-speed-select" title="playback speed" aria-label="playback speed">
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+          <option value="1.75">1.75×</option>
+          <option value="2">2×</option>
+        </select>
+        <button class="sp-icon-btn" id="sp-mute-btn" title="mute" aria-label="mute"></button>
+      </div>
+    </div>
+
+    <div class="sp-reveal" id="sp-reveal-3">
+    <div class="sp-details" id="sp-details">
+      <div class="sp-details-tabs">
+        <button class="sp-details-tab active" data-tab="notes">Show notes</button>
+        <button class="sp-details-tab" data-tab="transcript">Transcript</button>
+      </div>
+      <div id="sp-notes-panel"></div>
+      <div id="sp-transcript-panel" hidden></div>
+    </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const SKIP_BACK_S = 15;
+  const SKIP_FWD_S = 30;
+
+  // Stormcast player — a self-contained bottom-sheet component. This exact
+  // block (CSS class prefix "sp-", JS identifier prefix "sp"/"SP_") is
+  // duplicated verbatim on every page of the site so a listening session
+  // started on one page keeps its player visible (and its localStorage-saved
+  // position restorable) after navigating to any other — see README for the
+  // one real limitation that comes with a static multi-page site: playback
+  // itself can't survive an actual page navigation, only its *position* can,
+  // so resuming after a nav takes a tap (or, on browsers whose autoplay
+  // heuristics allow it, resumes on its own).
+  // =====================================================================
+
+  const SP_ARTWORK_URL = "https://isc.sans.edu/images/podcast3000.jpg";
+  const SP_EPISODE_KEY = "signal-podcast-session-episode";
+  const SP_STATE_KEY = "signal-podcast-session-state";
+  const SP_SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+  const SP_ICON = {
+    play: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
+    pause: `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>`,
+    volume: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16.3 12a4.3 4.3 0 0 0-2.4-3.85v7.7A4.3 4.3 0 0 0 16.3 12z"/></svg>`,
+    muted: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19.4 8.5 18 7.1l-2.1 2.1-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1z"/></svg>`,
+    notes: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>`,
+    close: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>`,
+    skipBack: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    skipFwd: `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX(-1)"><path d="M4 12a8 8 0 1 1 2.5 5.8"/><polyline points="4 6 4 12 10 12"/></svg>`,
+    chevronUp: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg>`,
+    chevronDown: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+  };
+
+  const spState = { episode: null };
+  let spStage = 2;
+  let spLastSaveAt = 0;
+  let spReveal2H = 0; // natural (rendered) height of the seek+transport block, in px
+  let spReveal3H = 0; // natural (rendered, already capped at 46vh by .sp-details) height of the notes/transcript block
+  let spChromeH = 0;  // handle + header height — present at every stage, so measured separately from the reveals
+  const SP_MINI_PROGRESS_H = 13; // fixed by CSS (3px bar + 10px bottom margin) — stage-1-only, cheap enough to hardcode rather than measure
+
+  function spEl(id) { return document.getElementById(id); }
+
+  function spFmtDate(iso) {
+    if (!iso) return "unknown date";
+    const d = new Date(iso);
+    return isNaN(d) ? "unknown date" : d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+
+  function spFmtDuration(seconds) {
+    if (seconds == null || !isFinite(seconds)) return "0:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+    const ss = String(s).padStart(2, "0");
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  function spCleanTranscript(text) {
+    return text.replace(/\s+/g, " ").trim();
+  }
+
+  function spEscapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  // ---------- stage (1 = mini, 2 = standard controls, 3 = + notes/transcript) ----------
+
+  // The bar's rendered height is *always* computed analytically from these
+  // independently-measured, stage-invariant pieces — never read live off the
+  // bar itself. A live getBoundingClientRect() taken right after changing a
+  // transitioning element's height reflects wherever the animation happens
+  // to be at that exact instant (in practice: still ~the pre-change value,
+  // since the transition hasn't advanced yet) — that's what made
+  // --sp-bar-height/body padding get stuck a step behind on every stage
+  // change. Computing it from spChromeH/spReveal2H/spReveal3H sidesteps the
+  // race entirely: the target is known the instant a stage change is
+  // requested, with no dependency on animation timing.
+  function spBarHeightForProgress(p) {
+    const h2 = spReveal2H * Math.max(0, Math.min(1, p));
+    const h3 = spReveal3H * Math.max(0, Math.min(1, p - 1));
+    const mini = p < 0.5 ? SP_MINI_PROGRESS_H : 0;
+    return spChromeH + mini + h2 + h3;
+  }
+
+  function spSyncBodyPadding(progress) {
+    const bar = spEl("sp-bar");
+    const p = progress == null ? spStage - 1 : progress;
+    const h = bar.hidden ? 0 : spBarHeightForProgress(p);
+    document.body.style.paddingBottom = bar.hidden ? "" : `${h}px`;
+    // A page can optionally key its own absolutely-positioned chrome off this
+    // (e.g. spotlight.html's floating pause/speed buttons, which aren't in
+    // normal document flow so body padding alone wouldn't move them).
+    document.documentElement.style.setProperty("--sp-bar-height", `${h}px`);
+  }
+
+  // Stage 2/3 content (#sp-reveal-2/#sp-reveal-3) never actually hides — its
+  // wrapper's height animates between 0 and its natural rendered height, so
+  // "expanding" is a real, smooth, continuously-trackable size change rather
+  // than a pop between hidden/visible. Measuring means briefly flipping to
+  // height:auto, reading the box, then restoring — the standard technique for
+  // animating to/from a size CSS can't itself transition. spChromeH (handle +
+  // header) doesn't need this trick since it's never zeroed/hidden.
+  function spMeasureReveals() {
+    const r2 = spEl("sp-reveal-2"), r3 = spEl("sp-reveal-3");
+    const h2 = r2.style.height, h3 = r3.style.height;
+    const t2 = r2.style.transition, t3 = r3.style.transition;
+    r2.style.transition = "none"; r3.style.transition = "none";
+    r2.style.height = "auto"; r3.style.height = "auto";
+    spReveal2H = r2.getBoundingClientRect().height;
+    spReveal3H = r3.getBoundingClientRect().height;
+    r2.style.height = h2; r3.style.height = h3;
+    void r2.offsetHeight; // force reflow before re-enabling the transition
+    r2.style.transition = t2; r3.style.transition = t3;
+    spChromeH = spEl("sp-handle").getBoundingClientRect().height + spEl("sp-header").getBoundingClientRect().height;
+  }
+  let spResizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(spResizeTimer);
+    spResizeTimer = setTimeout(() => { spMeasureReveals(); spApplyStage(spStage); }, 200);
+  });
+
+  function spUpdateChevron() {
+    spEl("sp-chevron").innerHTML = spStage === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+  }
+
+  // The continuous, real-time visual (progress 0=stage1 .. 1=stage2 .. 2=stage3)
+  // driven straight off pointer position during a drag — this is what makes
+  // dragging feel smooth/1:1 instead of "drag, nothing, then a sudden jump,"
+  // and (via spSyncBodyPadding(p)) keeps body padding / --sp-bar-height
+  // tracking the finger in real time too, not just settling correctly at
+  // the end.
+  function spSetRevealProgress(p) {
+    spEl("sp-reveal-2").style.height = `${spReveal2H * Math.max(0, Math.min(1, p))}px`;
+    spEl("sp-reveal-3").style.height = `${spReveal3H * Math.max(0, Math.min(1, p - 1))}px`;
+    const near = p < 0.5 ? 1 : (p < 1.5 ? 2 : 3);
+    spEl("sp-mini-play").hidden = near !== 1;
+    spEl("sp-mini-progress-wrap").hidden = near !== 1;
+    spEl("sp-notes-btn").hidden = near === 1;
+    spEl("sp-chevron").innerHTML = near === 1 ? SP_ICON.chevronUp : SP_ICON.chevronDown;
+    spSyncBodyPadding(p);
+  }
+
+  // The authoritative "settle here" call — sets the exact target heights for
+  // a stage and lets the CSS transition on .sp-reveal ease into them. Used
+  // both for plain stage changes (click/tap) and to finish a drag once
+  // released, at which point spSetRevealProgress has already been driving
+  // the same two heights directly (transitions disabled) for 1:1 tracking.
+  function spApplyStage(n) {
+    spStage = Math.max(1, Math.min(3, n));
+    const bar = spEl("sp-bar");
+    bar.dataset.stage = String(spStage);
+    spEl("sp-reveal-2").style.height = `${spStage >= 2 ? spReveal2H : 0}px`;
+    spEl("sp-reveal-3").style.height = `${spStage >= 3 ? spReveal3H : 0}px`;
+    spEl("sp-mini-play").hidden = spStage !== 1;
+    spEl("sp-mini-progress-wrap").hidden = spStage !== 1;
+    spEl("sp-notes-btn").hidden = spStage === 1;
+    spEl("sp-notes-btn").classList.toggle("active", spStage === 3);
+    spUpdateChevron();
+    spSyncBodyPadding();
+    spSaveState(true);
+  }
+
+  // Drag the handle up/down for continuous, real-time stage tracking (mobile
+  // bottom-sheet layout only — on desktop the bar isn't a sheet sliding up
+  // from the screen edge, so a vertical drag has no obvious meaning there).
+  // A plain tap/click — no real movement — toggles stage 1 ⇄ 2 from *any*
+  // device, and doubles as the "good sized expand/collapse button" the
+  // handle's big chevron visually promises: dragging is a bonus, not the
+  // only way in.
+  function spWireStageGesture() {
+    const handle = spEl("sp-handle");
+    let startY = 0, dragging = false, moved = false, baseP = 1, rafId = null, pendingP = null;
+    const isSheetLayout = () => window.matchMedia("(max-width: 680px)").matches;
+    const DRAG_RANGE = 130; // px of drag == one full stage step
+
+    function flushFrame() {
+      rafId = null;
+      if (pendingP == null) return;
+      spSetRevealProgress(pendingP);
+    }
+
+    handle.addEventListener("pointerdown", (e) => {
+      dragging = true; startY = e.clientY; moved = false; baseP = spStage - 1;
+      try { handle.setPointerCapture(e.pointerId); } catch {}
+    });
+    handle.addEventListener("pointermove", (e) => {
+      if (!dragging || !isSheetLayout()) return;
+      const dy = startY - e.clientY;
+      if (Math.abs(dy) > 6 && !moved) {
+        moved = true;
+        spEl("sp-reveal-2").style.transition = "none";
+        spEl("sp-reveal-3").style.transition = "none";
+      }
+      if (!moved) return;
+      pendingP = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      if (rafId == null) rafId = requestAnimationFrame(flushFrame);
+    });
+    const release = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+      if (!moved) { spApplyStage(spStage === 1 ? 2 : 1); return; }
+      const dy = startY - e.clientY;
+      const p = Math.max(0, Math.min(2, baseP + dy / DRAG_RANGE));
+      spApplyStage(Math.round(p) + 1);
+    };
+    handle.addEventListener("pointerup", release);
+    handle.addEventListener("pointercancel", () => {
+      dragging = false;
+      if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+      spEl("sp-reveal-2").style.transition = "";
+      spEl("sp-reveal-3").style.transition = "";
+    });
+    handle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); spApplyStage(spStage === 1 ? 2 : 1); }
+    });
+  }
+
+  // ---------- session persistence (localStorage, shared across pages) ----------
+
+  function spSaveEpisodeRecord(ep) {
+    try { localStorage.setItem(SP_EPISODE_KEY, JSON.stringify(ep)); } catch {}
+  }
+
+  function spSaveState(immediate) {
+    if (!spState.episode) return;
+    const now = Date.now();
+    if (!immediate && now - spLastSaveAt < 4000) return;
+    spLastSaveAt = now;
+    const audio = spEl("sp-audio");
+    try {
+      localStorage.setItem(SP_STATE_KEY, JSON.stringify({
+        episodeId: spState.episode.id,
+        currentTime: audio.currentTime || 0,
+        playing: !audio.paused,
+        stage: spStage,
+        updatedAt: new Date().toISOString(),
+      }));
+    } catch {}
+  }
+
+  function spClearSession() {
+    try { localStorage.removeItem(SP_EPISODE_KEY); localStorage.removeItem(SP_STATE_KEY); } catch {}
+  }
+
+  function spRestoreSession() {
+    let ep, state;
+    try {
+      ep = JSON.parse(localStorage.getItem(SP_EPISODE_KEY) || "null");
+      state = JSON.parse(localStorage.getItem(SP_STATE_KEY) || "null");
+    } catch { return; }
+    if (!ep || !state || ep.id !== state.episodeId) return;
+    const ageMs = Date.now() - new Date(state.updatedAt || 0).getTime();
+    if (!isFinite(ageMs) || ageMs > SP_SESSION_MAX_AGE_MS) { spClearSession(); return; }
+    spOpenEpisode(ep, { resumeAt: state.currentTime || 0, autoplay: !!state.playing, initialStage: 1 });
+  }
+
+  // ---------- rendering ----------
+
+  function spSetPlayIcon(isPlaying) {
+    const icon = isPlaying ? SP_ICON.pause : SP_ICON.play;
+    spEl("sp-play-pause").innerHTML = icon;
+    spEl("sp-mini-play").innerHTML = icon;
+  }
+
+  function spSetMuteIcon(muted) {
+    spEl("sp-mute-btn").innerHTML = muted ? SP_ICON.muted : SP_ICON.volume;
+  }
+
+  function spRenderDetails(ep) {
+    const notesPanel = spEl("sp-notes-panel");
+    const transcriptPanel = spEl("sp-transcript-panel");
+    notesPanel.innerHTML = (ep.show_notes && ep.show_notes.length)
+      ? ep.show_notes.map(n => `
+          <div class="sp-note-item">
+            <div class="sp-note-heading">${spEscapeHtml(n.heading)}</div>
+            ${(n.links || []).map(u => `<a class="sp-note-link" href="${spEscapeHtml(u)}" target="_blank" rel="noopener noreferrer">${spEscapeHtml(u)}</a>`).join("")}
+          </div>`).join("")
+      : `<div class="sp-empty-note">No show notes recorded for this episode.</div>`;
+    transcriptPanel.innerHTML = ep.transcript
+      ? `<div class="sp-transcript-text">${spEscapeHtml(spCleanTranscript(ep.transcript))}</div>`
+      : `<div class="sp-empty-note">Transcript ${ep.transcript_checked ? "is not available for this episode." : "hasn't been backfilled yet — check back soon."}</div>`;
+    document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "notes"));
+    notesPanel.hidden = false;
+    transcriptPanel.hidden = true;
+  }
+
+  function spSetupMediaSession(ep) {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: ep.title,
+      artist: ep.show_name || "SANS ISC Stormcast",
+      album: ep.show_name || "Stormcast",
+      // "sizes" is just a hint for choosing among multiple artwork options —
+      // harmless to leave generic since only one image is ever provided here,
+      // and actual per-episode art (Darknet Diaries has its own per episode)
+      // isn't a fixed, knowable dimension the way Stormcast's fixed image is.
+      artwork: [{ src: ep.artwork_url || SP_ARTWORK_URL, sizes: "512x512", type: "image/jpeg" }],
+    });
+    const audio = spEl("sp-audio");
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+    navigator.mediaSession.setActionHandler("seekbackward", (d) => {
+      audio.currentTime = Math.max(0, audio.currentTime - (d.seekOffset || SKIP_BACK_S));
+    });
+    navigator.mediaSession.setActionHandler("seekforward", (d) => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + (d.seekOffset || SKIP_FWD_S));
+    });
+    try {
+      navigator.mediaSession.setActionHandler("seekto", (d) => {
+        if (d.fastSeek && "fastSeek" in audio) { audio.fastSeek(d.seekTime); return; }
+        audio.currentTime = d.seekTime;
+      });
+    } catch {}
+    // The lock screen / notification "stop" control is one of the two
+    // explicit ways this player is allowed to fully close (the other is the
+    // ✕ in the bar itself) — everything else (navigating away, a drag down
+    // to stage 1) only ever collapses it, never ends the session.
+    navigator.mediaSession.setActionHandler("stop", () => spCloseFully());
+  }
+
+  function spUpdatePositionState() {
+    const audio = spEl("sp-audio");
+    if ("mediaSession" in navigator && "setPositionState" in navigator.mediaSession && audio.duration && isFinite(audio.duration)) {
+      try {
+        navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime });
+      } catch {}
+    }
+  }
+
+  function spOpenEpisode(ep, { resumeAt = 0, autoplay = true, initialStage = 2 } = {}) {
+    spState.episode = ep;
+    const audio = spEl("sp-audio");
+    audio.src = ep.audio_url;
+
+    const savedRate = parseFloat(localStorage.getItem("signal-podcast-rate") || "1");
+    audio.playbackRate = isNaN(savedRate) ? 1 : savedRate;
+    spEl("sp-speed-select").value = String(audio.playbackRate);
+    audio.muted = localStorage.getItem("signal-podcast-muted") === "1";
+    spSetMuteIcon(audio.muted);
+
+    spEl("sp-bar").hidden = false;
+    spEl("sp-art").src = ep.artwork_url || SP_ARTWORK_URL;
+    spEl("sp-title").textContent = ep.title;
+    spEl("sp-meta").textContent =
+      `${ep.show_name ? ep.show_name + " · " : ""}${ep.episode_number ? "#" + ep.episode_number + " · " : ""}${spFmtDate(ep.published)}`
+      + `${(ep.categories || []).length ? " · " + ep.categories.slice(0, 4).join(", ") : ""}`;
+    spRenderDetails(ep);
+    spMeasureReveals();
+    spApplyStage(initialStage);
+    spSetupMediaSession(ep);
+    spSaveEpisodeRecord(ep);
+
+    const onMeta = () => {
+      if (resumeAt > 0) audio.currentTime = resumeAt;
+      if (autoplay) audio.play().catch((err) => console.warn("stormcast player: autoplay blocked", err));
+      spSaveState(true);
+      audio.removeEventListener("loadedmetadata", onMeta);
+    };
+    audio.addEventListener("loadedmetadata", onMeta);
+
+    if (typeof render === "function") render();
+  }
+
+  function spCloseFully() {
+    const audio = spEl("sp-audio");
+    audio.pause();
+    audio.src = "";
+    spState.episode = null;
+    spEl("sp-bar").hidden = true;
+    spSyncBodyPadding();
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = null;
+      try { navigator.mediaSession.playbackState = "none"; } catch {}
+    }
+    spClearSession();
+    if (typeof render === "function") render();
+  }
+
+  function spWirePlayer() {
+    const audio = spEl("sp-audio");
+    const seekBar = spEl("sp-seek-bar");
+    const playBtn = spEl("sp-play-pause");
+    const miniPlayBtn = spEl("sp-mini-play");
+    const muteBtn = spEl("sp-mute-btn");
+    const speedSelect = spEl("sp-speed-select");
+    const notesBtn = spEl("sp-notes-btn");
+    const closeBtn = spEl("sp-close");
+
+    spEl("sp-skip-back").insertAdjacentHTML("afterbegin", SP_ICON.skipBack);
+    spEl("sp-skip-fwd").insertAdjacentHTML("afterbegin", SP_ICON.skipFwd);
+    playBtn.innerHTML = SP_ICON.play;
+    miniPlayBtn.innerHTML = SP_ICON.play;
+    notesBtn.innerHTML = SP_ICON.notes;
+    closeBtn.innerHTML = SP_ICON.close;
+
+    const togglePlay = () => { if (audio.paused) audio.play(); else audio.pause(); };
+    playBtn.addEventListener("click", togglePlay);
+    miniPlayBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePlay(); });
+
+    spEl("sp-skip-back").addEventListener("click", () => {
+      audio.currentTime = Math.max(0, audio.currentTime - SKIP_BACK_S);
+    });
+    spEl("sp-skip-fwd").addEventListener("click", () => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + SKIP_FWD_S);
+    });
+    speedSelect.addEventListener("change", (e) => {
+      const rate = parseFloat(e.target.value);
+      audio.playbackRate = rate;
+      try { localStorage.setItem("signal-podcast-rate", String(rate)); } catch {}
+    });
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      spSetMuteIcon(audio.muted);
+      try { localStorage.setItem("signal-podcast-muted", audio.muted ? "1" : "0"); } catch {}
+    });
+    seekBar.addEventListener("input", () => {
+      if (audio.duration) audio.currentTime = (seekBar.value / 1000) * audio.duration;
+    });
+    notesBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      spApplyStage(spStage === 3 ? 2 : 3);
+    });
+    document.querySelectorAll(".sp-details-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".sp-details-tab").forEach(t => t.classList.toggle("active", t === tab));
+        spEl("sp-notes-panel").hidden = tab.dataset.tab !== "notes";
+        spEl("sp-transcript-panel").hidden = tab.dataset.tab !== "transcript";
+        // Notes vs. transcript content is rarely the same height — re-measure
+        // and re-apply so stage 3's reveal height (and body padding) matches
+        // whichever panel is now showing, instead of leaving a gap or clip.
+        spMeasureReveals();
+        if (spStage === 3) spApplyStage(3);
+      });
+    });
+    closeBtn.addEventListener("click", (e) => { e.stopPropagation(); spCloseFully(); });
+
+    spWireStageGesture();
+
+    audio.addEventListener("play", () => { spSetPlayIcon(true); spSaveState(true); });
+    audio.addEventListener("pause", () => { spSetPlayIcon(false); spSaveState(true); });
+    audio.addEventListener("ended", () => spCloseFully());
+    audio.addEventListener("timeupdate", () => {
+      spEl("sp-time-current").textContent = spFmtDuration(audio.currentTime);
+      if (audio.duration) {
+        seekBar.value = String((audio.currentTime / audio.duration) * 1000);
+        spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+        spEl("sp-mini-progress-fill").style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+      }
+      spUpdatePositionState();
+      spSaveState(false);
+    });
+    audio.addEventListener("loadedmetadata", () => {
+      spEl("sp-time-duration").textContent = spFmtDuration(audio.duration);
+      spUpdatePositionState();
+    });
+
+    window.addEventListener("pagehide", () => spSaveState(true));
+  }
+
+  function spInit() {
+    spWirePlayer();
+    spRestoreSession();
+  }
+
+  // =====================================================================
+  // end Stormcast player — page-specific code (episode list, filters,
+
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const params = new URLSearchParams(location.search);
+  const domain = params.get("domain") || "enterprise";
+  let type = params.get("type") || (params.get("group") ? "groups" : null);
+  const id = params.get("id") || params.get("group");
+  const fromUrl = params.get("from");
+  const fromName = params.get("fromName");
+  // Digest mode: no specific entity requested (e.g. the plain "Spotlight" button on
+  // index.html) — a mixed carousel of recent feed items, severe CVEs, and two full
+  // group dossiers, built once in init() and assembled by buildDigestSlides().
+  const isNegotiation = params.get("mode") === "negotiation";
+  const isDigest = !isNegotiation && (params.get("mode") === "digest" || !id);
+
+  const TYPE_META = {
+    groups: { caseLabel: "CASE FILE", pageLabel: "ACTOR" },
+    techniques: { caseLabel: "TECHNIQUE FILE", pageLabel: "TECHNIQUE" },
+    software: { caseLabel: "ASSET FILE", pageLabel: "ASSET" },
+  };
+  if (!TYPE_META[type]) type = "groups";
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  // Prefer ending on a real sentence boundary within the cap — most feed
+  // summaries are 2-4 sentences, so this usually finds one instead of just
+  // hard-cutting. Only falls back to a mid-sentence word-boundary cut (with
+  // an ellipsis, so it reads as a deliberate trim rather than lost text)
+  // when no sentence end falls in a reasonable spot within the cap.
+  function truncateToSentence(text, maxLen) {
+    const trimmed = (text || "").trim();
+    if (trimmed.length <= maxLen) return trimmed;
+    const cut = trimmed.slice(0, maxLen);
+    const sentenceEnd = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
+    if (sentenceEnd > maxLen * 0.35) return cut.slice(0, sentenceEnd + 1).trim();
+    const wordEnd = cut.lastIndexOf(" ");
+    return (wordEnd > maxLen * 0.35 ? cut.slice(0, wordEnd) : cut).trim() + "…";
+  }
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return "🏳";
+    return [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join("");
+  }
+
+  function zoomHref(zType, zId, selfLabel) {
+    const p = new URLSearchParams();
+    p.set("domain", domain);
+    p.set("type", zType);
+    p.set("id", zId);
+    p.set("from", location.pathname + location.search);
+    p.set("fromName", selfLabel);
+    return "spotlight.html?" + p.toString();
+  }
+
+  function showEmptyTarget(message, backHref, backLabel) {
+    document.getElementById("stage").innerHTML = `
+      <div class="empty-target">
+        <div class="stamp" style="transform:rotate(-4deg)">NO TARGET<br>SELECTED</div>
+        <div style="color:var(--text-dim); font-size:13px; max-width:40ch;">${escapeHtml(message)}</div>
+        <a href="${escapeHtml(backHref || "attack.html")}" style="font-family:var(--font-mono); font-size:12px;">‹ ${escapeHtml(backLabel || "return to ATT&CK Explorer")}</a>
+      </div>`;
+  }
+
+  async function loadDomain() {
+    const res = await fetch(`data/attack/${domain}.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    data.byId = { techniques: {}, groups: {}, software: {}, campaigns: {}, mitigations: {}, tactics: {} };
+    for (const key of Object.keys(data.byId)) {
+      data.byId[key] = Object.fromEntries((data[key] || []).map(e => [e.id, e]));
+    }
+    return data;
+  }
+
+  function techniqueLabel(t, data) {
+    if (t.parent && data.byId.techniques[t.parent]) return `${data.byId.techniques[t.parent].name}: ${t.name}`;
+    return t.name;
+  }
+
+  function groupsUsingSoftware(s, data) {
+    return data.groups.filter(g => g.software.includes(s.id));
+  }
+
+  async function loadThreats() {
+    const res = await fetch(`data/feed/latest.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function loadCveLatest() {
+    const res = await fetch(`data/cve/latest.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function loadLeaktrackerLatest() {
+    const res = await fetch(`data/leaktracker/latest.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function loadLeaktrackerGroups() {
+    const res = await fetch(`data/leaktracker/groups.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function loadBreachesLatest() {
+    const res = await fetch(`data/breaches/latest.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function loadPodcastLatest() {
+    const res = await fetch(`data/podcast/latest.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  function percentile(arr, p) {
+    const s = [...arr].sort((a, b) => a - b);
+    if (!s.length) return 0;
+    return s[Math.min(s.length - 1, Math.floor(s.length * p))];
+  }
+
+  function computeAssessment(group, data) {
+    const techCounts = data.groups.map(g => g.techniques.length);
+    const softCounts = data.groups.map(g => g.software.length);
+    const techMax = Math.max(1, ...techCounts);
+    const tacticsTouched = new Set(group.techniques.flatMap(tid => data.byId.techniques[tid]?.tactics || []));
+    const coveragePct = data.tactics.length ? (tacticsTouched.size / data.tactics.length) * 100 : 0;
+    const techPct = (group.techniques.length / techMax) * 100;
+    const score = Math.round((techPct + coveragePct) / 2);
+
+    let level, color;
+    if (score >= 75) { level = "CRITICAL"; color = "var(--red)"; }
+    else if (score >= 50) { level = "HIGH"; color = "var(--amber)"; }
+    else if (score >= 25) { level = "MODERATE"; color = "var(--teal)"; }
+    else { level = "LOW"; color = "var(--text-dim)"; }
+
+    const techP75 = percentile(techCounts, 0.75);
+    const softP75 = percentile(softCounts, 0.75);
+    const badges = [];
+    if (group.countries.length) badges.push("STATE-LINKED");
+    if (coveragePct >= 80) badges.push("FULL SPECTRUM");
+    if (techP75 > 0 && group.techniques.length >= techP75) badges.push("PROLIFIC OPERATOR");
+    if (softP75 > 0 && group.software.length >= softP75) badges.push("HEAVY ARSENAL");
+    if (group.campaigns.length >= 2) badges.push("ACTIVE CAMPAIGNS");
+    if (!badges.length) badges.push("LOW PROFILE");
+
+    return { score, level, color, coveragePct, tacticsTouched, badges };
+  }
+
+  function relatedGroups(group, data, limit = 6) {
+    const mySoft = new Set(group.software);
+    const myTech = new Set(group.techniques);
+    return data.groups
+      .filter(g => g.id !== group.id)
+      .map(g => {
+        const softOverlap = g.software.filter(id => mySoft.has(id)).length;
+        const techOverlap = g.techniques.filter(id => myTech.has(id)).length;
+        return { g, score: softOverlap * 3 + techOverlap };
+      })
+      .filter(x => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit);
+  }
+
+  function mitigationsFor(techniqueIds, data, limit = 10) {
+    const freq = {};
+    techniqueIds.forEach(tid => {
+      (data.byId.techniques[tid]?.mitigations || []).forEach(mid => { freq[mid] = (freq[mid] || 0) + 1; });
+    });
+    return Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([mid]) => data.byId.mitigations[mid])
+      .filter(Boolean);
+  }
+
+  // ---------- shared slide builders ----------
+
+  function titleSlide(g, data, assessment) {
+    return {
+      key: "title", duration: 4500,
+      html: `
+        <div class="case-number">CASE FILE // ${g.id} // ${escapeHtml(domain.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(g.name)}</h1>
+        <div class="chip-row">
+          ${g.countries.map(c => `<span class="tag-chip flag-chip">${flagEmoji(c.code)} ${escapeHtml(c.name)}</span>`).join("")}
+          ${g.aliases.filter(a => a !== g.name).slice(0, 6).map(a => `<span class="tag-chip">${escapeHtml(a)}</span>`).join("")}
+        </div>
+        <div class="gauge-wrap" style="--gauge-color:${assessment.color}">
+          <div class="gauge-label">THREAT ASSESSMENT: <b>${assessment.level}</b> (${assessment.score}/100)</div>
+          <div class="gauge-track"><div class="gauge-fill" style="width:${assessment.score}%"></div></div>
+          <div class="gauge-caption">derived from technique breadth &amp; kill-chain coverage — not an official rating</div>
+        </div>
+        <div class="badge-row">${assessment.badges.map(b => `<span class="badge">${b}</span>`).join("")}</div>
+      `,
+    };
+  }
+
+  function originSlide(g) {
+    return {
+      key: "origin", duration: 8500,
+      html: `
+        <div class="section-label">Origin &amp; Identity</div>
+        <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
+        <div class="meta-grid">
+          <div class="meta-cell"><span>ALIASES ON RECORD</span><b>${g.aliases.length}</b></div>
+          <div class="meta-cell"><span>ATTRIBUTION</span><b>${g.countries.map(c => c.name).join(", ") || "UNKNOWN"}</b></div>
+        </div>
+      `,
+    };
+  }
+
+  function coverageSlide(g, data, selfLabel) {
+    const rows = data.tactics.map(t => {
+      const techs = g.techniques.map(tid => data.byId.techniques[tid]).filter(t2 => t2 && t2.tactics.includes(t.id));
+      return { t, techs };
+    });
+    const max = Math.max(1, ...rows.map(r => r.techs.length));
+    return {
+      key: "coverage", duration: 6500,
+      html: `
+        <div class="section-label">Kill-Chain Scan</div>
+        <div class="scan-list">
+          ${rows.map(({ t, techs }, i) => {
+            const pct = techs.length ? (techs.length / max * 100).toFixed(0) : 0;
+            const rowTag = techs.length ? "button" : "div";
+            const rowHtml = `
+              <${rowTag} class="scan-row ${techs.length ? "hit no-nav" : ""}" data-i="${i}" data-pct="${pct}">
+                <div>
+                  <div class="sname">${escapeHtml(t.name)}</div>
+                  <div class="strack"><div class="sfill"></div></div>
+                </div>
+                <div class="scount">${techs.length || "—"}</div>
+              </${rowTag}>`;
+            const detailHtml = techs.length ? `
+              <div class="scan-detail" data-i="${i}" hidden>
+                <div class="chip-row">
+                  ${techs.map(tq => `<a class="chip no-nav" href="${zoomHref("techniques", tq.id, selfLabel)}">${escapeHtml(techniqueLabel(tq, data))}</a>`).join("")}
+                </div>
+              </div>` : "";
+            return rowHtml + detailHtml;
+          }).join("")}
+        </div>
+      `,
+      onMount(el) {
+        const rowsEl = [...el.querySelectorAll(".scan-row")];
+        rowsEl.forEach((row, i) => {
+          const fill = row.querySelector(".sfill");
+          const pct = row.dataset.pct;
+          if (REDUCED_MOTION) { fill.style.width = pct + "%"; return; }
+          setTimeout(() => { fill.style.width = pct + "%"; }, 60 * i);
+        });
+        el.querySelectorAll("button.scan-row").forEach(row => {
+          row.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const i = row.dataset.i;
+            const detail = el.querySelector(`.scan-detail[data-i="${i}"]`);
+            const willOpen = detail.hidden;
+            el.querySelectorAll(".scan-detail").forEach(d => { d.hidden = true; });
+            detail.hidden = !willOpen;
+          });
+        });
+      },
+    };
+  }
+
+  function arsenalSlide(g, data, selfLabel) {
+    const items = g.software.map(id => data.byId.software[id]).filter(Boolean);
+    return {
+      key: "arsenal", duration: 7500,
+      html: `
+        <div class="section-label">Arsenal On Record (${items.length})</div>
+        <div class="asset-grid">
+          ${items.map(s => `
+            <div class="asset-card no-nav" data-id="${s.id}" tabindex="0" role="button">
+              <div class="aid">${s.id} · ${s.type}</div>
+              <div class="aname">${escapeHtml(s.name)}</div>
+              <div class="adesc">
+                <div>${escapeHtml((s.description || "No description on file.").slice(0, 220))}${(s.description || "").length > 220 ? "…" : ""}</div>
+                <a class="zoom-link no-nav" href="${zoomHref("software", s.id, selfLabel)}">open full dossier ⌕</a>
+              </div>
+            </div>`).join("")}
+        </div>
+      `,
+      onMount(el) {
+        el.querySelectorAll(".asset-card").forEach(card => {
+          const toggle = () => card.classList.toggle("expanded");
+          card.addEventListener("click", (e) => {
+            if (e.target.closest(".zoom-link")) return; // let the link navigate normally
+            e.stopPropagation();
+            toggle();
+          });
+          card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+          });
+        });
+      },
+    };
+  }
+
+  function campaignsSlide(items) {
+    items = [...items].sort((a, b) => (a.first_seen || "").localeCompare(b.first_seen || ""));
+    return {
+      key: "campaigns", duration: 7000,
+      html: `
+        <div class="section-label">Operations Log (${items.length})</div>
+        <div class="timeline">
+          ${items.map(c => `
+            <div class="tl-entry">
+              <div class="tl-year">${(c.first_seen || "").slice(0, 4) || "DATE UNKNOWN"}${c.last_seen && c.last_seen.slice(0, 4) !== (c.first_seen || "").slice(0, 4) ? " – " + c.last_seen.slice(0, 4) : ""}</div>
+              <div class="tl-name">${escapeHtml(c.name)}</div>
+              <div class="tl-desc">${escapeHtml((c.description || "").slice(0, 260))}${(c.description || "").length > 260 ? "…" : ""}</div>
+            </div>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  function connectionsSlide(related, selfLabel) {
+    const dots = Array.from({ length: 10 }, (_, i) => {
+      const a = (360 / 10) * i;
+      return `<div class="orbit-dot" style="--a:${a}deg; --r:${50 + (i % 3) * 12}px"></div>`;
+    }).join("");
+    return {
+      key: "connections", duration: 6500,
+      html: `
+        <div class="section-label">Known Associates</div>
+        <div class="orbit-wrap" aria-hidden="true">
+          <div class="orbit-ring">${dots}</div>
+          <div class="orbit-ring rev">${dots}</div>
+          <div class="orbit-center"></div>
+        </div>
+        <div class="associate-list">
+          ${related.map(({ g: other, score }) => `
+            <a class="associate-row no-nav" href="${zoomHref("groups", other.id, selfLabel)}">
+              <span class="ar-name">${escapeHtml(other.name)}</span>
+              <span class="ar-score">${score} shared TTP${score === 1 ? "" : "s"}</span>
+            </a>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  function defenseSlide(items) {
+    return {
+      key: "defense", duration: 7500,
+      html: `
+        <div class="section-label">Recommended Countermeasures</div>
+        <div class="counter-list">
+          ${items.map((m, i) => `
+            <div class="counter-entry">
+              <div class="cnum">${String(i + 1).padStart(2, "0")}</div>
+              <div>
+                <div class="cname">${escapeHtml(m.name)}</div>
+                <div class="cdesc">${escapeHtml((m.description || "").slice(0, 220))}${(m.description || "").length > 220 ? "…" : ""}</div>
+              </div>
+            </div>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  // used by technique + software dossiers to cross-link into groups/software/techniques
+  function crossRefSlide(groupsList, softwareList, techniquesList, data, selfLabel) {
+    const sections = [];
+    if (groupsList.length) sections.push({
+      label: "GROUPS", rows: groupsList.map(g => ({ href: zoomHref("groups", g.id, selfLabel), name: g.name, meta: g.countries.map(c => flagEmoji(c.code)).join("") })),
+    });
+    if (softwareList.length) sections.push({
+      label: "SOFTWARE & TOOLS", rows: softwareList.map(s => ({ href: zoomHref("software", s.id, selfLabel), name: s.name, meta: s.type })),
+    });
+    if (techniquesList.length) sections.push({
+      label: "TECHNIQUES", rows: techniquesList.map(t => ({ href: zoomHref("techniques", t.id, selfLabel), name: techniqueLabel(t, data), meta: t.id })),
+    });
+    return {
+      key: "usedby", duration: 7500,
+      html: `
+        <div class="section-label">Observed Usage</div>
+        ${sections.map(s => `
+          <div class="subhead">${s.label} (${s.rows.length})</div>
+          <div class="associate-list" style="margin-bottom:18px;">
+            ${s.rows.map(r => `
+              <a class="associate-row no-nav" href="${r.href}">
+                <span class="ar-name">${escapeHtml(r.name)}</span>
+                <span class="ar-score">${escapeHtml(r.meta)}</span>
+              </a>`).join("")}
+          </div>`).join("")}
+      `,
+    };
+  }
+
+  // ---------- digest slides (feed items / CVEs, for the mixed Spotlight digest) ----------
+
+  function fmtDuration(seconds) {
+    if (seconds == null) return "—";
+    // Stormcast episodes run ~5 minutes, but Darknet Diaries commonly runs
+    // 60-120+ — needs real H:MM:SS once it crosses an hour, not "95:02".
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+    const ss = String(s).padStart(2, "0");
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  // One slide per show — the latest episode of each, Stormcast first (per
+  // the explicit "after the stormcast carousel item" ordering), then any
+  // other show. .slice(0,1) on the combined episode list would have almost
+  // always picked Stormcast alone, since it publishes far more often than
+  // Darknet Diaries; this guarantees every show actually gets a turn.
+  function latestEpisodePerShow(episodes) {
+    const bestByShow = {};
+    for (const ep of episodes) {
+      const cur = bestByShow[ep.show];
+      if (!cur || (ep.published || "") > (cur.published || "")) bestByShow[ep.show] = ep;
+    }
+    const preferredOrder = ["stormcast", "darknetdiaries"];
+    const result = preferredOrder.filter(s => bestByShow[s]).map(s => bestByShow[s]);
+    Object.keys(bestByShow).forEach(s => { if (!preferredOrder.includes(s)) result.push(bestByShow[s]); });
+    return result;
+  }
+
+  function podcastDigestSlide(ep) {
+    return {
+      key: "podcast", duration: 8000,
+      html: `
+        <div class="kind-tag podcast">Podcast — ${escapeHtml(ep.show_name || "")}</div>
+        <div class="case-number">${escapeHtml((ep.show_name || "PODCAST").toUpperCase())} // ${escapeHtml((ep.published || "").slice(0, 10))}${ep.episode_number ? " // EPISODE " + escapeHtml(ep.episode_number) : ""}</div>
+        <h1 class="redact">${escapeHtml(ep.title)}</h1>
+        <p class="dossier-text">${escapeHtml((ep.summary || "").slice(0, 220))}${(ep.summary || "").length > 220 ? "…" : ""}</p>
+        ${(ep.categories || []).length ? `<div class="chip-row">${ep.categories.slice(0, 6).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
+        <button type="button" class="podcast-listen-btn no-nav" data-role="listen" data-ep-id="${escapeHtml(ep.id)}">▶ Listen now · ${escapeHtml(fmtDuration(ep.duration_seconds))}</button>
+        <a class="zoom-link stacked no-nav" href="podcast.html">full podcast archive ›</a>
+      `,
+      onMount(el) {
+        const btn = el.querySelector('[data-role="listen"]');
+        if (!btn) return;
+        btn.dataset.label = btn.textContent;
+        btn.addEventListener("click", (evt) => {
+          evt.stopPropagation();
+          spOpenEpisode(ep);
+          spotlightSyncListenButtons();
+        });
+      },
+    };
+  }
+
+  function feedItemSlide(entry) {
+    const summary = truncateToSentence(entry.summary || "", 260);
+    return {
+      key: "feed", duration: 6000,
+      // Picked up by updateReadArticleButton (called from goTo) rather than
+      // an inline link — see the .read-article-btn CSS comment for why.
+      articleLink: entry.link || "",
+      html: `
+        <div class="kind-tag feed">Threat Feed Item</div>
+        <div class="case-number">SIGNAL FEED // ${escapeHtml(entry.source || "unknown source")} // ${escapeHtml((entry.severity || "info").toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(entry.title)}</h1>
+        <p class="dossier-text">${escapeHtml(summary) || "No summary available."}</p>
+      `,
+    };
+  }
+
+  function cveDetailSlide(cve) {
+    const sev = (cve.cvss && cve.cvss.severity) || "UNRATED";
+    const score = cve.cvss ? `${cve.cvss.score.toFixed(1)} (v${cve.cvss.version})` : "unrated";
+    return {
+      key: "cve", duration: 8000,
+      html: `
+        <div class="kind-tag cve">CVE Advisory</div>
+        <div class="case-number">CVE RECORD // ${sev} // CVSS ${score}</div>
+        <h1 class="redact">${escapeHtml(cve.id)}</h1>
+        <p class="dossier-text">${escapeHtml(cve.description)}</p>
+        ${cve.kev && cve.kev.in_kev ? `
+          <div class="kev-box">
+            <div class="kb-label">⚠ CISA KNOWN EXPLOITED VULNERABILITY — added ${escapeHtml(cve.kev.date_added)}</div>
+            ${escapeHtml(cve.kev.required_action || "")}
+          </div>` : ""}
+        <div class="meta-grid">
+          <div class="meta-cell"><span>Published</span><b>${(cve.published || "—").slice(0, 10)}</b></div>
+          <div class="meta-cell"><span>Last modified</span><b>${(cve.lastModified || "—").slice(0, 10)}</b></div>
+        </div>
+        ${(cve.cwes || []).length ? `
+          <div class="section-title">Weakness categories</div>
+          <div class="chip-row">${cve.cwes.map(w => `<span class="tag-chip">${escapeHtml(w.id)} · ${escapeHtml(w.name)}</span>`).join("")}</div>
+        ` : ""}
+        ${(cve.vendors || []).length ? `
+          <div class="section-title">Affected vendors / products</div>
+          <div class="chip-row">${cve.vendors.map(v => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("")}</div>
+        ` : ""}
+        <div class="section-title">References</div>
+        <div class="ref-list">
+          <a class="no-nav" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(cve.id)}" target="_blank" rel="noopener noreferrer">nvd.nist.gov/vuln/detail/${escapeHtml(cve.id)}</a>
+          ${(cve.references || []).map(r => `<a class="no-nav" href="${escapeHtml(r)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r)}</a>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  function breachTeaserSlide(b) {
+    return {
+      key: "breach", duration: 7500,
+      html: `
+        <div class="kind-tag breach">Breach</div>
+        <div class="case-number">DISCLOSURE RECORD // ${escapeHtml((b.breach_date || "").slice(0, 10))}</div>
+        <h1 class="redact">${escapeHtml(b.title)}</h1>
+        <div class="chip-row">
+          <span class="tag-chip">${(b.pwn_count || 0).toLocaleString()} accounts affected</span>
+          ${b.is_verified ? `<span class="tag-chip">Verified</span>` : `<span class="tag-chip">Unverified</span>`}
+          ${(b.data_classes || []).slice(0, 3).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}
+        </div>
+        <p class="dossier-text">${escapeHtml(b.description) || "No description available."}</p>
+        <a class="zoom-link no-nav" href="breaches.html?id=${encodeURIComponent(b.id)}">full breach record ›</a>
+      `,
+    };
+  }
+
+  // A condensed one-slide teaser for the digest's random-groups section — name,
+  // origin, description only. The full multi-slide dossier (coverage, arsenal,
+  // connections, etc.) is one tap away via the Focused Spotlight link instead
+  // of being unpacked inline, which is what made the old 2-group digest run to
+  // ~14 extra slides on its own.
+  function groupTeaserSlide(g) {
+    return {
+      key: "group-teaser", duration: 7000,
+      html: `
+        <div class="kind-tag group">APT Group</div>
+        <div class="case-number">CASE FILE // ${g.id} // ${escapeHtml(domain.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(g.name)}</h1>
+        <div class="chip-row">
+          ${g.countries.length
+            ? g.countries.map(c => `<span class="tag-chip flag-chip">${flagEmoji(c.code)} ${escapeHtml(c.name)}</span>`).join("")
+            : `<span class="tag-chip">Origin unattributed</span>`}
+        </div>
+        <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
+        <a class="zoom-link no-nav" href="${zoomHref("groups", g.id, "Digest")}">⌁ focused spotlight: ${escapeHtml(g.name)} ›</a>
+      `,
+    };
+  }
+
+  function victimTeaserSlide(v) {
+    return {
+      key: "leak-victim", duration: 7000,
+      html: `
+        <div class="kind-tag victim">Ransomware Victim</div>
+        <div class="case-number">LEAK-SITE POSTING // ${escapeHtml(v.group.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(v.victim)}</h1>
+        <div class="claimed-by"><span class="cb-icon">☣</span> claimed by <b>${escapeHtml(v.group)}</b></div>
+        <div class="chip-row">
+          ${v.sector ? `<span class="tag-chip">${escapeHtml(v.sector)}</span>` : ""}
+          ${v.country ? `<span class="tag-chip">${escapeHtml(v.country)}</span>` : ""}
+          <span class="tag-chip">${escapeHtml((v.published || "").slice(0, 10))}</span>
+        </div>
+        <p class="dossier-text">${escapeHtml(v.description) || "No description available."}</p>
+        <a class="zoom-link no-nav" href="leaktracker.html?group=${encodeURIComponent(v.group)}">focus on ${escapeHtml(v.group)} ›</a>
+      `,
+    };
+  }
+
+  // Same URL shape as leaktracker.html's negotiationHref — a same-app link
+  // into spotlight.html's negotiation-replay mode, not the external transcript
+  // itself. Launched from the digest, so "back" returns to this same digest
+  // (mirroring zoomHref's from/fromName pattern) rather than leaktracker.html.
+  function negotiationSpotlightHref(g, chatUrl, label) {
+    const p = new URLSearchParams();
+    p.set("mode", "negotiation");
+    p.set("group", g.name);
+    p.set("chat", chatUrl);
+    p.set("label", label);
+    p.set("from", location.pathname + location.search);
+    p.set("fromName", "Digest");
+    return "spotlight.html?" + p.toString();
+  }
+
+  function negotiationGroupTeaserSlide(g) {
+    const n = g.negotiation || {};
+    return {
+      key: "negotiation-group", duration: 8000,
+      html: `
+        <div class="kind-tag negotiation-group">Ransomware Group</div>
+        <div class="case-number">LEAK-SITE PROFILE // ${escapeHtml(g.name.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(g.name)}</h1>
+        <div class="chip-row">
+          ${(g.countries || []).length
+            ? g.countries.map(c => `<span class="tag-chip flag-chip">${flagEmoji(c.code)} ${escapeHtml(c.name)}</span>`).join("")
+            : `<span class="tag-chip">Origin unattributed</span>`}
+          ${g.raas ? `<span class="tag-chip">RaaS</span>` : ""}
+          <span class="tag-chip">${n.chat_count} negotiation chat${n.chat_count === 1 ? "" : "s"} on file</span>
+        </div>
+        <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
+        ${n.latest_chat_url ? `<a class="zoom-link stacked no-nav" href="${negotiationSpotlightHref(g, n.latest_chat_url, "latest")}">▶ play latest negotiation${n.latest_chat_date ? ` · ${escapeHtml(n.latest_chat_date)}` : ""}</a>` : ""}
+        ${n.longest_chat_url ? `<a class="zoom-link stacked no-nav" href="${negotiationSpotlightHref(g, n.longest_chat_url, "longest")}">▶ play longest negotiation · ${n.longest_chat_message_count} messages</a>` : ""}
+      `,
+    };
+  }
+
+  // ---------- per-type title/profile slides ----------
+
+  function techniqueTitleSlide(t, data) {
+    const tacticNames = t.tactics.map(id => data.byId.tactics[id]?.name).filter(Boolean);
+    return {
+      key: "title", duration: 4500,
+      html: `
+        <div class="case-number">TECHNIQUE FILE // ${t.id} // ${escapeHtml(domain.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(techniqueLabel(t, data))}</h1>
+        <div class="chip-row">
+          ${tacticNames.map(n => `<span class="tag-chip">${escapeHtml(n)}</span>`).join("")}
+          ${t.platforms.map(p => `<span class="tag-chip">${escapeHtml(p)}</span>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  function profileSlide(entity, label) {
+    return {
+      key: "origin", duration: 8000,
+      html: `
+        <div class="section-label">${escapeHtml(label)}</div>
+        <p class="dossier-text">${escapeHtml(entity.description) || "No description on file."}</p>
+      `,
+    };
+  }
+
+  function softwareTitleSlide(s) {
+    return {
+      key: "title", duration: 4500,
+      html: `
+        <div class="case-number">ASSET FILE // ${s.id} // ${escapeHtml(domain.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(s.name)}</h1>
+        <div class="chip-row">
+          <span class="tag-chip">${escapeHtml(s.type)}</span>
+          ${s.platforms.map(p => `<span class="tag-chip">${escapeHtml(p)}</span>`).join("")}
+          ${s.aliases.filter(a => a !== s.name).slice(0, 6).map(a => `<span class="tag-chip">${escapeHtml(a)}</span>`).join("")}
+        </div>
+      `,
+    };
+  }
+
+  // ---------- per-type slide-deck assembly ----------
+
+  function buildGroupSlides(g, data, selfLabel) {
+    const assessment = computeAssessment(g, data);
+    const related = relatedGroups(g, data);
+    const mitigations = mitigationsFor(g.techniques, data);
+
+    const list = [titleSlide(g, data, assessment), originSlide(g), coverageSlide(g, data, selfLabel)];
+    if (g.software.length) list.push(arsenalSlide(g, data, selfLabel));
+    if (g.campaigns.length) list.push(campaignsSlide(g.campaigns.map(id => data.byId.campaigns[id]).filter(Boolean)));
+    if (related.length) list.push(connectionsSlide(related, selfLabel));
+    if (mitigations.length) list.push(defenseSlide(mitigations));
+    return list;
+  }
+
+  function buildTechniqueSlides(t, data, selfLabel) {
+    const list = [techniqueTitleSlide(t, data), profileSlide(t, "Technique Profile")];
+    const groupsList = t.groups.map(id => data.byId.groups[id]).filter(Boolean);
+    const softwareList = t.software.map(id => data.byId.software[id]).filter(Boolean);
+    if (groupsList.length || softwareList.length) list.push(crossRefSlide(groupsList, softwareList, [], data, selfLabel));
+    const campaignsList = (t.campaigns || []).map(id => data.byId.campaigns[id]).filter(Boolean);
+    if (campaignsList.length) list.push(campaignsSlide(campaignsList));
+    const mitigations = (t.mitigations || []).map(id => data.byId.mitigations[id]).filter(Boolean);
+    if (mitigations.length) list.push(defenseSlide(mitigations));
+    return list;
+  }
+
+  function buildSoftwareSlides(s, data, selfLabel) {
+    const list = [softwareTitleSlide(s), profileSlide(s, "Asset Profile")];
+    const groupsList = groupsUsingSoftware(s, data);
+    const techniquesList = s.techniques.map(id => data.byId.techniques[id]).filter(Boolean);
+    if (groupsList.length || techniquesList.length) list.push(crossRefSlide(groupsList, [], techniquesList, data, selfLabel));
+    const campaignsList = (s.campaigns || []).map(id => data.byId.campaigns[id]).filter(Boolean);
+    if (campaignsList.length) list.push(campaignsSlide(campaignsList));
+    return list;
+  }
+
+  function feedEntryDate(e) {
+    const p = e.published_sort; // [year, month(1-12), day, hour, minute, second], UTC
+    if (!Array.isArray(p) || p.length < 6) return null;
+    return new Date(Date.UTC(p[0], p[1] - 1, p[2], p[3], p[4], p[5]));
+  }
+
+  // Every feed item from the last 24h, newest first — but never fewer than 5,
+  // so a quiet overnight doesn't leave the digest with only 1 or 2 news slides.
+  function selectDigestFeedEntries(entries, { windowMs = 24 * 60 * 60 * 1000, minCount = 5 } = {}) {
+    const sorted = [...entries].sort((a, b) => {
+      const da = feedEntryDate(a), db = feedEntryDate(b);
+      return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
+    });
+    const cutoff = Date.now() - windowMs;
+    const withinWindow = sorted.filter(e => {
+      const d = feedEntryDate(e);
+      return d && d.getTime() >= cutoff;
+    });
+    return withinWindow.length >= minCount ? withinWindow : sorted.slice(0, minCount);
+  }
+
+  function buildDigestSlides(threats, cves, attackData, groupIds, leaktracker, leaktrackerGroups, negotiationGroupNames, breaches, podcast) {
+    const podcastSlides = latestEpisodePerShow(podcast.episodes || []).map(podcastDigestSlide);
+    const feedSlides = selectDigestFeedEntries(threats.entries || []).map(feedItemSlide);
+    const cveSlides = (cves.cves || []).slice(0, 10).map(cveDetailSlide);
+    const breachSlides = (breaches.breaches || []).slice(0, 3).map(breachTeaserSlide);
+    const groupSlides = groupIds
+      .map(gid => attackData.byId.groups[gid])
+      .filter(Boolean)
+      .map(groupTeaserSlide);
+    const victimSlides = (leaktracker.victims || []).slice(0, 5).map(victimTeaserSlide);
+    const negotiationSlides = negotiationGroupNames
+      .map(name => (leaktrackerGroups.groups || []).find(g => g.name === name))
+      .filter(Boolean)
+      .map(negotiationGroupTeaserSlide);
+    return [...podcastSlides, ...feedSlides, ...cveSlides, ...breachSlides, ...groupSlides, ...victimSlides, ...negotiationSlides];
+  }
+
+  // ---------- engine ----------
+
+  let slides = [];
+  let idx = 0;
+  let timerRAF = null;
+  let timerStart = 0;
+  let timerDuration = 0;
+  let isPaused = false;
+  let pauseBegan = 0;
+  let interactionPaused = false;
+  let pendingNavTimer = null;
+  // manualPauseLock is the explicit pause/resume button's state. It takes
+  // precedence over every touch/tap control: while engaged, resumeTimer()
+  // refuses to run (so double-tap and swipe can't silently undo it), and a
+  // freshly-entered slide starts paused instead of auto-running. Only the
+  // button itself (toggleManualPause) can clear it. Built for readers who
+  // can't reliably land a double-tap and need a deliberate, persistent control.
+  let manualPauseLock = false;
+
+  const SPEED_KEY = "signal-spotlight-speed";
+  const SPEED_ORDER = ["normal", "slow", "slowest"];
+  const SPEED_OFFSET_MS = { normal: 0, slow: 5000, slowest: 10000 };
+  const SPEED_LABEL = { normal: "NORMAL", slow: "SLOW", slowest: "SLOWEST" };
+  let speedMode = SPEED_ORDER.includes(localStorage.getItem(SPEED_KEY)) ? localStorage.getItem(SPEED_KEY) : "normal";
+
+  function speedOffset() { return SPEED_OFFSET_MS[speedMode] || 0; }
+
+  function updateSpeedButton() {
+    const btn = document.getElementById("speed-btn");
+    btn.textContent = `◷ ${SPEED_LABEL[speedMode]}`;
+    btn.className = `speed-btn no-nav control-btn ${speedMode !== "normal" ? speedMode : ""}`;
+  }
+
+  function cycleSpeed() {
+    speedMode = SPEED_ORDER[(SPEED_ORDER.indexOf(speedMode) + 1) % SPEED_ORDER.length];
+    localStorage.setItem(SPEED_KEY, speedMode);
+    updateSpeedButton();
+    // Apply immediately to the slide already on screen, not just future ones —
+    // extending timerDuration just makes the current countdown take longer to
+    // fill, since it's still measured from the same timerStart.
+    if (slides[idx]) timerDuration = slides[idx].duration + speedOffset();
+  }
+
+  function updateStatusUI() {
+    const flag = document.getElementById("paused-flag");
+    const btn = document.getElementById("pause-btn");
+    flag.classList.toggle("on", manualPauseLock || interactionPaused);
+    flag.textContent = manualPauseLock ? "‖ PAUSED — TAP ▶ TO RESUME" : "‖ PAUSED — DOUBLE-TAP TO RESUME";
+    btn.textContent = manualPauseLock ? "▶" : "‖";
+    btn.setAttribute("aria-label", manualPauseLock ? "Resume auto-advance" : "Pause auto-advance");
+    btn.classList.toggle("active", manualPauseLock);
+  }
+
+  function toggleManualPause() {
+    if (manualPauseLock) {
+      manualPauseLock = false;
+      resumeTimer();
+    } else {
+      manualPauseLock = true;
+      interactionPaused = false;
+      if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+      pauseTimer();
+    }
+    updateStatusUI();
+  }
+
+  function renderChrome() {
+    document.getElementById("case-id").textContent = isDigest
+      ? "SIGNAL // SPOTLIGHT // DIGEST"
+      : `SIGNAL // SPOTLIGHT // ${TYPE_META[type].pageLabel} // ${domain.toUpperCase()}`;
+    document.getElementById("progress-bar").innerHTML = slides.map(() => `<div class="seg"><div class="seg-fill"></div></div>`).join("");
+  }
+
+  function renderSlides() {
+    const root = document.getElementById("slides");
+    root.innerHTML = slides.map((s, i) => `
+      <div class="slide" data-i="${i}" data-key="${s.key}">
+        <div class="slide-inner">${s.html}</div>
+      </div>`).join("");
+    slides.forEach((s, i) => {
+      if (s.onMount) s.onMount(root.querySelector(`.slide[data-i="${i}"]`));
+    });
+  }
+
+  function segFills() { return [...document.querySelectorAll(".seg-fill")]; }
+
+  function setSegProgress(i, pct) {
+    const fills = segFills();
+    if (fills[i]) fills[i].style.width = pct + "%";
+  }
+
+  function syncSegsForIndex(i) {
+    segFills().forEach((fill, si) => { fill.style.width = si < i ? "100%" : si > i ? "0%" : fill.style.width; });
+  }
+
+  function cancelTimer() {
+    if (timerRAF) cancelAnimationFrame(timerRAF);
+    timerRAF = null;
+  }
+
+  function startTimer(duration) {
+    cancelTimer();
+    timerDuration = duration;
+    timerStart = performance.now();
+    // A manual pause persists across navigation — a slide reached while paused
+    // starts paused too, rather than silently resuming autoplay behind the reader.
+    isPaused = manualPauseLock;
+    if (isPaused) pauseBegan = timerStart;
+    updateStatusUI();
+    if (REDUCED_MOTION) { setSegProgress(idx, manualPauseLock ? 0 : 100); return; }
+    setSegProgress(idx, 0);
+    tick();
+  }
+
+  function tick() {
+    if (!isPaused) {
+      const elapsed = performance.now() - timerStart;
+      const frac = Math.min(1, elapsed / timerDuration);
+      setSegProgress(idx, frac * 100);
+      if (frac >= 1) { timerRAF = null; next(true); return; }
+    }
+    timerRAF = requestAnimationFrame(tick);
+  }
+
+  function pauseTimer() { if (!isPaused) { isPaused = true; pauseBegan = performance.now(); } updateStatusUI(); }
+  function resumeTimer() {
+    if (manualPauseLock) return; // locked — only the pause/resume button can clear this
+    if (isPaused) { isPaused = false; timerStart += performance.now() - pauseBegan; }
+    updateStatusUI();
+  }
+
+  // Swaps the fixed footer slot between the generic navigation hint and a
+  // slide-specific outbound link (currently only feed items carry one) —
+  // see the .read-article-btn CSS comment for why this replaced the old
+  // inline-in-content link.
+  function updateReadArticleButton(slide) {
+    const btn = document.getElementById("read-article-btn");
+    const hint = document.getElementById("hint");
+    const link = slide && slide.articleLink;
+    btn.classList.toggle("visible", !!link);
+    hint.classList.toggle("suppressed", !!link);
+    if (link) btn.href = link;
+  }
+
+  function goTo(i) {
+    if (i < 0 || i >= slides.length) return;
+    const root = document.getElementById("slides");
+    root.querySelectorAll(".slide").forEach(el => el.classList.remove("active"));
+    idx = i;
+    root.querySelector(`.slide[data-i="${i}"]`).classList.add("active");
+    syncSegsForIndex(i);
+    updateReadArticleButton(slides[i]);
+    interactionPaused = false;
+    if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+    startTimer(slides[i].duration + speedOffset());
+  }
+
+  function next() {
+    // The carousel loops indefinitely — past the last slide it wraps back to the first,
+    // whether that's a single-entity dossier or the mixed digest.
+    goTo(idx < slides.length - 1 ? idx + 1 : 0);
+  }
+  function prev() { goTo(idx > 0 ? idx - 1 : slides.length - 1); }
+
+  function setupInput() {
+    const stage = document.getElementById("stage");
+    let downAt = null, downX = 0, downY = 0, moved = false, downOnNoNav = false;
+    let lastTapAt = 0;
+    let suppressNextClick = false;
+    const DOUBLE_TAP_MS = 340;
+
+    document.getElementById("pause-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleManualPause();
+    });
+
+    document.getElementById("speed-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      cycleSpeed();
+    });
+    updateSpeedButton();
+
+    // Capture phase so this runs before a link's own navigation (or an
+    // asset-card's own click-to-expand handler) fires.
+    stage.addEventListener("click", (e) => {
+      if (suppressNextClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        suppressNextClick = false;
+      }
+    }, true);
+
+    function performNav(clientX) {
+      const w = window.innerWidth;
+      if (clientX < w * 0.3) prev(); else next();
+    }
+
+    // A swipe always navigates, even if it starts on a card or link — a card-dense
+    // slide (Arsenal, Connections) must never trap the user with no way to move on.
+    //
+    // A short tap on an interactive element (.no-nav) pauses the auto-advance timer
+    // and KEEPS it paused — it does not resume on its own. Only a double-tap resumes
+    // it (continuing the current slide's countdown toward the next slide). A single
+    // background tap while paused this way is held for one double-tap window before
+    // falling through to normal prev/next, so the two gestures don't collide.
+    stage.addEventListener("pointerdown", (e) => {
+      // The pause and speed buttons fully own their own click behavior (including
+      // managing pause state themselves) — they must never enter the generic
+      // swipe/tap tracking below, or a tap on them would also trip the "tapped a
+      // .no-nav element" pause-until-double-tap path as an unrelated side effect.
+      if (e.target.closest(".control-btn")) return;
+      // Starting a drag on top of a real <a> would otherwise trigger the browser's
+      // native "drag this link" gesture instead of our pointermove tracking, which
+      // silently swallows a swipe that happens to start on a link-heavy slide (e.g.
+      // Connections). preventDefault here suppresses only that native drag — the
+      // link's own click-driven navigation on release is unaffected.
+      if (e.target.closest("a")) e.preventDefault();
+      downAt = performance.now(); downX = e.clientX; downY = e.clientY; moved = false;
+      downOnNoNav = !!e.target.closest(".no-nav");
+      pauseTimer();
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if (downAt == null) return;
+      if (Math.abs(e.clientX - downX) > 10 || Math.abs(e.clientY - downY) > 10) moved = true;
+    });
+    stage.addEventListener("pointerup", (e) => {
+      if (downAt == null) return;
+      const heldMs = performance.now() - downAt;
+      const dx = e.clientX - downX;
+      const wasOnNoNav = downOnNoNav;
+      downAt = null;
+
+      if (moved && Math.abs(dx) > 60) {
+        // A drag that starts AND ends over the same <a> (a wide row like an
+        // associate-row spans most of the slide width) still fires a native
+        // click on release regardless of distance traveled — unlike touch,
+        // mouse click-detection doesn't care how far you moved in between.
+        // Since we've already treated this as a swipe, suppress that click.
+        suppressNextClick = true;
+        interactionPaused = false;
+        if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+        resumeTimer();
+        if (dx < 0) next(); else prev();
+        return;
+      }
+
+      if (heldMs < 250 && !moved) {
+        const now = performance.now();
+        const isDoubleTap = (now - lastTapAt) < DOUBLE_TAP_MS;
+        lastTapAt = isDoubleTap ? 0 : now;
+
+        if (isDoubleTap && interactionPaused) {
+          if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+          interactionPaused = false;
+          resumeTimer();
+          return;
+        }
+
+        if (wasOnNoNav) {
+          interactionPaused = true;
+          pauseTimer();
+          return;
+        }
+
+        if (interactionPaused) {
+          if (pendingNavTimer) clearTimeout(pendingNavTimer);
+          const clientX = e.clientX;
+          pendingNavTimer = setTimeout(() => { pendingNavTimer = null; performNav(clientX); }, DOUBLE_TAP_MS);
+          return;
+        }
+
+        performNav(e.clientX);
+        return;
+      }
+      resumeTimer();
+    });
+    stage.addEventListener("pointercancel", () => { downAt = null; resumeTimer(); });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+      else if (e.key === "Escape") { const el = document.getElementById("exit-link"); if (el) location.href = el.href; }
+    });
+  }
+
+  function setupBackLink() {
+    const el = document.getElementById("exit-link");
+    if (fromUrl) { el.href = fromUrl; el.textContent = `‹ ${fromName || "back"}`; }
+    else if (isDigest) { el.href = "index.html"; el.textContent = "‹ EXIT"; }
+    else { el.href = "attack.html"; el.textContent = "‹ EXIT"; }
+  }
+
+  const DIGEST_GROUP_COUNT = 3;
+  const DIGEST_NEGOTIATION_GROUP_COUNT = 3;
+
+  async function loadDigestData() {
+    const [attackR, threatsR, cveR, leaktrackerR, leaktrackerGroupsR, breachesR, podcastR] = await Promise.allSettled(
+      [loadDomain(), loadThreats(), loadCveLatest(), loadLeaktrackerLatest(), loadLeaktrackerGroups(), loadBreachesLatest(), loadPodcastLatest()]
+    );
+    if (attackR.status === "rejected") console.error("digest: ATT&CK data failed to load", attackR.reason);
+    if (threatsR.status === "rejected") console.error("digest: feed data failed to load", threatsR.reason);
+    if (cveR.status === "rejected") console.error("digest: CVE data failed to load", cveR.reason);
+    if (leaktrackerR.status === "rejected") console.error("digest: leak-tracker data failed to load", leaktrackerR.reason);
+    if (leaktrackerGroupsR.status === "rejected") console.error("digest: leak-tracker groups failed to load", leaktrackerGroupsR.reason);
+    if (breachesR.status === "rejected") console.error("digest: breach data failed to load", breachesR.reason);
+    if (podcastR.status === "rejected") console.error("digest: podcast data failed to load", podcastR.reason);
+    return {
+      attackData: attackR.status === "fulfilled" ? attackR.value : null,
+      threats: threatsR.status === "fulfilled" ? threatsR.value : { entries: [] },
+      cves: cveR.status === "fulfilled" ? cveR.value : { cves: [] },
+      leaktracker: leaktrackerR.status === "fulfilled" ? leaktrackerR.value : { victims: [] },
+      leaktrackerGroups: leaktrackerGroupsR.status === "fulfilled" ? leaktrackerGroupsR.value : { groups: [] },
+      breaches: breachesR.status === "fulfilled" ? breachesR.value : { breaches: [] },
+      podcast: podcastR.status === "fulfilled" ? podcastR.value : { episodes: [] },
+    };
+  }
+
+  async function initDigest() {
+    const { attackData, threats, cves, leaktracker, leaktrackerGroups, breaches, podcast } = await loadDigestData();
+
+    const validGroupIds = attackData ? attackData.groups.map(g => g.id) : [];
+    let groupIds = (params.get("groups") || "").split(",").map(s => s.trim()).filter(gid => validGroupIds.includes(gid));
+
+    const validNegotiationNames = (leaktrackerGroups.groups || []).filter(g => g.negotiation && g.negotiation.available).map(g => g.name);
+    let negotiationGroupNames = (params.get("negoGroups") || "").split(",").map(s => s.trim()).filter(n => validNegotiationNames.includes(n));
+
+    // No (valid) group set pinned in the URL yet — pick DIGEST_GROUP_COUNT at
+    // random and bake them into the URL via replaceState, so reloading or
+    // backing out of a zoomed-in sub-entity returns to this *same* set rather
+    // than a fresh roll.
+    let pinUrl = false;
+    if (groupIds.length < DIGEST_GROUP_COUNT && validGroupIds.length >= DIGEST_GROUP_COUNT) {
+      const pool = [...validGroupIds];
+      groupIds = [];
+      while (groupIds.length < DIGEST_GROUP_COUNT && pool.length) {
+        groupIds.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+      }
+      pinUrl = true;
+    }
+    if (negotiationGroupNames.length < DIGEST_NEGOTIATION_GROUP_COUNT && validNegotiationNames.length >= DIGEST_NEGOTIATION_GROUP_COUNT) {
+      const pool = [...validNegotiationNames];
+      negotiationGroupNames = [];
+      while (negotiationGroupNames.length < DIGEST_NEGOTIATION_GROUP_COUNT && pool.length) {
+        negotiationGroupNames.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+      }
+      pinUrl = true;
+    } else if (negotiationGroupNames.length === 0 && validNegotiationNames.length) {
+      // Fewer matched groups than DIGEST_NEGOTIATION_GROUP_COUNT overall —
+      // still show whatever's available rather than nothing.
+      negotiationGroupNames = validNegotiationNames;
+      pinUrl = true;
+    }
+    if (pinUrl) {
+      const p = new URLSearchParams(location.search);
+      p.set("mode", "digest");
+      p.set("domain", domain);
+      p.set("groups", groupIds.join(","));
+      p.set("negoGroups", negotiationGroupNames.join(","));
+      history.replaceState(null, "", `spotlight.html?${p.toString()}`);
+    }
+
+    slides = buildDigestSlides(threats, cves, attackData || { byId: { groups: {} } }, groupIds, leaktracker, leaktrackerGroups, negotiationGroupNames, breaches, podcast);
+    if (slides.length === 0) {
+      showEmptyTarget("No feed, CVE, ATT&CK, or leak-tracker data available yet — have the fetch scripts been run?");
+      return;
+    }
+
+    setupBackLink();
+    renderChrome();
+    renderSlides();
+    setupInput();
+    goTo(0);
+  }
+
+  // ---------- negotiation replay: a leaked ransom-chat transcript played
+  // back as speech bubbles instead of a slide deck. Reuses the shared
+  // pause/speed engine (manualPauseLock, speedOffset, isPaused/timerStart)
+  // so the same controls that pace the digest also pace this, but drives
+  // its own reveal loop (revealUpTo) since "advance" here means "reveal the
+  // next message", not "swipe to the next slide" — the whole transcript is
+  // fetched and rendered up front, and messages are just faded in in order. ----------
+
+  const NEGOTIATION_URL_PREFIX = "https://raw.githubusercontent.com/Casualtek/Ransomchats/";
+  // Must match .chat-scroll's padding-bottom in the CSS above — how far a
+  // freshly-revealed message is kept clear of the pause/speed buttons, which
+  // float on top of the scroll area rather than reserving their own space.
+  const CONTROL_CLEARANCE_PX = 140;
+  let negoMessages = [];
+  let negoRevealed = 0;
+  // Whether auto-reveal should keep scrolling the transcript to follow the
+  // newest message — true until the reader deliberately scrolls away from
+  // the current frontier to read back, and re-armed by the resume button.
+  let negoFollowing = true;
+  // A smooth scrollTo() we trigger ourselves still fires a stream of native
+  // 'scroll' events while it animates, each with a scrollTop that hasn't
+  // reached the target yet — treating those as "the reader scrolled away"
+  // would cancel following on literally every auto-scroll. This is a
+  // deadline (performance.now()-based), not a boolean, so a second
+  // auto-scroll fired before the first settles doesn't get its own window
+  // closed early by the first one's cleanup.
+  let negoProgrammaticScrollUntil = 0;
+
+  function cleanChatContent(raw) {
+    return (raw || "").trim().replace(/^>\s?/, "");
+  }
+
+  function negoMessageDuration(content) {
+    const words = (content || "").split(/\s+/).filter(Boolean).length;
+    return Math.max(1800, Math.min(7000, 900 + words * 160));
+  }
+
+  function renderNegotiationChrome(groupName, label) {
+    document.getElementById("case-id").textContent = `SIGNAL // NEGOTIATION // ${escapeHtml(groupName).toUpperCase()} // ${label}`;
+    document.querySelector(".stamp").innerHTML = "LEAKED<br>TRANSCRIPT";
+    document.getElementById("progress-bar").innerHTML = `<div class="seg"><div class="seg-fill" id="nego-progress-fill"></div></div>`;
+    document.getElementById("stage").classList.add("negotiation-mode");
+  }
+
+  function renderNegotiationMessages() {
+    document.getElementById("slides").innerHTML = `
+      <div class="chat-scroll" id="chat-scroll">
+        ${negoMessages.map((m, i) => `
+          <div class="chat-msg ${m.party}" data-i="${i}">
+            <div class="chat-bubble">${escapeHtml(m.content)}</div>
+            <div class="chat-meta">${escapeHtml(m.partyLabel)}</div>
+          </div>
+        `).join("")}
+        <div class="chat-end" id="chat-end">— end of transcript —</div>
+      </div>`;
+  }
+
+  function setNegoProgress(pct) {
+    const fill = document.getElementById("nego-progress-fill");
+    if (fill) fill.style.width = pct + "%";
+  }
+
+  // The scroll target that keeps the last REVEALED message clear of the
+  // floating controls. Deliberately not based on root.scrollHeight/clientHeight
+  // alone — every message (including ones not revealed yet) is already in the
+  // DOM with real layout height so "scroll ahead" has something to scroll
+  // into, which means scrollHeight reflects the *whole* transcript from the
+  // first render, not just what's currently visible. Anchoring on the last
+  // revealed element's own position instead keeps this correct regardless of
+  // how much still-invisible content sits below it.
+  function frontierScrollTarget() {
+    const root = document.getElementById("chat-scroll");
+    const lastEl = root.querySelector(`.chat-msg[data-i="${negoRevealed - 1}"]`);
+    if (!lastEl) return 0;
+    const raw = lastEl.offsetTop + lastEl.offsetHeight - root.clientHeight + CONTROL_CLEARANCE_PX;
+    return Math.max(0, Math.min(raw, root.scrollHeight - root.clientHeight));
+  }
+
+  function scrollToFrontier(smooth) {
+    const root = document.getElementById("chat-scroll");
+    const useSmooth = smooth && !REDUCED_MOTION;
+    // Generous window for a smooth scroll to settle — it only ever needs to
+    // cover a message or two's worth of distance, never the whole transcript.
+    negoProgrammaticScrollUntil = performance.now() + (useSmooth ? 700 : 50);
+    root.scrollTo({ top: frontierScrollTarget(), behavior: useSmooth ? "smooth" : "auto" });
+  }
+
+  function revealUpTo(n) {
+    n = Math.min(n, negoMessages.length);
+    if (n <= negoRevealed) return;
+    const root = document.getElementById("chat-scroll");
+    for (let i = negoRevealed; i < n; i++) {
+      const el = root.querySelector(`.chat-msg[data-i="${i}"]`);
+      if (el) el.classList.add("visible");
+    }
+    negoRevealed = n;
+    setNegoProgress((negoRevealed / negoMessages.length) * 100);
+    if (negoRevealed >= negoMessages.length) {
+      document.getElementById("chat-end").classList.add("visible");
+    }
+    if (negoFollowing) scrollToFrontier(true);
+  }
+
+  function cancelNegoTimer() { if (timerRAF) cancelAnimationFrame(timerRAF); timerRAF = null; }
+
+  function startNegoMessageTimer() {
+    cancelNegoTimer();
+    if (negoRevealed >= negoMessages.length) return;
+    if (REDUCED_MOTION) { revealUpTo(negoMessages.length); return; }
+    timerDuration = negoMessageDuration(negoMessages[negoRevealed].content) + speedOffset();
+    timerStart = performance.now();
+    isPaused = manualPauseLock;
+    if (isPaused) pauseBegan = timerStart;
+    updateStatusUI();
+    negoTick();
+  }
+
+  function negoTick() {
+    if (negoRevealed >= negoMessages.length) { timerRAF = null; return; }
+    if (!isPaused) {
+      const elapsed = performance.now() - timerStart;
+      if (elapsed >= timerDuration) {
+        revealUpTo(negoRevealed + 1);
+        timerRAF = null;
+        startNegoMessageTimer();
+        return;
+      }
+    }
+    timerRAF = requestAnimationFrame(negoTick);
+  }
+
+  function setupNegotiationInput() {
+    document.getElementById("pause-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wasPaused = manualPauseLock;
+      toggleManualPause();
+      // Resuming re-arms auto-scroll and snaps straight back to the current
+      // frontier — a paused reader may have scrolled off anywhere to read
+      // back, and resume should pick up the reveal where it left off, in view,
+      // not silently keep revealing off-screen until they scroll down again.
+      if (wasPaused) { negoFollowing = true; scrollToFrontier(true); }
+    });
+    document.getElementById("speed-btn").addEventListener("click", (e) => { e.stopPropagation(); cycleSpeed(); });
+    updateSpeedButton();
+
+    const root = document.getElementById("chat-scroll");
+    root.addEventListener("scroll", () => {
+      // Ignore scroll events fired by our own in-flight auto-scroll — a smooth
+      // scrollTo() reports intermediate scrollTop values on every frame while
+      // it animates, which would otherwise read as "the reader scrolled away"
+      // on essentially every single auto-reveal.
+      if (performance.now() < negoProgrammaticScrollUntil) return;
+
+      // "Following" means the reader is sitting at the current frontier —
+      // compare against that message's own scroll position, not against
+      // root.scrollHeight, which already includes not-yet-revealed messages'
+      // reserved (but invisible) height and would never read as "near bottom".
+      negoFollowing = Math.abs(root.scrollTop - frontierScrollTarget()) < 48;
+
+      // Scrolling past the reveal frontier (deliberately reading ahead) should
+      // just show those messages immediately, rather than leaving blank gaps —
+      // and playback, once resumed, continues from wherever that landed instead
+      // of replaying from the old position.
+      let revealTo = negoRevealed;
+      const scrollBottom = root.scrollTop + root.clientHeight;
+      root.querySelectorAll(".chat-msg:not(.visible)").forEach(el => {
+        if (el.offsetTop < scrollBottom + 40) {
+          revealTo = Math.max(revealTo, parseInt(el.dataset.i, 10) + 1);
+        }
+      });
+      if (revealTo > negoRevealed) {
+        const wasFollowing = negoFollowing;
+        negoFollowing = false; // don't fight a manual upward/ahead scroll with an auto-scroll
+        revealUpTo(revealTo);
+        negoFollowing = wasFollowing;
+        if (!isPaused) startNegoMessageTimer();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { const el = document.getElementById("exit-link"); if (el) location.href = el.href; }
+    });
+  }
+
+  async function initNegotiation() {
+    const chatUrl = params.get("chat") || "";
+    const groupName = params.get("group") || "Unknown group";
+    const rawLabel = params.get("label") || "latest";
+    const label = rawLabel === "longest" ? "LONGEST TRANSCRIPT"
+      : rawLabel === "latest" ? "LATEST TRANSCRIPT"
+      : `TRANSCRIPT · ${rawLabel.toUpperCase()}`;
+    const backHref = `leaktracker.html?group=${encodeURIComponent(groupName)}`;
+
+    setupBackLink();
+    renderNegotiationChrome(groupName, label);
+
+    // The chat URL arrives via a query param — only ever fetch it if it's
+    // actually pointing at the trusted Ransomchats archive, not wherever a
+    // tampered link might point.
+    if (!chatUrl.startsWith(NEGOTIATION_URL_PREFIX)) {
+      showEmptyTarget("This negotiation link isn't from a trusted source, so it wasn't loaded.", backHref, groupName);
+      return;
+    }
+
+    let chat;
+    try {
+      const res = await fetch(chatUrl, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      chat = await res.json();
+    } catch (err) {
+      showEmptyTarget("Couldn't load this negotiation transcript.", backHref, groupName);
+      console.error(err);
+      return;
+    }
+
+    negoMessages = (chat.messages || [])
+      .map(m => {
+        const isVictim = (m.party || "").trim().toLowerCase() === "victim";
+        return {
+          party: isVictim ? "victim" : "them",
+          partyLabel: m.party || (isVictim ? "Victim" : groupName),
+          content: cleanChatContent(m.content),
+        };
+      })
+      .filter(m => m.content);
+
+    if (negoMessages.length === 0) {
+      showEmptyTarget("This transcript has no messages.", backHref, groupName);
+      return;
+    }
+
+    renderNegotiationMessages();
+    setupNegotiationInput();
+    revealUpTo(1);
+    startNegoMessageTimer();
+  }
+
+  // ---------- podcast "Listen now" button state ----------
+  // Starting playback is just spOpenEpisode() from the shared Stormcast
+  // player module (see the block above, identical on every page) — this
+  // page only needs to keep its own "Listen now" button's label/style in
+  // sync with whether that shared player is currently on this episode.
+  // audio's "emptied" event conveniently fires exactly when spCloseFully()
+  // clears the src, so it doubles as the "player was closed" signal.
+
+  function spotlightSyncListenButtons() {
+    const bar = spEl("sp-bar");
+    document.querySelectorAll('[data-role="listen"]').forEach(b => {
+      const isThisOne = !bar.hidden && spState.episode && spState.episode.id === b.dataset.epId;
+      b.classList.toggle("playing", isThisOne);
+      b.textContent = isThisOne ? "♪ Playing — see player below" : (b.dataset.label || b.textContent);
+    });
+  }
+
+  function wireSpotlightPodcastSync() {
+    const audio = spEl("sp-audio");
+    audio.addEventListener("play", spotlightSyncListenButtons);
+    audio.addEventListener("pause", spotlightSyncListenButtons);
+    audio.addEventListener("emptied", spotlightSyncListenButtons);
+  }
+
+  async function init() {
+    spInit();
+    wireSpotlightPodcastSync();
+    spotlightSyncListenButtons();
+    if (isNegotiation) { await initNegotiation(); return; }
+    if (isDigest) { await initDigest(); return; }
+
+    let data;
+    try { data = await loadDomain(); }
+    catch (err) { showEmptyTarget(`Couldn't load ${domain} data. Has scripts/fetch_attack.py been run yet?`); console.error(err); return; }
+
+    const entity = data.byId[type] && data.byId[type][id];
+    if (!entity) { showEmptyTarget(`No record for "${escapeHtml(id)}" in the ${domain} domain.`); return; }
+
+    setupBackLink();
+    const selfLabel = type === "techniques" ? techniqueLabel(entity, data) : entity.name;
+
+    if (type === "groups") slides = buildGroupSlides(entity, data, selfLabel);
+    else if (type === "techniques") slides = buildTechniqueSlides(entity, data, selfLabel);
+    else if (type === "software") slides = buildSoftwareSlides(entity, data, selfLabel);
+
+    renderChrome();
+    renderSlides();
+    setupInput();
+    goTo(0);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
