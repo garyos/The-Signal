@@ -7984,7 +7984,7 @@
     {
       "id": "CVE-2026-14164",
       "published": "2026-06-30T07:16:32.170",
-      "lastModified": "2026-09-08T19:17:50.650",
+      "lastModified": "2026-09-09T17:17:15.903",
       "vulnStatus": "Awaiting Analysis",
       "description": "A double free issue has been identified in libarchive's RAR5 reader. During parsing of a specially crafted RAR5 archive, the filtered_buf pointer may remain stale after being freed during unpacking state reinitialization. Subsequent processing of another archive entry can trigger a second free of the same memory region, resulting in a double-free condition. Successful exploitation may cause applications using the vulnerable libarchive API to terminate unexpectedly, leading to a denial of service",
       "cvss": {
@@ -9899,7 +9899,7 @@
     {
       "id": "CVE-2026-54371",
       "published": "2026-06-29T14:16:57.823",
-      "lastModified": "2026-09-02T13:18:02.227",
+      "lastModified": "2026-09-09T13:20:31.290",
       "vulnStatus": "Deferred",
       "description": "attr before version 2.6.0 contains a symlink traversal vulnerability in the getfattr and setfattr utilities that allows local attackers to escalate privileges by replacing a pathname component with a symbolic link during directory hierarchy traversal. Attackers who control a pathname component can redirect getfattr and setfattr operations to arbitrary files by substituting a symlink, leading to local privilege escalation when getfattr or setfattr is invoked by a privileged process over an attack",
       "cvss": {
@@ -9918,7 +9918,7 @@
         "Red Hat Red Hat Enterprise Linux 10",
         "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Discovery 2"
+        "Red Hat Cert Manager support for Red Hat OpenShift release 1.19"
       ],
       "references": [
         "https://cgit.git.savannah.nongnu.org/cgit/attr.git/commit/?id=49f79e947270f06940b9100fa638f85dddc4aa7f",
@@ -9933,7 +9933,7 @@
     {
       "id": "CVE-2026-54369",
       "published": "2026-06-29T14:16:57.487",
-      "lastModified": "2026-09-07T13:20:31.333",
+      "lastModified": "2026-09-09T13:20:30.973",
       "vulnStatus": "Deferred",
       "description": "acl before version 2.4.0 contains a symlink traversal vulnerability in the libacl pathname-based functions acl_get_file(), acl_set_file(), acl_extended_file(), and acl_delete_def_file() that allows local attackers to escalate privileges by replacing any pathname component with a symbolic link. Attackers who control any component of a pathname processed by a privileged caller can redirect ACL read or write operations to arbitrary files or directories, enabling unauthorized manipulation of access ",
       "cvss": {
@@ -9950,9 +9950,9 @@
       "vendors": [
         "acl project acl",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat OpenShift Container Platform 4.22"
+        "Red Hat Red Hat Enterprise Linux 9"
       ],
       "references": [
         "https://cgit.git.savannah.nongnu.org/cgit/acl.git/commit/?id=24a227d0ab8576612194f8a56c2314389adc74a5",
@@ -10091,7 +10091,7 @@
     {
       "id": "CVE-2026-13676",
       "published": "2026-06-29T14:16:47.967",
-      "lastModified": "2026-09-07T13:18:04.273",
+      "lastModified": "2026-09-09T13:18:36.323",
       "vulnStatus": "Modified",
       "description": "fast-uri versions 2.3.1 through 3.1.2 and 4.0.0 fail to canonicalize Unicode (IDN) hostnames for HTTP-family URLs. The IDN conversion path calls a helper that does not exist on the global URL constructor, silently leaving the host in its original Unicode form while normalize() and equal() still return values that differ from a WHATWG-compatible URL parser. Applications that use fast-uri to enforce host-based policy (denylists, loopback filtering, redirect validation, outbound proxy routing) befo",
       "cvss": {
@@ -12701,8 +12701,8 @@
     {
       "id": "CVE-2026-53322",
       "published": "2026-06-26T20:17:25.560",
-      "lastModified": "2026-07-15T01:16:32.400",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-09T13:20:29.680",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: vfio/pci: Clean up DMABUFs before disabling function On device shutdown, make vfio_pci_core_close_device() call vfio_pci_dma_buf_cleanup() before the function is disabled via vfio_pci_core_disable(). This ensures that all access via DMABUFs is revoked before the function's BARs become inaccessible. This fixes an issue where, if the function is disabled first, a tiny window exists in which the function's MSE is cleared and yet BA",
       "cvss": {
         "score": 8.8,
@@ -12729,8 +12729,8 @@
       "references": [
         "https://git.kernel.org/stable/c/4f1000a30f67cf7d328059242776a858611d5ef9",
         "https://git.kernel.org/stable/c/d97708701434ce72968e771976aaf9d3438fcafd",
-        "https://access.redhat.com/security/cve/CVE-2026-53322",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2493709"
+        "https://access.redhat.com/errata/RHSA-2026:65334",
+        "https://access.redhat.com/security/cve/CVE-2026-53322"
       ],
       "kev": {
         "in_kev": false
@@ -21538,8 +21538,8 @@
     {
       "id": "CVE-2026-53277",
       "published": "2026-06-25T09:16:45.897",
-      "lastModified": "2026-07-15T01:16:31.867",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-09T13:20:29.430",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Take the SRCU lock for page table walks in fault injection and AT emulation walk_s1() and kvm_walk_nested_s2() expect to be called while holding kvm->srcu to guard against memslot changes. While this is generally the case, __kvm_at_s12() and __kvm_find_s1_desc_level() call into the respective walkers without taking kvm->srcu. Fix by acquiring kvm->srcu prior to the table walk in both instances.",
       "cvss": {
         "score": 8.8,
@@ -21567,7 +21567,7 @@
         "https://git.kernel.org/stable/c/97706097f9b851cfe55c3b00b083dfc2bcf542bc",
         "https://git.kernel.org/stable/c/ec42b4ed1b072ea2d03f086061aa67bad6d8de39",
         "https://git.kernel.org/stable/c/f2ca45b50d4216c9cc7ffabf50d9ad1932209251",
-        "https://access.redhat.com/security/cve/CVE-2026-53277"
+        "https://access.redhat.com/errata/RHSA-2026:64775"
       ],
       "kev": {
         "in_kev": false
@@ -23302,7 +23302,7 @@
     {
       "id": "CVE-2026-53185",
       "published": "2026-06-25T09:16:35.920",
-      "lastModified": "2026-09-03T13:05:59.273",
+      "lastModified": "2026-09-09T13:20:28.880",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: zram: fix use-after-free in zram_bvec_write_partial() zram_read_page() picks the sync or async backing device read path based on whether the parent bio is NULL. zram_bvec_write_partial() passes its parent bio down, so for ZRAM_WB slots the read is dispatched asynchronously and zram_read_page() returns 0 while the bio is still in flight. The caller then runs memcpy_from_bvec(), zram_write_page() and __free_page() on the buffer, l",
       "cvss": {
@@ -23323,9 +23323,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 6"
       ],
       "references": [
         "https://git.kernel.org/stable/c/0c2821665ff71be3f4b07ecece384669f2877f6a",
@@ -25949,7 +25949,7 @@
     {
       "id": "CVE-2026-2050",
       "published": "2026-06-24T22:16:46.497",
-      "lastModified": "2026-08-22T04:17:47.330",
+      "lastModified": "2026-09-09T13:19:12.093",
       "vulnStatus": "Modified",
       "description": "GIMP HDR File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of GIMP. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the parsing of HDR files. The issue results from the lack of proper validation of the length of user-supplied data prior to copying it to a heap-b",
       "cvss": {
@@ -25970,9 +25970,9 @@
       "vendors": [
         "GIMP GIMP",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 9.2 Update Services for SAP Solutions",
-        "Red Hat Red Hat Enterprise Linux 9.4 Update Services for SAP Solutions"
+        "Red Hat Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support",
+        "Red Hat Red Hat Enterprise Linux 8.4 Extended Update Support Long-Life Add-On",
+        "Red Hat Red Hat Enterprise Linux 8.6 Advanced Mission Critical Update Support"
       ],
       "references": [
         "https://gitlab.gnome.org/GNOME/gegl/-/merge_requests/241",
@@ -28123,8 +28123,8 @@
     {
       "id": "CVE-2026-53091",
       "published": "2026-06-24T17:17:23.283",
-      "lastModified": "2026-07-23T18:34:52.973",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-09T13:20:28.643",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: pull headers in qdisc_pkt_len_segs_init() Most ndo_start_xmit() methods expects headers of gso packets to be already in skb->head. net/core/tso.c users are particularly at risk, because tso_build_hdr() does a memcpy(hdr, skb->data, hdr_len); qdisc_pkt_len_segs_init() already does a dissection of gso packets. Use pskb_may_pull() instead of skb_header_pointer() to make sure drivers do not have to reimplement this. Some malici",
       "cvss": {
         "score": 8.4,
@@ -28151,8 +28151,8 @@
       "references": [
         "https://git.kernel.org/stable/c/7fb4c19670110f052c04e1ec1d2b953b9f4f57e4",
         "https://git.kernel.org/stable/c/9d4f5c68f5ad4ab425f3ce1500c97c9f9743999a",
-        "https://access.redhat.com/security/cve/CVE-2026-53091",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2492270"
+        "https://access.redhat.com/errata/RHSA-2026:65334",
+        "https://access.redhat.com/security/cve/CVE-2026-53091"
       ],
       "kev": {
         "in_kev": false
@@ -28545,7 +28545,7 @@
     {
       "id": "CVE-2026-53071",
       "published": "2026-06-24T17:17:20.843",
-      "lastModified": "2026-07-23T12:18:26.597",
+      "lastModified": "2026-09-09T13:20:28.350",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: l2cap: Add missing chan lock in l2cap_ecred_reconf_rsp l2cap_ecred_reconf_rsp() calls l2cap_chan_del() without holding l2cap_chan_lock(). Every other l2cap_chan_del() caller in the file acquires the lock first. A remote BLE device can send a crafted L2CAP ECRED reconfiguration response to corrupt the channel list while another thread is iterating it. Add l2cap_chan_hold() and l2cap_chan_lock() before l2cap_chan_del(),",
       "cvss": {
@@ -29340,7 +29340,7 @@
     {
       "id": "CVE-2026-53016",
       "published": "2026-06-24T17:17:12.893",
-      "lastModified": "2026-08-31T13:18:22.103",
+      "lastModified": "2026-09-09T13:20:28.020",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: crypto: ccp - copy IV using skcipher ivsize AF_ALG rfc3686-ctr-aes-ccp requests pass an 8-byte IV to the driver. ccp_aes_complete() restores AES_BLOCK_SIZE bytes into the caller's IV buffer while RFC3686 skciphers expose an 8-byte IV, so the restore overruns the provided buffer. Use crypto_skcipher_ivsize() to copy only the algorithm's IV length.",
       "cvss": {
@@ -29361,9 +29361,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 8.6 Advanced Mission Critical Update Support",
-        "Red Hat Red Hat Enterprise Linux 8.6 Extended Update Support Long-Life Add-On"
+        "Red Hat Red Hat Enterprise Linux 8.6 Advanced Mission Critical Update Support"
       ],
       "references": [
         "https://git.kernel.org/stable/c/227c1e1d9e2aa4cfc65ba446d5690da1f546cda4",
@@ -29437,7 +29437,7 @@
     {
       "id": "CVE-2026-53009",
       "published": "2026-06-24T17:17:12.117",
-      "lastModified": "2026-08-12T12:19:41.470",
+      "lastModified": "2026-09-09T13:20:27.760",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: ice: fix double-free of tx_buf skb If ice_tso() or ice_tx_csum() fail, the error path in ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points to it and is marked as valid (ICE_TX_BUF_SKB). 'next_to_use' remains unchanged, so the potential problem will likely fix itself when the next packet is transmitted and the tx_buf gets overwritten. But if there is no next packet and the interface is brought down instead,",
       "cvss": {
@@ -29458,9 +29458,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8"
+        "Red Hat Red Hat Enterprise Linux 7"
       ],
       "references": [
         "https://git.kernel.org/stable/c/1a303baa715e6b78d6a406aaf335f87ff35acfcd",
@@ -29475,7 +29475,7 @@
     {
       "id": "CVE-2026-53006",
       "published": "2026-06-24T17:17:11.750",
-      "lastModified": "2026-09-08T09:18:13.590",
+      "lastModified": "2026-09-09T13:20:27.423",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: ipv6: fix possible UAF in icmpv6_rcv() Caching saddr and daddr before pskb_pull() is problematic since skb->head can change. Remove these temporary variables: - We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr when net_dbg_ratelimited() is called in the slow path. - Avoid potential future misuse after pskb_pull() call.",
       "cvss": {
@@ -29496,9 +29496,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 8.8 Telecommunications Update Service",
-        "Red Hat Red Hat Enterprise Linux 8.8 Update Services for SAP Solutions"
+        "Red Hat Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support"
       ],
       "references": [
         "https://git.kernel.org/stable/c/0069813e6ca9309eca78022bcb3aeb1e9ef90a12",
@@ -29603,7 +29603,7 @@
     {
       "id": "CVE-2026-53002",
       "published": "2026-06-24T17:17:11.263",
-      "lastModified": "2026-09-08T09:18:13.327",
+      "lastModified": "2026-09-09T13:20:27.140",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: conntrack: remove sprintf usage Replace it with scnprintf, the buffer sizes are expected to be large enough to hold the result, no need for snprintf+overflow check. Increase buffer size in mangle_content_len() while at it. BUG: KASAN: stack-out-of-bounds in vsnprintf+0xea5/0x1270 Write of size 1 at addr [..] vsnprintf+0xea5/0x1270 sprintf+0xb1/0xe0 mangle_content_len+0x1ac/0x280 nf_nat_sdp_session+0x1cc/0x240 process_",
       "cvss": {
@@ -29619,10 +29619,10 @@
       ],
       "vendors": [
         "Linux Linux",
+        "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 10",
         "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8"
+        "Red Hat Red Hat Enterprise Linux 7"
       ],
       "references": [
         "https://git.kernel.org/stable/c/1c9fb8aeed06790d42cdcd00f6c3ce0b9e926c1e",
@@ -29637,7 +29637,7 @@
     {
       "id": "CVE-2026-53000",
       "published": "2026-06-24T17:17:11.047",
-      "lastModified": "2026-08-17T12:18:54.980",
+      "lastModified": "2026-09-09T13:20:26.890",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nat: use kfree_rcu to release ops Florian Westphal says: \"Historically this is not an issue, even for normal base hooks: the data path doesn't use the original nf_hook_ops that are used to register the callbacks. However, in v5.14 I added the ability to dump the active netfilter hooks from userspace. This code will peek back into the nf_hook_ops that are available at the tail of the pointer-array blob used by the data",
       "cvss": {
@@ -29653,10 +29653,10 @@
       ],
       "vendors": [
         "Linux Linux",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
+        "Red Hat Red Hat Enterprise Linux 9",
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8"
+        "Red Hat Red Hat Enterprise Linux 6"
       ],
       "references": [
         "https://git.kernel.org/stable/c/32fdd2e38e7435a368d88f5977a7d6585ebc8b0e",
@@ -31930,7 +31930,7 @@
     {
       "id": "CVE-2026-52924",
       "published": "2026-06-24T08:16:22.430",
-      "lastModified": "2026-08-26T13:19:13.923",
+      "lastModified": "2026-09-09T13:20:26.580",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: sctp: purge outqueue on stale COOKIE-ECHO handling sctp_stream_update() is only invoked when the association is moved into COOKIE_WAIT during association setup/reconfiguration. In this path, the outbound stream scheduler state (stream->out_curr) is expected to be clean, since no user data should have been transmitted yet unless the state machine has already partially progressed. However, a corner case exists in sctp_sf_do_5_2_6_",
       "cvss": {
@@ -37347,7 +37347,7 @@
     {
       "id": "CVE-2026-54293",
       "published": "2026-06-22T19:17:20.983",
-      "lastModified": "2026-08-28T16:18:14.693",
+      "lastModified": "2026-09-09T13:20:30.723",
       "vulnStatus": "Modified",
       "description": "NLTK (Natural Language Toolkit) is a suite of open source Python modules, data sets, and tutorials supporting research and development in Natural Language Processing. Prior to 3.10.0-rc1, nltk.data.load() in NLTK is vulnerable to path traversal via URL-encoded path separators and traversal segments when using the nltk: URL scheme. The unsafe-path regex check is performed before url2pathname() decodes the %xx sequences (a classic decode-after-check / TOCTOU-style flaw), allowing an attacker to by",
       "cvss": {
@@ -38732,7 +38732,7 @@
     {
       "id": "CVE-2026-54100",
       "published": "2026-06-22T14:17:40.950",
-      "lastModified": "2026-09-07T13:20:23.897",
+      "lastModified": "2026-09-09T13:20:30.487",
       "vulnStatus": "Modified",
       "description": "A flaw was found in the Windows Machine Config Operator (WMCO) for Red Hat OpenShift Container Platform. WMCO establishes SSH connections to Windows worker nodes without verifying the remote server host key. An adjacent-network attacker who can intercept or redirect WMCO's SSH session can capture WICD and kubelet bootstrap credentials transferred during node configuration, enabling compromise of Windows node identities in the cluster.",
       "cvss": {
@@ -38764,7 +38764,7 @@
     {
       "id": "CVE-2026-54099",
       "published": "2026-06-22T14:17:40.820",
-      "lastModified": "2026-09-07T13:20:23.350",
+      "lastModified": "2026-09-09T13:20:30.257",
       "vulnStatus": "Modified",
       "description": "A flaw was found in the Windows Machine Config Operator (WMCO) for Red Hat OpenShift Container Platform. The WICD CSR auto-approver validates that a Certificate Signing Request contains the organization system:wicd-nodes but does not reject additional organization values such as system:masters. A compromised Windows worker node that holds WICD credentials can submit a CSR that is auto-approved and signed by the cluster, yielding a client certificate that grants cluster-administrator privileges a",
       "cvss": {
@@ -47093,7 +47093,7 @@
     {
       "id": "CVE-2026-9697",
       "published": "2026-06-17T18:18:06.473",
-      "lastModified": "2026-09-04T13:20:12.473",
+      "lastModified": "2026-09-09T13:20:46.803",
       "vulnStatus": "Modified",
       "description": "Impact: undici's ProxyAgent silently drops the requestTls option when configured with a SOCKS5 proxy URI (socks5:// or socks://). The target HTTPS connection through the SOCKS5 tunnel falls back to Node's default trust store, ignoring user-configured ca, cert, key, rejectUnauthorized, and servername settings. Applications that pin to an internal or corporate CA via requestTls.ca will, when their proxy URI is SOCKS5, get the default Mozilla CA bundle as the trust anchor instead. Any cert signed b",
       "cvss": {
@@ -47127,7 +47127,7 @@
     {
       "id": "CVE-2026-6734",
       "published": "2026-06-17T18:18:05.617",
-      "lastModified": "2026-09-04T13:20:07.583",
+      "lastModified": "2026-09-09T13:20:33.460",
       "vulnStatus": "Modified",
       "description": "Impact: When using Socks5ProxyAgent, undici reuses a single connection pool across different origins without verifying that the pool's origin matches the requested origin. All requests are dispatched through the pool connected to the first origin, regardless of the intended destination. This causes cross-origin request routing: credentials and request data intended for origin B are sent to origin A, responses from the wrong origin are trusted, and HTTPS requests may be silently downgraded to HTT",
       "cvss": {
@@ -47705,7 +47705,7 @@
     {
       "id": "CVE-2026-12151",
       "published": "2026-06-17T17:16:42.370",
-      "lastModified": "2026-09-04T13:18:12.320",
+      "lastModified": "2026-09-09T13:18:35.397",
       "vulnStatus": "Modified",
       "description": "Impact: The undici WebSocket client enforces maxPayloadSize on the cumulative byte count of fragments in a message but does not enforce a limit on the number of fragments. A malicious WebSocket server can stream many small or empty continuation frames that each pass per-frame and cumulative-size validation, collectively causing unbounded memory growth in the client process. The result is memory exhaustion and a denial of service. Affected applications are those using the undici WebSocket client ",
       "cvss": {
@@ -51066,7 +51066,7 @@
     {
       "id": "CVE-2026-48779",
       "published": "2026-06-17T13:20:42.887",
-      "lastModified": "2026-09-07T13:20:15.797",
+      "lastModified": "2026-09-09T13:20:22.113",
       "vulnStatus": "Modified",
       "description": "ws is an open source WebSocket client and server for Node.js. All versions from 1.1.0 up to (but not including) 5.2.5, from 6.0.0 up to 6.2.4, from 7.0.0 up to 7.5.11, and from 8.0.0 up to 8.21.0 are affected by a memory exhaustion DoS vulnerability. A peer can send a high volume of exceptionally small fragments and data chunks, with modest network traffic, to force the remote peer into allocating and holding structural wrappers that consume far more memory than the default documented message-si",
       "cvss": {
@@ -75073,7 +75073,7 @@
     {
       "id": "CVE-2026-44990",
       "published": "2026-06-12T21:16:22.447",
-      "lastModified": "2026-09-07T13:20:06.403",
+      "lastModified": "2026-09-09T13:20:12.560",
       "vulnStatus": "Deferred",
       "description": "ApostropheCMS is an open-source Node.js content management system, and sanitize-html provides a simple HTML sanitizer with a clear API. Under the default configuration, versions of `sanitize-html` prior to 2.17.4 can turn attacker-controlled content inside a disallowed `xmp` element into live HTML or JavaScript. This is a sanitizer bypass in the default `disallowedTagsMode: 'discard'` path and can lead to stored XSS in applications that render sanitized output back to users. Version 2.17.4 patch",
       "cvss": {
@@ -75429,7 +75429,7 @@
     {
       "id": "CVE-2026-12143",
       "published": "2026-06-12T19:16:26.560",
-      "lastModified": "2026-09-07T13:18:02.720",
+      "lastModified": "2026-09-09T13:18:33.133",
       "vulnStatus": "Awaiting Analysis",
       "description": "form-data is a library for creating readable multipart/form-data streams. In versions through 4.0.5, the `field` argument to `FormData#append` and the `filename` option are concatenated verbatim into the `Content-Disposition` header without escaping carriage return (CR), line feed (LF), or double-quote (\") characters. An application that passes attacker-controlled data as a field name or filename (for example, an API gateway that turns JSON object keys into multipart field names) allows the atta",
       "cvss": {
@@ -76061,7 +76061,7 @@
     {
       "id": "CVE-2026-50011",
       "published": "2026-06-12T16:16:31.313",
-      "lastModified": "2026-09-02T13:18:00.370",
+      "lastModified": "2026-09-09T13:20:26.280",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, RedisArrayAggregator pre-allocates ArrayList with initial capacity equal to the RESP array element count declared in an array header. That count is taken from the wire before the corresponding child messages exist. A small malicious header can claim a huge initial capacity. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -76099,7 +76099,7 @@
     {
       "id": "CVE-2026-50010",
       "published": "2026-06-12T16:16:31.180",
-      "lastModified": "2026-09-07T13:20:22.210",
+      "lastModified": "2026-09-09T13:20:25.790",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, SimpleTrustManagerFactory.engineGetTrustManagers() and related paths wrap any user-supplied plain X509TrustManager in X509TrustManagerWrapper, which extends X509ExtendedTrustManager but implements the 3-arg checkServerTrusted(chain, authType, SSLEngine) by discarding the SSLEngine and calling the 2-arg delegate. Because the object now IS an X509ExtendedTrust",
       "cvss": {
@@ -76164,7 +76164,7 @@
     {
       "id": "CVE-2026-48059",
       "published": "2026-06-12T16:16:30.720",
-      "lastModified": "2026-09-02T13:17:59.170",
+      "lastModified": "2026-09-09T13:20:21.720",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, the HAProxy PROXY protocol v2 codec in netty leaks native or heap memory on every connection when a client sends a syntactically valid header containing nested `PP2_TYPE_SSL` TLVs (type-length-value records) at depth two or greater. The leak occurs on the successful parse path \u2014 no exception is thrown, the message fires downstream, the decoder removes itself",
       "cvss": {
@@ -76202,7 +76202,7 @@
     {
       "id": "CVE-2026-48043",
       "published": "2026-06-12T16:16:30.587",
-      "lastModified": "2026-09-02T13:17:58.697",
+      "lastModified": "2026-09-09T13:20:21.260",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-codec-http2 prior to versions 4.1.135.Final and 4.2.15.Final, the `DelegatingDecompressorFrameListener` class orchestrates HTTP/2 decompression by embedding a per-stream `EmbeddedChannel` that runs the appropriate decompression codec (gzip, deflate, zstd) and forwards decompressed chunks to a wrapped listener. Each decompressed chunk is a pooled `ByteBuf` handed to an anonymous `ChannelInboundHandl",
       "cvss": {
@@ -76244,7 +76244,7 @@
     {
       "id": "CVE-2026-48006",
       "published": "2026-06-12T16:16:30.450",
-      "lastModified": "2026-09-07T13:20:14.667",
+      "lastModified": "2026-09-09T13:20:20.877",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, the RedisArrayAggregator handler permanently leaks pooled direct-memory buffers when a Redis pipeline connection closes before a RESP array aggregate completes. The handler retains child messages in per-handler state (`depths` field) but defines no `channelInactive`, `handlerRemoved`, or `exceptionCaught` method to release them when the pipeline tears down. ",
       "cvss": {
@@ -76282,7 +76282,7 @@
     {
       "id": "CVE-2026-47691",
       "published": "2026-06-12T16:16:30.310",
-      "lastModified": "2026-09-02T13:17:57.547",
+      "lastModified": "2026-09-09T13:20:19.013",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, Netty's `DnsResolveContext` insufficiently validates the bailiwick of NS records, enabling DNS Cache Poisoning. An attacker controlling an authoritative name server for a subdomain can poison the cache for parent domains (like `.co.uk`). In `io.netty.resolver.dns.DnsResolveContext.AuthoritativeNameServerList#add` method accepts any NS record from the AUTHORI",
       "cvss": {
@@ -76864,7 +76864,7 @@
     {
       "id": "CVE-2026-46340",
       "published": "2026-06-12T15:16:27.743",
-      "lastModified": "2026-09-02T13:17:56.477",
+      "lastModified": "2026-09-09T13:20:16.710",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In versions of netty-transport-sctp prior to 4.1.135.Final and 4.2.15.Final, for each non-complete SctpMessage fragment the handler does `fragments.put(streamId, Unpooled.wrappedBuffer(frag, byteBuf))`, wrapping the previous accumulator and the new slice into a *new* CompositeByteBuf every time. After N fragments the accumulator is an N-deep chain of composites, each holding references and component arrays;",
       "cvss": {
@@ -76898,7 +76898,7 @@
     {
       "id": "CVE-2026-45674",
       "published": "2026-06-12T15:16:27.550",
-      "lastModified": "2026-09-04T13:19:53.297",
+      "lastModified": "2026-09-09T13:20:13.883",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, Netty's DnsResolveContext fails to validate the origin (bailiwick) of CNAME records in DNS responses. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -76936,7 +76936,7 @@
     {
       "id": "CVE-2026-45416",
       "published": "2026-06-12T15:16:26.940",
-      "lastModified": "2026-09-07T13:20:08.353",
+      "lastModified": "2026-09-09T13:20:13.317",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, SslClientHelloHandler.decode() reads the 24-bit TLS handshake length and, when the ClientHello does not fit in the first record, eagerly allocates `ctx.alloc().buffer(handshakeLength)` (line 161). The guard at line 140 is `handshakeLength > maxClientHelloLength && maxClientHelloLength != 0`, and the commonly-used SniHandler/AbstractSniHandler constructors (S",
       "cvss": {
@@ -77005,7 +77005,7 @@
     {
       "id": "CVE-2026-44893",
       "published": "2026-06-12T15:16:26.103",
-      "lastModified": "2026-09-03T13:05:51.107",
+      "lastModified": "2026-09-09T13:20:12.157",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-codec-haproxy prior to versions 4.1.135.Final and 4.2.15.Final, when decoding a PP2_TYPE_SSL TLV, HAProxyMessage.readNextTLV() first calls `header.retainedSlice(header.readerIndex(), length)` and only then reads the 1-byte client field and 4-byte verify field. If the attacker sets the TLV length below 5, the subsequent readByte/readInt throws IndexOutOfBoundsException. HAProxyMessageDecoder only ca",
       "cvss": {
@@ -78067,7 +78067,7 @@
     {
       "id": "CVE-2026-44890",
       "published": "2026-06-11T22:16:56.997",
-      "lastModified": "2026-08-12T12:19:27.490",
+      "lastModified": "2026-09-09T13:20:11.867",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-codec-redis prior to versions 4.1.135.Final and 4.2.15.Final, an attacker can cause DoS by sending crafted Redis payloads across multiple connections without `\\r\\n`. This exhausts the server's direct memory pool (OutOfDirectMemoryError), preventing legitimate connections from being processed. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -78105,7 +78105,7 @@
     {
       "id": "CVE-2026-44250",
       "published": "2026-06-11T22:16:56.857",
-      "lastModified": "2026-08-12T12:19:21.060",
+      "lastModified": "2026-09-09T13:20:07.233",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-codec-redis prior to versions 4.1.135.Final and 4.2.15.Final, an attacker can cause DoS by sending a crafted Redis payload with deeply nested arrays. This forces the server to allocate a massive number of state objects and collections, leading to memory exhaustion and an OutOfMemoryError. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -78143,7 +78143,7 @@
     {
       "id": "CVE-2026-44249",
       "published": "2026-06-11T22:16:56.707",
-      "lastModified": "2026-09-07T13:19:56.373",
+      "lastModified": "2026-09-09T13:20:06.740",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-handler prior to versions 4.1.135.Final and 4.2.15.Final, an attacker can bypass IPv6 subnet rules due to an incorrect masking operation in IpSubnetFilterRule.compareTo(). Valid public IP addresses can bypass the restrictions. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -79967,7 +79967,7 @@
     {
       "id": "CVE-2026-44496",
       "published": "2026-06-11T17:16:33.590",
-      "lastModified": "2026-09-07T13:20:05.497",
+      "lastModified": "2026-09-09T13:20:11.020",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Axios versions before 0.32.0 on the 0.x line and before 1.16.0 on the 1.x line build a regular expression from the configured XSRF cookie name without escaping regex metacharacters. In standard browser environments, an attacker who can influence the cookie name passed to axios can cause expensive regex backtracking while axios reads document.cookie. The practical impact is client-side availability degradation, such as freezing the",
       "cvss": {
@@ -80005,7 +80005,7 @@
     {
       "id": "CVE-2026-44495",
       "published": "2026-06-11T17:16:33.450",
-      "lastModified": "2026-09-07T13:20:04.510",
+      "lastModified": "2026-09-09T13:20:10.383",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. From 0.19.0 to before 0.31.1 and 1.15.2, Axios contains prototype-pollution gadgets in request config processing. If another vulnerability in the same JavaScript process has already polluted Object.prototype.transformResponse, affected Axios versions may treat that inherited value as request configuration or as an option validator. Axios does not itself create the prototype pollution. Exploitability requires a separate prototype-p",
       "cvss": {
@@ -80089,7 +80089,7 @@
     {
       "id": "CVE-2026-44492",
       "published": "2026-06-11T17:16:33.167",
-      "lastModified": "2026-09-07T13:20:02.633",
+      "lastModified": "2026-09-09T13:20:09.803",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios does not normalise IPv4-mapped IPv6 addresses. When NO_PROXY lists an IPv4 address such as 127.0.0.1 or 169.254.169.254, a request URL using the IPv4-mapped IPv6 form (::ffff:7f00:1, ::ffff:a9fe:a9fe) still routes through the configured proxy. Node.js resolves these addresses to the underlying IPv4 host, so the request reaches the internal service via the proxy rather than being blocked. This vuln",
       "cvss": {
@@ -80154,7 +80154,7 @@
     {
       "id": "CVE-2026-44488",
       "published": "2026-06-11T17:16:32.750",
-      "lastModified": "2026-09-07T13:20:00.753",
+      "lastModified": "2026-09-09T13:20:09.210",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Axios versions 1.7.0 through 1.15.x did not enforce configured request and response size limits when requests were sent with the fetch adapter. Applications that selected adapter: 'fetch', or ran in environments where axios resolved to the fetch adapter, could receive or send bodies larger than maxContentLength or maxBodyLength despite those limits being explicitly configured. This can cause resource exhaustion in server-side usag",
       "cvss": {
@@ -80188,7 +80188,7 @@
     {
       "id": "CVE-2026-44487",
       "published": "2026-06-11T17:16:32.607",
-      "lastModified": "2026-09-07T13:19:59.670",
+      "lastModified": "2026-09-09T13:20:08.550",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios\u2019s Node.js HTTP adapter may forward a Proxy-Authorization header to a redirected origin during specific proxy-to-direct redirect flows. This affects Node.js usage, where an initial HTTP request is sent through an authenticated HTTP proxy, redirects are followed, and the redirected URL is no longer proxied. Under affected redirect shapes, the final origin can receive the proxy credential that was in",
       "cvss": {
@@ -80222,7 +80222,7 @@
     {
       "id": "CVE-2026-44486",
       "published": "2026-06-11T17:16:32.450",
-      "lastModified": "2026-09-07T13:19:58.727",
+      "lastModified": "2026-09-09T13:20:07.930",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios\u2019 Node.js HTTP adapter can leak proxy credentials to a redirect target in affected versions. When a request is sent through an authenticated proxy, Axios may add a Proxy-Authorization header. If Axios then follows a redirect and the redirected request is no longer sent through that proxy, the stale Proxy-Authorization header can remain on the redirected request and be sent to the redirect target. T",
       "cvss": {
@@ -81509,7 +81509,7 @@
     {
       "id": "CVE-2026-46625",
       "published": "2026-06-10T22:16:59.613",
-      "lastModified": "2026-09-07T13:20:13.947",
+      "lastModified": "2026-09-09T13:20:18.357",
       "vulnStatus": "Modified",
       "description": "JavaScript Cookie is a JavaScript API for handling cookies, client-side. Prior to version 3.0.7, js-cookie's internal assign() helper copies properties with for...in + plain assignment. When the source object is produced by JSON.parse, the JSON object's \"__proto__\" member is an own enumerable property, so the for\u2026in enumerates it and the target[key] = source[key] write triggers the Object.prototype.__proto__ setter on the fresh target ({}). The result is a per-instance prototype hijack: Object.p",
       "cvss": {
@@ -82037,7 +82037,7 @@
     {
       "id": "CVE-2026-6893",
       "published": "2026-06-10T20:17:29.807",
-      "lastModified": "2026-09-09T06:17:15.847",
+      "lastModified": "2026-09-09T16:17:04.283",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in dracut. A remote attacker on the adjacent network can exploit this vulnerability by providing specially crafted DHCP (Dynamic Host Configuration Protocol) options, such as a malicious hostname, to a system using dracut's legacy DHCP path. These options are improperly handled and written into temporary shell scripts without proper escaping, leading to command injection. This allows the attacker to achieve root code execution within the initramfs, potentially compromising the s",
       "cvss": {
@@ -84037,7 +84037,7 @@
     {
       "id": "CVE-2026-11837",
       "published": "2026-06-10T05:16:38.510",
-      "lastModified": "2026-09-08T18:17:33.763",
+      "lastModified": "2026-09-09T13:18:32.693",
       "vulnStatus": "Awaiting Analysis",
       "description": "A local privilege escalation vulnerability was found in the ansible.posix authorized_key module. The module's keyfile() function uses os.chown() instead of os.lchown() and opens files without O_NOFOLLOW when managing SSH authorized keys. An unprivileged local user can pre-stage symbolic links in their ~/.ssh directory to redirect file ownership changes to arbitrary system paths when an operator runs the authorized_key task as root, leading to local privilege escalation.",
       "cvss": {
@@ -103182,7 +103182,7 @@
     {
       "id": "CVE-2026-11332",
       "published": "2026-06-05T09:16:26.070",
-      "lastModified": "2026-09-07T13:18:00.763",
+      "lastModified": "2026-09-09T23:16:53.617",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in ansible-core. The ansible-galaxy role install command processes dependency specifications from a role's meta/requirements.yml file. Due to improper neutralization of argument delimiters, a malicious role author can inject arbitrary git configuration flags through the src field. This allows arbitrary code execution on the machine of a user who installs the role via ansible-galaxy role install.",
       "cvss": {
@@ -103347,7 +103347,7 @@
     {
       "id": "CVE-2026-41567",
       "published": "2026-06-05T02:17:13.817",
-      "lastModified": "2026-09-07T13:19:28.847",
+      "lastModified": "2026-09-09T13:19:53.313",
       "vulnStatus": "Awaiting Analysis",
       "description": "Moby is an open source container framework. In versions prior to 29.5.1 and in moby/moby v2 prior to v2.0.0-beta.14, when a compressed archive is uploaded to a container via `PUT /containers/{id}/archive` or piped through `docker cp -`, the daemon resolves decompression binaries (such as `xz` or `unpigz`) from the container's filesystem rather than the host's due to incorrect ordering of operations. A malicious container image containing a trojanized decompression binary can achieve arbitrary co",
       "cvss": {
@@ -117464,7 +117464,7 @@
     {
       "id": "CVE-2026-1784",
       "published": "2026-06-02T09:16:15.683",
-      "lastModified": "2026-09-07T13:18:05.787",
+      "lastModified": "2026-09-09T15:17:06.550",
       "vulnStatus": "Modified",
       "description": "The Route OpenShift resource allows to define routes to make pods reachable at a subdomain through HAProxy. It was found that the checks performed on the spec.path YAML stanza in a Route document was insufficient and could allow a controlled injection of the HAProxy configuration.",
       "cvss": {
@@ -122690,5 +122690,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-09T10:05:11.197025+00:00"
+  "updated_at": "2026-09-10T10:00:57.959572+00:00"
 }

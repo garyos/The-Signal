@@ -2067,7 +2067,7 @@
     {
       "id": "CVE-2026-46385",
       "published": "2026-05-29T20:16:27.990",
-      "lastModified": "2026-09-07T13:20:11.760",
+      "lastModified": "2026-09-09T13:20:17.253",
       "vulnStatus": "Deferred",
       "description": "iskorotkov/avro is a fast Go Avro codec. Prior to 2.33.0, the Avro array and map decoders looped over an attacker-controlled block-count value without checking the underlying reader's error state inside the loop body. Reader.ReadBlockHeader returns the count as a Go int, which is 64-bit on amd64 / arm64 targets \u2014 so a producer can declare a block of up to math.MaxInt64 (~9.2 \u00d7 10\u00b9\u2078) elements followed by EOF (or any truncated payload), and the decoder will attempt that many no-op iterations befor",
       "cvss": {
@@ -2105,7 +2105,7 @@
     {
       "id": "CVE-2026-46384",
       "published": "2026-05-29T20:16:27.847",
-      "lastModified": "2026-09-07T13:20:11.167",
+      "lastModified": "2026-09-09T13:20:17.007",
       "vulnStatus": "Deferred",
       "description": "iskorotkov/avro is a fast Go Avro codec. Prior to 2.33.0, several Avro decoder paths read attacker-controlled 64-bit values from the wire format and either narrowed them to platform-sized int before bounds-checking, or summed them with overflow-prone signed-int arithmetic. On 32-bit targets (GOARCH=386, arm, mips, wasm, etc.), the truncation paths can silently bypass byte-slice limits, select the wrong union branch, or hit the OCF negative-make panic via wrap. Three sub-issues are not 32-bit-spe",
       "cvss": {
@@ -5754,7 +5754,7 @@
     {
       "id": "CVE-2026-46579",
       "published": "2026-05-29T11:16:17.050",
-      "lastModified": "2026-09-07T13:20:12.320",
+      "lastModified": "2026-09-09T15:17:07.280",
       "vulnStatus": "Modified",
       "description": "A flaw was found in the OpenShift Router. When a Route has `insecureEdgeTerminationPolicy` set to Allow, the HTTP frontend does not remove `X-SSL-Client-*` headers from incoming requests. This allows an unauthenticated attacker to send plain HTTP requests with crafted `X-SSL-Client-*` headers. As a result, backends relying on these headers for mutual TLS (Transport Layer Security) authentication can be bypassed, enabling the attacker to impersonate client certificate identities.",
       "cvss": {
@@ -13197,7 +13197,7 @@
     {
       "id": "CVE-2026-46189",
       "published": "2026-05-28T10:16:34.540",
-      "lastModified": "2026-07-30T12:18:50.763",
+      "lastModified": "2026-09-09T13:20:16.377",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path Sashiko points out that pvrdma_uar_free() is already called within pvrdma_dealloc_ucontext(), so calling it before triggers a double free.",
       "cvss": {
@@ -13211,8 +13211,8 @@
           "name": "CWE-415"
         },
         {
-          "id": "CWE-1341",
-          "name": "CWE-1341"
+          "id": "CWE-763",
+          "name": "CWE-763"
         }
       ],
       "vendors": [
@@ -13869,7 +13869,7 @@
     {
       "id": "CVE-2026-46145",
       "published": "2026-05-28T10:16:30.110",
-      "lastModified": "2026-09-03T13:05:53.670",
+      "lastModified": "2026-09-09T13:20:16.097",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/mana: Validate rx_hash_key_len Sashiko points out that rx_hash_key_len comes from a uAPI structure and is blindly passed to memcpy, allowing the userspace to trash kernel memory. Bounds check it so the memcpy cannot overflow.",
       "cvss": {
@@ -13890,9 +13890,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 6"
+        "Red Hat Red Hat Enterprise Linux 9"
       ],
       "references": [
         "https://git.kernel.org/stable/c/012796f9541fcd0c1fa8ae4da7eb4d83931ef838",
@@ -14364,7 +14364,7 @@
     {
       "id": "CVE-2026-46117",
       "published": "2026-05-28T10:16:27.203",
-      "lastModified": "2026-07-21T12:18:48.320",
+      "lastModified": "2026-09-09T13:20:15.763",
       "vulnStatus": "Undergoing Analysis",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/mana: Remove user triggerable WARN_ON() in mana_ib_create_qp_rss() Sashiko points out that the user can specify WQs sharing the same CQ as a part of the uAPI and this will trigger the WARN_ON() then go on to corrupt the kernel. Just reject it outright and fail the QP creation.",
       "cvss": {
@@ -14387,7 +14387,7 @@
         "Red Hat Red Hat Enterprise Linux 10",
         "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 6"
+        "Red Hat Red Hat Enterprise Linux 9.4 Update Services for SAP Solutions"
       ],
       "references": [
         "https://git.kernel.org/stable/c/159f2efabc89d3f931d38f2d35876535d4abf0a3",
@@ -14679,7 +14679,7 @@
     {
       "id": "CVE-2026-9804",
       "published": "2026-05-28T09:16:49.500",
-      "lastModified": "2026-09-08T16:18:38.643",
+      "lastModified": "2026-09-09T15:17:28.217",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in KubeVirt's virt-exportserver component. An attacker with specific namespace-level access can exploit a path traversal vulnerability in the VMExport directory endpoint. By placing a symbolic link (symlink) within an exported filesystem Persistent Volume Claim (PVC) that points outside its designated mount root, the attacker can read arbitrary files from the exporter pod's filesystem. This leads to information disclosure, potentially exposing sensitive data.",
       "cvss": {
@@ -14697,7 +14697,7 @@
         "Red Hat Red Hat Container Native Virtualization 4.17",
         "Red Hat Red Hat Container Native Virtualization 4.18",
         "Red Hat Red Hat Container Native Virtualization 4.19",
-        "Red Hat Red Hat Container Native Virtualization 4.2",
+        "Red Hat Red Hat Container Native Virtualization 4.20",
         "Red Hat Red Hat Container Native Virtualization 4.21"
       ],
       "references": [
@@ -18629,7 +18629,7 @@
     {
       "id": "CVE-2026-46099",
       "published": "2026-05-27T14:17:31.557",
-      "lastModified": "2026-09-03T13:05:53.090",
+      "lastModified": "2026-09-09T13:20:15.450",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: ipv6: fix NOREF dst use in seg6 and rpl lwtunnels seg6_input_core() and rpl_input() call ip6_route_input() which sets a NOREF dst on the skb, then pass it to dst_cache_set_ip6() invoking dst_hold() unconditionally. On PREEMPT_RT, ksoftirqd is preemptible and a higher-priority task can release the underlying pcpu_rt between the lookup and the caching through a concurrent FIB lookup on a shared nexthop. Simplified race sequen",
       "cvss": {
@@ -18650,9 +18650,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 9.2 Update Services for SAP Solutions",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 9.6 Extended Update Support"
       ],
       "references": [
         "https://git.kernel.org/stable/c/51fef5a7c4d160839199e941929456ba21ddf73c",
@@ -19976,7 +19976,7 @@
     {
       "id": "CVE-2026-45998",
       "published": "2026-05-27T14:17:17.407",
-      "lastModified": "2026-08-17T12:18:45.410",
+      "lastModified": "2026-09-09T13:20:15.190",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: rxrpc: Fix potential UAF after skb_unshare() failure If skb_unshare() fails to unshare a packet due to allocation failure in rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread()) will be NULL'd out. This will likely cause the call to trace_rxrpc_rx_done() to oops. Fix this by moving the unsharing down to where rxrpc_input_call_event() calls rxrpc_input_call_packet(). There are a number of places prior to that w",
       "cvss": {
@@ -19997,9 +19997,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8"
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
+        "Red Hat Red Hat Enterprise Linux 9.4 Update Services for SAP Solutions",
+        "Red Hat Red Hat Enterprise Linux 9.6 Extended Update Support"
       ],
       "references": [
         "https://git.kernel.org/stable/c/1f2740150f904bfa60e4bad74d65add3ccb5e7f8",
@@ -28000,7 +28000,7 @@
     {
       "id": "CVE-2026-7374",
       "published": "2026-05-26T14:16:40.717",
-      "lastModified": "2026-09-08T17:18:31.723",
+      "lastModified": "2026-09-09T15:17:10.817",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in KubeVirt's virt-handler component. This vulnerability allows an authenticated OpenShift user with edit permissions in a single namespace to exploit improper symlink validation when connecting to virtual machine console sockets. By replacing the console socket with a symlink to the host's container runtime (CRI-O) socket, an attacker can hijack virt-handler's privileged connection. This enables the attacker to access any Unix socket on the host, potentially leading to full con",
       "cvss": {
@@ -34332,7 +34332,7 @@
     {
       "id": "CVE-2026-39821",
       "published": "2026-05-22T16:16:20.410",
-      "lastModified": "2026-09-07T13:19:13.533",
+      "lastModified": "2026-09-09T13:19:41.850",
       "vulnStatus": "Modified",
       "description": "The ToASCII and ToUnicode functions incorrectly accept Punycode-encoded labels that decode to an ASCII-only label. For example, ToUnicode(\"xn--example-.com\") incorrectly returns the name \"example.com\" rather than an error. This behavior can lead to privilege escalation in programs using the idna package. For example, a program which performs privilege checks on the ASCII hostname may reject \"example.com\" but permit \"xn--example-.com\". If that program subsequently converts the ASCII hostname to U",
       "cvss": {
@@ -34508,7 +34508,7 @@
     {
       "id": "CVE-2026-9277",
       "published": "2026-05-22T14:16:30.330",
-      "lastModified": "2026-09-07T13:20:44.847",
+      "lastModified": "2026-09-09T13:20:46.243",
       "vulnStatus": "Deferred",
       "description": "shell-quote's `quote()` function did not validate object-token inputs against the operator model used by `parse()`. The `.op` field was backslash-escaped character by character using `/(.)/g`, which in JavaScript does not match line terminators (\\n, \\r, U+2028, U+2029). A line terminator in `.op` therefore passed through unescaped into the output; POSIX shells treat a literal newline as a command separator, so any content after it would execute as a second command. The vulnerable code path is re",
       "cvss": {
@@ -35086,7 +35086,7 @@
     {
       "id": "CVE-2026-42508",
       "published": "2026-05-22T04:16:25.440",
-      "lastModified": "2026-09-07T13:19:44.563",
+      "lastModified": "2026-09-09T13:20:01.750",
       "vulnStatus": "Modified",
       "description": "Previously, a revoked 'SignatureKey' belonging to a CA was not correctly checked for revocation. Now, both the 'key' and 'key.SignatureKey' are checked for @revoked.",
       "cvss": {
@@ -35286,7 +35286,7 @@
     {
       "id": "CVE-2026-39829",
       "published": "2026-05-22T04:16:22.310",
-      "lastModified": "2026-09-07T13:19:17.303",
+      "lastModified": "2026-09-09T13:19:45.230",
       "vulnStatus": "Modified",
       "description": "The RSA and DSA public key parsers did not enforce size limits on key parameters. A crafted public key with an excessively large modulus or DSA parameter could cause several minutes of CPU consumption during signature verification. This could be triggered by unauthenticated clients during public key authentication. RSA moduli are now limited to 8192 bits, and DSA parameters are validated per FIPS 186-2.",
       "cvss": {
@@ -49211,7 +49211,7 @@
     {
       "id": "CVE-2026-45736",
       "published": "2026-05-15T15:16:54.103",
-      "lastModified": "2026-09-07T13:20:09.987",
+      "lastModified": "2026-09-09T13:20:14.373",
       "vulnStatus": "Modified",
       "description": "ws is an open source WebSocket client and server for Node.js. Prior to 8.20.1, the websocket.close() implementation is vulnerable to uninitialized memory disclosure when a TypedArray is passed as the reason argument. This vulnerability is fixed in 8.20.1.",
       "cvss": {
@@ -49869,7 +49869,7 @@
     {
       "id": "CVE-2026-44673",
       "published": "2026-05-14T21:16:47.500",
-      "lastModified": "2026-08-07T12:17:56.963",
+      "lastModified": "2026-09-09T13:20:11.590",
       "vulnStatus": "Deferred",
       "description": "libyang is a YANG data modeling language library. Prior to SO 5.2.15, lyb_read_string() in src/parser_lyb.c contains an integer overflow that results in a heap buffer overflow when parsing a maliciously crafted LYB binary blob. An attacker who can supply LYB data to any libyang consumer (NETCONF server, sysrepo, etc.) can trigger a crash or potential heap corruption. This vulnerability is fixed in SO 5.2.15.",
       "cvss": {
@@ -55046,7 +55046,7 @@
     {
       "id": "CVE-2026-42587",
       "published": "2026-05-13T19:17:24.460",
-      "lastModified": "2026-09-07T13:19:48.860",
+      "lastModified": "2026-09-09T13:20:04.417",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.2.13.Final and 4.1.133.Final, HttpContentDecompressor accepts a maxAllocation parameter to limit decompression buffer size and prevent decompression bomb attacks. This limit is correctly enforced for gzip and deflate encodings via ZlibDecoder, but is silently ignored when the content encoding is br (Brotli), zstd, or snappy. An attacker can bypass the configured decompression limit by sending a compressed payload wi",
       "cvss": {
@@ -55140,7 +55140,7 @@
     {
       "id": "CVE-2026-42584",
       "published": "2026-05-13T19:17:24.043",
-      "lastModified": "2026-09-07T13:19:48.033",
+      "lastModified": "2026-09-09T13:20:03.943",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.2.13.Final and 4.1.133.Final, HttpClientCodec pairs each inbound response with an outbound request by queue.poll() once per response, including for 1xx. If the client pipelines GET then HEAD and the server sends 103, then 200 with GET body, then 200 for HEAD, the queue pairs HEAD with the first 200. The HEAD rule then skips reading that message\u2019s body, so the GET entity bytes stay on the stream and the following 200",
       "cvss": {
@@ -55239,7 +55239,7 @@
     {
       "id": "CVE-2026-42581",
       "published": "2026-05-13T19:17:23.627",
-      "lastModified": "2026-09-07T13:19:47.143",
+      "lastModified": "2026-09-09T13:20:03.410",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.2.13.Final and 4.1.133.Final, HttpObjectDecoder strips a conflicting Content-Length header when a request carries both Transfer-Encoding: chunked and Content-Length, but only for HTTP/1.1 messages. The guard is absent for HTTP/1.0. An attacker that sends an HTTP/1.0 request with both headers causes Netty to decode the body as chunked while leaving Content-Length intact in the forwarded HttpMessage. Any downstream pr",
       "cvss": {
@@ -55273,7 +55273,7 @@
     {
       "id": "CVE-2026-42579",
       "published": "2026-05-13T19:17:23.353",
-      "lastModified": "2026-09-07T13:19:46.340",
+      "lastModified": "2026-09-09T13:20:02.890",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.2.13.Final and 4.1.133.Final, Netty's DNS codec does not enforce RFC 1035 domain name constraints during either encoding or decoding. This creates a bidirectional attack surface: malicious DNS responses can exploit the decoder, and user-influenced hostnames can exploit the encoder. This vulnerability is fixed in 4.2.13.Final and 4.1.133.Final.",
       "cvss": {
@@ -55319,7 +55319,7 @@
     {
       "id": "CVE-2026-42578",
       "published": "2026-05-13T19:17:23.210",
-      "lastModified": "2026-09-07T13:19:45.503",
+      "lastModified": "2026-09-09T13:20:02.353",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.2.13.Final and 4.1.133.Final, Netty's HttpProxyHandler constructs HTTP CONNECT requests with header validation explicitly disabled. The newInitialMessage() method creates headers using DefaultHttpHeadersFactory.headersFactory().withValidation(false), then adds user-provided outboundHeaders without any CRLF validation. This allows an attacker who can influence the outbound headers to inject arbitrary HTTP headers int",
       "cvss": {
@@ -56896,7 +56896,7 @@
     {
       "id": "CVE-2026-44293",
       "published": "2026-05-13T16:16:56.253",
-      "lastModified": "2026-09-07T13:19:57.230",
+      "lastModified": "2026-09-09T13:20:07.537",
       "vulnStatus": "Modified",
       "description": "protobufjs compiles protobuf definitions into JavaScript (JS) functions. Prior to 7.5.6 and 8.0.2, protobufjs generated JavaScript for toObject conversion could include an unsafe expression derived from a schema-controlled bytes field default value. A crafted descriptor with a non-string default value for a bytes field could cause attacker-controlled code to be emitted into the generated conversion function. This vulnerability is fixed in 7.5.6 and 8.0.2.",
       "cvss": {
@@ -57113,7 +57113,7 @@
     {
       "id": "CVE-2026-42945",
       "published": "2026-05-13T16:16:50.190",
-      "lastModified": "2026-09-07T13:19:50.293",
+      "lastModified": "2026-09-09T13:20:04.940",
       "vulnStatus": "Modified",
       "description": "NGINX Plus and NGINX Open Source have a vulnerability in the ngx_http_rewrite_module module. This vulnerability exists when the rewrite directive is followed by a rewrite, if, or set directive and an unnamed Perl-Compatible Regular Expression (PCRE) capture (for example, $1, $2) with a replacement string that includes a question mark (?). An unauthenticated attacker along with conditions beyond its control can exploit this vulnerability by sending crafted HTTP requests. This may cause a heap buf",
       "cvss": {
@@ -82956,7 +82956,7 @@
     {
       "id": "CVE-2026-42499",
       "published": "2026-05-07T20:16:44.540",
-      "lastModified": "2026-09-07T13:19:43.180",
+      "lastModified": "2026-09-09T13:20:00.720",
       "vulnStatus": "Modified",
       "description": "Pathological inputs could cause DoS through consumePhrase when parsing an email address according to RFC 5322.",
       "cvss": {
@@ -83052,7 +83052,7 @@
     {
       "id": "CVE-2026-39820",
       "published": "2026-05-07T20:16:43.187",
-      "lastModified": "2026-09-07T13:19:12.163",
+      "lastModified": "2026-09-09T13:19:40.757",
       "vulnStatus": "Modified",
       "description": "Well-crafted inputs reaching ParseAddress, ParseAddressList, and ParseDate were able to trigger excessive CPU exhaustion and memory allocations.",
       "cvss": {
@@ -83090,7 +83090,7 @@
     {
       "id": "CVE-2026-33814",
       "published": "2026-05-07T20:16:42.880",
-      "lastModified": "2026-09-07T13:19:00.857",
+      "lastModified": "2026-09-09T13:19:27.987",
       "vulnStatus": "Modified",
       "description": "When processing HTTP/2 SETTINGS frames, transport will enter an infinite loop of writing CONTINUATION frames if it receives a SETTINGS_MAX_FRAME_SIZE with a value of 0.",
       "cvss": {
@@ -83128,7 +83128,7 @@
     {
       "id": "CVE-2026-33811",
       "published": "2026-05-07T20:16:42.770",
-      "lastModified": "2026-09-07T13:18:58.867",
+      "lastModified": "2026-09-09T13:19:26.390",
       "vulnStatus": "Modified",
       "description": "When using LookupCNAME with the cgo DNS resolver, a very long CNAME response can trigger a double-free of C memory and a crash.",
       "cvss": {
@@ -90730,7 +90730,7 @@
     {
       "id": "CVE-2026-43133",
       "published": "2026-05-06T12:16:30.480",
-      "lastModified": "2026-09-02T13:17:52.160",
+      "lastModified": "2026-09-09T13:20:06.160",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: nSVM: Always use vmcb01 in VMLOAD/VMSAVE emulation Commit cc3ed80ae69f (\"KVM: nSVM: always use vmcb01 to for vmsave/vmload of guest state\") made KVM always use vmcb01 for the fields controlled by VMSAVE/VMLOAD, but it missed updating the VMLOAD/VMSAVE emulation code to always use vmcb01. As a result, if VMSAVE/VMLOAD is executed by an L2 guest and is not intercepted by L1, KVM will mistakenly use vmcb02. Always use vmcb01 i",
       "cvss": {
@@ -91076,7 +91076,7 @@
     {
       "id": "CVE-2026-43114",
       "published": "2026-05-06T10:16:25.163",
-      "lastModified": "2026-09-03T13:05:47.223",
+      "lastModified": "2026-09-09T13:20:05.813",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nft_set_pipapo_avx2: don't return non-matching entry on expiry New test case fails unexpectedly when avx2 matching functions are used. The test first loads a ranomly generated pipapo set with 'ipv4 . port' key, i.e. nft -f foo. This works. Then, it reloads the set after a flush: (echo flush set t s; cat foo) | nft -f - This is expected to work, because its the same set after all and it was already loaded once. But wit",
       "cvss": {
@@ -91096,10 +91096,10 @@
       ],
       "vendors": [
         "Linux Linux",
-        "Red Hat Red Hat Enterprise Linux 9",
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
+        "Red Hat Red Hat Enterprise Linux 9",
+        "Red Hat Red Hat Enterprise Linux 9.2 Update Services for SAP Solutions"
       ],
       "references": [
         "https://git.kernel.org/stable/c/07de44424bb7f17ef9357e8535df96d9e97c40cb",
@@ -94590,7 +94590,7 @@
     {
       "id": "CVE-2026-6322",
       "published": "2026-05-05T11:16:33.360",
-      "lastModified": "2026-09-07T13:20:35.310",
+      "lastModified": "2026-09-09T13:20:32.473",
       "vulnStatus": "Modified",
       "description": "fast-uri normalize() decoded percent-encoded authority delimiters inside the host component and then re-emitted them as raw delimiters during serialization. A host that combined an allowed domain, an encoded at-sign, and a different domain was re-emitted with the at-sign as a raw userinfo separator, changing the URI's authority to the second domain. Applications that normalize untrusted URLs before host allowlist checks, redirect validation, or outbound request routing can be steered to a differ",
       "cvss": {
@@ -94696,7 +94696,7 @@
     {
       "id": "CVE-2026-43869",
       "published": "2026-05-05T08:16:01.063",
-      "lastModified": "2026-09-07T13:19:52.227",
+      "lastModified": "2026-09-09T13:20:06.423",
       "vulnStatus": "Modified",
       "description": "Improper Validation of Certificate with Host Mismatch vulnerability in Apache Thrift. This issue affects Apache Thrift: before 0.23.0. Users are recommended to upgrade to version 0.23.0, which fixes the issue.",
       "cvss": {
@@ -95785,7 +95785,7 @@
     {
       "id": "CVE-2026-42154",
       "published": "2026-05-04T19:16:04.397",
-      "lastModified": "2026-09-07T13:19:40.323",
+      "lastModified": "2026-09-09T13:19:59.277",
       "vulnStatus": "Modified",
       "description": "Prometheus is an open-source monitoring system and time series database. Prior to versions 3.5.3 and 3.11.3, the remote read endpoint (/api/v1/read) does not validate the declared decoded length in a snappy-compressed request body before allocating memory. An unauthenticated attacker can send a small payload that causes a huge heap allocation per request. Under concurrent load this can exhaust available memory and crash the Prometheus process. This issue has been patched in versions 3.5.3 and 3.",
       "cvss": {
@@ -95827,7 +95827,7 @@
     {
       "id": "CVE-2026-42151",
       "published": "2026-05-04T19:16:04.220",
-      "lastModified": "2026-09-07T13:19:39.027",
+      "lastModified": "2026-09-09T13:19:58.333",
       "vulnStatus": "Modified",
       "description": "Prometheus is an open-source monitoring system and time series database. Prior to versions 3.5.3 and 3.11.3, the client_secret field in the Azure AD remote write OAuth configuration (storage/remote/azuread) was typed as string instead of Secret. Prometheus redacts fields of type Secret when serving the configuration via the /-/config HTTP API endpoint. Because the field was a plain string, the Azure OAuth client secret was exposed in plaintext to any user or process with access to that endpoint.",
       "cvss": {
@@ -96681,7 +96681,7 @@
     {
       "id": "CVE-2026-42027",
       "published": "2026-05-04T17:16:24.123",
-      "lastModified": "2026-07-15T02:21:21.493",
+      "lastModified": "2026-09-09T13:19:55.387",
       "vulnStatus": "Modified",
       "description": "Arbitrary Class Instantiation via Model Manifest in Apache OpenNLP ExtensionLoader Versions Affected: before 1.9.5, before 2.5.9, before 3.0.0-M3 Description: The ExtensionLoader.instantiateExtension(Class, String) method loads a class by its fully-qualified name via Class.forName() and invokes its no-arg constructor, with the class name sourced from the manifest.properties entry of a model archive. The existing isAssignableFrom check correctly rejects classes that are not subtypes of the expect",
       "cvss": {
@@ -96701,16 +96701,16 @@
       ],
       "vendors": [
         "Apache Software Foundation Apache OpenNLP",
+        "Red Hat Red Hat OpenShift AI 2.25",
         "Red Hat Red Hat build of Apache Camel for Spring Boot 4",
         "Red Hat Red Hat Data Grid 8",
-        "Red Hat Red Hat Fuse 7",
-        "Red Hat Red Hat JBoss Enterprise Application Platform 8"
+        "Red Hat Red Hat Fuse 7"
       ],
       "references": [
         "https://lists.apache.org/thread/ltlo4powjfc0w2w2yyl1o5tc7q1gcb2y",
         "http://www.openwall.com/lists/oss-security/2026/05/01/20",
-        "https://access.redhat.com/security/cve/CVE-2026-42027",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2466527"
+        "https://access.redhat.com/errata/RHSA-2026:65126",
+        "https://access.redhat.com/security/cve/CVE-2026-42027"
       ],
       "kev": {
         "in_kev": false
@@ -103766,7 +103766,7 @@
     {
       "id": "CVE-2026-43003",
       "published": "2026-05-01T09:16:17.440",
-      "lastModified": "2026-09-07T13:19:51.667",
+      "lastModified": "2026-09-09T13:20:05.563",
       "vulnStatus": "Modified",
       "description": "An issue was discovered in OpenStack ironic-python-agent 1.0.0 through 11.5.0. Ironic Python Agent (IPA) sometimes executes grub-install from within a chroot of the deployed partition image, leading to code execution in the case of a malicious image.",
       "cvss": {
@@ -103787,7 +103787,7 @@
       "vendors": [
         "OpenStack ironic-python-agent",
         "Red Hat Red Hat OpenShift Container Platform 4.19",
-        "Red Hat Red Hat OpenShift Container Platform 4.2",
+        "Red Hat Red Hat OpenShift Container Platform 4.20",
         "Red Hat Red Hat OpenShift Container Platform 4.21",
         "Red Hat Red Hat OpenShift Container Platform 4.22"
       ],
@@ -104430,5 +104430,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-09T10:05:11.099314+00:00"
+  "updated_at": "2026-09-10T10:00:57.865568+00:00"
 }
