@@ -204,13 +204,20 @@
      that's exactly what made the hero appear at a different Y each time. --- */
   .kind-tag.analytic { background: var(--purple); }
   .analytic-title { min-height: 2.4em; line-height: 1.15; }
+  /* Sized to fit entirely within one screen without scrolling, not just to
+     clear the footer controls when scrolled — this is a carousel, swiping
+     to the next item shouldn't require an extra scroll gesture first.
+     Tuned against a 375x667 viewport (iPhone SE class, the shortest realistic
+     target) and verified empirically (scrollHeight === clientHeight) rather
+     than assumed, since hand-estimating box-model heights from CSS values
+     alone has been wrong before in this file. */
   .analytic-hero {
-    min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 14px; margin: 4px 0 26px; text-align: center;
+    min-height: 132px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; margin: 4px 0 14px; text-align: center;
   }
-  .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; max-width: 320px; }
-  .legend-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
-  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
+  .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; max-width: 300px; }
+  .legend-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-dim); }
+  .legend-swatch { width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto; }
   .legend-label { font-family: var(--font-mono); letter-spacing: 0.04em; }
   .legend-count { font-family: var(--font-sans); font-weight: 700; color: var(--text); }
 
@@ -221,22 +228,22 @@
      to 77). Always both counts — how many rows AND how much volume they
      represent — never just one, so the shown vs. hidden portions both stay
      legible. */
-  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 10px; opacity: 0.85; }
-  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: 0 0 12px; }
+  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 6px; opacity: 0.85; }
+  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: 0 0 10px; }
 
-  .big-stat .bs-number { font-family: var(--font-sans); font-size: 74px; font-weight: 800; color: var(--text); line-height: 1; }
-  .big-stat .bs-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+  .big-stat .bs-number { font-family: var(--font-sans); font-size: 50px; font-weight: 800; color: var(--text); line-height: 1; }
+  .big-stat .bs-label { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
 
-  .stat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .stat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
   .stat-bar-label { flex: 0 0 128px; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .stat-bar-track { flex: 1 1 auto; height: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--line); }
+  .stat-bar-track { flex: 1 1 auto; height: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--line); }
   .stat-bar-fill { height: 100%; }
   .stat-bar-count { flex: 0 0 auto; min-width: 30px; text-align: right; font-size: 11px; color: var(--text-dim); }
 
-  .rank-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
-  .rank-num { flex: 0 0 20px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); text-align: right; }
-  .rank-label { flex: 0 0 118px; font-family: var(--font-mono); font-size: 11px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .rank-track { flex: 1 1 auto; height: 9px; background: rgba(255,255,255,0.06); border: 1px solid var(--line); }
+  .rank-row { display: flex; align-items: center; gap: 10px; margin-bottom: 3px; }
+  .rank-num { flex: 0 0 20px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-align: right; }
+  .rank-label { flex: 0 0 118px; font-family: var(--font-mono); font-size: 10.5px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rank-track { flex: 1 1 auto; height: 7px; background: rgba(255,255,255,0.06); border: 1px solid var(--line); }
   .rank-fill { height: 100%; }
   .rank-value { flex: 0 0 auto; min-width: 32px; text-align: right; font-size: 11px; color: var(--text-dim); }
 
@@ -822,7 +829,7 @@
   // through a style="" attribute rather than a bare stroke="" one, since CSS
   // custom properties in a plain presentation attribute aren't reliably
   // resolved across engines the way they are inside an actual style rule.
-  function donutChartSvg(segments, size = 208, thickness = 26) {
+  function donutChartSvg(segments, size = 118, thickness = 15) {
     const total = segments.reduce((s, x) => s + x.value, 0) || 1;
     const r = (size - thickness) / 2;
     const c = size / 2;
@@ -902,7 +909,7 @@
   function analyticFeedVolume(weekEntries) {
     const bySource = {};
     weekEntries.forEach(e => { const s = e.source || "Unknown"; bySource[s] = (bySource[s] || 0) + 1; });
-    const { top, moreRows, moreSum } = topNWithOverflow(bySource, 8);
+    const { top, moreRows, moreSum } = topNWithOverflow(bySource, 6);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
       key: "analytic", duration: 7500,
@@ -953,7 +960,7 @@
   function analyticTopRansomwareGroups(weekVictims) {
     const byGroup = {};
     weekVictims.forEach(v => { const g = v.group || "Unknown"; byGroup[g] = (byGroup[g] || 0) + 1; });
-    const { top, moreRows, moreSum } = topNWithOverflow(byGroup, 8);
+    const { top, moreRows, moreSum } = topNWithOverflow(byGroup, 6);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
       key: "analytic", duration: 7500,
