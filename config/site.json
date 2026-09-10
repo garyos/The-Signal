@@ -1,0 +1,60 @@
+{
+  "_notes": [
+    "Feature-gate config, read client-side by every page. Missing file, missing key,",
+    "or an expired subscription (see below) are all treated identically: every",
+    "feature behaves as if it were 'true'. This file lives in config/ specifically",
+    "because that directory is NOT copied by the mirror-signal.yml / mirror-intel.yml",
+    "workflows -- a mirrored deployment (The-Signal, Intel) simply won't have this",
+    "file at all and will run fully open unless a config/site.json is added there",
+    "directly, independent of this one. That's what makes this the basis for a real",
+    "per-deployment subscription-tier system later: each deployed copy of the site",
+    "can carry its own config/site.json with its own flags.",
+    "",
+    "Each value under \"features\" is normally a plain boolean. A feature that needs",
+    "an extra switch (currently only \"podcast\", for spotlight.html's in-page audio",
+    "player vs. linking out to the source) is an object instead: {\"enabled\": bool,",
+    "...extra switches}. Both shapes are handled by every page's loader.",
+    "",
+    "\"ads\" is a simple on/off for the sponsored slides in the spotlight/intel",
+    "digest carousels -- disabling it just removes them, no locked/teaser state.",
+    "",
+    "Every other feature, when disabled, still shows in the digest carousels but",
+    "capped to a single locked/watermarked teaser item instead of its normal count,",
+    "and the corresponding standalone page (where one exists) redirects to",
+    "index.html with a 'Subscribe for Access' message -- see README's Feature",
+    "gating section for the full behavior.",
+    "",
+    "\"subscription\" is shaped after JWT claims (sub/iss/iat/exp) on purpose, so a",
+    "future version of this loader can swap a fetched JSON file for a verified JWT",
+    "without changing the shape features are read in. None of it is enforced yet",
+    "beyond exp (and only if it's actually set -- it defaults to null, i.e. never",
+    "expires): alg is deliberately \"none\" (the real, defined JWT value for",
+    "'unsecured, do not trust this for access control') until real signature",
+    "verification exists."
+  ],
+
+  "subscription": {
+    "tier": "unrestricted",
+    "sub": null,
+    "iss": null,
+    "iat": null,
+    "exp": null,
+    "alg": "none",
+    "signature": null
+  },
+
+  "features": {
+    "feed": true,
+    "cve": false,
+    "breaches": true,
+    "attack": true,
+    "leaktracker": false,
+    "negotiation": true,
+    "podcast": { "enabled": true, "media_playback": false },
+    "research": true,
+    "reports": true,
+    "dashboard": true,
+    "spotlight": true,
+    "ads": true
+  }
+}
