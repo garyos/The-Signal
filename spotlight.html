@@ -232,12 +232,25 @@
      hand-drawn with plain SVG + CSS (no charting library anywhere in this
      codebase) --- */
   .kind-tag.analytic { background: var(--purple); }
-  .donut-wrap { display: flex; align-items: center; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
-  .donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-width: 140px; }
-  .legend-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); }
+  /* Legend sits below the donut (not beside it) specifically so the donut
+     itself can be drawn large — full slide width to work with instead of
+     splitting it with a side legend. */
+  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; margin: 18px 0 4px; }
+  .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; max-width: 320px; }
+  .legend-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
-  .legend-label { font-family: var(--font-mono); letter-spacing: 0.04em; flex: 1 1 auto; }
+  .legend-label { font-family: var(--font-mono); letter-spacing: 0.04em; }
   .legend-count { font-family: var(--font-sans); font-weight: 700; color: var(--text); }
+
+  /* Reconciliation note for any analytic whose headline total is computed
+     over the FULL underlying dataset but whose breakdown below it only
+     shows the top N — without this, the two numbers visibly don't add up
+     (a real bug this fixes: "78 articles" over a breakdown that only summed
+     to 77). Always both counts — how many rows AND how much volume they
+     represent — never just one, so the shown vs. hidden portions both stay
+     legible. */
+  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 6px; opacity: 0.85; }
+  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: -8px 0 14px; }
 
   .big-stat { text-align: center; margin: 10px 0 22px; }
   .big-stat .bs-number { font-family: var(--font-sans); font-size: 54px; font-weight: 800; color: var(--text); line-height: 1; }
@@ -2110,7 +2123,7 @@
   // go through a style="" attribute rather than a bare stroke="" one, since
   // CSS custom properties in a plain presentation attribute aren't reliably
   // resolved across engines the way they are inside an actual style rule.
-  function donutChartSvg(segments, size = 116, thickness = 16) {
+  function donutChartSvg(segments, size = 208, thickness = 26) {
     const total = segments.reduce((s, x) => s + x.value, 0) || 1;
     const r = (size - thickness) / 2;
     const c = size / 2;
@@ -2169,10 +2182,26 @@
     };
   }
 
+  // A breakdown capped to the top N rows, with the reconciliation note that
+  // fixes the "headline total doesn't match what the breakdown adds up to"
+  // bug: the note always states BOTH how many rows are hidden and how much
+  // volume they represent, so the displayed total is never left implying a
+  // sum the visible rows don't actually produce.
+  function topNWithOverflow(counts, n) {
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const top = sorted.slice(0, n);
+    const rest = sorted.slice(n);
+    return { top, moreRows: rest.length, moreSum: rest.reduce((s, [, v]) => s + v, 0) };
+  }
+  function overflowNoteHtml(moreRows, moreSum, rowNoun) {
+    if (moreRows <= 0) return "";
+    return `<div class="analytic-more-note">+ ${moreRows} more ${rowNoun}${moreRows === 1 ? "" : "s"} (${moreSum} not shown)</div>`;
+  }
+
   function analyticFeedVolume(weekEntries) {
     const bySource = {};
     weekEntries.forEach(e => { const s = e.source || "Unknown"; bySource[s] = (bySource[s] || 0) + 1; });
-    const top = Object.entries(bySource).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const { top, moreRows, moreSum } = topNWithOverflow(bySource, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
       key: "analytic", duration: 7000,
@@ -2186,6 +2215,7 @@
             <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${(n / max * 100).toFixed(0)}%; background:var(--blue)"></div></div>
             <div class="stat-bar-count">${n}</div>
           </div>`).join("") : `<p class="dossier-text">No feed data yet this week.</p>`}
+        ${overflowNoteHtml(moreRows, moreSum, "source")}
       `,
     };
   }
@@ -2197,6 +2227,7 @@
       html: `
         <div class="kind-tag analytic">Analytics</div>
         <h1 class="redact">Top 10 CVEs by Score — This Week</h1>
+        <div class="analytic-context-note">out of ${weekCves.length} Critical/High CVE${weekCves.length === 1 ? "" : "s"} this week</div>
         ${top.length ? top.map((c, i) => {
           const score = (c.cvss && c.cvss.score) || 0;
           const sev = ((c.cvss && c.cvss.severity) || "unrated").toLowerCase();
@@ -2215,7 +2246,7 @@
   function analyticTopRansomwareGroups(weekVictims) {
     const byGroup = {};
     weekVictims.forEach(v => { const g = v.group || "Unknown"; byGroup[g] = (byGroup[g] || 0) + 1; });
-    const top = Object.entries(byGroup).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const { top, moreRows, moreSum } = topNWithOverflow(byGroup, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
       key: "analytic", duration: 7000,
@@ -2229,6 +2260,7 @@
             <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${(n / max * 100).toFixed(0)}%; background:var(--teal)"></div></div>
             <div class="stat-bar-count">${n}</div>
           </div>`).join("") : `<p class="dossier-text">No ransomware activity logged yet this week.</p>`}
+        ${overflowNoteHtml(moreRows, moreSum, "group")}
       `,
     };
   }
