@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>THE SIGNAL — Intel Digest</title>
+<style>
+  /*
+    Standalone digest carousel — a self-contained duplicate of the
+    "Spotlight Digest" feature (spotlight.html's digest mode) with every
+    cross-page dependency removed on purpose:
+      - no ATT&CK deep-dive dossiers (those need attack.html's data +
+        multi-page zoom navigation)
+      - no ransomware negotiation replay (needs its own reveal UI this file
+        doesn't implement)
+      - no embedded audio player (podcast items link out to the original
+        episode page instead of playing in-page)
+      - no links anywhere back into this site's other pages (breaches.html,
+        leaktracker.html, podcast.html, attack.html) — this file is meant to
+        be distributable on its own (e.g. mirrored into a separate repo as a
+        standalone product), so nothing it links to may not exist there.
+    It still reads the same underlying JSON feeds (data/feed, data/cve,
+    data/breaches, data/leaktracker, data/attack, data/podcast) plus a new
+    data/ads/ folder for sponsor placements — see adSlide()/loadAds() below.
+  */
+  :root {
+    --ink: #05070a;
+    --ink-raised: #10151d;
+    --ink-input: #0d1219;
+    --line: #1e2733;
+    --text: #d7dde5;
+    --text-dim: #7d8998;
+    --amber: #ffb020;
+    --red: #ff5c5c;
+    --blue: #5ac8ff;
+    --green: #4fd58a;
+    --purple: #c792ea;
+    --teal: #2dd4bf;
+    --orange: #ff9f4a;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--ink); }
+  body { font-family: var(--font-mono); color: var(--text); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .stage {
+    position: fixed; inset: 0; overflow: hidden;
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 20%, #16202f 0%, #05070a 60%),
+      var(--ink);
+    -webkit-user-select: none; user-select: none;
+  }
+  .stage::before {
+    content: ""; position: absolute; inset: -20% 0; pointer-events: none; z-index: 30;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode: overlay;
+    animation: scandrift 9s linear infinite;
+  }
+  @keyframes scandrift { from { transform: translateY(0); } to { transform: translateY(24px); } }
+  .stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 31;
+    box-shadow: inset 0 0 140px rgba(0,0,0,0.75);
+  }
+
+  .progress-bar {
+    position: absolute; top: max(10px, env(safe-area-inset-top)); left: 12px; right: 12px; z-index: 22;
+    display: flex; gap: 4px;
+  }
+  .seg { flex: 1; height: 3px; background: rgba(255,255,255,0.15); border-radius: 1px; overflow: hidden; }
+  .seg-fill { height: 100%; width: 0%; background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+  /* No exit link, no stamp — standalone product, nothing to exit to and
+     nothing to classify. Just the product label, centered. */
+  .topbar {
+    position: absolute; top: calc(max(10px, env(safe-area-inset-top)) + 12px); left: 12px; right: 12px; z-index: 22;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .case-id-wrap { min-width: 0; }
+  .case-id {
+    font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.08em; text-align: center;
+    text-transform: uppercase;
+  }
+  .paused-flag {
+    font-size: 9px; color: var(--amber); letter-spacing: 0.1em; margin-top: 3px; opacity: 0;
+    text-align: center; transition: opacity 0.2s ease;
+  }
+  .paused-flag.on { opacity: 1; }
+
+  .slides { position: absolute; inset: 0; z-index: 10; }
+  .slide {
+    position: absolute; inset: 0; display: none;
+    padding: 92px 22px 64px; overflow-y: auto;
+  }
+  .slide.active { display: block; animation: slideIn 0.35s ease; }
+  .slide-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: flex-start; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* redaction-reveal motif for headline text */
+  .redact { position: relative; display: inline-block; }
+  .redact::after {
+    content: ""; position: absolute; inset: -2px -4px; background: #05070a; transform-origin: right;
+  }
+  .slide.active .redact::after { animation: declassify 0.55s ease forwards; animation-delay: 0.2s; }
+  @keyframes declassify { to { transform: scaleX(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .redact::after { transform: scaleX(0); }
+  }
+
+  /* Category label — deliberately large and immediate: this carousel mixes
+     feed items, CVEs, breaches, and more, so "what am I looking at" has to
+     read at a glance. */
+  .kind-tag {
+    display: inline-block; font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); padding: 6px 12px; margin-bottom: 12px;
+  }
+  .kind-tag.feed { background: var(--blue); }
+  .kind-tag.cve { background: var(--red); }
+  .kind-tag.group { background: var(--purple); }
+  .kind-tag.victim { background: var(--teal); }
+  .kind-tag.breach { background: var(--amber); }
+  .kind-tag.podcast { background: var(--orange); }
+  .kind-tag.ad { background: var(--text-dim); color: var(--ink); }
+
+  /* Source attribution — prominent on purpose, so it's obvious at a glance
+     where an item's data actually came from. */
+  .source-credit { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+  .source-credit .sc-label {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .source-credit .sc-name { font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: var(--text); }
+
+  .claimed-by {
+    display: flex; align-items: center; gap: 8px; border: 1px solid var(--red); background: rgba(255,92,92,0.08);
+    color: var(--text); padding: 9px 12px; margin-bottom: 14px; font-size: 13px;
+  }
+  .claimed-by .cb-icon { color: var(--red); font-size: 15px; flex: 0 0 auto; }
+  .claimed-by b { font-family: var(--font-sans); font-weight: 700; }
+
+  .case-number { font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .slide-inner h1 {
+    font-family: var(--font-sans); font-size: clamp(28px, 8vw, 44px); margin: 0 0 12px; line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag-chip { font-size: 10.5px; color: var(--text-dim); border: 1px solid var(--line); padding: 4px 9px; letter-spacing: 0.03em; }
+  .flag-chip { font-size: 13px; }
+
+  .dossier-text {
+    font-family: var(--font-sans); font-size: 15px; line-height: 1.7; color: var(--text);
+    white-space: pre-line; max-width: 60ch;
+  }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+  .meta-cell { border: 1px solid var(--line); padding: 10px 12px; }
+  .meta-cell span { display: block; font-size: 9.5px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 4px; }
+  .meta-cell b { font-family: var(--font-sans); font-size: 14px; }
+  .section-title { font-size: 12.5px; font-weight: 700; margin: 16px 0 8px; color: var(--text); }
+
+  .kev-box { border: 1px solid var(--red); padding: 10px 12px; font-size: 12px; line-height: 1.55; color: var(--text); margin: 14px 0; }
+  .kev-box .kb-label { color: var(--red); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .ref-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .ref-list a { color: var(--blue); font-size: 11.5px; word-break: break-all; }
+
+  /* Sponsored placements — visually distinct (dashed border, muted kind-tag)
+     so they're never mistaken for editorial content, and disclosed as
+     "Sponsored" up front rather than blended in. */
+  .ad-card { border: 1px dashed var(--line); background: var(--ink-raised); padding: 16px; margin-top: 2px; }
+  .ad-image {
+    display: block; width: 100%; max-height: 170px; object-fit: cover;
+    border: 1px solid var(--line); margin-bottom: 14px; background: var(--ink-input);
+  }
+  .ad-advertiser {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--text-dim);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  /* Podcast listen link — styled like the old in-page play button, but it's
+     a plain outbound <a> to the episode's original page, not a player
+     trigger (this file has no audio player at all). */
+  .podcast-listen-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--ink);
+    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+    border: none; padding: 12px 18px; text-decoration: none; margin-top: 6px;
+  }
+  .podcast-listen-btn:hover { filter: brightness(1.08); }
+
+  .tap-zone { position: absolute; top: 88px; bottom: 96px; z-index: 15; pointer-events: none; }
+  .tap-left { left: 0; width: 30%; }
+  .tap-right { right: 0; width: 70%; }
+  .hint {
+    position: absolute; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 56px); left: 0; right: 0; z-index: 22;
+    text-align: center; font-size: 10px; color: var(--text-dim); opacity: 0.7; pointer-events: none;
+    letter-spacing: 0.04em;
+  }
+  .hint.suppressed { display: none; }
+
+  /* Fixed footer slot for a slide-specific outbound link (article / ad CTA),
+     anchored here rather than living inline in the slide's own content —
+     content length varies slide to slide, so an inline link would land at a
+     different y-position every time, easy to fat-finger while tapping
+     through the carousel. */
+  .slide-actions {
+    position: absolute; left: 50%; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 56px); z-index: 24;
+    transform: translateX(-50%);
+    display: none; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .slide-actions.visible { display: flex; }
+  .slide-action-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--blue);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--blue); padding: 8px 14px;
+    text-decoration: none; white-space: nowrap;
+  }
+  .slide-action-btn:hover { background: var(--blue); color: var(--ink); }
+
+  .pause-btn {
+    position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 24;
+    transform: translateX(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(16,21,29,0.92); border: 2px solid var(--amber); color: var(--amber);
+    font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 0 16px rgba(255,176,32,0.25);
+  }
+  .pause-btn:hover { filter: brightness(1.15); }
+  .pause-btn.active { border-color: var(--red); color: var(--red); box-shadow: 0 0 16px rgba(255,92,92,0.35); }
+
+  .speed-btn {
+    position: absolute; right: 14px; bottom: max(18px, calc(env(safe-area-inset-bottom) + 6px)); z-index: 24;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--line); padding: 7px 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .speed-btn:hover { color: var(--text); border-color: var(--text-dim); }
+  .speed-btn.slow { color: var(--blue); border-color: var(--blue); }
+  .speed-btn.slowest { color: var(--teal); border-color: var(--teal); }
+
+  .empty-target {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 24px; z-index: 20;
+  }
+  .empty-target .et-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--text-dim); border: 1px solid var(--line);
+    padding: 6px 12px;
+  }
+
+  ::-webkit-scrollbar { width: 0; height: 0; }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="topbar">
+      <div class="case-id-wrap">
+        <div class="case-id">THE SIGNAL // INTEL DIGEST</div>
+        <div class="paused-flag" id="paused-flag">‖ PAUSED — DOUBLE-TAP TO RESUME</div>
+      </div>
+    </div>
+
+    <div class="slides" id="slides"></div>
+    <div class="tap-zone tap-left" id="tap-left"></div>
+    <div class="tap-zone tap-right" id="tap-right"></div>
+    <div class="hint" id="hint">tap right to advance · left to go back · tap an item to inspect</div>
+    <div class="slide-actions no-nav control-btn" id="slide-actions"></div>
+    <button class="pause-btn no-nav control-btn" id="pause-btn" aria-label="Pause auto-advance">‖</button>
+    <button class="speed-btn no-nav control-btn" id="speed-btn" aria-label="Reading speed">◷ NORMAL</button>
+  </div>
+
+<script>
+(() => {
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  function truncateToSentence(text, maxLen) {
+    const trimmed = (text || "").trim();
+    if (trimmed.length <= maxLen) return trimmed;
+    const cut = trimmed.slice(0, maxLen);
+    const sentenceEnd = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
+    if (sentenceEnd > maxLen * 0.35) return cut.slice(0, sentenceEnd + 1).trim();
+    const wordEnd = cut.lastIndexOf(" ");
+    return (wordEnd > maxLen * 0.35 ? cut.slice(0, wordEnd) : cut).trim() + "…";
+  }
+
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return "🏳";
+    return [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join("");
+  }
+
+  function fmtDuration(seconds) {
+    if (seconds == null) return "—";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    const mm = h > 0 ? String(m).padStart(2, "0") : String(m);
+    const ss = String(s).padStart(2, "0");
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  function showEmptyTarget(message) {
+    document.getElementById("stage").innerHTML = `
+      <div class="empty-target">
+        <div class="et-label">NO CONTENT AVAILABLE</div>
+        <div style="color:var(--text-dim); font-size:13px; max-width:40ch;">${escapeHtml(message)}</div>
+      </div>`;
+  }
+
+  // ---------- data loading ----------
+
+  async function loadJson(path) {
+    const res = await fetch(`${path}?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  const AD_TIER_WEIGHT = { premium: 3, pro: 2, standard: 1 };
+  const AD_FILES = ["standard", "pro", "premium"];
+
+  async function loadAds() {
+    const results = await Promise.allSettled(AD_FILES.map(f => loadJson(`data/ads/${f}.json`)));
+    return results
+      .map(r => (r.status === "fulfilled" ? r.value : null))
+      .filter(ad => ad && ad.active !== false && ad.link)
+      .sort((a, b) => (AD_TIER_WEIGHT[b.tier] || 0) - (AD_TIER_WEIGHT[a.tier] || 0));
+  }
+
+  async function loadDigestData() {
+    const sources = {
+      attackData: "data/attack/enterprise.json",
+      threats: "data/feed/latest.json",
+      cves: "data/cve/latest.json",
+      leaktracker: "data/leaktracker/latest.json",
+      breaches: "data/breaches/latest.json",
+      podcast: "data/podcast/latest.json",
+    };
+    const keys = Object.keys(sources);
+    const results = await Promise.allSettled(keys.map(k => loadJson(sources[k])));
+    const out = {};
+    keys.forEach((k, i) => {
+      if (results[i].status === "rejected") {
+        console.error(`intel digest: ${k} failed to load`, results[i].reason);
+      }
+      out[k] = results[i].status === "fulfilled" ? results[i].value : null;
+    });
+    return out;
+  }
+
+  // ---------- slide builders ----------
+
+  function feedEntryDate(e) {
+    const p = e.published_sort;
+    if (!Array.isArray(p) || p.length < 6) return null;
+    return new Date(Date.UTC(p[0], p[1] - 1, p[2], p[3], p[4], p[5]));
+  }
+
+  // Every feed item from the last 24h, newest first — but never fewer than
+  // 5, so a quiet overnight doesn't leave the digest thin.
+  function selectRecentFeedEntries(entries, { windowMs = 24 * 60 * 60 * 1000, minCount = 5 } = {}) {
+    const sorted = [...entries].sort((a, b) => {
+      const da = feedEntryDate(a), db = feedEntryDate(b);
+      return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
+    });
+    const cutoff = Date.now() - windowMs;
+    const withinWindow = sorted.filter(e => {
+      const d = feedEntryDate(e);
+      return d && d.getTime() >= cutoff;
+    });
+    return withinWindow.length >= minCount ? withinWindow : sorted.slice(0, minCount);
+  }
+
+  function feedItemSlide(entry) {
+    const summary = truncateToSentence(entry.summary || "", 260);
+    return {
+      key: "feed", duration: 6000,
+      actions: entry.link ? [{ label: "read full article ↗", href: entry.link, external: true }] : [],
+      html: `
+        <div class="kind-tag feed">Threat Feed Item</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${escapeHtml(entry.source || "Unknown source")}</span></div>
+        <div class="case-number">INTEL FEED // ${escapeHtml((entry.severity || "info").toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(entry.title)}</h1>
+        <p class="dossier-text">${escapeHtml(summary) || "No summary available."}</p>
+      `,
+    };
+  }
+
+  function cveDetailSlide(cve) {
+    const sev = (cve.cvss && cve.cvss.severity) || "UNRATED";
+    const score = cve.cvss ? `${cve.cvss.score.toFixed(1)} (v${cve.cvss.version})` : "unrated";
+    return {
+      key: "cve", duration: 8000,
+      html: `
+        <div class="kind-tag cve">CVE Advisory</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${cve.kev && cve.kev.in_kev ? "NVD · CISA KEV" : "NVD"}</span></div>
+        <div class="case-number">CVE RECORD // ${sev} // CVSS ${score}</div>
+        <h1 class="redact">${escapeHtml(cve.id)}</h1>
+        <p class="dossier-text">${escapeHtml(cve.description)}</p>
+        ${cve.kev && cve.kev.in_kev ? `
+          <div class="kev-box">
+            <div class="kb-label">⚠ CISA KNOWN EXPLOITED VULNERABILITY — added ${escapeHtml(cve.kev.date_added)}</div>
+            ${escapeHtml(cve.kev.required_action || "")}
+          </div>` : ""}
+        <div class="meta-grid">
+          <div class="meta-cell"><span>Published</span><b>${(cve.published || "—").slice(0, 10)}</b></div>
+          <div class="meta-cell"><span>Last modified</span><b>${(cve.lastModified || "—").slice(0, 10)}</b></div>
+        </div>
+        ${(cve.cwes || []).length ? `
+          <div class="section-title">Weakness categories</div>
+          <div class="chip-row">${cve.cwes.map(w => `<span class="tag-chip">${escapeHtml(w.id)} · ${escapeHtml(w.name)}</span>`).join("")}</div>
+        ` : ""}
+        ${(cve.vendors || []).length ? `
+          <div class="section-title">Affected vendors / products</div>
+          <div class="chip-row">${cve.vendors.map(v => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("")}</div>
+        ` : ""}
+        <div class="section-title">References</div>
+        <div class="ref-list">
+          <a class="no-nav" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(cve.id)}" target="_blank" rel="noopener noreferrer">nvd.nist.gov/vuln/detail/${escapeHtml(cve.id)}</a>
+        </div>
+      `,
+    };
+  }
+
+  function breachTeaserSlide(b) {
+    return {
+      key: "breach", duration: 7500,
+      html: `
+        <div class="kind-tag breach">Breach</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">Have I Been Pwned</span></div>
+        <div class="case-number">DISCLOSURE RECORD // ${escapeHtml((b.breach_date || "").slice(0, 10))}</div>
+        <h1 class="redact">${escapeHtml(b.title)}</h1>
+        <div class="chip-row">
+          <span class="tag-chip">${(b.pwn_count || 0).toLocaleString()} accounts affected</span>
+          ${b.is_verified ? `<span class="tag-chip">Verified</span>` : `<span class="tag-chip">Unverified</span>`}
+          ${(b.data_classes || []).slice(0, 3).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}
+        </div>
+        <p class="dossier-text">${escapeHtml(b.description) || "No description available."}</p>
+      `,
+    };
+  }
+
+  function groupTeaserSlide(g) {
+    return {
+      key: "group-teaser", duration: 7000,
+      html: `
+        <div class="kind-tag group">APT Group</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">MITRE ATT&amp;CK</span></div>
+        <div class="case-number">CASE FILE // ${escapeHtml(g.id)}</div>
+        <h1 class="redact">${escapeHtml(g.name)}</h1>
+        <div class="chip-row">
+          ${g.countries.length
+            ? g.countries.map(c => `<span class="tag-chip flag-chip">${flagEmoji(c.code)} ${escapeHtml(c.name)}</span>`).join("")
+            : `<span class="tag-chip">Origin unattributed</span>`}
+        </div>
+        <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
+      `,
+    };
+  }
+
+  function victimTeaserSlide(v) {
+    return {
+      key: "leak-victim", duration: 7000,
+      html: `
+        <div class="kind-tag victim">Ransomware Victim</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">ransomware.live</span></div>
+        <div class="case-number">LEAK-SITE POSTING // ${escapeHtml(v.group.toUpperCase())}</div>
+        <h1 class="redact">${escapeHtml(v.victim)}</h1>
+        <div class="claimed-by"><span class="cb-icon">☣</span> claimed by <b>${escapeHtml(v.group)}</b></div>
+        <div class="chip-row">
+          ${v.sector ? `<span class="tag-chip">${escapeHtml(v.sector)}</span>` : ""}
+          ${v.country ? `<span class="tag-chip">${escapeHtml(v.country)}</span>` : ""}
+          <span class="tag-chip">${escapeHtml((v.published || "").slice(0, 10))}</span>
+        </div>
+        <p class="dossier-text">${escapeHtml(v.description) || "No description available."}</p>
+      `,
+    };
+  }
+
+  // One slide per show — latest episode of each. "Listen" links straight
+  // out to the episode's own page; there's no in-page player here.
+  function latestEpisodePerShow(episodes) {
+    const bestByShow = {};
+    for (const ep of episodes) {
+      const cur = bestByShow[ep.show];
+      if (!cur || (ep.published || "") > (cur.published || "")) bestByShow[ep.show] = ep;
+    }
+    return Object.values(bestByShow);
+  }
+
+  function podcastDigestSlide(ep) {
+    return {
+      key: "podcast", duration: 8000,
+      html: `
+        <div class="kind-tag podcast">Podcast — ${escapeHtml(ep.show_name || "")}</div>
+        <div class="case-number">${escapeHtml((ep.show_name || "PODCAST").toUpperCase())} // ${escapeHtml((ep.published || "").slice(0, 10))}${ep.episode_number ? " // EPISODE " + escapeHtml(ep.episode_number) : ""}</div>
+        <h1 class="redact">${escapeHtml(ep.title)}</h1>
+        <p class="dossier-text">${escapeHtml((ep.summary || "").slice(0, 220))}${(ep.summary || "").length > 220 ? "…" : ""}</p>
+        ${(ep.categories || []).length ? `<div class="chip-row">${ep.categories.slice(0, 6).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
+        ${ep.episode_link ? `<a class="podcast-listen-btn no-nav" href="${escapeHtml(ep.episode_link)}" target="_blank" rel="noopener noreferrer">▶ Listen now · ${escapeHtml(fmtDuration(ep.duration_seconds))} ↗</a>` : ""}
+      `,
+    };
+  }
+
+  function adSlide(ad) {
+    return {
+      key: "ad", duration: 6500,
+      actions: [{ label: ad.cta_label || "Learn more ↗", href: ad.link, external: true }],
+      html: `
+        <div class="kind-tag ad">Sponsored</div>
+        <div class="ad-card">
+          ${ad.image_url ? `<img class="ad-image" src="${escapeHtml(ad.image_url)}" alt="" loading="lazy">` : ""}
+          <div class="ad-advertiser">${escapeHtml(ad.advertiser || "")}</div>
+          <h1 class="redact">${escapeHtml(ad.product || "")}</h1>
+          <p class="dossier-text">${escapeHtml(ad.tagline || "")}</p>
+        </div>
+      `,
+    };
+  }
+
+  // One ad slot every AD_INSERT_INTERVAL content slides, cycling through the
+  // tier-sorted ad list — since the list is sorted premium-first, a premium
+  // placement always lands in the earliest ad slot of each cycle, ahead of
+  // pro and standard.
+  const AD_INSERT_INTERVAL = 4;
+  function interleaveAds(contentSlides, ads) {
+    if (!ads.length) return contentSlides;
+    const out = [];
+    let adCursor = 0;
+    contentSlides.forEach((slide, i) => {
+      out.push(slide);
+      if ((i + 1) % AD_INSERT_INTERVAL === 0) {
+        out.push(adSlide(ads[adCursor % ads.length]));
+        adCursor++;
+      }
+    });
+    return out;
+  }
+
+  const DIGEST_GROUP_COUNT = 3;
+
+  function buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker) {
+    const podcastSlides = latestEpisodePerShow((podcast && podcast.episodes) || []).map(podcastDigestSlide);
+    const feedSlides = selectRecentFeedEntries((threats && threats.entries) || []).map(feedItemSlide);
+    const cveSlides = ((cves && cves.cves) || []).slice(0, 10).map(cveDetailSlide);
+    const breachSlides = ((breaches && breaches.breaches) || []).slice(0, 3).map(breachTeaserSlide);
+    const victimSlides = ((leaktracker && leaktracker.victims) || []).slice(0, 5).map(victimTeaserSlide);
+
+    let groupSlides = [];
+    if (attackData && Array.isArray(attackData.groups) && attackData.groups.length) {
+      const pool = [...attackData.groups];
+      const picked = [];
+      while (picked.length < DIGEST_GROUP_COUNT && pool.length) {
+        picked.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+      }
+      groupSlides = picked.map(groupTeaserSlide);
+    }
+
+    return [...podcastSlides, ...feedSlides, ...cveSlides, ...breachSlides, ...groupSlides, ...victimSlides];
+  }
+
+  // ---------- engine (same shape as spotlight.html's digest carousel) ----------
+
+  let slides = [];
+  let idx = 0;
+  let timerRAF = null;
+  let timerStart = 0;
+  let timerDuration = 0;
+  let isPaused = false;
+  let pauseBegan = 0;
+  let interactionPaused = false;
+  let pendingNavTimer = null;
+  let manualPauseLock = false;
+
+  const SPEED_KEY = "signal-intel-speed";
+  const SPEED_ORDER = ["normal", "slow", "slowest"];
+  const SPEED_OFFSET_MS = { normal: 0, slow: 5000, slowest: 10000 };
+  const SPEED_LABEL = { normal: "NORMAL", slow: "SLOW", slowest: "SLOWEST" };
+  let speedMode = SPEED_ORDER.includes(localStorage.getItem(SPEED_KEY)) ? localStorage.getItem(SPEED_KEY) : "normal";
+
+  function speedOffset() { return SPEED_OFFSET_MS[speedMode] || 0; }
+
+  function updateSpeedButton() {
+    const btn = document.getElementById("speed-btn");
+    btn.textContent = `◷ ${SPEED_LABEL[speedMode]}`;
+    btn.className = `speed-btn no-nav control-btn ${speedMode !== "normal" ? speedMode : ""}`;
+  }
+
+  function cycleSpeed() {
+    speedMode = SPEED_ORDER[(SPEED_ORDER.indexOf(speedMode) + 1) % SPEED_ORDER.length];
+    localStorage.setItem(SPEED_KEY, speedMode);
+    updateSpeedButton();
+    if (slides[idx]) timerDuration = slides[idx].duration + speedOffset();
+  }
+
+  function updateStatusUI() {
+    const flag = document.getElementById("paused-flag");
+    const btn = document.getElementById("pause-btn");
+    flag.classList.toggle("on", manualPauseLock || interactionPaused);
+    flag.textContent = manualPauseLock ? "‖ PAUSED — TAP ▶ TO RESUME" : "‖ PAUSED — DOUBLE-TAP TO RESUME";
+    btn.textContent = manualPauseLock ? "▶" : "‖";
+    btn.setAttribute("aria-label", manualPauseLock ? "Resume auto-advance" : "Pause auto-advance");
+    btn.classList.toggle("active", manualPauseLock);
+  }
+
+  function toggleManualPause() {
+    if (manualPauseLock) {
+      manualPauseLock = false;
+      resumeTimer();
+    } else {
+      manualPauseLock = true;
+      interactionPaused = false;
+      if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+      pauseTimer();
+    }
+    updateStatusUI();
+  }
+
+  function renderChrome() {
+    document.getElementById("progress-bar").innerHTML = slides.map(() => `<div class="seg"><div class="seg-fill"></div></div>`).join("");
+  }
+
+  function renderSlides() {
+    const root = document.getElementById("slides");
+    root.innerHTML = slides.map((s, i) => `
+      <div class="slide" data-i="${i}" data-key="${s.key}">
+        <div class="slide-inner">${s.html}</div>
+      </div>`).join("");
+  }
+
+  function segFills() { return [...document.querySelectorAll(".seg-fill")]; }
+  function setSegProgress(i, pct) { const fills = segFills(); if (fills[i]) fills[i].style.width = pct + "%"; }
+  function syncSegsForIndex(i) {
+    segFills().forEach((fill, si) => { fill.style.width = si < i ? "100%" : si > i ? "0%" : fill.style.width; });
+  }
+
+  function cancelTimer() { if (timerRAF) cancelAnimationFrame(timerRAF); timerRAF = null; }
+
+  function startTimer(duration) {
+    cancelTimer();
+    timerDuration = duration;
+    timerStart = performance.now();
+    isPaused = manualPauseLock;
+    if (isPaused) pauseBegan = timerStart;
+    updateStatusUI();
+    if (REDUCED_MOTION) { setSegProgress(idx, manualPauseLock ? 0 : 100); return; }
+    setSegProgress(idx, 0);
+    tick();
+  }
+
+  function tick() {
+    if (!isPaused) {
+      const elapsed = performance.now() - timerStart;
+      const frac = Math.min(1, elapsed / timerDuration);
+      setSegProgress(idx, frac * 100);
+      if (frac >= 1) { timerRAF = null; next(); return; }
+    }
+    timerRAF = requestAnimationFrame(tick);
+  }
+
+  function pauseTimer() { if (!isPaused) { isPaused = true; pauseBegan = performance.now(); } updateStatusUI(); }
+  function resumeTimer() {
+    if (manualPauseLock) return;
+    if (isPaused) { isPaused = false; timerStart += performance.now() - pauseBegan; }
+    updateStatusUI();
+  }
+
+  function updateSlideActions(slide) {
+    const container = document.getElementById("slide-actions");
+    const hint = document.getElementById("hint");
+    const actions = (slide && slide.actions) || [];
+    container.innerHTML = actions.map(a => `
+      <a class="slide-action-btn" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(a.label)}</a>
+    `).join("");
+    container.classList.toggle("visible", actions.length > 0);
+    hint.classList.toggle("suppressed", actions.length > 0);
+  }
+
+  function goTo(i) {
+    if (i < 0 || i >= slides.length) return;
+    const root = document.getElementById("slides");
+    root.querySelectorAll(".slide").forEach(el => el.classList.remove("active"));
+    idx = i;
+    root.querySelector(`.slide[data-i="${i}"]`).classList.add("active");
+    syncSegsForIndex(i);
+    updateSlideActions(slides[i]);
+    interactionPaused = false;
+    if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+    startTimer(slides[i].duration + speedOffset());
+  }
+
+  function next() { goTo(idx < slides.length - 1 ? idx + 1 : 0); }
+  function prev() { goTo(idx > 0 ? idx - 1 : slides.length - 1); }
+
+  function setupInput() {
+    const stage = document.getElementById("stage");
+    let downAt = null, downX = 0, downY = 0, moved = false, downOnNoNav = false;
+    let lastTapAt = 0;
+    let suppressNextClick = false;
+    const DOUBLE_TAP_MS = 340;
+
+    document.getElementById("pause-btn").addEventListener("click", (e) => { e.stopPropagation(); toggleManualPause(); });
+    document.getElementById("speed-btn").addEventListener("click", (e) => { e.stopPropagation(); cycleSpeed(); });
+    updateSpeedButton();
+
+    stage.addEventListener("click", (e) => {
+      if (suppressNextClick) { e.preventDefault(); e.stopPropagation(); suppressNextClick = false; }
+    }, true);
+
+    function performNav(clientX) {
+      const w = window.innerWidth;
+      if (clientX < w * 0.3) prev(); else next();
+    }
+
+    stage.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".control-btn")) return;
+      if (e.target.closest("a")) e.preventDefault();
+      downAt = performance.now(); downX = e.clientX; downY = e.clientY; moved = false;
+      downOnNoNav = !!e.target.closest(".no-nav");
+      pauseTimer();
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if (downAt == null) return;
+      if (Math.abs(e.clientX - downX) > 10 || Math.abs(e.clientY - downY) > 10) moved = true;
+    });
+    stage.addEventListener("pointerup", (e) => {
+      if (downAt == null) return;
+      const heldMs = performance.now() - downAt;
+      const dx = e.clientX - downX;
+      const wasOnNoNav = downOnNoNav;
+      downAt = null;
+
+      if (moved && Math.abs(dx) > 60) {
+        suppressNextClick = true;
+        interactionPaused = false;
+        if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+        resumeTimer();
+        if (dx < 0) next(); else prev();
+        return;
+      }
+
+      if (heldMs < 250 && !moved) {
+        const now = performance.now();
+        const isDoubleTap = (now - lastTapAt) < DOUBLE_TAP_MS;
+        lastTapAt = isDoubleTap ? 0 : now;
+
+        if (isDoubleTap && interactionPaused) {
+          if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
+          interactionPaused = false;
+          resumeTimer();
+          return;
+        }
+
+        if (wasOnNoNav) { interactionPaused = true; pauseTimer(); return; }
+
+        if (interactionPaused) {
+          if (pendingNavTimer) clearTimeout(pendingNavTimer);
+          const clientX = e.clientX;
+          pendingNavTimer = setTimeout(() => { pendingNavTimer = null; performNav(clientX); }, DOUBLE_TAP_MS);
+          return;
+        }
+
+        performNav(e.clientX);
+        return;
+      }
+      resumeTimer();
+    });
+    stage.addEventListener("pointercancel", () => { downAt = null; resumeTimer(); });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    });
+  }
+
+  async function init() {
+    const [{ attackData, threats, cves, leaktracker, breaches, podcast }, ads] = await Promise.all([
+      loadDigestData(), loadAds(),
+    ]);
+
+    const contentSlides = buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker);
+    if (contentSlides.length === 0) {
+      showEmptyTarget("No feed, CVE, breach, or leak-tracker data available yet — have the fetch scripts been run?");
+      return;
+    }
+    slides = interleaveAds(contentSlides, ads);
+
+    renderChrome();
+    renderSlides();
+    setupInput();
+    goTo(0);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

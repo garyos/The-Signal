@@ -87,6 +87,7 @@
     border: 2px solid var(--red); padding: 3px 7px; transform: rotate(-6deg); opacity: 0.75;
     text-align: center; line-height: 1.3; white-space: nowrap;
   }
+  .stamp[hidden] { display: none; }
 
   .slides { position: absolute; inset: 0; z-index: 10; }
   /* .slide is a plain block scroll container — NOT itself a flex box with
@@ -129,9 +130,13 @@
   /* --- digest slide-kind labels: the digest mixes feed items, CVEs, APT
      group teasers and ransomware victims in one carousel, so each slide
      needs an immediate, plain-language "what am I looking at" cue. --- */
+  /* Bumped up from a small 10px label — this is the reader's first, plain-
+     language cue for "what kind of item is this" in a carousel that mixes
+     feed items, CVEs, breaches, and more, so it needs to read instantly,
+     not be squinted at. */
   .kind-tag {
-    display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); padding: 4px 9px; margin-bottom: 10px;
+    display: inline-block; font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); padding: 6px 12px; margin-bottom: 12px;
   }
   .kind-tag.feed { background: var(--blue); }
   .kind-tag.cve { background: var(--red); }
@@ -140,6 +145,21 @@
   .kind-tag.negotiation-group { background: var(--green); }
   .kind-tag.breach { background: var(--amber); }
   .kind-tag.podcast { background: var(--orange); }
+  .kind-tag.ad { background: var(--text-dim); color: var(--ink); }
+
+  /* Source attribution — deliberately more prominent than the old buried
+     "SIGNAL FEED // BleepingComputer // INFO" mono line, so it's obvious at
+     a glance where an item's data actually came from. */
+  .source-credit {
+    display: flex; align-items: center; gap: 7px; margin-bottom: 12px;
+  }
+  .source-credit .sc-label {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .source-credit .sc-name {
+    font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: var(--text);
+  }
 
   .claimed-by {
     display: flex; align-items: center; gap: 8px; border: 1px solid var(--red); background: rgba(255,92,92,0.08);
@@ -291,23 +311,42 @@
   }
   .hint.suppressed { display: none; }
 
-  /* A slide-specific outbound link (currently: feed items) — fixed in the
-     same footer slot .hint normally occupies (swapped in for it, see
-     updateReadArticleButton) rather than living inline in the slide's own
-     content flow. Inline was the original approach, but a summary's length
-     varies slide to slide, so the link landed at a different y-position
-     every time — easy to fat-finger while tapping through the carousel.
-     Anchoring it here fixes its position across every slide instead. */
-  .read-article-btn {
+  /* A slide-specific outbound link (feed items' "read article", a group/
+     victim teaser's "focus" link, a negotiation teaser's "play" links) —
+     fixed in the same footer slot .hint normally occupies (swapped in for
+     it, see updateSlideActions) rather than living inline in the slide's
+     own content flow. Inline was the original approach, but content length
+     varies slide to slide, so a link landed at a different y-position every
+     time — easy to fat-finger while tapping through the carousel. Anchoring
+     it here fixes its position across every slide instead. When a slide
+     has more than one action (a negotiation teaser can offer both "latest"
+     and "longest"), they stack in this same anchored spot rather than each
+     picking their own position.
+     Color varies by action kind so it still visually matches the kind-tag
+     it belongs to (blue=article, purple=group focus, teal=victim focus,
+     amber=breach, green=negotiation) rather than everything defaulting to
+     one link color regardless of what it actually does. */
+  .slide-actions {
     position: absolute; left: 50%; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 56px); z-index: 24;
     transform: translateX(-50%);
-    display: none; align-items: center; gap: 6px;
+    display: none; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .slide-actions.visible { display: flex; }
+  .slide-action-btn {
+    display: inline-flex; align-items: center; gap: 6px;
     font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--blue);
     background: rgba(16,21,29,0.92); border: 1px solid var(--blue); padding: 8px 14px;
     text-decoration: none; white-space: nowrap;
   }
-  .read-article-btn.visible { display: inline-flex; }
-  .read-article-btn:hover { background: var(--blue); color: var(--ink); }
+  .slide-action-btn:hover { background: var(--blue); color: var(--ink); }
+  .slide-action-btn.purple { color: var(--purple); border-color: var(--purple); }
+  .slide-action-btn.purple:hover { background: var(--purple); color: var(--ink); }
+  .slide-action-btn.teal { color: var(--teal); border-color: var(--teal); }
+  .slide-action-btn.teal:hover { background: var(--teal); color: var(--ink); }
+  .slide-action-btn.amber { color: var(--amber); border-color: var(--amber); }
+  .slide-action-btn.amber:hover { background: var(--amber); color: var(--ink); }
+  .slide-action-btn.green { color: var(--green); border-color: var(--green); }
+  .slide-action-btn.green:hover { background: var(--green); color: var(--ink); }
 
   /* Explicit, persistent pause/resume control — takes precedence over every
      touch/tap gesture (see manualPauseLock in the script). A big, unambiguous
@@ -345,7 +384,7 @@
   .pause-btn { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .speed-btn { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .hint { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
-  .read-article-btn { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .slide-actions { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
 
   .podcast-listen-btn {
     display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--ink);
@@ -364,7 +403,7 @@
   /* --- negotiation replay: a scrolling chat log instead of a slide deck.
      Navigation here is browser scroll, not swipe, so tap-zones/hint are
      hidden for this mode via .negotiation-mode on #stage. --- */
-  .negotiation-mode .tap-zone, .negotiation-mode .hint, .negotiation-mode .read-article-btn { display: none; }
+  .negotiation-mode .tap-zone, .negotiation-mode .hint, .negotiation-mode .slide-actions { display: none; }
   /* Setting overflow-y without an explicit overflow-x lets the CSS overflow
      spec compute overflow-x as "auto" too (not "visible"), so a bubble with
      one long unbroken token (a hash, a URL) could open up a horizontal
@@ -525,14 +564,14 @@
         <div class="case-id" id="case-id">SIGNAL // SPOTLIGHT</div>
         <div class="paused-flag" id="paused-flag">‖ PAUSED — DOUBLE-TAP TO RESUME</div>
       </div>
-      <div class="stamp">CLASSIFIED<br>EYES ONLY</div>
+      <div class="stamp" id="stamp" hidden></div>
     </div>
 
     <div class="slides" id="slides"></div>
     <div class="tap-zone tap-left" id="tap-left"></div>
     <div class="tap-zone tap-right" id="tap-right"></div>
     <div class="hint" id="hint">tap right to advance · left to go back · tap an item to inspect</div>
-    <a class="read-article-btn no-nav control-btn" id="read-article-btn" href="#" target="_blank" rel="noopener noreferrer">read full article ↗</a>
+    <div class="slide-actions no-nav control-btn" id="slide-actions"></div>
     <button class="pause-btn no-nav control-btn" id="pause-btn" aria-label="Pause auto-advance">‖</button>
     <button class="speed-btn no-nav control-btn" id="speed-btn" aria-label="Reading speed">◷ NORMAL</button>
   </div>
@@ -1529,12 +1568,13 @@
     const summary = truncateToSentence(entry.summary || "", 260);
     return {
       key: "feed", duration: 6000,
-      // Picked up by updateReadArticleButton (called from goTo) rather than
-      // an inline link — see the .read-article-btn CSS comment for why.
-      articleLink: entry.link || "",
+      // Picked up by updateSlideActions (called from goTo) rather than an
+      // inline link — see the .slide-actions CSS comment for why.
+      actions: entry.link ? [{ label: "read full article ↗", href: entry.link, variant: "blue", external: true }] : [],
       html: `
         <div class="kind-tag feed">Threat Feed Item</div>
-        <div class="case-number">SIGNAL FEED // ${escapeHtml(entry.source || "unknown source")} // ${escapeHtml((entry.severity || "info").toUpperCase())}</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${escapeHtml(entry.source || "Unknown source")}</span></div>
+        <div class="case-number">SIGNAL FEED // ${escapeHtml((entry.severity || "info").toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(entry.title)}</h1>
         <p class="dossier-text">${escapeHtml(summary) || "No summary available."}</p>
       `,
@@ -1548,6 +1588,7 @@
       key: "cve", duration: 8000,
       html: `
         <div class="kind-tag cve">CVE Advisory</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${cve.kev && cve.kev.in_kev ? "NVD · CISA KEV" : "NVD"}</span></div>
         <div class="case-number">CVE RECORD // ${sev} // CVSS ${score}</div>
         <h1 class="redact">${escapeHtml(cve.id)}</h1>
         <p class="dossier-text">${escapeHtml(cve.description)}</p>
@@ -1580,8 +1621,10 @@
   function breachTeaserSlide(b) {
     return {
       key: "breach", duration: 7500,
+      actions: [{ label: "full breach record ›", href: `breaches.html?id=${encodeURIComponent(b.id)}`, variant: "amber" }],
       html: `
         <div class="kind-tag breach">Breach</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">Have I Been Pwned</span></div>
         <div class="case-number">DISCLOSURE RECORD // ${escapeHtml((b.breach_date || "").slice(0, 10))}</div>
         <h1 class="redact">${escapeHtml(b.title)}</h1>
         <div class="chip-row">
@@ -1590,7 +1633,6 @@
           ${(b.data_classes || []).slice(0, 3).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}
         </div>
         <p class="dossier-text">${escapeHtml(b.description) || "No description available."}</p>
-        <a class="zoom-link no-nav" href="breaches.html?id=${encodeURIComponent(b.id)}">full breach record ›</a>
       `,
     };
   }
@@ -1603,8 +1645,10 @@
   function groupTeaserSlide(g) {
     return {
       key: "group-teaser", duration: 7000,
+      actions: [{ label: `⌁ focus here: ${g.name} ›`, href: zoomHref("groups", g.id, "Digest"), variant: "purple" }],
       html: `
         <div class="kind-tag group">APT Group</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">MITRE ATT&amp;CK</span></div>
         <div class="case-number">CASE FILE // ${g.id} // ${escapeHtml(domain.toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(g.name)}</h1>
         <div class="chip-row">
@@ -1613,7 +1657,6 @@
             : `<span class="tag-chip">Origin unattributed</span>`}
         </div>
         <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
-        <a class="zoom-link no-nav" href="${zoomHref("groups", g.id, "Digest")}">⌁ focused spotlight: ${escapeHtml(g.name)} ›</a>
       `,
     };
   }
@@ -1621,8 +1664,10 @@
   function victimTeaserSlide(v) {
     return {
       key: "leak-victim", duration: 7000,
+      actions: [{ label: `focus on ${v.group} ›`, href: `leaktracker.html?group=${encodeURIComponent(v.group)}`, variant: "teal" }],
       html: `
         <div class="kind-tag victim">Ransomware Victim</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">ransomware.live</span></div>
         <div class="case-number">LEAK-SITE POSTING // ${escapeHtml(v.group.toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(v.victim)}</h1>
         <div class="claimed-by"><span class="cb-icon">☣</span> claimed by <b>${escapeHtml(v.group)}</b></div>
@@ -1632,7 +1677,6 @@
           <span class="tag-chip">${escapeHtml((v.published || "").slice(0, 10))}</span>
         </div>
         <p class="dossier-text">${escapeHtml(v.description) || "No description available."}</p>
-        <a class="zoom-link no-nav" href="leaktracker.html?group=${encodeURIComponent(v.group)}">focus on ${escapeHtml(v.group)} ›</a>
       `,
     };
   }
@@ -1654,10 +1698,25 @@
 
   function negotiationGroupTeaserSlide(g) {
     const n = g.negotiation || {};
+    const actions = [];
+    if (n.latest_chat_url) {
+      actions.push({
+        label: `▶ play latest negotiation${n.latest_chat_date ? ` · ${n.latest_chat_date}` : ""}`,
+        href: negotiationSpotlightHref(g, n.latest_chat_url, "latest"), variant: "green",
+      });
+    }
+    if (n.longest_chat_url) {
+      actions.push({
+        label: `▶ play longest negotiation · ${n.longest_chat_message_count} messages`,
+        href: negotiationSpotlightHref(g, n.longest_chat_url, "longest"), variant: "green",
+      });
+    }
     return {
       key: "negotiation-group", duration: 8000,
+      actions,
       html: `
         <div class="kind-tag negotiation-group">Ransomware Group</div>
+        <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">ransomware.live · Ransomchats</span></div>
         <div class="case-number">LEAK-SITE PROFILE // ${escapeHtml(g.name.toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(g.name)}</h1>
         <div class="chip-row">
@@ -1668,8 +1727,6 @@
           <span class="tag-chip">${n.chat_count} negotiation chat${n.chat_count === 1 ? "" : "s"} on file</span>
         </div>
         <p class="dossier-text">${escapeHtml(g.description) || "No description on file."}</p>
-        ${n.latest_chat_url ? `<a class="zoom-link stacked no-nav" href="${negotiationSpotlightHref(g, n.latest_chat_url, "latest")}">▶ play latest negotiation${n.latest_chat_date ? ` · ${escapeHtml(n.latest_chat_date)}` : ""}</a>` : ""}
-        ${n.longest_chat_url ? `<a class="zoom-link stacked no-nav" href="${negotiationSpotlightHref(g, n.longest_chat_url, "longest")}">▶ play longest negotiation · ${n.longest_chat_message_count} messages</a>` : ""}
       `,
     };
   }
@@ -1922,17 +1979,18 @@
     updateStatusUI();
   }
 
-  // Swaps the fixed footer slot between the generic navigation hint and a
-  // slide-specific outbound link (currently only feed items carry one) —
-  // see the .read-article-btn CSS comment for why this replaced the old
-  // inline-in-content link.
-  function updateReadArticleButton(slide) {
-    const btn = document.getElementById("read-article-btn");
+  // Swaps the fixed footer slot between the generic navigation hint and any
+  // slide-specific outbound link(s) — see the .slide-actions CSS comment
+  // for why these live here instead of inline in the slide's own content.
+  function updateSlideActions(slide) {
+    const container = document.getElementById("slide-actions");
     const hint = document.getElementById("hint");
-    const link = slide && slide.articleLink;
-    btn.classList.toggle("visible", !!link);
-    hint.classList.toggle("suppressed", !!link);
-    if (link) btn.href = link;
+    const actions = (slide && slide.actions) || [];
+    container.innerHTML = actions.map(a => `
+      <a class="slide-action-btn${a.variant ? " " + a.variant : ""}" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(a.label)}</a>
+    `).join("");
+    container.classList.toggle("visible", actions.length > 0);
+    hint.classList.toggle("suppressed", actions.length > 0);
   }
 
   function goTo(i) {
@@ -1942,7 +2000,7 @@
     idx = i;
     root.querySelector(`.slide[data-i="${i}"]`).classList.add("active");
     syncSegsForIndex(i);
-    updateReadArticleButton(slides[i]);
+    updateSlideActions(slides[i]);
     interactionPaused = false;
     if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
     startTimer(slides[i].duration + speedOffset());
@@ -2204,7 +2262,9 @@
 
   function renderNegotiationChrome(groupName, label) {
     document.getElementById("case-id").textContent = `SIGNAL // NEGOTIATION // ${escapeHtml(groupName).toUpperCase()} // ${label}`;
-    document.querySelector(".stamp").innerHTML = "LEAKED<br>TRANSCRIPT";
+    const stampEl = document.getElementById("stamp");
+    stampEl.innerHTML = "LEAKED<br>TRANSCRIPT";
+    stampEl.hidden = false;
     document.getElementById("progress-bar").innerHTML = `<div class="seg"><div class="seg-fill" id="nego-progress-fill"></div></div>`;
     document.getElementById("stage").classList.add("negotiation-mode");
   }
