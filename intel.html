@@ -126,6 +126,15 @@
   .kind-tag.podcast { background: var(--orange); }
   .kind-tag.ad { background: var(--text-dim); color: var(--ink); }
 
+  /* "Today" (highlighted) or a short date — lets a reader place a feed/CVE
+     item in time at a glance, now that the two are merged into one
+     date-ordered sequence instead of two separate blocks. */
+  .day-label {
+    display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .day-label.today { color: var(--amber); font-weight: 700; }
+
   /* Source attribution — prominent on purpose, so it's obvious at a glance
      where an item's data actually came from. */
   .source-credit { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
@@ -376,13 +385,14 @@
     return withinWindow.length >= minCount ? withinWindow : sorted.slice(0, minCount);
   }
 
-  function feedItemSlide(entry) {
+  function feedItemSlide(entry, dayLabelText) {
     const summary = truncateToSentence(entry.summary || "", 260);
     return {
       key: "feed", duration: 6000,
       actions: entry.link ? [{ label: "read full article ↗", href: entry.link, external: true }] : [],
       html: `
         <div class="kind-tag feed">Threat Feed Item</div>
+        ${dayLabelText ? `<div class="day-label${dayLabelText === "Today" ? " today" : ""}">${escapeHtml(dayLabelText)}</div>` : ""}
         <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${escapeHtml(entry.source || "Unknown source")}</span></div>
         <div class="case-number">INTEL FEED // ${escapeHtml((entry.severity || "info").toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(entry.title)}</h1>
@@ -391,13 +401,14 @@
     };
   }
 
-  function cveDetailSlide(cve) {
+  function cveDetailSlide(cve, dayLabelText) {
     const sev = (cve.cvss && cve.cvss.severity) || "UNRATED";
     const score = cve.cvss ? `${cve.cvss.score.toFixed(1)} (v${cve.cvss.version})` : "unrated";
     return {
       key: "cve", duration: 8000,
       html: `
         <div class="kind-tag cve">CVE Advisory</div>
+        ${dayLabelText ? `<div class="day-label${dayLabelText === "Today" ? " today" : ""}">${escapeHtml(dayLabelText)}</div>` : ""}
         <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">${cve.kev && cve.kev.in_kev ? "NVD · CISA KEV" : "NVD"}</span></div>
         <div class="case-number">CVE RECORD // ${sev} // CVSS ${score}</div>
         <h1 class="redact">${escapeHtml(cve.id)}</h1>
@@ -544,10 +555,57 @@
 
   const DIGEST_GROUP_COUNT = 3;
 
+  function startOfUTCDay(d) {
+    return d ? Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) : null;
+  }
+
+  // NVD publishes `published`/`lastModified` as UTC timestamps but without a
+  // trailing "Z" or offset (e.g. "2026-09-01T22:17:13.170") — the ECMA-262
+  // date-time string format treats a time-of-day string with no zone as
+  // LOCAL time, not UTC, so `new Date(cve.published)` would silently shift
+  // by the reader's own offset. Appending "Z" when one isn't already present
+  // forces the correct UTC interpretation.
+  function cveDate(cve) {
+    const raw = cve && cve.published;
+    if (!raw) return null;
+    const iso = /[Zz]|[+-]\d\d:?\d\d$/.test(raw) ? raw : raw + "Z";
+    const d = new Date(iso);
+    return isNaN(d) ? null : d;
+  }
+
+  // "Today" if the item's UTC calendar day matches the current UTC calendar
+  // day, otherwise a short, human date — lets a reader place a slide in time
+  // at a glance instead of doing date arithmetic themselves. Formatted in
+  // UTC too (not the browser's local zone), so the label never disagrees
+  // with the "Today" check it's paired with near a midnight-UTC boundary.
+  function dayLabel(dateObj) {
+    if (!dateObj) return "";
+    if (startOfUTCDay(dateObj) === startOfUTCDay(new Date())) return "Today";
+    return dateObj.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+  }
+
+  // Feed items and CVEs used to render as two separate blocks — every
+  // selected feed item, then every selected CVE. Merging both into one list
+  // sorted by actual publish date (most recent first, so today's items from
+  // either source lead) interleaves them by recency instead, and each
+  // slide's dayLabel ("Today" or its own date) makes that ordering legible
+  // as you page through rather than just an invisible sort order.
+  function mergeFeedAndCveByDate(feedEntries, cveList, cveCap) {
+    const cveSorted = [...cveList]
+      .sort((a, b) => (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0))
+      .slice(0, cveCap);
+    const items = [
+      ...feedEntries.map(e => ({ date: feedEntryDate(e), slide: feedItemSlide(e, dayLabel(feedEntryDate(e))) })),
+      ...cveSorted.map(c => ({ date: cveDate(c), slide: cveDetailSlide(c, dayLabel(cveDate(c))) })),
+    ];
+    items.sort((a, b) => (b.date ? b.date.getTime() : 0) - (a.date ? a.date.getTime() : 0));
+    return items.map(i => i.slide);
+  }
+
   function buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker) {
     const podcastSlides = latestEpisodePerShow((podcast && podcast.episodes) || []).map(podcastDigestSlide);
-    const feedSlides = selectRecentFeedEntries((threats && threats.entries) || []).map(feedItemSlide);
-    const cveSlides = ((cves && cves.cves) || []).slice(0, 10).map(cveDetailSlide);
+    const feedEntries = selectRecentFeedEntries((threats && threats.entries) || []);
+    const feedAndCveSlides = mergeFeedAndCveByDate(feedEntries, (cves && cves.cves) || [], 10);
     const breachSlides = ((breaches && breaches.breaches) || []).slice(0, 3).map(breachTeaserSlide);
     const victimSlides = ((leaktracker && leaktracker.victims) || []).slice(0, 5).map(victimTeaserSlide);
 
@@ -561,7 +619,7 @@
       groupSlides = picked.map(groupTeaserSlide);
     }
 
-    return [...podcastSlides, ...feedSlides, ...cveSlides, ...breachSlides, ...groupSlides, ...victimSlides];
+    return [...podcastSlides, ...feedAndCveSlides, ...breachSlides, ...groupSlides, ...victimSlides];
   }
 
   // ---------- engine (same shape as spotlight.html's digest carousel) ----------
