@@ -175,12 +175,30 @@
 
   /* --- analytics: donut / big-stat / horizontal-bar / ranked-list, all
      hand-drawn with plain SVG + CSS (no charting library anywhere in this
-     codebase) --- */
+     codebase).
+
+     This is a carousel, not a document — five analytics get flipped
+     through in quick succession, often auto-advancing, so what matters
+     here isn't "does each slide read well on its own" (that's the report's
+     job) but "does the SEQUENCE feel like one continuous thing." A report
+     reader sets their own pace and re-reads at will; a carousel viewer's
+     eye has to land in the same place every time or the whole thing reads
+     as jumpy. So every analytic shares one rigid skeleton instead of each
+     being laid out to fit its own content:
+       kind-tag (fixed) -> title (fixed-height, 1- or 2-line text both
+       reserve the same box) -> hero (fixed-height, a donut or a big number,
+       always centered in the same box right after the title) -> body
+       (variable-height breakdown list — allowed to vary, since it's below
+       the part the eye lands on first).
+     The earlier version let a paragraph of report-style prose sit between
+     the title and the actual chart, with length that varied by analytic —
+     that's exactly what made the hero appear at a different Y each time. --- */
   .kind-tag.analytic { background: var(--purple); }
-  /* Legend sits below the donut (not beside it) specifically so the donut
-     itself can be drawn large — full slide width to work with instead of
-     splitting it with a side legend. */
-  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; margin: 18px 0 4px; }
+  .analytic-title { min-height: 2.4em; line-height: 1.15; }
+  .analytic-hero {
+    min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; margin: 4px 0 26px; text-align: center;
+  }
   .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; max-width: 320px; }
   .legend-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
@@ -194,12 +212,11 @@
      to 77). Always both counts — how many rows AND how much volume they
      represent — never just one, so the shown vs. hidden portions both stay
      legible. */
-  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 6px; opacity: 0.85; }
-  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: -8px 0 14px; }
+  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 10px; opacity: 0.85; }
+  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: 0 0 12px; }
 
-  .big-stat { text-align: center; margin: 10px 0 22px; }
-  .big-stat .bs-number { font-family: var(--font-sans); font-size: 54px; font-weight: 800; color: var(--text); line-height: 1; }
-  .big-stat .bs-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 8px; }
+  .big-stat .bs-number { font-family: var(--font-sans); font-size: 74px; font-weight: 800; color: var(--text); line-height: 1; }
+  .big-stat .bs-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
 
   .stat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .stat-bar-label { flex: 0 0 128px; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -258,16 +275,6 @@
     text-transform: uppercase; margin-bottom: 6px;
   }
 
-  /* Podcast listen link — styled like the old in-page play button, but it's
-     a plain outbound <a> to the episode's original page, not a player
-     trigger (this file has no audio player at all). */
-  .podcast-listen-btn {
-    display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--ink);
-    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
-    border: none; padding: 12px 18px; text-decoration: none; margin-top: 6px;
-  }
-  .podcast-listen-btn:hover { filter: brightness(1.08); }
-
   .tap-zone { position: absolute; top: 88px; bottom: 96px; z-index: 15; pointer-events: none; }
   .tap-left { left: 0; width: 30%; }
   .tap-right { right: 0; width: 70%; }
@@ -296,6 +303,8 @@
     text-decoration: none; white-space: nowrap;
   }
   .slide-action-btn:hover { background: var(--blue); color: var(--ink); }
+  .slide-action-btn.orange { color: var(--orange); border-color: var(--orange); }
+  .slide-action-btn.orange:hover { background: var(--orange); color: var(--ink); }
 
   .pause-btn {
     position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 24;
@@ -574,16 +583,23 @@
     return Object.values(bestByShow);
   }
 
+  // "Listen now" lives in the shared fixed footer slot (slide.actions) now,
+  // same as every other item's outbound link — it used to sit inline in
+  // the slide's own content, which meant it landed at a different
+  // position/size on every podcast slide depending on how much text came
+  // before it.
   function podcastDigestSlide(ep) {
     return {
       key: "podcast", duration: 8000,
+      actions: ep.episode_link
+        ? [{ label: `▶ Listen now · ${fmtDuration(ep.duration_seconds)} ↗`, href: ep.episode_link, variant: "orange", external: true }]
+        : [],
       html: `
         <div class="kind-tag podcast">Podcast — ${escapeHtml(ep.show_name || "")}</div>
         <div class="case-number">${escapeHtml((ep.show_name || "PODCAST").toUpperCase())} // ${escapeHtml((ep.published || "").slice(0, 10))}${ep.episode_number ? " // EPISODE " + escapeHtml(ep.episode_number) : ""}</div>
         <h1 class="redact">${escapeHtml(ep.title)}</h1>
         <p class="dossier-text">${escapeHtml((ep.summary || "").slice(0, 220))}${(ep.summary || "").length > 220 ? "…" : ""}</p>
         ${(ep.categories || []).length ? `<div class="chip-row">${ep.categories.slice(0, 6).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
-        ${ep.episode_link ? `<a class="podcast-listen-btn no-nav" href="${escapeHtml(ep.episode_link)}" target="_blank" rel="noopener noreferrer">▶ Listen now · ${escapeHtml(fmtDuration(ep.duration_seconds))} ↗</a>` : ""}
       `,
     };
   }
@@ -823,12 +839,11 @@
       .filter(k => counts[k])
       .map(k => ({ label: k, value: counts[k], color: ANALYTICS_COLORS[k] }));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">CVE Severity — This Week</h1>
-        <p class="dossier-text">${weekCves.length} Critical/High-severity CVE${weekCves.length === 1 ? "" : "s"} published so far this week.</p>
-        <div class="donut-wrap">
+        <h1 class="redact analytic-title">CVE Severity — This Week</h1>
+        <div class="analytic-hero">
           ${donutChartSvg(segments)}
           <div class="donut-legend">
             ${segments.length ? segments.map(s => `
@@ -836,6 +851,7 @@
             `).join("") : `<div class="legend-row">No CVE data yet this week.</div>`}
           </div>
         </div>
+        <div class="analytic-context-note">${weekCves.length} Critical/High CVE${weekCves.length === 1 ? "" : "s"} published so far this week</div>
       `,
     };
   }
@@ -845,13 +861,15 @@
     const kevCount = weekCves.filter(c => c.kev && c.kev.in_kev).length;
     const pct = total ? Math.round((kevCount / total) * 100) : 0;
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">CISA KEV Watch</h1>
-        <div class="big-stat"><div class="bs-number">${kevCount}</div><div class="bs-label">actively exploited CVE${kevCount === 1 ? "" : "s"} this week</div></div>
+        <h1 class="redact analytic-title">CISA KEV Watch</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${kevCount}</div><div class="bs-label">actively exploited this week</div></div>
+        </div>
         <div class="stat-bar-row"><div class="stat-bar-track"><div class="stat-bar-fill" style="width:${pct}%; background:var(--red)"></div></div><div class="stat-bar-count">${pct}%</div></div>
-        <p class="dossier-text" style="margin-top:16px;">${total ? `${kevCount} of ${total} Critical/High CVE${total === 1 ? "" : "s"} published this week ${kevCount === 1 ? "is" : "are"} on CISA's Known Exploited Vulnerabilities catalog — confirmed active exploitation in the wild.` : "No CVE data yet this week."}</p>
+        <div class="analytic-context-note" style="margin-top:10px;">${total ? `${pct}% of ${total} Critical/High CVE${total === 1 ? "" : "s"} this week ${kevCount === 1 ? "is" : "are"} confirmed under active exploitation` : "No CVE data yet this week."}</div>
       `,
     };
   }
@@ -878,11 +896,13 @@
     const { top, moreRows, moreSum } = topNWithOverflow(bySource, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Feed Volume — This Week</h1>
-        <div class="big-stat"><div class="bs-number">${weekEntries.length}</div><div class="bs-label">articles captured so far this week</div></div>
+        <h1 class="redact analytic-title">Feed Volume — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${weekEntries.length}</div><div class="bs-label">articles captured so far this week</div></div>
+        </div>
         ${top.length ? top.map(([src, n]) => `
           <div class="stat-bar-row">
             <div class="stat-bar-label">${escapeHtml(src)}</div>
@@ -896,11 +916,15 @@
 
   function analyticTop10Cves(weekCves) {
     const top = [...weekCves].sort((a, b) => ((b.cvss && b.cvss.score) || 0) - ((a.cvss && a.cvss.score) || 0)).slice(0, 10);
+    const topScore = top.length ? ((top[0].cvss && top[0].cvss.score) || 0) : 0;
     return {
-      key: "analytic", duration: 8000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Top 10 CVEs by Score — This Week</h1>
+        <h1 class="redact analytic-title">Top 10 CVEs by Score — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${topScore.toFixed(1)}</div><div class="bs-label">highest CVSS score this week</div></div>
+        </div>
         <div class="analytic-context-note">out of ${weekCves.length} Critical/High CVE${weekCves.length === 1 ? "" : "s"} this week</div>
         ${top.length ? top.map((c, i) => {
           const score = (c.cvss && c.cvss.score) || 0;
@@ -923,11 +947,13 @@
     const { top, moreRows, moreSum } = topNWithOverflow(byGroup, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Most Active Ransomware Groups — This Week</h1>
-        <div class="big-stat"><div class="bs-number">${weekVictims.length}</div><div class="bs-label">victim postings so far this week</div></div>
+        <h1 class="redact analytic-title">Top Ransomware Groups — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${weekVictims.length}</div><div class="bs-label">victim postings so far this week</div></div>
+        </div>
         ${top.length ? top.map(([g, n]) => `
           <div class="stat-bar-row">
             <div class="stat-bar-label">${escapeHtml(g)}</div>
@@ -1134,7 +1160,7 @@
     const hint = document.getElementById("hint");
     const actions = (slide && slide.actions) || [];
     container.innerHTML = actions.map(a => `
-      <a class="slide-action-btn" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(a.label)}</a>
+      <a class="slide-action-btn${a.variant ? " " + a.variant : ""}" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(a.label)}</a>
     `).join("");
     container.classList.toggle("visible", actions.length > 0);
     hint.classList.toggle("suppressed", actions.length > 0);

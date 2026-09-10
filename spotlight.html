@@ -230,12 +230,30 @@
 
   /* --- analytics: donut / big-stat / horizontal-bar / ranked-list, all
      hand-drawn with plain SVG + CSS (no charting library anywhere in this
-     codebase) --- */
+     codebase).
+
+     This is a carousel, not a document — five analytics get flipped
+     through in quick succession, often auto-advancing, so what matters
+     here isn't "does each slide read well on its own" (that's the report's
+     job) but "does the SEQUENCE feel like one continuous thing." A report
+     reader sets their own pace and re-reads at will; a carousel viewer's
+     eye has to land in the same place every time or the whole thing reads
+     as jumpy. So every analytic shares one rigid skeleton instead of each
+     being laid out to fit its own content:
+       kind-tag (fixed) -> title (fixed-height, 1- or 2-line text both
+       reserve the same box) -> hero (fixed-height, a donut or a big number,
+       always centered in the same box right after the title) -> body
+       (variable-height breakdown list — allowed to vary, since it's below
+       the part the eye lands on first).
+     The earlier version let a paragraph of report-style prose sit between
+     the title and the actual chart, with length that varied by analytic —
+     that's exactly what made the hero appear at a different Y each time. --- */
   .kind-tag.analytic { background: var(--purple); }
-  /* Legend sits below the donut (not beside it) specifically so the donut
-     itself can be drawn large — full slide width to work with instead of
-     splitting it with a side legend. */
-  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; margin: 18px 0 4px; }
+  .analytic-title { min-height: 2.4em; line-height: 1.15; }
+  .analytic-hero {
+    min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; margin: 4px 0 26px; text-align: center;
+  }
   .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; max-width: 320px; }
   .legend-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
@@ -249,12 +267,11 @@
      to 77). Always both counts — how many rows AND how much volume they
      represent — never just one, so the shown vs. hidden portions both stay
      legible. */
-  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 6px; opacity: 0.85; }
-  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: -8px 0 14px; }
+  .analytic-more-note { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 10px; opacity: 0.85; }
+  .analytic-context-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: 0 0 12px; }
 
-  .big-stat { text-align: center; margin: 10px 0 22px; }
-  .big-stat .bs-number { font-family: var(--font-sans); font-size: 54px; font-weight: 800; color: var(--text); line-height: 1; }
-  .big-stat .bs-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 8px; }
+  .big-stat .bs-number { font-family: var(--font-sans); font-size: 74px; font-weight: 800; color: var(--text); line-height: 1; }
+  .big-stat .bs-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
 
   .stat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .stat-bar-label { flex: 0 0 128px; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -455,6 +472,9 @@
   .slide-action-btn.amber:hover { background: var(--amber); color: var(--ink); }
   .slide-action-btn.green { color: var(--green); border-color: var(--green); }
   .slide-action-btn.green:hover { background: var(--green); color: var(--ink); }
+  .slide-action-btn.orange { color: var(--orange); border-color: var(--orange); }
+  .slide-action-btn.orange:hover { background: var(--orange); color: var(--ink); }
+  .slide-action-btn.playing { color: var(--orange); border-color: var(--orange); background: rgba(255,159,74,0.14); }
 
   /* Explicit, persistent pause/resume control — takes precedence over every
      touch/tap gesture (see manualPauseLock in the script). A big, unambiguous
@@ -493,14 +513,6 @@
   .speed-btn { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .hint { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .slide-actions { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
-
-  .podcast-listen-btn {
-    display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--ink);
-    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
-    border: none; padding: 12px 18px; cursor: pointer; margin-top: 6px;
-  }
-  .podcast-listen-btn:hover { filter: brightness(1.08); }
-  .podcast-listen-btn.playing { background: var(--ink-raised); color: var(--orange); border: 1px solid var(--orange); }
 
   .empty-target {
     position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -1647,36 +1659,34 @@
     return result;
   }
 
+  // Media playback can be turned off via config/site.json's
+  // features.podcast.media_playback — same behavior intel.html always uses
+  // (no in-page player at all): a plain outbound link to the episode's own
+  // page instead of the in-page Stormcast player. Either way, "Listen now"
+  // lives in the shared fixed footer slot (slide.actions) now, same as
+  // every other item's outbound link — it used to sit inline in the slide's
+  // own content, which meant it landed at a different position/size on
+  // every podcast slide depending on how much text came before it.
   function podcastDigestSlide(ep, mediaPlaybackEnabled = true) {
-    // Media playback can be turned off via config/site.json's
-    // features.podcast.media_playback — same behavior intel.html always
-    // uses (no in-page player at all): a plain outbound link to the
-    // episode's own page instead of the in-page Stormcast player button.
-    const listenHtml = mediaPlaybackEnabled
-      ? `<button type="button" class="podcast-listen-btn no-nav" data-role="listen" data-ep-id="${escapeHtml(ep.id)}">▶ Listen now · ${escapeHtml(fmtDuration(ep.duration_seconds))}</button>`
-      : (ep.episode_link ? `<a class="podcast-listen-btn no-nav" href="${escapeHtml(ep.episode_link)}" target="_blank" rel="noopener noreferrer">▶ Listen now · ${escapeHtml(fmtDuration(ep.duration_seconds))} ↗</a>` : "");
+    const label = `▶ Listen now · ${fmtDuration(ep.duration_seconds)}`;
+    const actions = mediaPlaybackEnabled
+      ? [{
+          label, variant: "orange",
+          onClick: () => { spOpenEpisode(ep); spotlightSyncListenButtons(); },
+          attrs: { "data-role": "listen", "data-ep-id": ep.id, "data-idle-label": label },
+        }]
+      : (ep.episode_link ? [{ label: `${label} ↗`, href: ep.episode_link, variant: "orange", external: true }] : []);
     return {
       key: "podcast", duration: 8000,
+      actions,
       html: `
         <div class="kind-tag podcast">Podcast — ${escapeHtml(ep.show_name || "")}</div>
         <div class="case-number">${escapeHtml((ep.show_name || "PODCAST").toUpperCase())} // ${escapeHtml((ep.published || "").slice(0, 10))}${ep.episode_number ? " // EPISODE " + escapeHtml(ep.episode_number) : ""}</div>
         <h1 class="redact">${escapeHtml(ep.title)}</h1>
         <p class="dossier-text">${escapeHtml((ep.summary || "").slice(0, 220))}${(ep.summary || "").length > 220 ? "…" : ""}</p>
         ${(ep.categories || []).length ? `<div class="chip-row">${ep.categories.slice(0, 6).map(c => `<span class="tag-chip">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
-        ${listenHtml}
         <a class="zoom-link stacked no-nav" href="podcast.html">full podcast archive ›</a>
       `,
-      onMount(el) {
-        if (!mediaPlaybackEnabled) return; // plain link — nothing to wire up
-        const btn = el.querySelector('[data-role="listen"]');
-        if (!btn) return;
-        btn.dataset.label = btn.textContent;
-        btn.addEventListener("click", (evt) => {
-          evt.stopPropagation();
-          spOpenEpisode(ep);
-          spotlightSyncListenButtons();
-        });
-      },
     };
   }
 
@@ -2149,12 +2159,11 @@
       .filter(k => counts[k])
       .map(k => ({ label: k, value: counts[k], color: ANALYTICS_COLORS[k] }));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">CVE Severity — This Week</h1>
-        <p class="dossier-text">${weekCves.length} Critical/High-severity CVE${weekCves.length === 1 ? "" : "s"} published so far this week.</p>
-        <div class="donut-wrap">
+        <h1 class="redact analytic-title">CVE Severity — This Week</h1>
+        <div class="analytic-hero">
           ${donutChartSvg(segments)}
           <div class="donut-legend">
             ${segments.length ? segments.map(s => `
@@ -2162,6 +2171,7 @@
             `).join("") : `<div class="legend-row">No CVE data yet this week.</div>`}
           </div>
         </div>
+        <div class="analytic-context-note">${weekCves.length} Critical/High CVE${weekCves.length === 1 ? "" : "s"} published so far this week</div>
       `,
     };
   }
@@ -2171,13 +2181,15 @@
     const kevCount = weekCves.filter(c => c.kev && c.kev.in_kev).length;
     const pct = total ? Math.round((kevCount / total) * 100) : 0;
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">CISA KEV Watch</h1>
-        <div class="big-stat"><div class="bs-number">${kevCount}</div><div class="bs-label">actively exploited CVE${kevCount === 1 ? "" : "s"} this week</div></div>
+        <h1 class="redact analytic-title">CISA KEV Watch</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${kevCount}</div><div class="bs-label">actively exploited this week</div></div>
+        </div>
         <div class="stat-bar-row"><div class="stat-bar-track"><div class="stat-bar-fill" style="width:${pct}%; background:var(--red)"></div></div><div class="stat-bar-count">${pct}%</div></div>
-        <p class="dossier-text" style="margin-top:16px;">${total ? `${kevCount} of ${total} Critical/High CVE${total === 1 ? "" : "s"} published this week ${kevCount === 1 ? "is" : "are"} on CISA's Known Exploited Vulnerabilities catalog — confirmed active exploitation in the wild.` : "No CVE data yet this week."}</p>
+        <div class="analytic-context-note" style="margin-top:10px;">${total ? `${pct}% of ${total} Critical/High CVE${total === 1 ? "" : "s"} this week ${kevCount === 1 ? "is" : "are"} confirmed under active exploitation` : "No CVE data yet this week."}</div>
       `,
     };
   }
@@ -2204,11 +2216,13 @@
     const { top, moreRows, moreSum } = topNWithOverflow(bySource, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Feed Volume — This Week</h1>
-        <div class="big-stat"><div class="bs-number">${weekEntries.length}</div><div class="bs-label">articles captured so far this week</div></div>
+        <h1 class="redact analytic-title">Feed Volume — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${weekEntries.length}</div><div class="bs-label">articles captured so far this week</div></div>
+        </div>
         ${top.length ? top.map(([src, n]) => `
           <div class="stat-bar-row">
             <div class="stat-bar-label">${escapeHtml(src)}</div>
@@ -2222,11 +2236,15 @@
 
   function analyticTop10Cves(weekCves) {
     const top = [...weekCves].sort((a, b) => ((b.cvss && b.cvss.score) || 0) - ((a.cvss && a.cvss.score) || 0)).slice(0, 10);
+    const topScore = top.length ? ((top[0].cvss && top[0].cvss.score) || 0) : 0;
     return {
-      key: "analytic", duration: 8000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Top 10 CVEs by Score — This Week</h1>
+        <h1 class="redact analytic-title">Top 10 CVEs by Score — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${topScore.toFixed(1)}</div><div class="bs-label">highest CVSS score this week</div></div>
+        </div>
         <div class="analytic-context-note">out of ${weekCves.length} Critical/High CVE${weekCves.length === 1 ? "" : "s"} this week</div>
         ${top.length ? top.map((c, i) => {
           const score = (c.cvss && c.cvss.score) || 0;
@@ -2249,11 +2267,13 @@
     const { top, moreRows, moreSum } = topNWithOverflow(byGroup, 8);
     const max = Math.max(1, ...top.map(([, n]) => n));
     return {
-      key: "analytic", duration: 7000,
+      key: "analytic", duration: 7500,
       html: `
         <div class="kind-tag analytic">Analytics</div>
-        <h1 class="redact">Most Active Ransomware Groups — This Week</h1>
-        <div class="big-stat"><div class="bs-number">${weekVictims.length}</div><div class="bs-label">victim postings so far this week</div></div>
+        <h1 class="redact analytic-title">Top Ransomware Groups — This Week</h1>
+        <div class="analytic-hero">
+          <div class="big-stat"><div class="bs-number">${weekVictims.length}</div><div class="bs-label">victim postings so far this week</div></div>
+        </div>
         ${top.length ? top.map(([g, n]) => `
           <div class="stat-bar-row">
             <div class="stat-bar-label">${escapeHtml(g)}</div>
@@ -2487,13 +2507,28 @@
   // Swaps the fixed footer slot between the generic navigation hint and any
   // slide-specific outbound link(s) — see the .slide-actions CSS comment
   // for why these live here instead of inline in the slide's own content.
+  // Actions normally navigate (href), but one (the podcast "Listen now"
+  // control, when the in-page player is enabled) needs to trigger JS
+  // instead of going anywhere — onClick renders a <button> in the same slot
+  // with the same look rather than an <a>. attrs carries through any extra
+  // data-* attributes a caller needs on the rendered element (podcast uses
+  // this to keep its existing play-state sync working against whichever
+  // button is currently in this slot).
   function updateSlideActions(slide) {
     const container = document.getElementById("slide-actions");
     const hint = document.getElementById("hint");
     const actions = (slide && slide.actions) || [];
-    container.innerHTML = actions.map(a => `
-      <a class="slide-action-btn${a.variant ? " " + a.variant : ""}" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(a.label)}</a>
-    `).join("");
+    container.innerHTML = actions.map((a, i) => {
+      const cls = `slide-action-btn${a.variant ? " " + a.variant : ""}`;
+      const attrs = a.attrs ? Object.entries(a.attrs).map(([k, v]) => ` ${k}="${escapeHtml(String(v))}"`).join("") : "";
+      if (a.onClick) return `<button type="button" class="${cls}" data-action-i="${i}"${attrs}>${escapeHtml(a.label)}</button>`;
+      return `<a class="${cls}" href="${escapeHtml(a.href)}"${a.external ? ' target="_blank" rel="noopener noreferrer"' : ""}${attrs}>${escapeHtml(a.label)}</a>`;
+    }).join("");
+    actions.forEach((a, i) => {
+      if (!a.onClick) return;
+      const btn = container.querySelector(`[data-action-i="${i}"]`);
+      if (btn) btn.addEventListener("click", (e) => { e.stopPropagation(); a.onClick(); });
+    });
     container.classList.toggle("visible", actions.length > 0);
     hint.classList.toggle("suppressed", actions.length > 0);
   }
@@ -2506,6 +2541,12 @@
     root.querySelector(`.slide[data-i="${i}"]`).classList.add("active");
     syncSegsForIndex(i);
     updateSlideActions(slides[i]);
+    // The action button is rebuilt fresh on every navigation (unlike the
+    // old inline button, which stayed in the DOM — and kept its synced
+    // "Playing" state — even while its slide was inactive), so landing on
+    // a podcast slide while that exact episode is already playing needs an
+    // explicit re-sync here rather than waiting for the next audio event.
+    if (typeof spotlightSyncListenButtons === "function") spotlightSyncListenButtons();
     interactionPaused = false;
     if (pendingNavTimer) { clearTimeout(pendingNavTimer); pendingNavTimer = null; }
     startTimer(slides[i].duration + speedOffset());
@@ -2978,10 +3019,13 @@
 
   function spotlightSyncListenButtons() {
     const bar = spEl("sp-bar");
+    // Only the current slide's action button (if any) ever exists in the
+    // DOM now — updateSlideActions rebuilds #slide-actions fresh on every
+    // goTo() — so this finds at most one match, not one per podcast slide.
     document.querySelectorAll('[data-role="listen"]').forEach(b => {
       const isThisOne = !bar.hidden && spState.episode && spState.episode.id === b.dataset.epId;
       b.classList.toggle("playing", isThisOne);
-      b.textContent = isThisOne ? "♪ Playing — see player below" : (b.dataset.label || b.textContent);
+      b.textContent = isThisOne ? "♪ Playing — see player below" : b.dataset.idleLabel;
     });
   }
 
