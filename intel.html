@@ -343,6 +343,24 @@
   .speed-btn.slow { color: var(--blue); border-color: var(--blue); }
   .speed-btn.slowest { color: var(--teal); border-color: var(--teal); }
 
+  /* Hides the pause button and the "tap right to advance..." hint text for
+     readers who find them intrusive — mirrors .speed-btn's look, positioned
+     bottom-left instead of bottom-right so the two flank the pause button
+     symmetrically. This toggle itself is exempt from the class it applies
+     (see the selector below) so there's always a way to bring the others
+     back. .slide-actions is deliberately untouched here — it keeps its own
+     fixed position regardless of whether the pause button is showing, so an
+     outbound link never moves depending on this toggle's state. */
+  .chrome-toggle {
+    position: absolute; left: 14px; bottom: max(18px, calc(env(safe-area-inset-bottom) + 6px)); z-index: 24;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--line); padding: 7px 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .chrome-toggle:hover { color: var(--text); border-color: var(--text-dim); }
+  #stage.chrome-hidden .pause-btn,
+  #stage.chrome-hidden .hint { display: none; }
+
   .empty-target {
     position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 14px; text-align: center; padding: 24px; z-index: 20;
@@ -372,6 +390,7 @@
     <div class="slide-actions no-nav control-btn" id="slide-actions"></div>
     <button class="pause-btn no-nav control-btn" id="pause-btn" aria-label="Pause auto-advance">‖</button>
     <button class="speed-btn no-nav control-btn" id="speed-btn" aria-label="Reading speed">◷ NORMAL</button>
+    <button class="chrome-toggle no-nav control-btn" id="chrome-toggle" aria-label="Toggle on-screen controls">⊙ HIDE UI</button>
   </div>
 
 <script>
@@ -829,7 +848,7 @@
   // through a style="" attribute rather than a bare stroke="" one, since CSS
   // custom properties in a plain presentation attribute aren't reliably
   // resolved across engines the way they are inside an actual style rule.
-  function donutChartSvg(segments, size = 118, thickness = 15) {
+  function donutChartSvg(segments, size = 190, thickness = 24) {
     const total = segments.reduce((s, x) => s + x.value, 0) || 1;
     const r = (size - thickness) / 2;
     const c = size / 2;
@@ -1099,6 +1118,27 @@
     if (slides[idx]) timerDuration = slides[idx].duration + speedOffset();
   }
 
+  // Hides the pause button and the tap-hint text for readers who find them
+  // intrusive — persisted the same way reading speed is, so the preference
+  // sticks across visits. Deliberately doesn't touch .slide-actions at all:
+  // that stays fixed in place regardless, so an outbound link never shifts
+  // position depending on whether the pause button happens to be showing.
+  const CHROME_KEY = "signal-intel-chrome-hidden";
+  let chromeHidden = localStorage.getItem(CHROME_KEY) === "1";
+
+  function updateChromeToggle() {
+    document.getElementById("stage").classList.toggle("chrome-hidden", chromeHidden);
+    const btn = document.getElementById("chrome-toggle");
+    btn.textContent = chromeHidden ? "⊙ SHOW UI" : "⊙ HIDE UI";
+    btn.setAttribute("aria-pressed", String(chromeHidden));
+  }
+
+  function toggleChrome() {
+    chromeHidden = !chromeHidden;
+    try { localStorage.setItem(CHROME_KEY, chromeHidden ? "1" : "0"); } catch {}
+    updateChromeToggle();
+  }
+
   function updateStatusUI() {
     const flag = document.getElementById("paused-flag");
     const btn = document.getElementById("pause-btn");
@@ -1208,6 +1248,8 @@
     document.getElementById("pause-btn").addEventListener("click", (e) => { e.stopPropagation(); toggleManualPause(); });
     document.getElementById("speed-btn").addEventListener("click", (e) => { e.stopPropagation(); cycleSpeed(); });
     updateSpeedButton();
+    document.getElementById("chrome-toggle").addEventListener("click", (e) => { e.stopPropagation(); toggleChrome(); });
+    updateChromeToggle();
 
     stage.addEventListener("click", (e) => {
       if (suppressNextClick) { e.preventDefault(); e.stopPropagation(); suppressNextClick = false; }
