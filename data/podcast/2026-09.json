@@ -2,6 +2,63 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10088",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10088",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10088.mp3",
+      "title": "SANS Stormcast Thursday, September 10th, 2026: Proxmox Scans; MSFT Defender, Gogole Chorme, and FortiPAM Vulns.",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 10th, 2026: Proxmox Scans; MSFT Defender, Gogole Chorme, and FortiPAM Vulns.",
+      "show_notes": [
+        {
+          "heading": "Scans for Proxmox Servers",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20for%20Proxmox%20Servers/33324"
+          ]
+        },
+        {
+          "heading": "Next Nightmare Eclipse Vulnerability",
+          "links": [
+            "https://github.com/MSNightmare/ShieldCrash/blob/main/README.md"
+          ]
+        },
+        {
+          "heading": "Google Chrome Updates",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html"
+          ]
+        },
+        {
+          "heading": "FortiPAM Vulnerability",
+          "links": [
+            "https://amibeingpwned.com/blog/fortinet-pam-vuln"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-10T10:10:11+00:00",
+      "duration_seconds": 340,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10088.mp3",
+      "audio_length_bytes": 4764940,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10088",
+      "categories": [
+        "fortipam",
+        "google",
+        "chrome",
+        "proxmox"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10088",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, September 10th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Purple\n Team Operations. In diaries today, I'm writing about some\n brute forcing that I'm seeing more and more against Proxmox\n servers. I think there are two reasons behind this increase.\n First of all, about a week ago, there was like a\n vulnerability being announced in an older version of Proxmox\n and SH sort of authentication bypass of vulnerability. Now,\n again, this was an older version, no longer supported,\n shouldn't really be a big deal, but probably still a lot\n of exposed servers out there. And the second one, I think,\n is that we have more and more users switching away from\n VMware, which was a traditional target when\n attackers were looking for vulnerable virtualization\n systems. Well, now they got Proxmox here to play around\n with. What I'm seeing is not exploitation of a specific\n vulnerability, but essentially just brute forcing. Now,\n Proxmox is pretty good, actually, when it comes to\n sort of different authentication options. You\n have multi-factor authentication, you have pass\n keys. So definitely there are ways to protect yourself\n against brute forcing if you must keep the admin interface\n exposed. Still, you probably don't want to do this. And as\n it has become traditional following Microsoft's Patch\n Tuesday, we of course get nightmare eclipses zero day\n Wednesday. The latest vulnerability here is the\n shield crash, and it's actually not a fundamentally\n new vulnerability. It's shield break, but it does expand this\n older vulnerability to bypass the fix that Microsoft has\n implemented for this. Again, it's always tricky to keep\n these anti-malware systems free from these privilege\n escalation vulnerabilities. And I'm sure we probably have\n a bunch more to come. In one article, I saw that this is\n like the 11th Saturday that Nightmare Eclipse has\n published now. I haven't counted myself, but sounds\n like about the right number. And Google released security\n updates for Google Chrome, fixing a total of 230 security\n fixes. There is one vulnerability that already has\n been exploited in the wild. It's a memory buffer overrun\n in V8, the JavaScript engine. Nothing that special for\n Google Chrome. That's the type of vulnerability that usually\n happens in V8. Now, you still need to break out of the\n sandbox, which typically is another exploit. They didn't\n indicate if the exploits seen in the wild actually are\n taking advantage of any kind of sandbox escape to\n compromise the system outside of the browser. Google also\n indicated they will be shifting their update cycle\n slightly. You'll now get weekly security updates and\n only every other week there will be actually a major\n version update or a feature update being released. And if\n you're using FortiPAM, that's FortiNET's Privilege Access\n Management, then well, you must update pretty quickly\n because there is an interesting vulnerability that\n allows a NetHacker to specify what proxy is being used by\n the Chrome extension. If an NetHacker does so, then all\n requests of the user are being sent to the attacker's proxy.\n There are kind of three pieces to it. First, the attacker\n needs to set up a web listener at a particular URL. That's\n pretty straightforward. Next, they need to send a request to\n the extension, which, well, has an authentication field.\n But if the authentication token, which should be a JWT\n token, is not the right format, so basically just a\n random string, then it's just accepted. So there is no\n failure being used here if you're actually not presenting\n a valid token at all. Finally, there is a pop-up where the\n user is then able to reject the request. But with some\n simple JavaScript, it's possible to auto-approve this\n pop-up. Now, in order to fix this vulnerability, you must\n update the extension, the browser extension, but you\n also must update your FortiPAM server component. So both must\n be updated in order to prevent this problem. Well, and that's\n it for today. There were a couple other things about Palo\n Alto had some updates and a couple others, but really just\n too many vulnerabilities these days. I hope I picked the\n right ones. Also note that on Monday we'll have a major\n Apple update. That's when they're going to release the\n 27 versions of their operating systems. Thanks and talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10086",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

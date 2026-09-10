@@ -1,6 +1,63 @@
 {
-  "fetched_at": "2026-09-10T07:45:50.019574+00:00",
+  "fetched_at": "2026-09-10T13:16:40.312953+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10088",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10088",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10088.mp3",
+      "title": "SANS Stormcast Thursday, September 10th, 2026: Proxmox Scans; MSFT Defender, Gogole Chorme, and FortiPAM Vulns.",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 10th, 2026: Proxmox Scans; MSFT Defender, Gogole Chorme, and FortiPAM Vulns.",
+      "show_notes": [
+        {
+          "heading": "Scans for Proxmox Servers",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20for%20Proxmox%20Servers/33324"
+          ]
+        },
+        {
+          "heading": "Next Nightmare Eclipse Vulnerability",
+          "links": [
+            "https://github.com/MSNightmare/ShieldCrash/blob/main/README.md"
+          ]
+        },
+        {
+          "heading": "Google Chrome Updates",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html"
+          ]
+        },
+        {
+          "heading": "FortiPAM Vulnerability",
+          "links": [
+            "https://amibeingpwned.com/blog/fortinet-pam-vuln"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-10T10:10:11+00:00",
+      "duration_seconds": 340,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10088.mp3",
+      "audio_length_bytes": 4764940,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10088",
+      "categories": [
+        "fortipam",
+        "google",
+        "chrome",
+        "proxmox"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10088",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, September 10th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Purple\n Team Operations. In diaries today, I'm writing about some\n brute forcing that I'm seeing more and more against Proxmox\n servers. I think there are two reasons behind this increase.\n First of all, about a week ago, there was like a\n vulnerability being announced in an older version of Proxmox\n and SH sort of authentication bypass of vulnerability. Now,\n again, this was an older version, no longer supported,\n shouldn't really be a big deal, but probably still a lot\n of exposed servers out there. And the second one, I think,\n is that we have more and more users switching away from\n VMware, which was a traditional target when\n attackers were looking for vulnerable virtualization\n systems. Well, now they got Proxmox here to play around\n with. What I'm seeing is not exploitation of a specific\n vulnerability, but essentially just brute forcing. Now,\n Proxmox is pretty good, actually, when it comes to\n sort of different authentication options. You\n have multi-factor authentication, you have pass\n keys. So definitely there are ways to protect yourself\n against brute forcing if you must keep the admin interface\n exposed. Still, you probably don't want to do this. And as\n it has become traditional following Microsoft's Patch\n Tuesday, we of course get nightmare eclipses zero day\n Wednesday. The latest vulnerability here is the\n shield crash, and it's actually not a fundamentally\n new vulnerability. It's shield break, but it does expand this\n older vulnerability to bypass the fix that Microsoft has\n implemented for this. Again, it's always tricky to keep\n these anti-malware systems free from these privilege\n escalation vulnerabilities. And I'm sure we probably have\n a bunch more to come. In one article, I saw that this is\n like the 11th Saturday that Nightmare Eclipse has\n published now. I haven't counted myself, but sounds\n like about the right number. And Google released security\n updates for Google Chrome, fixing a total of 230 security\n fixes. There is one vulnerability that already has\n been exploited in the wild. It's a memory buffer overrun\n in V8, the JavaScript engine. Nothing that special for\n Google Chrome. That's the type of vulnerability that usually\n happens in V8. Now, you still need to break out of the\n sandbox, which typically is another exploit. They didn't\n indicate if the exploits seen in the wild actually are\n taking advantage of any kind of sandbox escape to\n compromise the system outside of the browser. Google also\n indicated they will be shifting their update cycle\n slightly. You'll now get weekly security updates and\n only every other week there will be actually a major\n version update or a feature update being released. And if\n you're using FortiPAM, that's FortiNET's Privilege Access\n Management, then well, you must update pretty quickly\n because there is an interesting vulnerability that\n allows a NetHacker to specify what proxy is being used by\n the Chrome extension. If an NetHacker does so, then all\n requests of the user are being sent to the attacker's proxy.\n There are kind of three pieces to it. First, the attacker\n needs to set up a web listener at a particular URL. That's\n pretty straightforward. Next, they need to send a request to\n the extension, which, well, has an authentication field.\n But if the authentication token, which should be a JWT\n token, is not the right format, so basically just a\n random string, then it's just accepted. So there is no\n failure being used here if you're actually not presenting\n a valid token at all. Finally, there is a pop-up where the\n user is then able to reject the request. But with some\n simple JavaScript, it's possible to auto-approve this\n pop-up. Now, in order to fix this vulnerability, you must\n update the extension, the browser extension, but you\n also must update your FortiPAM server component. So both must\n be updated in order to prevent this problem. Well, and that's\n it for today. There were a couple other things about Palo\n Alto had some updates and a couple others, but really just\n too many vulnerabilities these days. I hope I picked the\n right ones. Also note that on Monday we'll have a major\n Apple update. That's when they're going to release the\n 27 versions of their operating systems. Thanks and talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10086",
       "show": "stormcast",
@@ -3403,67 +3460,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9980",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday June 22nd, 2026 edition\n of the SANS Internet Stormcenter Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n cybersecurity engineering. Well, Xavier came across an\n interesting phishing email that used IPv4 mapped IPv6\n addresses. These addresses are really more an operating\n system construct. So you will not see these addresses on the\n network. That's something I often see people describe, but\n on the network, you would see an IPv4 packet in this case.\n The main reason for these IPv6 addresses and basically start\n with all zeros, then FFFF and the last 32 bits are the IPv4\n address that's sort of embedded in this address. The\n real reason for these addresses is really more than\n that. You know, when you're writing networking software,\n you can really just write IPv6 software and then it will\n automatically be able to connect with IPv4 hosts. But\n the operating system then will basically create an IPv4\n packet, not an IPv6 packet when connecting to such an\n address. So the main purpose of these addresses is\n obfuscation from scanning tools. Your antivirus, anti\n -malware, anti-spam will not necessarily see an IPv4\n address here. They think they sort of have an IPv6 address.\n And then of course, they won't find it on any block list. So\n at least that's what I think is sort of happening here.\n That's why attackers sometimes use these addresses. Now in\n the host header, when you're copy pasting this address into\n a browser, you will still see the IPv6 address here. But\n it's really not just a string that used as a host name,\n which happened to be that address. So from a filtering\n point of view, I think you can just essentially consider all\n these IPv4 mapped IPv6 addresses malicious and just\n block emails that contain these strings. And F5 fixed\n two critical vulnerabilities in NGINX, the web server and\n often also used as an HTTP proxy. The more important one\n of these two, or should I say more critical one, is\n affecting Quick or HTTP 3. It's a use-after free, so a\n memory management, vulnerability that is\n exploitable for remote code execution if an attacker can\n make it past address space, layout, randomization or ASLR.\n So definitely get your NGINX servers patched. The second\n vulnerability does have quite a few requirements as to\n specific configurations that you need to run. It's also a\n buffer overflow, so also something that you should\n address. But I think exploitation may be a little\n more likely for the first one in particular if you don't use\n ASLR on your system, like if the binary wasn't compiled for\n it, which does happen sort of in the IoT world, not so much\n sort of if you're running a major Linux distribution. And\n talking about HTTP and proxies, probably one of the\n more popular ways of implementing a proxy, in\n particular if you're sticking with open source software, is\n SQUID. And while we do have a vulnerability in SQUID, that's\n a little bit a reminder of Heartbleed, in that it leaks\n parts of other users' requests. The way this would\n be exploited is that an attacker is able to send\n requests through the proxy and is able in the reply to\n receive data submitted by other users. So a victim would\n log in to a website. Now the attacker would then connect\n through that same SQUID proxy to an FTP server. And due to a\n parsing error in directory listings via FTP and SQUID,\n yes SQUID also does deal with FTP, the attacker would then\n be able to see some of the content submitted via other\n users via HTTP. So interesting vulnerability, probably a\n quick fix here is not to allow FTP and that hopefully is\n nothing that you're needing too much, but there is also a\n patch available for this vulnerability. And it was just\n last week that I referred to a publication that discovered\n that AMD turned off memory encryption on its consumer\n -grade processors, in particular the Ryzen 9000 line\n of CPUs, which is sort of their current consumer CPU.\n Well, AMD, after being called out for it, never really\n explained why it was removed, but stated now that in a BIOS\n update in July, the feature should be re-enabled.\n Remember, this was one of those odd issues where you\n could enable it in the BIOS, but it was actually not\n enabled in the CPU due to a firmware change in the CPU. So\n I guess they're now trying to undo this change and hopefully\n come July, your memory encryption will work again.\n Well, and that's it for today. So thanks again for listening.\n And a quick note about my schedule this week. There will\n only be a podcast for Monday, Tuesday, Wednesday. I'll be\n traveling at the end of the week. So there will be no\n podcast on Thursday and Friday. Thanks and talk to you\n again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9978",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9978",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9978.mp3",
-      "title": "SANS Stormcast Thursday, June 18th, 2026: QUIC Challenge; Android 17; Oracle CSPU; JetBrains Plugins;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, June 18th, 2026: QUIC Challenge; Android 17; Oracle CSPU; JetBrains Plugins;",
-      "show_notes": [
-        {
-          "heading": "The browser blind spot: Why your security tool may not be blocking what you think it is [Guest Diary]",
-          "links": [
-            "https://isc.sans.edu/diary/The%20browser%20blind%20spot%3A%20Why%20your%20security%20tool%20may%20not%20be%20blocking%20what%20you%20think%20it%20is%20%5BGuest%20Diary%5D/33084"
-          ]
-        },
-        {
-          "heading": "Android 17 Security Patches",
-          "links": [
-            "https://source.android.com/docs/security/bulletin/android-17"
-          ]
-        },
-        {
-          "heading": "Oracle Critical Security Patch Update Advisory - June 2026",
-          "links": [
-            "https://www.oracle.com/security-alerts/cspujun2026.html"
-          ]
-        },
-        {
-          "heading": "Multiple JetBrains IDE plugins caught stealing AI keys",
-          "links": [
-            "https://www.aikido.dev/blog/multiple-jetbrains-ide-plugins-caught-stealing-ai-keys"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-06-18T02:00:02+00:00",
-      "duration_seconds": 384,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9978.mp3",
-      "audio_length_bytes": 5377744,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9978",
-      "categories": [
-        "jetbrains",
-        "ide",
-        "oracle",
-        "patches",
-        "android",
-        "quic",
-        "http3",
-        "http"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9978",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, June 18, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. If you didn't know it, as part of the\n Bachelor's Program, you're actually going to do an\n internship as one of the options with the Internet\n Storm Center, looking at Honeypot alerts and\n essentially figuring out sort of what's going on there out\n in the internet. Today we do have a guest post by Varun\n Mardula, who writes about QUIC, and better actually HTTP\n 3 in this particular case. QUIC is one of those weird\n protocols. Probably should have been a transport layer\n protocol, like TCP and UDP, but well, that wasn't really\n feasible. So Google decided to actually go with sort of a new\n protocol layer over UDP. Now this is a protocol that has\n become really popular recently. I believe the latest\n numbers I've seen is something like 30% of web traffic is\n using QUIC these days. It's supported by all the major\n browsers and many web servers. The problem, of course, with a\n very new and different protocol like this in\n particular since it's encrypted and there is no sort\n of clear text version of QUIC is that your good old\n inspection tools don't really work well. All HTTPS, TLS\n inspection tools typically rely on setting up a proxy and\n that's sort of what that diary is about that well once you're\n using QUIC these proxies become pretty much blind for\n what's actually going on on your network. So really one of\n the few options that you have to deal with this is to block\n any UDP packets at least outbound to port 443. Now I\n want to do a couple additions here to this particular diary.\n First of all it's not just 443 that's just default port for\n HTTP 3. So that's when you're running HTTP over QUIC there\n are other things they can do over QUIC like SMB for example\n in recent versions of Windows there's also DNS over QUIC\n which basically is just like DNS over HTTPS but now using\n that QUIC layer any port is possible just like you can use\n HTTPS over any port. So you really have to be much more\n careful about outbound UDP traffic not just port 443.\n Another sort of interesting detection technique here is\n your browser learns about a particular website's QUIC\n capabilities via an HTTPS DNS record. So filtering those\n records can also help blocking QUIC or just monitoring those\n records to see you know what websites are actually\n advertising that they are supporting QUIC. And Google\n today released Android 17. Now this update also includes\n fixes for about 21 if I counted them correctly\n vulnerabilities. Many of them high nothing critical. Now\n what's interesting here is that this brings Android 17 up\n to the July 1st patch level. So Android 17 currently is\n about two weeks ahead of the other Android versions as far\n as security patches go. It's not clear how many of these\n vulnerabilities affect older versions of Android but I\n guess we'll see early July which ones they'll then patch\n for some of the earlier versions of Android. And\n Oracle published another one of its monthly critical\n security patch updates. This one fixes 245 vulnerabilities.\n That's sort of close to what we usually see in the\n quarterly critical patch updates. So first critical\n security patch update we had last month in May going\n forward. It'll also always be at the third Tuesday of the\n month. So kind of to be a little bit off from\n Microsoft's patches so not to have too much overlap here.\n But again the nomenclature that Oracle adopted now is\n critical patch update. It's the quarterly update that\n patches everything and then critical security patch\n update. These are the monthly updates and those as they\n described as more focused. Now here for example we had a lot\n of vulnerabilities in the Fusion middleware. That's\n always one of those highly targeted a piece of software.\n Definitely if you're running this pay attention and apply\n these patches. I've talked a lot about not just supply\n chain issues but also about malicious plugins for Visual\n Studio Code. Well Visual Studio Code is not the only\n IDE being targeted by attackers. JetBrains also has\n similar issues. Aikido just discovered a number of\n malicious plugins that were specializing in stealing AI\n keys. Now these plugins that sort of follows the standard\n playbook here are modified legitimate plugins. So the\n user thinks they're downloading a plugin that will\n actually help them interact with various AI tools. As part\n of the setup the user has to enter their API key for the\n particular AI tool they're going to use. Well and as soon\n as they hit apply there's a function being called that's\n sort of linked to the apply button that will take the API\n key and send it off to the attacker. Interestingly that\n it's been sent off just an IP address so there's no hostname\n as always with it. It's also sent in the clear over HTTP\n but apparently still works. Well and that's it for today\n thanks again for listening. Remember no podcast on Friday\n because of the Juneteenth holiday so talk to you again\n on Monday. Bye.",
       "transcript_checked": true
     }
   ]
