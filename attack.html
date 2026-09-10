@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE SIGNAL — ATT&amp;CK Explorer</title>
+<script>
+  // Feature gate: redirects to index.html if this page is disabled via
+  // config/site.json (a missing file or missing key both default to
+  // enabled — see config/site.json's own _notes for the full design).
+  (async () => {
+    const PAGE_KEY = "attack";
+    try {
+      const res = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) return;
+      const cfg = await res.json();
+      const exp = cfg && cfg.subscription && cfg.subscription.exp;
+      if (typeof exp === "number" && Date.now() / 1000 > exp) return; // expired config == no config
+      const v = cfg && cfg.features && cfg.features[PAGE_KEY];
+      const enabled = v == null ? true : (typeof v === "boolean" ? v : v.enabled !== false);
+      if (!enabled) location.replace(`index.html?locked=${PAGE_KEY}`);
+    } catch {}
+  })();
+</script>
 <style>
   :root {
     --ink: #0a0e14;

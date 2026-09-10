@@ -97,7 +97,26 @@
     padding: 92px 22px 64px; overflow-y: auto;
   }
   .slide.active { display: block; animation: slideIn 0.35s ease; }
-  .slide-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: flex-start; }
+  .slide-inner { min-height: 100%; position: relative; display: flex; flex-direction: column; justify-content: flex-start; }
+
+  /* A feature-gated item's locked teaser state (see config/site.json and
+     lockSlide()) — translucent, not opaque: the point is to signal "there's
+     something here" rather than hide it outright, while still being
+     unreadable and (since it sits above everything else in the slide,
+     including any inline links) unclickable. Deliberately NOT .no-nav —
+     tapping a locked slide still advances the carousel like any other
+     non-interactive content would, rather than pausing as if it were a
+     real control. */
+  .feature-lock-overlay {
+    position: absolute; inset: 0; z-index: 5;
+    background: rgba(5,7,10,0.84);
+    display: flex; align-items: center; justify-content: center; text-align: center; padding: 32px;
+  }
+  .feature-lock-message {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--amber); border: 1px solid var(--amber); padding: 14px 18px; max-width: 34ch; line-height: 1.6;
+    background: rgba(16,21,29,0.9);
+  }
   @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* redaction-reveal motif for headline text */
@@ -584,40 +603,127 @@
     return dateObj.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
   }
 
+  // ---------- feature gating (config/site.json) ----------
+  // See config/site.json's own _notes for the full design: a missing file,
+  // a missing key, or an expired subscription all default to "enabled".
+  // Disabled features aren't hidden outright here — each still shows a
+  // single locked/watermarked teaser (see lockSlide), so a reader can see
+  // what they're missing rather than the category just silently vanishing.
+
+  async function loadFeatureConfig() {
+    try {
+      const res = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) return null;
+      const cfg = await res.json();
+      const exp = cfg && cfg.subscription && cfg.subscription.exp;
+      if (typeof exp === "number" && Date.now() / 1000 > exp) {
+        console.warn("cti-feed config: subscription expired, falling back to defaults");
+        return null;
+      }
+      return cfg;
+    } catch { return null; }
+  }
+  function featureFlag(cfg, key) {
+    const v = cfg && cfg.features && cfg.features[key];
+    if (v == null) return true;
+    if (typeof v === "boolean") return v;
+    if (typeof v === "object") return v.enabled !== false;
+    return true;
+  }
+
+  const FEATURE_LABELS = {
+    feed: "Threat Feed", cve: "CVE Advisory", breaches: "Breach", attack: "APT Group",
+    leaktracker: "Ransomware Victim", podcast: "Podcast",
+  };
+
+  // Wraps an already-built slide as a locked teaser: strips its outbound
+  // action(s) and lays a translucent watermark over its content instead of
+  // hiding it outright — you can see there's something there, just not
+  // read it (the overlay sits above everything in the slide, including any
+  // inline links, so nothing underneath stays clickable either).
+  function lockSlide(slide, featureKey) {
+    const label = FEATURE_LABELS[featureKey] || featureKey;
+    return {
+      ...slide,
+      actions: [],
+      locked: true,
+      html: slide.html + `
+        <div class="feature-lock-overlay">
+          <div class="feature-lock-message">${escapeHtml(label)} Feature Classified: Subscribe for Access</div>
+        </div>
+      `,
+    };
+  }
+
   // Feed items and CVEs used to render as two separate blocks — every
   // selected feed item, then every selected CVE. Merging both into one list
   // sorted by actual publish date (most recent first, so today's items from
   // either source lead) interleaves them by recency instead, and each
   // slide's dayLabel ("Today" or its own date) makes that ordering legible
   // as you page through rather than just an invisible sort order.
-  function mergeFeedAndCveByDate(feedEntries, cveList, cveCap) {
+  function mergeFeedAndCveByDate(feedEntries, cveList, cveCap, feedEnabled, cveEnabled) {
+    const feedPool = feedEnabled ? feedEntries : feedEntries.slice(0, 1);
     const cveSorted = [...cveList]
       .sort((a, b) => (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0))
-      .slice(0, cveCap);
+      .slice(0, cveEnabled ? cveCap : 1);
     const items = [
-      ...feedEntries.map(e => ({ date: feedEntryDate(e), slide: feedItemSlide(e, dayLabel(feedEntryDate(e))) })),
-      ...cveSorted.map(c => ({ date: cveDate(c), slide: cveDetailSlide(c, dayLabel(cveDate(c))) })),
+      ...feedPool.map(e => {
+        const d = feedEntryDate(e);
+        let slide = feedItemSlide(e, dayLabel(d));
+        if (!feedEnabled) slide = lockSlide(slide, "feed");
+        return { date: d, slide };
+      }),
+      ...cveSorted.map(c => {
+        const d = cveDate(c);
+        let slide = cveDetailSlide(c, dayLabel(d));
+        if (!cveEnabled) slide = lockSlide(slide, "cve");
+        return { date: d, slide };
+      }),
     ];
     items.sort((a, b) => (b.date ? b.date.getTime() : 0) - (a.date ? a.date.getTime() : 0));
     return items.map(i => i.slide);
   }
 
-  function buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker) {
-    const podcastSlides = latestEpisodePerShow((podcast && podcast.episodes) || []).map(podcastDigestSlide);
-    const feedEntries = selectRecentFeedEntries((threats && threats.entries) || []);
-    const feedAndCveSlides = mergeFeedAndCveByDate(feedEntries, (cves && cves.cves) || [], 10);
-    const breachSlides = ((breaches && breaches.breaches) || []).slice(0, 3).map(breachTeaserSlide);
-    const victimSlides = ((leaktracker && leaktracker.victims) || []).slice(0, 5).map(victimTeaserSlide);
+  function buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker, cfg) {
+    const feedOn = featureFlag(cfg, "feed"), cveOn = featureFlag(cfg, "cve");
+    const breachesOn = featureFlag(cfg, "breaches"), attackOn = featureFlag(cfg, "attack");
+    const leaktrackerOn = featureFlag(cfg, "leaktracker"), podcastOn = featureFlag(cfg, "podcast");
 
-    let groupSlides = [];
+    const podcastPool = latestEpisodePerShow((podcast && podcast.episodes) || []);
+    const podcastSlides = (podcastOn ? podcastPool : podcastPool.slice(0, 1)).map(ep => {
+      const slide = podcastDigestSlide(ep);
+      return podcastOn ? slide : lockSlide(slide, "podcast");
+    });
+
+    const feedEntries = selectRecentFeedEntries((threats && threats.entries) || []);
+    const feedAndCveSlides = mergeFeedAndCveByDate(feedEntries, (cves && cves.cves) || [], 10, feedOn, cveOn);
+
+    const breachPool = (breaches && breaches.breaches) || [];
+    const breachSlides = (breachesOn ? breachPool.slice(0, 3) : breachPool.slice(0, 1)).map(b => {
+      const slide = breachTeaserSlide(b);
+      return breachesOn ? slide : lockSlide(slide, "breaches");
+    });
+
+    const victimPool = (leaktracker && leaktracker.victims) || [];
+    const victimSlides = (leaktrackerOn ? victimPool.slice(0, 5) : victimPool.slice(0, 1)).map(v => {
+      const slide = victimTeaserSlide(v);
+      return leaktrackerOn ? slide : lockSlide(slide, "leaktracker");
+    });
+
+    let groupPool = [];
     if (attackData && Array.isArray(attackData.groups) && attackData.groups.length) {
       const pool = [...attackData.groups];
       const picked = [];
-      while (picked.length < DIGEST_GROUP_COUNT && pool.length) {
+      const wantCount = attackOn ? DIGEST_GROUP_COUNT : 1;
+      while (picked.length < wantCount && pool.length) {
         picked.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
       }
-      groupSlides = picked.map(groupTeaserSlide);
+      groupPool = picked;
     }
+    const groupSlides = groupPool.map(g => {
+      const slide = groupTeaserSlide(g);
+      return attackOn ? slide : lockSlide(slide, "attack");
+    });
 
     return [...podcastSlides, ...feedAndCveSlides, ...breachSlides, ...groupSlides, ...victimSlides];
   }
@@ -837,16 +943,16 @@
   }
 
   async function init() {
-    const [{ attackData, threats, cves, leaktracker, breaches, podcast }, ads] = await Promise.all([
-      loadDigestData(), loadAds(),
+    const [{ attackData, threats, cves, leaktracker, breaches, podcast }, ads, cfg] = await Promise.all([
+      loadDigestData(), loadAds(), loadFeatureConfig(),
     ]);
 
-    const contentSlides = buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker);
+    const contentSlides = buildDigestSlides(threats, cves, attackData, breaches, podcast, leaktracker, cfg);
     if (contentSlides.length === 0) {
       showEmptyTarget("No feed, CVE, breach, or leak-tracker data available yet — have the fetch scripts been run?");
       return;
     }
-    slides = interleaveAds(contentSlides, ads);
+    slides = featureFlag(cfg, "ads") ? interleaveAds(contentSlides, ads) : contentSlides;
 
     renderChrome();
     renderSlides();

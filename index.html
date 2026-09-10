@@ -158,6 +158,30 @@
     .explorer-cta .cta-desc { display: none; }
   }
 
+  /* A feature-gated CTA (see config/site.json): visually locked and inert —
+     background desaturated, href removed by JS so it's not just visually
+     disabled while still clickable, a lock glyph replaces the arrow. */
+  .explorer-cta.locked {
+    background: var(--ink-raised); color: var(--text-dim); border-color: var(--line);
+    cursor: not-allowed; filter: none;
+  }
+  .explorer-cta.locked:hover, .explorer-cta.locked:focus-visible { filter: none; }
+  .explorer-cta.locked .cta-arrow::before { content: "🔒"; font-size: 15px; }
+  .explorer-cta.locked .cta-arrow { visibility: visible; }
+
+  /* "Subscribe for Access" toast — shown when a locked CTA is clicked, or
+     when arriving here via a redirect from a gated page/URL (?locked=...). */
+  .locked-toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(0);
+    z-index: 100; max-width: min(90vw, 420px);
+    background: var(--ink-raised); border: 1px solid var(--amber); color: var(--text);
+    padding: 12px 16px; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.02em;
+    text-align: center; box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .locked-toast.visible { opacity: 1; transform: translateX(-50%) translateY(-6px); pointer-events: auto; }
+  .locked-toast b { color: var(--amber); }
+
   .pulse-dot {
     width: 7px;
     height: 7px;
@@ -673,6 +697,73 @@
       </span>
       <span class="cta-arrow">›</span>
     </a>
+
+    <div class="locked-toast" id="locked-toast"></div>
+    <script>
+      // Feature gating for the home CTAs — see config/site.json's own
+      // _notes for the full design. A gated button is stripped of its href
+      // and visually locked rather than just hidden, and clicking it (or
+      // arriving here via a redirect from a gated page/URL) shows a
+      // "Subscribe for Access" toast instead of navigating anywhere.
+      (async () => {
+        const PAGE_LABELS = {
+          feed: "Threat Feed", cve: "CVE Advisory", breaches: "Breach", attack: "APT Group",
+          leaktracker: "Ransomware Victim", negotiation: "Ransomware Group", podcast: "Podcast",
+          research: "Research", reports: "Reports", dashboard: "Dashboard", spotlight: "Spotlight",
+        };
+        const PAGE_FEATURE_MAP = {
+          "spotlight.html": "spotlight", "attack.html": "attack", "cve.html": "cve",
+          "leaktracker.html": "leaktracker", "breaches.html": "breaches", "podcast.html": "podcast",
+          "research.html": "research", "reports.html": "reports", "dashboard.html": "dashboard",
+        };
+        let toastTimer = null;
+        function showLockedMessage(key) {
+          const toast = document.getElementById("locked-toast");
+          const label = PAGE_LABELS[key] || key;
+          toast.innerHTML = `<b>${label}</b> Feature Classified: Subscribe for Access`;
+          toast.classList.add("visible");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.remove("visible"), 4000);
+        }
+
+        let cfg = null;
+        try {
+          const res = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
+          if (res.ok) {
+            cfg = await res.json();
+            const exp = cfg && cfg.subscription && cfg.subscription.exp;
+            if (typeof exp === "number" && Date.now() / 1000 > exp) cfg = null; // expired == no config
+          }
+        } catch {}
+        const enabled = (key) => {
+          const v = cfg && cfg.features && cfg.features[key];
+          return v == null ? true : (typeof v === "boolean" ? v : v.enabled !== false);
+        };
+
+        document.querySelectorAll(".explorer-cta[href]").forEach((a) => {
+          const key = PAGE_FEATURE_MAP[a.getAttribute("href")];
+          if (!key || enabled(key)) return;
+          a.classList.add("locked");
+          a.removeAttribute("href");
+          a.setAttribute("role", "button");
+          a.setAttribute("tabindex", "0");
+          a.setAttribute("aria-disabled", "true");
+          a.addEventListener("click", (e) => { e.preventDefault(); showLockedMessage(key); });
+          a.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showLockedMessage(key); }
+          });
+        });
+
+        // Arrived here via a redirect from a gated page/URL elsewhere on the
+        // site (see the per-page feature-gate scripts) — show the same
+        // message, then clean the query string off the URL.
+        const lockedParam = new URLSearchParams(location.search).get("locked");
+        if (lockedParam) {
+          showLockedMessage(lockedParam);
+          history.replaceState(null, "", location.pathname);
+        }
+      })();
+    </script>
 
     <div class="section-title">News Feed</div>
 
