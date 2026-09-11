@@ -1,6 +1,70 @@
 {
-  "fetched_at": "2026-09-10T13:16:40.312953+00:00",
+  "fetched_at": "2026-09-11T07:40:38.805101+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10090",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10090",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10090.mp3",
+      "title": "SANS Stormcast Friday, September 11th, 2026: Redtail Analsys (@sans_edu); Checkpoint VPN Patch; Netscaler and Sonicwall Attacks",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 11th, 2026: Redtail Analsys (@sans_edu); Checkpoint VPN Patch; Netscaler and Sonicwall Attacks",
+      "show_notes": [
+        {
+          "heading": "Redtail Payload Analysis",
+          "links": [
+            "https://isc.sans.edu/diary/Redtail%20Payload%20Analysis%20%5BGuest%20Diary%5D/33326"
+          ]
+        },
+        {
+          "heading": "Checkpoint Critical Security Advisory: VPN Vulnerabilities CVE-2026-85102 and CVE-2026-8510",
+          "links": [
+            "https://community.checkpoint.com/t5/General-Topics/Action-Required-Critical-Security-Advisory-VPN-Vulnerabilities/td-p/281995"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Firewall Management Center Software Authentication Bypass Vulnerability",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2"
+          ]
+        },
+        {
+          "heading": "Netscaler ADC Exploit",
+          "links": [
+            "https://x.com/ethicalhack3r/status/2095480651478663393"
+          ]
+        },
+        {
+          "heading": "Sonicwall SMA1000 Attack",
+          "links": [
+            "https://hunt.io/blog/sonicwall-sma1000-uk-council-attack"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-11T02:00:02+00:00",
+      "duration_seconds": 352,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10090.mp3",
+      "audio_length_bytes": 4939712,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10090",
+      "categories": [
+        "sonicwall",
+        "netscaler",
+        "csico",
+        "checkpoint",
+        "redtail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10090",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 11th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. In diaries today we have one of our undercredit\n interns write about a copy of the Red Tail Malware that\n Aaron Ng here did capture in his honeypot. Now the details\n are really very nice in this particular analysis, but what\n I want to point out is the way the analysis was done. This\n sample was analyzed using a runtime analysis, which tends\n to be the simpler form and faster form often to figure\n out what a particular piece of malware does. You essentially\n just run it. Of course, running malware comes with\n some complications. You don't want the malware to go out as\n some of the samples often do and infect other systems.\n Also, you want to be able to capture all of the activity\n from this malware and experiment with different\n runtime options and such. And that's a part of what Aaron\n did here. But Aaron used an interesting tool that I always\n highly recommend when you're trying to do this kind of\n analysis. And that's iNetSim. iNetSim is essentially\n software that sort of simulates a small internet for\n you. So you have like no various services that you can\n enable there that will then mimic the real services that\n the malware may be connecting to things like DNS servers and\n such to basically give the malware a little bit more\n realistic view like it would be connected to the actual\n internet. And of course, with the advantage to still have\n the isolation and not having to maintain yourself all these\n different services that you may need to spin up otherwise\n if you want to get sort of the same result. So interesting\n tool if you are doing runtime analysis of malware, iNetSim\n certainly something that I would recommend. And a couple\n other solutions too like this, but I find this really sort of\n simple and it's one of those solutions that does really\n most of what you need and usually suffices over some\n very much more complex solutions. And Checkpoint\n yesterday released a critical security advisory and a patch\n fixing two vulnerabilities. These vulnerabilities do allow\n unauthenticated remote code execution, at least the first\n one. The second one, also a heap-based buffer overflow,\n doesn't say whether or not it needs authentication to\n execute any code here. Either way, definitely something that\n you do want to patch in particular for the first one,\n the unauthenticated remote code execution vulnerability.\n Now, Checkpoint also points out that if you have the\n Checkpoint Live patch feature enabled, then the patch should\n have already been applied to your system. They rolled it\n out September 9th. But after spending a lot of time this\n week on talking about vulnerabilities, let's talk\n now a little bit about vulnerabilities that are\n currently being exploited. Cisco just updated the\n advisory they published in March for its Secure Firewall\n Management Center. This vulnerability is now being\n exploited and Cisco does offer some indicators of compromise\n that you can use to check if your instance was affected by\n this particular exploit. And Ryan Dewhurst with Pravidian\n did note on X that they're observing exploitation of\n Netscaler ADC vulnerability. This vulnerability was\n originally patched about a month ago, a little bit less\n than a month ago. Proof of concept exploit was made\n public a couple days ago. And that's, as Ryan here points\n out, also is always sort of a basic sign. Once you see a\n public proof of concept, well, yes, at that point, the\n vulnerability is widely being exploited. And you always\n should assume compromise, of course, at this point. And\n finally, SonicWall SMA 1000. We had recently an already\n exploited vulnerability being patched there. Hunt.io now\n published a real nice and detailed walkthrough of an\n attack that they have seen in the wild against local\n government in the UK. These walkthroughs are always really\n helpful because they really show what attackers are doing\n with these vulnerabilities, how to identify this\n particular attacker. But then also similar attacks that\n exploit the same vulnerability, because here\n you can see what particular evidence, for example, may be\n left behind on a compromised system. That's always very\n helpful if you see the full walkthrough in some vendor\n bulletins like the Cisco one I mentioned earlier. They're\n very specific indicators of compromise, which, of course,\n may change from attacker to attacker. And it's not always\n that obvious what you can use here as a good indicator of\n compromise beyond sort of that simple file name, hash or IP\n address that may have been published. Well, and this is\n it for today. So thanks for listening. Thanks for liking.\n Thanks for subscribing. Remember, any future teachers\n of myself will usually be listed in the show notes. So\n take a look at that. And that's it for today, for this\n week. Talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10088",
       "show": "stormcast",
@@ -3400,66 +3464,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9982",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, June 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n cybersecurity leadership. Web shells. Well, that's a topic\n that keeps coming up and Xavier found a new one on\n GitHub. These web shells are popping up ever so often. This\n one claims to be hard to detect or undetectable. What\n this usually means, it's just too new for signatures to\n actually have been added to standard endpoint protection\n software that's often used to detect web shells. A better\n way often to detect web shells is just to look for\n unauthorized changes than just looking for signatures. Now,\n the way they are typically being deployed is that you\n have some kind of unauthorized file upload vulnerability,\n maybe a remote code execution vulnerability on a web server.\n And then very typical, the first thing that an attacker\n is doing is using that vulnerability to gain\n persistent access by uploading a web shell. So usually a\n little script in whatever language you're using on your\n server. This one, I think, is written in PHP, but they exist\n for pretty much any sort of web application language out\n there. And as a result, well, yeah, better pay attention to\n these web shells. No matter, you know, if the attacker uses\n AI or not, detecting web shells is probably going to\n help you either way. And GitHub is making some\n improvements to the security of its workflows in order to\n prevent some of the more common supply chain attacks.\n The change they made this week is a change to the pull\n request target. So when someone submits a pull request\n with this particular pull request target, you have the\n option to initiate workflows. And these workflows do have\n access to secrets. It's associated with the\n repository. Since essentially anybody can initiate a pull\n request, well, they constraint now when these workflows will\n run. And in particular, if the pull request came from a fork,\n which, well, would basically indicate that someone forked\n your repository, which is possible for any public\n repository, and then use that to submit a pull request,\n which is not an uncommon issue. That's how you submit\n pull requests. But the problem has been that pull request\n target would automatically then initiate actions in these\n workflows. And as a result, well, that led to some of\n these compromises if you didn't secure that pull\n request target accordingly. Now, you can opt out of this\n new behavior. But as GitHub points out in its manuals and\n in the blog post, they posted about this, then you it's\n basically up to you to make sure that the GitHub action is\n secured. And they give you some hints as to how to\n accomplish this. And one of the ongoing issues if you're\n running a website is that this point, a majority of the\n traffic you're seeing is likely created by bots, either\n malicious ones that are scanning your site for\n vulnerabilities, or well, AI agents, which may or may not\n be considered malicious depending on their use case,\n and really just no search engines and others that are\n just spidering your website using automated scripts. While\n sometimes you may want to allow this, quite often, it's\n really more annoying, it can cause a bit of service issues,\n our website often is sort of the victim of that. And the\n there is always a challenge, how do we figure out if a user\n is actually a person and the common solution here is\n CAPTCHAs. However, users don't like CAPTCHAs. CAPTCHAs are\n intrusive, they add friction. So there's a new solution now\n and Cloudflare announced that they're going to support it.\n And when we with Cloudflare support, of course, this is\n becoming sort of a real thing to be looking into, it's\n private access tokens, don't mix them up with personal\n access token, private access tokens, essentially an\n assertion that Cloudflare will generate the first time you\n are solving a CAPTCHA, or if there's another indication\n that you're not a bot that you're a person. So Cloudflare\n will issue that private access token. And it's digitally\n signed, of course, and with that the browser can then\n prove going forward, that it is actually operated by a\n person. And Cloudflare will then sort of act as the broker\n here in order to basically tell other websites, hey, this\n is a person and we don't need to have them solve a CAPTCHA\n again. Sounds like an interesting idea. As far as I\n understand, the standard that's sort of built around\n this is not quite complete yet. So a little bit early to\n comment on all of it. But it is supposed to be privacy\n preserving in the sense that different websites can\n correlate a particular user. So they just know it is a\n human, but they don't necessarily know what human or\n who is actually accessing their site. As a web\n developer, you probably don't really have to do anything\n about this. If you're using CAPTCHA solutions, like for\n example, Cloudflare, that's then sort of automatically\n being taken care of. As part of their CAPTCHA solution. And\n then I quickly want to comment on FortiBleed. I haven't\n mentioned FortiBleed much yet. In particular, it was\n mentioned in the press quite a bit. And part of the reason I\n didn't mention it was because it didn't appear to be that\n much new. Enterprise firewalls. We all know our\n attackers preferred entry point into networks. And\n that's just another case of outdated, meaning unpatched\n firewalls being used to breach corporate networks. But there\n is one detail that made this particular attack so\n devastating. And this again, nothing new, but I think\n something that's often overlooked when it comes to\n compromises of these border gateway devices. And that's\n that hackers used the vantage point of having access to all\n traffic traversing the device to actually then capture\n additional credentials. So this is something that you\n definitely have to consider if you find any kind of gateway\n or firewall or such that was compromised. In particular, if\n some of these devices have the ability to intercept TLS. In\n that case, you must specifically assume that any\n credential being sent through the particular device has been\n compromised and as a result must be changed. This is of\n course a very tough challenge. And I don't say it's easy to\n actually enumerate what you need to change and how you\n need to change it. But yes, that's just makes security\n more fun and complex. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast. And remember, there will be no\n podcast this week on Thursday, Friday. So thanks and talk to\n you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9980",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9980",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9980.mp3",
-      "title": "SANS Stormcast Monday, June 22nd, 2026: IPv4 Mapped Phish; nginx bug; squid bleeds; AMD encryption fix",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, June 22nd, 2026: IPv4 Mapped Phish; nginx bug; squid bleeds; AMD encryption fix",
-      "show_notes": [
-        {
-          "heading": "eBanking Phishing Delivered Through IPv4-Mapped IPv6 Address",
-          "links": [
-            "https://isc.sans.edu/diary/eBanking%20Phishing%20Delivered%20Through%20IPv4-Mapped%20IPv6%20Address/33090"
-          ]
-        },
-        {
-          "heading": "NGINX ngx_http_v3_module vulnerability CVE-2026-42530",
-          "links": [
-            "https://my.f5.com/manage/s/article/K000161616"
-          ]
-        },
-        {
-          "heading": "Squidbleed (CVE-2026-47729)",
-          "links": [
-            "https://blog.calif.io/p/squidbleed-cve-2026-47729"
-          ]
-        },
-        {
-          "heading": "AMD will reinstate memory encryption on Ryzen 9000 CPUs through a BIOS update in July",
-          "links": [
-            "https://www.tomshardware.com/pc-components/cpus/amd-will-reinstate-memory-encryption-on-ryzen-9000-cpus-through-a-bios-update-in-july-tsme-is-coming-back-after-valuable-community-feedback"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-06-22T02:00:02+00:00",
-      "duration_seconds": 366,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9980.mp3",
-      "audio_length_bytes": 5132321,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9980",
-      "categories": [
-        "quid",
-        "amd",
-        "encryption",
-        "nginx",
-        "ebanking",
-        "phishing",
-        "ipv6"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9980",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday June 22nd, 2026 edition\n of the SANS Internet Stormcenter Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n cybersecurity engineering. Well, Xavier came across an\n interesting phishing email that used IPv4 mapped IPv6\n addresses. These addresses are really more an operating\n system construct. So you will not see these addresses on the\n network. That's something I often see people describe, but\n on the network, you would see an IPv4 packet in this case.\n The main reason for these IPv6 addresses and basically start\n with all zeros, then FFFF and the last 32 bits are the IPv4\n address that's sort of embedded in this address. The\n real reason for these addresses is really more than\n that. You know, when you're writing networking software,\n you can really just write IPv6 software and then it will\n automatically be able to connect with IPv4 hosts. But\n the operating system then will basically create an IPv4\n packet, not an IPv6 packet when connecting to such an\n address. So the main purpose of these addresses is\n obfuscation from scanning tools. Your antivirus, anti\n -malware, anti-spam will not necessarily see an IPv4\n address here. They think they sort of have an IPv6 address.\n And then of course, they won't find it on any block list. So\n at least that's what I think is sort of happening here.\n That's why attackers sometimes use these addresses. Now in\n the host header, when you're copy pasting this address into\n a browser, you will still see the IPv6 address here. But\n it's really not just a string that used as a host name,\n which happened to be that address. So from a filtering\n point of view, I think you can just essentially consider all\n these IPv4 mapped IPv6 addresses malicious and just\n block emails that contain these strings. And F5 fixed\n two critical vulnerabilities in NGINX, the web server and\n often also used as an HTTP proxy. The more important one\n of these two, or should I say more critical one, is\n affecting Quick or HTTP 3. It's a use-after free, so a\n memory management, vulnerability that is\n exploitable for remote code execution if an attacker can\n make it past address space, layout, randomization or ASLR.\n So definitely get your NGINX servers patched. The second\n vulnerability does have quite a few requirements as to\n specific configurations that you need to run. It's also a\n buffer overflow, so also something that you should\n address. But I think exploitation may be a little\n more likely for the first one in particular if you don't use\n ASLR on your system, like if the binary wasn't compiled for\n it, which does happen sort of in the IoT world, not so much\n sort of if you're running a major Linux distribution. And\n talking about HTTP and proxies, probably one of the\n more popular ways of implementing a proxy, in\n particular if you're sticking with open source software, is\n SQUID. And while we do have a vulnerability in SQUID, that's\n a little bit a reminder of Heartbleed, in that it leaks\n parts of other users' requests. The way this would\n be exploited is that an attacker is able to send\n requests through the proxy and is able in the reply to\n receive data submitted by other users. So a victim would\n log in to a website. Now the attacker would then connect\n through that same SQUID proxy to an FTP server. And due to a\n parsing error in directory listings via FTP and SQUID,\n yes SQUID also does deal with FTP, the attacker would then\n be able to see some of the content submitted via other\n users via HTTP. So interesting vulnerability, probably a\n quick fix here is not to allow FTP and that hopefully is\n nothing that you're needing too much, but there is also a\n patch available for this vulnerability. And it was just\n last week that I referred to a publication that discovered\n that AMD turned off memory encryption on its consumer\n -grade processors, in particular the Ryzen 9000 line\n of CPUs, which is sort of their current consumer CPU.\n Well, AMD, after being called out for it, never really\n explained why it was removed, but stated now that in a BIOS\n update in July, the feature should be re-enabled.\n Remember, this was one of those odd issues where you\n could enable it in the BIOS, but it was actually not\n enabled in the CPU due to a firmware change in the CPU. So\n I guess they're now trying to undo this change and hopefully\n come July, your memory encryption will work again.\n Well, and that's it for today. So thanks again for listening.\n And a quick note about my schedule this week. There will\n only be a podcast for Monday, Tuesday, Wednesday. I'll be\n traveling at the end of the week. So there will be no\n podcast on Thursday and Friday. Thanks and talk to you\n again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

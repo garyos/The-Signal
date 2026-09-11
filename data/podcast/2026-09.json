@@ -2,6 +2,70 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10090",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10090",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10090.mp3",
+      "title": "SANS Stormcast Friday, September 11th, 2026: Redtail Analsys (@sans_edu); Checkpoint VPN Patch; Netscaler and Sonicwall Attacks",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 11th, 2026: Redtail Analsys (@sans_edu); Checkpoint VPN Patch; Netscaler and Sonicwall Attacks",
+      "show_notes": [
+        {
+          "heading": "Redtail Payload Analysis",
+          "links": [
+            "https://isc.sans.edu/diary/Redtail%20Payload%20Analysis%20%5BGuest%20Diary%5D/33326"
+          ]
+        },
+        {
+          "heading": "Checkpoint Critical Security Advisory: VPN Vulnerabilities CVE-2026-85102 and CVE-2026-8510",
+          "links": [
+            "https://community.checkpoint.com/t5/General-Topics/Action-Required-Critical-Security-Advisory-VPN-Vulnerabilities/td-p/281995"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Firewall Management Center Software Authentication Bypass Vulnerability",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-onprem-fmc-authbypass-5JPp45V2"
+          ]
+        },
+        {
+          "heading": "Netscaler ADC Exploit",
+          "links": [
+            "https://x.com/ethicalhack3r/status/2095480651478663393"
+          ]
+        },
+        {
+          "heading": "Sonicwall SMA1000 Attack",
+          "links": [
+            "https://hunt.io/blog/sonicwall-sma1000-uk-council-attack"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-11T02:00:02+00:00",
+      "duration_seconds": 352,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10090.mp3",
+      "audio_length_bytes": 4939712,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10090",
+      "categories": [
+        "sonicwall",
+        "netscaler",
+        "csico",
+        "checkpoint",
+        "redtail"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10090",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 11th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. In diaries today we have one of our undercredit\n interns write about a copy of the Red Tail Malware that\n Aaron Ng here did capture in his honeypot. Now the details\n are really very nice in this particular analysis, but what\n I want to point out is the way the analysis was done. This\n sample was analyzed using a runtime analysis, which tends\n to be the simpler form and faster form often to figure\n out what a particular piece of malware does. You essentially\n just run it. Of course, running malware comes with\n some complications. You don't want the malware to go out as\n some of the samples often do and infect other systems.\n Also, you want to be able to capture all of the activity\n from this malware and experiment with different\n runtime options and such. And that's a part of what Aaron\n did here. But Aaron used an interesting tool that I always\n highly recommend when you're trying to do this kind of\n analysis. And that's iNetSim. iNetSim is essentially\n software that sort of simulates a small internet for\n you. So you have like no various services that you can\n enable there that will then mimic the real services that\n the malware may be connecting to things like DNS servers and\n such to basically give the malware a little bit more\n realistic view like it would be connected to the actual\n internet. And of course, with the advantage to still have\n the isolation and not having to maintain yourself all these\n different services that you may need to spin up otherwise\n if you want to get sort of the same result. So interesting\n tool if you are doing runtime analysis of malware, iNetSim\n certainly something that I would recommend. And a couple\n other solutions too like this, but I find this really sort of\n simple and it's one of those solutions that does really\n most of what you need and usually suffices over some\n very much more complex solutions. And Checkpoint\n yesterday released a critical security advisory and a patch\n fixing two vulnerabilities. These vulnerabilities do allow\n unauthenticated remote code execution, at least the first\n one. The second one, also a heap-based buffer overflow,\n doesn't say whether or not it needs authentication to\n execute any code here. Either way, definitely something that\n you do want to patch in particular for the first one,\n the unauthenticated remote code execution vulnerability.\n Now, Checkpoint also points out that if you have the\n Checkpoint Live patch feature enabled, then the patch should\n have already been applied to your system. They rolled it\n out September 9th. But after spending a lot of time this\n week on talking about vulnerabilities, let's talk\n now a little bit about vulnerabilities that are\n currently being exploited. Cisco just updated the\n advisory they published in March for its Secure Firewall\n Management Center. This vulnerability is now being\n exploited and Cisco does offer some indicators of compromise\n that you can use to check if your instance was affected by\n this particular exploit. And Ryan Dewhurst with Pravidian\n did note on X that they're observing exploitation of\n Netscaler ADC vulnerability. This vulnerability was\n originally patched about a month ago, a little bit less\n than a month ago. Proof of concept exploit was made\n public a couple days ago. And that's, as Ryan here points\n out, also is always sort of a basic sign. Once you see a\n public proof of concept, well, yes, at that point, the\n vulnerability is widely being exploited. And you always\n should assume compromise, of course, at this point. And\n finally, SonicWall SMA 1000. We had recently an already\n exploited vulnerability being patched there. Hunt.io now\n published a real nice and detailed walkthrough of an\n attack that they have seen in the wild against local\n government in the UK. These walkthroughs are always really\n helpful because they really show what attackers are doing\n with these vulnerabilities, how to identify this\n particular attacker. But then also similar attacks that\n exploit the same vulnerability, because here\n you can see what particular evidence, for example, may be\n left behind on a compromised system. That's always very\n helpful if you see the full walkthrough in some vendor\n bulletins like the Cisco one I mentioned earlier. They're\n very specific indicators of compromise, which, of course,\n may change from attacker to attacker. And it's not always\n that obvious what you can use here as a good indicator of\n compromise beyond sort of that simple file name, hash or IP\n address that may have been published. Well, and this is\n it for today. So thanks for listening. Thanks for liking.\n Thanks for subscribing. Remember, any future teachers\n of myself will usually be listed in the show notes. So\n take a look at that. And that's it for today, for this\n week. Talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10088",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
