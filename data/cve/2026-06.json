@@ -6994,7 +6994,7 @@
     {
       "id": "CVE-2026-58015",
       "published": "2026-06-30T13:19:17.707",
-      "lastModified": "2026-09-09T08:17:21.727",
+      "lastModified": "2026-09-10T18:18:04.190",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. The D-Bus client-side implementation of the DBUS_COOKIE_SHA1 SASL authentication mechanism does not validate the cookie_context parameter received from the server. A malicious D-Bus server can supply a cookie_context containing path traversal sequences, causing the client to read an arbitrary file and exfiltrate sensitive data by verifying guessed file contents against a generated hash.",
       "cvss": {
@@ -7032,7 +7032,7 @@
     {
       "id": "CVE-2026-58014",
       "published": "2026-06-30T13:19:17.580",
-      "lastModified": "2026-09-09T08:17:21.477",
+      "lastModified": "2026-09-10T18:18:03.887",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. An off-by-one error can occur in the g_key_file_get_locale_string_list function in the gkeyfile.c file when loading a key file with an empty value. This flaw can cause an out-of-bounds access of 1 byte or a denial of service when the out-of-bounds access crosses a page boundary.",
       "cvss": {
@@ -7066,7 +7066,7 @@
     {
       "id": "CVE-2026-58013",
       "published": "2026-06-30T13:19:17.457",
-      "lastModified": "2026-09-09T08:17:21.223",
+      "lastModified": "2026-09-10T18:18:03.590",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. A buffer over-read can occur in g_io_channel_read_line_backend() in the giochannel.c file when a custom line terminator with a length greater than one is set, causing memcmp to read past the GString buffer. This vulnerability can cause a minor information disclosure of 7 bytes or a denial of service when the buffer over-read crosses a page boundary.",
       "cvss": {
@@ -7100,7 +7100,7 @@
     {
       "id": "CVE-2026-58012",
       "published": "2026-06-30T13:19:17.330",
-      "lastModified": "2026-09-09T08:17:20.973",
+      "lastModified": "2026-09-10T18:18:03.290",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. A buffer over-read can occur in the g_regex_replace function when used with the `G_REGEX_RAW` compile flag and case-change replacement escapes because the string_append function processes matched substrings using UTF-8 functions that assume valid UTF-8 input, even when the string is treated as raw bytes. This vulnerability can cause a minor information disclosure of 1-5 bytes and a denial of service when the buffer over-read crosses a page boundary.",
       "cvss": {
@@ -7134,7 +7134,7 @@
     {
       "id": "CVE-2026-58011",
       "published": "2026-06-30T13:19:17.200",
-      "lastModified": "2026-09-09T08:17:20.713",
+      "lastModified": "2026-09-10T18:18:03.000",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. An out-of-bounds read of only 2 bytes can occur in the g_date_time_get_ymd function in the glib/gdatetime.c file when an invalid GDateTime object produced by the g_date_time_add_full function is processed. This flaw can corrupt the date output and potentially cause logic errors that may lead to a denial of service.",
       "cvss": {
@@ -7168,7 +7168,7 @@
     {
       "id": "CVE-2026-58010",
       "published": "2026-06-30T13:19:17.067",
-      "lastModified": "2026-09-09T08:17:20.417",
+      "lastModified": "2026-09-10T18:18:02.700",
       "vulnStatus": "Modified",
       "description": "A flaw was found in GLib. An off-by-one error can occur in the gvs_tuple_is_normal function in the glib/gvariant-serialiser.c file when doing an alignment padding check because the bounds check uses > instead of >=, causing an out-of-bounds read of only 1 byte. This issue can cause a minor information disclosure of 1 byte and a denial of service when the out-of-bounds read crosses a page boundary.",
       "cvss": {
@@ -10091,7 +10091,7 @@
     {
       "id": "CVE-2026-13676",
       "published": "2026-06-29T14:16:47.967",
-      "lastModified": "2026-09-09T13:18:36.323",
+      "lastModified": "2026-09-10T13:17:34.637",
       "vulnStatus": "Modified",
       "description": "fast-uri versions 2.3.1 through 3.1.2 and 4.0.0 fail to canonicalize Unicode (IDN) hostnames for HTTP-family URLs. The IDN conversion path calls a helper that does not exist on the global URL constructor, silently leaving the host in its original Unicode form while normalize() and equal() still return values that differ from a WHATWG-compatible URL parser. Applications that use fast-uri to enforce host-based policy (denylists, loopback filtering, redirect validation, outbound proxy routing) befo",
       "cvss": {
@@ -28123,7 +28123,7 @@
     {
       "id": "CVE-2026-53091",
       "published": "2026-06-24T17:17:23.283",
-      "lastModified": "2026-09-09T13:20:28.643",
+      "lastModified": "2026-09-10T13:20:26.450",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: pull headers in qdisc_pkt_len_segs_init() Most ndo_start_xmit() methods expects headers of gso packets to be already in skb->head. net/core/tso.c users are particularly at risk, because tso_build_hdr() does a memcpy(hdr, skb->data, hdr_len); qdisc_pkt_len_segs_init() already does a dissection of gso packets. Use pskb_may_pull() instead of skb_header_pointer() to make sure drivers do not have to reimplement this. Some malici",
       "cvss": {
@@ -28144,15 +28144,15 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8"
+        "Red Hat Red Hat Enterprise Linux 7"
       ],
       "references": [
         "https://git.kernel.org/stable/c/7fb4c19670110f052c04e1ec1d2b953b9f4f57e4",
         "https://git.kernel.org/stable/c/9d4f5c68f5ad4ab425f3ce1500c97c9f9743999a",
         "https://access.redhat.com/errata/RHSA-2026:65334",
-        "https://access.redhat.com/security/cve/CVE-2026-53091"
+        "https://access.redhat.com/errata/RHSA-2026:66324"
       ],
       "kev": {
         "in_kev": false
@@ -29603,7 +29603,7 @@
     {
       "id": "CVE-2026-53002",
       "published": "2026-06-24T17:17:11.263",
-      "lastModified": "2026-09-09T13:20:27.140",
+      "lastModified": "2026-09-10T13:20:26.143",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: conntrack: remove sprintf usage Replace it with scnprintf, the buffer sizes are expected to be large enough to hold the result, no need for snprintf+overflow check. Increase buffer size in mangle_content_len() while at it. BUG: KASAN: stack-out-of-bounds in vsnprintf+0xea5/0x1270 Write of size 1 at addr [..] vsnprintf+0xea5/0x1270 sprintf+0xb1/0xe0 mangle_content_len+0x1ac/0x280 nf_nat_sdp_session+0x1cc/0x240 process_",
       "cvss": {
@@ -29620,9 +29620,9 @@
       "vendors": [
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 9",
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 6"
       ],
       "references": [
         "https://git.kernel.org/stable/c/1c9fb8aeed06790d42cdcd00f6c3ce0b9e926c1e",
@@ -29909,7 +29909,7 @@
     {
       "id": "CVE-2026-52987",
       "published": "2026-06-24T17:17:09.517",
-      "lastModified": "2026-08-03T13:18:50.170",
+      "lastModified": "2026-09-10T13:20:25.870",
       "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: drm/amdgpu: avoid double drm_exec_fini() in userq validate When new_addition is true, amdgpu_userq_vm_validate() calls drm_exec_fini(&exec) before iterating over the collected HMM ranges and calling amdgpu_ttm_tt_get_user_pages(). If amdgpu_ttm_tt_get_user_pages() fails in that path, the code jumps to unlock_all and calls drm_exec_fini(&exec) a second time on the same exec object. drm_exec_fini() is not idempotent: it frees exec",
       "cvss": {
@@ -47093,7 +47093,7 @@
     {
       "id": "CVE-2026-9697",
       "published": "2026-06-17T18:18:06.473",
-      "lastModified": "2026-09-09T13:20:46.803",
+      "lastModified": "2026-09-10T13:20:34.513",
       "vulnStatus": "Modified",
       "description": "Impact: undici's ProxyAgent silently drops the requestTls option when configured with a SOCKS5 proxy URI (socks5:// or socks://). The target HTTPS connection through the SOCKS5 tunnel falls back to Node's default trust store, ignoring user-configured ca, cert, key, rejectUnauthorized, and servername settings. Applications that pin to an internal or corporate CA via requestTls.ca will, when their proxy URI is SOCKS5, get the default Mozilla CA bundle as the trust anchor instead. Any cert signed b",
       "cvss": {
@@ -47127,7 +47127,7 @@
     {
       "id": "CVE-2026-6734",
       "published": "2026-06-17T18:18:05.617",
-      "lastModified": "2026-09-09T13:20:33.460",
+      "lastModified": "2026-09-10T13:20:30.103",
       "vulnStatus": "Modified",
       "description": "Impact: When using Socks5ProxyAgent, undici reuses a single connection pool across different origins without verifying that the pool's origin matches the requested origin. All requests are dispatched through the pool connected to the first origin, regardless of the intended destination. This causes cross-origin request routing: credentials and request data intended for origin B are sent to origin A, responses from the wrong origin are trusted, and HTTPS requests may be silently downgraded to HTT",
       "cvss": {
@@ -47705,7 +47705,7 @@
     {
       "id": "CVE-2026-12151",
       "published": "2026-06-17T17:16:42.370",
-      "lastModified": "2026-09-09T13:18:35.397",
+      "lastModified": "2026-09-10T13:17:33.933",
       "vulnStatus": "Modified",
       "description": "Impact: The undici WebSocket client enforces maxPayloadSize on the cumulative byte count of fragments in a message but does not enforce a limit on the number of fragments. A malicious WebSocket server can stream many small or empty continuation frames that each pass per-frame and cumulative-size validation, collectively causing unbounded memory growth in the client process. The result is memory exhaustion and a denial of service. Affected applications are those using the undici WebSocket client ",
       "cvss": {
@@ -51066,7 +51066,7 @@
     {
       "id": "CVE-2026-48779",
       "published": "2026-06-17T13:20:42.887",
-      "lastModified": "2026-09-09T13:20:22.113",
+      "lastModified": "2026-09-10T13:20:20.017",
       "vulnStatus": "Modified",
       "description": "ws is an open source WebSocket client and server for Node.js. All versions from 1.1.0 up to (but not including) 5.2.5, from 6.0.0 up to 6.2.4, from 7.0.0 up to 7.5.11, and from 8.0.0 up to 8.21.0 are affected by a memory exhaustion DoS vulnerability. A peer can send a high volume of exceptionally small fragments and data chunks, with modest network traffic, to force the remote peer into allocating and holding structural wrappers that consume far more memory than the default documented message-si",
       "cvss": {
@@ -75073,7 +75073,7 @@
     {
       "id": "CVE-2026-44990",
       "published": "2026-06-12T21:16:22.447",
-      "lastModified": "2026-09-09T13:20:12.560",
+      "lastModified": "2026-09-10T13:20:17.020",
       "vulnStatus": "Deferred",
       "description": "ApostropheCMS is an open-source Node.js content management system, and sanitize-html provides a simple HTML sanitizer with a clear API. Under the default configuration, versions of `sanitize-html` prior to 2.17.4 can turn attacker-controlled content inside a disallowed `xmp` element into live HTML or JavaScript. This is a sanitizer bypass in the default `disallowedTagsMode: 'discard'` path and can lead to stored XSS in applications that render sanitized output back to users. Version 2.17.4 patch",
       "cvss": {
@@ -75429,7 +75429,7 @@
     {
       "id": "CVE-2026-12143",
       "published": "2026-06-12T19:16:26.560",
-      "lastModified": "2026-09-09T13:18:33.133",
+      "lastModified": "2026-09-10T13:17:31.690",
       "vulnStatus": "Awaiting Analysis",
       "description": "form-data is a library for creating readable multipart/form-data streams. In versions through 4.0.5, the `field` argument to `FormData#append` and the `filename` option are concatenated verbatim into the `Content-Disposition` header without escaping carriage return (CR), line feed (LF), or double-quote (\") characters. An application that passes attacker-controlled data as a field name or filename (for example, an API gateway that turns JSON object keys into multipart field names) allows the atta",
       "cvss": {
@@ -76099,7 +76099,7 @@
     {
       "id": "CVE-2026-50010",
       "published": "2026-06-12T16:16:31.180",
-      "lastModified": "2026-09-09T13:20:25.790",
+      "lastModified": "2026-09-10T13:20:25.037",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, SimpleTrustManagerFactory.engineGetTrustManagers() and related paths wrap any user-supplied plain X509TrustManager in X509TrustManagerWrapper, which extends X509ExtendedTrustManager but implements the 3-arg checkServerTrusted(chain, authType, SSLEngine) by discarding the SSLEngine and calling the 2-arg delegate. Because the object now IS an X509ExtendedTrust",
       "cvss": {
@@ -76936,7 +76936,7 @@
     {
       "id": "CVE-2026-45416",
       "published": "2026-06-12T15:16:26.940",
-      "lastModified": "2026-09-09T13:20:13.317",
+      "lastModified": "2026-09-10T13:20:17.770",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, SslClientHelloHandler.decode() reads the 24-bit TLS handshake length and, when the ClientHello does not fit in the first record, eagerly allocates `ctx.alloc().buffer(handshakeLength)` (line 161). The guard at line 140 is `handshakeLength > maxClientHelloLength && maxClientHelloLength != 0`, and the commonly-used SniHandler/AbstractSniHandler constructors (S",
       "cvss": {
@@ -78143,7 +78143,7 @@
     {
       "id": "CVE-2026-44249",
       "published": "2026-06-11T22:16:56.707",
-      "lastModified": "2026-09-09T13:20:06.740",
+      "lastModified": "2026-09-10T13:20:11.367",
       "vulnStatus": "Modified",
       "description": "Netty is a network application framework for development of protocol servers and clients. In netty-handler prior to versions 4.1.135.Final and 4.2.15.Final, an attacker can bypass IPv6 subnet rules due to an incorrect masking operation in IpSubnetFilterRule.compareTo(). Valid public IP addresses can bypass the restrictions. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
       "cvss": {
@@ -79967,7 +79967,7 @@
     {
       "id": "CVE-2026-44496",
       "published": "2026-06-11T17:16:33.590",
-      "lastModified": "2026-09-09T13:20:11.020",
+      "lastModified": "2026-09-10T13:20:16.453",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Axios versions before 0.32.0 on the 0.x line and before 1.16.0 on the 1.x line build a regular expression from the configured XSRF cookie name without escaping regex metacharacters. In standard browser environments, an attacker who can influence the cookie name passed to axios can cause expensive regex backtracking while axios reads document.cookie. The practical impact is client-side availability degradation, such as freezing the",
       "cvss": {
@@ -80005,7 +80005,7 @@
     {
       "id": "CVE-2026-44495",
       "published": "2026-06-11T17:16:33.450",
-      "lastModified": "2026-09-09T13:20:10.383",
+      "lastModified": "2026-09-10T13:20:15.810",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. From 0.19.0 to before 0.31.1 and 1.15.2, Axios contains prototype-pollution gadgets in request config processing. If another vulnerability in the same JavaScript process has already polluted Object.prototype.transformResponse, affected Axios versions may treat that inherited value as request configuration or as an option validator. Axios does not itself create the prototype pollution. Exploitability requires a separate prototype-p",
       "cvss": {
@@ -80047,7 +80047,7 @@
     {
       "id": "CVE-2026-44494",
       "published": "2026-06-11T17:16:33.313",
-      "lastModified": "2026-09-07T13:20:03.563",
+      "lastModified": "2026-09-10T13:20:15.197",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. From 1.0.0 to before 1.16.0, the Axios library is vulnerable to a Prototype Pollution \"Gadget\" attack that allows any Object.prototype pollution in the application's dependency tree to be escalated into a full Man-in-the-Middle (MITM) attack \u2014 intercepting, reading, and modifying all HTTP traffic including authentication credentials. The HTTP adapter at lib/adapters/http.js:670 reads config.proxy via standard property access, whic",
       "cvss": {
@@ -80089,7 +80089,7 @@
     {
       "id": "CVE-2026-44492",
       "published": "2026-06-11T17:16:33.167",
-      "lastModified": "2026-09-09T13:20:09.803",
+      "lastModified": "2026-09-10T13:20:14.593",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios does not normalise IPv4-mapped IPv6 addresses. When NO_PROXY lists an IPv4 address such as 127.0.0.1 or 169.254.169.254, a request URL using the IPv4-mapped IPv6 form (::ffff:7f00:1, ::ffff:a9fe:a9fe) still routes through the configured proxy. Node.js resolves these addresses to the underlying IPv4 host, so the request reaches the internal service via the proxy rather than being blocked. This vuln",
       "cvss": {
@@ -80154,7 +80154,7 @@
     {
       "id": "CVE-2026-44488",
       "published": "2026-06-11T17:16:32.750",
-      "lastModified": "2026-09-09T13:20:09.210",
+      "lastModified": "2026-09-10T13:20:13.997",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Axios versions 1.7.0 through 1.15.x did not enforce configured request and response size limits when requests were sent with the fetch adapter. Applications that selected adapter: 'fetch', or ran in environments where axios resolved to the fetch adapter, could receive or send bodies larger than maxContentLength or maxBodyLength despite those limits being explicitly configured. This can cause resource exhaustion in server-side usag",
       "cvss": {
@@ -80188,7 +80188,7 @@
     {
       "id": "CVE-2026-44487",
       "published": "2026-06-11T17:16:32.607",
-      "lastModified": "2026-09-09T13:20:08.550",
+      "lastModified": "2026-09-10T13:20:13.377",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios\u2019s Node.js HTTP adapter may forward a Proxy-Authorization header to a redirected origin during specific proxy-to-direct redirect flows. This affects Node.js usage, where an initial HTTP request is sent through an authenticated HTTP proxy, redirects are followed, and the redirected URL is no longer proxied. Under affected redirect shapes, the final origin can receive the proxy credential that was in",
       "cvss": {
@@ -80222,7 +80222,7 @@
     {
       "id": "CVE-2026-44486",
       "published": "2026-06-11T17:16:32.450",
-      "lastModified": "2026-09-09T13:20:07.930",
+      "lastModified": "2026-09-10T13:20:12.757",
       "vulnStatus": "Modified",
       "description": "Axios is a promise based HTTP client for the browser and Node.js. Prior to 0.32.0 and 1.16.0, Axios\u2019 Node.js HTTP adapter can leak proxy credentials to a redirect target in affected versions. When a request is sent through an authenticated proxy, Axios may add a Proxy-Authorization header. If Axios then follows a redirect and the redirected request is no longer sent through that proxy, the stale Proxy-Authorization header can remain on the redirected request and be sent to the redirect target. T",
       "cvss": {
@@ -81784,7 +81784,7 @@
     {
       "id": "CVE-2026-10143",
       "published": "2026-06-10T22:16:55.503",
-      "lastModified": "2026-08-17T12:17:09.227",
+      "lastModified": "2026-09-10T13:17:30.657",
       "vulnStatus": "Modified",
       "description": "kafka-python prior to 2.3.2 contains a denial-of-service vulnerability in SCRAM authentication handling that allows a malicious or machine-in-the-middle broker to freeze the client event loop by supplying an excessively large iteration count. In scram.py, ScramClient.process_server_first_message() passes the broker-controlled SCRAM iteration count directly to hashlib.pbkdf2_hmac() without validation, blocking producer sends, consumer polls, admin operations, and heartbeats, which can cause consu",
       "cvss": {
@@ -81804,7 +81804,7 @@
       ],
       "vendors": [
         "Dana Powers kafka-python",
-        "Red Hat Red Hat Quay 3.1",
+        "Red Hat Red Hat Quay 3.10",
         "Red Hat Red Hat Quay 3.12",
         "Red Hat Red Hat Quay 3.15",
         "Red Hat Red Hat Quay 3.16"
@@ -82037,7 +82037,7 @@
     {
       "id": "CVE-2026-6893",
       "published": "2026-06-10T20:17:29.807",
-      "lastModified": "2026-09-09T16:17:04.283",
+      "lastModified": "2026-09-10T13:20:30.730",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in dracut. A remote attacker on the adjacent network can exploit this vulnerability by providing specially crafted DHCP (Dynamic Host Configuration Protocol) options, such as a malicious hostname, to a system using dracut's legacy DHCP path. These options are improperly handled and written into temporary shell scripts without proper escaping, leading to command injection. This allows the attacker to achieve root code execution within the initramfs, potentially compromising the s",
       "cvss": {
@@ -98927,7 +98927,7 @@
     {
       "id": "CVE-2026-44185",
       "published": "2026-06-08T16:16:40.327",
-      "lastModified": "2026-09-02T13:17:52.650",
+      "lastModified": "2026-09-10T13:20:11.090",
       "vulnStatus": "Modified",
       "description": "Buffer Over-read vulnerability in Apache HTTP Server via outbound OCSP requests to an attacker controlled OCSP server This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67. Users are recommended to upgrade to version 2.4.68, which fixes the issue.",
       "cvss": {
@@ -99037,7 +99037,7 @@
     {
       "id": "CVE-2026-42536",
       "published": "2026-06-08T16:16:39.263",
-      "lastModified": "2026-09-02T13:17:50.403",
+      "lastModified": "2026-09-10T13:20:09.447",
       "vulnStatus": "Modified",
       "description": "Heap-based Buffer Overflow vulnerability in Apache HTTP Server with mod_xml2enc, xml2StartParse, and untrusted content This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67. Users are recommended to upgrade to version 2.4.68, which fixes the issue.",
       "cvss": {
@@ -99156,7 +99156,7 @@
     {
       "id": "CVE-2026-34355",
       "published": "2026-06-08T16:16:38.387",
-      "lastModified": "2026-09-02T13:17:33.850",
+      "lastModified": "2026-09-10T13:19:46.580",
       "vulnStatus": "Modified",
       "description": "A buffer overflow in mod_proxy_html in Apache HTTP Server 2.4.67 and earlier allows an attack by an untrusted backend. Users are recommended to upgrade to version 2.4.68, which fixes this issue.",
       "cvss": {
@@ -103182,7 +103182,7 @@
     {
       "id": "CVE-2026-11332",
       "published": "2026-06-05T09:16:26.070",
-      "lastModified": "2026-09-09T23:16:53.617",
+      "lastModified": "2026-09-10T13:17:30.930",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in ansible-core. The ansible-galaxy role install command processes dependency specifications from a role's meta/requirements.yml file. Due to improper neutralization of argument delimiters, a malicious role author can inject arbitrary git configuration flags through the src field. This allows arbitrary code execution on the machine of a user who installs the role via ansible-galaxy role install.",
       "cvss": {
@@ -117464,7 +117464,7 @@
     {
       "id": "CVE-2026-1784",
       "published": "2026-06-02T09:16:15.683",
-      "lastModified": "2026-09-09T15:17:06.550",
+      "lastModified": "2026-09-10T13:17:37.847",
       "vulnStatus": "Modified",
       "description": "The Route OpenShift resource allows to define routes to make pods reachable at a subdomain through HAProxy. It was found that the checks performed on the spec.path YAML stanza in a Route document was insufficient and could allow a controlled injection of the HAProxy configuration.",
       "cvss": {
@@ -122690,5 +122690,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-10T10:00:57.959572+00:00"
+  "updated_at": "2026-09-11T09:57:39.467093+00:00"
 }

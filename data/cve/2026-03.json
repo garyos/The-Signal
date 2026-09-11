@@ -670,7 +670,7 @@
     {
       "id": "CVE-2026-4800",
       "published": "2026-03-31T20:16:29.660",
-      "lastModified": "2026-09-09T13:20:23.153",
+      "lastModified": "2026-09-10T13:20:23.210",
       "vulnStatus": "Modified",
       "description": "Impact: The fix for CVE-2021-23337 (https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the variable option in _.template but did not apply the same validation to options.imports key names. Both paths flow into the same Function() constructor sink. When an application passes untrusted input as options.imports key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time. Additionally, _.template uses assignInWith to m",
       "cvss": {
@@ -9142,7 +9142,7 @@
     {
       "id": "CVE-2026-33894",
       "published": "2026-03-27T21:17:25.983",
-      "lastModified": "2026-09-04T13:19:08.247",
+      "lastModified": "2026-09-10T13:18:25.977",
       "vulnStatus": "Modified",
       "description": "Forge (also called `node-forge`) is a native implementation of Transport Layer Security in JavaScript. Prior to version 1.4.0, RSASSA PKCS#1 v1.5 signature verification accepts forged signatures for low public exponent keys (e=3). Attackers can forge signatures by stuffing \u201cgarbage\u201d bytes within the ASN structure in order to construct a signature that passes verification, enabling Bleichenbacher style forgery. This issue is similar to CVE-2022-24771, but adds bytes in an addition field within th",
       "cvss": {
@@ -13485,7 +13485,7 @@
     {
       "id": "CVE-2026-32286",
       "published": "2026-03-26T20:16:12.303",
-      "lastModified": "2026-09-07T13:18:45.610",
+      "lastModified": "2026-09-10T13:18:08.907",
       "vulnStatus": "Modified",
       "description": "The DataRow.Decode function fails to properly validate field lengths. A malicious or compromised PostgreSQL server can send a DataRow message with a negative field length, causing a slice bounds out of range panic.",
       "cvss": {
@@ -23755,7 +23755,7 @@
     {
       "id": "CVE-2026-1519",
       "published": "2026-03-25T14:16:33.110",
-      "lastModified": "2026-09-04T13:18:16.507",
+      "lastModified": "2026-09-10T13:17:37.363",
       "vulnStatus": "Modified",
       "description": "If a BIND resolver is performing DNSSEC validation and encounters a maliciously crafted zone, the resolver may consume excessive CPU. Authoritative-only servers are generally unaffected, although there are circumstances where authoritative servers may make recursive queries (see: https://kb.isc.org/docs/why-does-my-authoritative-server-make-recursive-queries). This issue affects BIND 9 versions 9.11.0 through 9.16.50, 9.18.0 through 9.18.46, 9.20.0 through 9.20.20, 9.21.0 through 9.21.19, 9.11.3",
       "cvss": {
@@ -26880,6 +26880,60 @@
       ],
       "references": [
         "https://github.com/withastro/astro/security/advisories/GHSA-3rmj-9m5h-8fpv"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-23921",
+      "published": "2026-03-24T19:16:50.563",
+      "lastModified": "2026-09-10T21:13:20.120",
+      "vulnStatus": "Analyzed",
+      "description": "A low privilege Zabbix user with API access can exploit a blind SQL injection vulnerability in include/classes/api/CApiService.php to execute arbitrary SQL selects via the sortfield parameter. Although query results are not returned directly, an attacker can exfiltrate arbitrary database data through time-based techniques, potentially leading to session identifier disclosure and administrator account compromise.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "Zabbix Zabbix"
+      ],
+      "references": [
+        "https://support.zabbix.com/browse/ZBX-27640"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-23920",
+      "published": "2026-03-24T19:16:49.557",
+      "lastModified": "2026-09-10T21:15:39.950",
+      "vulnStatus": "Analyzed",
+      "description": "Host and event action script input is validated with a regex (set by the administrator), but the validation runs in multiline mode. If ^ and $ anchors are used in user input validation, an injected newline lets authenticated users bypass the check and inject shell commands.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Zabbix Zabbix"
+      ],
+      "references": [
+        "https://support.zabbix.com/browse/ZBX-27639"
       ],
       "kev": {
         "in_kev": false
@@ -33635,7 +33689,7 @@
     {
       "id": "CVE-2026-4602",
       "published": "2026-03-23T06:16:22.070",
-      "lastModified": "2026-08-17T12:18:51.243",
+      "lastModified": "2026-09-10T13:20:22.877",
       "vulnStatus": "Modified",
       "description": "Versions of the package jsrsasign before 11.1.1 are vulnerable to Incorrect Conversion between Numeric Types due to handling negative exponents in ext/jsbn2.js. An attacker can force the computation of incorrect modular inverses and break signature verification by calling modPow with a negative exponent.",
       "cvss": {
@@ -33654,7 +33708,7 @@
         "org.webjars.npm:jsrsasign",
         "Red Hat Migration Toolkit for Virtualization 2.1",
         "Red Hat Migration Toolkit for Virtualization 2.9",
-        "Red Hat Red Hat Quay 3.1"
+        "Red Hat Red Hat Quay 3.10"
       ],
       "references": [
         "https://gist.github.com/Kr0emer/7ecd2be7d17419e4677315ef3758faf5",
@@ -33669,7 +33723,7 @@
     {
       "id": "CVE-2026-4601",
       "published": "2026-03-23T06:16:21.893",
-      "lastModified": "2026-08-17T12:18:51.013",
+      "lastModified": "2026-09-10T13:20:22.510",
       "vulnStatus": "Modified",
       "description": "Versions of the package jsrsasign before 11.1.1 are vulnerable to Missing Cryptographic Step via the KJUR.crypto.DSA.signWithMessageHash process in the DSA signing implementation. An attacker can recover the private key by forcing r or s to be zero, so the library emits an invalid signature without retrying, and then solves for x from the resulting signature.",
       "cvss": {
@@ -33688,7 +33742,7 @@
         "org.webjars.npm:jsrsasign",
         "Red Hat Migration Toolkit for Virtualization 2.1",
         "Red Hat Migration Toolkit for Virtualization 2.9",
-        "Red Hat Red Hat Quay 3.1"
+        "Red Hat Red Hat Quay 3.10"
       ],
       "references": [
         "https://gist.github.com/Kr0emer/93789fe6efe5519db9692d4ad1dad586",
@@ -33703,7 +33757,7 @@
     {
       "id": "CVE-2026-4600",
       "published": "2026-03-23T06:16:21.697",
-      "lastModified": "2026-08-17T12:18:50.777",
+      "lastModified": "2026-09-10T13:20:22.247",
       "vulnStatus": "Modified",
       "description": "Versions of the package jsrsasign before 11.1.1 are vulnerable to Improper Verification of Cryptographic Signature via the DSA domain-parameter validation in KJUR.crypto.DSA.setPublic (and the related DSA/X509 verification flow in src/dsa-2.0.js). An attacker can forge DSA signatures or X.509 certificates that X509.verifySignature() accepts by supplying malicious domain parameters such as g=1, y=1, and a fixed r=1, which make the verification equation true for any hash.",
       "cvss": {
@@ -33722,7 +33776,7 @@
         "org.webjars.npm:jsrsasign",
         "Red Hat Migration Toolkit for Virtualization 2.1",
         "Red Hat Migration Toolkit for Virtualization 2.9",
-        "Red Hat Red Hat Quay 3.1"
+        "Red Hat Red Hat Quay 3.10"
       ],
       "references": [
         "https://gist.github.com/Kr0emer/bf15ddc097176e951659a24a8e9002a7",
@@ -33737,7 +33791,7 @@
     {
       "id": "CVE-2026-4599",
       "published": "2026-03-23T06:16:21.513",
-      "lastModified": "2026-08-17T12:18:50.550",
+      "lastModified": "2026-09-10T13:20:21.650",
       "vulnStatus": "Modified",
       "description": "Versions of the package jsrsasign from 7.0.0 and before 11.1.1 are vulnerable to Incomplete Comparison with Missing Factors via the getRandomBigIntegerZeroToMax and getRandomBigIntegerMinToMax functions in src/crypto-1.1.js; an attacker can recover the private key by exploiting the incorrect compareTo checks that accept out-of-range candidates and thus bias DSA nonces during signature generation.",
       "cvss": {
@@ -33760,7 +33814,7 @@
         "org.webjars.npm:jsrsasign",
         "Red Hat Migration Toolkit for Virtualization 2.1",
         "Red Hat Migration Toolkit for Virtualization 2.9",
-        "Red Hat Red Hat Quay 3.1"
+        "Red Hat Red Hat Quay 3.10"
       ],
       "references": [
         "https://gist.github.com/Kr0emer/081681818b51605c91945126d74b4f20",
@@ -33775,7 +33829,7 @@
     {
       "id": "CVE-2026-4598",
       "published": "2026-03-23T06:16:21.300",
-      "lastModified": "2026-08-17T12:18:50.313",
+      "lastModified": "2026-09-10T13:20:20.940",
       "vulnStatus": "Modified",
       "description": "Versions of the package jsrsasign before 11.1.1 are vulnerable to Infinite loop via the bnModInverse function in ext/jsbn2.js when the BigInteger.modInverse implementation receives zero or negative inputs, allowing an attacker to hang the process permanently by supplying such crafted values (e.g., modInverse(0, m) or modInverse(-1, m)).",
       "cvss": {
@@ -33798,7 +33852,7 @@
         "org.webjars.npm:jsrsasign",
         "Red Hat Migration Toolkit for Virtualization 2.1",
         "Red Hat Migration Toolkit for Virtualization 2.9",
-        "Red Hat Red Hat Quay 3.1"
+        "Red Hat Red Hat Quay 3.10"
       ],
       "references": [
         "https://gist.github.com/Kr0emer/a1bf5cd4547cc630d2dcc5e761de8264",
@@ -36767,7 +36821,7 @@
     {
       "id": "CVE-2026-33186",
       "published": "2026-03-20T23:16:45.180",
-      "lastModified": "2026-09-09T13:19:17.693",
+      "lastModified": "2026-09-10T13:18:13.270",
       "vulnStatus": "Modified",
       "description": "gRPC-Go is the Go language implementation of gRPC. Versions prior to 1.79.3 have an authorization bypass resulting from improper input validation of the HTTP/2 `:path` pseudo-header. The gRPC-Go server was too lenient in its routing logic, accepting requests where the `:path` omitted the mandatory leading slash (e.g., `Service/Method` instead of `/Service/Method`). While the server successfully routed these requests to the correct handler, authorization interceptors (including the official `grpc",
       "cvss": {
@@ -48015,7 +48069,7 @@
     {
       "id": "CVE-2026-30922",
       "published": "2026-03-18T04:17:18.397",
-      "lastModified": "2026-09-09T13:19:12.773",
+      "lastModified": "2026-09-10T13:18:04.640",
       "vulnStatus": "Modified",
       "description": "pyasn1 is a generic ASN.1 library for Python. Prior to 0.6.3, the `pyasn1` library is vulnerable to a Denial of Service (DoS) attack caused by uncontrolled recursion when decoding ASN.1 data with deeply nested structures. An attacker can supply a crafted payload containing thousands of nested `SEQUENCE` (`0x30`) or `SET` (`0x31`) tags with \"Indefinite Length\" (`0x80`) markers. This forces the decoder to recursively call itself until the Python interpreter crashes with a `RecursionError` or consu",
       "cvss": {
@@ -48694,7 +48748,7 @@
     {
       "id": "CVE-2026-27459",
       "published": "2026-03-18T00:16:19.273",
-      "lastModified": "2026-08-31T13:17:33.347",
+      "lastModified": "2026-09-10T13:17:59.900",
       "vulnStatus": "Modified",
       "description": "pyOpenSSL is a Python wrapper around the OpenSSL library. Starting in version 22.0.0 and prior to version 26.0.0, if a user provided callback to `set_cookie_generate_callback` returned a cookie value greater than 256 bytes, pyOpenSSL would overflow an OpenSSL provided buffer. Starting in version 26.0.0, cookie values that are too long are now rejected.",
       "cvss": {
@@ -51125,7 +51179,7 @@
     {
       "id": "CVE-2026-28498",
       "published": "2026-03-16T18:16:07.717",
-      "lastModified": "2026-08-17T12:17:44.020",
+      "lastModified": "2026-09-10T13:18:01.797",
       "vulnStatus": "Modified",
       "description": "Authlib is a Python library which builds OAuth and OpenID Connect servers. Prior to version 1.6.9, a library-level vulnerability was identified in the Authlib Python library concerning the validation of OpenID Connect (OIDC) ID Tokens. Specifically, the internal hash verification logic (_verify_hash) responsible for validating the at_hash (Access Token Hash) and c_hash (Authorization Code Hash) claims exhibits a fail-open behavior when encountering an unsupported or unknown cryptographic algorit",
       "cvss": {
@@ -51150,7 +51204,7 @@
       "vendors": [
         "authlib authlib",
         "Red Hat Red Hat Ansible Automation Platform 2.6",
-        "Red Hat Red Hat Quay 3.1",
+        "Red Hat Red Hat Quay 3.10",
         "Red Hat Red Hat Quay 3.12",
         "Red Hat Red Hat Quay 3.15"
       ],
@@ -51167,7 +51221,7 @@
     {
       "id": "CVE-2026-27962",
       "published": "2026-03-16T18:16:07.383",
-      "lastModified": "2026-08-17T12:17:43.700",
+      "lastModified": "2026-09-10T13:18:01.463",
       "vulnStatus": "Modified",
       "description": "Authlib is a Python library which builds OAuth and OpenID Connect servers. Prior to version 1.6.9, a JWK Header Injection vulnerability in authlib's JWS implementation allows an unauthenticated attacker to forge arbitrary JWT tokens that pass signature verification. When key=None is passed to any JWS deserialization function, the library extracts and uses the cryptographic key embedded in the attacker-controlled JWT jwk header field. An attacker can sign a token with their own private key, embed",
       "cvss": {
@@ -51183,7 +51237,7 @@
       ],
       "vendors": [
         "authlib authlib",
-        "Red Hat Red Hat Quay 3.1",
+        "Red Hat Red Hat Quay 3.10",
         "Red Hat Red Hat Quay 3.14",
         "Red Hat Red Hat Quay 3.15",
         "Red Hat Red Hat Quay 3.16"
@@ -56041,7 +56095,7 @@
     {
       "id": "CVE-2026-32597",
       "published": "2026-03-13T19:55:09.500",
-      "lastModified": "2026-08-17T12:17:54.263",
+      "lastModified": "2026-09-10T13:18:12.027",
       "vulnStatus": "Modified",
       "description": "PyJWT is a JSON Web Token implementation in Python. Prior to 2.12.0, PyJWT does not validate the crit (Critical) Header Parameter defined in RFC 7515 \u00a74.1.11. When a JWS token contains a crit array listing extensions that PyJWT does not understand, the library accepts the token instead of rejecting it. This violates the MUST requirement in the RFC. This vulnerability is fixed in 2.12.0.",
       "cvss": {
@@ -78632,7 +78686,7 @@
     {
       "id": "CVE-2026-27137",
       "published": "2026-03-06T22:16:00.850",
-      "lastModified": "2026-09-09T13:19:04.873",
+      "lastModified": "2026-09-10T13:17:56.663",
       "vulnStatus": "Modified",
       "description": "When verifying a certificate chain which contains a certificate containing multiple email address constraints which share common local portions but different domain portions, these constraints will not be properly applied, and only the last constraint will be considered.",
       "cvss": {
@@ -78666,7 +78720,7 @@
     {
       "id": "CVE-2026-25679",
       "published": "2026-03-06T22:16:00.720",
-      "lastModified": "2026-09-09T13:18:55.003",
+      "lastModified": "2026-09-10T13:17:46.757",
       "vulnStatus": "Modified",
       "description": "url.Parse insufficiently validated the host/authority component and accepted some invalid URLs.",
       "cvss": {
@@ -79034,7 +79088,7 @@
     {
       "id": "CVE-2026-29063",
       "published": "2026-03-06T19:16:21.557",
-      "lastModified": "2026-09-09T13:19:10.573",
+      "lastModified": "2026-09-10T13:18:02.623",
       "vulnStatus": "Modified",
       "description": "Immutable.js provides many Persistent Immutable data structures. Prior to versions 3.8.3, 4.3.7, and 5.1.5, Prototype Pollution is possible in immutable via the mergeDeep(), mergeDeepWith(), merge(), Map.toJS(), and Map.toObject() APIs. This issue has been patched in versions 3.8.3, 4.3.7, and 5.1.5.",
       "cvss": {
@@ -80619,7 +80673,7 @@
     {
       "id": "CVE-2026-29074",
       "published": "2026-03-06T08:16:26.920",
-      "lastModified": "2026-08-17T12:17:46.120",
+      "lastModified": "2026-09-10T13:18:03.533",
       "vulnStatus": "Modified",
       "description": "SVGO, short for SVG Optimizer, is a Node.js library and command-line application for optimizing SVG files. From version 2.1.0 to before version 2.8.1, from version 3.0.0 to before version 3.3.3, and before version 4.0.1, SVGO accepts XML with custom entities, without guards against entity expansion or recursion. This can result in a small XML file (811 bytes) stalling the application and even crashing the Node.js process with JavaScript heap out of memory. This issue has been patched in versions",
       "cvss": {
@@ -80894,7 +80948,7 @@
     {
       "id": "CVE-2026-28802",
       "published": "2026-03-06T07:16:01.053",
-      "lastModified": "2026-08-17T12:17:44.350",
+      "lastModified": "2026-09-10T13:18:02.380",
       "vulnStatus": "Modified",
       "description": "Authlib is a Python library which builds OAuth and OpenID Connect servers. From version 1.6.5 to before version 1.6.7, previous tests involving passing a malicious JWT containing alg: none and an empty signature was passing the signature verification step without any changes to the application code when a failure was expected.. This issue has been patched in version 1.6.7.",
       "cvss": {
@@ -80911,7 +80965,7 @@
       "vendors": [
         "authlib authlib",
         "Red Hat Red Hat Ansible Automation Platform 2.6",
-        "Red Hat Red Hat Quay 3.1",
+        "Red Hat Red Hat Quay 3.10",
         "Red Hat Red Hat Quay 3.12",
         "Red Hat Red Hat Quay 3.15"
       ],
@@ -93727,8 +93781,8 @@
     {
       "id": "CVE-2026-20079",
       "published": "2026-03-04T18:16:24.230",
-      "lastModified": "2026-09-10T04:17:50.803",
-      "vulnStatus": "Modified",
+      "lastModified": "2026-09-10T12:48:17.580",
+      "vulnStatus": "Analyzed",
       "description": "A vulnerability in the web interface of Cisco Secure Firewall Management Center (FMC) Software could allow an unauthenticated, remote attacker to bypass authentication and execute script files on an affected device to obtain root access to the underlying operating system.&nbsp; This vulnerability is due to an improper system process that is created at boot time. An attacker could exploit this vulnerability by sending crafted HTTP requests to an affected device. A successful exploit could allow t",
       "cvss": {
         "score": 10.0,
@@ -102524,5 +102578,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-10T10:00:57.704505+00:00"
+  "updated_at": "2026-09-11T09:57:39.196664+00:00"
 }

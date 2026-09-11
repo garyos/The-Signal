@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T10:00:58.658695+00:00",
+  "generated_at": "2026-09-11T09:57:40.229508+00:00",
   "cves": [
     {
       "id": "CVE-2026-75650",
@@ -103,8 +103,8 @@
     {
       "id": "CVE-2026-87491",
       "published": "2026-09-09T01:17:05.887",
-      "lastModified": "2026-09-10T04:18:21.813",
-      "vulnStatus": "Modified",
+      "lastModified": "2026-09-10T12:49:02.630",
+      "vulnStatus": "Analyzed",
       "description": "Out of bounds write in V8 in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: Medium)",
       "cvss": {
         "score": 8.8,
@@ -275,10 +275,936 @@
       }
     },
     {
+      "id": "CVE-2026-86060",
+      "published": "2026-09-05T20:17:18.703",
+      "lastModified": "2026-09-11T04:18:02.840",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "RouterOS contains an argument-handling flaw in the SSH login path involving usernames that begin with a prohibited character, allowing for the trusted RouterOS policy mask to be changed, leading to privilege escalation. Exploitation requires an unauthenticated SSH session to reach the RouterOS login helper.This issue was fixed in versions: 6.49.21 (Long-term), 7.23.4 (Long-term) and 7.24.2 (Stable)",
+      "cvss": null,
+      "cwes": [
+        {
+          "id": "CWE-88",
+          "name": "Argument Injection"
+        }
+      ],
+      "vendors": [
+        "Mikrotik RouterOS"
+      ],
+      "references": [
+        "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-09-10",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      }
+    },
+    {
+      "id": "CVE-2026-67277",
+      "published": "2026-09-05T20:17:18.120",
+      "lastModified": "2026-09-11T04:17:44.900",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "RouterOS accepts a \"related\" btest connection before the corresponding primary session has completed authentication. An unauthenticated client can use this state to start an IPv4 UDP test. With \"random-data=false\", the sender transmits an uninitialized tail from a kernel packet buffer. A separate unchecked, inverted packet-size interval causes unsigned integer underflow, anomalously large fragmented output, and can restart the RouterOS kernel. This issue was fixed in versions: 6.49.21 (Long-term",
+      "cvss": null,
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Mikrotik RouterOS"
+      ],
+      "references": [
+        "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-09-10",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      }
+    },
+    {
+      "id": "CVE-2026-8778",
+      "published": "2026-09-11T04:18:04.617",
+      "lastModified": "2026-09-11T04:18:04.617",
+      "vulnStatus": "Received",
+      "description": "The MIPL Grouped Checkout Fields for WooCommerce \u2013 Customize & Organize Checkout Fields. plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the `mipl_wc_upload_file` function in all versions up to, and including, 1.2.1. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "mulika MIPL Grouped Checkout Fields for WooCommerce. Customize & Organize Checkout Fields."
+      ],
+      "references": [
+        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/mipl-wc-checkout-fields.php#L260",
+        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/mipl-wc-checkout-fields.php#L260"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82107",
+      "published": "2026-09-10T22:17:04.220",
+      "lastModified": "2026-09-10T22:17:04.220",
+      "vulnStatus": "Received",
+      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to obtain sensitive information and bypass security restrictions due to improper authentication.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "IBM DataStage on Cloud Pak for Data"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286562"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82100",
+      "published": "2026-09-10T22:17:04.090",
+      "lastModified": "2026-09-10T22:17:04.090",
+      "vulnStatus": "Received",
+      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to cause a denial of service due to a path traversal vulnerability.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-22",
+          "name": "Path Traversal"
+        }
+      ],
+      "vendors": [
+        "IBM DataStage on Cloud Pak for Data"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286562"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81204",
+      "published": "2026-09-10T22:17:01.580",
+      "lastModified": "2026-09-10T22:17:01.580",
+      "vulnStatus": "Received",
+      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 could allow a remote attacker to execute arbitrary code due to code injection during graph construction.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "IBM Langflow OSS"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286666"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80424",
+      "published": "2026-09-10T22:17:01.163",
+      "lastModified": "2026-09-10T22:17:01.163",
+      "vulnStatus": "Received",
+      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to create arbitrary files due to path traversal during archive extraction.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-22",
+          "name": "Path Traversal"
+        }
+      ],
+      "vendors": [
+        "IBM DataStage on Cloud Pak for Data"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286562"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-79724",
+      "published": "2026-09-10T22:17:00.530",
+      "lastModified": "2026-09-10T22:17:00.530",
+      "vulnStatus": "Received",
+      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 could allow a remote attacker to execute arbitrary OS commands due to improper neutralization of special elements used in an OS command.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "IBM Langflow OSS"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286666"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-78573",
+      "published": "2026-09-10T22:16:59.987",
+      "lastModified": "2026-09-10T22:16:59.987",
+      "vulnStatus": "Received",
+      "description": "IBM ContextForge MCP Gateway 1.0.0 through 1.0.7 could allow a remote attacker to gain administrative access due to the use of default credentials.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1392",
+          "name": "CWE-1392"
+        }
+      ],
+      "vendors": [
+        "IBM ContextForge MCP Gateway"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286834"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-45764",
+      "published": "2026-09-10T22:16:56.250",
+      "lastModified": "2026-09-10T22:16:56.250",
+      "vulnStatus": "Received",
+      "description": "Suricata is a network Intrusion Detection System, Intrusion Prevention System and Network Security Monitoring engine. Prior to versions 7.0.16 and 8.0.5, a protocol change while processing HTTP/2 traffic could lead to type confusion in Suricata. Crafted traffic may cause Suricata to crash, resulting in denial of service. Versions 7.0.16 and 8.0.5 contain a fix. As a workaround, disable HTTP/2 parsing if it is not required.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-843",
+          "name": "Type Confusion"
+        }
+      ],
+      "vendors": [
+        "OISF suricata"
+      ],
+      "references": [
+        "https://forum.suricata.io/t/suricata-8-0-5-and-7-0-16-released/6315",
+        "https://github.com/OISF/suricata/security/advisories/GHSA-5rvq-72r5-rqhr",
+        "https://redmine.openinfosecfoundation.org/issues/8492"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-19646",
+      "published": "2026-09-10T22:16:55.697",
+      "lastModified": "2026-09-10T22:16:55.697",
+      "vulnStatus": "Received",
+      "description": "IBM Common Licensing Agent 9.0, Agent 9.0.0.1, Agent 9.0.0.2, ART 9.0, ART 9.0.0.1, and ART 9.0.0.2 could allow a remote attacker to redirect users to an arbitrary domain due to improper validation of the HTTP Host header.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1149",
+          "name": "CWE-1149"
+        }
+      ],
+      "vendors": [
+        "IBM Common Licensing"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286490"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89094",
+      "published": "2026-09-10T21:17:53.160",
+      "lastModified": "2026-09-10T21:17:53.160",
+      "vulnStatus": "Received",
+      "description": "Forgejo before 16.0.4 allows remote code execution via a crafted template repository because template expansion on files in .forgejo/template is mishandled.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1336",
+          "name": "CWE-1336"
+        }
+      ],
+      "vendors": [
+        "Forgejo Forgejo"
+      ],
+      "references": [
+        "https://codeberg.org/forgejo/forgejo/milestone/139655",
+        "https://news.ycombinator.com/item?id=49645907"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-85025",
+      "published": "2026-09-10T21:17:51.990",
+      "lastModified": "2026-09-10T21:34:14.253",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 Langflow could allow an unauthenticated attacker to execute arbitrary code and access or modify chat sessions through publicly shared MCP project endpoints due to improper enforcement of public-flow security restrictions and session isolation controls.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "IBM Langflow OSS"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7286666"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-75940",
+      "published": "2026-09-10T21:17:44.080",
+      "lastModified": "2026-09-10T21:34:43.440",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was reported in Lenovo Health Android Application, distributed exclusively in the Chinese market, that could allow an attacker to access sensitive health-related information.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-798",
+          "name": "Use of Hard-Coded Credentials"
+        }
+      ],
+      "vendors": [
+        "Lenovo Health Application"
+      ],
+      "references": [
+        "https://iknow.lenovo.com.cn/detail/442248"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89086",
+      "published": "2026-09-10T20:17:32.113",
+      "lastModified": "2026-09-10T21:17:52.570",
+      "vulnStatus": "Received",
+      "description": "In the jose package before 0.11.0 for OCaml, library calls to validate an RSA signature only confirm that PKCS #1 decoding succeeds, and proceed to declare the signature valid without the required steps that involve the public key.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-347",
+          "name": "Improper Verification of Cryptographic Signature"
+        }
+      ],
+      "vendors": [
+        "OCaml jose"
+      ],
+      "references": [
+        "https://github.com/ulrikstrid/ocaml-jose/commit/cf17d991ec6a0d1997956b6c7799890f9c28879e",
+        "https://osv.dev/vulnerability/OSEC-2026-19"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89049",
+      "published": "2026-09-10T19:17:42.373",
+      "lastModified": "2026-09-10T19:44:21.980",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A server-side request forgery issue due to improper validation of equivalent address representations in the port forwarding to remote hosts functionality in Amazon AWS Systems Manager Agent (SSM Agent) before 3.3.4851.0 on all platforms might allow an authenticated remote user to bypass the remote destination denylist and reach link-local endpoints, potentially obtaining the temporary IAM role credentials of a managed instance and acting with that role's permissions from outside the instance, vi",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-918",
+          "name": "Server-Side Request Forgery (SSRF)"
+        },
+        {
+          "id": "CWE-1289",
+          "name": "CWE-1289"
+        }
+      ],
+      "vendors": [
+        "AWS Amazon SSM Agent"
+      ],
+      "references": [
+        "https://aws.amazon.com/security/security-bulletins/2026-107-aws/",
+        "https://github.com/aws/amazon-ssm-agent/releases/tag/3.3.4851.0",
+        "https://github.com/aws/amazon-ssm-agent/security/advisories/GHSA-w9jw-h72g-6hxc"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89042",
+      "published": "2026-09-10T18:18:15.910",
+      "lastModified": "2026-09-10T19:58:20.507",
+      "vulnStatus": "Deferred",
+      "description": "passport-saml-encrypted through 0.1.13 makes SAML signature verification conditional on an optional cert option, allowing attackers to bypass authentication by submitting unsigned SAML responses. Attackers can post forged SAML responses with arbitrary NameID and attributes to the assertion consumer service endpoint to receive authenticated profiles without valid signatures.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-347",
+          "name": "Improper Verification of Cryptographic Signature"
+        }
+      ],
+      "vendors": [
+        "krakenjs passport-saml-encrypted"
+      ],
+      "references": [
+        "https://github.com/krakenjs/passport-saml-encrypted",
+        "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L296",
+        "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L321",
+        "https://github.com/krakenjs/passport-saml-encrypted/issues/29"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88044",
+      "published": "2026-09-10T17:17:08.387",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. From 1.70.0 until 1.75.1, the serve/start RC interface accepts per-server proxyOpt.AuthProxy settings, and the FTP and S3 constructors in cmd/serve/ftp/ftp.go and cmd/serve/s3/server.go incorrectly check the process-global proxy.Opt.AuthProxy value instead. When the global value is empty, the request-local authentication proxy is ignored: FTP falls back to the fixed filesystem with usern",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "rclone rclone"
+      ],
+      "references": [
+        "https://github.com/rclone/rclone/commit/739403963abf6f58003c2becd5f7c4ad0d644153",
+        "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "https://github.com/rclone/rclone/security/advisories/GHSA-p569-5gjg-9cmj"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-85228",
+      "published": "2026-09-10T17:17:06.437",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "An integer overflow in the tensor buffer validation component in Amazon Deep Java Library (DJL) from 0.13.0 through 0.36.0 on all platforms might allow a remote unauthenticated actor to obtain information from adjacent process memory or cause a denial of service via a crafted tensor payload. To remediate this issue, users should upgrade to version 0.37.0 or above.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "Amazon Deep Java Library"
+      ],
+      "references": [
+        "https://aws.amazon.com/security/security-bulletins/2026-106-aws/",
+        "https://github.com/deepjavalibrary/djl/releases/tag/v0.37.0"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-68488",
+      "published": "2026-09-10T17:17:05.437",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A Time-of-check Time-of-use (TOCTOU) race condition leading to insecure symlink following in Plesk causes local privilege escalation to root via arbitrary file/directory ownership takeover.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.0",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-367",
+          "name": "Time-of-Check Time-of-Use Race Condition"
+        }
+      ],
+      "vendors": [
+        "WebPros Plesk"
+      ],
+      "references": [
+        "https://support.plesk.com/hc/en-us/articles/43248932867351-Vulnerability-in-Plesk-s-Backup-Manager-symlink-race-during-restore-allows-root-privilege-escalation"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-68487",
+      "published": "2026-09-10T17:17:05.310",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Path traversal in Plesk's Backup Manager causes arbitrary file write as root by an authenticated customer.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.0",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-36",
+          "name": "CWE-36"
+        }
+      ],
+      "vendors": [
+        "WebPros Plesk"
+      ],
+      "references": [
+        "https://support.plesk.com/hc/en-us/articles/43248841638551-Vulnerability-in-Plesk-s-Backup-Manager-unsigned-backup-header-allows-path-traversal"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-52098",
+      "published": "2026-09-10T17:17:04.940",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "An issue in Flowise 3.1.2 allows a remote attacker to execute arbitrary code via the /api/v1/prediction/<flowId> endpoint",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise",
+        "https://github.com/FlowiseAI/Flowise/blob/main/packages/server/src/utils/constants.ts",
+        "https://github.com/FlowiseAI/Flowise/blob/main/packages/server/src/utils/validateKey.ts"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88899",
+      "published": "2026-09-10T16:18:12.120",
+      "lastModified": "2026-09-10T19:58:20.507",
+      "vulnStatus": "Deferred",
+      "description": "knowns versions before 0.31.0 fail to properly validate the x-opencode-directory request header in the /api/opencode proxy endpoint. Remote attackers can supply arbitrary directory paths to execute file operations outside the project root on the host system.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-73",
+          "name": "CWE-73"
+        }
+      ],
+      "vendors": [
+        "knowns-dev knowns"
+      ],
+      "references": [
+        "https://github.com/knowns-dev/knowns/blob/v0.30.0/internal/server/server.go#L1283-L1296",
+        "https://github.com/knowns-dev/knowns/commit/37db0561b37b48b8bd035a417d7f1da6258ae657",
+        "https://github.com/knowns-dev/knowns/releases/tag/v0.31.0",
+        "https://github.com/knowns-dev/knowns/security/advisories/GHSA-9h2q-r9fh-f98w"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88018",
+      "published": "2026-09-10T16:18:08.913",
+      "lastModified": "2026-09-10T19:54:25.810",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. Prior to 1.75.1, rclone serve s3 configured with --auth-proxy but without --auth-key allows authPairMiddleware to register any client-chosen accessKeyID with an empty ws.s3Secret. gofakes3 then verifies the request\u2019s SigV4 signature against that same empty secret, while Server.auth passes the access key identifier as both the user and authentication value to the proxy without an independ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        },
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "rclone rclone"
+      ],
+      "references": [
+        "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd",
+        "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81468",
+      "published": "2026-09-10T16:17:58.157",
+      "lastModified": "2026-09-11T04:17:58.087",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Dell ThinOS 10, versions prior to 2605_10. 2616, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A high privileged attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Dell ThinOS 10"
+      ],
+      "references": [
+        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81467",
+      "published": "2026-09-10T16:17:58.040",
+      "lastModified": "2026-09-11T04:17:57.980",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Dell ThinOS 10, versions prior to 2605_10. 2616, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Dell ThinOS 10"
+      ],
+      "references": [
+        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81048",
+      "published": "2026-09-10T16:17:57.543",
+      "lastModified": "2026-09-11T04:17:57.060",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Dell ThinOS 10, versions prior to 2605_10.2616, contain an Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Remote Code execution",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
+      "vendors": [
+        "Dell ThinOS 10"
+      ],
+      "references": [
+        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81046",
+      "published": "2026-09-10T16:17:57.417",
+      "lastModified": "2026-09-11T04:17:56.037",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Dell ThinOS 10, versions prior to 2605_10.2616, contain a Protection Mechanism Failure vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Arbitrary Code Execution within the application context.",
+      "cvss": {
+        "score": 9.4,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        }
+      ],
+      "vendors": [
+        "Dell ThinOS 10"
+      ],
+      "references": [
+        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81800",
+      "published": "2026-09-10T15:17:46.360",
+      "lastModified": "2026-09-10T15:43:28.913",
+      "vulnStatus": "Deferred",
+      "description": "Unauthenticated SQL Injection in Verified Reviews (Avis V\u00e9rifi\u00e9s) <= 2.4.6 versions.",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "Par avisverifies Verified Reviews (Avis V\u00e9rifi\u00e9s)"
+      ],
+      "references": [
+        "https://patchstack.com/database/wordpress/plugin/netreviews/vulnerability/wordpress-verified-reviews-avis-verifies-plugin-2-4-6-sql-injection-vulnerability?_s_id=cve"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88877",
+      "published": "2026-09-10T14:17:16.023",
+      "lastModified": "2026-09-10T15:17:57.790",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Traefik is a HTTP reverse proxy and load balancer. In versions >= v3.7.0 and <= v3.7.11, the Kubernetes ingress-nginx provider mishandles Ingresses that carry both an authentication annotation and the nginx.ingress.kubernetes.io/from-to-www-redirect annotation. For such Ingresses the provider creates an additional 'sibling' router that matches on the host alone, carries only the RedirectRegex middleware, and still points at the parent router's protected backend service. Because RedirectRegex is ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-639",
+          "name": "CWE-639"
+        }
+      ],
+      "vendors": [
+        "traefik traefik"
+      ],
+      "references": [
+        "https://github.com/traefik/traefik/security/advisories/GHSA-cjr6-pf59-jq29",
+        "https://www.vulncheck.com/advisories/traefik-3.7.0-authentication-bypass-via-from-to-www-redirect"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88869",
+      "published": "2026-09-10T14:17:14.637",
+      "lastModified": "2026-09-10T16:18:10.990",
+      "vulnStatus": "Deferred",
+      "description": "AVideo through commit c3edcc274c389816d434acadac07ee78eaf330c1 contains a stored cross-site scripting vulnerability in the AD_Server plugin's log.php endpoint that fails to escape the label parameter before storage. An unauthenticated attacker can inject malicious HTML through the label parameter, which is later rendered unsanitized in the admin Ad Types report using jQuery .html(), allowing execution of arbitrary JavaScript in an administrator's browser session.",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-79",
+          "name": "Cross-Site Scripting (XSS)"
+        }
+      ],
+      "vendors": [
+        "WWBN AVideo"
+      ],
+      "references": [
+        "https://github.com/WWBN/AVideo/security/advisories/GHSA-h68w-3r38-wmm8",
+        "https://www.vulncheck.com/advisories/avideo-ad-server-stored-xss-via-log-php-label-parameter"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88864",
+      "published": "2026-09-10T14:17:12.187",
+      "lastModified": "2026-09-10T15:17:57.103",
+      "vulnStatus": "Deferred",
+      "description": "Capgo (capgo.app) fails to restrict direct write access to the public.sso_providers table exposed through Supabase PostgREST. A holder of an ordinary Capgo full API key can insert a row with status='active' and enforce_sso=true, bypassing the intended backend SSO provisioning route (supabase/functions/_backend/private/sso/providers.ts) and its controls: the Enterprise plan requirement, SSO provider creation via the Supabase Management API, DNS TXT domain-ownership verification, the pending_verif",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        }
+      ],
+      "vendors": [
+        "Cap-go capgo.app"
+      ],
+      "references": [
+        "https://github.com/Cap-go/capgo.app/security/advisories/GHSA-xg7v-83qv-qfff",
+        "https://www.vulncheck.com/advisories/capgo-sso-provider-authentication-bypass-via-postgrest-direct-write"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-9163",
+      "published": "2026-09-10T13:20:33.663",
+      "lastModified": "2026-09-10T15:13:07.090",
+      "vulnStatus": "Deferred",
+      "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in GIS Informatics GisLab Laboratory Management System allows SQL Injection. This issue affects GisLab Laboratory Management System: from 1.4.03 before 1.5.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "GIS Informatics GisLab Laboratory Management System"
+      ],
+      "references": [
+        "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1063"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-8323",
       "published": "2026-09-10T09:17:06.250",
-      "lastModified": "2026-09-10T09:17:06.250",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T16:18:12.997",
+      "vulnStatus": "Deferred",
       "description": "URL redirection to untrusted site ('open redirect') vulnerability in Armiya Information Technologies Ltd. Co. Access Control System allows Fake the Source of Data. This issue affects Access Control System: before Versiyon 2.",
       "cvss": {
         "score": 9.3,
@@ -304,8 +1230,8 @@
     {
       "id": "CVE-2026-88285",
       "published": "2026-09-10T09:17:05.563",
-      "lastModified": "2026-09-10T09:17:05.563",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T16:18:10.260",
+      "vulnStatus": "Deferred",
       "description": "GeoVision GV-LPC2211 V1.13 exposes a network-accessible PTZ control service without authentication, allowing remote clients to retrieve PTZ information and issue PTZ or raw serial commands.",
       "cvss": {
         "score": 9.4,
@@ -331,8 +1257,8 @@
     {
       "id": "CVE-2026-88278",
       "published": "2026-09-10T09:17:04.787",
-      "lastModified": "2026-09-10T09:17:04.787",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T16:18:09.483",
+      "vulnStatus": "Deferred",
       "description": "GeoVision GV-LPC2211 V1.13 fails to enforce WS-Security UsernameToken freshness or nonce reuse protection, allowing a captured PasswordDigest token to be replayed for subsequent ONVIF operations.",
       "cvss": {
         "score": 9.8,
@@ -358,15 +1284,20 @@
     {
       "id": "CVE-2026-59679",
       "published": "2026-09-10T09:17:02.883",
-      "lastModified": "2026-09-10T09:17:02.883",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T15:43:03.760",
+      "vulnStatus": "Awaiting Analysis",
       "description": "fs_read_glyphs() in the libXfont2 font-server client (src/fc/fserve.c) indexes the per-character encoding[] array using num_chars from the FS_QueryXBitmaps16 reply, but that array was allocated with a size derived from num_extents in the separate FS_QueryXExtents16 reply. The two CARD32 fields are never cross-checked. A malicious or compromised font server can send a small num_extents (e.g. 1) in the extents reply, then a large num_chars (e.g. 100000) in the bitmaps reply. This causes attacker-c",
       "cvss": {
         "score": 9.0,
         "version": "3.1",
         "severity": "CRITICAL"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
       "vendors": [
         "SUSE Container suse/kiosk/tigervnc-x11vnc:1.14-63.8",
         "SUSE Container suse/kiosk/xorg:21.1-83.7",
@@ -384,15 +1315,20 @@
     {
       "id": "CVE-2026-44950",
       "published": "2026-09-10T09:17:02.490",
-      "lastModified": "2026-09-10T09:17:02.490",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T19:17:27.730",
+      "vulnStatus": "Awaiting Analysis",
       "description": "fs_read_glyphs() in the libXfont2 font-server client (src/fc/fserve.c) copies each glyph's bitmap into a single buffer. Existing checks validates only that the source slice (position, length) lies within the source bitmap buffer. It does not check whether the running destination cursor has exceeded the allocation. A malicious font server can send overlapping source offsets -- for example 1000 glyphs each referencing {position:0, length:64} with nbytes=64. Each individual source range passes the ",
       "cvss": {
         "score": 9.0,
         "version": "3.1",
         "severity": "CRITICAL"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-122",
+          "name": "CWE-122"
+        }
+      ],
       "vendors": [
         "SUSE Container suse/kiosk/tigervnc-x11vnc:1.14-63.8",
         "SUSE Container suse/kiosk/xorg:21.1-83.7",
@@ -408,10 +1344,66 @@
       }
     },
     {
+      "id": "CVE-2026-80352",
+      "published": "2026-09-10T08:16:59.070",
+      "lastModified": "2026-09-10T16:17:57.120",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Camel K. A YAML injection vulnerability in custom resource configuration allows an authorized CR author to inject arbitrary Kubernetes objects, potentially enabling unauthorized resource creation with the privileges of the operator. This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2. Users are recommended to upgrade to version 2.9.3, 2.10.2 or 2.11.0, which fixes the issue.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Camel K"
+      ],
+      "references": [
+        "https://camel.apache.org/security/CVE-2026-80352.html",
+        "http://www.openwall.com/lists/oss-security/2026/09/10/15"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80351",
+      "published": "2026-09-10T08:16:58.947",
+      "lastModified": "2026-09-10T16:17:56.967",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Improper neutralization of directives in dynamically evaluated code ('eval injection') vulnerability in Apache Camel K. An improper neutralization of directives in dynamically evaluated Maven configuration allows tenant-controlled repository content to influence code execution within the operator pod, potentially enabling tenants to execute arbitrary code with the privileges of the operator. This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2. Users are recommen",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-95",
+          "name": "CWE-95"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Camel K"
+      ],
+      "references": [
+        "https://camel.apache.org/security/CVE-2026-80351.html",
+        "http://www.openwall.com/lists/oss-security/2026/09/10/14"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-7188",
       "published": "2026-09-10T08:16:57.893",
-      "lastModified": "2026-09-10T08:16:57.893",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T15:13:07.090",
+      "vulnStatus": "Deferred",
       "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in Armiya Information Technologies Ltd. Co. Access Control System allows SQL Injection. This issue affects Access Control System: before Versiyon 2.",
       "cvss": {
         "score": 9.8,
@@ -435,10 +1427,179 @@
       }
     },
     {
+      "id": "CVE-2026-78361",
+      "published": "2026-09-10T07:17:03.143",
+      "lastModified": "2026-09-10T15:13:07.090",
+      "vulnStatus": "Deferred",
+      "description": "The zipMoney(Zip Co) Payments Plugin for WooCommerce WordPress plugin before 2.4.0 does not perform any authorisation checks on one of its front-end request handlers, and does not restrict which option name a caller may supply, allowing unauthenticated users to delete arbitrary WordPress options. This can be used to destroy site and access control configuration, deactivate every installed zipMoney(Zip Co) Payments Plugin for WooCommerce WordPress plugin before 2.4.0, and take the site offline.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Unknown zipMoney(Zip Co) Payments Plugin for WooCommerce"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/8b9a00f5-d7f5-447d-b109-d15e2cde3885/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-77770",
+      "published": "2026-09-10T07:17:02.943",
+      "lastModified": "2026-09-10T15:13:07.090",
+      "vulnStatus": "Deferred",
+      "description": "The miniOrange 2FA WordPress plugin before 6.3.1, miniOrange 2FA WordPress plugin before 19.3 does not require a validated transaction before deleting site options whose names come from unauthenticated request input, allowing any visitor to delete arbitrary options, which can lock every administrator out of the dashboard or deactivate every miniOrange 2FA WordPress plugin before 6.3.1, miniOrange 2FA WordPress plugin before 19.3 on the site.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Unknown miniOrange 2FA"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/68bc7294-1ee6-44a9-9995-3b23b921f750/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-84939",
+      "published": "2026-09-10T06:17:06.460",
+      "lastModified": "2026-09-10T16:17:58.687",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Path traversal vulnerability in Apache FreeMarker template loading mechanism, if the attacker can specify an arbitrary malformed locale identifier to FreeMarker, and the localized lookup configuration setting is enabled (it's by default enabled). This issue affects Apache FreeMarker from 2.2.0 through 2.3.34. Users are recommended to upgrade to version 2.3.35. Disabling localized lookup in previous versions also mitigates this. Note that even in versions affected by this vulnerability, the files",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-23",
+          "name": "CWE-23"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache FreeMarker"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/hrd7o2ylwkkswdyhyzllgqt0f80kyd5y",
+        "http://www.openwall.com/lists/oss-security/2026/09/08/2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-67593",
+      "published": "2026-09-10T05:17:01.560",
+      "lastModified": "2026-09-10T16:17:45.273",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "A remote attacker can craft an Openwire RemoveSubscriptionInfo command to cause the deletion of a queue on the Artemis broker before the connection authentication and authorization stage or at any time thereafter. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Artemis",
+        "Apache Software Foundation Apache ActiveMQ Artemis"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/zlglnsg8s5xv8n56d15dm5mf00h2d8xs",
+        "http://www.openwall.com/lists/oss-security/2026/09/10/6"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-57967",
+      "published": "2026-09-10T05:17:01.443",
+      "lastModified": "2026-09-10T16:17:16.243",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "An unauthenticated remote attacker can craft a CORE protocol SESSION_REATTACH packet to steal an existing session and assume ongoing execution of the previously authenticated session. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Artemis",
+        "Apache Software Foundation Apache ActiveMQ Artemis"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/fxfjqrdsnksw5f17zs3yqo864lblgv6y",
+        "http://www.openwall.com/lists/oss-security/2026/09/10/5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-49364",
+      "published": "2026-09-10T05:17:01.230",
+      "lastModified": "2026-09-10T16:17:13.750",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "An unauthenticated network-adjacent attacker can leverage discovery to capture cluster administrative credentials during the initial cluster connection handshake. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Artemis",
+        "Apache Software Foundation Apache ActiveMQ Artemis"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/4qbgcz3k38q30bfbf7hphtomrdc8l8n8",
+        "http://www.openwall.com/lists/oss-security/2026/09/10/3"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-19583",
       "published": "2026-09-10T03:16:59.010",
-      "lastModified": "2026-09-10T03:16:59.010",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-11T04:17:24.930",
+      "vulnStatus": "Awaiting Analysis",
       "description": "Velociraptor allows some sensitive artifacts to be gated by additional permissions. For example, the Linux.Sys.BashShell artifact allows arbitrary command execution on endpoints, and so it requires the EXECVE permission to schedule. However, no such check was implemented for client monitoring artifacts. Additionally there was no requirement that client monitoring artifacts carry the CLIENT_EVENTS type. This allows any user who can schedule client monitoring artifacts to also schedule otherwise r",
       "cvss": {
         "score": 9.9,
@@ -465,8 +1626,8 @@
     {
       "id": "CVE-2026-18351",
       "published": "2026-09-10T02:16:34.180",
-      "lastModified": "2026-09-10T02:16:34.180",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T14:39:13.757",
+      "vulnStatus": "Deferred",
       "description": "The Drag and Drop File Upload for Elementor Forms plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 1.6.0 via the elementor_file_upload function. This is due to insufficient file type validation in the is_file_type_valid() function, which uses the attacker-controlled 'type' parameter as regex keys in the MIME allowlist, allowing blacklist bypass via a crafted extension that sanitize_file_name() later normalizes to a PHP extension. This makes it pos",
       "cvss": {
         "score": 9.8,
@@ -495,8 +1656,8 @@
     {
       "id": "CVE-2026-87931",
       "published": "2026-09-10T00:17:24.737",
-      "lastModified": "2026-09-10T06:17:06.770",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T14:39:13.757",
+      "vulnStatus": "Deferred",
       "description": "A vulnerability has been found in Behavioral Technology Group Pavlok Behavioral Conditioning Wearable up to 20260707. Impacted is an unknown function of the component Apple Notification Center Service Event Handler. The manipulation leads to buffer overflow. The attack must be carried out from within the local network. The vendor was contacted early about this disclosure but did not respond in any way.",
       "cvss": {
         "score": 9.6,
@@ -527,10 +1688,60 @@
       }
     },
     {
+      "id": "CVE-2026-71805",
+      "published": "2026-09-09T22:18:19.043",
+      "lastModified": "2026-09-10T16:17:53.127",
+      "vulnStatus": "Deferred",
+      "description": "An arbitrary file upload and path traversal vulnerability exists in LZ-litchi 1.0.0. Unauthenticated remote attackers can upload arbitrary files and write them outside the intended storage directory via the directory parameter in POST /app-api/infra/file/upload.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://github.com/W000i/vuln/issues/9"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-36433",
+      "published": "2026-09-09T21:17:01.983",
+      "lastModified": "2026-09-10T16:17:11.753",
+      "vulnStatus": "Deferred",
+      "description": "An issue in Actions Semiconductor Co. Ltd Tool- Media Player Utilities v.4.46 allows a physically proximate attacker execute arbitrary code via the Production.dll and RdiskUpgrade.exe components",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://bytescan.net/CVE/CVE-2026-36433.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-87911",
       "published": "2026-09-09T20:21:02.017",
-      "lastModified": "2026-09-09T20:21:02.017",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T15:53:23.707",
+      "vulnStatus": "Deferred",
       "description": "An OS command injection weakness in the read-only enforcement of the SQL validation component in Amazon awslabs postgres-mcp-server before 1.1.7 might allow an unauthenticated actor to execute operating system commands on the host of a self-managed PostgreSQL server by placing a crafted COPY ... TO PROGRAM statement into content that is processed when an authenticated user interacts with the MCP server in its default read-only mode. To remediate this issue, users should upgrade to version 1.1.7 ",
       "cvss": {
         "score": 9.6,
@@ -562,8 +1773,8 @@
     {
       "id": "CVE-2026-54694",
       "published": "2026-09-09T19:17:28.400",
-      "lastModified": "2026-09-09T19:17:28.400",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-10T16:17:14.873",
+      "vulnStatus": "Deferred",
       "description": "SkillTree is a micro-learning gamification platform. Prior to version 4.4.2, two independent code flaws combine into a single exploitable attack chain, with three distinct exploitation paths of escalating impact. `StringHighlighter.js` builds an HTML string by interpolating raw `value` substrings directly into a template literal with no HTML entity encoding. `HighlightedValue.vue` renders that string \u2014 and all unfiltered plain values \u2014 via Vue's `v-html` directive, which sets `innerHTML`. Separa",
       "cvss": {
         "score": 9.6,
@@ -635,7 +1846,7 @@
     {
       "id": "CVE-2026-79689",
       "published": "2026-09-09T16:17:07.197",
-      "lastModified": "2026-09-09T19:58:35.750",
+      "lastModified": "2026-09-11T04:17:53.167",
       "vulnStatus": "Analyzed",
       "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to script injection.",
       "cvss": {
@@ -721,7 +1932,7 @@
     {
       "id": "CVE-2026-79941",
       "published": "2026-09-09T15:17:10.363",
-      "lastModified": "2026-09-09T20:01:21.077",
+      "lastModified": "2026-09-11T04:17:53.393",
       "vulnStatus": "Analyzed",
       "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to script injection.",
       "cvss": {
@@ -804,7 +2015,7 @@
     {
       "id": "CVE-2026-80172",
       "published": "2026-09-09T12:17:15.057",
-      "lastModified": "2026-09-09T20:14:34.570",
+      "lastModified": "2026-09-11T04:17:55.830",
       "vulnStatus": "Analyzed",
       "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Insufficient Verification of Data Authenticity vulnerability. An unauthenticated attacker with remote access could exploit this, leading to unauthorized access. This vulnerability is considered critical as an unauthenticated attacker can repeatedly reuse a captured request to generate ADMIN access and refresh tokens. Since there is no nonce validation or time limit on reques",
       "cvss": {
@@ -859,6 +2070,98 @@
       ],
       "references": [
         "https://portal.perforce.com/s/cve/a91Qi000003CcxRIAS/unauthenticated-remote-code-execution-in-akana-policy-manager-console"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-56207",
+      "published": "2026-09-09T11:17:14.827",
+      "lastModified": "2026-09-10T20:38:05.413",
+      "vulnStatus": "Analyzed",
+      "description": "Signature of Bearer token is not verified in last step of SAML2 authentication for Impala's hs2-http interface, allowing altering user name and acting as another user. This issue affects Apache Impala: >=4.0.0. Users are recommended to upgrade to version 4.5.2, which fixes this issue.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-347",
+          "name": "Improper Verification of Cryptographic Signature"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Impala"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/20cov78py0zqzx7dyq39ktythkwn91zs",
+        "http://www.openwall.com/lists/oss-security/2026/09/08/22"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-41871",
+      "published": "2026-09-09T11:17:14.570",
+      "lastModified": "2026-09-10T20:38:51.250",
+      "vulnStatus": "Analyzed",
+      "description": "Missing Authorization, Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Apache Nutch Server (Nutch REST API). This issue affects Apache Nutch: from 1.10 through 1.22. Users are recommended to upgrade to version 1.23, which removes the Nutch Server. If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only. Please, also visit the Apache Nutch security advisories https://nutch.apache.org/",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-470",
+          "name": "CWE-470"
+        },
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Nutch"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/rbr63fx8vlrhzrfknq2l0mg0d0blsl54",
+        "http://www.openwall.com/lists/oss-security/2026/09/08/5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-41869",
+      "published": "2026-09-09T11:17:14.290",
+      "lastModified": "2026-09-10T20:39:59.543",
+      "vulnStatus": "Analyzed",
+      "description": "Missing Authorization, Improper Resource Shutdown and Job Interruption vulnerability in Apache Nutch Server (Nutch REST API). This issue affects Apache Nutch: from 1.10 through 1.22. Users are recommended to upgrade to version 1.23, which removes the Nutch Server. If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only. Please, also visit the Apache Nutch security advisories https://nutch.apache.org/documentation/security/ .",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-404",
+          "name": "CWE-404"
+        },
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Apache Software Foundation Apache Nutch"
+      ],
+      "references": [
+        "https://lists.apache.org/thread/ps4yhlvo6kdgmksdgb9lv1h4p0oy5fdj",
+        "http://www.openwall.com/lists/oss-security/2026/09/08/3"
       ],
       "kev": {
         "in_kev": false
@@ -1284,6 +2587,62 @@
       }
     },
     {
+      "id": "CVE-2026-87544",
+      "published": "2026-09-09T01:17:11.920",
+      "lastModified": "2026-09-10T12:51:36.277",
+      "vulnStatus": "Analyzed",
+      "description": "Incorrect authorization in Extensions in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to bypass system access restrictions into a privileged page via a crafted HTML page. (Chromium security severity: Low)",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
+        "https://issues.chromium.org/issues/542355360"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-87534",
+      "published": "2026-09-09T01:17:10.823",
+      "lastModified": "2026-09-10T19:17:38.190",
+      "vulnStatus": "Modified",
+      "description": "Missing authorization in WebView in Google Chrome on on Android prior to 153.0.8010.36 allowed a remote attacker leveraging social engineering to bypass system access restrictions via crafted network traffic. (Chromium security severity: Medium)",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
+        "https://issues.chromium.org/issues/513134173"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-87529",
       "published": "2026-09-09T01:17:10.240",
       "lastModified": "2026-09-10T04:18:24.343",
@@ -1530,1451 +2889,6 @@
       "references": [
         "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
         "https://issues.chromium.org/issues/520161438"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87492",
-      "published": "2026-09-09T01:17:05.993",
-      "lastModified": "2026-09-10T04:18:21.990",
-      "vulnStatus": "Analyzed",
-      "description": "Incorrect authorization in DevTools in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-863",
-          "name": "Incorrect Authorization"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/529123409"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87488",
-      "published": "2026-09-09T01:17:05.557",
-      "lastModified": "2026-09-10T04:18:21.470",
-      "vulnStatus": "Analyzed",
-      "description": "Use after free in WebGL in Google Chrome on on Android prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Critical)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/546252753"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87474",
-      "published": "2026-09-09T01:17:03.990",
-      "lastModified": "2026-09-10T04:18:20.577",
-      "vulnStatus": "Analyzed",
-      "description": "Use after free in Payments in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/554558968"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87470",
-      "published": "2026-09-09T01:17:03.560",
-      "lastModified": "2026-09-10T04:18:20.407",
-      "vulnStatus": "Analyzed",
-      "description": "Improper quantity validation in Tint in Google Chrome on on Mac prior to 153.0.8010.36 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Medium)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-1284",
-          "name": "CWE-1284"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/536446354"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87464",
-      "published": "2026-09-09T01:17:02.907",
-      "lastModified": "2026-09-10T04:18:20.080",
-      "vulnStatus": "Analyzed",
-      "description": "Use after free in WebGL in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Critical)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/544163112"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87455",
-      "published": "2026-09-09T01:17:01.883",
-      "lastModified": "2026-09-10T04:18:19.570",
-      "vulnStatus": "Analyzed",
-      "description": "Use after free in Aura in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Medium)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/542565481"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87448",
-      "published": "2026-09-09T01:17:01.113",
-      "lastModified": "2026-09-10T04:18:19.397",
-      "vulnStatus": "Analyzed",
-      "description": "Use after free in DevTools in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Low)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/516965176"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87438",
-      "published": "2026-09-09T01:17:00.027",
-      "lastModified": "2026-09-10T04:18:18.867",
-      "vulnStatus": "Analyzed",
-      "description": "Out of bounds write in WebGL in Google Chrome on on Android prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Critical)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-787",
-          "name": "Out-of-Bounds Write"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/548127218"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-53939",
-      "published": "2026-09-09T00:17:31.700",
-      "lastModified": "2026-09-09T16:17:03.240",
-      "vulnStatus": "Received",
-      "description": "OpenIDC/cjose is a C library implementing the Javascript Object Signing and Encryption (JOSE). In versions 0.6.1 through 0.6.2.5, when cjose encrypts a JWE using an AES-CBC-HMAC content-encryption algorithm (`A128CBC-HS256`, `A192CBC-HS384`, or `A256CBC-HS512`) together with any key-management algorithm that generates a fresh content-encryption key (CEK), the CEK is all zero bytes instead of being randomly generated. The resulting JWE is therefore encrypted and authenticated under a fixed, publi",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-321",
-          "name": "CWE-321"
-        },
-        {
-          "id": "CWE-330",
-          "name": "Use of Insufficiently Random Values"
-        }
-      ],
-      "vendors": [
-        "OpenIDC cjose"
-      ],
-      "references": [
-        "https://github.com/OpenIDC/cjose/commit/2a6e5bd969fa20059fb00913fb9f57d77ea6a4d9",
-        "https://github.com/OpenIDC/cjose/releases/tag/v0.6.2.6",
-        "https://github.com/OpenIDC/cjose/security/advisories/GHSA-f6wf-pqg3-6wqq"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-53581",
-      "published": "2026-09-08T23:17:24.550",
-      "lastModified": "2026-09-09T14:17:12.343",
-      "vulnStatus": "Received",
-      "description": "OPNsense is a FreeBSD based firewall and routing platform. Prior to version 26.1.9 of opnsense/core and version 26.4_20 of BE/opnsense/core, a path traversal vulnerability in the NTP configuration module allows an attacker to overwrite arbitrary files on the system as the root user. By manipulating the GPS or PPS serial port parameter, an attacker with access to the NTP configuration can escape the intended directory and force the system to write user-controlled data to any file on the filesyste",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        },
-        {
-          "id": "CWE-73",
-          "name": "CWE-73"
-        }
-      ],
-      "vendors": [
-        "opnsense core"
-      ],
-      "references": [
-        "https://github.com/opnsense/core/security/advisories/GHSA-872g-g543-j37m"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85982",
-      "published": "2026-09-08T21:18:47.293",
-      "lastModified": "2026-09-09T16:03:22.897",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "The Auth0 AD/LDAP Connector is vulnerable to stored Cross-Site Scripting (XSS) issues due to improper HTML encoding of data in search results and updater log content displayed in the admin panel. An authenticated user with privileges to modify directory attributes, or a low-privileged local user on the host where the connector is installed, could insert script content. This script content could then execute in an administrator's browser when they view the affected search results or update logs.",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-79",
-          "name": "Cross-Site Scripting (XSS)"
-        }
-      ],
-      "vendors": [
-        "Auth0 Auth0 AD/LDAP Connector"
-      ],
-      "references": [
-        "https://trust.okta.com/security-advisories/stored-cross-site-scripting-xss-in-auth0-ad-ldap-connector-cve-2026-85982"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-84869",
-      "published": "2026-09-08T20:18:51.147",
-      "lastModified": "2026-09-09T21:17:05.343",
-      "vulnStatus": "Deferred",
-      "description": "A condition in the ScreenConnect client may allow files to be transferred and executed through an active remote session without authorization or Host confirmation in certain circumstances. ScreenConnect servers are not impacted.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-269",
-          "name": "Improper Privilege Management"
-        },
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "ConnectWise ScreenConnect"
-      ],
-      "references": [
-        "https://github.com/ConnectWise-Advisories/Disclosures/tree/main/CVE-2026-84869",
-        "https://www.connectwise.com/company/trust/advisories",
-        "https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-75746",
-      "published": "2026-09-08T20:18:22.120",
-      "lastModified": "2026-09-09T10:21:15.203",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "ColdFusion is affected by an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker with high privileges could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "Adobe ColdFusion 2025",
-        "Adobe ColdFusion 2023"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/coldfusion/apsb26-119.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-48273",
-      "published": "2026-09-08T20:17:33.560",
-      "lastModified": "2026-09-09T14:17:12.240",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "ColdFusion is affected by an Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-95",
-          "name": "CWE-95"
-        }
-      ],
-      "vendors": [
-        "Adobe ColdFusion 2025",
-        "Adobe ColdFusion 2023"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/coldfusion/apsb26-119.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-19232",
-      "published": "2026-09-08T20:17:28.940",
-      "lastModified": "2026-09-10T04:17:48.773",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. A low-privileged attacker could exploit this vulnerability to gain elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-863",
-          "name": "Incorrect Authorization"
-        }
-      ],
-      "vendors": [
-        "Adobe Adobe Experience Manager as a Cloud Service",
-        "Adobe Adobe Experience Manager 6.5 LTS",
-        "Adobe Adobe Experience Manager 6.5"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/experience-manager/apsb26-98.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-82004",
-      "published": "2026-09-08T19:19:59.743",
-      "lastModified": "2026-09-09T13:56:01.877",
-      "vulnStatus": "Analyzed",
-      "description": "Adobe Campaign Classic (ACC) is affected by an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Adobe Adobe Campaign Classic"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/campaign/apsb26-142.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-76201",
-      "published": "2026-09-08T19:19:40.947",
-      "lastModified": "2026-09-09T13:55:29.733",
-      "vulnStatus": "Analyzed",
-      "description": "Adobe Commerce is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-79",
-          "name": "Cross-Site Scripting (XSS)"
-        }
-      ],
-      "vendors": [
-        "Adobe Adobe Commerce",
-        "Adobe Adobe Commerce B2B",
-        "Adobe Magento Open Source"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/magento/apsb26-138.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-76200",
-      "published": "2026-09-08T19:19:40.813",
-      "lastModified": "2026-09-09T13:55:26.180",
-      "vulnStatus": "Analyzed",
-      "description": "Adobe Commerce is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-79",
-          "name": "Cross-Site Scripting (XSS)"
-        }
-      ],
-      "vendors": [
-        "Adobe Adobe Commerce",
-        "Adobe Adobe Commerce B2B",
-        "Adobe Magento Open Source"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/magento/apsb26-138.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-66302",
-      "published": "2026-09-08T19:18:07.690",
-      "lastModified": "2026-09-09T10:17:12.300",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "External control of file name or path in Skype for Business allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-73",
-          "name": "CWE-73"
-        }
-      ],
-      "vendors": [
-        "Microsoft Skype for Business Server 2015 CU13",
-        "Microsoft Skype for Business Server 2019 CU8",
-        "Microsoft Skype for Business Server Subscription Edition CU1"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-66302"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-58822",
-      "published": "2026-09-08T19:18:02.780",
-      "lastModified": "2026-09-08T21:18:22.417",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "In multiple functions of ftsmooth.c, there is a possible memory safety issue due to improper casting. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-704",
-          "name": "CWE-704"
-        }
-      ],
-      "vendors": [
-        "Google Android"
-      ],
-      "references": [
-        "https://source.android.com/docs/security/bulletin/2026/2026-09-01"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-49921",
-      "published": "2026-09-08T19:17:59.193",
-      "lastModified": "2026-09-08T20:17:33.803",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "In multiple locations, there is a possible memory safety issue due to a heap buffer overflow. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Google Android"
-      ],
-      "references": [
-        "https://source.android.com/docs/security/bulletin/2026/2026-09-01"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83941",
-      "published": "2026-09-08T18:21:04.853",
-      "lastModified": "2026-09-08T18:39:13.460",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Missing authorization in Entra ID allows an authorized attacker to elevate privileges over a network.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Microsoft Microsoft Entra"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83941"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81376",
-      "published": "2026-09-08T18:20:53.813",
-      "lastModified": "2026-09-09T10:22:05.660",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Incomplete comparison with missing factors in Visual Studio Code allows an unauthorized attacker to bypass a security feature over a network.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-693",
-          "name": "CWE-693"
-        },
-        {
-          "id": "CWE-1023",
-          "name": "CWE-1023"
-        }
-      ],
-      "vendors": [
-        "Microsoft Visual Studio Code"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-81376"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-78510",
-      "published": "2026-09-08T18:20:46.200",
-      "lastModified": "2026-09-09T10:21:44.700",
-      "vulnStatus": "Analyzed",
-      "description": "Heap-based buffer overflow in Microsoft Office Word allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Microsoft 365 Apps for Enterprise",
-        "Microsoft Microsoft Office 2016",
-        "Microsoft Microsoft Office 2019",
-        "Microsoft Microsoft Office 365 for Mac",
-        "Microsoft Microsoft Office LTSC 2021"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-78510"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-78509",
-      "published": "2026-09-08T18:20:46.070",
-      "lastModified": "2026-09-09T18:59:36.657",
-      "vulnStatus": "Analyzed",
-      "description": "Heap-based buffer overflow in Microsoft Office Outlook allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Microsoft 365 Apps for Enterprise",
-        "Microsoft Microsoft Office 2019",
-        "Microsoft Microsoft Office 365 for Mac",
-        "Microsoft Microsoft Office LTSC 2021",
-        "Microsoft Microsoft Office LTSC 2024"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-78509"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-78445",
-      "published": "2026-09-08T18:20:42.263",
-      "lastModified": "2026-09-09T10:21:35.990",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Use after free in Windows Services for NFS ONCRPC XDR Driver allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2",
-        "Microsoft Windows Server 2012 R2 (Server Core installation)",
-        "Microsoft Windows Server 2016"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-78445"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-77493",
-      "published": "2026-09-08T18:20:35.187",
-      "lastModified": "2026-09-09T10:21:29.920",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Double free in Microsoft Graphics Component allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-415",
-          "name": "CWE-415"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-77493"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-73025",
-      "published": "2026-09-08T18:20:32.490",
-      "lastModified": "2026-09-09T10:21:12.700",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Weak authentication in Windows iSCSI allows an unauthorized attacker to bypass a security feature over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-1390",
-          "name": "CWE-1390"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-73025"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-73010",
-      "published": "2026-09-08T18:20:29.987",
-      "lastModified": "2026-09-09T17:17:36.090",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Use after free in Windows Failover Cluster allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows Server 2019",
-        "Microsoft Windows Server 2019 (Server Core installation)",
-        "Microsoft Windows Server 2022",
-        "Microsoft Windows Server 2025"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-73010"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-73009",
-      "published": "2026-09-08T18:20:29.810",
-      "lastModified": "2026-09-09T10:21:10.060",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Use after free in Windows Secure Socket Tunneling Protocol (SSTP) allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-73009"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-72983",
-      "published": "2026-09-08T18:20:25.073",
-      "lastModified": "2026-09-09T04:19:51.723",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Use after free in Windows Internet Connection Sharing (ICS) allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-72983"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-72982",
-      "published": "2026-09-08T18:20:24.863",
-      "lastModified": "2026-09-09T10:21:09.207",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Stack-based buffer overflow in Windows Netlogon allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-121",
-          "name": "CWE-121"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-72982"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-72979",
-      "published": "2026-09-08T18:20:24.310",
-      "lastModified": "2026-09-09T19:17:44.400",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Use after free in Windows DHCP Server allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-72979"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-70296",
-      "published": "2026-09-08T18:20:04.910",
-      "lastModified": "2026-09-09T17:17:32.747",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Out-of-bounds write in Windows Imaging Component allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-787",
-          "name": "Out-of-Bounds Write"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70296"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69910",
-      "published": "2026-09-08T18:20:02.250",
-      "lastModified": "2026-09-09T10:20:30.713",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Stack-based buffer overflow in Windows Hyper-V allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-121",
-          "name": "CWE-121"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69910"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69854",
-      "published": "2026-09-08T18:19:56.910",
-      "lastModified": "2026-09-08T18:39:51.493",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Improper authentication in Spring Cloud Azure allows an unauthorized attacker to elevate privileges over a network.",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        }
-      ],
-      "vendors": [
-        "Microsoft Spring Cloud Azure"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69854"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69845",
-      "published": "2026-09-08T18:19:56.003",
-      "lastModified": "2026-09-08T18:39:51.493",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Heap-based buffer overflow in Windows DHCP Server allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-20",
-          "name": "Improper Input Validation"
-        },
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69845"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69829",
-      "published": "2026-09-08T18:19:54.707",
-      "lastModified": "2026-09-09T10:20:20.210",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Heap-based buffer overflow in Windows Shell allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69829"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69824",
-      "published": "2026-09-08T18:19:54.190",
-      "lastModified": "2026-09-08T18:39:51.493",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Integer underflow (wrap or wraparound) in Microsoft Standard XPS allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        },
-        {
-          "id": "CWE-191",
-          "name": "CWE-191"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69824"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69819",
-      "published": "2026-09-08T18:19:53.570",
-      "lastModified": "2026-09-09T20:20:06.707",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Out-of-bounds write in RPC Runtime allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-787",
-          "name": "Out-of-Bounds Write"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69819"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69769",
-      "published": "2026-09-08T18:19:48.147",
-      "lastModified": "2026-09-09T19:17:42.100",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Heap-based buffer overflow in Windows HTTP Print Provider allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69769"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69768",
-      "published": "2026-09-08T18:19:47.970",
-      "lastModified": "2026-09-08T18:39:51.493",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Heap-based buffer overflow in Windows RNDIS allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69768"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69730",
-      "published": "2026-09-08T18:19:45.140",
-      "lastModified": "2026-09-10T04:18:14.773",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Use after free in Windows DNS allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69730"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69715",
-      "published": "2026-09-08T18:19:43.520",
-      "lastModified": "2026-09-08T18:39:34.660",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Out-of-bounds read in Windows Direct Show allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        },
-        {
-          "id": "CWE-125",
-          "name": "Out-of-Bounds Read"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69715"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69641",
-      "published": "2026-09-08T18:19:36.313",
-      "lastModified": "2026-09-09T10:19:38.377",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Missing authorization in Microsoft Exchange Server allows an authorized attacker to elevate privileges over a network.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Microsoft Microsoft Exchange Server 2016 Cumulative Update 23",
-        "Microsoft Microsoft Exchange Server 2019 Cumulative Update 14",
-        "Microsoft Microsoft Exchange Server 2019 Cumulative Update 15",
-        "Microsoft Microsoft Exchange Server Subscription Edition RTM"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69641"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69595",
-      "published": "2026-09-08T18:19:30.093",
-      "lastModified": "2026-09-09T10:19:22.983",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Use after free in Windows Services for NFS ONCRPC XDR Driver allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-416",
-          "name": "Use After Free"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows Server 2012",
-        "Microsoft Windows Server 2012 (Server Core installation)",
-        "Microsoft Windows Server 2012 R2",
-        "Microsoft Windows Server 2012 R2 (Server Core installation)",
-        "Microsoft Windows Server 2016"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69595"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69590",
-      "published": "2026-09-08T18:19:29.310",
-      "lastModified": "2026-09-09T10:19:21.190",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Remote Code Execution in Windows Routing and Remote Access Service (RRAS) allows attacker to gain an unauthorized access to victim's machine",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69590"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-69586",
-      "published": "2026-09-08T18:19:28.670",
-      "lastModified": "2026-09-09T18:17:00.260",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Integer overflow or wraparound in Microsoft Windows PDF allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        },
-        {
-          "id": "CWE-190",
-          "name": "Integer Overflow / Wraparound"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69586"
       ],
       "kev": {
         "in_kev": false
