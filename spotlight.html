@@ -2,6 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  // Sync, not deferred: must set data-theme before first paint or the page
+  // flashes cyber (the CSS default) before snapping to the viewer's saved
+  // theme. A localStorage failure (private-mode Safari, quota) silently
+  // falls back to cyber -- that's already today's look, so failing closed
+  // here is invisible.
+  try {
+    const t = localStorage.getItem("signal-theme");
+    if (t === "fractal" || t === "neutral") document.documentElement.setAttribute("data-theme", t);
+  } catch {}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>THE SIGNAL — Spotlight Dossier</title>
 <script>
@@ -544,6 +555,18 @@
   #stage.chrome-hidden .pause-btn,
   #stage.chrome-hidden .hint { display: none; }
 
+  /* Stacked directly above chrome-toggle, same left offset. Deliberately
+     exempt from .chrome-hidden for the same reason chrome-toggle itself is:
+     a viewer who hides the UI and dislikes fractal theme must still be able
+     to reach the one control that can change it back. */
+  .theme-toggle {
+    position: absolute; left: 14px; bottom: calc(max(18px, calc(env(safe-area-inset-bottom) + 6px)) + 34px); z-index: 24;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim);
+    background: rgba(16,21,29,0.92); border: 1px solid var(--line); padding: 7px 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--text-dim); }
+
   /* The shared Stormcast player (sp-bar, injected below) is fixed at the
      true viewport bottom, but pause-btn/speed-btn/hint are positioned
      relative to #stage rather than in normal document flow, so body padding
@@ -553,6 +576,7 @@
   .pause-btn { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .speed-btn { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .chrome-toggle { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px))); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
+  .theme-toggle { bottom: calc(var(--sp-bar-height, 0px) + max(18px, calc(env(safe-area-inset-bottom) + 6px)) + 34px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .hint { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
   .slide-actions { bottom: calc(var(--sp-bar-height, 0px) + max(12px, env(safe-area-inset-bottom)) + 56px); transition: bottom 0.24s cubic-bezier(0.22, 1, 0.36, 1); }
 
@@ -716,6 +740,8 @@
     #sp-speed-select { padding: 8px 5px; font-size: 10px; }
   }
 </style>
+<link rel="stylesheet" href="theme.css">
+<script src="theme-fractal.js" defer></script>
 </head>
 <body>
   <div class="stage" id="stage">
@@ -737,6 +763,7 @@
     <button class="pause-btn no-nav control-btn" id="pause-btn" aria-label="Pause auto-advance">‖</button>
     <button class="speed-btn no-nav control-btn" id="speed-btn" aria-label="Reading speed">◷ NORMAL</button>
     <button class="chrome-toggle no-nav control-btn" id="chrome-toggle" aria-label="Toggle on-screen controls">⊙ HIDE UI</button>
+    <button class="theme-toggle no-nav control-btn" id="theme-toggle" aria-label="Cycle site theme">◐ CYBER</button>
   </div>
 
 
@@ -2118,11 +2145,35 @@
   // lead) interleaves them by recency instead, and each slide's dayLabel
   // ("Today" or its own date) makes that ordering legible as you page
   // through rather than just an invisible sort order.
+  function cveSeverityRank(c) {
+    const sev = ((c.cvss && c.cvss.severity) || "").toUpperCase();
+    return sev === "CRITICAL" ? 0 : sev === "HIGH" ? 1 : 2;
+  }
+
+  function rankCvesBySeverityThenDate(list) {
+    return [...list].sort((a, b) => {
+      const sevDiff = cveSeverityRank(a) - cveSeverityRank(b);
+      if (sevDiff !== 0) return sevDiff;
+      return (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0);
+    });
+  }
+
+  // Ranks by severity (Critical before High) then recency, and reserves
+  // room within the cap for every actively-exploited (CISA KEV) CVE. A
+  // pure recency sort can silently push a KEV entry out once enough newer
+  // non-KEV Criticals/Highs have landed -- exactly the item this digest
+  // most needs to surface -- so KEV entries are selected first and the
+  // remaining slots filled by rank.
+  function selectDigestCves(cveList, cveCap) {
+    const ranked = rankCvesBySeverityThenDate(cveList);
+    const kev = ranked.filter(c => c.kev && c.kev.in_kev).slice(0, cveCap);
+    const rest = ranked.filter(c => !(c.kev && c.kev.in_kev)).slice(0, Math.max(0, cveCap - kev.length));
+    return rankCvesBySeverityThenDate([...kev, ...rest]);
+  }
+
   function mergeFeedAndCveByDate(feedEntries, cveList, feedOn, cveOn, feedCap, cveCap) {
     const feedPool = feedEntries.slice(0, feedCap);
-    const cveSorted = [...cveList]
-      .sort((a, b) => (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0))
-      .slice(0, cveCap);
+    const cveSorted = selectDigestCves(cveList, cveCap);
     const items = [
       ...feedPool.map(e => {
         const d = feedEntryDate(e);
@@ -2486,6 +2537,23 @@
     updateChromeToggle();
   }
 
+  // Cycles cyber -> fractal -> neutral -> cyber. theme-fractal.js watches
+  // data-theme itself (via MutationObserver) to mount/unmount the WebGL
+  // background, so this only needs to own the attribute + persistence +
+  // button label, not the rendering.
+  const THEME_KEY = "signal-theme";
+  const THEME_ORDER = ["cyber", "fractal", "neutral"];
+  const THEME_LABEL = { cyber: "◐ CYBER", fractal: "◑ FRACTAL", neutral: "◒ NEUTRAL" };
+
+  function cycleTheme() {
+    const cur = document.documentElement.getAttribute("data-theme") || "cyber";
+    const next = THEME_ORDER[(THEME_ORDER.indexOf(cur) + 1) % THEME_ORDER.length];
+    if (next === "cyber") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem(THEME_KEY, next); } catch {}
+    document.getElementById("theme-toggle").textContent = THEME_LABEL[next];
+  }
+
   function updateStatusUI() {
     const flag = document.getElementById("paused-flag");
     const btn = document.getElementById("pause-btn");
@@ -2652,6 +2720,11 @@
       toggleChrome();
     });
     updateChromeToggle();
+    document.getElementById("theme-toggle").addEventListener("click", (e) => {
+      e.stopPropagation();
+      cycleTheme();
+    });
+    document.getElementById("theme-toggle").textContent = THEME_LABEL[document.documentElement.getAttribute("data-theme") || "cyber"];
 
     // Capture phase so this runs before a link's own navigation (or an
     // asset-card's own click-to-expand handler) fires.
@@ -2994,6 +3067,8 @@
     updateSpeedButton();
     document.getElementById("chrome-toggle").addEventListener("click", (e) => { e.stopPropagation(); toggleChrome(); });
     updateChromeToggle();
+    document.getElementById("theme-toggle").addEventListener("click", (e) => { e.stopPropagation(); cycleTheme(); });
+    document.getElementById("theme-toggle").textContent = THEME_LABEL[document.documentElement.getAttribute("data-theme") || "cyber"];
 
     const root = document.getElementById("chat-scroll");
     root.addEventListener("scroll", () => {

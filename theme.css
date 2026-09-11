@@ -1,0 +1,82 @@
+/* Shared theme overlay for every THE SIGNAL page. Every page's own <style>
+   already declares the same core custom-property names in its own :root
+   (--ink, --ink-raised, --ink-input, --line, --text, --text-dim, and the
+   semantic accent set --red/--amber/--green/--blue/--purple/--teal/--orange/
+   --indigo/--rose). An html[data-theme="x"] selector has higher specificity
+   than a page's own :root, so these blocks reskin every page's existing
+   rules with zero edits to any page's own component CSS. "cyber" (today's
+   dark look) is simply the ABSENCE of data-theme -- no block needed here.
+
+   Semantic accents keep their hue family in every theme (red stays
+   danger/critical, amber stays warning/high, green stays safe/low, etc.) --
+   only lightness/saturation are tuned per theme's background. Never
+   reassign what a var means. */
+
+html[data-theme="neutral"] {
+  --ink:        #f3f5f8;
+  --ink-raised: #ffffff;
+  --ink-input:  #eaeef3;
+  --line:       #d5dbe2;
+  --text:       #171b21;  /* ~15.8:1 vs --ink */
+  --text-dim:   #5c6570;  /* ~5.4:1 vs --ink */
+
+  --amber:  #b45300;
+  --red:    #c22a42;
+  --blue:   #0d6fa8;
+  --green:  #0f7d4c;
+  --purple: #7b4fb0;
+  --teal:   #0a7d73;
+  --orange: #b04f0d;
+  --indigo: #4a52c9;
+  --rose:   #b8336a;
+}
+
+html[data-theme="fractal"] #stage {
+  background: none; /* let the mounted canvas show through instead of the stage's own gradient */
+}
+/* Every page's own CSS sets an opaque `background: var(--ink)` on `body`
+   itself, covering the full viewport. That paints as body's own background
+   box -- which happens regardless of any descendant's z-index, negative or
+   not, since it's body's OWN paint layer, not a stacking-order competitor
+   with its children. A negative-z-index canvas alone can't show through
+   that; body's background has to be neutralized too (confirmed by an actual
+   rendered screenshot showing the fractal fully hidden even after fixing
+   the canvas's z-index). html keeps its own background, which is harmless
+   here -- it's the page's absolute foundation layer, already below anything
+   stacking-ordered. */
+html[data-theme="fractal"] body {
+  background: transparent;
+}
+
+/* theme-fractal.js mounts/unmounts these; the rules just say what they look
+   like when present. The canvas's own CSS background is the fallback shown
+   whenever WebGL isn't available or hasn't drawn a frame yet -- never a
+   blank element.
+
+   NEGATIVE z-index, not 0/1: on the 9 flat pages, ordinary page content
+   (cards, headings) has no explicit `position`, which puts it in the CSS
+   painting order's "non-positioned in-flow" step -- and that step paints
+   BEFORE (below) any positioned descendant with z-index 0 or auto,
+   regardless of DOM order. A z-index of 0 therefore painted the canvas OVER
+   every card's opaque background, hiding it entirely (caught via an actual
+   rendered screenshot, not assumed). Negative z-index paints in the step
+   that comes before non-positioned content instead, which is what "sits
+   behind the page" actually requires. On spotlight.html/intel.html, #stage's
+   other children (.slides etc.) are already explicitly z-indexed 10+, so
+   this is still safely below them either way. */
+#signal-fractal-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, #1a0f2e 0%, #05050a 65%);
+}
+#signal-fractal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(5, 7, 10, 0.7);
+}

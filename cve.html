@@ -2,6 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  // Sync, not deferred: must set data-theme before first paint or the page
+  // flashes cyber (the CSS default) before snapping to the viewer's saved
+  // theme. A localStorage failure (private-mode Safari, quota) silently
+  // falls back to cyber -- that's already today's look, so failing closed
+  // here is invisible.
+  try {
+    const t = localStorage.getItem("signal-theme");
+    if (t === "fractal" || t === "neutral") document.documentElement.setAttribute("data-theme", t);
+  } catch {}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE SIGNAL — CVE Explorer</title>
 <script>
@@ -331,6 +342,8 @@
     #sp-speed-select { padding: 8px 5px; font-size: 10px; }
   }
 </style>
+<link rel="stylesheet" href="theme.css">
+<script src="theme-fractal.js" defer></script>
 </head>
 <body>
   <div class="frame">
