@@ -266,6 +266,13 @@
   .dossier-text {
     font-family: var(--font-sans); font-size: 15px; line-height: 1.7; color: var(--text);
     white-space: pre-line; max-width: 60ch;
+    /* overflow-wrap:anywhere only forces a break when a single unbroken run
+       (a long URL, an onion address, a hash) doesn't fit on its own line —
+       normal prose keeps wrapping at spaces exactly as before. word-break
+       would be the wrong tool here: it breaks ANY word wherever it hits the
+       line edge, including ordinary short words, not just the oversized
+       token that actually needs it. */
+    overflow-wrap: anywhere;
   }
   .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
   .meta-cell { border: 1px solid var(--line); padding: 10px 12px; }
@@ -592,7 +599,7 @@
     return {
       key: "leak-victim", duration: 7000,
       html: `
-        <div class="kind-tag victim">Ransomware Victim</div>
+        <div class="kind-tag victim">Potential Ransomware Victim</div>
         <div class="source-credit"><span class="sc-label">Source</span><span class="sc-name">ransomware.live</span></div>
         <div class="case-number">LEAK-SITE POSTING // ${escapeHtml(v.group.toUpperCase())}</div>
         <h1 class="redact">${escapeHtml(v.victim)}</h1>
@@ -764,7 +771,7 @@
 
   const FEATURE_LABELS = {
     feed: "Threat Feed", cve: "CVE Advisory", breaches: "Breach", attack: "APT Group",
-    leaktracker: "Ransomware Victim", podcast: "Podcast", analytics: "Analytics",
+    leaktracker: "Potential Ransomware Victim", podcast: "Podcast", analytics: "Analytics",
   };
 
   // Wraps an already-built slide as a locked teaser: strips its outbound
@@ -1032,12 +1039,18 @@
     const feedOn = featureFlag(cfg, "feed"), cveOn = featureFlag(cfg, "cve");
     const breachesOn = featureFlag(cfg, "breaches"), attackOn = featureFlag(cfg, "attack");
     const leaktrackerOn = featureFlag(cfg, "leaktracker"), podcastOn = featureFlag(cfg, "podcast");
+    // leaktracker.watermark_victims is a separate axis from leaktracker.enabled
+    // (see config/site.json's own _notes): it can lock/limit the digest's
+    // victim items on their own while leaktracker.html itself stays fully
+    // open. A disabled leaktracker feature already implies this regardless
+    // of what watermark_victims says.
+    const victimsOn = leaktrackerOn && featureOption(cfg, "leaktracker", "watermark_victims", false) !== true;
 
     const feedCap = feedOn ? resolveMaxItems(cfg, "feed", Infinity) : 1;
     const cveCap = cveOn ? resolveMaxItems(cfg, "cve", 10) : 1;
     const breachesCap = breachesOn ? resolveMaxItems(cfg, "breaches", 3) : 1;
     const attackCap = attackOn ? resolveMaxItems(cfg, "attack", DIGEST_GROUP_COUNT) : 1;
-    const leaktrackerCap = leaktrackerOn ? resolveMaxItems(cfg, "leaktracker", 5) : 1;
+    const leaktrackerCap = victimsOn ? resolveMaxItems(cfg, "leaktracker", 5) : 1;
     const podcastCap = podcastOn ? resolveMaxItems(cfg, "podcast", Infinity) : 1;
 
     const splashSlides = [splashSlide()];
@@ -1064,7 +1077,7 @@
     const victimPool = ((leaktracker && leaktracker.victims) || []).slice(0, leaktrackerCap);
     const victimSlides = victimPool.map(v => {
       const slide = victimTeaserSlide(v);
-      return leaktrackerOn ? slide : lockSlide(slide, "leaktracker");
+      return victimsOn ? slide : lockSlide(slide, "leaktracker");
     });
 
     let groupPool = [];
