@@ -9543,7 +9543,7 @@
     {
       "id": "CVE-2026-33871",
       "published": "2026-03-27T20:16:34.833",
-      "lastModified": "2026-09-09T13:19:32.517",
+      "lastModified": "2026-09-11T13:17:43.027",
       "vulnStatus": "Modified",
       "description": "Netty is an asynchronous, event-driven network application framework. In versions prior to 4.1.132.Final and 4.2.10.Final, a remote user can trigger a Denial of Service (DoS) against a Netty HTTP/2 server by sending a flood of `CONTINUATION` frames. The server's lack of a limit on the number of `CONTINUATION` frames, combined with a bypass of existing size-based mitigations using zero-byte frames, allows an user to cause excessive CPU consumption with minimal bandwidth, rendering the server unre",
       "cvss": {
@@ -36567,8 +36567,8 @@
     {
       "id": "CVE-2026-33243",
       "published": "2026-03-20T23:16:47.167",
-      "lastModified": "2026-06-17T10:37:10.827",
-      "vulnStatus": "Modified",
+      "lastModified": "2026-09-11T15:55:06.403",
+      "vulnStatus": "Analyzed",
       "description": "barebox is a bootloader. In barebox from version 2016.03.0 to before version 2026.03.1 (and the corresponding backport to 2025.09.3), an attacker could exploit a FIT signature verification vulnerability to trick the bootloader into booting different images than those that were verified as part of a signed configuration. mkimage(1) sets the hashed-nodes property of the FIT signature node to list which nodes of the FIT were hashed as part of the signing process as these will need to be verified la",
       "cvss": {
         "score": 8.2,
@@ -36821,7 +36821,7 @@
     {
       "id": "CVE-2026-33186",
       "published": "2026-03-20T23:16:45.180",
-      "lastModified": "2026-09-10T13:18:13.270",
+      "lastModified": "2026-09-11T13:17:30.047",
       "vulnStatus": "Modified",
       "description": "gRPC-Go is the Go language implementation of gRPC. Versions prior to 1.79.3 have an authorization bypass resulting from improper input validation of the HTTP/2 `:path` pseudo-header. The gRPC-Go server was too lenient in its routing logic, accepting requests where the `:path` omitted the mandatory leading slash (e.g., `Service/Method` instead of `/Service/Method`). While the server successfully routed these requests to the correct handler, authorization interceptors (including the official `grpc",
       "cvss": {
@@ -60649,6 +60649,36 @@
       }
     },
     {
+      "id": "CVE-2026-28384",
+      "published": "2026-03-12T15:16:27.247",
+      "lastModified": "2026-09-11T15:33:43.067",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "An improper sanitization of the compression_algorithm parameter in Canonical LXD allows an authenticated, unprivileged user to execute commands as the LXD daemon on the LXD server via API calls to the image and backup endpoints. This issue affected LXD from 4.12 through 6.6 and was fixed in the snap versions 5.0.6-e49d9f4 (channel 5.0/stable), 5.21.4-1374f39 (channel 5.21/stable), and 6.7-1f11451 (channel 6.0 stable). The channel 4.0/stable is not affected as it contains version 4.0.10.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Canonical lxd"
+      ],
+      "references": [
+        "https://discourse.ubuntu.com/t/lxd-authenticated-remote-code-execution-fixes-available/78365",
+        "https://github.com/canonical/lxd/commit/043696a13171ace7dd4c2b32d34ce039ab629052",
+        "https://github.com/canonical/lxd/commit/7046979645c2ce1b63b2f9e60ddf6cbc4c4b78f9",
+        "https://github.com/canonical/lxd/commit/b7b411caf5c4971bfe2386c72128f44d7e2aaf4f"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-21671",
       "published": "2026-03-12T15:16:13.630",
       "lastModified": "2026-06-17T10:18:53.893",
@@ -78720,7 +78750,7 @@
     {
       "id": "CVE-2026-25679",
       "published": "2026-03-06T22:16:00.720",
-      "lastModified": "2026-09-10T13:17:46.757",
+      "lastModified": "2026-09-11T13:17:13.637",
       "vulnStatus": "Modified",
       "description": "url.Parse insufficiently validated the host/authority component and accepted some invalid URLs.",
       "cvss": {
@@ -102578,5 +102608,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-11T09:57:39.196664+00:00"
+  "updated_at": "2026-09-12T09:32:22.459587+00:00"
 }

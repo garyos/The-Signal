@@ -2178,7 +2178,7 @@
     {
       "id": "CVE-2026-17615",
       "published": "2026-08-31T17:17:37.717",
-      "lastModified": "2026-09-04T08:17:15.400",
+      "lastModified": "2026-09-11T18:16:56.397",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in RESTEasy's SourceProvider. This vulnerability allows an unauthenticated attacker to perform an unauthenticated remote file read. By sending a specially crafted XML body with a DOCTYPE declaration referencing external entities to an endpoint that accepts application/xml and returns Source or StreamSource, the server can be tricked into resolving the entity and including sensitive file contents in the HTTP response. This is due to the SourceProvider.writeTo() method creating a ",
       "cvss": {
@@ -2193,16 +2193,17 @@
         }
       ],
       "vendors": [
-        "Red Hat Red Hat Build of Apache Camel 3.33 for Quarkus 3.33.3.SP1",
         "Red Hat Red Hat build of Apache Camel 4 for Quarkus 3",
         "Red Hat Red Hat build of Apicurio Registry 3",
         "Red Hat Red Hat build of Debezium 3",
-        "Red Hat Red Hat Build of Keycloak"
+        "Red Hat Red Hat Build of Keycloak",
+        "Red Hat Red Hat Enterprise Linux 8"
       ],
       "references": [
+        "https://access.redhat.com/errata/RHSA-2026:62515",
+        "https://access.redhat.com/errata/RHSA-2026:62555",
         "https://access.redhat.com/errata/RHSA-2026:63302",
-        "https://access.redhat.com/security/cve/CVE-2026-17615",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2507635"
+        "https://access.redhat.com/security/cve/CVE-2026-17615"
       ],
       "kev": {
         "in_kev": false
@@ -3956,7 +3957,7 @@
     {
       "id": "CVE-2026-12894",
       "published": "2026-08-31T13:17:20.753",
-      "lastModified": "2026-09-04T17:16:50.470",
+      "lastModified": "2026-09-11T18:16:56.137",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in the Qute template engine, which is used by Quarkus to generate dynamic content like HTML pages or emails. The issue exists in the component responsible for looking up data values (ReflectionValueResolver), which fails to properly block access to sensitive Java internal functions when processing certain data types like Enums. An attacker who can provide or influence the template text can exploit this bypass to take control of the server by executing unauthorized commands.",
       "cvss": {
@@ -3972,15 +3973,14 @@
       ],
       "vendors": [
         "Quarkus quarkus-qute",
-        "Red Hat Red Hat Build of Apache Camel 3.33 for Quarkus 3.33.3.SP1",
         "Red Hat Red Hat build of Apache Camel 4 for Quarkus 3",
-        "Red Hat Red Hat build of Quarkus",
         "Red Hat Red Hat JBoss Enterprise Application Platform Expansion Pack"
       ],
       "references": [
+        "https://access.redhat.com/errata/RHSA-2026:62515",
+        "https://access.redhat.com/errata/RHSA-2026:62555",
         "https://access.redhat.com/errata/RHSA-2026:63302",
-        "https://access.redhat.com/security/cve/CVE-2026-12894",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2491319"
+        "https://access.redhat.com/security/cve/CVE-2026-12894"
       ],
       "kev": {
         "in_kev": false
@@ -6351,8 +6351,8 @@
     {
       "id": "CVE-2026-82466",
       "published": "2026-08-29T17:17:58.910",
-      "lastModified": "2026-08-31T19:17:20.530",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-11T18:26:53.610",
+      "vulnStatus": "Deferred",
       "description": "Rodauth before 2.46.0 contains an authentication bypass vulnerability in the webauthn_login route that allows logged-in users to authenticate as any other account. Attackers can exploit improper account resolution logic that falls back to session account identifiers instead of validating the credential binding to complete authentication as arbitrary users.",
       "cvss": {
         "score": 8.7,
@@ -7208,8 +7208,8 @@
     {
       "id": "CVE-2026-81533",
       "published": "2026-08-28T22:16:54.930",
-      "lastModified": "2026-09-01T21:03:04.987",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:53:28.090",
+      "vulnStatus": "Analyzed",
       "description": "An application using the MongoDB BI Connector ODBC Driver may encounter a memory-safety issue when a submitted SQL statement contains an unusually long run of digits following a LIMIT clause. The issue occurs only on connections where the driver's optional prefetch setting is enabled, and stems from the driver copying the digit sequence into a fixed-size internal buffer without checking its length. A user able to influence the numeric portion of a LIMIT clause could cause the hosting application",
       "cvss": {
         "score": 7.1,
@@ -7235,8 +7235,8 @@
     {
       "id": "CVE-2026-81532",
       "published": "2026-08-28T22:16:54.793",
-      "lastModified": "2026-09-01T21:03:04.987",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:54:31.000",
+      "vulnStatus": "Analyzed",
       "description": "A user able to submit SQL through an application using the MongoDB Connector for BI ODBC driver can supply a positioned-cursor statement whose cursor name exceeds the size of an internal fixed-length buffer. Because the name length is not bounded before the driver builds its diagnostic message, memory adjacent to that buffer is overwritten with user-supplied content. This can terminate the hosting application process and may allow unintended code to run within it.",
       "cvss": {
         "score": 8.8,
@@ -8614,7 +8614,7 @@
     {
       "id": "CVE-2026-72984",
       "published": "2026-08-28T20:19:44.943",
-      "lastModified": "2026-09-01T23:30:58.867",
+      "lastModified": "2026-09-11T17:19:05.033",
       "vulnStatus": "Analyzed",
       "description": "Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
       "cvss": {
@@ -8629,7 +8629,11 @@
         }
       ],
       "vendors": [
-        "Microsoft Microsoft Edge (Chromium-based)"
+        "Microsoft Microsoft Edge (Chromium-based)",
+        "Microsoft Microsoft Edge for Android",
+        "Microsoft Microsoft Edge for iOS",
+        "Microsoft Microsoft Edge for Linux",
+        "Microsoft Microsoft Edge for MAC"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-72984"
@@ -19961,6 +19965,33 @@
       "vendors": [],
       "references": [
         "https://github.com/fangtang7/CVE/blob/main/DocSys/DocSys%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96.md"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-65646",
+      "published": "2026-08-26T22:16:26.020",
+      "lastModified": "2026-09-11T18:16:57.340",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Improper neutralization of special elements in in Plesk's DNS zone management functionality allows remote authenticated users to disclose arbitrary local files and escalate privileges.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.0",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        }
+      ],
+      "vendors": [
+        "WebPros Plesk"
+      ],
+      "references": [
+        "https://support.plesk.com/hc/en-us/articles/42877023875351-Vulnerability-CVE-2026-65646-in-Plesk-s-DNS-zone-management-functionality"
       ],
       "kev": {
         "in_kev": false
@@ -33765,8 +33796,8 @@
     {
       "id": "CVE-2026-75803",
       "published": "2026-08-25T13:19:29.570",
-      "lastModified": "2026-09-01T19:17:27.543",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:17:17.823",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: ChaCha20-Poly1305 and AES-OCB decryption with an empty ciphertext can report success without verifying the supplied authentication tag when the operation is finalized by calling the EVP_Cipher() function. Impact summary: Applications calling EVP_Cipher() on an empty ciphertext and expecting the call to check the AEAD tag may accept forged messages. CWE: CWE-354 (Improper Validation of Integrity Check Value) Description: The EVP_Cipher() API call for AEAD ciphers behaves like a one",
       "cvss": {
         "score": 9.1,
@@ -33795,8 +33826,8 @@
     {
       "id": "CVE-2026-63076",
       "published": "2026-08-25T13:19:26.543",
-      "lastModified": "2026-08-28T19:46:29.323",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:17:12.460",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: OpenSSL CMP password based protection verification only checks whether the protectionAlg parameter was not NULL and not its ASN.1 type, before treating it as a PBMParameter. A crafted message can contain a parameter of a different type, which is then dereferenced as an invalid pointer. Impact summary: A remote, unauthenticated attacker can crash an application acting as a CMP server that accepts PBM-protected messages, or a CMP client talking to a malicious or intercepted CMP serv",
       "cvss": {
         "score": 7.5,
@@ -33825,8 +33856,8 @@
     {
       "id": "CVE-2026-63075",
       "published": "2026-08-25T13:19:26.413",
-      "lastModified": "2026-08-28T19:46:29.323",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:17:05.403",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: When OpenSSL processes QUIC traffic from a peer that repeatedly sends ack-eliciting packets while not acknowledging ACK-only responses, the QUIC stack can retain ACK-only packet metadata for the lifetime of the connection. Impact summary: A remote peer that can complete a QUIC handshake can cause connection-scoped memory growth which may lead to Denial of Service through memory exhaustion, especially with sustained traffic or many concurrent QUIC connections. CWE: CWE-770: Allocat",
       "cvss": {
         "score": 7.5,
@@ -33855,8 +33886,8 @@
     {
       "id": "CVE-2026-63073",
       "published": "2026-08-25T13:19:26.147",
-      "lastModified": "2026-08-31T20:17:07.540",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:16:45.633",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: OpenSSL CMP response validation passed an unexpected response sender distinguished name directly as the format string to `ERR_raise_data()`. Impact summary: A malicious or intercepted CMP endpoint can crash a CMP client that enforces an expected sender or uses a pinned server certificate whose subject becomes the default expected sender. CWE: CWE-134 (Use of Externally-Controlled Format String) Description: When validating a received CMP message, ossl_cmp_msg_check_update() conver",
       "cvss": {
         "score": 9.8,
@@ -33885,8 +33916,8 @@
     {
       "id": "CVE-2026-63072",
       "published": "2026-08-25T13:19:26.010",
-      "lastModified": "2026-08-28T19:46:29.323",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:16:34.287",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: OpenSSL CMS decryption sizes the key-unwrap output buffer based on querying the unwrapped key size, but the AES-WRAP-PAD unwrap primitive can write and cleanse more bytes than that query reports, causing an 8-byte out-of-bounds heap write. Impact summary: An attacker who supplies a crafted CMS message can trigger a deterministic 8-byte out-of-bounds heap write when the victim decrypts it with CMS_decrypt(), corrupting the heap and typically resulting in a Denial of Service. CWE: C",
       "cvss": {
         "score": 7.5,
@@ -33943,8 +33974,8 @@
     {
       "id": "CVE-2026-54874",
       "published": "2026-08-25T13:19:24.033",
-      "lastModified": "2026-08-28T19:46:29.323",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:16:28.067",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: Receiving a DTLS record for a future epoch while a handshake is in progress causes OpenSSL to buffer far more memory than the record itself requires. Impact summary: A peer can use a small amount of network traffic to make an OpenSSL DTLS endpoint retain a disproportionately large amount of memory, which may lead to a Denial of Service. CWE: CWE-405: Asymmetric Resource Consumption (Amplification) Description: While a DTLS handshake is in progress, a peer may legitimately have alr",
       "cvss": {
         "score": 7.5,
@@ -34003,8 +34034,8 @@
     {
       "id": "CVE-2026-14457",
       "published": "2026-08-25T13:17:49.533",
-      "lastModified": "2026-08-28T19:46:29.323",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:14:35.873",
+      "vulnStatus": "Analyzed",
       "description": "Issue summary: In a server or client configuration with RFC7250 Raw Public Keys (RPKs) enabled, and only the private key (with no associated certificate) configured locally, a NULL pointer dereference may occur when the remote peer solicits raw public keys and also sends the typically omitted \"signature_algorithms_cert\" TLS extension. Impact summary: The impact is limited to a possible Denial of Service as a result of an application abort, no data disclosure or remote command execution are possi",
       "cvss": {
         "score": 7.5,
@@ -40243,8 +40274,8 @@
     {
       "id": "CVE-2026-66897",
       "published": "2026-08-24T10:16:39.767",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T15:28:53.323",
+      "vulnStatus": "Analyzed",
       "description": "A path traversal vulnerability in LXD's instance template processing allows an attacker with container edit permissions, or any user launching a crafted image, to overwrite arbitrary files on the host system as root. When processing target template paths specified in metadata.yaml, LXD validates the path against a confined os.Root directory handle but subsequently opens and creates the file using os.Create with an unconfined string path. This discrepancy between path resolution checks and file c",
       "cvss": {
         "score": 9.9,
@@ -45411,6 +45442,60 @@
       }
     },
     {
+      "id": "CVE-2026-69225",
+      "published": "2026-08-21T21:17:03.300",
+      "lastModified": "2026-09-11T17:58:14.710",
+      "vulnStatus": "Analyzed",
+      "description": "There is an information disclosure vulnerability in Esri Portal for ArcGIS versions 11.5 through 12.0 and earlier that may allow a remote, unauthenticated attacker to reflect sensitive information in a http response body.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        }
+      ],
+      "vendors": [
+        "Esri Portal for ArcGIS"
+      ],
+      "references": [
+        "https://www.esri.com/arcgis-blog/products/arcgis-enterprise/administration/august-2026-arcgis-security-bulletin"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69224",
+      "published": "2026-08-21T21:17:03.150",
+      "lastModified": "2026-09-11T17:59:56.997",
+      "vulnStatus": "Analyzed",
+      "description": "There is an information disclosure vulnerability in Esri Portal for ArcGIS versions 12.0 and earlier that may under difficult to reproduce circumstances allow a remote, unauthenticated attacker to reflect sensitive information in a http response body.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        }
+      ],
+      "vendors": [
+        "Esri Portal for ArcGIS"
+      ],
+      "references": [
+        "https://www.esri.com/arcgis-blog/products/arcgis-enterprise/administration/august-2026-arcgis-security-bulletin"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-68508",
       "published": "2026-08-21T21:17:02.963",
       "lastModified": "2026-09-09T21:06:39.057",
@@ -45675,8 +45760,8 @@
     {
       "id": "CVE-2026-54457",
       "published": "2026-08-21T21:17:00.267",
-      "lastModified": "2026-08-25T14:16:52.080",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-11T18:24:59.400",
+      "vulnStatus": "Awaiting Analysis",
       "description": "TensorZero is an open-source LLMOps platform that unifies an LLM gateway, observability, evaluation, optimization, and experimentation. Prior to 2026.6.0, the TensorZero Gateway /internal/object_storage endpoint accepts a caller-supplied JSON storage_path parameter that dynamically overrides the [object_storage] configuration. Selecting the filesystem storage type allows arbitrary files on the gateway filesystem to be read, including credential files. Selecting the s3_compatible storage type cau",
       "cvss": {
         "score": 7.7,
@@ -72219,8 +72304,8 @@
     {
       "id": "CVE-2026-70922",
       "published": "2026-08-18T21:17:50.043",
-      "lastModified": "2026-08-22T03:16:22.713",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T20:17:35.350",
+      "vulnStatus": "Analyzed",
       "description": "Vulnerability in the Oracle Financial Services Enterprise Case Management product of Oracle Financial Services Applications (component: Web UI). Supported versions that are affected are 8.0.8.2 and 8.1.2.11. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Financial Services Enterprise Case Management. Successful attacks of this vulnerability can result in takeover of Oracle Financial Services Enterprise Case Management. CVSS 3.1 B",
       "cvss": {
         "score": 8.8,
@@ -72354,8 +72439,8 @@
     {
       "id": "CVE-2026-70910",
       "published": "2026-08-18T21:17:48.870",
-      "lastModified": "2026-08-22T03:16:21.257",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T20:17:09.263",
+      "vulnStatus": "Analyzed",
       "description": "Vulnerability in the Siebel CRM Integration product of Oracle Siebel CRM (component: REST). Supported versions that are affected are 17.0-26.6. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Siebel CRM Integration. Successful attacks of this vulnerability can result in unauthorized access to critical data or complete access to all Siebel CRM Integration accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts). CVSS Vector: (C",
       "cvss": {
         "score": 7.5,
@@ -73770,8 +73855,8 @@
     {
       "id": "CVE-2026-70852",
       "published": "2026-08-18T21:17:41.210",
-      "lastModified": "2026-08-24T15:16:43.337",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T20:15:12.970",
+      "vulnStatus": "Analyzed",
       "description": "Vulnerability in the Oracle Demand Planning product of Oracle Supply Chain (component: Internal Operations). Supported versions that are affected are 12.1 and 12.2. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Demand Planning. Successful attacks of this vulnerability can result in unauthorized access to critical data or complete access to all Oracle Demand Planning accessible data as well as unauthorized update, insert or dele",
       "cvss": {
         "score": 8.2,
@@ -73797,8 +73882,8 @@
     {
       "id": "CVE-2026-70846",
       "published": "2026-08-18T21:17:40.430",
-      "lastModified": "2026-08-25T04:18:18.327",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T20:15:00.937",
+      "vulnStatus": "Analyzed",
       "description": "Vulnerability in the Oracle Demand Planning product of Oracle Supply Chain (component: Internal Operations). Supported versions that are affected are 12.1 and 12.2. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Demand Planning. While the vulnerability is in Oracle Demand Planning, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in unauthorized creation, del",
       "cvss": {
         "score": 9.6,
@@ -75947,8 +76032,8 @@
     {
       "id": "CVE-2026-70737",
       "published": "2026-08-18T21:17:26.440",
-      "lastModified": "2026-08-25T04:18:17.040",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T20:14:41.213",
+      "vulnStatus": "Analyzed",
       "description": "Vulnerability in the Oracle Enterprise Manager for Systems Infrastructure product of Oracle Enterprise Manager (component: Storage Server Management). Supported versions that are affected are 13.5 and 24.1. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Enterprise Manager for Systems Infrastructure. Successful attacks of this vulnerability can result in takeover of Oracle Enterprise Manager for Systems Infrastructure. CVSS 3.1 Ba",
       "cvss": {
         "score": 8.8,
@@ -94849,8 +94934,8 @@
     {
       "id": "CVE-2026-75056",
       "published": "2026-08-17T16:17:52.770",
-      "lastModified": "2026-08-28T21:29:30.987",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T13:09:34.317",
+      "vulnStatus": "Analyzed",
       "description": "In JetBrains IntelliJ IDEA before 2026.2.1 rCE via Markdown export tool was possible",
       "cvss": {
         "score": 7.8,
@@ -119643,8 +119728,8 @@
     {
       "id": "CVE-2026-66256",
       "published": "2026-08-13T15:19:56.557",
-      "lastModified": "2026-08-14T19:04:48.700",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T13:53:49.327",
+      "vulnStatus": "Analyzed",
       "description": "** UNSUPPORTED WHEN ASSIGNED ** Deserialization of Untrusted Data vulnerability in Apache Shindig. This issue affects Apache Shindig: all versions. Users with access to the Shindig REST API can send specially-crafted requests to trigger arbitrary code execution on the server. As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users. NOTE: This vulnerability only affects ",
       "cvss": {
         "score": 7.2,
@@ -124747,8 +124832,8 @@
     {
       "id": "CVE-2026-19003",
       "published": "2026-08-12T22:17:15.153",
-      "lastModified": "2026-08-28T21:16:15.740",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:54:13.050",
+      "vulnStatus": "Analyzed",
       "description": "A data source definition containing an over-length file path setting may cause the MongoDB BI Connector ODBC Driver setup dialog to write outside the bounds of an allocated buffer. The issue stems from an incorrect buffer capacity calculation in the dialog's file and folder selection handling, and is reached only when a user opens the setup dialog for such a data source and initiates a file or folder selection. Depending on build configuration, the result may range from abnormal process terminat",
       "cvss": {
         "score": 7.8,
@@ -124922,8 +125007,8 @@
     {
       "id": "CVE-2026-66898",
       "published": "2026-08-12T21:17:39.700",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T15:30:05.387",
+      "vulnStatus": "Analyzed",
       "description": "A path traversal vulnerability in LXD allows an attacker to manipulate file system paths during backup import and restore operations. When importing or restoring a backup archive, LXD fails to validate instance and storage volume names contained within the archive metadata. An attacker can exploit this flaw by supplying a crafted backup archive with malicious instance or volume names containing path traversal sequences, potentially allowing file access or overwriting outside the designated resto",
       "cvss": {
         "score": 9.9,
@@ -125010,8 +125095,8 @@
     {
       "id": "CVE-2026-19004",
       "published": "2026-08-12T21:17:37.577",
-      "lastModified": "2026-08-28T21:16:15.740",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:59:45.797",
+      "vulnStatus": "Analyzed",
       "description": "An application using the MongoDB BI Connector ODBC Driver may experience a memory-safety issue when processing output parameters from a stored procedure. Triggering this issue requires connecting to an untrusted or impersonated database server that returns crafted metadata. This may result in process termination, disclosure of process memory, or, under certain conditions, arbitrary code execution.",
       "cvss": {
         "score": 8.1,
@@ -125037,8 +125122,8 @@
     {
       "id": "CVE-2026-19002",
       "published": "2026-08-12T21:17:37.440",
-      "lastModified": "2026-08-28T21:16:15.740",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:52:43.157",
+      "vulnStatus": "Analyzed",
       "description": "A missing bounds check when parsing stored procedure parameter metadata in the MongoDB BI Connector ODBC Driver can result in an out-of-bounds write in the client application process. Triggering this issue requires control over the server the driver connects to, or the ability to respond in its place, in order to return malformed metadata. The resulting memory corruption may cause the client application to terminate abnormally or, under certain conditions, execute unintended code.",
       "cvss": {
         "score": 8.1,
@@ -125064,8 +125149,8 @@
     {
       "id": "CVE-2026-19001",
       "published": "2026-08-12T21:17:37.307",
-      "lastModified": "2026-08-28T21:16:15.740",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:53:56.270",
+      "vulnStatus": "Analyzed",
       "description": "The MongoDB BI Connector ODBC Driver may write outside the bounds of a fixed-size buffer when an application supplies an unusually long catalog, schema, or object name to a metadata retrieval function. This may result in memory corruption within the calling application's process, leading to abnormal termination and, under certain conditions, the potential for arbitrary code execution.",
       "cvss": {
         "score": 9.8,
@@ -125175,8 +125260,8 @@
     {
       "id": "CVE-2026-16033",
       "published": "2026-08-12T21:17:35.880",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T18:23:30.367",
+      "vulnStatus": "Analyzed",
       "description": "A path traversal vulnerability in LXD allows an attacker to achieve arbitrary host file read or unconstrained file creation. When processing image metadata templates, LXD fails to properly sanitize or restrict template file paths from escaping the instance templates directory (specifically affecting virtual machine / QEMU driver execution paths). An attacker can exploit this flaw by providing a crafted image archive with malicious template directives containing path traversal sequences, causing ",
       "cvss": {
         "score": 8.5,
@@ -126017,8 +126102,8 @@
     {
       "id": "CVE-2026-63300",
       "published": "2026-08-12T20:17:47.953",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:21:14.557",
+      "vulnStatus": "Analyzed",
       "description": "An improper validation vulnerability in the instancePostMigration function in lxd/instance_post.go of LXD allows an authenticated attacker with can_create_instances permissions on a restricted project to bypass project-level security restrictions. When migrating an instance between projects, LXD fails to validate the instance's configuration against the target project's enforced restrictions (such as restricted.containers.lowlevel, restricted.devices.*, and restricted.networks.access). An attack",
       "cvss": {
         "score": 9.9,
@@ -126046,8 +126131,8 @@
     {
       "id": "CVE-2026-63299",
       "published": "2026-08-12T20:17:47.830",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:26:06.753",
+      "vulnStatus": "Analyzed",
       "description": "An authorization bypass vulnerability in LXD allows an authenticated user to bypass project-level disk and volume limits. Two related code paths fail to verify resource limits during volume operations: the storagePoolVolumeTypePostMove function omits the limits.AllowVolumeCreation check before moving a volume across projects, and volume snapshot restore operations skip the AllowVolumeUpdate check when the configuration is nil (Config == nil). An attacker can exploit these flaws to allocate stora",
       "cvss": {
         "score": 9.9,
@@ -126073,8 +126158,8 @@
     {
       "id": "CVE-2026-63298",
       "published": "2026-08-12T20:17:47.713",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:20:11.603",
+      "vulnStatus": "Analyzed",
       "description": "An improper neutralization of special elements vulnerability in LXD's NVIDIA instance configuration handling allows an authenticated attacker to inject arbitrary configuration directives. By supplying newline characters within the 'nvidia.driver.capabilities' or 'nvidia.require.*' configuration values, an attacker can manipulate the generated lxc.conf file. This flaw enables the attacker to execute arbitrary code on the host system with the privileges of the LXD daemon.",
       "cvss": {
         "score": 9.9,
@@ -126100,8 +126185,8 @@
     {
       "id": "CVE-2026-63297",
       "published": "2026-08-12T20:17:47.583",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:18:18.907",
+      "vulnStatus": "Analyzed",
       "description": "An authorization bypass vulnerability in LXD due to a timing flaw during configuration merging allows an authenticated attacker to bypass target project restrictions during cross-project instance copies. When copying an instance to a target project, LXD performs restriction checks before configuration merging is complete, creating a time-of-check to time-of-use (TOCTOU) condition. An attacker can exploit this flaw to copy instances with disallowed high-privilege configurations into restricted pr",
       "cvss": {
         "score": 9.9,
@@ -126131,8 +126216,8 @@
     {
       "id": "CVE-2026-63296",
       "published": "2026-08-12T20:17:47.437",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:15:30.017",
+      "vulnStatus": "Analyzed",
       "description": "An authorization bypass vulnerability in LXD allows an authenticated attacker to bypass target project restrictions during instance migration. When migrating an instance to a target project, LXD accepts configuration overrides without validating the new configuration against the target project's enforced restrictions. An attacker can exploit this flaw to move instances with disallowed high-privilege configurations into restricted projects, bypassing security controls.",
       "cvss": {
         "score": 9.9,
@@ -126158,8 +126243,8 @@
     {
       "id": "CVE-2026-63294",
       "published": "2026-08-12T20:17:47.187",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:11:30.647",
+      "vulnStatus": "Analyzed",
       "description": "A link following vulnerability in LXD allows an attacker to achieve root command execution on the host system. During the import or unpacking of crafted image or backup archives, LXD fails to properly validate and confine the backup.yaml file when it exists as a symbolic link. An attacker can exploit this flaw by providing a malicious archive with a symlinked backup.yaml file, causing LXD to process unconfined configuration metadata and execute arbitrary commands with root privileges.",
       "cvss": {
         "score": 9.9,
@@ -126212,8 +126297,8 @@
     {
       "id": "CVE-2026-62420",
       "published": "2026-08-12T20:17:46.897",
-      "lastModified": "2026-08-28T15:24:38.600",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-09-11T14:32:59.620",
+      "vulnStatus": "Analyzed",
       "description": "An authorization bypass vulnerability in LXD allows an authenticated attacker to bypass target project security restrictions during cross-project instance migrations. When moving an instance cross-project to a different cluster member via POST /1.0/instances/{name} with migration: true, project: <target>, and target: <member>, the destination node skips all project restriction checks because the request arrives as an internal cluster notification. An attacker can exploit this to introduce disall",
       "cvss": {
         "score": 9.9,
@@ -126988,8 +127073,8 @@
     {
       "id": "CVE-2026-69106",
       "published": "2026-08-12T18:18:11.273",
-      "lastModified": "2026-08-28T21:29:30.987",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T15:36:31.117",
+      "vulnStatus": "Analyzed",
       "description": "A low-privileged user may poison cached artifact metadata under specific conditions, potentially causing consumers to retrieve untrusted content.",
       "cvss": {
         "score": 8.8,
@@ -127077,8 +127162,8 @@
     {
       "id": "CVE-2026-42018",
       "published": "2026-08-12T18:17:29.473",
-      "lastModified": "2026-08-28T21:29:30.987",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-12T04:16:33.587",
+      "vulnStatus": "Analyzed",
       "description": "JFrog Artifactory could return an internal anonymous-user token to an unauthenticated caller when anonymous access is disabled, potentially exposing sensitive resources.",
       "cvss": {
         "score": 7.5,
@@ -127096,10 +127181,15 @@
       ],
       "references": [
         "https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases",
-        "https://docs.jfrog.com/releases/docs/jfrog-security-advisories"
+        "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-42018",
+        "https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201"
       ],
       "kev": {
-        "in_kev": false
+        "in_kev": true,
+        "date_added": "2026-09-11",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
       }
     },
     {
@@ -128037,8 +128127,8 @@
     {
       "id": "CVE-2026-69105",
       "published": "2026-08-12T16:17:20.093",
-      "lastModified": "2026-08-28T21:29:30.987",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T18:49:47.130",
+      "vulnStatus": "Analyzed",
       "description": "An unauthenticated attacker may cause untrusted package content to be cached under specific conditions, potentially affecting artifact integrity and availability.",
       "cvss": {
         "score": 8.1,
@@ -145305,6 +145395,33 @@
       ],
       "references": [
         "https://documentation.commvault.com/securityadvisories/CV_2026_07_5.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-13738",
+      "published": "2026-08-11T12:17:37.923",
+      "lastModified": "2026-09-11T14:25:13.003",
+      "vulnStatus": "Analyzed",
+      "description": "CommServe contained an authorization bypass vulnerability affecting a limited set of command execution operations. Software customers upgrade to resolved maintenance release. Update all Commvault installations, including Commserve, Webserver, Command Center, Media Agents, Clients and HyperScale X.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "Commvault Commvault Cloud"
+      ],
+      "references": [
+        "https://documentation.commvault.com/securityadvisories/CV_2026_07_9.html"
       ],
       "kev": {
         "in_kev": false
@@ -174299,6 +174416,97 @@
       }
     },
     {
+      "id": "CVE-2026-70478",
+      "published": "2026-08-04T20:16:54.610",
+      "lastModified": "2026-09-11T21:14:26.357",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the POST /api/v1/oauth2-credential/refresh/:credentialId endpoint is included in WHITELIST_URLS and requires no authentication. The endpoint decrypts the stored credential, sends a refresh request to the configured OAuth provider with the client secret and refresh token, and returns the refreshed access_token in the response body. An attacker with a credential ID can use the token to access t",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-qgvm-j2hm-6m38"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70477",
+      "published": "2026-08-04T20:16:54.473",
+      "lastModified": "2026-09-11T21:09:26.917",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, a prompt injection sent to a chatflow using a CSV Agent node can cause the LLM to respond with a malicious Python script that bypasses the blocklist validator and executes in an unsandboxed Pyodide environment. The specific flaw exists within the run method of the CSV_Agents class, where untrusted data is used to construct an LLM prompt and the resulting pythonCode is validated by validatePyt",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/f4e2794f6a576b94578f2fdafbf49c2fb304626c",
+        "https://github.com/FlowiseAI/Flowise/pull/6499",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-5xvg-pmgg-3mxr"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70476",
+      "published": "2026-08-04T20:16:54.330",
+      "lastModified": "2026-09-11T21:09:17.230",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, several organization billing endpoints in packages/server/src/enterprise/routes/organization.route.ts and packages/server/src/enterprise/controllers/organization.controller.ts accept attacker-controlled Stripe subscriptionId values without verifying that the identifier belongs to the authenticated user's organization. An authenticated attacker can perform unauthorized Stripe subscription oper",
+      "cvss": {
+        "score": 8.2,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        },
+        {
+          "id": "CWE-639",
+          "name": "CWE-639"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/4d7899d02ca370a5510406be5c91483085a412f9",
+        "https://github.com/FlowiseAI/Flowise/pull/6321",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-gmmw-qg98-6j6p"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-18810",
       "published": "2026-08-04T20:16:51.360",
       "lastModified": "2026-08-12T20:59:00.027",
@@ -174414,6 +174622,72 @@
       ],
       "references": [
         "https://support.lenovo.com/my/en/solutions/ht509976-lenovo-xclarity-orchestrator"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70474",
+      "published": "2026-08-04T19:16:54.977",
+      "lastModified": "2026-09-11T21:07:42.970",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to 3.1.3, Flowise has three OAuth2 credential endpoints that look up credentials by id alone with no workspaceId filter. The authorize, callback, and refresh handlers query the Credential table by id only; callback and refresh are whitelisted from authentication. This allows any authenticated user to initiate OAuth2 flows against credentials belonging to other workspaces, allows an unauthent",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-wch5-xp77-fxg4"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70473",
+      "published": "2026-08-04T19:16:54.830",
+      "lastModified": "2026-09-11T21:05:40.573",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to 3.1.3, Flowise GET /api/v1/upsert-history returns the entire server-wide upsert history instead of being scoped to the requesting user, tenant, or workspace. The response can exceed 100MB and includes sensitive configuration data, including Vector Store settings such as Qdrant Server URL and collection name. The observed behavior indicates missing or insufficient authorization checks, wor",
+      "cvss": {
+        "score": 8.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        },
+        {
+          "id": "CWE-202",
+          "name": "CWE-202"
+        },
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/d81483b70c997ddf981acc9c49fbd9a02fa345cd",
+        "https://github.com/FlowiseAI/Flowise/pull/6170",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-fr6g-7cq8-fg82"
       ],
       "kev": {
         "in_kev": false
@@ -183046,8 +183320,8 @@
     {
       "id": "CVE-2026-67297",
       "published": "2026-08-01T13:16:58.967",
-      "lastModified": "2026-08-31T20:25:28.573",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:04:27.790",
+      "vulnStatus": "Analyzed",
       "description": "FreeRDP before 3.29.0 fails to enforce the RESPONSE_SIZE_LIMIT when processing Transfer-Encoding: chunked HTTP responses in http_response_recv_body(). Attackers controlling a malicious RD Gateway endpoint can send oversized chunked response bodies to exhaust client memory resources without triggering the configured size limit.",
       "cvss": {
         "score": 7.5,
@@ -183074,8 +183348,8 @@
     {
       "id": "CVE-2026-67296",
       "published": "2026-08-01T13:16:58.830",
-      "lastModified": "2026-08-31T20:25:28.573",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-09-11T21:03:57.027",
+      "vulnStatus": "Analyzed",
       "description": "FreeRDP before 3.29.0 contains a denial of service vulnerability in the RDPEI server channel handler that fails to validate maximum PDU body length before stream allocation. A malicious RDP client can send a header-only RDPEI message with a large declared body length to force excessive memory allocation on the server.",
       "cvss": {
         "score": 7.5,
@@ -183848,5 +184122,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-11T09:57:39.734775+00:00"
+  "updated_at": "2026-09-12T09:32:23.276006+00:00"
 }
