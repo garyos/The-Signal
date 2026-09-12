@@ -500,7 +500,17 @@
   // guessed). This formula has no fallback branch to trip because it has
   // no singularity in the first place.
   function computeCameraBasis(yaw, forward) {
-    const right = { x: Math.cos(yaw), y: 0, z: -Math.sin(yaw) };
+    // Sign matters here: this has to land on the same right/up directions
+    // cross(forward, worldUp) would have produced, since that's what the
+    // rest of the input code (mousemove's yaw -=, A/D strafing off
+    // basis.right) was already built and tuned against. Getting it backwards
+    // doesn't change yaw/pitch tracking itself -- it flips what gets
+    // rendered and which way A/D strafes, which reads as "up is down, left
+    // is right" even though the underlying look direction is tracking
+    // correctly (confirmed by deriving this closed form directly from
+    // cross(forward, worldUp) and checking it matches at multiple yaw/pitch
+    // samples, not by guessing a sign).
+    const right = { x: -Math.cos(yaw), y: 0, z: Math.sin(yaw) };
     const up = V.norm(V.cross(right, forward));
     return { forward, right, up };
   }
@@ -801,16 +811,30 @@
   }
 
   const lockOverlay = document.getElementById("lock-overlay");
+  // Shown once, up front, to explain the controls. After that it must stay
+  // gone for good -- it's full-screen and catches every click (that's how
+  // it turns a click into requestPointerLock), so re-showing it on every
+  // Esc-unlock silently ate all clicks meant for waypoint/label pills and
+  // made Esc look like a dead end with no way back to interacting with
+  // anything (confirmed as the actual mechanism, not assumed: the overlay
+  // has no pointer-events:none, so it sits above the pills at z-index 50
+  // and intercepts the click before it ever reaches them). Esc releasing
+  // the lock should just hand back a normal cursor for clicking pills --
+  // #mouselook-btn is the deliberate, already-built way to re-engage flight
+  // input when the player wants it back.
+  let instructionsSeen = false;
+  function dismissLockOverlay() { instructionsSeen = true; lockOverlay.hidden = true; }
   lockOverlay.addEventListener("click", () => { canvas.requestPointerLock && canvas.requestPointerLock(); });
   // Pointer Lock has no touch equivalent -- pointerlockchange would never
   // fire on a touch device, permanently stranding touch players behind
   // this overlay (confirmed via an actual touch-simulated test, not
   // assumed). A touch anywhere on the overlay just dismisses it directly;
   // the touch-fallback flight controls work independently of `locked`.
-  lockOverlay.addEventListener("touchstart", () => { lockOverlay.hidden = true; }, { passive: true });
+  lockOverlay.addEventListener("touchstart", () => { dismissLockOverlay(); }, { passive: true });
   document.addEventListener("pointerlockchange", () => {
     locked = document.pointerLockElement === canvas;
-    lockOverlay.hidden = locked;
+    if (locked) dismissLockOverlay();
+    else if (!instructionsSeen) lockOverlay.hidden = false;
   });
   document.addEventListener("mousemove", (e) => {
     if (!locked) return;
@@ -827,7 +851,7 @@
     // would otherwise be stuck staring at this full-screen overlay forever
     // -- the very first flight input dismisses it, independent of mouse
     // lock (which stays available separately via a click).
-    if (MOVEMENT_KEYS.has(e.code)) lockOverlay.hidden = true;
+    if (MOVEMENT_KEYS.has(e.code)) dismissLockOverlay();
   });
   window.addEventListener("keyup", (e) => { keys[e.code] = false; });
 
