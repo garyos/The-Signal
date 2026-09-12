@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>THREAT HUNTER</title>
+<meta name="description" content="THREAT HUNTER — free-flight through a galaxy of MITRE ATT&CK threat-actor networks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    THREAT HUNTER is a standalone, currently-unlinked page built on top of
+    recon.html's node/edge rendering and per-group data sampling -- but
+    recon's entire SCRIPTED camera-timeline engine (buildShotList,
+    buildTimeline, the revisit/orbital-bounce logic) is deliberately NOT
+    reused here: there is no predetermined tour, the player flies freely
+    and the camera IS player input. Only the static layout/data/rendering
+    primitives (buildFlight, layoutNodes, computeCameraBasis, project,
+    drawNode/drawEdge, the dossier) carry over, verbatim where possible.
+  */
+  :root {
+    --ink: #050608;
+    --ink-panel: rgba(6,12,18,0.82);
+    --line: rgba(0,255,200,0.18);
+    --text: #e8fbff;
+    --text-dim: #7fa8b8;
+    --c-group: #b026ff;
+    --c-campaign: #ff00aa;
+    --c-technique: #ff2751;
+    --c-tactic: #7c4dff;
+    --c-software: #00f0ff;
+    --c-mitigation: #00ff9c;
+    --font-display: "Chakra Petch", "IBM Plex Mono", ui-monospace, monospace;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: var(--ink); color: var(--text); font-family: var(--font-mono);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .controls { transition: opacity 0s, transform 0s !important; }
+  }
+
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; cursor: crosshair; }
+
+  /* ---------- reticle ---------- */
+  #reticle {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 22px; height: 22px; z-index: 15; pointer-events: none; opacity: 0.55;
+  }
+  #reticle::before, #reticle::after { content: ""; position: absolute; background: var(--text); }
+  #reticle::before { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+  #reticle::after { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+
+  /* ---------- brand ---------- */
+  .brand {
+    position: fixed; top: max(18px, env(safe-area-inset-top)); left: max(22px, env(safe-area-inset-left));
+    z-index: 30; pointer-events: none;
+  }
+  .brand .bw { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.08em; color: var(--text); }
+  .brand .bw span { color: var(--c-technique); }
+  .brand .bt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; color: var(--text-dim); opacity: 0.65; margin-top: 2px; text-transform: uppercase; }
+
+  /* ---------- pointer-lock prompt ---------- */
+  #lock-overlay {
+    position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    background: rgba(2,3,5,0.72); backdrop-filter: blur(4px); cursor: pointer; text-align: center; padding: 24px;
+  }
+  #lock-overlay[hidden] { display: none; }
+  #lock-overlay .lo-title { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: 0.04em; }
+  #lock-overlay .lo-sub { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); max-width: 380px; line-height: 1.6; }
+  #lock-overlay .lo-keys { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; justify-content: center; }
+  #lock-overlay .lo-key { font-family: var(--font-mono); font-size: 10px; border: 1px solid var(--line); border-radius: 3px; padding: 4px 9px; color: var(--text); }
+
+  /* ---------- HUD panel chrome (shared corner-bracket look) ---------- */
+  .hud-panel {
+    position: fixed; z-index: 20; background: var(--ink-panel); border: 1px solid var(--line);
+    backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%);
+    padding: 16px 18px;
+  }
+  .hud-panel::before, .hud-panel::after, .hud-panel .hb-br1, .hud-panel .hb-br2 { content: ""; position: absolute; width: 14px; height: 14px; pointer-events: none; }
+  .hud-panel::before { top: -1px; left: -1px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; }
+  .hud-panel::after { top: -1px; right: -1px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; }
+  .hud-panel .hb-br1 { bottom: -1px; left: -1px; border-bottom: 2px solid currentColor; border-left: 2px solid currentColor; }
+  .hud-panel .hb-br2 { bottom: -1px; right: -1px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
+
+  /* ---------- dossier ---------- */
+  #dossier {
+    top: max(70px, calc(env(safe-area-inset-top) + 60px)); right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom)); width: 340px; overflow-y: auto;
+    color: var(--c-technique);
+    opacity: 1; transition: opacity 0.35s ease;
+  }
+  #dossier.dz-hidden { opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { #dossier { transition: none; } }
+  #dossier-type { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; font-weight: 600; }
+  #dossier-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); float: right; }
+  #dossier-body { margin-top: 14px; color: var(--text); }
+  .dz-name { font-family: var(--font-display); font-size: 21px; font-weight: 700; margin: 0 0 6px; line-height: 1.15; color: var(--text); }
+  .dz-sub { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-bottom: 10px; }
+  .dz-chiprow { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .dz-chiprow-dim .dz-chip { opacity: 0.55; }
+  .dz-chip { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.04em; padding: 3px 8px; border: 1px solid var(--line); border-radius: 20px; color: var(--text-dim); white-space: nowrap; }
+  .dz-desc { font-size: 12.5px; line-height: 1.6; color: var(--text-dim); margin: 0 0 14px; }
+  .dz-stats { display: flex; gap: 18px; flex-wrap: wrap; }
+  .dz-stats > div { display: flex; flex-direction: column; }
+  .dz-stats b { font-family: var(--font-display); font-size: 20px; color: var(--text); }
+  .dz-stats span { font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.04em; text-transform: uppercase; }
+  .dz-timeline { margin-bottom: 12px; }
+  .dz-timeline-track { position: relative; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .dz-timeline-fill { position: absolute; top: 0; bottom: 0; background: var(--c-campaign); box-shadow: 0 0 8px var(--c-campaign); border-radius: 2px; }
+  .dz-timeline-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ---------- approach labels (a pool, not one) ---------- */
+  .node-label {
+    position: fixed; z-index: 12; transform: translate(-50%, -100%);
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em;
+    color: var(--text); background: rgba(5,8,12,0.78); border: 1px solid var(--line);
+    padding: 3px 8px; border-radius: 3px; white-space: nowrap; pointer-events: none; opacity: 0.9;
+  }
+
+  /* ---------- off-screen waypoints ---------- */
+  .waypoint {
+    position: fixed; z-index: 24; transform: translate(-50%, -50%);
+    display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px;
+    background: rgba(5,8,12,0.85); border: 1px solid var(--c-group); color: var(--text);
+    padding: 5px 10px 5px 6px; border-radius: 20px; cursor: pointer; pointer-events: auto;
+    box-shadow: 0 0 10px rgba(176,38,255,0.35);
+  }
+  .waypoint .wp-arrow { display: inline-block; color: var(--c-group); font-size: 12px; }
+  .waypoint .wp-dist { color: var(--text-dim); font-size: 9px; }
+  .waypoint:hover { border-color: var(--text); }
+
+  /* ---------- boost meter ---------- */
+  #boost-meter {
+    position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(70px, calc(env(safe-area-inset-bottom) + 60px));
+    z-index: 26; width: 160px; pointer-events: none;
+  }
+  #boost-meter .bm-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-dim); margin-bottom: 4px; }
+  #boost-meter .bm-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  #boost-meter .bm-fill { height: 100%; background: var(--c-software); box-shadow: 0 0 8px var(--c-software); transition: width 0.1s linear; }
+  #boost-meter.depleted .bm-fill { background: var(--c-technique); box-shadow: 0 0 8px var(--c-technique); }
+
+  /* Only ever shown once a real touch event has been seen (see JS) --
+     desktop/mouse players use SPACE and never see it. */
+  #touch-boost {
+    position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom));
+    z-index: 30; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; font-weight: 600;
+    background: rgba(176,38,255,0.18); border: 1px solid var(--c-group); color: var(--text);
+    padding: 14px 18px; border-radius: 30px; -webkit-tap-highlight-color: transparent;
+  }
+  #touch-boost[hidden] { display: none; }
+  #touch-boost.active { background: rgba(176,38,255,0.4); }
+
+  /* ---------- controls (count + randomize), auto-hiding ---------- */
+  .controls {
+    position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    z-index: 30; display: flex; gap: 10px; align-items: center;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .controls.hidden { opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity 0.6s ease, transform 0.6s ease; }
+  .control-group { display: flex; gap: 4px; background: rgba(5,8,12,0.7); border: 1px solid var(--line); border-radius: 3px; padding: 3px; backdrop-filter: blur(6px); }
+  .control-group button { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px; background: transparent; border: none; color: var(--text-dim); cursor: pointer; border-radius: 2px; }
+  .control-group button.active { background: rgba(0,240,255,0.12); color: var(--c-software); box-shadow: inset 0 0 0 1px rgba(0,240,255,0.4); }
+  .control-group button:hover { color: var(--text); }
+  #randomize-btn { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
+  #randomize-btn:hover { background: rgba(176,38,255,0.22); }
+
+  /* ---------- static fallback ---------- */
+  #fallback { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
+  #fallback[hidden] { display: none; }
+  #fallback .fb-wordmark { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: 0.08em; }
+  #fallback .fb-msg { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 20px; }
+
+  @media (max-width: 640px) {
+    #dossier { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 38vh; border-radius: 14px 14px 0 0; border-bottom: none; }
+    #boost-meter { bottom: max(20px, env(safe-area-inset-bottom)); left: max(20px, env(safe-area-inset-left)); }
+  }
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="reticle"></div>
+
+  <div class="brand">
+    <div class="bw">THREAT<span>:</span>HUNTER</div>
+    <div class="bt">Free-flight through the ATT&CK galaxy</div>
+  </div>
+
+  <div id="lock-overlay">
+    <div class="lo-title">THREAT HUNTER</div>
+    <div class="lo-sub">Click to take manual control. Mouse to steer, WASD to fly, hold SPACE to boost. Fly close to a node to pull up its dossier.</div>
+    <div class="lo-keys">
+      <span class="lo-key">MOUSE — steer</span>
+      <span class="lo-key">W/S — thrust</span>
+      <span class="lo-key">A/D — strafe</span>
+      <span class="lo-key">SPACE — boost</span>
+      <span class="lo-key">ESC — release</span>
+    </div>
+  </div>
+
+  <div id="dossier" class="hud-panel dz-hidden">
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div id="dossier-type">—</div>
+    <div id="dossier-id"></div>
+    <div id="dossier-body"></div>
+  </div>
+
+  <div id="boost-meter">
+    <div class="bm-label">BOOST</div>
+    <div class="bm-track"><div class="bm-fill" id="bm-fill" style="width:100%"></div></div>
+  </div>
+
+  <button id="touch-boost" hidden>⚡ BOOST</button>
+
+  <div id="labels-layer"></div>
+  <div id="waypoints-layer"></div>
+
+  <div class="controls" id="controls">
+    <div class="control-group" id="count-group">
+      <button data-count="10" class="ct-btn">10</button>
+      <button data-count="20" class="ct-btn active">20</button>
+      <button data-count="40" class="ct-btn">40</button>
+      <button data-count="80" class="ct-btn">80</button>
+    </div>
+    <button id="randomize-btn">⟲ RANDOMIZE GALAXY</button>
+  </div>
+
+  <div id="fallback" hidden>
+    <div class="fb-wordmark">THREAT HUNTER</div>
+    <div class="fb-msg">Canvas rendering isn't available in this browser.</div>
+  </div>
+
+<script>
+(() => {
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- vector helpers (same as recon.html) ----------
+  const V = {
+    sub: (a,b) => ({x:a.x-b.x, y:a.y-b.y, z:a.z-b.z}),
+    add: (a,b) => ({x:a.x+b.x, y:a.y+b.y, z:a.z+b.z}),
+    scale: (a,s) => ({x:a.x*s, y:a.y*s, z:a.z*s}),
+    dot: (a,b) => a.x*b.x + a.y*b.y + a.z*b.z,
+    cross: (a,b) => ({x:a.y*b.z-a.z*b.y, y:a.z*b.x-a.x*b.z, z:a.x*b.y-a.y*b.x}),
+    len: (a) => Math.sqrt(a.x*a.x + a.y*a.y + a.z*a.z),
+    norm: (a) => { const l = V.len(a) || 1e-6; return {x:a.x/l, y:a.y/l, z:a.z/l}; },
+    lerp: (a,b,t) => ({x:a.x+(b.x-a.x)*t, y:a.y+(b.y-a.y)*t, z:a.z+(b.z-a.z)*t}),
+  };
+  const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
+  const EASE_INOUT = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
+
+  function escapeHtml(s) {
+    return (s == null ? "" : String(s)).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function excerpt(text, n = 220) {
+    if (!text) return "";
+    const clean = text.replace(/\s+/g, " ").trim();
+    return clean.length > n ? clean.slice(0, n).trim() + "…" : clean;
+  }
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return "";
+    const A = 0x1F1E6;
+    return String.fromCodePoint(...[...code.toUpperCase()].map(c => A + c.charCodeAt(0) - 65));
+  }
+  function chip(text) { return `<span class="dz-chip">${escapeHtml(text)}</span>`; }
+
+  // ---------- data loading (same pattern as attack.html / recon.html) ----------
+  const TYPES = ["groups", "techniques", "tactics", "software", "campaigns", "mitigations"];
+  async function loadDomain(domain) {
+    const res = await fetch(`data/attack/${domain}.json?t=${Date.now()}`, { cache: "no-store" });
+    const data = await res.json();
+    data.byId = {};
+    for (const t of TYPES) data.byId[t] = Object.fromEntries((data[t] || []).map(e => [e.id, e]));
+    return data;
+  }
+
+  // ---------- per-group sampling (verbatim from recon.html) ----------
+  function sampleTechniques(data, group, campaigns, cap = 10) {
+    const techs = (group.techniques || []).map(id => data.byId.techniques[id]).filter(Boolean);
+    const seenTactics = new Set();
+    const picked = []; const pickedIds = new Set();
+    for (const t of techs) {
+      if (picked.length >= cap) break;
+      const primary = (t.tactics || [])[0];
+      if (primary && !seenTactics.has(primary)) { seenTactics.add(primary); picked.push(t); pickedIds.add(t.id); }
+    }
+    if (picked.length < cap) {
+      const campaignTechIds = new Set();
+      for (const c of campaigns) for (const id of (c.techniques || [])) campaignTechIds.add(id);
+      for (const t of techs) {
+        if (picked.length >= cap) break;
+        if (pickedIds.has(t.id) || !campaignTechIds.has(t.id)) continue;
+        picked.push(t); pickedIds.add(t.id);
+      }
+    }
+    for (const t of techs) {
+      if (picked.length >= cap) break;
+      if (pickedIds.has(t.id)) continue;
+      picked.push(t); pickedIds.add(t.id);
+    }
+    return picked;
+  }
+  function sampleTactics(data, techniques, cap = 6) {
+    const seen = new Set(); const out = [];
+    for (const t of techniques) {
+      for (const tacId of (t.tactics || [])) {
+        if (seen.has(tacId)) continue;
+        const tac = data.byId.tactics[tacId];
+        if (!tac) continue;
+        seen.add(tacId); out.push(tac);
+        if (out.length >= cap) return out;
+      }
+    }
+    return out;
+  }
+  function sampleSoftware(data, group, campaigns, cap = 4) {
+    const picked = []; const pickedIds = new Set();
+    const campaignSw = new Set();
+    for (const c of campaigns) for (const id of (c.software || [])) campaignSw.add(id);
+    const ids = group.software || [];
+    for (const id of ids) {
+      if (picked.length >= cap) break;
+      if (!campaignSw.has(id) || pickedIds.has(id)) continue;
+      const sw = data.byId.software[id];
+      if (sw) { picked.push(sw); pickedIds.add(id); }
+    }
+    for (const id of ids) {
+      if (picked.length >= cap) break;
+      if (pickedIds.has(id)) continue;
+      const sw = data.byId.software[id];
+      if (sw) { picked.push(sw); pickedIds.add(id); }
+    }
+    return picked;
+  }
+  function sampleMitigations(data, techniques, cap = 3) {
+    const count = new Map();
+    for (const t of techniques) for (const id of (t.mitigations || [])) count.set(id, (count.get(id) || 0) + 1);
+    return [...count.entries()].sort((a,b) => b[1]-a[1]).map(([id]) => data.byId.mitigations[id]).filter(Boolean).slice(0, cap);
+  }
+
+  function buildFlight(data, group) {
+    const origin = { id: group.id, type: "group", entity: group, parent: null, ring: 0 };
+    const nodes = [origin];
+
+    const campaigns = (group.campaigns || []).map(id => data.byId.campaigns[id]).filter(Boolean).slice(0, 3);
+    const campaignNodes = campaigns.map(c => ({ id: c.id, type: "campaign", entity: c, parent: origin, ring: 1 }));
+    nodes.push(...campaignNodes);
+
+    const techniques = sampleTechniques(data, group, campaigns, 10);
+    const techniqueNodes = techniques.map(t => {
+      const camp = campaignNodes.find(cn => (cn.entity.techniques || []).includes(t.id));
+      return { id: t.id, type: "technique", entity: t, parent: camp || origin, ring: 2 };
+    });
+    nodes.push(...techniqueNodes);
+
+    const tactics = sampleTactics(data, techniques, 6);
+    const tacticNodes = tactics.map(tac => {
+      const src = techniqueNodes.find(tn => (tn.entity.tactics || []).includes(tac.id));
+      return { id: tac.id, type: "tactic", entity: tac, parent: src || origin, ring: 3 };
+    });
+    nodes.push(...tacticNodes);
+
+    const software = sampleSoftware(data, group, campaigns, 4);
+    const softwareNodes = software.map(sw => {
+      const camp = campaignNodes.find(cn => (cn.entity.software || []).includes(sw.id));
+      return { id: sw.id, type: "software", entity: sw, parent: camp || origin, ring: 3 };
+    });
+    nodes.push(...softwareNodes);
+
+    const mitigations = sampleMitigations(data, techniques, 3);
+    const mitigationNodes = mitigations.map(m => {
+      const src = techniqueNodes.find(tn => (tn.entity.mitigations || []).includes(m.id));
+      return { id: m.id, type: "mitigation", entity: m, parent: src || origin, ring: 4 };
+    });
+    nodes.push(...mitigationNodes);
+
+    layoutNodes(nodes, origin);
+    return nodes;
+  }
+
+  // ---------- full-3D radial layout (verbatim from recon.html) ----------
+  const RING_DIST = [0, 340, 260, 230, 210];
+  const FAN_CONE = 62 * Math.PI / 180;
+
+  function fibonacciSpherePoint(i, n) {
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    const y = n <= 1 ? 0 : 1 - (i / (n - 1)) * 2;
+    const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
+    const theta = goldenAngle * i;
+    return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
+  }
+  function perturbDirection(dir, coneRad) {
+    const arbitrary = Math.abs(dir.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
+    const t1 = V.norm(V.cross(dir, arbitrary));
+    const t2 = V.cross(dir, t1);
+    const az = Math.random() * Math.PI * 2;
+    const polar = Math.random() * coneRad;
+    const s = Math.sin(polar);
+    const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
+    return V.norm(V.add(V.scale(dir, Math.cos(polar)), offset));
+  }
+  function layoutNodes(nodes, origin) {
+    origin.pos = { x: 0, y: 0, z: 0 };
+    origin.dir = { x: 0, y: 0, z: 1 };
+    for (let ring = 1; ring <= 4; ring++) {
+      const ringNodes = nodes.filter(node => node.ring === ring);
+      const dist = RING_DIST[ring];
+      if (ring === 1) {
+        const n = ringNodes.length;
+        ringNodes.forEach((node, i) => {
+          node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
+          node.pos = V.scale(node.dir, dist);
+        });
+      } else {
+        const byParent = new Map();
+        for (const node of ringNodes) {
+          if (!byParent.has(node.parent)) byParent.set(node.parent, []);
+          byParent.get(node.parent).push(node);
+        }
+        for (const [parent, kids] of byParent) {
+          const parentDir = parent.dir || { x: 0, y: 0, z: 1 };
+          kids.forEach(node => {
+            node.dir = perturbDirection(parentDir, FAN_CONE);
+            node.pos = V.add(parent.pos, V.scale(node.dir, dist));
+          });
+        }
+      }
+    }
+  }
+
+  // ---------- galaxy: place N independent networks on a jittered 3D grid ----------
+  const CELL_SIZE = 5000;
+  const CELL_JITTER = 700;
+  // A network's own internal reach never exceeds this (sum of RING_DIST) --
+  // used only for the doc-comment math in the plan; not needed at runtime
+  // since CELL_SIZE/CELL_JITTER were chosen with it already in mind.
+  function gridPositions(n) {
+    const dim = Math.max(2, Math.ceil(Math.cbrt(n)));
+    const cells = [];
+    for (let x = 0; x < dim; x++) for (let y = 0; y < dim; y++) for (let z = 0; z < dim; z++) cells.push({x,y,z});
+    // shuffle so we don't always fill a solid sub-cube (spread picks across the whole grid)
+    for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [cells[i],cells[j]]=[cells[j],cells[i]]; }
+    const half = (dim-1)/2;
+    return cells.slice(0, n).map(c => ({
+      x: (c.x - half) * CELL_SIZE + (Math.random()*2-1) * CELL_JITTER,
+      y: (c.y - half) * CELL_SIZE + (Math.random()*2-1) * CELL_JITTER,
+      z: (c.z - half) * CELL_SIZE + (Math.random()*2-1) * CELL_JITTER,
+    }));
+  }
+
+  let networks = []; // [{ id, group, center, nodes: [...] }]
+  let currentData = null;
+
+  function buildGalaxy(count) {
+    const groups = [...currentData.groups];
+    for (let i = groups.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [groups[i],groups[j]]=[groups[j],groups[i]]; }
+    const chosen = groups.slice(0, count);
+    const positions = gridPositions(chosen.length);
+    networks = chosen.map((group, i) => {
+      const center = positions[i];
+      const nodes = buildFlight(currentData, group);
+      for (const node of nodes) node.pos = V.add(node.pos, center);
+      const net = { id: group.id, group, center, nodes };
+      for (const node of nodes) node.network = net;
+      return net;
+    });
+  }
+
+  // ---------- camera basis + projection (verbatim from recon.html) ----------
+  const FOV = 62 * Math.PI / 180;
+  let stableUp = { x: 0, y: 1, z: 0 };
+  function computeCameraBasis(cam) {
+    const forward = V.norm(cam.forward);
+    let right = V.cross(forward, stableUp);
+    if (V.len(right) < 1e-4) right = V.cross(forward, Math.abs(forward.y) < 0.9 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 });
+    right = V.norm(right);
+    const up = V.norm(V.cross(right, forward));
+    stableUp = up;
+    return { forward, right, up };
+  }
+  function project(pos, camPos, basis, cssW, cssH, fov) {
+    const rel = V.sub(pos, camPos);
+    const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
+    if (camZ <= 2) return null;
+    const f = 1 / Math.tan(fov / 2);
+    const aspect = cssW / cssH;
+    const ndcX = (camX * f) / (camZ * aspect);
+    const ndcY = (camY * f) / camZ;
+    const x = (ndcX*0.5 + 0.5) * cssW;
+    const y = (1 - (ndcY*0.5 + 0.5)) * cssH;
+    const scale = clamp(260 / camZ, 0.1, 3.2);
+    const nearFade = 20, farFade = 3200;
+    const opacity = clamp(1 - (camZ - nearFade) / (farFade - nearFade), 0.04, 1);
+    return { x, y, camX, camY, camZ, scale, opacity };
+  }
+
+  // ---------- renderer ----------
+  const PALETTE = {
+    group: "#b026ff", campaign: "#ff00aa", technique: "#ff2751",
+    tactic: "#7c4dff", software: "#00f0ff", mitigation: "#00ff9c",
+  };
+  const canvas = document.getElementById("scene");
+  const ctx = canvas.getContext ? canvas.getContext("2d") : null;
+  let cssW = 0, cssH = 0;
+  let starsNear = [], starsMid = [], starsFar = [], nebulae = [];
+
+  // Stars are a skybox: pure directions (normalized), meant to sit at
+  // effectively infinite distance with constant apparent size regardless of
+  // "camZ" -- NOT real world-space points. Feeding a raw unnormalized
+  // vector into the same 1/camZ size formula real objects use blew up into
+  // huge blobs for any star whose vector was nearly perpendicular to the
+  // view (camZ near zero), which is exactly the "nebula" artifact caught
+  // in an actual screenshot, not assumed.
+  function makeStars(count) {
+    const out = [];
+    for (let i = 0; i < count; i++) out.push(V.norm({ x: Math.random()*2-1, y: Math.random()*2-1, z: Math.random()*2-1 }));
+    return out;
+  }
+  function resizeCanvas() {
+    cssW = window.innerWidth; cssH = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.width = cssW + "px"; canvas.style.height = cssH + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function initBackdrop() {
+    starsFar = makeStars(160);
+    starsMid = makeStars(110);
+    starsNear = makeStars(70);
+    nebulae = [];
+    for (let i = 0; i < 6; i++) {
+      nebulae.push({
+        dir: V.norm({ x: Math.random()*2-1, y: Math.random()*2-1, z: Math.random()*2-1 }),
+        dist: 9000 + Math.random()*6000,
+        hue: [ "rgba(176,38,255,0.10)", "rgba(0,240,255,0.08)", "rgba(255,0,170,0.08)" ][i % 3],
+        r: 1400 + Math.random()*1200,
+      });
+    }
+  }
+
+  let degraded = false;
+  // Parallax starfield: each layer's points are directions painted relative
+  // to the player's orientation (not real world-positioned points -- cheap,
+  // and gives real depth-of-travel feel via different drift rates per
+  // layer). Deliberately calm/low-contrast, not another HUD-grid overlay.
+  function drawBackdrop(basis, speedFrac) {
+    const g = ctx.createRadialGradient(cssW/2, cssH*0.5, 0, cssW/2, cssH*0.5, Math.max(cssW, cssH)*0.9);
+    g.addColorStop(0, "#0a1018"); g.addColorStop(1, "#050608");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, cssW, cssH);
+
+    ctx.save(); ctx.fillStyle = "#ffffff";
+    drawStarLayer(starsFar, basis, 0.5, speedFrac);
+    drawStarLayer(starsMid, basis, 0.8, speedFrac);
+    drawStarLayer(starsNear, basis, 1.3, speedFrac);
+    ctx.restore();
+
+    for (const neb of nebulae) {
+      const pos = V.scale(neb.dir, neb.dist);
+      const rel = V.sub(pos, playerPos);
+      const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
+      if (camZ <= 100) continue;
+      const f = 1 / Math.tan(FOV/2), aspect = cssW/cssH;
+      const x = ((camX*f)/(camZ*aspect)*0.5+0.5)*cssW, y = (1-((camY*f)/camZ*0.5+0.5))*cssH;
+      const r = clamp(neb.r * 300 / camZ, 20, 500);
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, neb.hue); grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad; ctx.fillRect(x-r, y-r, r*2, r*2);
+    }
+  }
+  function drawStarLayer(stars, basis, sizeMul, speedFrac) {
+    const streak = !REDUCED_MOTION && speedFrac > 0.25;
+    // Fixed apparent size -- these are skybox directions, not real-distance
+    // points, so they must NOT scale with 1/camZ the way world objects do
+    // (see makeStars' comment for the blow-up bug that caused).
+    const r = Math.max(0.5, sizeMul * 1.1);
+    for (const s of stars) {
+      const camX = V.dot(s, basis.right), camY = V.dot(s, basis.up), camZ = V.dot(s, basis.forward);
+      if (camZ <= 0.02) continue;
+      const f = 1 / Math.tan(FOV/2), aspect = cssW/cssH;
+      const x = ((camX*f)/(camZ*aspect)*0.5+0.5)*cssW, y = (1-((camY*f)/camZ*0.5+0.5))*cssH;
+      if (x < -50 || x > cssW+50 || y < -50 || y > cssH+50) continue;
+      ctx.globalAlpha = clamp(0.2 + sizeMul*0.25, 0.15, 0.9);
+      if (streak) {
+        const dx = x - cssW/2, dy = y - cssH/2;
+        const len = clamp(speedFrac * 26 * sizeMul, 2, 60);
+        const d = Math.sqrt(dx*dx+dy*dy) || 1;
+        ctx.strokeStyle = "#ffffff"; ctx.lineWidth = Math.max(0.6, r*0.8);
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + (dx/d)*len, y + (dy/d)*len); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function drawEdge(a, b, type) {
+    const color = PALETTE[type];
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = Math.min(a.opacity, b.opacity) * 0.5;
+    const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+    grad.addColorStop(0, "rgba(255,255,255,0.3)"); grad.addColorStop(1, color);
+    ctx.strokeStyle = grad; ctx.lineWidth = 1.3;
+    ctx.shadowColor = color; ctx.shadowBlur = degraded ? 3 : 8;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    ctx.restore();
+  }
+  function drawNode(n, p, focused, nowMs) {
+    const color = PALETTE[n.type];
+    const isGroup = n.type === "group";
+    const r = Math.max(2, 9 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
+    if (isGroup) {
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = "#04030a";
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.globalCompositeOperation = "lighter";
+      ctx.shadowColor = color; ctx.shadowBlur = (degraded ? 16 : 30) * p.scale;
+      ctx.strokeStyle = color; ctx.lineWidth = Math.max(2, 3 * p.scale);
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.stroke();
+      ctx.restore();
+    } else {
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.globalCompositeOperation = "lighter";
+      ctx.shadowColor = color; ctx.shadowBlur = (degraded ? 10 : 22) * p.scale * (focused ? 1.5 : 1);
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+    if (focused) {
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      ctx.globalAlpha = p.opacity * 0.6;
+      ctx.strokeStyle = color; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r + 7 + Math.sin(nowMs/220)*3, 0, Math.PI*2); ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  // ---------- dossier (proximity-driven, not scripted) ----------
+  function timelineBar(firstSeen, lastSeen) {
+    const y0 = 2004, y1 = new Date().getFullYear() + 1;
+    const f = new Date(firstSeen).getFullYear();
+    const l = new Date(lastSeen || firstSeen).getFullYear();
+    const pctStart = clamp((f - y0) / (y1 - y0), 0, 1) * 100;
+    const pctEnd = clamp((l - y0) / (y1 - y0), 0, 1) * 100;
+    return `<div class="dz-timeline"><div class="dz-timeline-track"><div class="dz-timeline-fill" style="left:${pctStart}%;width:${Math.max(1, pctEnd-pctStart)}%"></div></div><div class="dz-timeline-labels"><span>${f}</span><span>${l}</span></div></div>`;
+  }
+  function dossierHtml(node, data) {
+    const e = node.entity;
+    const allNodes = node.network.nodes;
+    switch (node.type) {
+      case "group": {
+        const flags = (e.countries || []).map(c => `${flagEmoji(c.code)} ${escapeHtml(c.name)}`).join(", ") || "Attribution unclear";
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${flags}</div>
+          ${(e.aliases||[]).length ? `<div class="dz-chiprow">${e.aliases.slice(0,8).map(chip).join("")}</div>` : ""}
+          <p class="dz-desc">${escapeHtml(excerpt(e.summary || e.description, 260))}</p>
+          <div class="dz-stats">
+            <div><b>${(e.techniques||[]).length}</b><span>techniques</span></div>
+            <div><b>${(e.software||[]).length}</b><span>software</span></div>
+            <div><b>${(e.campaigns||[]).length}</b><span>campaigns</span></div>
+          </div>`;
+      }
+      case "campaign":
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          ${e.first_seen ? timelineBar(e.first_seen, e.last_seen) : ""}
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 260))}</p>`;
+      case "technique": {
+        const label = e.is_subtechnique && e.parent && data.byId.techniques[e.parent] ? `${data.byId.techniques[e.parent].name}: ${e.name}` : e.name;
+        return `
+          <h2 class="dz-name">${escapeHtml(label)}</h2>
+          <div class="dz-chiprow">${(e.tactics||[]).map(id => data.byId.tactics[id]).filter(Boolean).map(t => chip(t.name)).join("")}</div>
+          <div class="dz-chiprow dz-chiprow-dim">${(e.platforms||[]).slice(0,6).map(chip).join("")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>`;
+      }
+      case "tactic": {
+        const count = allNodes.filter(n => n.type === "technique" && (n.entity.tactics||[]).includes(e.id)).length;
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${escapeHtml(e.shortname || "")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>
+          <div class="dz-stats"><div><b>${count}</b><span>techniques in this network</span></div></div>`;
+      }
+      case "software":
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${escapeHtml((e.type||"").toUpperCase())}</div>
+          ${(e.aliases||[]).length ? `<div class="dz-chiprow">${e.aliases.slice(0,6).map(chip).join("")}</div>` : ""}
+          <div class="dz-chiprow dz-chiprow-dim">${(e.platforms||[]).slice(0,6).map(chip).join("")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>`;
+      case "mitigation": {
+        const count = allNodes.filter(n => n.type === "technique" && (n.entity.mitigations||[]).includes(e.id)).length;
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 260))}</p>
+          <div class="dz-stats"><div><b>${count}</b><span>techniques mitigated</span></div></div>`;
+      }
+      default: return "";
+    }
+  }
+  let dossierCurrentNode = null;
+  function renderDossier(node) {
+    if (node === dossierCurrentNode) return;
+    dossierCurrentNode = node;
+    const typeEl = document.getElementById("dossier-type");
+    const idEl = document.getElementById("dossier-id");
+    const bodyEl = document.getElementById("dossier-body");
+    const panel = document.getElementById("dossier");
+    typeEl.textContent = node.type.toUpperCase();
+    panel.style.color = PALETTE[node.type];
+    idEl.textContent = node.entity.id;
+    bodyEl.innerHTML = dossierHtml(node, currentData);
+    panel.classList.remove("dz-hidden");
+  }
+  function hideDossier() {
+    if (dossierCurrentNode === null) return;
+    dossierCurrentNode = null;
+    document.getElementById("dossier").classList.add("dz-hidden");
+  }
+
+  // ---------- player state + input ----------
+  let playerPos = { x: 0, y: 300, z: -1600 };
+  let yaw = 0, pitch = 0; // radians; forward derived each frame
+  let velocity = { x: 0, y: 0, z: 0 };
+  const keys = {};
+  let boosting = false;
+  let boostMeter = 100;
+  let locked = false;
+  let autoBoost = null; // { from, to, camFromForward, t0, dur } when active
+
+  const BASE_ACCEL = 2600, BASE_MAXSPEED = 1000, DRAG = 0.985;
+  const BOOST_MUL = 2.6, BOOST_DRAIN = 38, BOOST_REGEN = 16, BOOST_MIN_TO_USE = 4;
+  const TRIGGER_RADIUS = 220, LABEL_RADIUS = 2500, ACTIVE_RADIUS = 6000, RENDER_CULL = 12000;
+
+  function forwardFromAngles() {
+    return {
+      x: Math.cos(pitch) * Math.sin(yaw),
+      y: Math.sin(pitch),
+      z: Math.cos(pitch) * Math.cos(yaw),
+    };
+  }
+
+  const lockOverlay = document.getElementById("lock-overlay");
+  lockOverlay.addEventListener("click", () => { canvas.requestPointerLock && canvas.requestPointerLock(); });
+  // Pointer Lock has no touch equivalent -- pointerlockchange would never
+  // fire on a touch device, permanently stranding touch players behind
+  // this overlay (confirmed via an actual touch-simulated test, not
+  // assumed). A touch anywhere on the overlay just dismisses it directly;
+  // the touch-fallback flight controls work independently of `locked`.
+  lockOverlay.addEventListener("touchstart", () => { lockOverlay.hidden = true; }, { passive: true });
+  document.addEventListener("pointerlockchange", () => {
+    locked = document.pointerLockElement === canvas;
+    lockOverlay.hidden = locked;
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!locked) return;
+    const sens = 0.0022;
+    yaw -= e.movementX * sens;
+    pitch = clamp(pitch - e.movementY * sens, -1.5, 1.5);
+  });
+  window.addEventListener("keydown", (e) => { keys[e.code] = true; if (e.code === "Space") e.preventDefault(); });
+  window.addEventListener("keyup", (e) => { keys[e.code] = false; });
+
+  // Basic touch fallback: drag steers like a stick anchored at first touch,
+  // constant forward thrust while touching, hold the boost pill to boost.
+  // The pill only reveals itself once a real touch is seen (desktop/mouse
+  // players never see it and keep using SPACE).
+  let touchAnchor = null, touchDelta = { x: 0, y: 0 };
+  const touchBoostBtn = document.getElementById("touch-boost");
+  canvas.addEventListener("touchstart", (e) => {
+    touchAnchor = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    touchBoostBtn.hidden = false;
+  }, { passive: true });
+  canvas.addEventListener("touchmove", (e) => {
+    if (!touchAnchor) return;
+    touchDelta = { x: e.touches[0].clientX - touchAnchor.x, y: e.touches[0].clientY - touchAnchor.y };
+  }, { passive: true });
+  canvas.addEventListener("touchend", () => { touchAnchor = null; touchDelta = { x: 0, y: 0 }; }, { passive: true });
+  touchBoostBtn.addEventListener("touchstart", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); }, { passive: true });
+  touchBoostBtn.addEventListener("touchend", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); }, { passive: true });
+
+  function updatePhysics(dt) {
+    if (autoBoost) return; // scripted transit owns the camera during auto-boost
+    const touching = touchAnchor !== null;
+    if (touching) {
+      yaw -= clamp(touchDelta.x * 0.0009, -0.05, 0.05);
+      pitch = clamp(pitch - clamp(touchDelta.y * 0.0009, -0.05, 0.05), -1.5, 1.5);
+    }
+    const forward = forwardFromAngles();
+    const basis = computeCameraBasis({ forward });
+    boosting = (locked && keys["Space"]) || (touching && boostTouchHeld);
+    if (boosting && boostMeter <= 0) boosting = false;
+
+    let thrust = { x: 0, y: 0, z: 0 };
+    if (locked) {
+      if (keys["KeyW"]) thrust = V.add(thrust, forward);
+      if (keys["KeyS"]) thrust = V.sub(thrust, forward);
+      if (keys["KeyD"]) thrust = V.add(thrust, basis.right);
+      if (keys["KeyA"]) thrust = V.sub(thrust, basis.right);
+    } else if (touching) {
+      thrust = forward; // constant forward thrust while touching
+    }
+    const accel = BASE_ACCEL * (boosting ? BOOST_MUL : 1);
+    if (V.len(thrust) > 0.01) velocity = V.add(velocity, V.scale(V.norm(thrust), accel * dt));
+    velocity = V.scale(velocity, Math.pow(DRAG, dt*60));
+    const maxSpeed = BASE_MAXSPEED * (boosting ? BOOST_MUL : 1);
+    const speed = V.len(velocity);
+    if (speed > maxSpeed) velocity = V.scale(velocity, maxSpeed/speed);
+
+    playerPos = V.add(playerPos, V.scale(velocity, dt));
+
+    if (boosting) boostMeter = clamp(boostMeter - BOOST_DRAIN*dt, 0, 100);
+    else boostMeter = clamp(boostMeter + BOOST_REGEN*dt, 0, 100);
+    if (boostMeter < BOOST_MIN_TO_USE) boosting = false;
+  }
+  let boostTouchHeld = false;
+
+  // ---------- auto-boost: scripted transit to a chosen network ----------
+  function startAutoBoost(network) {
+    if (autoBoost) return;
+    const dir = V.norm(V.sub(network.center, playerPos));
+    const target = V.sub(network.center, V.scale(dir, 900)); // arrive just outside it
+    autoBoost = { from: { ...playerPos }, to: target, fromForward: forwardFromAngles(), toForward: dir, t0: performance.now(), dur: clamp(V.len(V.sub(target, playerPos)) * 0.9, 900, 3600) };
+  }
+  function updateAutoBoost(nowMs) {
+    if (!autoBoost) return;
+    const pct = clamp((nowMs - autoBoost.t0) / autoBoost.dur, 0, 1);
+    const e = EASE_INOUT(pct);
+    playerPos = V.lerp(autoBoost.from, autoBoost.to, e);
+    const fwd = V.norm(V.lerp(autoBoost.fromForward, autoBoost.toForward, e));
+    yaw = Math.atan2(fwd.x, fwd.z);
+    pitch = clamp(Math.asin(clamp(fwd.y, -1, 1)), -1.5, 1.5);
+    velocity = V.scale(V.sub(autoBoost.to, autoBoost.from), 1/(autoBoost.dur/1000));
+    boosting = true;
+    if (pct >= 1) autoBoost = null;
+  }
+
+  // ---------- labels + waypoints ----------
+  const labelsLayer = document.getElementById("labels-layer");
+  const waypointsLayer = document.getElementById("waypoints-layer");
+  let labelPool = [];
+  function ensureLabelPool(n) {
+    while (labelPool.length < n) { const el = document.createElement("div"); el.className = "node-label"; el.hidden = true; labelsLayer.appendChild(el); labelPool.push(el); }
+  }
+  function updateApproachLabels(basis) {
+    const nearNetworks = networks.filter(net => V.len(V.sub(net.center, playerPos)) < LABEL_RADIUS + 1600);
+    const visible = [];
+    for (const net of nearNetworks) {
+      if (V.len(V.sub(net.center, playerPos)) > LABEL_RADIUS) continue;
+      for (const node of net.nodes) {
+        const p = project(node.pos, playerPos, basis, cssW, cssH, FOV);
+        if (p && p.x > -40 && p.x < cssW+40 && p.y > -40 && p.y < cssH+40) visible.push({ node, p });
+      }
+    }
+    ensureLabelPool(visible.length);
+    labelPool.forEach((el, i) => {
+      if (i >= visible.length) { el.hidden = true; return; }
+      const { node, p } = visible[i];
+      el.hidden = false;
+      el.textContent = node.entity.name;
+      const r = 9 * p.scale * (node.type === "group" ? 2 : 1);
+      el.style.left = p.x + "px";
+      el.style.top = (p.y - r - 8) + "px";
+    });
+  }
+  let waypointPool = [];
+  function ensureWaypointPool(n) {
+    while (waypointPool.length < n) {
+      const el = document.createElement("div"); el.className = "waypoint"; el.hidden = true;
+      el.innerHTML = `<span class="wp-arrow">➤</span><span class="wp-name"></span><span class="wp-dist"></span>`;
+      waypointsLayer.appendChild(el); waypointPool.push(el);
+    }
+  }
+  function updateWaypoints(basis) {
+    const offscreen = networks.filter(net => {
+      const dist = V.len(V.sub(net.center, playerPos));
+      if (dist < LABEL_RADIUS) return false; // already close, labels cover it
+      const p = project(net.center, playerPos, basis, cssW, cssH, FOV);
+      return !p || p.x < 0 || p.x > cssW || p.y < 0 || p.y > cssH;
+    });
+    ensureWaypointPool(offscreen.length);
+    waypointPool.forEach((el, i) => {
+      if (i >= offscreen.length) { el.hidden = true; el.onclick = null; return; }
+      const net = offscreen[i];
+      const rel = V.sub(net.center, playerPos);
+      const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
+      let ang = Math.atan2(-camY, camX);
+      if (camZ < 0) ang += Math.PI;
+      const cx = cssW/2, cy = cssH/2, pad = 46;
+      const halfW = cssW/2 - pad, halfH = cssH/2 - pad;
+      const dx = Math.cos(ang), dy = -Math.sin(ang);
+      const tx = Math.abs(dx) > 1e-4 ? halfW/Math.abs(dx) : Infinity;
+      const ty = Math.abs(dy) > 1e-4 ? halfH/Math.abs(dy) : Infinity;
+      const t = Math.min(tx, ty);
+      el.hidden = false;
+      el.style.left = (cx + dx*t) + "px";
+      el.style.top = (cy + dy*t) + "px";
+      el.querySelector(".wp-arrow").style.transform = `rotate(${(Math.atan2(dy,dx)*180/Math.PI)+90}deg)`;
+      el.querySelector(".wp-name").textContent = net.group.name;
+      el.querySelector(".wp-dist").textContent = Math.round(V.len(rel)/100)/10 + "k";
+      el.onclick = (ev) => { ev.stopPropagation(); startAutoBoost(net); };
+    });
+  }
+
+  // ---------- proximity dossier ----------
+  function updateDossierProximity() {
+    let nearest = null, nearestDist = Infinity;
+    for (const net of networks) {
+      if (V.len(V.sub(net.center, playerPos)) > ACTIVE_RADIUS + 1600) continue;
+      for (const node of net.nodes) {
+        const d = V.len(V.sub(node.pos, playerPos));
+        if (d < nearestDist) { nearestDist = d; nearest = node; }
+      }
+    }
+    if (nearest && nearestDist <= TRIGGER_RADIUS) renderDossier(nearest);
+    else hideDossier();
+  }
+
+  // ---------- main render + loop ----------
+  let frameTimes = [];
+  function trackPerf(dt) {
+    frameTimes.push(dt);
+    if (frameTimes.length > 120) frameTimes.shift();
+    if (!degraded && frameTimes.length >= 60) {
+      const avg = frameTimes.reduce((a,b)=>a+b,0)/frameTimes.length;
+      if (avg > 30) degraded = true;
+    }
+  }
+
+  function render(nowMs) {
+    ctx.clearRect(0, 0, cssW, cssH);
+    const forward = forwardFromAngles();
+    const basis = computeCameraBasis({ forward });
+    const speedFrac = clamp(V.len(velocity) / (BASE_MAXSPEED * BOOST_MUL), 0, 1);
+    drawBackdrop(basis, speedFrac);
+
+    const proj = new Map();
+    for (const net of networks) {
+      if (V.len(V.sub(net.center, playerPos)) - 1600 > RENDER_CULL) continue;
+      for (const node of net.nodes) {
+        const p = project(node.pos, playerPos, basis, cssW, cssH, FOV);
+        if (p) proj.set(node, p);
+      }
+    }
+    for (const [node, p] of proj) {
+      if (!node.parent) continue;
+      const a = proj.get(node.parent);
+      if (a) drawEdge(a, p, node.type);
+    }
+    const sorted = [...proj.entries()].sort((a,b) => b[1].camZ - a[1].camZ);
+    for (const [node, p] of sorted) drawNode(node, p, node === dossierCurrentNode, nowMs);
+
+    // boost vignette
+    if (!REDUCED_MOTION && speedFrac > 0.5) {
+      ctx.save();
+      const a = (speedFrac - 0.5) * 0.5;
+      const grad = ctx.createRadialGradient(cssW/2, cssH/2, Math.min(cssW,cssH)*0.25, cssW/2, cssH/2, Math.max(cssW,cssH)*0.6);
+      grad.addColorStop(0, "rgba(0,0,0,0)"); grad.addColorStop(1, `rgba(176,38,255,${a*0.25})`);
+      ctx.fillStyle = grad; ctx.fillRect(0,0,cssW,cssH);
+      ctx.restore();
+    }
+
+    updateApproachLabels(basis);
+    updateWaypoints(basis);
+    updateDossierProximity();
+
+    const bm = document.getElementById("bm-fill");
+    bm.style.width = boostMeter + "%";
+    document.getElementById("boost-meter").classList.toggle("depleted", boostMeter < BOOST_MIN_TO_USE);
+  }
+
+  let lastFrameTime = null, rafId = null;
+  function frame(now) {
+    if (lastFrameTime == null) lastFrameTime = now;
+    const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
+    lastFrameTime = now;
+    trackPerf(dt * 1000);
+    updateAutoBoost(now);
+    updatePhysics(dt);
+    render(now);
+    rafId = requestAnimationFrame(frame);
+  }
+  function startLoop() { lastFrameTime = null; if (rafId) cancelAnimationFrame(rafId); rafId = requestAnimationFrame(frame); }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { if (rafId) cancelAnimationFrame(rafId); rafId = null; }
+    else if (!rafId) startLoop();
+  });
+
+  // ---------- settings: network count + randomize ----------
+  let networkCount = 20;
+  function respawnGalaxy() {
+    buildGalaxy(networkCount);
+    playerPos = { x: 0, y: 300, z: -1600 };
+    velocity = { x: 0, y: 0, z: 0 };
+    yaw = 0; pitch = 0;
+    hideDossier();
+  }
+  document.querySelectorAll(".ct-btn").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".ct-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    networkCount = parseInt(btn.dataset.count, 10);
+    respawnGalaxy();
+  }));
+  document.getElementById("randomize-btn").addEventListener("click", () => respawnGalaxy());
+
+  // ---------- idle auto-hide for the settings cluster ----------
+  let idleTimer = null;
+  function resetIdle() {
+    document.getElementById("controls").classList.remove("hidden");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => document.getElementById("controls").classList.add("hidden"), 4000);
+  }
+  ["mousemove", "touchstart", "keydown"].forEach(ev => window.addEventListener(ev, resetIdle, { passive: true }));
+
+  // ---------- init ----------
+  if (!ctx) {
+    document.getElementById("fallback").hidden = false;
+    document.getElementById("scene").hidden = true;
+  } else {
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    initBackdrop();
+    resetIdle();
+    (async () => {
+      currentData = await loadDomain("enterprise");
+      respawnGalaxy();
+      startLoop();
+    })();
+  }
+})();
+</script>
+</body>
+</html>
