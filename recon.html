@@ -488,34 +488,26 @@
     mitigation: { transit: 1200, hold: 600 },
   };
   // Revisits have NO hold at all -- a pure transit, so the camera never
-  // actually stops moving between "zooming out" and "zooming back in"; the
-  // two legs either side of a revisit waypoint are velocity-matched instead
-  // (see the ease selection below) so it reads as one continuous swing, not
-  // a stop-and-restart. Orbital revisits (returning to the origin, between
-  // its direct children) get a longer transit than local ones (returning to
-  // some deeper parent) since there's more distance to actually cover and
-  // more of the structure to register on the way past.
-  const REVISIT_LOCAL_MS = 750;
-  const REVISIT_ORBITAL_MS = 1700;
+  // stops moving in TIME between "zooming out" and "zooming back in." But
+  // it DOES still decelerate into the waypoint and re-accelerate away from
+  // it (both legs use the same ease-in-out curve as everything else) --
+  // that's the actual "apex" feel of a real camera swing through a point,
+  // like a ball at the top of a bounce: velocity touches zero for an
+  // instant, position never stops moving, so it never reads as a stall.
+  // Constant-speed pass-through (an earlier version of this) was the wrong
+  // fix for "no pausing" -- it removed the deceleration entirely, which is
+  // what actually made the point feel like a smooth apex rather than a
+  // swerve. The leg leaving a revisit reuses that revisit's OWN transit
+  // duration (see lastRevisitMs below) instead of the target node's usual
+  // duration table, so the decelerate-in and accelerate-out halves of the
+  // bounce take comparable time -- an unequal split is what made "zoom in"
+  // and "zoom out" feel like different speeds.
+  const REVISIT_LOCAL_MS = 900;
+  const REVISIT_ORBITAL_MS = 1900;
   const FINALE_MS = 4000;
   const ESTABLISH_START = { x: 0, y: -60, z: -520 };
 
-  const EASE = {
-    // Full ease-in-out: starts and ends at rest. Used for a real node-to-
-    // real-node hop with no revisit involved on either side.
-    inOut: (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2,
-    // Starts at rest, ends at full speed -- used flying INTO a revisit
-    // waypoint, so the camera is still moving (not decelerating to a stop)
-    // right as it passes through.
-    in: (x) => x*x*x,
-    // Starts at full speed, decelerates to rest -- used flying OUT of a
-    // revisit waypoint into a real node, so it settles normally even though
-    // it didn't start from a standstill.
-    out: (x) => 1 - Math.pow(1-x, 3),
-    // Constant speed -- used only if two revisits ever landed back-to-back
-    // (doesn't happen with the current tree shapes, kept as a safe fallback).
-    linear: (x) => x,
-  };
+  const EASE_INOUT = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
 
   function orbitalShot(centroid, boundRadius) {
     const dist = Math.max(520, boundRadius * 2.2);
@@ -530,7 +522,7 @@
     const segs = [];
     let t = 0, idx = 0;
     let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
-    let prevWasRevisit = false;
+    let lastRevisitMs = null;
     for (const entry of shotOrder) {
       const n = entry.node;
       let camPos, lookAt, focusNode, fireDossier, transitMs, holdMs;
@@ -549,6 +541,7 @@
           transitMs = REVISIT_LOCAL_MS;
         }
         fireDossier = false; holdMs = 0;
+        lastRevisitMs = transitMs;
       } else {
         // Camera arrives already aimed down the edge it just traveled --
         // this IS "panning along the node connection with relationship,"
@@ -558,24 +551,22 @@
         camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
         lookAt = n.pos; focusNode = n; fireDossier = true;
         const dur = DURATIONS[n.type] || DURATIONS.technique;
-        transitMs = dur.transit; holdMs = dur.hold;
+        transitMs = lastRevisitMs != null ? lastRevisitMs : dur.transit;
+        holdMs = dur.hold;
+        lastRevisitMs = null;
       }
-      const ease = prevWasRevisit
-        ? (entry.revisit ? "linear" : "out")
-        : (entry.revisit ? "in" : "inOut");
-      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+transitMs, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes, ease });
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+transitMs, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes });
       t += transitMs;
       if (holdMs > 0) {
         segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+holdMs, camPos, lookAt, node: focusNode, fireDossier, groupName, allNodes });
         t += holdMs;
       }
       prevCamPos = camPos; prevLookAt = lookAt;
-      prevWasRevisit = entry.revisit;
     }
     // Same "view of all" framing as every mid-flight orbital revisit, for
     // visual consistency between "hopping to a sibling" and "the flight is
-    // done." Always eases out (the flight's last leg is never a revisit).
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes, ease: prevWasRevisit ? "out" : "inOut" });
+    // done."
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
@@ -591,21 +582,38 @@
       return { camPos: V.add(seg.camPos, { x: drift, y: 0, z: 0 }), lookAt: seg.lookAt };
     }
     const pct = clamp((t - seg.tStart) / (seg.tEnd - seg.tStart), 0, 1);
-    const easeFn = EASE[seg.ease] || EASE.inOut;
-    const e = easeFn(pct);
+    const e = EASE_INOUT(pct);
     return { camPos: V.lerp(seg.camFrom, seg.camTo, e), lookAt: V.lerp(seg.lookFrom, seg.lookTo, e) };
   }
 
   // ---------- projection ----------
   const FOV = 55 * Math.PI / 180;
-  function project(pos, cam, cssW, cssH) {
+  // Camera basis is stabilized across frames, not recomputed fresh from
+  // world-up every time: `right = cross(forward, worldUp)` degenerates as
+  // forward sweeps close to vertical, and its normalized direction can flip
+  // ~180 deg passing near that pole -- invisible with the old flattened
+  // layout (forward rarely went near-vertical) but very visible once nodes
+  // spread across a full 3D sphere (confirmed as the actual cause of the
+  // reported "camera view flip", not assumed). Carrying the previous
+  // frame's up vector forward and deriving right/up from THAT instead of
+  // fresh world-up each time keeps the frame continuous through the pole.
+  let stableUp = { x: 0, y: 1, z: 0 };
+  function computeCameraBasis(cam) {
     const forward = V.norm(V.sub(cam.lookAt, cam.camPos));
-    let right = V.cross(forward, { x: 0, y: 1, z: 0 });
-    if (V.len(right) < 1e-5) right = { x: 1, y: 0, z: 0 };
+    let right = V.cross(forward, stableUp);
+    if (V.len(right) < 1e-4) {
+      // forward is parallel to our stabilized up -- fall back to whichever
+      // world axis is furthest from forward, just to break the tie.
+      right = V.cross(forward, Math.abs(forward.y) < 0.9 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 });
+    }
     right = V.norm(right);
-    const camUp = V.norm(V.cross(right, forward));
+    const up = V.norm(V.cross(right, forward));
+    stableUp = up;
+    return { forward, right, up };
+  }
+  function project(pos, cam, basis, cssW, cssH) {
     const rel = V.sub(pos, cam.camPos);
-    const camX = V.dot(rel, right), camY = V.dot(rel, camUp), camZ = V.dot(rel, forward);
+    const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
     if (camZ <= 5) return null;
     const f = 1 / Math.tan(FOV / 2);
     const aspect = cssW / cssH;
@@ -712,8 +720,9 @@
   function render(camState, flightNodes, focusNode, nowMs) {
     ctx.clearRect(0, 0, cssW, cssH);
     drawBackdrop(nowMs);
+    const basis = computeCameraBasis(camState);
     const proj = new Map();
-    for (const n of flightNodes) { const p = project(n.pos, camState, cssW, cssH); if (p) proj.set(n, p); }
+    for (const n of flightNodes) { const p = project(n.pos, camState, basis, cssW, cssH); if (p) proj.set(n, p); }
     for (const n of flightNodes) {
       if (!n.parent) continue;
       const a = proj.get(n.parent), b = proj.get(n);
@@ -939,14 +948,13 @@
     }
 
     const camState = interpolateSegment(seg, elapsed, now);
-    // Fires near the END of the transit, not at the hold boundary: every
-    // easing curve a real-node transit can use (inOut or out, see EASE
-    // above) is nearly flat for its last ~20%, so the camera visually
-    // settles onto the node well before the transit's raw duration is
-    // actually up -- waiting for the hold to technically begin read as a
-    // lag between "arriving" and the dossier updating. Firing at 82%
-    // through the eased transit lines the update up with when it actually
-    // looks like you've arrived.
+    // Fires near the END of the transit, not at the hold boundary: the
+    // ease-in-out curve every transit uses is nearly flat for its last
+    // ~20%, so the camera visually settles onto the node well before the
+    // transit's raw duration is actually up -- waiting for the hold to
+    // technically begin read as a lag between "arriving" and the dossier
+    // updating. Firing at 82% through the eased transit lines the update up
+    // with when it actually looks like you've arrived.
     if (seg.node && seg.type === "transit" && seg.fireDossier && lastFiredIndex !== seg.index) {
       const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
       if (transitPct >= 0.82) {
