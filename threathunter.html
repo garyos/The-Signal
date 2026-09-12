@@ -94,8 +94,10 @@
      scrollable -- excerpt()'s own truncation already keeps real overflow
      rare. */
   #dossier {
-    top: max(70px, calc(env(safe-area-inset-top) + 60px)); right: max(18px, env(safe-area-inset-right));
-    width: 340px; max-height: calc(100vh - 100px); overflow: hidden;
+    /* Pushed down to clear the minimap, which now owns the very top of
+       this same corner. */
+    top: max(200px, calc(env(safe-area-inset-top) + 190px)); right: max(18px, env(safe-area-inset-right));
+    width: 340px; max-height: calc(100vh - 230px); overflow: hidden;
     color: var(--c-technique);
     opacity: 1; transition: opacity 0.35s ease;
     /* .hud-panel's own z-index (20) sat BELOW waypoint pills (24), so a
@@ -222,12 +224,44 @@
   }
   .controls.hidden { opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity 0.6s ease, transform 0.6s ease; }
   .control-group { display: flex; gap: 4px; background: rgba(5,8,12,0.7); border: 1px solid var(--line); border-radius: 3px; padding: 3px; backdrop-filter: blur(6px); }
+  /* Same-specificity author rule (.control-group's own display:flex) beats
+     the UA [hidden] default otherwise -- the exact pattern already caught
+     and fixed for #fallback earlier, applying here too. */
+  .control-group[hidden] { display: none; }
   .control-group button { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px; background: transparent; border: none; color: var(--text-dim); cursor: pointer; border-radius: 2px; }
   .control-group button.active { background: rgba(0,240,255,0.12); color: var(--c-software); box-shadow: inset 0 0 0 1px rgba(0,240,255,0.4); }
   .control-group button:hover { color: var(--text); }
-  #randomize-btn, #mouselook-btn, #nav-toggle { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
-  #randomize-btn:hover, #mouselook-btn:hover, #nav-toggle:hover { background: rgba(176,38,255,0.22); }
-  #mouselook-btn.active, #nav-toggle.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
+  #randomize-btn, #mouselook-btn, #settings-toggle { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
+  #randomize-btn:hover, #mouselook-btn:hover, #settings-toggle:hover { background: rgba(176,38,255,0.22); }
+  #mouselook-btn.active, #settings-toggle.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
+
+  /* ---------- settings: what's cluttering the view, gear icon always
+     available in .controls (subject to the same idle-hide/reveal-on-
+     interaction as everything else there, which is enough to never be a
+     permanent dead end -- any touch/click/keypress brings it back). ---------- */
+  #settings-panel {
+    bottom: max(64px, calc(env(safe-area-inset-bottom) + 54px)); left: 50%; transform: translateX(-50%);
+    width: 200px; z-index: 31; color: var(--c-group);
+  }
+  #settings-panel[hidden] { display: none; }
+  #settings-panel .settings-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 10px; }
+  .settings-row {
+    display: flex; align-items: center; gap: 8px; padding: 5px 2px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text); cursor: pointer;
+  }
+  .settings-row input { accent-color: var(--c-group); }
+
+  /* ---------- minimap: player-relative, forward-up radar. Rotates with
+     yaw (not a fixed north-up map) so "what's ahead" always reads as
+     "toward the top," matching how the reticle/HUD already reasons about
+     direction -- see drawMinimap()/worldToMinimap(). ---------- */
+  #minimap {
+    position: fixed; top: max(18px, env(safe-area-inset-top)); right: max(18px, env(safe-area-inset-right));
+    z-index: 26; width: 150px; height: 150px; border-radius: 50%;
+    border: 1px solid var(--line); background: rgba(5,8,12,0.6); overflow: hidden;
+  }
+  #minimap[hidden] { display: none; }
+  #minimap-canvas { display: block; width: 100%; height: 100%; }
 
   /* ---------- network nav: always-available "jump to any network" list,
      independent of whether it's currently on-screen or off-screen enough
@@ -277,6 +311,11 @@
     /* Below the boost meter instead of overlapping it, and capped shorter
        so it doesn't run into the dossier's new floating position. */
     #network-nav { top: max(150px, calc(env(safe-area-inset-top) + 140px)); width: 190px; max-height: 30vh; }
+    /* .controls itself moved up to clear the sticks on mobile (see above)
+       -- the settings popover needs to open above THAT position, not the
+       desktop one it was tuned for. */
+    #settings-panel { bottom: max(210px, calc(env(safe-area-inset-bottom) + 200px)); }
+    #minimap { width: 110px; height: 110px; }
   }
 </style>
 </head>
@@ -322,7 +361,12 @@
   <div id="labels-layer"></div>
   <div id="waypoints-layer"></div>
 
+  <div id="minimap">
+    <canvas id="minimap-canvas" width="150" height="150"></canvas>
+  </div>
+
   <div class="controls" id="controls">
+    <button id="settings-toggle">⚙ DISPLAY</button>
     <div class="control-group" id="count-group">
       <button data-count="5" class="ct-btn">5</button>
       <button data-count="10" class="ct-btn active">10</button>
@@ -330,7 +374,18 @@
     </div>
     <button id="randomize-btn">⟲ RANDOMIZE GALAXY</button>
     <button id="mouselook-btn">🖱 ENABLE MOUSE-LOOK</button>
-    <button id="nav-toggle" class="active">☰ NETWORKS</button>
+  </div>
+
+  <div id="settings-panel" class="hud-panel" hidden>
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div class="settings-title">DISPLAY OPTIONS</div>
+    <label class="settings-row"><input type="checkbox" data-setting="counts"> Network count</label>
+    <label class="settings-row"><input type="checkbox" data-setting="randomize"> Randomize button</label>
+    <label class="settings-row"><input type="checkbox" data-setting="mouselook"> Mouse-look button</label>
+    <label class="settings-row"><input type="checkbox" data-setting="boost"> Boost button</label>
+    <label class="settings-row"><input type="checkbox" data-setting="nav"> Network list</label>
+    <label class="settings-row"><input type="checkbox" data-setting="pills"> Distant pills</label>
+    <label class="settings-row"><input type="checkbox" data-setting="minimap"> Minimap</label>
   </div>
 
   <div id="network-nav" class="hud-panel">
@@ -869,6 +924,67 @@
     ctx.restore();
   }
 
+  // ---------- minimap: small player-relative, forward-up radar ----------
+  const minimapCanvas = document.getElementById("minimap-canvas");
+  const minimapCtx = minimapCanvas.getContext("2d");
+  // A FIXED world-units-per-pixel scale, not auto-fit to whatever's
+  // currently nearby -- a map that doesn't "zoom" as you move is what
+  // actually lets direction be read at a glance; auto-fitting would make
+  // everything else visibly drift every time you got closer to any one
+  // thing. Anything farther than this clamps to the map's rim (still
+  // pointing the right way, same idea as the off-screen waypoint pills)
+  // instead of being squeezed inward.
+  const MINIMAP_WORLD_RADIUS = 7000;
+  // Rotates the world offset to `pos` into player-forward-relative 2D space
+  // using the SAME right/forward basis the main camera already computes
+  // (not a separately re-derived yaw calculation), so it can never drift
+  // out of sync with what "forward" visually means on screen. Verified
+  // against the page's established right/forward convention (recon.html's
+  // earlier "steer keys switching" fix): at yaw 0, a point at world -x
+  // (the player's confirmed RIGHT there) maps to positive canvas x.
+  function worldToMinimap(pos, basis, pxRadius) {
+    const dx = pos.x - playerPos.x, dz = pos.z - playerPos.z;
+    const right = dx * basis.right.x + dz * basis.right.z;
+    const up = dx * basis.forward.x + dz * basis.forward.z;
+    const mag = Math.hypot(right, up);
+    if (mag < 1e-6) return { x: 0, y: 0 };
+    const clampedMag = Math.min(mag, MINIMAP_WORLD_RADIUS);
+    const scale = clampedMag / MINIMAP_WORLD_RADIUS * pxRadius / mag;
+    return { x: right * scale, y: -up * scale }; // canvas y grows down; forward should read as "up"
+  }
+  function drawMinimap(basis) {
+    if (!uiVisible.minimap) return;
+    const W = minimapCanvas.width, H = minimapCanvas.height;
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 6;
+    minimapCtx.clearRect(0, 0, W, H);
+    minimapCtx.strokeStyle = "rgba(255,255,255,0.08)"; minimapCtx.lineWidth = 1;
+    for (const frac of [0.34, 0.67, 1]) {
+      minimapCtx.beginPath(); minimapCtx.arc(cx, cy, R * frac, 0, Math.PI * 2); minimapCtx.stroke();
+    }
+    minimapCtx.fillStyle = "#b026ff";
+    for (const net of networks) {
+      const p = worldToMinimap(net.center, basis, R);
+      minimapCtx.beginPath(); minimapCtx.arc(cx + p.x, cy + p.y, 3, 0, Math.PI * 2); minimapCtx.fill();
+    }
+    if (wormholeForward) {
+      const p = worldToMinimap(wormholeForward.center, basis, R);
+      minimapCtx.fillStyle = "#00ff66";
+      minimapCtx.beginPath(); minimapCtx.arc(cx + p.x, cy + p.y, 4, 0, Math.PI * 2); minimapCtx.fill();
+    }
+    if (wormholeBackward) {
+      const p = worldToMinimap(wormholeBackward.center, basis, R);
+      minimapCtx.fillStyle = "#ff7a00";
+      minimapCtx.beginPath(); minimapCtx.arc(cx + p.x, cy + p.y, 4, 0, Math.PI * 2); minimapCtx.fill();
+    }
+    // Player marker: fixed at dead center, a small triangle pointing "up"
+    // -- the whole map is already rotated to match its own heading, so a
+    // plain dot here would throw away the one thing this view is for.
+    minimapCtx.fillStyle = "#ff2751";
+    minimapCtx.beginPath();
+    minimapCtx.moveTo(cx, cy - 6); minimapCtx.lineTo(cx - 4, cy + 4); minimapCtx.lineTo(cx + 4, cy + 4);
+    minimapCtx.closePath(); minimapCtx.fill();
+  }
+
   // ---------- dossier (proximity-driven, not scripted) ----------
   function timelineBar(firstSeen, lastSeen) {
     const y0 = 2004, y1 = new Date().getFullYear() + 1;
@@ -1063,7 +1179,17 @@
   const joystickMove = document.getElementById("joystick-move");
   const joystickLook = document.getElementById("joystick-look");
   const JOYSTICK_RADIUS = 56;
-  function revealTouchControls() { joystickMove.hidden = false; joystickLook.hidden = false; touchBoostBtn.hidden = false; }
+  // The move/look sticks are NEVER part of the display-settings system
+  // (see uiVisible below) -- they're the one thing that must always be
+  // reachable on touch, per "default to all other items hidden except for
+  // the direction and steering toggles." The boost button IS part of that
+  // system, so it only actually shows once both a touch has happened AND
+  // the setting is on (applyUiVisibility owns that combination).
+  function revealTouchControls() {
+    joystickMove.hidden = false; joystickLook.hidden = false;
+    touchSeen = true;
+    applyUiVisibility();
+  }
   canvas.addEventListener("touchstart", () => revealTouchControls(), { passive: true });
   function wireStick(el, setAnchor, setDelta, getAnchor) {
     const knob = el.querySelector(".joystick-knob");
@@ -1342,6 +1468,7 @@
     return bottom;
   }
   function updateWaypoints(basis) {
+    if (!uiVisible.pills) { for (const el of waypointPool.values()) el.hidden = true; return; }
     // Wormholes fold into the exact same offscreen-directional-pill system
     // as networks (see placeWormholes' comment on why they're shaped to
     // match) -- they just skip the label-radius cutover since they don't
@@ -1542,6 +1669,7 @@
     updateReticleHover(basis);
     updateDossierProximity();
     updateNetworkNav();
+    drawMinimap(basis);
     drawWormholeFX(nowMs);
 
     const bm = document.getElementById("bm-fill");
@@ -1611,23 +1739,66 @@
     document.getElementById("mouselook-btn").classList.toggle("active", document.pointerLockElement === canvas);
   });
 
+  // ---------- display settings: what's cluttering the view ----------
+  // Everything here used to just always be on screen -- fine on a big
+  // desktop viewport, but on a phone the count/randomize/mouse-look
+  // buttons, the pills, the nav list and now the minimap add up to real
+  // clutter around the two things that actually matter for playing on
+  // touch: the move/look sticks. Those two are NEVER part of this system
+  // (see revealTouchControls) -- everything else is, and defaults OFF on a
+  // narrow/touch viewport, ON on desktop, exactly per "default to all
+  // other items hidden except for the direction and steering toggles on
+  // the mobile."
+  const isMobileViewport = window.matchMedia("(max-width: 640px)").matches;
+  let touchSeen = false;
+  let uiVisible = {
+    counts: !isMobileViewport,
+    randomize: !isMobileViewport,
+    mouselook: !isMobileViewport,
+    boost: !isMobileViewport,
+    nav: !isMobileViewport,
+    pills: !isMobileViewport,
+    minimap: !isMobileViewport,
+  };
+  const minimapEl = document.getElementById("minimap");
+  function applyUiVisibility() {
+    document.getElementById("count-group").hidden = !uiVisible.counts;
+    document.getElementById("randomize-btn").hidden = !uiVisible.randomize;
+    document.getElementById("mouselook-btn").hidden = !uiVisible.mouselook;
+    minimapEl.hidden = !uiVisible.minimap;
+    // Touch-only, so also gated on a touch actually having happened --
+    // same reasoning as the sticks themselves, just layered with the
+    // setting instead of replacing it.
+    touchBoostBtn.hidden = !(uiVisible.boost && touchSeen);
+    if (!uiVisible.pills) for (const el of waypointPool.values()) el.hidden = true;
+  }
+  const settingsPanel = document.getElementById("settings-panel");
+  const settingsToggle = document.getElementById("settings-toggle");
+  settingsToggle.addEventListener("click", () => {
+    settingsPanel.hidden = !settingsPanel.hidden;
+    settingsToggle.classList.toggle("active", !settingsPanel.hidden);
+  });
+  settingsPanel.querySelectorAll("input[data-setting]").forEach(input => {
+    const key = input.dataset.setting;
+    input.checked = uiVisible[key];
+    input.addEventListener("change", () => {
+      uiVisible[key] = input.checked;
+      applyUiVisibility();
+    });
+  });
+  applyUiVisibility();
+
   // ---------- network nav: always-available list of every network (and
   // wormhole) for auto-boost, independent of on/off-screen state -- a
   // waypoint pill only exists for something currently off-screen; this is
-  // the full directory. Defaults visible per "toggle to hide." Content
-  // only rebuilt while actually shown (skip the work otherwise, same
-  // performance-conscious pattern the rest of the page already follows). ----------
+  // the full directory. Content only rebuilt while actually shown (skip
+  // the work otherwise, same performance-conscious pattern the rest of the
+  // page already follows). ----------
   const networkNavEl = document.getElementById("network-nav");
   const networkNavList = document.getElementById("network-nav-list");
-  const navToggleBtn = document.getElementById("nav-toggle");
-  let networkNavVisible = true;
-  navToggleBtn.addEventListener("click", () => {
-    networkNavVisible = !networkNavVisible;
-    networkNavEl.classList.toggle("dz-hidden", !networkNavVisible);
-    navToggleBtn.classList.toggle("active", networkNavVisible);
-  });
   function updateNetworkNav() {
-    if (!networkNavVisible) return;
+    networkNavEl.classList.toggle("dz-hidden", !uiVisible.nav);
+    if (!uiVisible.nav) return;
     const targets = [...networks, wormholeForward, wormholeBackward].filter(Boolean);
     const sorted = targets
       .map(net => ({ net, dist: V.len(V.sub(net.center, playerPos)) }))
