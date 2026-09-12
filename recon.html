@@ -447,6 +447,28 @@
     const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
     return V.norm(V.add(V.scale(axis, Math.cos(polar)), offset));
   }
+  // Pure Math.random() has no uniqueness guarantee -- two independent draws
+  // can coincidentally land on (or effectively on) the same line, which is
+  // exactly what "perfectly aligned" siblings looks like. This wraps
+  // randomHemisphereDirection in bounded rejection sampling: keep drawing
+  // until a candidate clears a minimum angular separation from every
+  // already-placed sibling under the same parent, falling back to the
+  // least-bad candidate seen if none clear it in time (a crowded parent
+  // with many siblings and limited hemisphere room must never be able to
+  // loop forever).
+  const MIN_SIBLING_SEP_COS = Math.cos(10 * Math.PI / 180);
+  function pickSeparatedDirection(axis, placedDirs) {
+    let bestCandidate = null, bestMaxDot = Infinity;
+    for (let attempt = 0; attempt < 20; attempt++) {
+      const candidate = randomHemisphereDirection(axis);
+      if (placedDirs.length === 0) return candidate;
+      let maxDot = -Infinity;
+      for (const d of placedDirs) maxDot = Math.max(maxDot, V.dot(candidate, d));
+      if (maxDot < MIN_SIBLING_SEP_COS) return candidate;
+      if (maxDot < bestMaxDot) { bestMaxDot = maxDot; bestCandidate = candidate; }
+    }
+    return bestCandidate;
+  }
 
   // Ring 1 fans across the FULL sphere around the origin -- there's nothing
   // "behind" it to point back at, every direction is equally outward.
@@ -496,8 +518,15 @@
           // rather than feeding a degenerate axis into the hemisphere math.
           const atOrigin = V.len(parent.pos) < 1;
           const axis = atOrigin ? null : V.norm(parent.pos);
+          // fibonacciSpherePoint (the atOrigin fallback) is already
+          // collision-free by construction (an even lattice never repeats
+          // an angle for a given n) -- only the random branch needs the
+          // separation guarantee, hence placedDirs only being threaded
+          // through pickSeparatedDirection.
+          const placedDirs = [];
           kids.forEach((node, i) => {
-            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : randomHemisphereDirection(axis);
+            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
+            placedDirs.push(node.dir);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
@@ -782,7 +811,7 @@
   function drawNode(n, p, focused, nowMs) {
     const color = PALETTE[n.type];
     const isGroup = n.type === "group";
-    const r = Math.max(2, 10 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
+    const r = Math.max(2, 14 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
 
     if (isGroup) {
       // Solid black sphere body, drawn with NORMAL compositing -- every

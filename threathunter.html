@@ -158,9 +158,9 @@
   .waypoint.wormhole-fwd { border-color: #00e0ff; box-shadow: 0 0 12px rgba(0,224,255,0.45); }
   .waypoint.wormhole-fwd .wp-arrow { color: #00e0ff; }
   .waypoint.wormhole-fwd:hover, .waypoint.wormhole-fwd.hovered { box-shadow: 0 0 16px rgba(0,224,255,0.75); }
-  .waypoint.wormhole-back { border-color: #ff2fd6; box-shadow: 0 0 12px rgba(255,47,214,0.45); }
-  .waypoint.wormhole-back .wp-arrow { color: #ff2fd6; }
-  .waypoint.wormhole-back:hover, .waypoint.wormhole-back.hovered { box-shadow: 0 0 16px rgba(255,47,214,0.75); }
+  .waypoint.wormhole-back { border-color: #ff7a00; box-shadow: 0 0 12px rgba(255,122,0,0.45); }
+  .waypoint.wormhole-back .wp-arrow { color: #ff7a00; }
+  .waypoint.wormhole-back:hover, .waypoint.wormhole-back.hovered { box-shadow: 0 0 16px rgba(255,122,0,0.75); }
 
   /* ---------- boost meter ---------- */
   #boost-meter {
@@ -173,9 +173,10 @@
   #boost-meter.depleted .bm-fill { background: var(--c-technique); box-shadow: 0 0 8px var(--c-technique); }
 
   /* Only ever shown once a real touch event has been seen (see JS) --
-     desktop/mouse players use SPACE and never see it. */
+     desktop/mouse players use SPACE and never see it. Sits above
+     #joystick-look instead of sharing its corner. */
   #touch-boost {
-    position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom));
+    position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(150px, calc(env(safe-area-inset-bottom) + 140px));
     z-index: 30; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; font-weight: 600;
     background: rgba(176,38,255,0.18); border: 1px solid var(--c-group); color: var(--text);
     padding: 14px 18px; border-radius: 30px; -webkit-tap-highlight-color: transparent;
@@ -183,24 +184,35 @@
   #touch-boost[hidden] { display: none; }
   #touch-boost.active { background: rgba(176,38,255,0.4); }
 
-  /* ---------- touch joystick (steer + forward thrust) ----------
-     A dedicated, visible drag zone instead of the old "drag anywhere on
-     canvas" -- that had no on-screen affordance at all, and competed with
-     tapping a label/waypoint pill elsewhere on the canvas. Only ever shown
-     once a real touch is seen (see JS), same as #touch-boost. */
-  #joystick {
-    position: fixed; left: max(24px, env(safe-area-inset-left)); bottom: max(28px, calc(env(safe-area-inset-bottom) + 14px));
+  /* ---------- twin touch sticks: move (left) + look (right) ----------
+     Two dedicated, visible drag zones instead of the old single stick that
+     conflated look with an always-on forced-forward thrust -- that read as
+     "drifting forward the moment you touch anything," not real WASD-style
+     movement. Left stick now drives actual omnidirectional thrust (push
+     the direction you want to go); right drives look, same delta-from-
+     center math the old single stick used for that half. Both, and the
+     boost button, only ever reveal themselves once a real touch is seen
+     (see JS) -- desktop/mouse players never see any of them. */
+  .joystick {
+    position: fixed; bottom: max(28px, calc(env(safe-area-inset-bottom) + 14px));
     z-index: 30; width: 112px; height: 112px; border-radius: 50%;
     background: rgba(5,8,12,0.55); border: 1px solid var(--line);
     touch-action: none; -webkit-tap-highlight-color: transparent;
   }
-  #joystick[hidden] { display: none; }
-  #joystick-knob {
+  #joystick-move { left: max(24px, env(safe-area-inset-left)); }
+  #joystick-look { right: max(24px, env(safe-area-inset-right)); }
+  .joystick[hidden] { display: none; }
+  .joystick-knob {
     position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; border-radius: 50%;
     background: rgba(176,38,255,0.35); border: 1px solid var(--c-group);
     transform: translate(-50%, -50%); box-shadow: 0 0 14px rgba(176,38,255,0.45);
   }
-  #joystick.active #joystick-knob { background: rgba(176,38,255,0.65); }
+  .joystick.active .joystick-knob { background: rgba(176,38,255,0.65); }
+  .joystick-label {
+    position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--text-dim);
+    pointer-events: none; white-space: nowrap;
+  }
 
   /* ---------- controls (count + randomize), auto-hiding ---------- */
   .controls {
@@ -213,9 +225,34 @@
   .control-group button { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px; background: transparent; border: none; color: var(--text-dim); cursor: pointer; border-radius: 2px; }
   .control-group button.active { background: rgba(0,240,255,0.12); color: var(--c-software); box-shadow: inset 0 0 0 1px rgba(0,240,255,0.4); }
   .control-group button:hover { color: var(--text); }
-  #randomize-btn, #mouselook-btn { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
-  #randomize-btn:hover, #mouselook-btn:hover { background: rgba(176,38,255,0.22); }
-  #mouselook-btn.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
+  #randomize-btn, #mouselook-btn, #nav-toggle { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
+  #randomize-btn:hover, #mouselook-btn:hover, #nav-toggle:hover { background: rgba(176,38,255,0.22); }
+  #mouselook-btn.active, #nav-toggle.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
+
+  /* ---------- network nav: always-available "jump to any network" list,
+     independent of whether it's currently on-screen or off-screen enough
+     to have earned a waypoint pill. Opposite corner from the dossier so
+     the two never compete for the same space. Internal scroll is fine
+     here (unlike the dossier's, which was deliberately removed) -- this
+     panel isn't sitting on top of the mouse-look drag surface. */
+  #network-nav {
+    top: max(70px, calc(env(safe-area-inset-top) + 60px)); left: max(18px, env(safe-area-inset-left));
+    width: 220px; max-height: calc(100vh - 140px); overflow-y: auto;
+    color: var(--c-software); z-index: 28;
+  }
+  #network-nav.dz-hidden { display: none; }
+  #network-nav .nav-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 10px; }
+  .nav-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: 7px 4px; border-radius: 3px; cursor: pointer; font-family: var(--font-mono); font-size: 11px;
+    color: var(--text); border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-row:last-child { border-bottom: none; }
+  .nav-row:hover { background: rgba(0,240,255,0.1); }
+  .nav-row .nav-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nav-row .nav-dist { color: var(--text-dim); font-size: 9.5px; white-space: nowrap; flex-shrink: 0; }
+  .nav-row.wormhole-fwd { color: #00e0ff; }
+  .nav-row.wormhole-back { color: #ff7a00; }
 
   /* ---------- static fallback ---------- */
   #fallback { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
@@ -224,14 +261,22 @@
   #fallback .fb-msg { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 20px; }
 
   @media (max-width: 640px) {
-    #dossier { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 38vh; border-radius: 14px 14px 0 0; border-bottom: none; }
-    /* The joystick and boost button now own the bottom two corners on a
+    /* bottom:0 put the dossier flush with the screen edge, directly on top
+       of the sticks/boost button that live there -- opening it froze
+       movement entirely since there was nothing left to touch (confirmed,
+       not assumed). Floating it above their reach instead leaves both
+       sticks reachable with the dossier open. */
+    #dossier { top: auto; left: 0; right: 0; bottom: 210px; max-height: 32vh; border-radius: 14px; }
+    /* The sticks and boost button now own the bottom two corners on a
        touch device, so the meter and the controls cluster both have to move
        off the bottom edge instead of sharing it -- both were confirmed
        overlapping the new touch controls in a real mobile screenshot, not
        assumed. */
     #boost-meter { top: max(92px, calc(env(safe-area-inset-top) + 82px)); left: max(18px, env(safe-area-inset-left)); bottom: auto; }
     .controls { bottom: max(158px, calc(env(safe-area-inset-bottom) + 148px)); }
+    /* Below the boost meter instead of overlapping it, and capped shorter
+       so it doesn't run into the dossier's new floating position. */
+    #network-nav { top: max(150px, calc(env(safe-area-inset-top) + 140px)); width: 190px; max-height: 30vh; }
   }
 </style>
 </head>
@@ -271,7 +316,8 @@
   </div>
 
   <button id="touch-boost" hidden>⚡ BOOST</button>
-  <div id="joystick" hidden><div id="joystick-knob"></div></div>
+  <div id="joystick-move" class="joystick" hidden><div class="joystick-knob"></div><div class="joystick-label">MOVE</div></div>
+  <div id="joystick-look" class="joystick" hidden><div class="joystick-knob"></div><div class="joystick-label">LOOK</div></div>
 
   <div id="labels-layer"></div>
   <div id="waypoints-layer"></div>
@@ -284,6 +330,13 @@
     </div>
     <button id="randomize-btn">⟲ RANDOMIZE GALAXY</button>
     <button id="mouselook-btn">🖱 ENABLE MOUSE-LOOK</button>
+    <button id="nav-toggle" class="active">☰ NETWORKS</button>
+  </div>
+
+  <div id="network-nav" class="hud-panel">
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div class="nav-title">ALL NETWORKS // AUTO-BOOST</div>
+    <div id="network-nav-list"></div>
   </div>
 
   <div id="fallback" hidden>
@@ -439,14 +492,9 @@
   }
 
   // ---------- full-3D radial layout ----------
-  // Every ring (not just ring 1) distributes its nodes across the FULL
-  // sphere around their parent via the same Fibonacci-sphere lattice, not a
-  // cone continuing the parent's own outward direction -- an earlier
-  // version constrained deeper rings to a ~62deg forward cone (fine for
-  // recon.html's cinematic "spidering outward" fly-through, but explicitly
-  // wrong for a free-flight 3D map: children should be able to shoot out
-  // from any side of their parent, using the whole sphere, not just a
-  // narrow forward wedge).
+  // Ring 1 distributes across the FULL sphere around the origin via a
+  // Fibonacci-sphere lattice -- not a cone continuing any one direction,
+  // since there's nothing "behind" the origin to point back at.
   const RING_DIST = [0, 340, 260, 230, 210];
 
   function fibonacciSpherePoint(i, n) {
@@ -455,6 +503,45 @@
     const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
     const theta = goldenAngle * i;
     return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
+  }
+  // A genuinely random direction in the outward hemisphere around `axis`
+  // (random azimuth + polar angle capped at 90deg) -- ported from
+  // recon.html verbatim. Deeper rings here used to place across the FULL
+  // sphere with no constraint, which let a child point straight back
+  // through its own parent toward the network's center, crossing/
+  // overlapping other branches -- the exact bug recon.html had before its
+  // own hemisphere fix. Still plenty wide (a full hemisphere, not a narrow
+  // cone) for "children can shoot out from any side of their parent," just
+  // never the side that doubles back toward the middle.
+  function randomHemisphereDirection(axis) {
+    const arbitrary = Math.abs(axis.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
+    const t1 = V.norm(V.cross(axis, arbitrary));
+    const t2 = V.cross(axis, t1);
+    const az = Math.random() * Math.PI * 2;
+    const polar = Math.random() * (Math.PI / 2);
+    const s = Math.sin(polar);
+    const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
+    return V.norm(V.add(V.scale(axis, Math.cos(polar)), offset));
+  }
+  // Bounded rejection sampling around randomHemisphereDirection: keeps
+  // drawing until a candidate clears a minimum angular separation from
+  // every already-placed sibling, so two independent random draws can't
+  // coincidentally land on (or near) the same line -- confirmed as a real,
+  // reproducible bug (siblings ending up perfectly aligned), not just a
+  // theoretical risk. Falls back to the least-bad candidate seen so a
+  // crowded parent can never loop forever.
+  const MIN_SIBLING_SEP_COS = Math.cos(10 * Math.PI / 180);
+  function pickSeparatedDirection(axis, placedDirs) {
+    let bestCandidate = null, bestMaxDot = Infinity;
+    for (let attempt = 0; attempt < 20; attempt++) {
+      const candidate = randomHemisphereDirection(axis);
+      if (placedDirs.length === 0) return candidate;
+      let maxDot = -Infinity;
+      for (const d of placedDirs) maxDot = Math.max(maxDot, V.dot(candidate, d));
+      if (maxDot < MIN_SIBLING_SEP_COS) return candidate;
+      if (maxDot < bestMaxDot) { bestMaxDot = maxDot; bestCandidate = candidate; }
+    }
+    return bestCandidate;
   }
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
@@ -476,8 +563,18 @@
         }
         for (const [parent, kids] of byParent) {
           const n = kids.length;
+          // buildFlight falls a node's parent straight back to the origin
+          // whenever there's no real upstream node to hang it off (any
+          // technique/software node in a group with zero campaigns --
+          // common in the real data). origin.pos is exactly {0,0,0}, so
+          // there's no outward axis to speak of there; fall back to the
+          // same full-sphere placement ring 1 uses.
+          const atOrigin = V.len(parent.pos) < 1;
+          const axis = atOrigin ? null : V.norm(parent.pos);
+          const placedDirs = [];
           kids.forEach((node, i) => {
-            node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
+            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
+            placedDirs.push(node.dir);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
@@ -711,7 +808,7 @@
   function drawNode(n, p, focused, nowMs) {
     const color = PALETTE[n.type];
     const isGroup = n.type === "group";
-    const r = Math.max(2, 9 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
+    const r = Math.max(2, 13 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
     if (isGroup) {
       ctx.save();
       ctx.globalAlpha = p.opacity;
@@ -752,7 +849,7 @@
   // Cyan family for forward, magenta for backward, so which is which is
   // readable from a distance before the pill/label text is even legible.
   function drawWormhole(p, kind, nowMs) {
-    const baseHue = kind === "forward" ? 190 : 300;
+    const baseHue = kind === "forward" ? 190 : 28; // blue vs orange -- maximally distinct, colorblind-safe
     const r = Math.max(14, 46 * p.scale);
     ctx.save();
     ctx.globalAlpha = p.opacity;
@@ -950,55 +1047,64 @@
   });
   window.addEventListener("keyup", (e) => { keys[e.code] = false; });
 
-  // Touch fallback: the joystick knob's offset from its own fixed center IS
-  // touchDelta (clamped to the base's radius, same "stick deflection" idea
-  // the old canvas-wide drag used, just now visible and anchored to a
-  // dedicated zone instead of anywhere on the canvas). Constant forward
-  // thrust while held, same as before. Both it and the boost button only
-  // reveal themselves once a real touch is seen (desktop/mouse players
-  // never see either and keep using SPACE/mouse-look).
-  let touchAnchor = null, touchDelta = { x: 0, y: 0 };
+  // Touch fallback: two independent sticks instead of one doing both jobs.
+  // The old single stick forced constant forward thrust just from being
+  // touched at all, with the drag only ever steering -- not real WASD-style
+  // movement. Now: left stick's knob offset from its own fixed center
+  // drives actual omnidirectional thrust (read in updatePhysics below,
+  // same "stick deflection" idea as before, just mapped to forward/strafe
+  // instead of always-forward); right stick drives look, identical math the
+  // old single stick used for that half. All three touch controls (both
+  // sticks + the boost button) only reveal themselves once a real touch is
+  // seen -- desktop/mouse players never see any of them.
+  let moveAnchor = null, moveDelta = { x: 0, y: 0 };
+  let lookAnchor = null, lookDelta = { x: 0, y: 0 };
   const touchBoostBtn = document.getElementById("touch-boost");
-  const joystick = document.getElementById("joystick");
-  const joystickKnob = document.getElementById("joystick-knob");
+  const joystickMove = document.getElementById("joystick-move");
+  const joystickLook = document.getElementById("joystick-look");
   const JOYSTICK_RADIUS = 56;
-  function revealTouchControls() { joystick.hidden = false; touchBoostBtn.hidden = false; }
+  function revealTouchControls() { joystickMove.hidden = false; joystickLook.hidden = false; touchBoostBtn.hidden = false; }
   canvas.addEventListener("touchstart", () => revealTouchControls(), { passive: true });
-  joystick.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    revealTouchControls();
-    const r = joystick.getBoundingClientRect();
-    touchAnchor = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-    touchDelta = { x: 0, y: 0 };
-    joystick.classList.add("active");
-  }, { passive: false });
-  joystick.addEventListener("touchmove", (e) => {
-    if (!touchAnchor) return;
-    e.preventDefault();
-    const t = e.touches[0];
-    let dx = t.clientX - touchAnchor.x, dy = t.clientY - touchAnchor.y;
-    const len = Math.hypot(dx, dy);
-    if (len > JOYSTICK_RADIUS) { dx = dx / len * JOYSTICK_RADIUS; dy = dy / len * JOYSTICK_RADIUS; }
-    touchDelta = { x: dx, y: dy };
-    joystickKnob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-  }, { passive: false });
-  function releaseJoystick() {
-    touchAnchor = null; touchDelta = { x: 0, y: 0 };
-    joystick.classList.remove("active");
-    joystickKnob.style.transform = "translate(-50%, -50%)";
+  function wireStick(el, setAnchor, setDelta, getAnchor) {
+    const knob = el.querySelector(".joystick-knob");
+    el.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      revealTouchControls();
+      const r = el.getBoundingClientRect();
+      setAnchor({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      setDelta({ x: 0, y: 0 });
+      el.classList.add("active");
+    }, { passive: false });
+    el.addEventListener("touchmove", (e) => {
+      const anchor = getAnchor();
+      if (!anchor) return;
+      e.preventDefault();
+      const t = e.touches[0];
+      let dx = t.clientX - anchor.x, dy = t.clientY - anchor.y;
+      const len = Math.hypot(dx, dy);
+      if (len > JOYSTICK_RADIUS) { dx = dx / len * JOYSTICK_RADIUS; dy = dy / len * JOYSTICK_RADIUS; }
+      setDelta({ x: dx, y: dy });
+      knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    }, { passive: false });
+    function release() {
+      setAnchor(null); setDelta({ x: 0, y: 0 });
+      el.classList.remove("active");
+      knob.style.transform = "translate(-50%, -50%)";
+    }
+    el.addEventListener("touchend", release, { passive: true });
+    el.addEventListener("touchcancel", release, { passive: true });
   }
-  joystick.addEventListener("touchend", releaseJoystick, { passive: true });
-  joystick.addEventListener("touchcancel", releaseJoystick, { passive: true });
+  wireStick(joystickMove, (a) => moveAnchor = a, (d) => moveDelta = d, () => moveAnchor);
+  wireStick(joystickLook, (a) => lookAnchor = a, (d) => lookDelta = d, () => lookAnchor);
   touchBoostBtn.addEventListener("touchstart", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); }, { passive: true });
   touchBoostBtn.addEventListener("touchend", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); }, { passive: true });
 
   const ARROW_TURN_RATE = 1.5; // rad/sec while a steering key is held
   function updatePhysics(dt) {
     if (autoBoost || wormholeFX) return; // scripted transit / wormhole transition owns the camera
-    const touching = touchAnchor !== null;
-    if (touching) {
-      yaw -= clamp(touchDelta.x * 0.0009, -0.05, 0.05);
-      pitch = clamp(pitch - clamp(touchDelta.y * 0.0009, -0.05, 0.05), -1.5, 1.5);
+    if (lookAnchor) {
+      yaw -= clamp(lookDelta.x * 0.0009, -0.05, 0.05);
+      pitch = clamp(pitch - clamp(lookDelta.y * 0.0009, -0.05, 0.05), -1.5, 1.5);
     }
     // Arrow-key steering: an alternative to mouse-look that works whether
     // or not pointer lock is engaged -- useful on its own, and also a real
@@ -1011,7 +1117,7 @@
 
     const forward = forwardFromAngles();
     const basis = computeCameraBasis(yaw, forward);
-    boosting = keys["Space"] || (touching && boostTouchHeld);
+    boosting = keys["Space"] || boostTouchHeld;
     if (boosting && boostMeter <= 0) boosting = false;
 
     // WASD thrust/strafe works regardless of pointer-lock state -- only
@@ -1022,7 +1128,16 @@
     if (keys["KeyS"]) thrust = V.sub(thrust, forward);
     if (keys["KeyD"]) thrust = V.add(thrust, basis.right);
     if (keys["KeyA"]) thrust = V.sub(thrust, basis.right);
-    if (touching) thrust = V.add(thrust, forward); // constant forward thrust while touching
+    if (moveAnchor) {
+      // Analog read off the move stick's deflection, normalized to
+      // [-1,1] per axis -- genuine omnidirectional thrust (push the
+      // direction you want to go) instead of the old "always creep
+      // forward the instant anything is touched."
+      const mx = clamp(moveDelta.x / JOYSTICK_RADIUS, -1, 1);
+      const my = clamp(moveDelta.y / JOYSTICK_RADIUS, -1, 1);
+      thrust = V.add(thrust, V.scale(forward, -my)); // stick up = forward
+      thrust = V.add(thrust, V.scale(basis.right, mx)); // stick right = strafe right
+    }
     const accel = BASE_ACCEL * (boosting ? BOOST_MUL : 1);
     if (V.len(thrust) > 0.01) velocity = V.add(velocity, V.scale(V.norm(thrust), accel * dt));
     velocity = V.scale(velocity, Math.pow(DRAG, dt*60));
@@ -1115,7 +1230,7 @@
     if (!wormholeFX) return;
     const pct = clamp((nowMs - wormholeFX.t0) / wormholeFX.dur, 0, 1);
     const intensity = pct < 0.5 ? pct / 0.5 : 1 - (pct - 0.5) / 0.5;
-    const hueBase = wormholeFX.kind === "forward" ? 190 : 300;
+    const hueBase = wormholeFX.kind === "forward" ? 190 : 28;
     const cx = cssW / 2, cy = cssH / 2;
     ctx.save();
     if (REDUCED_MOTION) {
@@ -1156,9 +1271,25 @@
   // ---------- labels + waypoints ----------
   const labelsLayer = document.getElementById("labels-layer");
   const waypointsLayer = document.getElementById("waypoints-layer");
-  let labelPool = [];
-  function ensureLabelPool(n) {
-    while (labelPool.length < n) { const el = document.createElement("div"); el.className = "node-label"; el.hidden = true; labelsLayer.appendChild(el); labelPool.push(el); }
+  // IDENTITY-keyed pools (entity -> its own persistent element), not
+  // position-indexed arrays. Position-indexing reassigned pool element `i`
+  // to whatever happened to be at index `i` of that frame's filtered
+  // visible/offscreen list -- when an entity flickered in/out near a
+  // threshold (screen edge, label radius), every LATER entry's index
+  // shifted by one, so the SAME element (and its color/class, e.g. a
+  // wormhole's) jumped to representing a different entity frame to frame.
+  // Confirmed as the actual mechanism behind "pills flashing various
+  // colours," not assumed. A node/network object is a stable JS reference
+  // across frames (never recreated except by a full respawn, which already
+  // tears the whole pool down anyway), so it's a valid Map key.
+  let labelPool = new Map(); // node -> element
+  function getLabelEl(node) {
+    let el = labelPool.get(node);
+    if (!el) {
+      el = document.createElement("div"); el.className = "node-label"; el.hidden = true;
+      labelsLayer.appendChild(el); labelPool.set(node, el);
+    }
+    return el;
   }
   function updateApproachLabels(basis) {
     const nearNetworks = networks.filter(net => V.len(V.sub(net.center, playerPos)) < LABEL_RADIUS + 1600);
@@ -1170,10 +1301,10 @@
         if (p && p.x > -40 && p.x < cssW+40 && p.y > -40 && p.y < cssH+40) visible.push({ node, p });
       }
     }
-    ensureLabelPool(visible.length);
-    labelPool.forEach((el, i) => {
-      if (i >= visible.length) { el.hidden = true; el.onclick = null; el._node = null; return; }
-      const { node, p } = visible[i];
+    const visibleNodes = new Set(visible.map(v => v.node));
+    for (const [node, el] of labelPool) if (!visibleNodes.has(node)) el.hidden = true;
+    for (const { node, p } of visible) {
+      const el = getLabelEl(node);
       el.hidden = false;
       el.textContent = node.entity.name;
       const r = 9 * p.scale * (node.type === "group" ? 2 : 1);
@@ -1181,15 +1312,17 @@
       el.style.top = (p.y - r - 8) + "px";
       el._node = node; // read back by updateReticleHover() while pointer-locked
       el.onclick = (ev) => { ev.stopPropagation(); pinnedNode = node; renderDossier(node); };
-    });
-  }
-  let waypointPool = [];
-  function ensureWaypointPool(n) {
-    while (waypointPool.length < n) {
-      const el = document.createElement("div"); el.className = "waypoint"; el.hidden = true;
-      el.innerHTML = `<span class="wp-arrow">➤</span><span class="wp-name"></span><span class="wp-dist"></span>`;
-      waypointsLayer.appendChild(el); waypointPool.push(el);
     }
+  }
+  let waypointPool = new Map(); // network/wormhole -> element
+  function getWaypointEl(entity) {
+    let el = waypointPool.get(entity);
+    if (!el) {
+      el = document.createElement("div"); el.className = "waypoint"; el.hidden = true;
+      el.innerHTML = `<span class="wp-arrow">➤</span><span class="wp-name"></span><span class="wp-dist"></span>`;
+      waypointsLayer.appendChild(el); waypointPool.set(entity, el);
+    }
+    return el;
   }
   const controlsEl = document.getElementById("controls");
   // How far up from the bottom edge waypoint pills need to stay clear --
@@ -1202,7 +1335,8 @@
   // frame.
   function safeBottomEdge() {
     let bottom = cssH - 70;
-    if (!joystick.hidden) bottom = Math.min(bottom, joystick.getBoundingClientRect().top - 14);
+    if (!joystickMove.hidden) bottom = Math.min(bottom, joystickMove.getBoundingClientRect().top - 14);
+    if (!joystickLook.hidden) bottom = Math.min(bottom, joystickLook.getBoundingClientRect().top - 14);
     if (!touchBoostBtn.hidden) bottom = Math.min(bottom, touchBoostBtn.getBoundingClientRect().top - 14);
     if (controlsEl && !controlsEl.classList.contains("hidden")) bottom = Math.min(bottom, controlsEl.getBoundingClientRect().top - 14);
     return bottom;
@@ -1222,7 +1356,8 @@
       const p = project(net.center, playerPos, basis, cssW, cssH, FOV);
       return !p || p.x < 0 || p.x > cssW || p.y < 0 || p.y > cssH;
     });
-    ensureWaypointPool(offscreen.length);
+    const offscreenSet = new Set(offscreen);
+    for (const [entity, el] of waypointPool) if (!offscreenSet.has(entity)) el.hidden = true;
     // Asymmetric clamp box, not a symmetric pad around center: the
     // joystick, boost button and (when it hasn't auto-hidden) the bottom
     // control cluster all live along the bottom edge, and pills were
@@ -1232,9 +1367,8 @@
     // bottom one tracks the controls' real current position (see
     // safeBottomEdge) instead of guessing a fixed pixel count.
     const boxLeft = 90, boxRight = cssW - 90, boxTop = 64, boxBottom = safeBottomEdge();
-    waypointPool.forEach((el, i) => {
-      if (i >= offscreen.length) { el.hidden = true; el.onclick = null; el._network = null; return; }
-      const net = offscreen[i];
+    for (const net of offscreen) {
+      const el = getWaypointEl(net);
       const rel = V.sub(net.center, playerPos);
       const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
       let ang = Math.atan2(-camY, camX);
@@ -1249,15 +1383,27 @@
       el.hidden = false;
       el.style.left = (cx + dx*t) + "px";
       el.style.top = (cy + dy*t) + "px";
-      el.classList.toggle("wormhole-fwd", net.isWormhole && net.kind === "forward");
-      el.classList.toggle("wormhole-back", net.isWormhole && net.kind === "backward");
+      // classList.toggle's second argument only forces the state when it's
+      // an actual boolean -- passed a plain `undefined` (which is exactly
+      // what `net.isWormhole && ...` short-circuits to for every ordinary
+      // network, since isWormhole is unset there rather than explicitly
+      // false), it falls back to a plain flip on every single call. With
+      // these pool elements now persistent across frames, that meant a
+      // network's pill was toggling this class on then off every other
+      // frame, forever -- confirmed as the real mechanism behind "pills
+      // flashing various colours," not the pool-identity theory this
+      // session's earlier fix addressed (that was real too, just not the
+      // whole story). !! forces a genuine boolean so toggle can't fall
+      // back to flipping.
+      el.classList.toggle("wormhole-fwd", !!(net.isWormhole && net.kind === "forward"));
+      el.classList.toggle("wormhole-back", !!(net.isWormhole && net.kind === "backward"));
       el.querySelector(".wp-arrow").textContent = net.isWormhole ? "◎" : "➤";
       el.querySelector(".wp-arrow").style.transform = `rotate(${(Math.atan2(dy,dx)*180/Math.PI)+90}deg)`;
       el.querySelector(".wp-name").textContent = net.group.name;
       el.querySelector(".wp-dist").textContent = Math.round(V.len(rel)/100)/10 + "k";
       el._network = net; // read back by updateReticleHover() while pointer-locked
       el.onclick = (ev) => { ev.stopPropagation(); startAutoBoost(net); };
-    });
+    }
   }
 
   // ---------- reticle hover (pointer lock hides the cursor, so the fixed
@@ -1266,7 +1412,7 @@
     hoveredLabelNode = null;
     hoveredWaypointNet = null;
     const cx = cssW / 2, cy = cssH / 2;
-    for (const el of labelPool) {
+    for (const el of labelPool.values()) {
       el.classList.remove("hovered");
       if (locked && !el.hidden && el._node && !hoveredLabelNode) {
         const r = el.getBoundingClientRect();
@@ -1285,7 +1431,7 @@
     // nose close to its true direction, which is exactly what the
     // boresight-angle check below measures.
     const BORESIGHT_COS = Math.cos(0.09); // ~5 degrees off dead-ahead
-    for (const el of waypointPool) {
+    for (const el of waypointPool.values()) {
       el.classList.remove("hovered");
       if (locked && !el.hidden && el._network && !hoveredWaypointNet) {
         const dir = V.norm(V.sub(el._network.center, playerPos));
@@ -1395,6 +1541,7 @@
     }
     updateReticleHover(basis);
     updateDossierProximity();
+    updateNetworkNav();
     drawWormholeFX(nowMs);
 
     const bm = document.getElementById("bm-fill");
@@ -1439,8 +1586,8 @@
     // content (or a waypoint's onclick still capturing an old network
     // object) during the one frame before the pools resize is exactly the
     // kind of thing "clear all and spawn a new set" is asking not to see.
-    labelPool.forEach(el => el.remove()); labelPool = [];
-    waypointPool.forEach(el => el.remove()); waypointPool = [];
+    for (const el of labelPool.values()) el.remove(); labelPool = new Map();
+    for (const el of waypointPool.values()) el.remove(); waypointPool = new Map();
   }
   function respawnGalaxy() {
     buildGalaxy(networkCount);
@@ -1463,6 +1610,43 @@
   document.addEventListener("pointerlockchange", () => {
     document.getElementById("mouselook-btn").classList.toggle("active", document.pointerLockElement === canvas);
   });
+
+  // ---------- network nav: always-available list of every network (and
+  // wormhole) for auto-boost, independent of on/off-screen state -- a
+  // waypoint pill only exists for something currently off-screen; this is
+  // the full directory. Defaults visible per "toggle to hide." Content
+  // only rebuilt while actually shown (skip the work otherwise, same
+  // performance-conscious pattern the rest of the page already follows). ----------
+  const networkNavEl = document.getElementById("network-nav");
+  const networkNavList = document.getElementById("network-nav-list");
+  const navToggleBtn = document.getElementById("nav-toggle");
+  let networkNavVisible = true;
+  navToggleBtn.addEventListener("click", () => {
+    networkNavVisible = !networkNavVisible;
+    networkNavEl.classList.toggle("dz-hidden", !networkNavVisible);
+    navToggleBtn.classList.toggle("active", networkNavVisible);
+  });
+  function updateNetworkNav() {
+    if (!networkNavVisible) return;
+    const targets = [...networks, wormholeForward, wormholeBackward].filter(Boolean);
+    const sorted = targets
+      .map(net => ({ net, dist: V.len(V.sub(net.center, playerPos)) }))
+      .sort((a, b) => a.dist - b.dist);
+    networkNavList.innerHTML = "";
+    for (const { net, dist } of sorted) {
+      const row = document.createElement("div");
+      row.className = "nav-row" + (net.isWormhole ? (net.kind === "forward" ? " wormhole-fwd" : " wormhole-back") : "");
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "nav-name";
+      nameSpan.textContent = (net.isWormhole ? "◎ " : "") + net.group.name;
+      const distSpan = document.createElement("span");
+      distSpan.className = "nav-dist";
+      distSpan.textContent = Math.round(dist / 100) / 10 + "k";
+      row.appendChild(nameSpan); row.appendChild(distSpan);
+      row.onclick = () => startAutoBoost(net);
+      networkNavList.appendChild(row);
+    }
+  }
 
   // ---------- idle auto-hide for the settings cluster ----------
   let idleTimer = null;
