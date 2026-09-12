@@ -472,9 +472,25 @@
         }
         for (const [parent, kids] of byParent) {
           const n = kids.length;
-          const axis = V.norm(parent.pos);
+          // buildFlight falls a node's parent straight back to the origin
+          // whenever there's no real upstream node to hang it off (e.g. any
+          // technique/software node in a group with zero campaigns, which
+          // is common in the real data, not a rare edge case). origin.pos
+          // is exactly {0,0,0}, so V.norm(parent.pos) had nothing to
+          // normalize and (via V.norm's zero-length fallback) came back
+          // {0,0,0} too -- a zero-length axis collapses the whole
+          // hemisphere rotation to {0,0,0}, pinning every one of those
+          // nodes' dir, and therefore pos, exactly onto the origin point.
+          // Confirmed as the actual mechanism (not assumed) by tracing
+          // buildFlight's `parent: camp || origin` fallbacks against a real
+          // campaign-less group. A parent sitting AT the origin has no
+          // outward axis to speak of anyway, so it should fall back to the
+          // same full-sphere placement ring 1 uses around the origin,
+          // rather than feeding a degenerate axis into the hemisphere math.
+          const atOrigin = V.len(parent.pos) < 1;
+          const axis = atOrigin ? null : V.norm(parent.pos);
           kids.forEach((node, i) => {
-            node.dir = fibonacciHemispherePoint(i, n, axis);
+            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : fibonacciHemispherePoint(i, n, axis);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
