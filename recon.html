@@ -423,16 +423,35 @@
     const theta = goldenAngle * i;
     return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
   }
+  // Same even Fibonacci lattice, but only the HALF of the sphere whose pole
+  // is `axis` (y in [0,1] instead of [-1,1] before rotating into place) --
+  // children fan out across that whole outward hemisphere rather than a
+  // narrow cone, but can never land in the other hemisphere pointing back
+  // toward where `axis` came from.
+  function fibonacciHemispherePoint(i, n, axis) {
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    const nn = Math.max(n, 1);
+    const y = nn <= 1 ? 1 : 1 - (i / (nn - 1));
+    const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
+    const theta = goldenAngle * i;
+    const local = { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
+    const arbitrary = Math.abs(axis.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
+    const t1 = V.norm(V.cross(axis, arbitrary));
+    const t2 = V.cross(axis, t1);
+    return V.norm(V.add(V.add(V.scale(t1, local.x), V.scale(axis, local.y)), V.scale(t2, local.z)));
+  }
 
-  // Every ring -- not just ring 1 -- spreads its nodes across the FULL
-  // sphere around their parent (same fibonacciSpherePoint lattice used for
-  // ring 1, just centered on the parent instead of the origin), so children
-  // can shoot out from any side of their parent rather than only continuing
-  // outward in the parent's own direction. That directional cone-fan (via a
-  // since-removed perturbDirection helper) was this page's original look,
-  // but threathunter.html's free-flight galaxy needed the same nodes to
-  // fill the whole sphere for real 3D navigation, and it reads better here
-  // too -- ported over on request rather than kept as two divergent looks.
+  // Ring 1 fans across the FULL sphere around the origin -- there's nothing
+  // "behind" it to point back at, every direction is equally outward.
+  // Every deeper ring fans across only the OUTWARD-facing hemisphere around
+  // its parent (hemisphere pole = direction from the origin out to that
+  // parent) -- wide and organic, same spirit as full-sphere, but a child
+  // can never point back in toward the center. Letting it use the full
+  // sphere there (the first version of this fix) let a child's line
+  // double back past its own parent toward the origin, crossing/overlapping
+  // other branches and nodes right in the shot that's supposed to be
+  // focused on it -- confirmed as the actual cause of the reported
+  // overlap, not assumed.
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
     origin.dir = { x: 0, y: 0, z: 1 };
@@ -453,8 +472,9 @@
         }
         for (const [parent, kids] of byParent) {
           const n = kids.length;
+          const axis = V.norm(parent.pos);
           kids.forEach((node, i) => {
-            node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
+            node.dir = fibonacciHemispherePoint(i, n, axis);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
