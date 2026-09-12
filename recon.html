@@ -110,7 +110,13 @@
     top: max(70px, calc(env(safe-area-inset-top) + 60px)); right: max(18px, env(safe-area-inset-right));
     bottom: max(18px, env(safe-area-inset-bottom)); width: 340px; overflow-y: auto;
     color: var(--c-technique); /* corner-bracket color, overridden per-type via JS on #dossier-type */
+    opacity: 1; transition: opacity 0.5s ease;
   }
+  /* Timed to the camera, not to a click: shown at the halfway point of the
+     zoom IN to a node, hidden at the halfway point of the zoom back OUT --
+     see frame()'s departTrigger/fireDossier handling. */
+  #dossier.dz-hidden { opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { #dossier { transition: none; } }
   #dossier-type { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; font-weight: 600; }
   #dossier-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); float: right; }
   #dossier-scanline {
@@ -120,6 +126,20 @@
   #dossier.dz-flash #dossier-scanline { animation: dzsweep 0.6s ease-out; }
   @keyframes dzsweep { 0% { top: 0; opacity: 0.9; } 100% { top: 100%; opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { #dossier.dz-flash #dossier-scanline { animation: none; } }
+
+  /* Floating in-scene name tag, repositioned every frame to track a node's
+     current projected screen position (see updateNodeLabel()). Only shown
+     during a local revisit's "zoom out zoom in" bounce -- with the dossier
+     itself hidden for that whole swing (see #dossier.dz-hidden above),
+     this is what actually reminds the viewer which node they just swung
+     back to, without needing the full panel. */
+  #node-label {
+    position: fixed; z-index: 22; transform: translate(-50%, -100%);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    color: var(--text); background: rgba(5,8,12,0.85); border: 1px solid var(--line);
+    padding: 4px 10px; border-radius: 3px; white-space: nowrap; pointer-events: none;
+  }
+  #node-label[hidden] { display: none; }
 
   #dossier-body { margin-top: 14px; color: var(--text); }
   .dz-name { font-family: var(--font-display); font-size: 21px; font-weight: 700; margin: 0 0 6px; line-height: 1.15; color: var(--text); }
@@ -204,13 +224,15 @@
     </div>
   </div>
 
-  <div id="dossier" class="hud-panel">
+  <div id="dossier" class="hud-panel dz-hidden">
     <span class="hb-br1"></span><span class="hb-br2"></span>
     <div id="dossier-scanline"></div>
     <div id="dossier-type">—</div>
     <div id="dossier-id"></div>
     <div id="dossier-body"></div>
   </div>
+
+  <div id="node-label" hidden></div>
 
   <div id="panel-gauge" class="hud-panel">
     <span class="hb-br1"></span><span class="hb-br2"></span>
@@ -523,13 +545,26 @@
     let t = 0, idx = 0;
     let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
     let lastRevisitMs = null;
+    // departTrigger marks the transit immediately following a real node's
+    // hold (whatever comes next -- a revisit or straight into the next real
+    // node) -- that's when the dossier should start fading out, mirroring
+    // fireDossier's "this transit ends at a real node" for showing it.
+    let justLeftHold = false;
+    // labelNode carries a local (non-orbital) revisit's own node reference
+    // across BOTH legs of that bounce -- the transit swinging back to it
+    // AND the transit immediately leaving it again -- so an in-scene name
+    // tag can stay pinned to that node for the whole "zoom out zoom in," not
+    // just the first half.
+    let pendingLabelNode = null;
     for (const entry of shotOrder) {
       const n = entry.node;
-      let camPos, lookAt, focusNode, fireDossier, transitMs, holdMs;
+      let camPos, lookAt, focusNode, fireDossier, transitMs, holdMs, labelNode;
       if (entry.revisit) {
         if (entry.orbital) {
           camPos = orbital.camPos; lookAt = orbital.lookAt; focusNode = null;
           transitMs = REVISIT_ORBITAL_MS;
+          labelNode = null;
+          pendingLabelNode = null;
         } else {
           // Local revisit: swing back to just this one immediate parent,
           // close-up, the same "approach along the edge" shot a real node
@@ -539,6 +574,8 @@
           camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
           lookAt = n.pos; focusNode = n;
           transitMs = REVISIT_LOCAL_MS;
+          labelNode = n;
+          pendingLabelNode = n;
         }
         fireDossier = false; holdMs = 0;
         lastRevisitMs = transitMs;
@@ -554,19 +591,23 @@
         transitMs = lastRevisitMs != null ? lastRevisitMs : dur.transit;
         holdMs = dur.hold;
         lastRevisitMs = null;
+        labelNode = pendingLabelNode;
+        pendingLabelNode = null;
       }
-      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+transitMs, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes });
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+transitMs, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, departTrigger: justLeftHold, labelNode, groupName, allNodes });
       t += transitMs;
+      justLeftHold = false;
       if (holdMs > 0) {
         segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+holdMs, camPos, lookAt, node: focusNode, fireDossier, groupName, allNodes });
         t += holdMs;
+        justLeftHold = true;
       }
       prevCamPos = camPos; prevLookAt = lookAt;
     }
     // Same "view of all" framing as every mid-flight orbital revisit, for
     // visual consistency between "hopping to a sibling" and "the flight is
     // done."
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, departTrigger: justLeftHold, groupName, allNodes });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
@@ -717,7 +758,7 @@
       ctx.restore();
     }
   }
-  function render(camState, flightNodes, focusNode, nowMs) {
+  function render(camState, flightNodes, focusNode, nowMs, labelNode) {
     ctx.clearRect(0, 0, cssW, cssH);
     drawBackdrop(nowMs);
     const basis = computeCameraBasis(camState);
@@ -730,6 +771,7 @@
     }
     const sorted = [...proj.entries()].sort((a,b) => b[1].camZ - a[1].camZ);
     for (const [n, p] of sorted) drawNode(n, p, n === focusNode, nowMs);
+    updateNodeLabel(labelNode, proj);
   }
 
   // ---------- dossier ----------
@@ -804,9 +846,23 @@
     panel.style.color = PALETTE[node.type];
     idEl.textContent = node.entity.id;
     bodyEl.innerHTML = dossierHtml(node, data, allNodes);
+    panel.classList.remove("dz-hidden");
     panel.classList.remove("dz-flash");
     void panel.offsetWidth;
     if (!REDUCED_MOTION) panel.classList.add("dz-flash");
+  }
+  function hideDossier() {
+    document.getElementById("dossier").classList.add("dz-hidden");
+  }
+  function updateNodeLabel(labelNode, proj) {
+    const el = document.getElementById("node-label");
+    const p = labelNode ? proj.get(labelNode) : null;
+    if (!p) { el.hidden = true; return; }
+    el.hidden = false;
+    el.textContent = labelNode.entity.name;
+    const r = 10 * p.scale * (labelNode.type === "group" ? 2 : 1);
+    el.style.left = p.x + "px";
+    el.style.top = (p.y - r - 10) + "px";
   }
 
   // ---------- analytics panels ----------
@@ -856,7 +912,7 @@
   // ---------- main state + loop ----------
   let currentData = null, currentDomain = "enterprise";
   let flightNodes = [], timeline = null, totalDuration = 0, elapsed = 0;
-  let speedMultiplier = 0.25, lastFiredIndex = -1, lastGroupId = null;
+  let speedMultiplier = 0.25, lastFiredIndex = -1, lastHiddenIndex = -1, lastGroupId = null;
   let lastFrameTime = null, rafId = null;
   let frameTimes = [];
 
@@ -876,9 +932,10 @@
     const shotOrder = buildShotList(flightNodes);
     const built = buildTimeline(shotOrder, flightNodes, g.name);
     timeline = built.timeline; totalDuration = built.total;
-    elapsed = 0; lastFiredIndex = -1; nextGroupPrepared = false;
+    elapsed = 0; lastFiredIndex = -1; lastHiddenIndex = -1; nextGroupPrepared = false;
     currentTitleGroup = g.name;
     document.getElementById("rt-name").textContent = g.name;
+    hideDossier();
     updateTacticGauge(currentData, flightNodes);
   }
   async function startDomain(domain) {
@@ -948,22 +1005,30 @@
     }
 
     const camState = interpolateSegment(seg, elapsed, now);
-    // Fires near the END of the transit, not at the hold boundary: the
-    // ease-in-out curve every transit uses is nearly flat for its last
-    // ~20%, so the camera visually settles onto the node well before the
-    // transit's raw duration is actually up -- waiting for the hold to
-    // technically begin read as a lag between "arriving" and the dossier
-    // updating. Firing at 82% through the eased transit lines the update up
-    // with when it actually looks like you've arrived.
+    // Shows at the HALFWAY point of the zoom in (not "arrival") -- the
+    // dossier appearing partway through the approach, then the hold giving
+    // a proper pause to actually read it, reads as the panel anticipating
+    // the node rather than lagging behind it.
     if (seg.node && seg.type === "transit" && seg.fireDossier && lastFiredIndex !== seg.index) {
       const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
-      if (transitPct >= 0.82) {
+      if (transitPct >= 0.5) {
         lastFiredIndex = seg.index;
         renderDossier(seg.node, currentData, seg.allNodes || flightNodes);
       }
     }
+    // Hides at the halfway point of the zoom back OUT (the transit
+    // immediately following that node's hold, whatever comes next -- a
+    // revisit or straight into the next real node) -- symmetric with the
+    // show trigger above.
+    if (seg.type === "transit" && seg.departTrigger && lastHiddenIndex !== seg.index) {
+      const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
+      if (transitPct >= 0.5) {
+        lastHiddenIndex = seg.index;
+        hideDossier();
+      }
+    }
     const focusNode = seg.node || null;
-    render(camState, seg.allNodes || flightNodes, focusNode, now);
+    render(camState, seg.allNodes || flightNodes, focusNode, now, seg.labelNode || null);
     rafId = requestAnimationFrame(frame);
   }
 
