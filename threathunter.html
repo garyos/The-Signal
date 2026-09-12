@@ -100,12 +100,11 @@
     width: 340px; max-height: calc(100vh - 230px); overflow: hidden;
     color: var(--c-technique);
     opacity: 1; transition: opacity 0.35s ease;
-    /* .hud-panel's own z-index (20) sat BELOW waypoint pills (24), so a
-       pill drifting behind the open dossier rendered in front of it --
-       confirmed as a plain stacking-order bug, not a layout one. The
-       dossier is the active/focused panel; nothing in-scene should ever
-       cover it. */
-    z-index: 32;
+    /* Highest of everything, including the lock-overlay (50) and settings
+       (55/56) -- it's the active/focused panel, and on mobile it now
+       deliberately sits where the settings button lives too (see the
+       media query below), which is only sane if the dossier always wins. */
+    z-index: 60;
   }
   #dossier-close {
     position: absolute; top: 10px; right: 12px; z-index: 2; background: none; border: none;
@@ -164,24 +163,17 @@
   .waypoint.wormhole-back .wp-arrow { color: #ff7a00; }
   .waypoint.wormhole-back:hover, .waypoint.wormhole-back.hovered { box-shadow: 0 0 16px rgba(255,122,0,0.75); }
 
-  /* ---------- boost meter ---------- */
-  #boost-meter {
-    position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(70px, calc(env(safe-area-inset-bottom) + 60px));
-    z-index: 26; width: 160px; pointer-events: none;
-  }
-  #boost-meter .bm-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-dim); margin-bottom: 4px; }
-  #boost-meter .bm-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
-  #boost-meter .bm-fill { height: 100%; background: var(--c-software); box-shadow: 0 0 8px var(--c-software); transition: width 0.1s linear; }
-  #boost-meter.depleted .bm-fill { background: var(--c-technique); box-shadow: 0 0 8px var(--c-technique); }
-
-  /* Only ever shown once a real touch event has been seen (see JS) --
-     desktop/mouse players use SPACE and never see it. Sits above
-     #joystick-look instead of sharing its corner. */
+  /* Boost button -- no meter alongside it anymore (it was unnecessary
+     clutter: the control is already just "hold to boost, release to
+     stop," which doesn't need a resource bar to be understood). Visible
+     by default on desktop (clickable with a real mouse too, see JS); on
+     mobile it stays gated behind both a real touch AND the display
+     setting. Sits above #joystick-look instead of sharing its corner. */
   #touch-boost {
     position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(150px, calc(env(safe-area-inset-bottom) + 140px));
-    z-index: 30; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; font-weight: 600;
+    z-index: 55; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; font-weight: 600;
     background: rgba(176,38,255,0.18); border: 1px solid var(--c-group); color: var(--text);
-    padding: 14px 18px; border-radius: 30px; -webkit-tap-highlight-color: transparent;
+    padding: 14px 18px; border-radius: 30px; -webkit-tap-highlight-color: transparent; cursor: pointer;
   }
   #touch-boost[hidden] { display: none; }
   #touch-boost.active { background: rgba(176,38,255,0.4); }
@@ -219,7 +211,16 @@
   /* ---------- controls (count + randomize), auto-hiding ---------- */
   .controls {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
-    z-index: 30; display: flex; gap: 10px; align-items: center;
+    /* Above the lock-overlay (50) -- it used to sit below it, which meant
+       these buttons (settings included, before it moved out to its own
+       spot) were genuinely unclickable, real clicks intercepted by the
+       overlay instead of reaching the button, until the overlay was
+       dismissed. Confirmed with Playwright's real hit-testing (which
+       reports what actually receives a click, unlike a scripted
+       .click()), not assumed. Persistent chrome like this should be
+       reachable regardless of whether the intro screen has been dismissed
+       yet -- only the 3D view/flight controls need that gate. */
+    z-index: 55; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center;
     transition: opacity 0.15s ease, transform 0.15s ease;
   }
   .controls.hidden { opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -235,13 +236,18 @@
   #randomize-btn:hover, #mouselook-btn:hover, #settings-toggle:hover { background: rgba(176,38,255,0.22); }
   #mouselook-btn.active, #settings-toggle.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
 
-  /* ---------- settings: what's cluttering the view, gear icon always
-     available in .controls (subject to the same idle-hide/reveal-on-
-     interaction as everything else there, which is enough to never be a
-     permanent dead end -- any touch/click/keypress brings it back). ---------- */
+  /* ---------- settings: what's cluttering the view. Its own permanent
+     top-left spot -- "rarely needed once set" -- instead of living inside
+     .controls, so it's never itself one of the things a display setting
+     could hide, and never subject to .controls' idle-hide either. Above
+     the lock-overlay for the same reachability reason as .controls. ---------- */
+  #settings-toggle {
+    position: fixed; top: max(64px, calc(env(safe-area-inset-top) + 54px)); left: max(22px, env(safe-area-inset-left));
+    z-index: 55;
+  }
   #settings-panel {
-    bottom: max(64px, calc(env(safe-area-inset-bottom) + 54px)); left: 50%; transform: translateX(-50%);
-    width: 200px; z-index: 31; color: var(--c-group);
+    top: max(104px, calc(env(safe-area-inset-top) + 94px)); left: max(22px, env(safe-area-inset-left));
+    width: 200px; z-index: 56; color: var(--c-group);
   }
   #settings-panel[hidden] { display: none; }
   #settings-panel .settings-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 10px; }
@@ -257,7 +263,7 @@
      direction -- see drawMinimap()/worldToMinimap(). ---------- */
   #minimap {
     position: fixed; top: max(18px, env(safe-area-inset-top)); right: max(18px, env(safe-area-inset-right));
-    z-index: 26; width: 150px; height: 150px; border-radius: 50%;
+    z-index: 55; width: 150px; height: 150px; border-radius: 50%;
     border: 1px solid var(--line); background: rgba(5,8,12,0.6); overflow: hidden;
   }
   #minimap[hidden] { display: none; }
@@ -270,9 +276,11 @@
      here (unlike the dossier's, which was deliberately removed) -- this
      panel isn't sitting on top of the mouse-look drag surface. */
   #network-nav {
-    top: max(70px, calc(env(safe-area-inset-top) + 60px)); left: max(18px, env(safe-area-inset-left));
-    width: 220px; max-height: calc(100vh - 140px); overflow-y: auto;
-    color: var(--c-software); z-index: 28;
+    /* Below the settings button/panel, which now live in this same
+       top-left corner -- was overlapping it before that moved here. */
+    top: max(118px, calc(env(safe-area-inset-top) + 108px)); left: max(18px, env(safe-area-inset-left));
+    width: 220px; max-height: calc(100vh - 190px); overflow-y: auto;
+    color: var(--c-software); z-index: 55;
   }
   #network-nav.dz-hidden { display: none; }
   #network-nav .nav-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 10px; }
@@ -295,27 +303,35 @@
   #fallback .fb-msg { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 20px; }
 
   @media (max-width: 640px) {
-    /* bottom:0 put the dossier flush with the screen edge, directly on top
-       of the sticks/boost button that live there -- opening it froze
-       movement entirely since there was nothing left to touch (confirmed,
-       not assumed). Floating it above their reach instead leaves both
-       sticks reachable with the dossier open. */
-    #dossier { top: auto; left: 0; right: 0; bottom: 210px; max-height: 32vh; border-radius: 14px; }
-    /* The sticks and boost button now own the bottom two corners on a
-       touch device, so the meter and the controls cluster both have to move
-       off the bottom edge instead of sharing it -- both were confirmed
-       overlapping the new touch controls in a real mobile screenshot, not
-       assumed. */
-    #boost-meter { top: max(92px, calc(env(safe-area-inset-top) + 82px)); left: max(18px, env(safe-area-inset-left)); bottom: auto; }
-    .controls { bottom: max(158px, calc(env(safe-area-inset-bottom) + 148px)); }
-    /* Below the boost meter instead of overlapping it, and capped shorter
-       so it doesn't run into the dossier's new floating position. */
-    #network-nav { top: max(150px, calc(env(safe-area-inset-top) + 140px)); width: 190px; max-height: 30vh; }
-    /* .controls itself moved up to clear the sticks on mobile (see above)
-       -- the settings popover needs to open above THAT position, not the
-       desktop one it was tuned for. */
-    #settings-panel { bottom: max(210px, calc(env(safe-area-inset-bottom) + 200px)); }
+    /* A bottom sheet made real sense when it was the only sensible place
+       for it, but it ate the sticks' reach while open. Now a small,
+       shrunk-down top panel instead, sitting to the left of the (also
+       shrunk) minimap -- using the real estate up there instead of
+       reserving a third of the screen height at the bottom. Fine to run
+       under the brand title (pointer-events:none there anyway, purely
+       decorative) rather than waste width avoiding it. */
+    #dossier {
+      top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left));
+      right: 128px; bottom: auto; width: auto;
+      max-height: 44vh; border-radius: 10px; padding: 10px 12px;
+    }
+    #dossier-close { top: 6px; right: 8px; }
+    #dossier-type, #dossier-id { font-size: 8.5px; }
+    #dossier-body { margin-top: 8px; }
+    #dossier .dz-name { font-size: 14px; margin-bottom: 3px; }
+    #dossier .dz-sub { font-size: 9px; margin-bottom: 6px; }
+    #dossier .dz-chip { font-size: 8px; padding: 2px 6px; }
+    #dossier .dz-chiprow { gap: 4px; margin-bottom: 6px; }
+    #dossier .dz-desc { font-size: 10px; line-height: 1.45; margin-bottom: 8px; }
+    #dossier .dz-stats { gap: 12px; }
+    #dossier .dz-stats b { font-size: 15px; }
+    #dossier .dz-stats span { font-size: 7.5px; }
     #minimap { width: 110px; height: 110px; }
+    /* Dossier no longer competes with the bottom edge, but the boost
+       button still does -- .controls needs to clear IT, not the old
+       bottom-sheet dossier this was originally tuned against. */
+    .controls { bottom: max(210px, calc(env(safe-area-inset-bottom) + 200px)); }
+    #network-nav { width: 190px; max-height: 34vh; }
   }
 </style>
 </head>
@@ -349,10 +365,7 @@
     <div id="dossier-body"></div>
   </div>
 
-  <div id="boost-meter">
-    <div class="bm-label">BOOST</div>
-    <div class="bm-track"><div class="bm-fill" id="bm-fill" style="width:100%"></div></div>
-  </div>
+  <button id="settings-toggle">⚙ DISPLAY</button>
 
   <button id="touch-boost" hidden>⚡ BOOST</button>
   <div id="joystick-move" class="joystick" hidden><div class="joystick-knob"></div><div class="joystick-label">MOVE</div></div>
@@ -366,7 +379,6 @@
   </div>
 
   <div class="controls" id="controls">
-    <button id="settings-toggle">⚙ DISPLAY</button>
     <div class="control-group" id="count-group">
       <button data-count="5" class="ct-btn">5</button>
       <button data-count="10" class="ct-btn active">10</button>
@@ -626,7 +638,15 @@
           // same full-sphere placement ring 1 uses.
           const atOrigin = V.len(parent.pos) < 1;
           const axis = atOrigin ? null : V.norm(parent.pos);
-          const placedDirs = [];
+          // Seeded with the parent's own incoming direction (ported from
+          // recon.html's version of this same fix) -- otherwise a child
+          // was free to continue almost dead-straight through the line
+          // its parent already arrived along, so parent/child/grandchild
+          // ended up close to collinear. Not caught by the per-sibling
+          // check alone (the parent isn't a sibling). Skipped for the
+          // atOrigin case since origin.dir is a meaningless fixed
+          // placeholder, not a real incoming direction.
+          const placedDirs = atOrigin ? [] : [parent.dir];
           kids.forEach((node, i) => {
             node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
             placedDirs.push(node.dir);
@@ -1191,11 +1211,23 @@
     applyUiVisibility();
   }
   canvas.addEventListener("touchstart", () => revealTouchControls(), { passive: true });
+  // `e.touches` is EVERY touch currently active anywhere on the page, not
+  // just the one on this element -- reading touches[0] blindly meant that
+  // holding both sticks at once could cross-wire them (whichever finger
+  // happened to sort into index 0 drove BOTH sticks' math, and which
+  // finger that was could flip as fingers lifted/landed), producing a
+  // sudden wrong delta on one stick out of nowhere. Confirmed as the
+  // actual mechanism (not assumed) -- this is exactly what reads as "a
+  // race condition" when using both at once. Each stick now tracks its
+  // OWN touch by identifier from touchstart through touchend/touchcancel,
+  // via changedTouches (which one) and touches (filtered to that one).
   function wireStick(el, setAnchor, setDelta, getAnchor) {
     const knob = el.querySelector(".joystick-knob");
+    let touchId = null;
     el.addEventListener("touchstart", (e) => {
       e.preventDefault();
       revealTouchControls();
+      touchId = e.changedTouches[0].identifier;
       const r = el.getBoundingClientRect();
       setAnchor({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
       setDelta({ x: 0, y: 0 });
@@ -1203,16 +1235,26 @@
     }, { passive: false });
     el.addEventListener("touchmove", (e) => {
       const anchor = getAnchor();
-      if (!anchor) return;
+      if (!anchor || touchId === null) return;
+      let t = null;
+      for (let i = 0; i < e.touches.length; i++) if (e.touches[i].identifier === touchId) { t = e.touches[i]; break; }
+      if (!t) return;
       e.preventDefault();
-      const t = e.touches[0];
       let dx = t.clientX - anchor.x, dy = t.clientY - anchor.y;
       const len = Math.hypot(dx, dy);
       if (len > JOYSTICK_RADIUS) { dx = dx / len * JOYSTICK_RADIUS; dy = dy / len * JOYSTICK_RADIUS; }
       setDelta({ x: dx, y: dy });
       knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
     }, { passive: false });
-    function release() {
+    function release(e) {
+      // A touchend/touchcancel for a DIFFERENT finger (e.g. the other
+      // stick releasing) must not reset THIS stick.
+      if (e && e.changedTouches) {
+        let mine = false;
+        for (let i = 0; i < e.changedTouches.length; i++) if (e.changedTouches[i].identifier === touchId) mine = true;
+        if (!mine) return;
+      }
+      touchId = null;
       setAnchor(null); setDelta({ x: 0, y: 0 });
       el.classList.remove("active");
       knob.style.transform = "translate(-50%, -50%)";
@@ -1224,13 +1266,24 @@
   wireStick(joystickLook, (a) => lookAnchor = a, (d) => lookDelta = d, () => lookAnchor);
   touchBoostBtn.addEventListener("touchstart", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); }, { passive: true });
   touchBoostBtn.addEventListener("touchend", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); }, { passive: true });
+  // It's visible-by-default on desktop now (see uiVisible.boost), which
+  // only makes sense if a real mouse can actually use it -- touch events
+  // alone never fire for a mouse click.
+  touchBoostBtn.addEventListener("mousedown", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); });
+  touchBoostBtn.addEventListener("mouseup", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); });
+  touchBoostBtn.addEventListener("mouseleave", () => { boostTouchHeld = false; touchBoostBtn.classList.remove("active"); });
 
   const ARROW_TURN_RATE = 1.5; // rad/sec while a steering key is held
   function updatePhysics(dt) {
     if (autoBoost || wormholeFX) return; // scripted transit / wormhole transition owns the camera
     if (lookAnchor) {
-      yaw -= clamp(lookDelta.x * 0.0009, -0.05, 0.05);
-      pitch = clamp(pitch - clamp(lookDelta.y * 0.0009, -0.05, 0.05), -1.5, 1.5);
+      // Old coefficient/clamp topped out at 3 rad/s at full deflection --
+      // 2x ARROW_TURN_RATE (the keyboard's own steering rate, 1.5 rad/s),
+      // and proportionally twitchy well below full deflection too, which
+      // is what read as "far too sensitive." Tuned down to top out
+      // slightly above the keyboard's own rate instead of double it.
+      yaw -= clamp(lookDelta.x * 0.0005, -0.03, 0.03);
+      pitch = clamp(pitch - clamp(lookDelta.y * 0.0005, -0.03, 0.03), -1.5, 1.5);
     }
     // Arrow-key steering: an alternative to mouse-look that works whether
     // or not pointer lock is engaged -- useful on its own, and also a real
@@ -1662,7 +1715,11 @@
       waypointsLayer.style.visibility = "hidden";
     } else {
       labelsLayer.style.visibility = "";
-      waypointsLayer.style.visibility = "";
+      // Second, layer-wide guard on top of updateWaypoints' own per-element
+      // hiding -- redundant when that logic is working, but a display
+      // setting the user explicitly turned off should never depend on a
+      // single code path being bug-free to actually stay off.
+      waypointsLayer.style.visibility = uiVisible.pills ? "" : "hidden";
       updateApproachLabels(basis);
       updateWaypoints(basis);
     }
@@ -1671,10 +1728,6 @@
     updateNetworkNav();
     drawMinimap(basis);
     drawWormholeFX(nowMs);
-
-    const bm = document.getElementById("bm-fill");
-    bm.style.width = boostMeter + "%";
-    document.getElementById("boost-meter").classList.toggle("depleted", boostMeter < BOOST_MIN_TO_USE);
   }
 
   let lastFrameTime = null, rafId = null;
@@ -1766,18 +1819,35 @@
     document.getElementById("randomize-btn").hidden = !uiVisible.randomize;
     document.getElementById("mouselook-btn").hidden = !uiVisible.mouselook;
     minimapEl.hidden = !uiVisible.minimap;
-    // Touch-only, so also gated on a touch actually having happened --
-    // same reasoning as the sticks themselves, just layered with the
-    // setting instead of replacing it.
-    touchBoostBtn.hidden = !(uiVisible.boost && touchSeen);
+    // On mobile this is also gated on a touch actually having happened,
+    // same reasoning as the sticks themselves (a real mouse pointer never
+    // fires touchstart, so it'd otherwise never appear at all there). On
+    // desktop the setting alone decides -- clickable with a real mouse
+    // too, see the mousedown/mouseup listeners below.
+    touchBoostBtn.hidden = isMobileViewport ? !(uiVisible.boost && touchSeen) : !uiVisible.boost;
+    // Belt-and-suspenders: hides every currently-tracked pill immediately
+    // AND (in render(), alongside the wormholeFX layer toggle) the whole
+    // waypoints DOM layer stays hidden while the setting is off, so a pill
+    // created afresh mid-frame can't slip through either.
     if (!uiVisible.pills) for (const el of waypointPool.values()) el.hidden = true;
   }
   const settingsPanel = document.getElementById("settings-panel");
   const settingsToggle = document.getElementById("settings-toggle");
-  settingsToggle.addEventListener("click", () => {
+  settingsToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
     settingsPanel.hidden = !settingsPanel.hidden;
     settingsToggle.classList.toggle("active", !settingsPanel.hidden);
   });
+  // Tapping/clicking anywhere else closes it -- previously only the gear
+  // button itself did, which read as a dead end ("I have to tap the
+  // display button to close that menu").
+  document.addEventListener("click", (e) => {
+    if (!settingsPanel.hidden && !settingsPanel.contains(e.target) && e.target !== settingsToggle) {
+      settingsPanel.hidden = true;
+      settingsToggle.classList.remove("active");
+    }
+  });
+  settingsPanel.addEventListener("click", (e) => e.stopPropagation());
   settingsPanel.querySelectorAll("input[data-setting]").forEach(input => {
     const key = input.dataset.setting;
     input.checked = uiVisible[key];

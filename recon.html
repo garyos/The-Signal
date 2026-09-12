@@ -523,7 +523,21 @@
           // an angle for a given n) -- only the random branch needs the
           // separation guarantee, hence placedDirs only being threaded
           // through pickSeparatedDirection.
-          const placedDirs = [];
+          //
+          // Seeded with the parent's OWN incoming direction (not just an
+          // empty list) when there is one -- otherwise a child was free to
+          // continue almost dead-straight through the line its parent
+          // already arrived along, so parent/child/grandchild ended up
+          // close to collinear. That's invisible to the per-sibling check
+          // (it's not a sibling), but it's exactly what "the camera
+          // focuses on a node but another node is in front of it, because
+          // they're in alignment" describes -- a shot approaching a node
+          // roughly from its parent's direction is looking straight down
+          // that same line. Excluded for the atOrigin case: origin.dir is
+          // a meaningless fixed placeholder, not a real incoming
+          // direction, and seeding it would wrongly bias away from a
+          // perfectly valid part of the sphere.
+          const placedDirs = atOrigin ? [] : [parent.dir];
           kids.forEach((node, i) => {
             node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
             placedDirs.push(node.dir);
