@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /*
-    RE:CON is a standalone, currently-unlinked page (no nav reference, not in
+    RE:CON is a standalone, still currently-unlinked page (no nav reference, not in
     either mirror workflow's allowlist yet — see the plan this was built
     from). It is NOT an explorer: nothing on this page is clickable. It's a
     non-interactive, auto-playing cinematic fly-through of MITRE ATT&CK
@@ -40,7 +40,7 @@
     background: var(--ink); color: var(--text); font-family: var(--font-mono);
   }
   @media (prefers-reduced-motion: reduce) {
-    .controls, #recon-title { transition: opacity 0s, transform 0s !important; }
+    .controls { transition: opacity 0s, transform 0s !important; }
   }
 
   /* ---------- scene ---------- */
@@ -55,12 +55,14 @@
   .brand .bw span { color: var(--c-technique); }
   .brand .bt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; color: var(--text-dim); opacity: 0.65; margin-top: 2px; text-transform: uppercase; }
 
-  /* ---------- current-group title: small, auto-hides, NOT dominant ---------- */
+  /* ---------- current-group title: small, always-on (fixed), NOT dominant ----------
+     Deliberately never auto-hides, unlike dataset/speed controls -- the
+     animation is non-interactive and the title is the only text telling a
+     passive viewer who they're looking at, so it needs to stay put. */
   #recon-title {
     position: fixed; top: max(18px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
     z-index: 25; text-align: center; pointer-events: none;
     font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
-    transition: opacity 0.15s ease, transform 0.15s ease;
   }
   #recon-title .rt-kicker { font-size: 9px; letter-spacing: 0.2em; color: var(--c-group); opacity: 0.85; margin-bottom: 3px; }
   #recon-title .rt-name { color: var(--text); font-weight: 600; }
@@ -80,7 +82,6 @@
     opacity: 0; transform: translate(-50%, 14px); pointer-events: none;
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  #recon-title.hidden { opacity: 0; transform: translate(-50%, -10px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .control-group { display: flex; gap: 4px; background: rgba(5,8,12,0.7); border: 1px solid var(--line); border-radius: 3px; padding: 3px; backdrop-filter: blur(6px); }
   .control-group button {
     font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px;
@@ -165,10 +166,6 @@
     #panel-gauge, #panel-landscape { display: none; }
   }
 
-  /* ---------- cut transition between cycles ---------- */
-  #scene.cutting { opacity: 0.12; transition: opacity 0.25s ease; }
-  #scene { transition: opacity 0.3s ease; }
-
   /* ---------- static fallback (canvas unsupported) ---------- */
   /* [hidden] override needed: an ID selector alone would lose to this rule's
      own `display: flex`, since author CSS beats the UA [hidden]{display:none}
@@ -201,9 +198,9 @@
       <button data-domain="ics" class="ds-btn">ICS</button>
     </div>
     <div class="control-group" id="speed-group">
-      <button data-speed="0.5" class="sp-btn">SLOW</button>
-      <button data-speed="1" class="sp-btn active">NORMAL</button>
-      <button data-speed="2" class="sp-btn">FAST</button>
+      <button data-speed="0.125" class="sp-btn">SLOW</button>
+      <button data-speed="0.25" class="sp-btn active">NORMAL</button>
+      <button data-speed="0.5" class="sp-btn">FAST</button>
     </div>
   </div>
 
@@ -390,49 +387,66 @@
   // their PARENT's own angle (not a fresh spiral each ring) so branches stay
   // visually attached to where they came from -- this is what makes it read
   // as spidering rather than a random point cloud.
+  //
+  // Ring 1 (the origin's direct children) is evenly divided around the full
+  // circle -- a clean, orderly first impression, like a directory's
+  // top-level entries. Deeper rings fan around their own parent's angle but
+  // with irregular per-sibling jitter layered on top of the even base
+  // spacing, deliberately UNEVEN -- real relationship data doesn't cluster
+  // on a grid, and looking hand-placed/organic there reads as more "alive"
+  // than a second ring of perfectly uniform fans would.
   const RING_Z = [0, 260, 520, 780, 1040];
   const RING_RADIUS = [0, 130, 290, 450, 610];
-  const GOLDEN_ANGLE = 137.508 * Math.PI / 180;
   const FAN_SPREAD = 46 * Math.PI / 180;
 
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
     origin.angle = 0;
     for (let ring = 1; ring <= 4; ring++) {
-      const ringNodes = nodes.filter(n => n.ring === ring);
+      const ringNodes = nodes.filter(node => node.ring === ring);
       if (ring === 1) {
-        ringNodes.forEach((n, i) => { n.angle = i * GOLDEN_ANGLE; });
+        const n = ringNodes.length;
+        ringNodes.forEach((node, i) => { node.angle = (i / n) * Math.PI * 2; });
       } else {
         const byParent = new Map();
-        for (const n of ringNodes) {
-          if (!byParent.has(n.parent)) byParent.set(n.parent, []);
-          byParent.get(n.parent).push(n);
+        for (const node of ringNodes) {
+          if (!byParent.has(node.parent)) byParent.set(node.parent, []);
+          byParent.get(node.parent).push(node);
         }
         for (const [parent, kids] of byParent) {
-          kids.forEach((n, i) => {
-            const offset = kids.length > 1 ? (i - (kids.length-1)/2) * (FAN_SPREAD / Math.max(1, kids.length-1)) : 0;
-            n.angle = (parent.angle || 0) + offset;
+          kids.forEach((node, i) => {
+            const base = kids.length > 1 ? (i - (kids.length-1)/2) * (FAN_SPREAD / Math.max(1, kids.length-1)) : 0;
+            const irregular = (Math.random() - 0.5) * FAN_SPREAD * 0.7;
+            node.angle = (parent.angle || 0) + base + irregular;
           });
         }
       }
       const z = RING_Z[ring], r = RING_RADIUS[ring];
-      ringNodes.forEach(n => {
+      ringNodes.forEach(node => {
         const jitter = ring >= 2 ? (Math.random()*40 - 20) : 0;
-        n.pos = { x: r*Math.cos(n.angle), y: r*Math.sin(n.angle)*0.6, z: z + jitter };
+        node.pos = { x: r*Math.cos(node.angle), y: r*Math.sin(node.angle)*0.6, z: z + jitter };
       });
     }
   }
 
-  // ---------- shot list: depth-first so a campaign and the techniques it
-  // introduces stay temporally adjacent, matching the requested "campaigns to
-  // techniques, tactics and more" narrative order and keeping the camera's
-  // path geometrically smooth (no wild backtracking).
+  // ---------- shot list: depth-first, directory-walk style -- parent, then
+  // child1's ENTIRE subtree, then explicitly hop back to the parent before
+  // heading to child2 (a "revisit" entry, {revisit:true}), then child2's
+  // subtree, and so on. The revisit entries are what make sibling branches
+  // read as parallel offshoots of the same node instead of the camera
+  // cutting in a straight line between wherever two unrelated subtrees
+  // happened to end/start -- buildTimeline gives each revisit a short,
+  // dossier-silent beat (see fireDossier below) rather than a full stop.
   function buildShotList(nodes) {
     const origin = nodes.find(n => n.ring === 0);
     const order = [];
     (function dfs(n) {
-      order.push(n);
-      for (const k of nodes.filter(x => x.parent === n)) dfs(k);
+      order.push({ node: n, revisit: false });
+      const kids = nodes.filter(x => x.parent === n);
+      kids.forEach((k, i) => {
+        if (i > 0) order.push({ node: n, revisit: true });
+        dfs(k);
+      });
     })(origin);
     return order;
   }
@@ -443,39 +457,51 @@
   }
 
   // ---------- timing engine ----------
+  // Transit-heavy on purpose: the ask is to foreground the pan ALONG the
+  // connection to the next node, not the static dwell once there -- these
+  // durations run noticeably more transit than hold (roughly 65/35) for
+  // every real node type, versus the original cut which was hold-heavy.
   const DURATIONS = {
-    group: { transit: 3000, hold: 2200 },
-    campaign: { transit: 1200, hold: 1700 },
-    technique: { transit: 900, hold: 1400 },
-    tactic: { transit: 900, hold: 1400 },
-    software: { transit: 900, hold: 1400 },
-    mitigation: { transit: 700, hold: 1200 },
+    group: { transit: 3400, hold: 1500 },
+    campaign: { transit: 2000, hold: 900 },
+    technique: { transit: 1500, hold: 800 },
+    tactic: { transit: 1500, hold: 800 },
+    software: { transit: 1500, hold: 800 },
+    mitigation: { transit: 1200, hold: 600 },
   };
+  // A revisit-to-parent beat between siblings: enough transit to actually
+  // register as "returning," but no real hold and no dossier flash -- the
+  // parent's dossier content is already showing, re-firing it would just
+  // look like a stutter.
+  const REVISIT_DUR = { transit: 700, hold: 250 };
   const FINALE_MS = 4000;
   const ESTABLISH_START = { x: 0, y: -60, z: -520 };
 
-  function buildTimeline(shotOrder, allNodes) {
+  function buildTimeline(shotOrder, allNodes, groupName) {
     const segs = [];
     let t = 0, idx = 0;
     let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
-    for (const n of shotOrder) {
-      const dur = DURATIONS[n.type] || DURATIONS.technique;
+    for (const entry of shotOrder) {
+      const n = entry.node;
+      const dur = entry.revisit ? REVISIT_DUR : (DURATIONS[n.type] || DURATIONS.technique);
       // Camera arrives already aimed down the edge it just traveled -- this
       // IS "panning along the node connection with relationship," not a cut
       // to a fresh angle for every node.
       let approachDir = V.norm(V.sub(n.pos, prevLookAt));
       if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
       const camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
-      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: n.pos, node: n });
+      const fireDossier = !entry.revisit;
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: n.pos, node: n, fireDossier, groupName, allNodes });
       t += dur.transit;
-      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt: n.pos, node: n });
+      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt: n.pos, node: n, fireDossier, groupName, allNodes });
       t += dur.hold;
       prevCamPos = camPos; prevLookAt = n.pos;
     }
     const centroid = centroidOf(allNodes);
-    const lastNode = shotOrder[shotOrder.length - 1];
+    const lastEntry = shotOrder[shotOrder.length - 1];
+    const lastNode = lastEntry ? lastEntry.node : null;
     const finaleCam = { x: centroid.x*0.3, y: -300, z: (lastNode ? lastNode.pos.z : 0) - 700 };
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: finaleCam, lookTo: centroid, node: null });
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: finaleCam, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
@@ -539,12 +565,41 @@
   }
 
   let degraded = false;
-  function drawBackdrop() {
-    const g = ctx.createRadialGradient(cssW/2, cssH*0.4, 0, cssW/2, cssH*0.4, Math.max(cssW, cssH)*0.8);
-    g.addColorStop(0, "#0a1018"); g.addColorStop(1, "#050608");
+  // SIGINT-flavored backdrop: a tactical grid + concentric range rings +
+  // a slow rotating sweep, instead of a plain nebula gradient -- reads as
+  // "signals intelligence ops display" rather than generic space decor.
+  function drawBackdrop(nowMs) {
+    const g = ctx.createRadialGradient(cssW/2, cssH*0.42, 0, cssW/2, cssH*0.42, Math.max(cssW, cssH)*0.85);
+    g.addColorStop(0, "#081512"); g.addColorStop(1, "#050608");
     ctx.fillStyle = g; ctx.fillRect(0, 0, cssW, cssH);
+
+    ctx.save();
+    ctx.strokeStyle = "rgba(0,255,180,0.045)"; ctx.lineWidth = 1;
+    const gridSize = 64;
+    for (let x = (cssW/2) % gridSize; x < cssW; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cssH); ctx.stroke(); }
+    for (let y = (cssH/2) % gridSize; y < cssH; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cssW, y); ctx.stroke(); }
+    ctx.restore();
+
+    const cx = cssW / 2, cy = cssH * 0.46, maxR = Math.max(cssW, cssH) * 0.62;
+    ctx.save();
+    ctx.strokeStyle = "rgba(0,255,180,0.07)"; ctx.lineWidth = 1;
+    for (let r = maxR/5; r <= maxR; r += maxR/5) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke(); }
+    ctx.restore();
+
+    if (!REDUCED_MOTION && ctx.createConicGradient) {
+      ctx.save();
+      const sweepAngle = (nowMs / 6000) % (Math.PI * 2);
+      const grad = ctx.createConicGradient(sweepAngle, cx, cy);
+      grad.addColorStop(0, "rgba(0,255,180,0.13)");
+      grad.addColorStop(0.035, "rgba(0,255,180,0)");
+      grad.addColorStop(1, "rgba(0,255,180,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
     ctx.save(); ctx.fillStyle = "#ffffff";
-    for (const s of stars) { ctx.globalAlpha = s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }
+    for (const s of stars) { ctx.globalAlpha = s.a * 0.6; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }
     ctx.restore();
   }
   function drawEdge(a, b, type) {
@@ -578,7 +633,7 @@
   }
   function render(camState, flightNodes, focusNode, nowMs) {
     ctx.clearRect(0, 0, cssW, cssH);
-    drawBackdrop();
+    drawBackdrop(nowMs);
     const proj = new Map();
     for (const n of flightNodes) { const p = project(n.pos, camState, cssW, cssH); if (p) proj.set(n, p); }
     for (const n of flightNodes) {
@@ -700,15 +755,13 @@
       </div>`).join("");
   }
 
-  // ---------- UI chrome: idle auto-hide ----------
+  // ---------- UI chrome: idle auto-hide (controls only -- title stays fixed) ----------
   let idleTimer = null;
   function resetIdle() {
     document.getElementById("controls").classList.remove("hidden");
-    document.getElementById("recon-title").classList.remove("hidden");
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
       document.getElementById("controls").classList.add("hidden");
-      document.getElementById("recon-title").classList.add("hidden");
     }, 3000);
   }
   ["mousemove", "touchstart", "keydown"].forEach(ev => window.addEventListener(ev, resetIdle, { passive: true }));
@@ -716,31 +769,64 @@
   // ---------- main state + loop ----------
   let currentData = null, currentDomain = "enterprise";
   let flightNodes = [], timeline = null, totalDuration = 0, elapsed = 0;
-  let speedMultiplier = 1, lastFiredIndex = -1, lastGroupId = null;
+  let speedMultiplier = 0.25, lastFiredIndex = -1, lastGroupId = null;
   let lastFrameTime = null, rafId = null;
   let frameTimes = [];
 
-  function setGroupTitle(g) {
-    document.getElementById("rt-name").textContent = g.name;
-  }
-  function rollNewGroup() {
+  function pickGroup() {
     const groups = currentData.groups;
     let g;
     do { g = groups[Math.floor(Math.random() * groups.length)]; } while (groups.length > 1 && g.id === lastGroupId);
     lastGroupId = g.id;
+    return g;
+  }
+
+  // Hard reset: used only on initial load and on a deliberate user dataset
+  // switch, where an abrupt cut is correct (the viewer just asked for it).
+  function startFreshGroup() {
+    const g = pickGroup();
     flightNodes = buildFlight(currentData, g);
     const shotOrder = buildShotList(flightNodes);
-    const built = buildTimeline(shotOrder, flightNodes);
+    const built = buildTimeline(shotOrder, flightNodes, g.name);
     timeline = built.timeline; totalDuration = built.total;
-    elapsed = 0; lastFiredIndex = -1;
-    setGroupTitle(g);
+    elapsed = 0; lastFiredIndex = -1; nextGroupPrepared = false;
+    currentTitleGroup = g.name;
+    document.getElementById("rt-name").textContent = g.name;
     updateTacticGauge(currentData, flightNodes);
   }
   async function startDomain(domain) {
     currentDomain = domain;
     currentData = await loadDomain(domain);
     computeThreatLandscape(currentData);
-    rollNewGroup();
+    startFreshGroup();
+  }
+
+  // Passive cycling (no user action): the next group's entire flight is
+  // built and its timeline APPENDED onto the current one the moment the
+  // finale pull-back begins, rather than resetting elapsed/timeline at the
+  // boundary -- the camera flies continuously from the old finale straight
+  // into the new group's establishing shot with no cut, per the brief
+  // ("load up the next group towards the end of the sequence and transition
+  // to that too"). The stitched segment's camFrom/lookFrom are overwritten
+  // to match exactly where the camera will actually BE at the seam, so
+  // there's no snap.
+  let nextGroupPrepared = false;
+  let currentTitleGroup = null;
+  function prepareAndAppendNextGroup(finaleSeg) {
+    nextGroupPrepared = true;
+    const g = pickGroup();
+    const nextFlight = buildFlight(currentData, g);
+    const shotOrder = buildShotList(nextFlight);
+    const built = buildTimeline(shotOrder, nextFlight, g.name);
+    const offset = totalDuration;
+    for (const s of built.timeline) { s.tStart += offset; s.tEnd += offset; s.index += 1e6; }
+    if (built.timeline.length) {
+      built.timeline[0].camFrom = finaleSeg.camTo;
+      built.timeline[0].lookFrom = finaleSeg.lookTo;
+    }
+    timeline = timeline.concat(built.timeline);
+    totalDuration += built.total;
+    updateTacticGauge(currentData, nextFlight);
   }
 
   function trackPerf(dt) {
@@ -759,20 +845,28 @@
     trackPerf(dt);
     elapsed += dt * speedMultiplier;
 
-    if (elapsed >= totalDuration) {
-      canvas.classList.add("cutting");
-      rollNewGroup();
-      setTimeout(() => canvas.classList.remove("cutting"), 300);
+    let seg = findSegment(timeline, elapsed);
+
+    if (seg.isFinale && !nextGroupPrepared) prepareAndAppendNextGroup(seg);
+
+    // Safety net only -- prepareAndAppendNextGroup runs as soon as the
+    // finale begins (4s of virtual time before this could ever trigger),
+    // so this should never actually fire in normal operation.
+    if (elapsed >= totalDuration) { startFreshGroup(); seg = findSegment(timeline, elapsed); }
+
+    if (seg.groupName && seg.groupName !== currentTitleGroup) {
+      currentTitleGroup = seg.groupName;
+      document.getElementById("rt-name").textContent = currentTitleGroup;
+      nextGroupPrepared = false;
     }
 
-    const seg = findSegment(timeline, elapsed);
     const camState = interpolateSegment(seg, elapsed, now);
-    if (seg.node && seg.type === "hold" && lastFiredIndex !== seg.index) {
+    if (seg.node && seg.type === "hold" && seg.fireDossier && lastFiredIndex !== seg.index) {
       lastFiredIndex = seg.index;
-      renderDossier(seg.node, currentData, flightNodes);
+      renderDossier(seg.node, currentData, seg.allNodes || flightNodes);
     }
     const focusNode = seg.node || null;
-    render(camState, flightNodes, focusNode, now);
+    render(camState, seg.allNodes || flightNodes, focusNode, now);
     rafId = requestAnimationFrame(frame);
   }
 
