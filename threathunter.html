@@ -87,12 +87,23 @@
   .hud-panel .hb-br2 { bottom: -1px; right: -1px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
 
   /* ---------- dossier ---------- */
+  /* No scrolling, ever: overflow was pulling scroll-wheel input into the
+     panel instead of the flight, and a scrollbar this close to the canvas
+     is one more thing fighting mouse-look for input. Height follows
+     content up to a cap; anything past that is clipped rather than
+     scrollable -- excerpt()'s own truncation already keeps real overflow
+     rare. */
   #dossier {
     top: max(70px, calc(env(safe-area-inset-top) + 60px)); right: max(18px, env(safe-area-inset-right));
-    bottom: max(18px, env(safe-area-inset-bottom)); width: 340px; overflow-y: auto;
+    width: 340px; max-height: calc(100vh - 100px); overflow: hidden;
     color: var(--c-technique);
     opacity: 1; transition: opacity 0.35s ease;
   }
+  #dossier-close {
+    position: absolute; top: 10px; right: 12px; z-index: 2; background: none; border: none;
+    color: var(--text-dim); font-family: var(--font-mono); font-size: 14px; cursor: pointer; padding: 2px 6px;
+  }
+  #dossier-close:hover { color: var(--text); }
   #dossier.dz-hidden { opacity: 0; pointer-events: none; }
   @media (prefers-reduced-motion: reduce) { #dossier { transition: none; } }
   #dossier-type { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; font-weight: 600; }
@@ -114,12 +125,15 @@
   .dz-timeline-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); margin-top: 4px; }
 
   /* ---------- approach labels (a pool, not one) ---------- */
+  /* Clickable on purpose -- pulls up that node's dossier without needing to
+     physically fly into trigger range (see pinnedNode in JS). */
   .node-label {
     position: fixed; z-index: 12; transform: translate(-50%, -100%);
     font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em;
     color: var(--text); background: rgba(5,8,12,0.78); border: 1px solid var(--line);
-    padding: 3px 8px; border-radius: 3px; white-space: nowrap; pointer-events: none; opacity: 0.9;
+    padding: 3px 8px; border-radius: 3px; white-space: nowrap; pointer-events: auto; opacity: 0.9; cursor: pointer;
   }
+  .node-label:hover { opacity: 1; border-color: var(--text); background: rgba(5,8,12,0.95); }
 
   /* ---------- off-screen waypoints ---------- */
   .waypoint {
@@ -165,8 +179,9 @@
   .control-group button { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px; background: transparent; border: none; color: var(--text-dim); cursor: pointer; border-radius: 2px; }
   .control-group button.active { background: rgba(0,240,255,0.12); color: var(--c-software); box-shadow: inset 0 0 0 1px rgba(0,240,255,0.4); }
   .control-group button:hover { color: var(--text); }
-  #randomize-btn { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
-  #randomize-btn:hover { background: rgba(176,38,255,0.22); }
+  #randomize-btn, #mouselook-btn { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 9px 14px; background: rgba(176,38,255,0.12); border: 1px solid var(--c-group); border-radius: 3px; color: var(--text); cursor: pointer; }
+  #randomize-btn:hover, #mouselook-btn:hover { background: rgba(176,38,255,0.22); }
+  #mouselook-btn.active { background: rgba(0,240,255,0.16); border-color: var(--c-software); }
 
   /* ---------- static fallback ---------- */
   #fallback { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
@@ -191,18 +206,20 @@
 
   <div id="lock-overlay">
     <div class="lo-title">THREAT HUNTER</div>
-    <div class="lo-sub">Click to take manual control. Mouse to steer, WASD to fly, hold SPACE to boost. Fly close to a node to pull up its dossier.</div>
+    <div class="lo-sub">WASD flies, arrow keys steer -- works right away. Click to also enable mouse-look. Fly close to a node (or click its label) to pull up its dossier.</div>
     <div class="lo-keys">
-      <span class="lo-key">MOUSE — steer</span>
+      <span class="lo-key">MOUSE (after click) — steer</span>
+      <span class="lo-key">ARROWS — steer</span>
       <span class="lo-key">W/S — thrust</span>
       <span class="lo-key">A/D — strafe</span>
       <span class="lo-key">SPACE — boost</span>
-      <span class="lo-key">ESC — release</span>
+      <span class="lo-key">ESC — release mouse</span>
     </div>
   </div>
 
   <div id="dossier" class="hud-panel dz-hidden">
     <span class="hb-br1"></span><span class="hb-br2"></span>
+    <button id="dossier-close" aria-label="Close dossier">✕</button>
     <div id="dossier-type">—</div>
     <div id="dossier-id"></div>
     <div id="dossier-body"></div>
@@ -220,12 +237,12 @@
 
   <div class="controls" id="controls">
     <div class="control-group" id="count-group">
-      <button data-count="10" class="ct-btn">10</button>
-      <button data-count="20" class="ct-btn active">20</button>
-      <button data-count="40" class="ct-btn">40</button>
-      <button data-count="80" class="ct-btn">80</button>
+      <button data-count="5" class="ct-btn">5</button>
+      <button data-count="10" class="ct-btn active">10</button>
+      <button data-count="15" class="ct-btn">15</button>
     </div>
     <button id="randomize-btn">⟲ RANDOMIZE GALAXY</button>
+    <button id="mouselook-btn">🖱 ENABLE MOUSE-LOOK</button>
   </div>
 
   <div id="fallback" hidden>
@@ -380,9 +397,16 @@
     return nodes;
   }
 
-  // ---------- full-3D radial layout (verbatim from recon.html) ----------
+  // ---------- full-3D radial layout ----------
+  // Every ring (not just ring 1) distributes its nodes across the FULL
+  // sphere around their parent via the same Fibonacci-sphere lattice, not a
+  // cone continuing the parent's own outward direction -- an earlier
+  // version constrained deeper rings to a ~62deg forward cone (fine for
+  // recon.html's cinematic "spidering outward" fly-through, but explicitly
+  // wrong for a free-flight 3D map: children should be able to shoot out
+  // from any side of their parent, using the whole sphere, not just a
+  // narrow forward wedge).
   const RING_DIST = [0, 340, 260, 230, 210];
-  const FAN_CONE = 62 * Math.PI / 180;
 
   function fibonacciSpherePoint(i, n) {
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
@@ -390,16 +414,6 @@
     const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
     const theta = goldenAngle * i;
     return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
-  }
-  function perturbDirection(dir, coneRad) {
-    const arbitrary = Math.abs(dir.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
-    const t1 = V.norm(V.cross(dir, arbitrary));
-    const t2 = V.cross(dir, t1);
-    const az = Math.random() * Math.PI * 2;
-    const polar = Math.random() * coneRad;
-    const s = Math.sin(polar);
-    const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
-    return V.norm(V.add(V.scale(dir, Math.cos(polar)), offset));
   }
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
@@ -420,9 +434,9 @@
           byParent.get(node.parent).push(node);
         }
         for (const [parent, kids] of byParent) {
-          const parentDir = parent.dir || { x: 0, y: 0, z: 1 };
-          kids.forEach(node => {
-            node.dir = perturbDirection(parentDir, FAN_CONE);
+          const n = kids.length;
+          kids.forEach((node, i) => {
+            node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
@@ -708,6 +722,12 @@
     }
   }
   let dossierCurrentNode = null;
+  // Set when a label is clicked -- keeps the dossier open for a node the
+  // player isn't physically close to, so they don't have to fly right up
+  // to it just to read about it. Real proximity always takes precedence
+  // over a pin the moment it applies (see updateDossierProximity), and the
+  // close button or picking a different label are the other ways to clear it.
+  let pinnedNode = null;
   function renderDossier(node) {
     if (node === dossierCurrentNode) return;
     dossierCurrentNode = node;
@@ -726,6 +746,11 @@
     dossierCurrentNode = null;
     document.getElementById("dossier").classList.add("dz-hidden");
   }
+  document.getElementById("dossier-close").addEventListener("click", (e) => {
+    e.stopPropagation();
+    pinnedNode = null;
+    hideDossier();
+  });
 
   // ---------- player state + input ----------
   let playerPos = { x: 0, y: 300, z: -1600 };
@@ -737,7 +762,14 @@
   let locked = false;
   let autoBoost = null; // { from, to, camFromForward, t0, dur } when active
 
-  const BASE_ACCEL = 2600, BASE_MAXSPEED = 1000, DRAG = 0.985;
+  // DRAG lowered from 0.985 -- that decayed full speed to near-zero over
+  // ~5s and ~1100 units of travel, nearly the whole span of one network, so
+  // stopping near a node in time meant braking almost as soon as you
+  // arrived. 0.95 stops in ~1.7s / ~330 units instead (confirmed via direct
+  // simulation, not just a guess at a smaller-sounding number) -- still
+  // real momentum, but survivable without planning a full network-width
+  // braking distance.
+  const BASE_ACCEL = 2600, BASE_MAXSPEED = 1000, DRAG = 0.95;
   const BOOST_MUL = 2.6, BOOST_DRAIN = 38, BOOST_REGEN = 16, BOOST_MIN_TO_USE = 4;
   const TRIGGER_RADIUS = 220, LABEL_RADIUS = 2500, ACTIVE_RADIUS = 6000, RENDER_CULL = 12000;
 
@@ -767,7 +799,17 @@
     yaw -= e.movementX * sens;
     pitch = clamp(pitch - e.movementY * sens, -1.5, 1.5);
   });
-  window.addEventListener("keydown", (e) => { keys[e.code] = true; if (e.code === "Space") e.preventDefault(); });
+  const PREVENT_DEFAULT_KEYS = new Set(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
+  const MOVEMENT_KEYS = new Set(["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
+  window.addEventListener("keydown", (e) => {
+    keys[e.code] = true;
+    if (PREVENT_DEFAULT_KEYS.has(e.code)) e.preventDefault();
+    // Movement no longer requires pointer lock, so a keyboard-only player
+    // would otherwise be stuck staring at this full-screen overlay forever
+    // -- the very first flight input dismisses it, independent of mouse
+    // lock (which stays available separately via a click).
+    if (MOVEMENT_KEYS.has(e.code)) lockOverlay.hidden = true;
+  });
   window.addEventListener("keyup", (e) => { keys[e.code] = false; });
 
   // Basic touch fallback: drag steers like a stick anchored at first touch,
@@ -788,6 +830,7 @@
   touchBoostBtn.addEventListener("touchstart", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); }, { passive: true });
   touchBoostBtn.addEventListener("touchend", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); }, { passive: true });
 
+  const ARROW_TURN_RATE = 1.5; // rad/sec while a steering key is held
   function updatePhysics(dt) {
     if (autoBoost) return; // scripted transit owns the camera during auto-boost
     const touching = touchAnchor !== null;
@@ -795,20 +838,29 @@
       yaw -= clamp(touchDelta.x * 0.0009, -0.05, 0.05);
       pitch = clamp(pitch - clamp(touchDelta.y * 0.0009, -0.05, 0.05), -1.5, 1.5);
     }
+    // Arrow-key steering: an alternative to mouse-look that works whether
+    // or not pointer lock is engaged -- useful on its own, and also a real
+    // fallback given how flaky requestPointerLock can be in some browser
+    // contexts.
+    if (keys["ArrowLeft"]) yaw += ARROW_TURN_RATE * dt;
+    if (keys["ArrowRight"]) yaw -= ARROW_TURN_RATE * dt;
+    if (keys["ArrowUp"]) pitch = clamp(pitch + ARROW_TURN_RATE * dt, -1.5, 1.5);
+    if (keys["ArrowDown"]) pitch = clamp(pitch - ARROW_TURN_RATE * dt, -1.5, 1.5);
+
     const forward = forwardFromAngles();
     const basis = computeCameraBasis({ forward });
-    boosting = (locked && keys["Space"]) || (touching && boostTouchHeld);
+    boosting = keys["Space"] || (touching && boostTouchHeld);
     if (boosting && boostMeter <= 0) boosting = false;
 
+    // WASD thrust/strafe works regardless of pointer-lock state -- only
+    // mouse-LOOK actually needs the lock (captured deltas only make sense
+    // while it's engaged); movement itself shouldn't be gated behind it.
     let thrust = { x: 0, y: 0, z: 0 };
-    if (locked) {
-      if (keys["KeyW"]) thrust = V.add(thrust, forward);
-      if (keys["KeyS"]) thrust = V.sub(thrust, forward);
-      if (keys["KeyD"]) thrust = V.add(thrust, basis.right);
-      if (keys["KeyA"]) thrust = V.sub(thrust, basis.right);
-    } else if (touching) {
-      thrust = forward; // constant forward thrust while touching
-    }
+    if (keys["KeyW"]) thrust = V.add(thrust, forward);
+    if (keys["KeyS"]) thrust = V.sub(thrust, forward);
+    if (keys["KeyD"]) thrust = V.add(thrust, basis.right);
+    if (keys["KeyA"]) thrust = V.sub(thrust, basis.right);
+    if (touching) thrust = V.add(thrust, forward); // constant forward thrust while touching
     const accel = BASE_ACCEL * (boosting ? BOOST_MUL : 1);
     if (V.len(thrust) > 0.01) velocity = V.add(velocity, V.scale(V.norm(thrust), accel * dt));
     velocity = V.scale(velocity, Math.pow(DRAG, dt*60));
@@ -831,17 +883,29 @@
     const target = V.sub(network.center, V.scale(dir, 900)); // arrive just outside it
     autoBoost = { from: { ...playerPos }, to: target, fromForward: forwardFromAngles(), toForward: dir, t0: performance.now(), dur: clamp(V.len(V.sub(target, playerPos)) * 0.9, 900, 3600) };
   }
-  function updateAutoBoost(nowMs) {
+  function updateAutoBoost(nowMs, dt) {
     if (!autoBoost) return;
     const pct = clamp((nowMs - autoBoost.t0) / autoBoost.dur, 0, 1);
     const e = EASE_INOUT(pct);
-    playerPos = V.lerp(autoBoost.from, autoBoost.to, e);
+    const newPos = V.lerp(autoBoost.from, autoBoost.to, e);
+    // Actual frame-to-frame delta, not the transit's average speed -- the
+    // average-speed version stayed constant (and high) right up to the very
+    // last frame, then handed that full velocity straight to normal physics
+    // the instant control returned, so the player kept flying at full
+    // transit speed past the target before drag ever got a chance to act
+    // (confirmed as the actual overshoot mechanism, not assumed). The eased
+    // curve's real instantaneous speed already approaches zero near the
+    // end, which is what should carry over.
+    velocity = dt > 0 ? V.scale(V.sub(newPos, playerPos), 1/dt) : { x: 0, y: 0, z: 0 };
+    playerPos = newPos;
     const fwd = V.norm(V.lerp(autoBoost.fromForward, autoBoost.toForward, e));
     yaw = Math.atan2(fwd.x, fwd.z);
     pitch = clamp(Math.asin(clamp(fwd.y, -1, 1)), -1.5, 1.5);
-    velocity = V.scale(V.sub(autoBoost.to, autoBoost.from), 1/(autoBoost.dur/1000));
     boosting = true;
-    if (pct >= 1) autoBoost = null;
+    if (pct >= 1) {
+      velocity = V.scale(velocity, 0.1); // small safety margin on top of the already-slow eased-out handoff
+      autoBoost = null;
+    }
   }
 
   // ---------- labels + waypoints ----------
@@ -863,13 +927,14 @@
     }
     ensureLabelPool(visible.length);
     labelPool.forEach((el, i) => {
-      if (i >= visible.length) { el.hidden = true; return; }
+      if (i >= visible.length) { el.hidden = true; el.onclick = null; return; }
       const { node, p } = visible[i];
       el.hidden = false;
       el.textContent = node.entity.name;
       const r = 9 * p.scale * (node.type === "group" ? 2 : 1);
       el.style.left = p.x + "px";
       el.style.top = (p.y - r - 8) + "px";
+      el.onclick = (ev) => { ev.stopPropagation(); pinnedNode = node; renderDossier(node); };
     });
   }
   let waypointPool = [];
@@ -921,8 +986,14 @@
         if (d < nearestDist) { nearestDist = d; nearest = node; }
       }
     }
-    if (nearest && nearestDist <= TRIGGER_RADIUS) renderDossier(nearest);
-    else hideDossier();
+    if (nearest && nearestDist <= TRIGGER_RADIUS) {
+      pinnedNode = null; // real proximity always wins over a click-pin
+      renderDossier(nearest);
+    } else if (pinnedNode) {
+      renderDossier(pinnedNode);
+    } else {
+      hideDossier();
+    }
   }
 
   // ---------- main render + loop ----------
@@ -984,7 +1055,7 @@
     const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
     lastFrameTime = now;
     trackPerf(dt * 1000);
-    updateAutoBoost(now);
+    updateAutoBoost(now, dt);
     updatePhysics(dt);
     render(now);
     rafId = requestAnimationFrame(frame);
@@ -996,13 +1067,22 @@
   });
 
   // ---------- settings: network count + randomize ----------
-  let networkCount = 20;
+  let networkCount = 10;
   function respawnGalaxy() {
     buildGalaxy(networkCount);
     playerPos = { x: 0, y: 300, z: -1600 };
     velocity = { x: 0, y: 0, z: 0 };
     yaw = 0; pitch = 0;
+    autoBoost = null;
+    pinnedNode = null;
     hideDossier();
+    // Explicit teardown, not just letting the pools get reused/repositioned
+    // next frame -- a stale pool element briefly showing last-galaxy
+    // content (or a waypoint's onclick still capturing an old network
+    // object) during the one frame before the pools resize is exactly the
+    // kind of thing "clear all and spawn a new set" is asking not to see.
+    labelPool.forEach(el => el.remove()); labelPool = [];
+    waypointPool.forEach(el => el.remove()); waypointPool = [];
   }
   document.querySelectorAll(".ct-btn").forEach(btn => btn.addEventListener("click", () => {
     document.querySelectorAll(".ct-btn").forEach(b => b.classList.remove("active"));
@@ -1011,6 +1091,10 @@
     respawnGalaxy();
   }));
   document.getElementById("randomize-btn").addEventListener("click", () => respawnGalaxy());
+  document.getElementById("mouselook-btn").addEventListener("click", () => { canvas.requestPointerLock && canvas.requestPointerLock(); });
+  document.addEventListener("pointerlockchange", () => {
+    document.getElementById("mouselook-btn").classList.toggle("active", document.pointerLockElement === canvas);
+  });
 
   // ---------- idle auto-hide for the settings cluster ----------
   let idleTimer = null;
