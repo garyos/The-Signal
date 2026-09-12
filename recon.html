@@ -491,11 +491,6 @@
     return order;
   }
 
-  function centroidOf(nodes) {
-    const s = nodes.reduce((a,n) => ({x:a.x+n.pos.x, y:a.y+n.pos.y, z:a.z+n.pos.z}), {x:0,y:0,z:0});
-    return { x: s.x/nodes.length, y: s.y/nodes.length, z: s.z/nodes.length };
-  }
-
   // ---------- timing engine ----------
   // Transit-heavy on purpose: the ask is to foreground the pan ALONG the
   // connection to the next node, not the static dwell once there -- these
@@ -531,15 +526,23 @@
 
   const EASE_INOUT = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
 
-  function orbitalShot(centroid, boundRadius) {
+  // Centers on the ORIGIN, not the flight's centroid. The centroid is
+  // pulled toward wherever the branches happen to extend, which is rarely
+  // (0,0,0) itself -- framing the wide shot around it could put the APT
+  // group node (always at local (0,0,0), the one thing this shot is
+  // actually supposed to reorient you against) anywhere in frame, including
+  // off-screen entirely. Confirmed as the actual cause of the reported
+  // "APT node offscreen on zoom out," not assumed.
+  function orbitalShot(boundRadius) {
     const dist = Math.max(520, boundRadius * 2.2);
-    return { camPos: V.add(centroid, { x: 0, y: -dist*0.35, z: -dist }), lookAt: centroid };
+    const originPos = { x: 0, y: 0, z: 0 };
+    return { camPos: V.add(originPos, { x: 0, y: -dist*0.35, z: -dist }), lookAt: originPos };
   }
 
   function buildTimeline(shotOrder, allNodes, groupName) {
-    const centroid = centroidOf(allNodes);
-    const boundRadius = allNodes.reduce((m, n) => Math.max(m, V.len(V.sub(n.pos, centroid))), 1);
-    const orbital = orbitalShot(centroid, boundRadius);
+    // Distance from the ORIGIN (0,0,0), not the centroid -- see orbitalShot.
+    const boundRadius = allNodes.reduce((m, n) => Math.max(m, V.len(n.pos)), 1);
+    const orbital = orbitalShot(boundRadius);
 
     const segs = [];
     let t = 0, idx = 0;
@@ -607,7 +610,7 @@
     // Same "view of all" framing as every mid-flight orbital revisit, for
     // visual consistency between "hopping to a sibling" and "the flight is
     // done."
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, departTrigger: justLeftHold, groupName, allNodes });
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: orbital.lookAt, node: null, isFinale: true, departTrigger: justLeftHold, groupName, allNodes });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
