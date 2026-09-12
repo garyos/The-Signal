@@ -98,6 +98,12 @@
     width: 340px; max-height: calc(100vh - 100px); overflow: hidden;
     color: var(--c-technique);
     opacity: 1; transition: opacity 0.35s ease;
+    /* .hud-panel's own z-index (20) sat BELOW waypoint pills (24), so a
+       pill drifting behind the open dossier rendered in front of it --
+       confirmed as a plain stacking-order bug, not a layout one. The
+       dossier is the active/focused panel; nothing in-scene should ever
+       cover it. */
+    z-index: 32;
   }
   #dossier-close {
     position: absolute; top: 10px; right: 12px; z-index: 2; background: none; border: none;
@@ -146,6 +152,15 @@
   .waypoint .wp-arrow { display: inline-block; color: var(--c-group); font-size: 12px; }
   .waypoint .wp-dist { color: var(--text-dim); font-size: 9px; }
   .waypoint:hover, .waypoint.hovered { border-color: var(--text); box-shadow: 0 0 14px rgba(176,38,255,0.6); }
+  /* Wormhole pills -- same shape, color-coded to match drawWormhole()'s
+     cyan-forward/magenta-backward in-world rings so the pill reads as the
+     same object before you're anywhere near it. */
+  .waypoint.wormhole-fwd { border-color: #00e0ff; box-shadow: 0 0 12px rgba(0,224,255,0.45); }
+  .waypoint.wormhole-fwd .wp-arrow { color: #00e0ff; }
+  .waypoint.wormhole-fwd:hover, .waypoint.wormhole-fwd.hovered { box-shadow: 0 0 16px rgba(0,224,255,0.75); }
+  .waypoint.wormhole-back { border-color: #ff2fd6; box-shadow: 0 0 12px rgba(255,47,214,0.45); }
+  .waypoint.wormhole-back .wp-arrow { color: #ff2fd6; }
+  .waypoint.wormhole-back:hover, .waypoint.wormhole-back.hovered { box-shadow: 0 0 16px rgba(255,47,214,0.75); }
 
   /* ---------- boost meter ---------- */
   #boost-meter {
@@ -167,6 +182,25 @@
   }
   #touch-boost[hidden] { display: none; }
   #touch-boost.active { background: rgba(176,38,255,0.4); }
+
+  /* ---------- touch joystick (steer + forward thrust) ----------
+     A dedicated, visible drag zone instead of the old "drag anywhere on
+     canvas" -- that had no on-screen affordance at all, and competed with
+     tapping a label/waypoint pill elsewhere on the canvas. Only ever shown
+     once a real touch is seen (see JS), same as #touch-boost. */
+  #joystick {
+    position: fixed; left: max(24px, env(safe-area-inset-left)); bottom: max(28px, calc(env(safe-area-inset-bottom) + 14px));
+    z-index: 30; width: 112px; height: 112px; border-radius: 50%;
+    background: rgba(5,8,12,0.55); border: 1px solid var(--line);
+    touch-action: none; -webkit-tap-highlight-color: transparent;
+  }
+  #joystick[hidden] { display: none; }
+  #joystick-knob {
+    position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(176,38,255,0.35); border: 1px solid var(--c-group);
+    transform: translate(-50%, -50%); box-shadow: 0 0 14px rgba(176,38,255,0.45);
+  }
+  #joystick.active #joystick-knob { background: rgba(176,38,255,0.65); }
 
   /* ---------- controls (count + randomize), auto-hiding ---------- */
   .controls {
@@ -191,7 +225,13 @@
 
   @media (max-width: 640px) {
     #dossier { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 38vh; border-radius: 14px 14px 0 0; border-bottom: none; }
-    #boost-meter { bottom: max(20px, env(safe-area-inset-bottom)); left: max(20px, env(safe-area-inset-left)); }
+    /* The joystick and boost button now own the bottom two corners on a
+       touch device, so the meter and the controls cluster both have to move
+       off the bottom edge instead of sharing it -- both were confirmed
+       overlapping the new touch controls in a real mobile screenshot, not
+       assumed. */
+    #boost-meter { top: max(92px, calc(env(safe-area-inset-top) + 82px)); left: max(18px, env(safe-area-inset-left)); bottom: auto; }
+    .controls { bottom: max(158px, calc(env(safe-area-inset-bottom) + 148px)); }
   }
 </style>
 </head>
@@ -231,6 +271,7 @@
   </div>
 
   <button id="touch-boost" hidden>⚡ BOOST</button>
+  <div id="joystick" hidden><div id="joystick-knob"></div></div>
 
   <div id="labels-layer"></div>
   <div id="waypoints-layer"></div>
@@ -466,6 +507,11 @@
 
   let networks = []; // [{ id, group, center, nodes: [...] }]
   let currentData = null;
+  // The wormhole's entire "undo" budget: exactly one stored snapshot, never
+  // a growing history -- see placeWormholes()/triggerWormhole() below.
+  let previousNetworks = null;
+  let wormholeForward = null, wormholeBackward = null;
+  let wormholeFX = null; // { kind, t0, dur, swapped } while a transition plays
 
   function buildGalaxy(count) {
     const groups = [...currentData.groups];
@@ -480,6 +526,27 @@
       for (const node of nodes) node.network = net;
       return net;
     });
+  }
+
+  // ---------- the wormhole ----------
+  // Fixed offsets from spawn, clear of the galaxy's own footprint at every
+  // network-count preset: gridPositions' CELL_SIZE/CELL_JITTER puts the
+  // worst case (10 or 15 networks) at up to ~5700 units from origin per
+  // axis, plus a network's own internal node spread (RING_DIST sums to
+  // ~1040), so ~6700 worst-case -- these sit well past that, not guessed.
+  const WORMHOLE_FORWARD_POS = { x: 8000, y: 500, z: 3000 };
+  const WORMHOLE_BACKWARD_POS = { x: -8000, y: 500, z: 3000 };
+  // wormholeBackward only exists once there's actually a previous galaxy to
+  // return to -- on first load, or right after a backward jump consumes
+  // it, there's nothing to go back to and the object/pill both vanish.
+  function placeWormholes() {
+    // Shaped enough like a `network` (a `.center` and a `.group.name`) that
+    // startAutoBoost() and updateWaypoints()'s pill rendering both accept
+    // one unmodified -- `isWormhole` is the one flag those two spots branch
+    // on to skip network-only behavior (the label-radius approach-label
+    // cutover, the distinct pill styling).
+    wormholeForward = { center: { ...WORMHOLE_FORWARD_POS }, kind: "forward", isWormhole: true, group: { name: "WORMHOLE — FORWARD" } };
+    wormholeBackward = previousNetworks ? { center: { ...WORMHOLE_BACKWARD_POS }, kind: "backward", isWormhole: true, group: { name: "WORMHOLE — BACK" } } : null;
   }
 
   // ---------- camera basis + projection ----------
@@ -659,9 +726,12 @@
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.stroke();
       ctx.restore();
     } else {
+      // Opaque fill -- "lighter" additive blending made overlapping nodes
+      // just brighten each other instead of the nearer one occluding the
+      // farther, reading as translucent blobs. shadowBlur alone still gives
+      // a glow halo without needing additive compositing for it.
       ctx.save();
       ctx.globalAlpha = p.opacity;
-      ctx.globalCompositeOperation = "lighter";
       ctx.shadowColor = color; ctx.shadowBlur = (degraded ? 10 : 22) * p.scale * (focused ? 1.5 : 1);
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
@@ -675,6 +745,31 @@
       ctx.beginPath(); ctx.arc(p.x, p.y, r + 7 + Math.sin(nowMs/220)*3, 0, Math.PI*2); ctx.stroke();
       ctx.restore();
     }
+  }
+  // Deliberately NOT drawn like a node (opaque, single glow) -- this needs
+  // to read as an anomaly, not a data point: several rotating, tilted,
+  // hue-drifting rings, additive so they actually glow against the void.
+  // Cyan family for forward, magenta for backward, so which is which is
+  // readable from a distance before the pill/label text is even legible.
+  function drawWormhole(p, kind, nowMs) {
+    const baseHue = kind === "forward" ? 190 : 300;
+    const r = Math.max(14, 46 * p.scale);
+    ctx.save();
+    ctx.globalAlpha = p.opacity;
+    ctx.globalCompositeOperation = "lighter";
+    for (let ring = 0; ring < 4; ring++) {
+      const hue = (baseHue + ring * 18 + (REDUCED_MOTION ? 0 : nowMs / 12)) % 360;
+      const ringR = r * (0.45 + ring * 0.22);
+      const rot = REDUCED_MOTION ? ring * 0.6 : (nowMs / (600 + ring * 220)) * (ring % 2 === 0 ? 1 : -1);
+      ctx.strokeStyle = `hsl(${hue}, 95%, 62%)`;
+      ctx.shadowColor = ctx.strokeStyle;
+      ctx.shadowBlur = (degraded ? 14 : 26) * p.scale;
+      ctx.lineWidth = Math.max(1.5, 3.2 * p.scale);
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, ringR, ringR * 0.55, rot, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
   // ---------- dossier (proximity-driven, not scripted) ----------
@@ -855,27 +950,51 @@
   });
   window.addEventListener("keyup", (e) => { keys[e.code] = false; });
 
-  // Basic touch fallback: drag steers like a stick anchored at first touch,
-  // constant forward thrust while touching, hold the boost pill to boost.
-  // The pill only reveals itself once a real touch is seen (desktop/mouse
-  // players never see it and keep using SPACE).
+  // Touch fallback: the joystick knob's offset from its own fixed center IS
+  // touchDelta (clamped to the base's radius, same "stick deflection" idea
+  // the old canvas-wide drag used, just now visible and anchored to a
+  // dedicated zone instead of anywhere on the canvas). Constant forward
+  // thrust while held, same as before. Both it and the boost button only
+  // reveal themselves once a real touch is seen (desktop/mouse players
+  // never see either and keep using SPACE/mouse-look).
   let touchAnchor = null, touchDelta = { x: 0, y: 0 };
   const touchBoostBtn = document.getElementById("touch-boost");
-  canvas.addEventListener("touchstart", (e) => {
-    touchAnchor = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    touchBoostBtn.hidden = false;
-  }, { passive: true });
-  canvas.addEventListener("touchmove", (e) => {
+  const joystick = document.getElementById("joystick");
+  const joystickKnob = document.getElementById("joystick-knob");
+  const JOYSTICK_RADIUS = 56;
+  function revealTouchControls() { joystick.hidden = false; touchBoostBtn.hidden = false; }
+  canvas.addEventListener("touchstart", () => revealTouchControls(), { passive: true });
+  joystick.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    revealTouchControls();
+    const r = joystick.getBoundingClientRect();
+    touchAnchor = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    touchDelta = { x: 0, y: 0 };
+    joystick.classList.add("active");
+  }, { passive: false });
+  joystick.addEventListener("touchmove", (e) => {
     if (!touchAnchor) return;
-    touchDelta = { x: e.touches[0].clientX - touchAnchor.x, y: e.touches[0].clientY - touchAnchor.y };
-  }, { passive: true });
-  canvas.addEventListener("touchend", () => { touchAnchor = null; touchDelta = { x: 0, y: 0 }; }, { passive: true });
+    e.preventDefault();
+    const t = e.touches[0];
+    let dx = t.clientX - touchAnchor.x, dy = t.clientY - touchAnchor.y;
+    const len = Math.hypot(dx, dy);
+    if (len > JOYSTICK_RADIUS) { dx = dx / len * JOYSTICK_RADIUS; dy = dy / len * JOYSTICK_RADIUS; }
+    touchDelta = { x: dx, y: dy };
+    joystickKnob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+  }, { passive: false });
+  function releaseJoystick() {
+    touchAnchor = null; touchDelta = { x: 0, y: 0 };
+    joystick.classList.remove("active");
+    joystickKnob.style.transform = "translate(-50%, -50%)";
+  }
+  joystick.addEventListener("touchend", releaseJoystick, { passive: true });
+  joystick.addEventListener("touchcancel", releaseJoystick, { passive: true });
   touchBoostBtn.addEventListener("touchstart", (e) => { e.stopPropagation(); boostTouchHeld = true; touchBoostBtn.classList.add("active"); }, { passive: true });
   touchBoostBtn.addEventListener("touchend", (e) => { e.stopPropagation(); boostTouchHeld = false; touchBoostBtn.classList.remove("active"); }, { passive: true });
 
   const ARROW_TURN_RATE = 1.5; // rad/sec while a steering key is held
   function updatePhysics(dt) {
-    if (autoBoost) return; // scripted transit owns the camera during auto-boost
+    if (autoBoost || wormholeFX) return; // scripted transit / wormhole transition owns the camera
     const touching = touchAnchor !== null;
     if (touching) {
       yaw -= clamp(touchDelta.x * 0.0009, -0.05, 0.05);
@@ -951,6 +1070,89 @@
     }
   }
 
+  // ---------- the wormhole: trigger + faster-than-light transition ----------
+  // Bigger than a node's TRIGGER_RADIUS (220) -- this is meant to read as a
+  // big, hard-to-miss object you fly INTO, not something you have to line
+  // up precisely on.
+  const WORMHOLE_TRIGGER_RADIUS = 450;
+  function checkWormholeCollision() {
+    if (wormholeFX || autoBoost) return;
+    for (const wh of [wormholeForward, wormholeBackward]) {
+      if (wh && V.len(V.sub(wh.center, playerPos)) < WORMHOLE_TRIGGER_RADIUS) { triggerWormhole(wh.kind); return; }
+    }
+  }
+  function triggerWormhole(kind) {
+    if (wormholeFX || (kind === "backward" && !previousNetworks)) return;
+    autoBoost = null; // the wormhole owns the camera for the duration of the effect
+    wormholeFX = { kind, t0: performance.now(), dur: 1500, swapped: false };
+  }
+  function updateWormholeFX(nowMs) {
+    if (!wormholeFX) return;
+    const pct = clamp((nowMs - wormholeFX.t0) / wormholeFX.dur, 0, 1);
+    // The actual data swap happens hidden behind the effect's brightest
+    // point (pct 0.5), not at the start or end -- so there's never a frame
+    // where the old galaxy visibly pops to the new one mid-flight.
+    if (!wormholeFX.swapped && pct >= 0.5) {
+      wormholeFX.swapped = true;
+      if (wormholeFX.kind === "forward") {
+        previousNetworks = networks; // overwritten, never appended -- always exactly one slot
+        buildGalaxy(networkCount);
+      } else {
+        const temp = networks; networks = previousNetworks; previousNetworks = temp;
+      }
+      resetPlayerAndTeardownPools();
+      placeWormholes();
+    }
+    if (pct >= 1) wormholeFX = null;
+  }
+  // Psychedelic FTL tunnel: expanding hue-cycling rings + radial streaks,
+  // ramping to a whiteout at the swap moment then fading -- drawn straight
+  // onto the existing scene canvas, no second canvas needed since only one
+  // ever plays at a time. prefers-reduced-motion collapses it to a plain
+  // fade (the swap still happens at the same midpoint) instead of skipping
+  // it outright, since the swap itself needs to stay masked either way.
+  function drawWormholeFX(nowMs) {
+    if (!wormholeFX) return;
+    const pct = clamp((nowMs - wormholeFX.t0) / wormholeFX.dur, 0, 1);
+    const intensity = pct < 0.5 ? pct / 0.5 : 1 - (pct - 0.5) / 0.5;
+    const hueBase = wormholeFX.kind === "forward" ? 190 : 300;
+    const cx = cssW / 2, cy = cssH / 2;
+    ctx.save();
+    if (REDUCED_MOTION) {
+      ctx.globalAlpha = intensity * 0.85;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, cssW, cssH);
+      ctx.restore();
+      return;
+    }
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = 0; i < 10; i++) {
+      const t = (nowMs / 260 + i / 10) % 1;
+      const r = t * Math.max(cssW, cssH) * 0.75 * (0.3 + intensity * 0.9);
+      const hue = (hueBase + i * 10 + nowMs / 4) % 360;
+      ctx.strokeStyle = `hsla(${hue}, 100%, 65%, ${(1 - t) * intensity})`;
+      ctx.lineWidth = 3 + intensity * 10;
+      ctx.beginPath(); ctx.arc(cx, cy, Math.max(1, r), 0, Math.PI * 2); ctx.stroke();
+    }
+    for (let i = 0; i < 24; i++) {
+      const ang = (i / 24) * Math.PI * 2 + nowMs / 900;
+      const len = intensity * Math.max(cssW, cssH) * 0.6;
+      const hue = (hueBase + i * 6) % 360;
+      ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${intensity * 0.5})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(ang) * 40, cy + Math.sin(ang) * 40);
+      ctx.lineTo(cx + Math.cos(ang) * (40 + len), cy + Math.sin(ang) * (40 + len));
+      ctx.stroke();
+    }
+    if (intensity > 0.85) {
+      ctx.globalAlpha = (intensity - 0.85) / 0.15 * 0.6;
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, cssW, cssH);
+    }
+    ctx.restore();
+  }
+
   // ---------- labels + waypoints ----------
   const labelsLayer = document.getElementById("labels-layer");
   const waypointsLayer = document.getElementById("waypoints-layer");
@@ -989,14 +1191,47 @@
       waypointsLayer.appendChild(el); waypointPool.push(el);
     }
   }
+  const controlsEl = document.getElementById("controls");
+  // How far up from the bottom edge waypoint pills need to stay clear --
+  // recomputed from the ACTUAL current bounding boxes of whichever bottom
+  // touch/UI controls are visible right now, rather than a fixed pixel
+  // guess: a static number either wasted space when the joystick/boost
+  // button/controls cluster weren't all showing, or (confirmed with a real
+  // mobile screenshot) still undershot once the controls cluster wrapped to
+  // two lines. Cheap -- at most 3 getBoundingClientRect calls, once a
+  // frame.
+  function safeBottomEdge() {
+    let bottom = cssH - 70;
+    if (!joystick.hidden) bottom = Math.min(bottom, joystick.getBoundingClientRect().top - 14);
+    if (!touchBoostBtn.hidden) bottom = Math.min(bottom, touchBoostBtn.getBoundingClientRect().top - 14);
+    if (controlsEl && !controlsEl.classList.contains("hidden")) bottom = Math.min(bottom, controlsEl.getBoundingClientRect().top - 14);
+    return bottom;
+  }
   function updateWaypoints(basis) {
-    const offscreen = networks.filter(net => {
-      const dist = V.len(V.sub(net.center, playerPos));
-      if (dist < LABEL_RADIUS) return false; // already close, labels cover it
+    // Wormholes fold into the exact same offscreen-directional-pill system
+    // as networks (see placeWormholes' comment on why they're shaped to
+    // match) -- they just skip the label-radius cutover since they don't
+    // have an approach-label equivalent of their own; once actually
+    // on-screen the in-world drawWormhole() render already covers it.
+    const targets = [...networks, wormholeForward, wormholeBackward].filter(Boolean);
+    const offscreen = targets.filter(net => {
+      if (!net.isWormhole) {
+        const dist = V.len(V.sub(net.center, playerPos));
+        if (dist < LABEL_RADIUS) return false; // already close, labels cover it
+      }
       const p = project(net.center, playerPos, basis, cssW, cssH, FOV);
       return !p || p.x < 0 || p.x > cssW || p.y < 0 || p.y > cssH;
     });
     ensureWaypointPool(offscreen.length);
+    // Asymmetric clamp box, not a symmetric pad around center: the
+    // joystick, boost button and (when it hasn't auto-hidden) the bottom
+    // control cluster all live along the bottom edge, and pills were
+    // landing right on top of them (confirmed with a real mobile
+    // screenshot). A uniform inset can't clear the bottom without wasting
+    // the same margin at the top too, so each edge gets its own -- and the
+    // bottom one tracks the controls' real current position (see
+    // safeBottomEdge) instead of guessing a fixed pixel count.
+    const boxLeft = 90, boxRight = cssW - 90, boxTop = 64, boxBottom = safeBottomEdge();
     waypointPool.forEach((el, i) => {
       if (i >= offscreen.length) { el.hidden = true; el.onclick = null; el._network = null; return; }
       const net = offscreen[i];
@@ -1004,15 +1239,19 @@
       const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
       let ang = Math.atan2(-camY, camX);
       if (camZ < 0) ang += Math.PI;
-      const cx = cssW/2, cy = cssH/2, pad = 46;
-      const halfW = cssW/2 - pad, halfH = cssH/2 - pad;
+      const cx = cssW/2, cy = cssH/2;
       const dx = Math.cos(ang), dy = -Math.sin(ang);
-      const tx = Math.abs(dx) > 1e-4 ? halfW/Math.abs(dx) : Infinity;
-      const ty = Math.abs(dy) > 1e-4 ? halfH/Math.abs(dy) : Infinity;
-      const t = Math.min(tx, ty);
+      const tLeft = dx < -1e-4 ? (boxLeft - cx) / dx : Infinity;
+      const tRight = dx > 1e-4 ? (boxRight - cx) / dx : Infinity;
+      const tTop = dy < -1e-4 ? (boxTop - cy) / dy : Infinity;
+      const tBottom = dy > 1e-4 ? (boxBottom - cy) / dy : Infinity;
+      const t = Math.min(tLeft, tRight, tTop, tBottom);
       el.hidden = false;
       el.style.left = (cx + dx*t) + "px";
       el.style.top = (cy + dy*t) + "px";
+      el.classList.toggle("wormhole-fwd", net.isWormhole && net.kind === "forward");
+      el.classList.toggle("wormhole-back", net.isWormhole && net.kind === "backward");
+      el.querySelector(".wp-arrow").textContent = net.isWormhole ? "◎" : "➤";
       el.querySelector(".wp-arrow").style.transform = `rotate(${(Math.atan2(dy,dx)*180/Math.PI)+90}deg)`;
       el.querySelector(".wp-name").textContent = net.group.name;
       el.querySelector(".wp-dist").textContent = Math.round(V.len(rel)/100)/10 + "k";
@@ -1124,6 +1363,13 @@
     const sorted = [...proj.entries()].sort((a,b) => b[1].camZ - a[1].camZ);
     for (const [node, p] of sorted) drawNode(node, p, node === dossierCurrentNode, nowMs);
 
+    // No render-cull distance for these -- there are only ever at most two.
+    for (const wh of [wormholeForward, wormholeBackward]) {
+      if (!wh) continue;
+      const p = project(wh.center, playerPos, basis, cssW, cssH, FOV);
+      if (p) drawWormhole(p, wh.kind, nowMs);
+    }
+
     // boost vignette
     if (!REDUCED_MOTION && speedFrac > 0.5) {
       ctx.save();
@@ -1134,10 +1380,22 @@
       ctx.restore();
     }
 
-    updateApproachLabels(basis);
-    updateWaypoints(basis);
+    // Labels/waypoints are separate DOM layers stacked ABOVE this canvas,
+    // so a full-screen effect drawn here would never actually cover them --
+    // hiding them for the transition's ~1.5s is simpler than fighting
+    // z-index, and they'd only be showing stale pre-swap data anyway.
+    if (wormholeFX) {
+      labelsLayer.style.visibility = "hidden";
+      waypointsLayer.style.visibility = "hidden";
+    } else {
+      labelsLayer.style.visibility = "";
+      waypointsLayer.style.visibility = "";
+      updateApproachLabels(basis);
+      updateWaypoints(basis);
+    }
     updateReticleHover(basis);
     updateDossierProximity();
+    drawWormholeFX(nowMs);
 
     const bm = document.getElementById("bm-fill");
     bm.style.width = boostMeter + "%";
@@ -1150,8 +1408,10 @@
     const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
     lastFrameTime = now;
     trackPerf(dt * 1000);
+    updateWormholeFX(now);
     updateAutoBoost(now, dt);
     updatePhysics(dt);
+    if (!wormholeFX) checkWormholeCollision();
     render(now);
     rafId = requestAnimationFrame(frame);
   }
@@ -1163,8 +1423,11 @@
 
   // ---------- settings: network count + randomize ----------
   let networkCount = 10;
-  function respawnGalaxy() {
-    buildGalaxy(networkCount);
+  // Shared by the manual "Randomize Galaxy" button AND the wormhole
+  // transition -- both need the exact same "no stale state left behind"
+  // reset, just triggered differently and (for the wormhole) with the
+  // actual galaxy swap happening on a different schedule around it.
+  function resetPlayerAndTeardownPools() {
     playerPos = { x: 0, y: 300, z: -1600 };
     velocity = { x: 0, y: 0, z: 0 };
     yaw = 0; pitch = 0;
@@ -1178,6 +1441,16 @@
     // kind of thing "clear all and spawn a new set" is asking not to see.
     labelPool.forEach(el => el.remove()); labelPool = [];
     waypointPool.forEach(el => el.remove()); waypointPool = [];
+  }
+  function respawnGalaxy() {
+    buildGalaxy(networkCount);
+    resetPlayerAndTeardownPools();
+    // An explicit manual reset starts a clean slate -- carrying over a
+    // wormhole "previous" snapshot from before it would let the backward
+    // wormhole return you to a galaxy this button just told the pools to
+    // forget entirely.
+    previousNetworks = null;
+    placeWormholes();
   }
   document.querySelectorAll(".ct-btn").forEach(btn => btn.addEventListener("click", () => {
     document.querySelectorAll(".ct-btn").forEach(b => b.classList.remove("active"));

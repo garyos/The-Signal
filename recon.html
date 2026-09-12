@@ -560,7 +560,6 @@
   const REVISIT_LOCAL_MS = 900;
   const REVISIT_ORBITAL_MS = 1900;
   const FINALE_MS = 4000;
-  const ESTABLISH_START = { x: 0, y: -60, z: -520 };
 
   const EASE_INOUT = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
 
@@ -592,7 +591,12 @@
 
     const segs = [];
     let t = 0, idx = 0;
-    let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
+    // The very first transit starts from this same wide orbital framing
+    // (not the old close-in ESTABLISH_START) so the flight opens on the
+    // whole network -- origin plus its ring-1 halo -- and only THEN zooms
+    // into the group node's own close-up, per "when Recon first loads it
+    // should show the whole network and then zoom in from there."
+    let prevCamPos = orbital.camPos, prevLookAt = orbital.lookAt;
     let lastRevisitMs = null;
     // departTrigger marks the transit immediately following a real node's
     // hold (whatever comes next -- a revisit or straight into the next real
@@ -800,9 +804,14 @@
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.stroke();
       ctx.restore();
     } else {
+      // Normal (opaque) compositing for the fill itself -- "lighter" is
+      // additive, so two overlapping nodes only ever brightened each other
+      // instead of the nearer one occluding the farther, which read as
+      // translucent glowing blobs rather than solid bodies. shadowBlur still
+      // gives it a soft glow halo without needing additive blending for
+      // that.
       ctx.save();
       ctx.globalAlpha = p.opacity;
-      ctx.globalCompositeOperation = "lighter";
       ctx.shadowColor = color;
       ctx.shadowBlur = (degraded ? 12 : 26) * p.scale * (focused ? 1.6 : 1);
       ctx.fillStyle = color;
