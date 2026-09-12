@@ -571,37 +571,36 @@
     const theta = goldenAngle * i;
     return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
   }
-  // A genuinely random direction in the outward hemisphere around `axis`
-  // (random azimuth + polar angle capped at 90deg) -- ported from
-  // recon.html verbatim. Deeper rings here used to place across the FULL
-  // sphere with no constraint, which let a child point straight back
-  // through its own parent toward the network's center, crossing/
-  // overlapping other branches -- the exact bug recon.html had before its
-  // own hemisphere fix. Still plenty wide (a full hemisphere, not a narrow
-  // cone) for "children can shoot out from any side of their parent," just
-  // never the side that doubles back toward the middle.
-  function randomHemisphereDirection(axis) {
+  // A genuinely random direction around `axis` -- random azimuth + polar
+  // angle capped at `maxPolar` -- ported from recon.html. maxPolar=PI/2 is
+  // a hemisphere (outward-only, every real node's children); maxPolar=PI
+  // is the FULL sphere (the origin-fallback case below, which has no
+  // outward side to restrict to). Deeper rings here used to place across
+  // the full sphere unconditionally, which let a child point straight back
+  // through its own parent toward the network's center -- the exact bug
+  // recon.html had before its own hemisphere fix.
+  function randomDirection(axis, maxPolar) {
     const arbitrary = Math.abs(axis.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
     const t1 = V.norm(V.cross(axis, arbitrary));
     const t2 = V.cross(axis, t1);
     const az = Math.random() * Math.PI * 2;
-    const polar = Math.random() * (Math.PI / 2);
+    const polar = Math.random() * maxPolar;
     const s = Math.sin(polar);
     const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
     return V.norm(V.add(V.scale(axis, Math.cos(polar)), offset));
   }
-  // Bounded rejection sampling around randomHemisphereDirection: keeps
-  // drawing until a candidate clears a minimum angular separation from
-  // every already-placed sibling, so two independent random draws can't
+  // Bounded rejection sampling around randomDirection: keeps drawing until
+  // a candidate clears a minimum angular separation from every already-
+  // placed direction it's handed, so two independent random draws can't
   // coincidentally land on (or near) the same line -- confirmed as a real,
-  // reproducible bug (siblings ending up perfectly aligned), not just a
+  // reproducible bug (nodes ending up perfectly aligned), not just a
   // theoretical risk. Falls back to the least-bad candidate seen so a
   // crowded parent can never loop forever.
   const MIN_SIBLING_SEP_COS = Math.cos(10 * Math.PI / 180);
-  function pickSeparatedDirection(axis, placedDirs) {
+  function pickSeparatedDirection(axis, maxPolar, placedDirs) {
     let bestCandidate = null, bestMaxDot = Infinity;
     for (let attempt = 0; attempt < 20; attempt++) {
-      const candidate = randomHemisphereDirection(axis);
+      const candidate = randomDirection(axis, maxPolar);
       if (placedDirs.length === 0) return candidate;
       let maxDot = -Infinity;
       for (const d of placedDirs) maxDot = Math.max(maxDot, V.dot(candidate, d));
@@ -610,18 +609,38 @@
     }
     return bestCandidate;
   }
+  // Separation is tracked PER PARENT, ACROSS EVERY RING AT ONCE -- not
+  // reset each time the outer ring loop advances. A single parent can have
+  // children spread across more than one ring simultaneously (a campaign
+  // directly parents both its technique nodes at ring 2 AND its software
+  // nodes at ring 3), and those two groups were being separated
+  // independently, each blind to the other's directions -- confirmed as
+  // the actual mechanism behind "software and techniques appearing in
+  // alignment" (not assumed, and ported straight from the same fix in
+  // recon.html): two different rings' passes under the same parent never
+  // compared notes at all. placedDirsByParent is the fix -- one running
+  // list per parent, shared by every ring's pass over that parent's
+  // children, seeded with the parent's own incoming direction (so a child
+  // can't continue dead-straight through the line its parent arrived along
+  // either) or, for a parent sitting exactly at the origin (buildFlight
+  // falls straight back to it whenever there's no real upstream node),
+  // the origin's own ring-1 campaign directions.
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
     origin.dir = { x: 0, y: 0, z: 1 };
+    const placedDirsByParent = new Map();
     for (let ring = 1; ring <= 4; ring++) {
       const ringNodes = nodes.filter(node => node.ring === ring);
       const dist = RING_DIST[ring];
       if (ring === 1) {
         const n = ringNodes.length;
+        const originDirs = [];
         ringNodes.forEach((node, i) => {
           node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
           node.pos = V.scale(node.dir, dist);
+          originDirs.push(node.dir);
         });
+        placedDirsByParent.set(origin, originDirs);
       } else {
         const byParent = new Map();
         for (const node of ringNodes) {
@@ -629,26 +648,18 @@
           byParent.get(node.parent).push(node);
         }
         for (const [parent, kids] of byParent) {
-          const n = kids.length;
-          // buildFlight falls a node's parent straight back to the origin
-          // whenever there's no real upstream node to hang it off (any
-          // technique/software node in a group with zero campaigns --
-          // common in the real data). origin.pos is exactly {0,0,0}, so
-          // there's no outward axis to speak of there; fall back to the
-          // same full-sphere placement ring 1 uses.
+          // A parent sitting AT the origin (V.len(parent.pos) < 1 --
+          // origin.pos is exactly {0,0,0}, nothing real ever lands that
+          // close per the outward-only placement below) has no outward
+          // axis to restrict to, so it gets the full sphere instead of a
+          // hemisphere -- same reasoning as ring 1 itself.
           const atOrigin = V.len(parent.pos) < 1;
-          const axis = atOrigin ? null : V.norm(parent.pos);
-          // Seeded with the parent's own incoming direction (ported from
-          // recon.html's version of this same fix) -- otherwise a child
-          // was free to continue almost dead-straight through the line
-          // its parent already arrived along, so parent/child/grandchild
-          // ended up close to collinear. Not caught by the per-sibling
-          // check alone (the parent isn't a sibling). Skipped for the
-          // atOrigin case since origin.dir is a meaningless fixed
-          // placeholder, not a real incoming direction.
-          const placedDirs = atOrigin ? [] : [parent.dir];
+          const axis = atOrigin ? { x: 0, y: 1, z: 0 } : V.norm(parent.pos);
+          const maxPolar = atOrigin ? Math.PI : Math.PI / 2;
+          if (!placedDirsByParent.has(parent)) placedDirsByParent.set(parent, atOrigin ? [] : [parent.dir]);
+          const placedDirs = placedDirsByParent.get(parent);
           kids.forEach((node, i) => {
-            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
+            node.dir = pickSeparatedDirection(axis, maxPolar, placedDirs);
             placedDirs.push(node.dir);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });

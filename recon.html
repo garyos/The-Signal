@@ -423,44 +423,42 @@
     const theta = goldenAngle * i;
     return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
   }
-  // A genuinely RANDOM direction somewhere in the outward hemisphere around
-  // `axis` -- built from a random azimuth + a random polar angle capped at
-  // 90 deg, the same two-random-angles construction this page's original
-  // cone-fan (perturbDirection) used, just widened from a narrow cone to a
-  // full hemisphere and re-centered on `axis` instead of the parent's own
-  // incoming direction. A deterministic even lattice (this function's first
-  // version, and ring 1's fibonacciSpherePoint below) places every sibling
-  // at a fixed, evenly-stepped angle from the others -- fine when there are
-  // enough of them to read as a scatter, but for the 1-3 siblings typical
-  // of a nested node it reads as mechanically in-line or exactly
-  // perpendicular instead of organic, which is what "make it look like
-  // proper constellations" was calling out. Never points into the other
-  // hemisphere (polar angle never exceeds 90 deg), so the "don't point back
-  // toward center" fix from before still holds.
-  function randomHemisphereDirection(axis) {
+  // A genuinely RANDOM direction around `axis` -- built from a random
+  // azimuth + a random polar angle capped at `maxPolar`, the same
+  // two-random-angles construction this page's original cone-fan
+  // (perturbDirection) used, just re-centered on `axis` instead of the
+  // parent's own incoming direction. maxPolar=PI/2 gives a hemisphere
+  // (outward-only, used for every real node's children); maxPolar=PI
+  // gives the FULL sphere (used only for the origin-fallback case below,
+  // which has no outward side to restrict to). A deterministic even
+  // lattice places every sibling at a fixed, evenly-stepped angle from the
+  // others -- fine when there are enough of them to read as a scatter, but
+  // for the 1-3 siblings typical of a nested node it reads as mechanically
+  // in-line or exactly perpendicular instead of organic, which is what
+  // "make it look like proper constellations" was calling out.
+  function randomDirection(axis, maxPolar) {
     const arbitrary = Math.abs(axis.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
     const t1 = V.norm(V.cross(axis, arbitrary));
     const t2 = V.cross(axis, t1);
     const az = Math.random() * Math.PI * 2;
-    const polar = Math.random() * (Math.PI / 2);
+    const polar = Math.random() * maxPolar;
     const s = Math.sin(polar);
     const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
     return V.norm(V.add(V.scale(axis, Math.cos(polar)), offset));
   }
   // Pure Math.random() has no uniqueness guarantee -- two independent draws
   // can coincidentally land on (or effectively on) the same line, which is
-  // exactly what "perfectly aligned" siblings looks like. This wraps
-  // randomHemisphereDirection in bounded rejection sampling: keep drawing
-  // until a candidate clears a minimum angular separation from every
-  // already-placed sibling under the same parent, falling back to the
-  // least-bad candidate seen if none clear it in time (a crowded parent
-  // with many siblings and limited hemisphere room must never be able to
-  // loop forever).
+  // exactly what "perfectly aligned" nodes looks like. This wraps
+  // randomDirection in bounded rejection sampling: keep drawing until a
+  // candidate clears a minimum angular separation from every already-
+  // placed direction it's handed, falling back to the least-bad candidate
+  // seen if none clear it in time (a crowded parent with many children and
+  // limited room must never be able to loop forever).
   const MIN_SIBLING_SEP_COS = Math.cos(10 * Math.PI / 180);
-  function pickSeparatedDirection(axis, placedDirs) {
+  function pickSeparatedDirection(axis, maxPolar, placedDirs) {
     let bestCandidate = null, bestMaxDot = Infinity;
     for (let attempt = 0; attempt < 20; attempt++) {
-      const candidate = randomHemisphereDirection(axis);
+      const candidate = randomDirection(axis, maxPolar);
       if (placedDirs.length === 0) return candidate;
       let maxDot = -Infinity;
       for (const d of placedDirs) maxDot = Math.max(maxDot, V.dot(candidate, d));
@@ -475,24 +473,41 @@
   // Every deeper ring fans across only the OUTWARD-facing hemisphere around
   // its parent (hemisphere pole = direction from the origin out to that
   // parent) -- wide and organic, same spirit as full-sphere, but a child
-  // can never point back in toward the center. Letting it use the full
-  // sphere there (the first version of this fix) let a child's line
-  // double back past its own parent toward the origin, crossing/overlapping
-  // other branches and nodes right in the shot that's supposed to be
-  // focused on it -- confirmed as the actual cause of the reported
-  // overlap, not assumed.
+  // can never point back in toward the center.
+  //
+  // Separation is tracked PER PARENT, ACROSS EVERY RING AT ONCE -- not
+  // reset each time the outer ring loop advances. A single parent can have
+  // children spread across more than one ring simultaneously (a campaign
+  // directly parents both its technique nodes at ring 2 AND its software
+  // nodes at ring 3), and those two groups were being separated
+  // independently, each blind to the other's directions -- confirmed as
+  // the actual mechanism behind "software and techniques appearing in
+  // alignment" (not assumed): two different rings' passes under the same
+  // parent never compared notes at all. placedDirsByParent is the fix --
+  // one running list per parent, shared by every ring's pass over that
+  // parent's children, seeded with the parent's own incoming direction (so
+  // a child can't continue dead-straight through the line its parent
+  // arrived along either -- see the collinearity fix below) or, for a
+  // parent sitting exactly at the origin (buildFlight falls straight back
+  // to it whenever there's no real upstream node, e.g. any technique in a
+  // zero-campaign group), the origin's own ring-1 campaign directions,
+  // since those are equally real siblings-in-spirit under that same point.
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
     origin.dir = { x: 0, y: 0, z: 1 };
+    const placedDirsByParent = new Map();
     for (let ring = 1; ring <= 4; ring++) {
       const ringNodes = nodes.filter(node => node.ring === ring);
       const dist = RING_DIST[ring];
       if (ring === 1) {
         const n = ringNodes.length;
+        const originDirs = [];
         ringNodes.forEach((node, i) => {
           node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
           node.pos = V.scale(node.dir, dist);
+          originDirs.push(node.dir);
         });
+        placedDirsByParent.set(origin, originDirs);
       } else {
         const byParent = new Map();
         for (const node of ringNodes) {
@@ -500,46 +515,18 @@
           byParent.get(node.parent).push(node);
         }
         for (const [parent, kids] of byParent) {
-          const n = kids.length;
-          // buildFlight falls a node's parent straight back to the origin
-          // whenever there's no real upstream node to hang it off (e.g. any
-          // technique/software node in a group with zero campaigns, which
-          // is common in the real data, not a rare edge case). origin.pos
-          // is exactly {0,0,0}, so V.norm(parent.pos) had nothing to
-          // normalize and (via V.norm's zero-length fallback) came back
-          // {0,0,0} too -- a zero-length axis collapses the whole
-          // hemisphere rotation to {0,0,0}, pinning every one of those
-          // nodes' dir, and therefore pos, exactly onto the origin point.
-          // Confirmed as the actual mechanism (not assumed) by tracing
-          // buildFlight's `parent: camp || origin` fallbacks against a real
-          // campaign-less group. A parent sitting AT the origin has no
-          // outward axis to speak of anyway, so it should fall back to the
-          // same full-sphere placement ring 1 uses around the origin,
-          // rather than feeding a degenerate axis into the hemisphere math.
+          // A parent sitting AT the origin (V.len(parent.pos) < 1 --
+          // origin.pos is exactly {0,0,0}, nothing real ever lands that
+          // close per the outward-only placement below) has no outward
+          // axis to restrict to, so it gets the full sphere instead of a
+          // hemisphere -- same reasoning as ring 1 itself.
           const atOrigin = V.len(parent.pos) < 1;
-          const axis = atOrigin ? null : V.norm(parent.pos);
-          // fibonacciSpherePoint (the atOrigin fallback) is already
-          // collision-free by construction (an even lattice never repeats
-          // an angle for a given n) -- only the random branch needs the
-          // separation guarantee, hence placedDirs only being threaded
-          // through pickSeparatedDirection.
-          //
-          // Seeded with the parent's OWN incoming direction (not just an
-          // empty list) when there is one -- otherwise a child was free to
-          // continue almost dead-straight through the line its parent
-          // already arrived along, so parent/child/grandchild ended up
-          // close to collinear. That's invisible to the per-sibling check
-          // (it's not a sibling), but it's exactly what "the camera
-          // focuses on a node but another node is in front of it, because
-          // they're in alignment" describes -- a shot approaching a node
-          // roughly from its parent's direction is looking straight down
-          // that same line. Excluded for the atOrigin case: origin.dir is
-          // a meaningless fixed placeholder, not a real incoming
-          // direction, and seeding it would wrongly bias away from a
-          // perfectly valid part of the sphere.
-          const placedDirs = atOrigin ? [] : [parent.dir];
+          const axis = atOrigin ? { x: 0, y: 1, z: 0 } : V.norm(parent.pos);
+          const maxPolar = atOrigin ? Math.PI : Math.PI / 2;
+          if (!placedDirsByParent.has(parent)) placedDirsByParent.set(parent, atOrigin ? [] : [parent.dir]);
+          const placedDirs = placedDirsByParent.get(parent);
           kids.forEach((node, i) => {
-            node.dir = atOrigin ? fibonacciSpherePoint(i, n) : pickSeparatedDirection(axis, placedDirs);
+            node.dir = pickSeparatedDirection(axis, maxPolar, placedDirs);
             placedDirs.push(node.dir);
             node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
