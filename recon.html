@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RE:CON</title>
+<meta name="description" content="RE:CON — Relational Effects Cyber Operations Network. A cinematic, auto-playing fly-through of MITRE ATT&CK relationship data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    RE:CON is a standalone, currently-unlinked page (no nav reference, not in
+    either mirror workflow's allowlist yet — see the plan this was built
+    from). It is NOT an explorer: nothing on this page is clickable. It's a
+    non-interactive, auto-playing cinematic fly-through of MITRE ATT&CK
+    relationship data, reading data/attack/{enterprise,mobile,ics}.json at
+    runtime exactly as attack.html does (same fetch + byId-index pattern),
+    with its own deliberately sharp/saturated color identity distinct from
+    THE SIGNAL's desaturated palette elsewhere on the site.
+  */
+  :root {
+    --ink: #050608;
+    --ink-panel: rgba(6,12,18,0.82);
+    --line: rgba(0,255,200,0.18);
+    --text: #e8fbff;
+    --text-dim: #7fa8b8;
+    --c-group: #ffcc00;
+    --c-campaign: #ff00aa;
+    --c-technique: #ff2751;
+    --c-tactic: #7c4dff;
+    --c-software: #00f0ff;
+    --c-mitigation: #00ff9c;
+    --font-display: "Chakra Petch", "IBM Plex Mono", ui-monospace, monospace;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: var(--ink); color: var(--text); font-family: var(--font-mono);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .controls, #recon-title { transition: opacity 0s, transform 0s !important; }
+  }
+
+  /* ---------- scene ---------- */
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+
+  /* ---------- always-on brand mark (never auto-hides, per brief) ---------- */
+  .brand {
+    position: fixed; top: max(18px, env(safe-area-inset-top)); left: max(22px, env(safe-area-inset-left));
+    z-index: 30; pointer-events: none;
+  }
+  .brand .bw { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.08em; color: var(--text); }
+  .brand .bw span { color: var(--c-technique); }
+  .brand .bt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; color: var(--text-dim); opacity: 0.65; margin-top: 2px; text-transform: uppercase; }
+
+  /* ---------- current-group title: small, auto-hides, NOT dominant ---------- */
+  #recon-title {
+    position: fixed; top: max(18px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+    z-index: 25; text-align: center; pointer-events: none;
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  #recon-title .rt-kicker { font-size: 9px; letter-spacing: 0.2em; color: var(--c-group); opacity: 0.85; margin-bottom: 3px; }
+  #recon-title .rt-name { color: var(--text); font-weight: 600; }
+
+  /* ---------- auto-hiding controls (dataset + speed), bottom-center ----------
+     NOT bottom-left: the always-on threat-landscape panel already lives
+     there, and a real click-intercept collision between the two (caught via
+     Playwright, not assumed) is what moved this here. Bottom-center is clear
+     of every other panel regardless of how tall the landscape panel's
+     content grows. */
+  .controls {
+    position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    z-index: 30; display: flex; flex-direction: row; gap: 10px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .controls.hidden {
+    opacity: 0; transform: translate(-50%, 14px); pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  #recon-title.hidden { opacity: 0; transform: translate(-50%, -10px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .control-group { display: flex; gap: 4px; background: rgba(5,8,12,0.7); border: 1px solid var(--line); border-radius: 3px; padding: 3px; backdrop-filter: blur(6px); }
+  .control-group button {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; padding: 6px 10px;
+    background: transparent; border: none; color: var(--text-dim); cursor: pointer; border-radius: 2px;
+  }
+  .control-group button.active { background: rgba(0,240,255,0.12); color: var(--c-software); box-shadow: inset 0 0 0 1px rgba(0,240,255,0.4); }
+  .control-group button:hover { color: var(--text); }
+
+  /* ---------- shared HUD panel chrome (corner brackets) ---------- */
+  .hud-panel {
+    position: fixed; z-index: 20; background: var(--ink-panel); border: 1px solid var(--line);
+    backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%);
+    padding: 16px 18px;
+  }
+  .hud-panel::before, .hud-panel::after,
+  .hud-panel .hb-br1, .hud-panel .hb-br2 {
+    content: ""; position: absolute; width: 14px; height: 14px; pointer-events: none;
+  }
+  .hud-panel::before { top: -1px; left: -1px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; }
+  .hud-panel::after { top: -1px; right: -1px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; }
+  .hud-panel .hb-br1 { bottom: -1px; left: -1px; border-bottom: 2px solid currentColor; border-left: 2px solid currentColor; }
+  .hud-panel .hb-br2 { bottom: -1px; right: -1px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
+
+  /* ---------- dossier (right column desktop, bottom sheet mobile) ---------- */
+  #dossier {
+    top: max(70px, calc(env(safe-area-inset-top) + 60px)); right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom)); width: 340px; overflow-y: auto;
+    color: var(--c-technique); /* corner-bracket color, overridden per-type via JS on #dossier-type */
+  }
+  #dossier-type { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; font-weight: 600; }
+  #dossier-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); float: right; }
+  #dossier-scanline {
+    position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0; pointer-events: none;
+  }
+  #dossier.dz-flash #dossier-scanline { animation: dzsweep 0.6s ease-out; }
+  @keyframes dzsweep { 0% { top: 0; opacity: 0.9; } 100% { top: 100%; opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { #dossier.dz-flash #dossier-scanline { animation: none; } }
+
+  #dossier-body { margin-top: 14px; color: var(--text); }
+  .dz-name { font-family: var(--font-display); font-size: 21px; font-weight: 700; margin: 0 0 6px; line-height: 1.15; color: var(--text); }
+  .dz-sub { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-bottom: 10px; }
+  .dz-chiprow { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .dz-chiprow-dim .dz-chip { opacity: 0.55; }
+  .dz-chip {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.04em; padding: 3px 8px;
+    border: 1px solid var(--line); border-radius: 20px; color: var(--text-dim); white-space: nowrap;
+  }
+  .dz-desc {
+    font-size: 12.5px; line-height: 1.6; color: var(--text-dim); margin: 0 0 14px;
+    clip-path: inset(0 100% 0 0); animation: dzwipe 0.3s ease-out 0.05s forwards;
+  }
+  @keyframes dzwipe { to { clip-path: inset(0 0 0 0); } }
+  @media (prefers-reduced-motion: reduce) { .dz-desc { clip-path: inset(0 0 0 0); animation: none; } }
+  .dz-stats { display: flex; gap: 18px; flex-wrap: wrap; }
+  .dz-stats > div { display: flex; flex-direction: column; }
+  .dz-stats b { font-family: var(--font-display); font-size: 20px; color: var(--text); }
+  .dz-stats span { font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.04em; text-transform: uppercase; }
+  .dz-timeline { margin-bottom: 12px; }
+  .dz-timeline-track { position: relative; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .dz-timeline-fill { position: absolute; top: 0; bottom: 0; background: var(--c-campaign); box-shadow: 0 0 8px var(--c-campaign); border-radius: 2px; }
+  .dz-timeline-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ---------- analytics panels: persistent ambient telemetry, never hide ---------- */
+  #panel-gauge { top: max(18px, env(safe-area-inset-top)); left: max(18px, env(safe-area-inset-left)); width: 200px; opacity: 0.85; color: var(--c-tactic); text-align: center; margin-top: 54px; }
+  #panel-gauge .hp-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-dim); margin-bottom: 8px; }
+  .tg-num { font-family: var(--font-display); font-size: 26px; font-weight: 700; fill: var(--text); }
+  .tg-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; fill: var(--text-dim); }
+
+  #panel-landscape { bottom: max(18px, env(safe-area-inset-bottom)); left: max(18px, env(safe-area-inset-left)); width: 240px; opacity: 0.85; color: var(--c-software); }
+  #panel-landscape .hp-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-dim); margin-bottom: 10px; }
+  .pl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+  .pl-id { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); width: 52px; flex: 0 0 auto; }
+  .pl-bar-track { flex: 1 1 auto; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .pl-bar-fill { height: 100%; background: var(--c-software); box-shadow: 0 0 6px var(--c-software); border-radius: 3px; }
+  .pl-count { font-family: var(--font-mono); font-size: 9.5px; color: var(--text); width: 22px; text-align: right; flex: 0 0 auto; }
+
+  @media (max-width: 640px) {
+    #dossier { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 42vh; border-radius: 14px 14px 0 0; border-bottom: none; }
+  }
+  @media (max-width: 480px) {
+    #panel-gauge, #panel-landscape { display: none; }
+  }
+
+  /* ---------- cut transition between cycles ---------- */
+  #scene.cutting { opacity: 0.12; transition: opacity 0.25s ease; }
+  #scene { transition: opacity 0.3s ease; }
+
+  /* ---------- static fallback (canvas unsupported) ---------- */
+  /* [hidden] override needed: an ID selector alone would lose to this rule's
+     own `display: flex`, since author CSS beats the UA [hidden]{display:none}
+     default -- confirmed by an actual render showing the fallback overlaid
+     on top of a working canvas until this was added. */
+  #fallback { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
+  #fallback[hidden] { display: none; }
+  #fallback .fb-wordmark { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: 0.08em; }
+  #fallback .fb-tagline { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; }
+  #fallback .fb-msg { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 20px; }
+</style>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div class="brand">
+    <div class="bw">RE<span>:</span>CON</div>
+    <div class="bt">Relational Effects Cyber Operations Network</div>
+  </div>
+
+  <div id="recon-title">
+    <div class="rt-kicker">// tracking</div>
+    <div class="rt-name" id="rt-name">—</div>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="control-group" id="dataset-group">
+      <button data-domain="enterprise" class="ds-btn active">ENTERPRISE</button>
+      <button data-domain="mobile" class="ds-btn">MOBILE</button>
+      <button data-domain="ics" class="ds-btn">ICS</button>
+    </div>
+    <div class="control-group" id="speed-group">
+      <button data-speed="0.5" class="sp-btn">SLOW</button>
+      <button data-speed="1" class="sp-btn active">NORMAL</button>
+      <button data-speed="2" class="sp-btn">FAST</button>
+    </div>
+  </div>
+
+  <div id="dossier" class="hud-panel">
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div id="dossier-scanline"></div>
+    <div id="dossier-type">—</div>
+    <div id="dossier-id"></div>
+    <div id="dossier-body"></div>
+  </div>
+
+  <div id="panel-gauge" class="hud-panel">
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div class="hp-title">TACTIC COVERAGE</div>
+    <div id="panel-gauge-body"></div>
+  </div>
+
+  <div id="panel-landscape" class="hud-panel">
+    <span class="hb-br1"></span><span class="hb-br2"></span>
+    <div class="hp-title">THREAT LANDSCAPE // TOP TECHNIQUES</div>
+    <div id="panel-landscape-body"></div>
+  </div>
+
+  <div id="fallback" hidden>
+    <div class="fb-wordmark">RE:CON</div>
+    <div class="fb-tagline">Relational Effects Cyber Operations Network</div>
+    <div class="fb-msg">Canvas rendering isn't available in this browser.</div>
+  </div>
+
+<script>
+(() => {
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- vector helpers ----------
+  const V = {
+    sub: (a,b) => ({x:a.x-b.x, y:a.y-b.y, z:a.z-b.z}),
+    add: (a,b) => ({x:a.x+b.x, y:a.y+b.y, z:a.z+b.z}),
+    scale: (a,s) => ({x:a.x*s, y:a.y*s, z:a.z*s}),
+    dot: (a,b) => a.x*b.x + a.y*b.y + a.z*b.z,
+    cross: (a,b) => ({x:a.y*b.z-a.z*b.y, y:a.z*b.x-a.x*b.z, z:a.x*b.y-a.y*b.x}),
+    len: (a) => Math.sqrt(a.x*a.x + a.y*a.y + a.z*a.z),
+    norm: (a) => { const l = V.len(a) || 1e-6; return {x:a.x/l, y:a.y/l, z:a.z/l}; },
+    lerp: (a,b,t) => ({x:a.x+(b.x-a.x)*t, y:a.y+(b.y-a.y)*t, z:a.z+(b.z-a.z)*t}),
+  };
+  const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
+  const easeInOutCubic = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
+
+  function escapeHtml(s) {
+    return (s == null ? "" : String(s)).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function excerpt(text, n = 220) {
+    if (!text) return "";
+    const clean = text.replace(/\s+/g, " ").trim();
+    return clean.length > n ? clean.slice(0, n).trim() + "…" : clean;
+  }
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return "";
+    const A = 0x1F1E6;
+    return String.fromCodePoint(...[...code.toUpperCase()].map(c => A + c.charCodeAt(0) - 65));
+  }
+  function chip(text) { return `<span class="dz-chip">${escapeHtml(text)}</span>`; }
+
+  // ---------- data loading (same fetch + byId pattern as attack.html's loadDomain) ----------
+  const TYPES = ["groups", "techniques", "tactics", "software", "campaigns", "mitigations"];
+  async function loadDomain(domain) {
+    const res = await fetch(`data/attack/${domain}.json?t=${Date.now()}`, { cache: "no-store" });
+    const data = await res.json();
+    data.byId = {};
+    for (const t of TYPES) data.byId[t] = Object.fromEntries((data[t] || []).map(e => [e.id, e]));
+    return data;
+  }
+
+  // ---------- sampling: a group can have 80+ techniques, far too many to fly
+  // through individually and stay "digestible" -- cap each category and pick
+  // for tactic-coverage breadth + campaign co-occurrence, not just raw order.
+  function sampleTechniques(data, group, campaigns, cap = 10) {
+    const techs = (group.techniques || []).map(id => data.byId.techniques[id]).filter(Boolean);
+    const seenTactics = new Set();
+    const picked = []; const pickedIds = new Set();
+    for (const t of techs) {
+      if (picked.length >= cap) break;
+      const primary = (t.tactics || [])[0];
+      if (primary && !seenTactics.has(primary)) { seenTactics.add(primary); picked.push(t); pickedIds.add(t.id); }
+    }
+    if (picked.length < cap) {
+      const campaignTechIds = new Set();
+      for (const c of campaigns) for (const id of (c.techniques || [])) campaignTechIds.add(id);
+      for (const t of techs) {
+        if (picked.length >= cap) break;
+        if (pickedIds.has(t.id) || !campaignTechIds.has(t.id)) continue;
+        picked.push(t); pickedIds.add(t.id);
+      }
+    }
+    for (const t of techs) {
+      if (picked.length >= cap) break;
+      if (pickedIds.has(t.id)) continue;
+      picked.push(t); pickedIds.add(t.id);
+    }
+    return picked;
+  }
+  function sampleTactics(data, techniques, cap = 6) {
+    const seen = new Set(); const out = [];
+    for (const t of techniques) {
+      for (const tacId of (t.tactics || [])) {
+        if (seen.has(tacId)) continue;
+        const tac = data.byId.tactics[tacId];
+        if (!tac) continue;
+        seen.add(tacId); out.push(tac);
+        if (out.length >= cap) return out;
+      }
+    }
+    return out;
+  }
+  function sampleSoftware(data, group, campaigns, cap = 4) {
+    const picked = []; const pickedIds = new Set();
+    const campaignSw = new Set();
+    for (const c of campaigns) for (const id of (c.software || [])) campaignSw.add(id);
+    const ids = group.software || [];
+    for (const id of ids) {
+      if (picked.length >= cap) break;
+      if (!campaignSw.has(id) || pickedIds.has(id)) continue;
+      const sw = data.byId.software[id];
+      if (sw) { picked.push(sw); pickedIds.add(id); }
+    }
+    for (const id of ids) {
+      if (picked.length >= cap) break;
+      if (pickedIds.has(id)) continue;
+      const sw = data.byId.software[id];
+      if (sw) { picked.push(sw); pickedIds.add(id); }
+    }
+    return picked;
+  }
+  function sampleMitigations(data, techniques, cap = 3) {
+    const count = new Map();
+    for (const t of techniques) for (const id of (t.mitigations || [])) count.set(id, (count.get(id) || 0) + 1);
+    return [...count.entries()].sort((a,b) => b[1]-a[1]).map(([id]) => data.byId.mitigations[id]).filter(Boolean).slice(0, cap);
+  }
+
+  // ---------- flight tree: every node keeps a `parent` pointer to the node
+  // it's most directly connected to, so layout/edges/camera-approach direction
+  // all derive from one real structure instead of three separate guesses.
+  function buildFlight(data, group) {
+    const origin = { id: group.id, type: "group", entity: group, parent: null, ring: 0 };
+    const nodes = [origin];
+
+    const campaigns = (group.campaigns || []).map(id => data.byId.campaigns[id]).filter(Boolean).slice(0, 3);
+    const campaignNodes = campaigns.map(c => ({ id: c.id, type: "campaign", entity: c, parent: origin, ring: 1 }));
+    nodes.push(...campaignNodes);
+
+    const techniques = sampleTechniques(data, group, campaigns, 10);
+    const techniqueNodes = techniques.map(t => {
+      const camp = campaignNodes.find(cn => (cn.entity.techniques || []).includes(t.id));
+      return { id: t.id, type: "technique", entity: t, parent: camp || origin, ring: 2 };
+    });
+    nodes.push(...techniqueNodes);
+
+    const tactics = sampleTactics(data, techniques, 6);
+    const tacticNodes = tactics.map(tac => {
+      const src = techniqueNodes.find(tn => (tn.entity.tactics || []).includes(tac.id));
+      return { id: tac.id, type: "tactic", entity: tac, parent: src || origin, ring: 3 };
+    });
+    nodes.push(...tacticNodes);
+
+    const software = sampleSoftware(data, group, campaigns, 4);
+    const softwareNodes = software.map(sw => {
+      const camp = campaignNodes.find(cn => (cn.entity.software || []).includes(sw.id));
+      return { id: sw.id, type: "software", entity: sw, parent: camp || origin, ring: 3 };
+    });
+    nodes.push(...softwareNodes);
+
+    const mitigations = sampleMitigations(data, techniques, 3);
+    const mitigationNodes = mitigations.map(m => {
+      const src = techniqueNodes.find(tn => (tn.entity.mitigations || []).includes(m.id));
+      return { id: m.id, type: "mitigation", entity: m, parent: src || origin, ring: 4 };
+    });
+    nodes.push(...mitigationNodes);
+
+    layoutNodes(nodes, origin);
+    return nodes;
+  }
+
+  // ---------- spine-and-spiral layout: depth (ring) = hop count from origin,
+  // so flying +z reads as advancing through the story; siblings fan around
+  // their PARENT's own angle (not a fresh spiral each ring) so branches stay
+  // visually attached to where they came from -- this is what makes it read
+  // as spidering rather than a random point cloud.
+  const RING_Z = [0, 260, 520, 780, 1040];
+  const RING_RADIUS = [0, 130, 290, 450, 610];
+  const GOLDEN_ANGLE = 137.508 * Math.PI / 180;
+  const FAN_SPREAD = 46 * Math.PI / 180;
+
+  function layoutNodes(nodes, origin) {
+    origin.pos = { x: 0, y: 0, z: 0 };
+    origin.angle = 0;
+    for (let ring = 1; ring <= 4; ring++) {
+      const ringNodes = nodes.filter(n => n.ring === ring);
+      if (ring === 1) {
+        ringNodes.forEach((n, i) => { n.angle = i * GOLDEN_ANGLE; });
+      } else {
+        const byParent = new Map();
+        for (const n of ringNodes) {
+          if (!byParent.has(n.parent)) byParent.set(n.parent, []);
+          byParent.get(n.parent).push(n);
+        }
+        for (const [parent, kids] of byParent) {
+          kids.forEach((n, i) => {
+            const offset = kids.length > 1 ? (i - (kids.length-1)/2) * (FAN_SPREAD / Math.max(1, kids.length-1)) : 0;
+            n.angle = (parent.angle || 0) + offset;
+          });
+        }
+      }
+      const z = RING_Z[ring], r = RING_RADIUS[ring];
+      ringNodes.forEach(n => {
+        const jitter = ring >= 2 ? (Math.random()*40 - 20) : 0;
+        n.pos = { x: r*Math.cos(n.angle), y: r*Math.sin(n.angle)*0.6, z: z + jitter };
+      });
+    }
+  }
+
+  // ---------- shot list: depth-first so a campaign and the techniques it
+  // introduces stay temporally adjacent, matching the requested "campaigns to
+  // techniques, tactics and more" narrative order and keeping the camera's
+  // path geometrically smooth (no wild backtracking).
+  function buildShotList(nodes) {
+    const origin = nodes.find(n => n.ring === 0);
+    const order = [];
+    (function dfs(n) {
+      order.push(n);
+      for (const k of nodes.filter(x => x.parent === n)) dfs(k);
+    })(origin);
+    return order;
+  }
+
+  function centroidOf(nodes) {
+    const s = nodes.reduce((a,n) => ({x:a.x+n.pos.x, y:a.y+n.pos.y, z:a.z+n.pos.z}), {x:0,y:0,z:0});
+    return { x: s.x/nodes.length, y: s.y/nodes.length, z: s.z/nodes.length };
+  }
+
+  // ---------- timing engine ----------
+  const DURATIONS = {
+    group: { transit: 3000, hold: 2200 },
+    campaign: { transit: 1200, hold: 1700 },
+    technique: { transit: 900, hold: 1400 },
+    tactic: { transit: 900, hold: 1400 },
+    software: { transit: 900, hold: 1400 },
+    mitigation: { transit: 700, hold: 1200 },
+  };
+  const FINALE_MS = 4000;
+  const ESTABLISH_START = { x: 0, y: -60, z: -520 };
+
+  function buildTimeline(shotOrder, allNodes) {
+    const segs = [];
+    let t = 0, idx = 0;
+    let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
+    for (const n of shotOrder) {
+      const dur = DURATIONS[n.type] || DURATIONS.technique;
+      // Camera arrives already aimed down the edge it just traveled -- this
+      // IS "panning along the node connection with relationship," not a cut
+      // to a fresh angle for every node.
+      let approachDir = V.norm(V.sub(n.pos, prevLookAt));
+      if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
+      const camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: n.pos, node: n });
+      t += dur.transit;
+      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt: n.pos, node: n });
+      t += dur.hold;
+      prevCamPos = camPos; prevLookAt = n.pos;
+    }
+    const centroid = centroidOf(allNodes);
+    const lastNode = shotOrder[shotOrder.length - 1];
+    const finaleCam = { x: centroid.x*0.3, y: -300, z: (lastNode ? lastNode.pos.z : 0) - 700 };
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: finaleCam, lookTo: centroid, node: null });
+    t += FINALE_MS;
+    return { timeline: segs, total: t };
+  }
+
+  function findSegment(timeline, t) {
+    for (const s of timeline) if (t >= s.tStart && t < s.tEnd) return s;
+    return timeline[timeline.length - 1];
+  }
+  function interpolateSegment(seg, t, nowMs) {
+    if (seg.type === "hold") {
+      const localT = nowMs / 1000;
+      const drift = REDUCED_MOTION ? 0 : Math.sin(localT * 0.6) * 6;
+      return { camPos: V.add(seg.camPos, { x: drift, y: 0, z: 0 }), lookAt: seg.lookAt };
+    }
+    const pct = clamp((t - seg.tStart) / (seg.tEnd - seg.tStart), 0, 1);
+    const e = easeInOutCubic(pct);
+    return { camPos: V.lerp(seg.camFrom, seg.camTo, e), lookAt: V.lerp(seg.lookFrom, seg.lookTo, e) };
+  }
+
+  // ---------- projection ----------
+  const FOV = 55 * Math.PI / 180;
+  function project(pos, cam, cssW, cssH) {
+    const forward = V.norm(V.sub(cam.lookAt, cam.camPos));
+    let right = V.cross(forward, { x: 0, y: 1, z: 0 });
+    if (V.len(right) < 1e-5) right = { x: 1, y: 0, z: 0 };
+    right = V.norm(right);
+    const camUp = V.norm(V.cross(right, forward));
+    const rel = V.sub(pos, cam.camPos);
+    const camX = V.dot(rel, right), camY = V.dot(rel, camUp), camZ = V.dot(rel, forward);
+    if (camZ <= 5) return null;
+    const f = 1 / Math.tan(FOV / 2);
+    const aspect = cssW / cssH;
+    const ndcX = (camX * f) / (camZ * aspect);
+    const ndcY = (camY * f) / camZ;
+    const x = (ndcX*0.5 + 0.5) * cssW;
+    const y = (1 - (ndcY*0.5 + 0.5)) * cssH;
+    const scale = clamp(220 / camZ, 0.15, 2.4);
+    const nearFade = 40, farFade = 1300;
+    const opacity = clamp(1 - (camZ - nearFade) / (farFade - nearFade), 0.05, 1);
+    return { x, y, camZ, scale, opacity };
+  }
+
+  // ---------- renderer ----------
+  const PALETTE = {
+    group: "#ffcc00", campaign: "#ff00aa", technique: "#ff2751",
+    tactic: "#7c4dff", software: "#00f0ff", mitigation: "#00ff9c",
+  };
+  const canvas = document.getElementById("scene");
+  const ctx = canvas.getContext ? canvas.getContext("2d") : null;
+  let cssW = 0, cssH = 0, stars = [];
+
+  function resizeCanvas() {
+    cssW = window.innerWidth; cssH = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.width = cssW + "px"; canvas.style.height = cssH + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = [];
+    for (let i = 0; i < 140; i++) stars.push({ x: Math.random()*cssW, y: Math.random()*cssH, r: Math.random()*1.4+0.3, a: Math.random()*0.5+0.1 });
+  }
+
+  let degraded = false;
+  function drawBackdrop() {
+    const g = ctx.createRadialGradient(cssW/2, cssH*0.4, 0, cssW/2, cssH*0.4, Math.max(cssW, cssH)*0.8);
+    g.addColorStop(0, "#0a1018"); g.addColorStop(1, "#050608");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, cssW, cssH);
+    ctx.save(); ctx.fillStyle = "#ffffff";
+    for (const s of stars) { ctx.globalAlpha = s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }
+    ctx.restore();
+  }
+  function drawEdge(a, b, type) {
+    const color = PALETTE[type];
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = Math.min(a.opacity, b.opacity) * 0.5;
+    const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+    grad.addColorStop(0, "rgba(255,255,255,0.35)"); grad.addColorStop(1, color);
+    ctx.strokeStyle = grad; ctx.lineWidth = 1.4;
+    ctx.shadowColor = color; ctx.shadowBlur = degraded ? 4 : 10;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    ctx.restore();
+  }
+  function drawNode(n, p, focused, nowMs) {
+    const color = PALETTE[n.type];
+    const r = Math.max(2, 10 * p.scale * (focused ? 1.4 : 1));
+    ctx.save();
+    ctx.globalAlpha = p.opacity;
+    ctx.globalCompositeOperation = "lighter";
+    ctx.shadowColor = color;
+    ctx.shadowBlur = (degraded ? 12 : 26) * p.scale * (focused ? 1.6 : 1);
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+    if (focused) {
+      ctx.globalAlpha = p.opacity * 0.6;
+      ctx.strokeStyle = color; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r + 8 + Math.sin(nowMs/220)*3, 0, Math.PI*2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function render(camState, flightNodes, focusNode, nowMs) {
+    ctx.clearRect(0, 0, cssW, cssH);
+    drawBackdrop();
+    const proj = new Map();
+    for (const n of flightNodes) { const p = project(n.pos, camState, cssW, cssH); if (p) proj.set(n, p); }
+    for (const n of flightNodes) {
+      if (!n.parent) continue;
+      const a = proj.get(n.parent), b = proj.get(n);
+      if (a && b) drawEdge(a, b, n.type);
+    }
+    const sorted = [...proj.entries()].sort((a,b) => b[1].camZ - a[1].camZ);
+    for (const [n, p] of sorted) drawNode(n, p, n === focusNode, nowMs);
+  }
+
+  // ---------- dossier ----------
+  function timelineBar(firstSeen, lastSeen) {
+    const y0 = 2004, y1 = new Date().getFullYear() + 1;
+    const f = new Date(firstSeen).getFullYear();
+    const l = new Date(lastSeen || firstSeen).getFullYear();
+    const pctStart = clamp((f - y0) / (y1 - y0), 0, 1) * 100;
+    const pctEnd = clamp((l - y0) / (y1 - y0), 0, 1) * 100;
+    return `<div class="dz-timeline"><div class="dz-timeline-track"><div class="dz-timeline-fill" style="left:${pctStart}%;width:${Math.max(1, pctEnd-pctStart)}%"></div></div><div class="dz-timeline-labels"><span>${f}</span><span>${l}</span></div></div>`;
+  }
+  function dossierHtml(node, data, allNodes) {
+    const e = node.entity;
+    switch (node.type) {
+      case "group": {
+        const flags = (e.countries || []).map(c => `${flagEmoji(c.code)} ${escapeHtml(c.name)}`).join(", ") || "Attribution unclear";
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${flags}</div>
+          ${(e.aliases||[]).length ? `<div class="dz-chiprow">${e.aliases.slice(0,8).map(chip).join("")}</div>` : ""}
+          <p class="dz-desc">${escapeHtml(excerpt(e.summary || e.description, 260))}</p>
+          <div class="dz-stats">
+            <div><b>${(e.techniques||[]).length}</b><span>techniques</span></div>
+            <div><b>${(e.software||[]).length}</b><span>software</span></div>
+            <div><b>${(e.campaigns||[]).length}</b><span>campaigns</span></div>
+          </div>`;
+      }
+      case "campaign":
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          ${e.first_seen ? timelineBar(e.first_seen, e.last_seen) : ""}
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 260))}</p>`;
+      case "technique": {
+        const label = e.is_subtechnique && e.parent && data.byId.techniques[e.parent] ? `${data.byId.techniques[e.parent].name}: ${e.name}` : e.name;
+        return `
+          <h2 class="dz-name">${escapeHtml(label)}</h2>
+          <div class="dz-chiprow">${(e.tactics||[]).map(id => data.byId.tactics[id]).filter(Boolean).map(t => chip(t.name)).join("")}</div>
+          <div class="dz-chiprow dz-chiprow-dim">${(e.platforms||[]).slice(0,6).map(chip).join("")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>`;
+      }
+      case "tactic": {
+        const count = allNodes.filter(n => n.type === "technique" && (n.entity.tactics||[]).includes(e.id)).length;
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${escapeHtml(e.shortname || "")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>
+          <div class="dz-stats"><div><b>${count}</b><span>techniques in this flight</span></div></div>`;
+      }
+      case "software":
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <div class="dz-sub">${escapeHtml((e.type||"").toUpperCase())}</div>
+          ${(e.aliases||[]).length ? `<div class="dz-chiprow">${e.aliases.slice(0,6).map(chip).join("")}</div>` : ""}
+          <div class="dz-chiprow dz-chiprow-dim">${(e.platforms||[]).slice(0,6).map(chip).join("")}</div>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 240))}</p>`;
+      case "mitigation": {
+        const count = allNodes.filter(n => n.type === "technique" && (n.entity.mitigations||[]).includes(e.id)).length;
+        return `
+          <h2 class="dz-name">${escapeHtml(e.name)}</h2>
+          <p class="dz-desc">${escapeHtml(excerpt(e.description, 260))}</p>
+          <div class="dz-stats"><div><b>${count}</b><span>techniques mitigated</span></div></div>`;
+      }
+      default: return "";
+    }
+  }
+  function renderDossier(node, data, allNodes) {
+    const typeEl = document.getElementById("dossier-type");
+    const idEl = document.getElementById("dossier-id");
+    const bodyEl = document.getElementById("dossier-body");
+    const panel = document.getElementById("dossier");
+    typeEl.textContent = node.type.toUpperCase();
+    panel.style.color = PALETTE[node.type];
+    idEl.textContent = node.entity.id;
+    bodyEl.innerHTML = dossierHtml(node, data, allNodes);
+    panel.classList.remove("dz-flash");
+    void panel.offsetWidth;
+    if (!REDUCED_MOTION) panel.classList.add("dz-flash");
+  }
+
+  // ---------- analytics panels ----------
+  function tacticGaugeSvg(tactics, litIds, size = 168, thickness = 13) {
+    const n = Math.max(1, tactics.length);
+    const r = (size - thickness) / 2, c = size / 2;
+    const circumference = 2 * Math.PI * r;
+    const gap = 4;
+    const segLen = Math.max(1, circumference / n - gap);
+    let offset = 0;
+    const arcs = tactics.map(t => {
+      const lit = litIds.has(t.id);
+      const color = lit ? "var(--c-tactic)" : "rgba(124,77,255,0.18)";
+      const arc = `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-dasharray="${segLen} ${circumference-segLen}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${c} ${c})" style="${lit ? "filter:drop-shadow(0 0 5px var(--c-tactic));" : ""}"/>`;
+      offset += circumference / n;
+      return arc;
+    }).join("");
+    const litCount = tactics.filter(t => litIds.has(t.id)).length;
+    return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">${arcs}<text x="${c}" y="${c-4}" text-anchor="middle" class="tg-num">${litCount}/${n}</text><text x="${c}" y="${c+16}" text-anchor="middle" class="tg-label">TACTICS</text></svg>`;
+  }
+  function updateTacticGauge(data, flightNodes) {
+    const litIds = new Set(flightNodes.filter(n => n.type === "tactic").map(n => n.entity.id));
+    document.getElementById("panel-gauge-body").innerHTML = tacticGaugeSvg(data.tactics || [], litIds);
+  }
+  function computeThreatLandscape(data) {
+    const top = [...(data.techniques || [])].sort((a,b) => (b.groups||[]).length - (a.groups||[]).length).slice(0, 5);
+    const max = top.length ? Math.max(1, (top[0].groups||[]).length) : 1;
+    document.getElementById("panel-landscape-body").innerHTML = top.map(t => `
+      <div class="pl-row">
+        <span class="pl-id">${escapeHtml(t.id)}</span>
+        <div class="pl-bar-track"><div class="pl-bar-fill" style="width:${Math.max(4, ((t.groups||[]).length/max)*100)}%"></div></div>
+        <span class="pl-count">${(t.groups||[]).length}</span>
+      </div>`).join("");
+  }
+
+  // ---------- UI chrome: idle auto-hide ----------
+  let idleTimer = null;
+  function resetIdle() {
+    document.getElementById("controls").classList.remove("hidden");
+    document.getElementById("recon-title").classList.remove("hidden");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      document.getElementById("controls").classList.add("hidden");
+      document.getElementById("recon-title").classList.add("hidden");
+    }, 3000);
+  }
+  ["mousemove", "touchstart", "keydown"].forEach(ev => window.addEventListener(ev, resetIdle, { passive: true }));
+
+  // ---------- main state + loop ----------
+  let currentData = null, currentDomain = "enterprise";
+  let flightNodes = [], timeline = null, totalDuration = 0, elapsed = 0;
+  let speedMultiplier = 1, lastFiredIndex = -1, lastGroupId = null;
+  let lastFrameTime = null, rafId = null;
+  let frameTimes = [];
+
+  function setGroupTitle(g) {
+    document.getElementById("rt-name").textContent = g.name;
+  }
+  function rollNewGroup() {
+    const groups = currentData.groups;
+    let g;
+    do { g = groups[Math.floor(Math.random() * groups.length)]; } while (groups.length > 1 && g.id === lastGroupId);
+    lastGroupId = g.id;
+    flightNodes = buildFlight(currentData, g);
+    const shotOrder = buildShotList(flightNodes);
+    const built = buildTimeline(shotOrder, flightNodes);
+    timeline = built.timeline; totalDuration = built.total;
+    elapsed = 0; lastFiredIndex = -1;
+    setGroupTitle(g);
+    updateTacticGauge(currentData, flightNodes);
+  }
+  async function startDomain(domain) {
+    currentDomain = domain;
+    currentData = await loadDomain(domain);
+    computeThreatLandscape(currentData);
+    rollNewGroup();
+  }
+
+  function trackPerf(dt) {
+    frameTimes.push(dt);
+    if (frameTimes.length > 120) frameTimes.shift();
+    if (!degraded && frameTimes.length >= 60) {
+      const avg = frameTimes.reduce((a,b) => a+b, 0) / frameTimes.length;
+      if (avg > 28) degraded = true;
+    }
+  }
+
+  function frame(now) {
+    if (lastFrameTime == null) lastFrameTime = now;
+    let dt = Math.min(now - lastFrameTime, 100);
+    lastFrameTime = now;
+    trackPerf(dt);
+    elapsed += dt * speedMultiplier;
+
+    if (elapsed >= totalDuration) {
+      canvas.classList.add("cutting");
+      rollNewGroup();
+      setTimeout(() => canvas.classList.remove("cutting"), 300);
+    }
+
+    const seg = findSegment(timeline, elapsed);
+    const camState = interpolateSegment(seg, elapsed, now);
+    if (seg.node && seg.type === "hold" && lastFiredIndex !== seg.index) {
+      lastFiredIndex = seg.index;
+      renderDossier(seg.node, currentData, flightNodes);
+    }
+    const focusNode = seg.node || null;
+    render(camState, flightNodes, focusNode, now);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function startLoop() {
+    lastFrameTime = null;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(frame);
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { if (rafId) cancelAnimationFrame(rafId); rafId = null; }
+    else if (!rafId) { startLoop(); }
+  });
+
+  // ---------- wire controls ----------
+  document.querySelectorAll(".ds-btn").forEach(btn => btn.addEventListener("click", async () => {
+    document.querySelectorAll(".ds-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    await startDomain(btn.dataset.domain);
+  }));
+  document.querySelectorAll(".sp-btn").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".sp-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    speedMultiplier = parseFloat(btn.dataset.speed);
+  }));
+
+  // ---------- init ----------
+  if (!ctx) {
+    document.getElementById("fallback").hidden = false;
+    document.getElementById("scene").hidden = true;
+  } else {
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    resetIdle();
+    startDomain("enterprise").then(startLoop);
+  }
+})();
+</script>
+</body>
+</html>
