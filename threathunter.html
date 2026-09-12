@@ -133,7 +133,7 @@
     color: var(--text); background: rgba(5,8,12,0.78); border: 1px solid var(--line);
     padding: 3px 8px; border-radius: 3px; white-space: nowrap; pointer-events: auto; opacity: 0.9; cursor: pointer;
   }
-  .node-label:hover { opacity: 1; border-color: var(--text); background: rgba(5,8,12,0.95); }
+  .node-label:hover, .node-label.hovered { opacity: 1; border-color: var(--text); background: rgba(5,8,12,0.95); }
 
   /* ---------- off-screen waypoints ---------- */
   .waypoint {
@@ -145,7 +145,7 @@
   }
   .waypoint .wp-arrow { display: inline-block; color: var(--c-group); font-size: 12px; }
   .waypoint .wp-dist { color: var(--text-dim); font-size: 9px; }
-  .waypoint:hover { border-color: var(--text); }
+  .waypoint:hover, .waypoint.hovered { border-color: var(--text); box-shadow: 0 0 14px rgba(176,38,255,0.6); }
 
   /* ---------- boost meter ---------- */
   #boost-meter {
@@ -482,16 +482,26 @@
     });
   }
 
-  // ---------- camera basis + projection (verbatim from recon.html) ----------
+  // ---------- camera basis + projection ----------
   const FOV = 62 * Math.PI / 180;
-  let stableUp = { x: 0, y: 1, z: 0 };
-  function computeCameraBasis(cam) {
-    const forward = V.norm(cam.forward);
-    let right = V.cross(forward, stableUp);
-    if (V.len(right) < 1e-4) right = V.cross(forward, Math.abs(forward.y) < 0.9 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 });
-    right = V.norm(right);
+  // Closed-form yaw/pitch basis, NOT recon.html's cross(forward, stableUp)
+  // trick. That trick exists for a camera that can face ANY direction
+  // (recon's scripted tour implies roll from its path), and it carries the
+  // previous frame's up vector forward to avoid flipping as forward sweeps
+  // near vertical. This game's camera never rolls (A/D is strafe, not
+  // roll), so `right` can be taken directly from yaw alone -- it's always
+  // horizontal, always unit length, and never once becomes degenerate,
+  // even with forward pointing straight up. Carrying state frame-to-frame
+  // was the actual bug: holding pitch near the clamp for any length of
+  // time pushed cross(forward, stableUp) toward zero, tripping the
+  // fallback branch repeatedly and re-deriving `right` from scratch each
+  // time -- which is exactly what "steer keys start switching" was
+  // (confirmed by reasoning through when that fallback fires, not
+  // guessed). This formula has no fallback branch to trip because it has
+  // no singularity in the first place.
+  function computeCameraBasis(yaw, forward) {
+    const right = { x: Math.cos(yaw), y: 0, z: -Math.sin(yaw) };
     const up = V.norm(V.cross(right, forward));
-    stableUp = up;
     return { forward, right, up };
   }
   function project(pos, camPos, basis, cssW, cssH, fov) {
@@ -728,6 +738,15 @@
   // over a pin the moment it applies (see updateDossierProximity), and the
   // close button or picking a different label are the other ways to clear it.
   let pinnedNode = null;
+  // With the mouse pointer-locked there's no cursor to click anything
+  // with -- the fixed center reticle stands in for it. Hovering a label
+  // with the reticle shows its dossier directly (no click needed);
+  // hovering a waypoint needs an actual click (mousedown still fires
+  // normally under pointer lock, only the cursor's on-screen position is
+  // what's unavailable) since that one starts a real flight, not just a
+  // read. Unlocked players keep using real clicks on both (already wired
+  // via each pool element's own onclick).
+  let hoveredLabelNode = null, hoveredWaypointNet = null;
   function renderDossier(node) {
     if (node === dossierCurrentNode) return;
     dossierCurrentNode = node;
@@ -848,7 +867,7 @@
     if (keys["ArrowDown"]) pitch = clamp(pitch - ARROW_TURN_RATE * dt, -1.5, 1.5);
 
     const forward = forwardFromAngles();
-    const basis = computeCameraBasis({ forward });
+    const basis = computeCameraBasis(yaw, forward);
     boosting = keys["Space"] || (touching && boostTouchHeld);
     if (boosting && boostMeter <= 0) boosting = false;
 
@@ -927,13 +946,14 @@
     }
     ensureLabelPool(visible.length);
     labelPool.forEach((el, i) => {
-      if (i >= visible.length) { el.hidden = true; el.onclick = null; return; }
+      if (i >= visible.length) { el.hidden = true; el.onclick = null; el._node = null; return; }
       const { node, p } = visible[i];
       el.hidden = false;
       el.textContent = node.entity.name;
       const r = 9 * p.scale * (node.type === "group" ? 2 : 1);
       el.style.left = p.x + "px";
       el.style.top = (p.y - r - 8) + "px";
+      el._node = node; // read back by updateReticleHover() while pointer-locked
       el.onclick = (ev) => { ev.stopPropagation(); pinnedNode = node; renderDossier(node); };
     });
   }
@@ -954,7 +974,7 @@
     });
     ensureWaypointPool(offscreen.length);
     waypointPool.forEach((el, i) => {
-      if (i >= offscreen.length) { el.hidden = true; el.onclick = null; return; }
+      if (i >= offscreen.length) { el.hidden = true; el.onclick = null; el._network = null; return; }
       const net = offscreen[i];
       const rel = V.sub(net.center, playerPos);
       const camX = V.dot(rel, basis.right), camY = V.dot(rel, basis.up), camZ = V.dot(rel, basis.forward);
@@ -972,9 +992,55 @@
       el.querySelector(".wp-arrow").style.transform = `rotate(${(Math.atan2(dy,dx)*180/Math.PI)+90}deg)`;
       el.querySelector(".wp-name").textContent = net.group.name;
       el.querySelector(".wp-dist").textContent = Math.round(V.len(rel)/100)/10 + "k";
+      el._network = net; // read back by updateReticleHover() while pointer-locked
       el.onclick = (ev) => { ev.stopPropagation(); startAutoBoost(net); };
     });
   }
+
+  // ---------- reticle hover (pointer lock hides the cursor, so the fixed
+  // center reticle stands in for it -- see the note by hoveredLabelNode) ----------
+  function updateReticleHover(basis) {
+    hoveredLabelNode = null;
+    hoveredWaypointNet = null;
+    const cx = cssW / 2, cy = cssH / 2;
+    for (const el of labelPool) {
+      el.classList.remove("hovered");
+      if (locked && !el.hidden && el._node && !hoveredLabelNode) {
+        const r = el.getBoundingClientRect();
+        if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) {
+          hoveredLabelNode = el._node;
+          el.classList.add("hovered");
+        }
+      }
+    }
+    // A waypoint's pill is always pinned to the screen edge -- it's a
+    // directional beacon for something off-screen, not that network's real
+    // screen position -- so the fixed center reticle can never actually sit
+    // inside its rect (confirmed via the projection math: it's clamped to
+    // within `pad` of the viewport border by construction). "Aiming the
+    // reticle at" an off-screen target instead means pointing the ship's
+    // nose close to its true direction, which is exactly what the
+    // boresight-angle check below measures.
+    const BORESIGHT_COS = Math.cos(0.09); // ~5 degrees off dead-ahead
+    for (const el of waypointPool) {
+      el.classList.remove("hovered");
+      if (locked && !el.hidden && el._network && !hoveredWaypointNet) {
+        const dir = V.norm(V.sub(el._network.center, playerPos));
+        if (V.dot(dir, basis.forward) > BORESIGHT_COS) {
+          hoveredWaypointNet = el._network;
+          el.classList.add("hovered");
+        }
+      }
+    }
+  }
+  // Click coordinates are unreliable while pointer-locked (the OS cursor
+  // isn't actually moving, so clientX/clientY stay frozen at lock time) --
+  // a waypoint's own onclick hit-test can't be trusted there. This listener
+  // uses the frame-computed reticle hover state instead, which is exactly
+  // what the crosshair is standing in over.
+  document.addEventListener("click", () => {
+    if (locked && hoveredWaypointNet) startAutoBoost(hoveredWaypointNet);
+  });
 
   // ---------- proximity dossier ----------
   function updateDossierProximity() {
@@ -987,8 +1053,12 @@
       }
     }
     if (nearest && nearestDist <= TRIGGER_RADIUS) {
-      pinnedNode = null; // real proximity always wins over a click-pin
+      pinnedNode = null; // real proximity always wins over a hover or a click-pin
       renderDossier(nearest);
+    } else if (hoveredLabelNode) {
+      // Reticle is over a label right now -- show it directly, no click
+      // needed (there's no free cursor to click with while locked anyway).
+      renderDossier(hoveredLabelNode);
     } else if (pinnedNode) {
       renderDossier(pinnedNode);
     } else {
@@ -1010,7 +1080,7 @@
   function render(nowMs) {
     ctx.clearRect(0, 0, cssW, cssH);
     const forward = forwardFromAngles();
-    const basis = computeCameraBasis({ forward });
+    const basis = computeCameraBasis(yaw, forward);
     const speedFrac = clamp(V.len(velocity) / (BASE_MAXSPEED * BOOST_MUL), 0, 1);
     drawBackdrop(basis, speedFrac);
 
@@ -1042,6 +1112,7 @@
 
     updateApproachLabels(basis);
     updateWaypoints(basis);
+    updateReticleHover(basis);
     updateDossierProximity();
 
     const bm = document.getElementById("bm-fill");
