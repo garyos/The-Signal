@@ -246,7 +246,6 @@
     lerp: (a,b,t) => ({x:a.x+(b.x-a.x)*t, y:a.y+(b.y-a.y)*t, z:a.z+(b.z-a.z)*t}),
   };
   const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
-  const easeInOutCubic = (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2;
 
   function escapeHtml(s) {
     return (s == null ? "" : String(s)).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -449,11 +448,13 @@
   // ---------- shot list: depth-first, directory-walk style -- parent, then
   // child1's ENTIRE subtree, then explicitly hop back to the parent before
   // heading to child2 (a "revisit" entry, {revisit:true}), then child2's
-  // subtree, and so on. The revisit entries are what make sibling branches
-  // read as parallel offshoots of the same node instead of the camera
-  // cutting in a straight line between wherever two unrelated subtrees
-  // happened to end/start -- buildTimeline gives each revisit a short,
-  // dossier-silent beat (see fireDossier below) rather than a full stop.
+  // subtree, and so on. Two kinds of revisit: `orbital:true` only when the
+  // node being returned to is the origin itself (i.e. we just finished one
+  // of the APT group's direct children's entire nested set and are about to
+  // start the next one) -- that's the only point that pulls back to the
+  // wide view. Every deeper revisit (e.g. between two techniques under the
+  // same campaign) is `orbital:false`: just a quick hop back to that one
+  // immediate parent, not the whole structure.
   function buildShotList(nodes) {
     const origin = nodes.find(n => n.ring === 0);
     const order = [];
@@ -461,7 +462,7 @@
       order.push({ node: n, revisit: false });
       const kids = nodes.filter(x => x.parent === n);
       kids.forEach((k, i) => {
-        if (i > 0) order.push({ node: n, revisit: true });
+        if (i > 0) order.push({ node: n, revisit: true, orbital: n === origin });
         dfs(k);
       });
     })(origin);
@@ -486,14 +487,35 @@
     software: { transit: 1500, hold: 800 },
     mitigation: { transit: 1200, hold: 600 },
   };
-  // A revisit-to-parent beat between siblings pulls all the way back to a
-  // wide "orbital" view of the entire flight (not just the parent up close)
-  // before the next transit dives back in -- so a sibling jump never loses
-  // your bearings, you always get re-oriented against the whole structure
-  // first. Reused for the finale pull-back too, for the same framing.
-  const REVISIT_DUR = { transit: 1100, hold: 450 };
+  // Revisits have NO hold at all -- a pure transit, so the camera never
+  // actually stops moving between "zooming out" and "zooming back in"; the
+  // two legs either side of a revisit waypoint are velocity-matched instead
+  // (see the ease selection below) so it reads as one continuous swing, not
+  // a stop-and-restart. Orbital revisits (returning to the origin, between
+  // its direct children) get a longer transit than local ones (returning to
+  // some deeper parent) since there's more distance to actually cover and
+  // more of the structure to register on the way past.
+  const REVISIT_LOCAL_MS = 750;
+  const REVISIT_ORBITAL_MS = 1700;
   const FINALE_MS = 4000;
   const ESTABLISH_START = { x: 0, y: -60, z: -520 };
+
+  const EASE = {
+    // Full ease-in-out: starts and ends at rest. Used for a real node-to-
+    // real-node hop with no revisit involved on either side.
+    inOut: (x) => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2, 3) / 2,
+    // Starts at rest, ends at full speed -- used flying INTO a revisit
+    // waypoint, so the camera is still moving (not decelerating to a stop)
+    // right as it passes through.
+    in: (x) => x*x*x,
+    // Starts at full speed, decelerates to rest -- used flying OUT of a
+    // revisit waypoint into a real node, so it settles normally even though
+    // it didn't start from a standstill.
+    out: (x) => 1 - Math.pow(1-x, 3),
+    // Constant speed -- used only if two revisits ever landed back-to-back
+    // (doesn't happen with the current tree shapes, kept as a safe fallback).
+    linear: (x) => x,
+  };
 
   function orbitalShot(centroid, boundRadius) {
     const dist = Math.max(520, boundRadius * 2.2);
@@ -508,12 +530,25 @@
     const segs = [];
     let t = 0, idx = 0;
     let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
+    let prevWasRevisit = false;
     for (const entry of shotOrder) {
       const n = entry.node;
-      const dur = entry.revisit ? REVISIT_DUR : (DURATIONS[n.type] || DURATIONS.technique);
-      let camPos, lookAt, focusNode, fireDossier;
+      let camPos, lookAt, focusNode, fireDossier, transitMs, holdMs;
       if (entry.revisit) {
-        camPos = orbital.camPos; lookAt = orbital.lookAt; focusNode = null; fireDossier = false;
+        if (entry.orbital) {
+          camPos = orbital.camPos; lookAt = orbital.lookAt; focusNode = null;
+          transitMs = REVISIT_ORBITAL_MS;
+        } else {
+          // Local revisit: swing back to just this one immediate parent,
+          // close-up, the same "approach along the edge" shot a real node
+          // gets -- not the wide view.
+          let approachDir = V.norm(V.sub(n.pos, prevLookAt));
+          if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
+          camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
+          lookAt = n.pos; focusNode = n;
+          transitMs = REVISIT_LOCAL_MS;
+        }
+        fireDossier = false; holdMs = 0;
       } else {
         // Camera arrives already aimed down the edge it just traveled --
         // this IS "panning along the node connection with relationship,"
@@ -522,16 +557,25 @@
         if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
         camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
         lookAt = n.pos; focusNode = n; fireDossier = true;
+        const dur = DURATIONS[n.type] || DURATIONS.technique;
+        transitMs = dur.transit; holdMs = dur.hold;
       }
-      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes });
-      t += dur.transit;
-      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt, node: focusNode, fireDossier, groupName, allNodes });
-      t += dur.hold;
+      const ease = prevWasRevisit
+        ? (entry.revisit ? "linear" : "out")
+        : (entry.revisit ? "in" : "inOut");
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+transitMs, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes, ease });
+      t += transitMs;
+      if (holdMs > 0) {
+        segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+holdMs, camPos, lookAt, node: focusNode, fireDossier, groupName, allNodes });
+        t += holdMs;
+      }
       prevCamPos = camPos; prevLookAt = lookAt;
+      prevWasRevisit = entry.revisit;
     }
-    // Same "view of all" framing as every mid-flight revisit, for visual
-    // consistency between "hopping to a sibling" and "the flight is done."
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
+    // Same "view of all" framing as every mid-flight orbital revisit, for
+    // visual consistency between "hopping to a sibling" and "the flight is
+    // done." Always eases out (the flight's last leg is never a revisit).
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes, ease: prevWasRevisit ? "out" : "inOut" });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
@@ -547,7 +591,8 @@
       return { camPos: V.add(seg.camPos, { x: drift, y: 0, z: 0 }), lookAt: seg.lookAt };
     }
     const pct = clamp((t - seg.tStart) / (seg.tEnd - seg.tStart), 0, 1);
-    const e = easeInOutCubic(pct);
+    const easeFn = EASE[seg.ease] || EASE.inOut;
+    const e = easeFn(pct);
     return { camPos: V.lerp(seg.camFrom, seg.camTo, e), lookAt: V.lerp(seg.lookFrom, seg.lookTo, e) };
   }
 
@@ -576,7 +621,7 @@
 
   // ---------- renderer ----------
   const PALETTE = {
-    group: "#ffcc00", campaign: "#ff00aa", technique: "#ff2751",
+    group: "#b026ff", campaign: "#ff00aa", technique: "#ff2751",
     tactic: "#7c4dff", software: "#00f0ff", mitigation: "#00ff9c",
   };
   const canvas = document.getElementById("scene");
@@ -622,20 +667,47 @@
   }
   function drawNode(n, p, focused, nowMs) {
     const color = PALETTE[n.type];
-    const r = Math.max(2, 10 * p.scale * (focused ? 1.4 : 1));
-    ctx.save();
-    ctx.globalAlpha = p.opacity;
-    ctx.globalCompositeOperation = "lighter";
-    ctx.shadowColor = color;
-    ctx.shadowBlur = (degraded ? 12 : 26) * p.scale * (focused ? 1.6 : 1);
-    ctx.fillStyle = color;
-    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+    const isGroup = n.type === "group";
+    const r = Math.max(2, 10 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
+
+    if (isGroup) {
+      // Solid black sphere body, drawn with NORMAL compositing -- every
+      // other node's "lighter" additive blending can only ever brighten,
+      // so a black fill under it would be invisible against the backdrop.
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = "#04030a";
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+      // Electric-purple ring + glow around it, additive so it actually glows.
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.globalCompositeOperation = "lighter";
+      ctx.shadowColor = color;
+      ctx.shadowBlur = (degraded ? 18 : 34) * p.scale;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(2, 3 * p.scale);
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.stroke();
+      ctx.restore();
+    } else {
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.globalCompositeOperation = "lighter";
+      ctx.shadowColor = color;
+      ctx.shadowBlur = (degraded ? 12 : 26) * p.scale * (focused ? 1.6 : 1);
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
     if (focused) {
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
       ctx.globalAlpha = p.opacity * 0.6;
       ctx.strokeStyle = color; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.arc(p.x, p.y, r + 8 + Math.sin(nowMs/220)*3, 0, Math.PI*2); ctx.stroke();
+      ctx.restore();
     }
-    ctx.restore();
   }
   function render(camState, flightNodes, focusNode, nowMs) {
     ctx.clearRect(0, 0, cssW, cssH);
@@ -867,13 +939,14 @@
     }
 
     const camState = interpolateSegment(seg, elapsed, now);
-    // Fires near the END of the transit, not at the hold boundary: the
-    // easeInOutCubic curve is nearly flat for its last ~20%, so the camera
-    // visually settles onto the node well before the transit's raw duration
-    // is actually up -- waiting for the hold to technically begin read as a
-    // lag between "arriving" and the dossier updating. Firing at 82% through
-    // the eased transit lines the update up with when it actually looks
-    // like you've arrived.
+    // Fires near the END of the transit, not at the hold boundary: every
+    // easing curve a real-node transit can use (inOut or out, see EASE
+    // above) is nearly flat for its last ~20%, so the camera visually
+    // settles onto the node well before the transit's raw duration is
+    // actually up -- waiting for the hold to technically begin read as a
+    // lag between "arriving" and the dossier updating. Firing at 82%
+    // through the eased transit lines the update up with when it actually
+    // looks like you've arrived.
     if (seg.node && seg.type === "transit" && seg.fireDossier && lastFiredIndex !== seg.index) {
       const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
       if (transitPct >= 0.82) {
