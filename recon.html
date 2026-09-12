@@ -382,31 +382,53 @@
     return nodes;
   }
 
-  // ---------- spine-and-spiral layout: depth (ring) = hop count from origin,
-  // so flying +z reads as advancing through the story; siblings fan around
-  // their PARENT's own angle (not a fresh spiral each ring) so branches stay
-  // visually attached to where they came from -- this is what makes it read
-  // as spidering rather than a random point cloud.
-  //
-  // Ring 1 (the origin's direct children) is evenly divided around the full
-  // circle -- a clean, orderly first impression, like a directory's
-  // top-level entries. Deeper rings fan around their own parent's angle but
-  // with irregular per-sibling jitter layered on top of the even base
-  // spacing, deliberately UNEVEN -- real relationship data doesn't cluster
-  // on a grid, and looking hand-placed/organic there reads as more "alive"
-  // than a second ring of perfectly uniform fans would.
-  const RING_Z = [0, 260, 520, 780, 1040];
-  const RING_RADIUS = [0, 130, 290, 450, 610];
-  const FAN_SPREAD = 46 * Math.PI / 180;
+  // ---------- true 3D radial-tree layout: every node carries a `dir` (unit
+  // vector, its own outward direction from its parent) and `pos` = parent.pos
+  // + dir*distance. Ring 1 (the origin's direct children) is distributed over
+  // the FULL SURFACE of a sphere around the origin via a Fibonacci-sphere
+  // lattice -- not a flat ring in one plane, which is what a 2D angle +
+  // flattened y previously produced (children only ever occupied a thin
+  // equatorial band, never more than half the space around the origin).
+  // Deeper rings fan out in a 3D cone around their own parent's direction,
+  // with randomized azimuth + a random cone half-angle so siblings scatter
+  // organically in every direction off their parent, not just left/right
+  // along one shared plane.
+  const RING_DIST = [0, 340, 260, 230, 210];
+  const FAN_CONE = 62 * Math.PI / 180;
+
+  function fibonacciSpherePoint(i, n) {
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    const y = n <= 1 ? 0 : 1 - (i / (n - 1)) * 2;
+    const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
+    const theta = goldenAngle * i;
+    return { x: Math.cos(theta)*radiusAtY, y, z: Math.sin(theta)*radiusAtY };
+  }
+  // Perturbs `dir` by a random angle within `coneRad` of itself, uniformly
+  // over the resulting cone (not just a 2D swing) -- builds an orthonormal
+  // basis around dir and offsets within it by a random azimuth + polar angle.
+  function perturbDirection(dir, coneRad) {
+    const arbitrary = Math.abs(dir.y) < 0.99 ? { x: 0, y: 1, z: 0 } : { x: 1, y: 0, z: 0 };
+    const t1 = V.norm(V.cross(dir, arbitrary));
+    const t2 = V.cross(dir, t1);
+    const az = Math.random() * Math.PI * 2;
+    const polar = Math.random() * coneRad;
+    const s = Math.sin(polar);
+    const offset = V.add(V.scale(t1, Math.cos(az)*s), V.scale(t2, Math.sin(az)*s));
+    return V.norm(V.add(V.scale(dir, Math.cos(polar)), offset));
+  }
 
   function layoutNodes(nodes, origin) {
     origin.pos = { x: 0, y: 0, z: 0 };
-    origin.angle = 0;
+    origin.dir = { x: 0, y: 0, z: 1 };
     for (let ring = 1; ring <= 4; ring++) {
       const ringNodes = nodes.filter(node => node.ring === ring);
+      const dist = RING_DIST[ring];
       if (ring === 1) {
         const n = ringNodes.length;
-        ringNodes.forEach((node, i) => { node.angle = (i / n) * Math.PI * 2; });
+        ringNodes.forEach((node, i) => {
+          node.dir = fibonacciSpherePoint(i, Math.max(n, 1));
+          node.pos = V.scale(node.dir, dist);
+        });
       } else {
         const byParent = new Map();
         for (const node of ringNodes) {
@@ -414,18 +436,13 @@
           byParent.get(node.parent).push(node);
         }
         for (const [parent, kids] of byParent) {
-          kids.forEach((node, i) => {
-            const base = kids.length > 1 ? (i - (kids.length-1)/2) * (FAN_SPREAD / Math.max(1, kids.length-1)) : 0;
-            const irregular = (Math.random() - 0.5) * FAN_SPREAD * 0.7;
-            node.angle = (parent.angle || 0) + base + irregular;
+          const parentDir = parent.dir || { x: 0, y: 0, z: 1 };
+          kids.forEach(node => {
+            node.dir = perturbDirection(parentDir, FAN_CONE);
+            node.pos = V.add(parent.pos, V.scale(node.dir, dist));
           });
         }
       }
-      const z = RING_Z[ring], r = RING_RADIUS[ring];
-      ringNodes.forEach(node => {
-        const jitter = ring >= 2 ? (Math.random()*40 - 20) : 0;
-        node.pos = { x: r*Math.cos(node.angle), y: r*Math.sin(node.angle)*0.6, z: z + jitter };
-      });
     }
   }
 
@@ -469,39 +486,52 @@
     software: { transit: 1500, hold: 800 },
     mitigation: { transit: 1200, hold: 600 },
   };
-  // A revisit-to-parent beat between siblings: enough transit to actually
-  // register as "returning," but no real hold and no dossier flash -- the
-  // parent's dossier content is already showing, re-firing it would just
-  // look like a stutter.
-  const REVISIT_DUR = { transit: 700, hold: 250 };
+  // A revisit-to-parent beat between siblings pulls all the way back to a
+  // wide "orbital" view of the entire flight (not just the parent up close)
+  // before the next transit dives back in -- so a sibling jump never loses
+  // your bearings, you always get re-oriented against the whole structure
+  // first. Reused for the finale pull-back too, for the same framing.
+  const REVISIT_DUR = { transit: 1100, hold: 450 };
   const FINALE_MS = 4000;
   const ESTABLISH_START = { x: 0, y: -60, z: -520 };
 
+  function orbitalShot(centroid, boundRadius) {
+    const dist = Math.max(520, boundRadius * 2.2);
+    return { camPos: V.add(centroid, { x: 0, y: -dist*0.35, z: -dist }), lookAt: centroid };
+  }
+
   function buildTimeline(shotOrder, allNodes, groupName) {
+    const centroid = centroidOf(allNodes);
+    const boundRadius = allNodes.reduce((m, n) => Math.max(m, V.len(V.sub(n.pos, centroid))), 1);
+    const orbital = orbitalShot(centroid, boundRadius);
+
     const segs = [];
     let t = 0, idx = 0;
     let prevCamPos = ESTABLISH_START, prevLookAt = { x: 0, y: 0, z: 0 };
     for (const entry of shotOrder) {
       const n = entry.node;
       const dur = entry.revisit ? REVISIT_DUR : (DURATIONS[n.type] || DURATIONS.technique);
-      // Camera arrives already aimed down the edge it just traveled -- this
-      // IS "panning along the node connection with relationship," not a cut
-      // to a fresh angle for every node.
-      let approachDir = V.norm(V.sub(n.pos, prevLookAt));
-      if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
-      const camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
-      const fireDossier = !entry.revisit;
-      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: n.pos, node: n, fireDossier, groupName, allNodes });
+      let camPos, lookAt, focusNode, fireDossier;
+      if (entry.revisit) {
+        camPos = orbital.camPos; lookAt = orbital.lookAt; focusNode = null; fireDossier = false;
+      } else {
+        // Camera arrives already aimed down the edge it just traveled --
+        // this IS "panning along the node connection with relationship,"
+        // not a cut to a fresh angle for every node.
+        let approachDir = V.norm(V.sub(n.pos, prevLookAt));
+        if (!isFinite(approachDir.x) || V.len(V.sub(n.pos, prevLookAt)) < 1e-4) approachDir = { x: 0, y: 0, z: 1 };
+        camPos = V.add(V.sub(n.pos, V.scale(approachDir, 180)), { x: 0, y: 35, z: 0 });
+        lookAt = n.pos; focusNode = n; fireDossier = true;
+      }
+      segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+dur.transit, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: camPos, lookTo: lookAt, node: focusNode, fireDossier, groupName, allNodes });
       t += dur.transit;
-      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt: n.pos, node: n, fireDossier, groupName, allNodes });
+      segs.push({ index: idx++, type: "hold", tStart: t, tEnd: t+dur.hold, camPos, lookAt, node: focusNode, fireDossier, groupName, allNodes });
       t += dur.hold;
-      prevCamPos = camPos; prevLookAt = n.pos;
+      prevCamPos = camPos; prevLookAt = lookAt;
     }
-    const centroid = centroidOf(allNodes);
-    const lastEntry = shotOrder[shotOrder.length - 1];
-    const lastNode = lastEntry ? lastEntry.node : null;
-    const finaleCam = { x: centroid.x*0.3, y: -300, z: (lastNode ? lastNode.pos.z : 0) - 700 };
-    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: finaleCam, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
+    // Same "view of all" framing as every mid-flight revisit, for visual
+    // consistency between "hopping to a sibling" and "the flight is done."
+    segs.push({ index: idx++, type: "transit", tStart: t, tEnd: t+FINALE_MS, camFrom: prevCamPos, lookFrom: prevLookAt, camTo: orbital.camPos, lookTo: centroid, node: null, isFinale: true, groupName, allNodes });
     t += FINALE_MS;
     return { timeline: segs, total: t };
   }
@@ -565,38 +595,14 @@
   }
 
   let degraded = false;
-  // SIGINT-flavored backdrop: a tactical grid + concentric range rings +
-  // a slow rotating sweep, instead of a plain nebula gradient -- reads as
-  // "signals intelligence ops display" rather than generic space decor.
+  // Deliberately minimal: a soft gradient + sparse stars. An earlier pass
+  // added a tactical grid + radar rings + sweep for a "SIGINT" feel, but it
+  // fought with the node graph for attention instead of receding behind it
+  // -- pulled per explicit feedback that it read as cluttered.
   function drawBackdrop(nowMs) {
     const g = ctx.createRadialGradient(cssW/2, cssH*0.42, 0, cssW/2, cssH*0.42, Math.max(cssW, cssH)*0.85);
-    g.addColorStop(0, "#081512"); g.addColorStop(1, "#050608");
+    g.addColorStop(0, "#0a1018"); g.addColorStop(1, "#050608");
     ctx.fillStyle = g; ctx.fillRect(0, 0, cssW, cssH);
-
-    ctx.save();
-    ctx.strokeStyle = "rgba(0,255,180,0.045)"; ctx.lineWidth = 1;
-    const gridSize = 64;
-    for (let x = (cssW/2) % gridSize; x < cssW; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cssH); ctx.stroke(); }
-    for (let y = (cssH/2) % gridSize; y < cssH; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cssW, y); ctx.stroke(); }
-    ctx.restore();
-
-    const cx = cssW / 2, cy = cssH * 0.46, maxR = Math.max(cssW, cssH) * 0.62;
-    ctx.save();
-    ctx.strokeStyle = "rgba(0,255,180,0.07)"; ctx.lineWidth = 1;
-    for (let r = maxR/5; r <= maxR; r += maxR/5) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke(); }
-    ctx.restore();
-
-    if (!REDUCED_MOTION && ctx.createConicGradient) {
-      ctx.save();
-      const sweepAngle = (nowMs / 6000) % (Math.PI * 2);
-      const grad = ctx.createConicGradient(sweepAngle, cx, cy);
-      grad.addColorStop(0, "rgba(0,255,180,0.13)");
-      grad.addColorStop(0.035, "rgba(0,255,180,0)");
-      grad.addColorStop(1, "rgba(0,255,180,0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath(); ctx.arc(cx, cy, maxR, 0, Math.PI*2); ctx.fill();
-      ctx.restore();
-    }
 
     ctx.save(); ctx.fillStyle = "#ffffff";
     for (const s of stars) { ctx.globalAlpha = s.a * 0.6; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }
@@ -861,9 +867,19 @@
     }
 
     const camState = interpolateSegment(seg, elapsed, now);
-    if (seg.node && seg.type === "hold" && seg.fireDossier && lastFiredIndex !== seg.index) {
-      lastFiredIndex = seg.index;
-      renderDossier(seg.node, currentData, seg.allNodes || flightNodes);
+    // Fires near the END of the transit, not at the hold boundary: the
+    // easeInOutCubic curve is nearly flat for its last ~20%, so the camera
+    // visually settles onto the node well before the transit's raw duration
+    // is actually up -- waiting for the hold to technically begin read as a
+    // lag between "arriving" and the dossier updating. Firing at 82% through
+    // the eased transit lines the update up with when it actually looks
+    // like you've arrived.
+    if (seg.node && seg.type === "transit" && seg.fireDossier && lastFiredIndex !== seg.index) {
+      const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
+      if (transitPct >= 0.82) {
+        lastFiredIndex = seg.index;
+        renderDossier(seg.node, currentData, seg.allNodes || flightNodes);
+      }
     }
     const focusNode = seg.node || null;
     render(camState, seg.allNodes || flightNodes, focusNode, now);
