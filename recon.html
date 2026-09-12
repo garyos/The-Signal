@@ -661,7 +661,7 @@
     const ndcX = (camX * f) / (camZ * aspect);
     const ndcY = (camY * f) / camZ;
     const x = (ndcX*0.5 + 0.5) * cssW;
-    const y = (1 - (ndcY*0.5 + 0.5)) * cssH;
+    const y = (1 - (ndcY*0.5 + 0.5)) * cssH + verticalCenterOffsetPx;
     const scale = clamp(220 / camZ, 0.15, 2.4);
     const nearFade = 40, farFade = 1300;
     const opacity = clamp(1 - (camZ - nearFade) / (farFade - nearFade), 0.05, 1);
@@ -676,6 +676,17 @@
   const canvas = document.getElementById("scene");
   const ctx = canvas.getContext ? canvas.getContext("2d") : null;
   let cssW = 0, cssH = 0, stars = [];
+  // On mobile the dossier becomes a bottom sheet (see #dossier's max-width:
+  // 640px media query, max-height: 42vh) covering the lower part of the
+  // screen. Every node's projection targets true viewport-center by
+  // default, which put the origin -- drawn at 2x every other node's radius
+  // -- partly behind that sheet even though smaller nodes centered the same
+  // way never reached far enough down to collide with it (confirmed via
+  // real rendering, not assumed). Shifting the whole scene's vertical
+  // center up so it's centered in the space actually left visible ABOVE
+  // the sheet, instead of the full viewport, fixes it for every node at
+  // once rather than special-casing the origin's size.
+  let verticalCenterOffsetPx = 0;
 
   function resizeCanvas() {
     cssW = window.innerWidth; cssH = window.innerHeight;
@@ -684,6 +695,7 @@
     canvas.height = Math.round(cssH * dpr);
     canvas.style.width = cssW + "px"; canvas.style.height = cssH + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    verticalCenterOffsetPx = cssW <= 640 ? -cssH * 0.21 : 0;
     stars = [];
     for (let i = 0; i < 140; i++) stars.push({ x: Math.random()*cssW, y: Math.random()*cssH, r: Math.random()*1.4+0.3, a: Math.random()*0.5+0.1 });
   }
@@ -1019,8 +1031,19 @@
     // Hides at the halfway point of the zoom back OUT (the transit
     // immediately following that node's hold, whatever comes next -- a
     // revisit or straight into the next real node) -- symmetric with the
-    // show trigger above.
-    if (seg.type === "transit" && seg.departTrigger && lastHiddenIndex !== seg.index) {
+    // show trigger above. Guarded by !seg.fireDossier: a straight chain
+    // with no revisit between two real nodes (nested parent-child-
+    // grandchild, no siblings) makes ONE transit segment do double duty --
+    // it's simultaneously "departing" the previous node's hold AND
+    // "arriving" at the next one. Without this guard both triggers fired on
+    // the same segment at the same 50% mark every frame: show ran, then
+    // hide immediately undid it, so the dossier never actually appeared
+    // for any node reached this way (the actual bug report -- confirmed by
+    // tracing exactly which segments carry both flags). When fireDossier is
+    // also true, the show branch above already repopulates the panel with
+    // the new node's content, so this is a straight content swap, not a
+    // hide-then-blank.
+    if (seg.type === "transit" && seg.departTrigger && !seg.fireDossier && lastHiddenIndex !== seg.index) {
       const transitPct = (elapsed - seg.tStart) / (seg.tEnd - seg.tStart);
       if (transitPct >= 0.5) {
         lastHiddenIndex = seg.index;
