@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>RE:CON</title>
-<meta name="description" content="RE:CON — Relational Effects Cyber Operations Network. A cinematic, auto-playing fly-through of MITRE ATT&CK relationship data.">
+<meta name="description" content="RE:CON — Relational Explorer: Cyber Operations Network. A cinematic, auto-playing fly-through of MITRE ATT&CK relationship data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -203,7 +203,7 @@
 
   <div class="brand">
     <div class="bw">RE<span>:</span>CON</div>
-    <div class="bt">Relational Effects Cyber Operations Network</div>
+    <div class="bt">Relational Explorer: Cyber Operations Network</div>
   </div>
 
   <div id="recon-title">
@@ -248,7 +248,7 @@
 
   <div id="fallback" hidden>
     <div class="fb-wordmark">RE:CON</div>
-    <div class="fb-tagline">Relational Effects Cyber Operations Network</div>
+    <div class="fb-tagline">Relational Explorer: Cyber Operations Network</div>
     <div class="fb-msg">Canvas rendering isn't available in this browser.</div>
   </div>
 
@@ -1139,7 +1139,14 @@
       }
     }
     const focusNode = seg.node || null;
-    render(camState, seg.allNodes || flightNodes, focusNode, now, seg.labelNode || null);
+    // seg.labelNode only ever covered a local revisit's own bounce; every
+    // OTHER real-node segment (the normal approach transit + hold) left
+    // focusNode with no on-screen label at all, just the side-panel
+    // dossier -- falling back to focusNode here means whichever node the
+    // camera is actually focused on always gets its name tag, not just
+    // during a revisit. Both null for the orbital wide view and the
+    // finale (seg.node is null there), so neither gets a label, correctly.
+    render(camState, seg.allNodes || flightNodes, focusNode, now, seg.labelNode || focusNode);
     rafId = requestAnimationFrame(frame);
   }
 

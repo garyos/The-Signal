@@ -141,6 +141,12 @@
     padding: 3px 8px; border-radius: 3px; white-space: nowrap; pointer-events: auto; opacity: 0.9; cursor: pointer;
   }
   .node-label:hover, .node-label.hovered { opacity: 1; border-color: var(--text); background: rgba(5,8,12,0.95); }
+  /* The APT group's own label -- same purple identity as its node (opaque
+     black + purple ring) and the wormhole/waypoint purple already used
+     elsewhere, so it reads as "the network's anchor," distinct from every
+     ordinary node's plain label at a glance. */
+  .node-label.group-label { color: var(--c-group); border-color: var(--c-group); font-weight: 600; box-shadow: 0 0 10px rgba(176,38,255,0.45); }
+  .node-label.group-label:hover, .node-label.group-label.hovered { background: rgba(176,38,255,0.18); box-shadow: 0 0 14px rgba(176,38,255,0.7); }
 
   /* ---------- off-screen waypoints ---------- */
   .waypoint {
@@ -245,8 +251,17 @@
     position: fixed; top: max(64px, calc(env(safe-area-inset-top) + 54px)); left: max(22px, env(safe-area-inset-left));
     z-index: 55;
   }
+  /* Its own permanent spot too, directly below the display button --
+     moved out of .controls (which lives at the bottom) so a visible
+     mouse-look button sits with the other top-left persistent chrome
+     instead of the bottom cluster. Same reachability tier as
+     settings-toggle (above the lock-overlay, never idle-hidden). */
+  #mouselook-btn {
+    position: fixed; top: max(104px, calc(env(safe-area-inset-top) + 94px)); left: max(22px, env(safe-area-inset-left));
+    z-index: 55;
+  }
   #settings-panel {
-    top: max(104px, calc(env(safe-area-inset-top) + 94px)); left: max(22px, env(safe-area-inset-left));
+    top: max(150px, calc(env(safe-area-inset-top) + 140px)); left: max(22px, env(safe-area-inset-left));
     width: 200px; z-index: 56; color: var(--c-group);
   }
   #settings-panel[hidden] { display: none; }
@@ -276,10 +291,10 @@
      here (unlike the dossier's, which was deliberately removed) -- this
      panel isn't sitting on top of the mouse-look drag surface. */
   #network-nav {
-    /* Below the settings button/panel, which now live in this same
-       top-left corner -- was overlapping it before that moved here. */
-    top: max(118px, calc(env(safe-area-inset-top) + 108px)); left: max(18px, env(safe-area-inset-left));
-    width: 220px; max-height: calc(100vh - 190px); overflow-y: auto;
+    /* Below the settings/mouse-look buttons (and, when open, the settings
+       panel), which now all live in this same top-left corner. */
+    top: max(158px, calc(env(safe-area-inset-top) + 148px)); left: max(18px, env(safe-area-inset-left));
+    width: 220px; max-height: calc(100vh - 210px); overflow-y: auto;
     color: var(--c-software); z-index: 55;
   }
   #network-nav.dz-hidden { display: none; }
@@ -366,6 +381,7 @@
   </div>
 
   <button id="settings-toggle">⚙ DISPLAY</button>
+  <button id="mouselook-btn">🖱 ENABLE MOUSE-LOOK</button>
 
   <button id="touch-boost" hidden>⚡ BOOST</button>
   <div id="joystick-move" class="joystick" hidden><div class="joystick-knob"></div><div class="joystick-label">MOVE</div></div>
@@ -385,7 +401,6 @@
       <button data-count="15" class="ct-btn">15</button>
     </div>
     <button id="randomize-btn">⟲ RANDOMIZE GALAXY</button>
-    <button id="mouselook-btn">🖱 ENABLE MOUSE-LOOK</button>
   </div>
 
   <div id="settings-panel" class="hud-panel" hidden>
@@ -896,13 +911,15 @@
     const isGroup = n.type === "group";
     const r = Math.max(2, 13 * p.scale * (focused ? 1.4 : 1) * (isGroup ? 2 : 1));
     if (isGroup) {
+      // Always fully opaque, ignoring the normal distance fade (p.opacity)
+      // every other node uses -- it's the one landmark every player needs
+      // to be able to spot and navigate by from any distance, not fade out
+      // like an ordinary node would.
       ctx.save();
-      ctx.globalAlpha = p.opacity;
       ctx.fillStyle = "#04030a";
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill();
       ctx.restore();
       ctx.save();
-      ctx.globalAlpha = p.opacity;
       ctx.globalCompositeOperation = "lighter";
       ctx.shadowColor = color; ctx.shadowBlur = (degraded ? 16 : 30) * p.scale;
       ctx.strokeStyle = color; ctx.lineWidth = Math.max(2, 3 * p.scale);
@@ -1083,9 +1100,9 @@
   let dossierCurrentNode = null;
   // Set when a label is clicked -- keeps the dossier open for a node the
   // player isn't physically close to, so they don't have to fly right up
-  // to it just to read about it. Real proximity always takes precedence
-  // over a pin the moment it applies (see updateDossierProximity), and the
-  // close button or picking a different label are the other ways to clear it.
+  // to it just to read about it. A crosshair hover (see updateDossierFocus)
+  // takes over the moment it applies; the close button, clicking the view,
+  // or picking a different label are the other ways to clear it.
   let pinnedNode = null;
   // With the mouse pointer-locked there's no cursor to click anything
   // with -- the fixed center reticle stands in for it. Hovering a label
@@ -1119,6 +1136,12 @@
     pinnedNode = null;
     hideDossier();
   });
+  // The X button alone was fiddly enough to feel "a bit useless" -- tapping
+  // or clicking anywhere on the actual view now also dismisses whatever's
+  // pinned. Scoped to the canvas itself (not document), so it can never
+  // fire from a click on a label/pill/panel -- those are separate elements
+  // layered above it, not something a canvas-only listener ever sees.
+  canvas.addEventListener("click", () => { pinnedNode = null; hideDossier(); });
 
   // ---------- player state + input ----------
   let playerPos = { x: 0, y: 300, z: -1600 };
@@ -1139,7 +1162,7 @@
   // braking distance.
   const BASE_ACCEL = 2600, BASE_MAXSPEED = 1000, DRAG = 0.95;
   const BOOST_MUL = 2.6, BOOST_DRAIN = 38, BOOST_REGEN = 16, BOOST_MIN_TO_USE = 4;
-  const TRIGGER_RADIUS = 220, LABEL_RADIUS = 2500, ACTIVE_RADIUS = 6000, RENDER_CULL = 12000;
+  const LABEL_RADIUS = 2500, RENDER_CULL = 12000;
 
   function forwardFromAngles() {
     return {
@@ -1376,9 +1399,8 @@
   }
 
   // ---------- the wormhole: trigger + faster-than-light transition ----------
-  // Bigger than a node's TRIGGER_RADIUS (220) -- this is meant to read as a
-  // big, hard-to-miss object you fly INTO, not something you have to line
-  // up precisely on.
+  // Meant to read as a big, hard-to-miss object you fly INTO, not
+  // something you have to line up precisely on.
   const WORMHOLE_TRIGGER_RADIUS = 450;
   function checkWormholeCollision() {
     if (wormholeFX || autoBoost) return;
@@ -1497,6 +1519,7 @@
       const el = getLabelEl(node);
       el.hidden = false;
       el.textContent = node.entity.name;
+      el.classList.toggle("group-label", node.type === "group");
       const r = 9 * p.scale * (node.type === "group" ? 2 : 1);
       el.style.left = p.x + "px";
       el.style.top = (p.y - r - 8) + "px";
@@ -1598,14 +1621,20 @@
   }
 
   // ---------- reticle hover (pointer lock hides the cursor, so the fixed
-  // center reticle stands in for it -- see the note by hoveredLabelNode) ----------
+  // center reticle stands in for it -- see the note by hoveredLabelNode).
+  // A mobile device never has a real pointer to lock in the first place,
+  // but it's in exactly the same position -- no free cursor to aim with
+  // independent of where the ship itself is facing -- so it gets the same
+  // reticle-driven selection by default rather than only working after an
+  // (impossible, there) explicit "enable mouse-look." ----------
   function updateReticleHover(basis) {
     hoveredLabelNode = null;
     hoveredWaypointNet = null;
+    const reticleActive = locked || isMobileViewport;
     const cx = cssW / 2, cy = cssH / 2;
     for (const el of labelPool.values()) {
       el.classList.remove("hovered");
-      if (locked && !el.hidden && el._node && !hoveredLabelNode) {
+      if (reticleActive && !el.hidden && el._node && !hoveredLabelNode) {
         const r = el.getBoundingClientRect();
         if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) {
           hoveredLabelNode = el._node;
@@ -1624,7 +1653,7 @@
     const BORESIGHT_COS = Math.cos(0.09); // ~5 degrees off dead-ahead
     for (const el of waypointPool.values()) {
       el.classList.remove("hovered");
-      if (locked && !el.hidden && el._network && !hoveredWaypointNet) {
+      if (reticleActive && !el.hidden && el._network && !hoveredWaypointNet) {
         const dir = V.norm(V.sub(el._network.center, playerPos));
         if (V.dot(dir, basis.forward) > BORESIGHT_COS) {
           hoveredWaypointNet = el._network;
@@ -1635,27 +1664,23 @@
   }
   // Click coordinates are unreliable while pointer-locked (the OS cursor
   // isn't actually moving, so clientX/clientY stay frozen at lock time) --
-  // a waypoint's own onclick hit-test can't be trusted there. This listener
-  // uses the frame-computed reticle hover state instead, which is exactly
-  // what the crosshair is standing in over.
+  // a waypoint's own onclick hit-test can't be trusted there. Mobile has no
+  // cursor coordinates to speak of either. Either way this listener uses
+  // the frame-computed reticle hover state instead, which is exactly what
+  // the crosshair is standing in over.
   document.addEventListener("click", () => {
-    if (locked && hoveredWaypointNet) startAutoBoost(hoveredWaypointNet);
+    if ((locked || isMobileViewport) && hoveredWaypointNet) startAutoBoost(hoveredWaypointNet);
   });
 
-  // ---------- proximity dossier ----------
-  function updateDossierProximity() {
-    let nearest = null, nearestDist = Infinity;
-    for (const net of networks) {
-      if (V.len(V.sub(net.center, playerPos)) > ACTIVE_RADIUS + 1600) continue;
-      for (const node of net.nodes) {
-        const d = V.len(V.sub(node.pos, playerPos));
-        if (d < nearestDist) { nearestDist = d; nearest = node; }
-      }
-    }
-    if (nearest && nearestDist <= TRIGGER_RADIUS) {
-      pinnedNode = null; // real proximity always wins over a hover or a click-pin
-      renderDossier(nearest);
-    } else if (hoveredLabelNode) {
+  // ---------- dossier: crosshair/click chosen, not proximity ----------
+  // Used to also auto-launch for whichever node was physically nearest,
+  // regardless of where the reticle was pointing -- that fought the
+  // crosshair directly (flying near a node you weren't even looking at
+  // would yank the dossier open over whatever you'd actually selected).
+  // The reticle (hover while locked) or a real click (label, unlocked) are
+  // now the only two ways in.
+  function updateDossierFocus() {
+    if (hoveredLabelNode) {
       // Reticle is over a label right now -- show it directly, no click
       // needed (there's no free cursor to click with while locked anyway).
       renderDossier(hoveredLabelNode);
@@ -1735,7 +1760,7 @@
       updateWaypoints(basis);
     }
     updateReticleHover(basis);
-    updateDossierProximity();
+    updateDossierFocus();
     updateNetworkNav();
     drawMinimap(basis);
     drawWormholeFX(nowMs);
@@ -1806,23 +1831,25 @@
   // ---------- display settings: what's cluttering the view ----------
   // Everything here used to just always be on screen -- fine on a big
   // desktop viewport, but on a phone the count/randomize/mouse-look
-  // buttons, the pills, the nav list and now the minimap add up to real
-  // clutter around the two things that actually matter for playing on
-  // touch: the move/look sticks. Those two are NEVER part of this system
-  // (see revealTouchControls) -- everything else is, and defaults OFF on a
-  // narrow/touch viewport, ON on desktop, exactly per "default to all
-  // other items hidden except for the direction and steering toggles on
-  // the mobile."
+  // buttons, the pills and the nav list add up to real clutter around the
+  // things that actually matter for playing on touch: the move/look
+  // sticks (NEVER part of this system, see revealTouchControls), the
+  // boost button, and the minimap. Mouse-look itself has no meaning on a
+  // device with no mouse -- its BUTTON stays off by default there, but the
+  // reticle-driven selection it normally requires pointer lock for is
+  // still fully active (see updateReticleHover/the click-to-autoboost
+  // listener both treating isMobileViewport the same as locked), since
+  // there's no free cursor to tap with on mobile either.
   const isMobileViewport = window.matchMedia("(max-width: 640px)").matches;
   let touchSeen = false;
   let uiVisible = {
     counts: !isMobileViewport,
     randomize: !isMobileViewport,
     mouselook: !isMobileViewport,
-    boost: !isMobileViewport,
+    boost: true,
     nav: !isMobileViewport,
     pills: !isMobileViewport,
-    minimap: !isMobileViewport,
+    minimap: true,
   };
   const minimapEl = document.getElementById("minimap");
   function applyUiVisibility() {
