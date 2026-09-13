@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-12T09:32:23.762465+00:00",
+  "generated_at": "2026-09-13T10:32:57.984611+00:00",
   "cves": [
     {
       "id": "CVE-2026-85706",
       "published": "2026-09-12T03:16:30.473",
-      "lastModified": "2026-09-12T04:16:44.907",
+      "lastModified": "2026-09-12T11:16:33.373",
       "vulnStatus": "Received",
       "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 18.7 before 19.1.8, 19.2 before 19.2.6, and 19.3 before 19.3.2 that, under certain conditions, an unauthenticated user could have read arbitrary files from the GitLab server due to improper path confinement and missing authentication enforcement in the repository commits API.",
       "cvss": {
@@ -23,7 +23,8 @@
       ],
       "references": [
         "https://gitlab.com/gitlab-org/gitlab/-/work_items/627748",
-        "https://hackerone.com/reports/3909881"
+        "https://hackerone.com/reports/3909881",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-85706"
       ],
       "kev": {
         "in_kev": true,
@@ -409,6 +410,36 @@
       }
     },
     {
+      "id": "CVE-2026-90558",
+      "published": "2026-09-12T18:16:44.587",
+      "lastModified": "2026-09-12T18:16:44.587",
+      "vulnStatus": "Received",
+      "description": "sngrep through 1.8.4 contains stack buffer overflow vulnerabilities in SIP attribute formatting routines when header values exceed the 255-byte buffer limit. Attackers can craft malicious SIP packets with oversized Call-ID, X-Call-ID, or other header fields to overflow stack buffers and cause crashes or execute arbitrary code during packet parsing and rendering.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "irontec sngrep"
+      ],
+      "references": [
+        "https://github.com/irontec/sngrep",
+        "https://github.com/irontec/sngrep/blob/v1.8.4/src/sip_call.c#L260",
+        "https://github.com/irontec/sngrep/blob/v1.8.4/src/sip_msg.c#L150",
+        "https://github.com/irontec/sngrep/commit/1ff74ee3ab5ff280e8ba976aa8c744dca57eb35b"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-78159",
       "published": "2026-09-12T08:16:24.377",
       "lastModified": "2026-09-12T08:16:24.377",
@@ -469,6 +500,195 @@
       }
     },
     {
+      "id": "CVE-2026-85681",
+      "published": "2026-09-12T06:16:27.250",
+      "lastModified": "2026-09-12T16:16:42.170",
+      "vulnStatus": "Received",
+      "description": "The WP Component WordPress plugin through 2.2.4 does not have any capability or nonce checks on one of the actions it makes available to unauthenticated users, and it takes both the option name and the option value from the request, allowing unauthenticated attackers to overwrite any of the site's options. On a single site installation this leads to a full takeover, as registration can be enabled with a default role of administrator.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-269",
+          "name": "Improper Privilege Management"
+        }
+      ],
+      "vendors": [
+        "Unknown WP Component"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/c602bd9e-a825-4990-a66b-1403bbeb2cee/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-84171",
+      "published": "2026-09-12T06:16:27.137",
+      "lastModified": "2026-09-12T16:16:41.897",
+      "vulnStatus": "Received",
+      "description": "The WP images upload on piclect WordPress plugin through 1.0 does not validate the name or type of uploaded files before writing them to a publicly accessible directory, allowing unauthenticated attackers to upload arbitrary files and execute arbitrary code on the server.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "Unknown WP images upload on piclect"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/e5b9fd87-92a7-4fc6-b8b2-896b87d97c40/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82845",
+      "published": "2026-09-12T06:16:26.043",
+      "lastModified": "2026-09-12T16:16:40.557",
+      "vulnStatus": "Received",
+      "description": "The Masteriyo LMS WordPress plugin before 3.4.1 does not prevent user-supplied values held as metadata from being deserialized when they are read back, allowing users with a minimal account to inject arbitrary PHP objects and, by way of a class shipped in a library bundled with the Masteriyo LMS WordPress plugin before 3.4.1, write and execute arbitrary code on the server. A weaker form of the same issue is reachable without an account and yields an arbitrary file write rather than code executio",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Unknown Masteriyo LMS"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/5ced30ea-8b78-495f-b10c-42b3f10adcb3/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81402",
+      "published": "2026-09-12T06:16:25.730",
+      "lastModified": "2026-09-12T16:16:40.140",
+      "vulnStatus": "Received",
+      "description": "The DS Ad Rotator WordPress plugin through 0.8 does not perform any capability check, nonce verification, or file-type validation on its image upload handler, allowing unauthenticated attackers to upload arbitrary files, including PHP, to a web-accessible directory, which can lead to remote code execution.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "Unknown DS Ad Rotator"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/60e82611-ddf1-4275-8c68-14694d863fca/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-77006",
+      "published": "2026-09-12T06:16:24.733",
+      "lastModified": "2026-09-12T16:16:38.670",
+      "vulnStatus": "Received",
+      "description": "The WebTotem Backups WordPress plugin through 1.0.1 does not validate a user-supplied file path, does not check the capability of the user making the request, and discards the result of its own CSRF check, allowing any authenticated user, such as a subscriber, to delete arbitrary files on the server, which can lead to a site takeover.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-73",
+          "name": "CWE-73"
+        }
+      ],
+      "vendors": [
+        "Unknown WebTotem Backups"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/71bc08cb-681c-44bd-b6a0-bb5c58e31653/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-77005",
+      "published": "2026-09-12T06:16:24.623",
+      "lastModified": "2026-09-12T16:16:38.523",
+      "vulnStatus": "Received",
+      "description": "The CODE MONKEYS PROPOSALS WordPress plugin through 1.0.1 does not validate a user-supplied file path before deleting a file, and does not check the capability of the user making the request, allowing any authenticated user, such as a subscriber, to delete arbitrary files on the server, which can lead to a site takeover.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-73",
+          "name": "CWE-73"
+        }
+      ],
+      "vendors": [
+        "Unknown CODE MONKEYS PROPOSALS"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/b9340774-84c2-41ec-a770-0123dd5608c2/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-75800",
+      "published": "2026-09-12T06:16:23.340",
+      "lastModified": "2026-09-12T16:16:38.363",
+      "vulnStatus": "Received",
+      "description": "The Frontegg SAML SSO WordPress plugin through 1.0.1 does not verify the signature or issuer of SAML authentication responses before establishing a session, allowing unauthenticated attackers to log in as any user, including administrators, as well as to create arbitrary accounts.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "Unknown Frontegg SAML SSO"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/be658aa5-8f7f-4938-bf13-b2e6ed3dcf89/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-87719",
       "published": "2026-09-12T03:16:31.477",
       "lastModified": "2026-09-12T03:16:31.477",
@@ -491,6 +711,1742 @@
       "references": [
         "https://gitlab.com/gitlab-org/gitlab/-/work_items/628160",
         "https://hackerone.com/reports/4012289"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89713",
+      "published": "2026-09-11T20:19:58.743",
+      "lastModified": "2026-09-13T07:17:37.013",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: check truncate permission under inode lock nfsd_setattr() checks whether a size update needs NFSD_MAY_TRUNC before it takes inode_lock(). The comparison uses the file size sampled by that unlocked read, but the actual ATTR_SIZE update is applied later under inode_lock() by notify_change(). This leaves a TOCTOU window for append-only files. If a client sends a SETATTR that does not shrink the file at the time of the unlocke",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3afa17d93ba8c925f49370c816c6dae5112d8c24",
+        "https://git.kernel.org/stable/c/44086254479035de42ca3d286ecf25521d4e6325",
+        "https://git.kernel.org/stable/c/b778e0e0a16759f22a70579c3cf8d254a40d4a7f",
+        "https://git.kernel.org/stable/c/d8352da196349182e1afd5a93308256cddc0a97d"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89712",
+      "published": "2026-09-11T20:19:58.620",
+      "lastModified": "2026-09-13T07:17:36.853",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: restart ssc_expire_umount walk after dropping nfsd_ssc_lock nfsd4_ssc_expire_umount() walks nn->nfsd_ssc_mount_list with list_for_each_entry_safe(ni, tmp, ...). For each expired entry it sets nsui_busy = true, drops nfsd_ssc_lock to run mntput() on the source vfsmount, then reacquires the lock to list_del + kfree the entry and continue iterating via the macro's saved tmp pointer. The nsui_busy flag protects the current ni ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/036c1b182f4da65363e79ec0ac276edc6b7296e5",
+        "https://git.kernel.org/stable/c/4ed8d2317aef21cc2a9e5a55d6b59860b4b151a8",
+        "https://git.kernel.org/stable/c/7377fa964b8aaf47cb04e5efcc4c82d15e8c2ce9",
+        "https://git.kernel.org/stable/c/77de363d9a1c8cd35f20482782c612cda085791a"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89708",
+      "published": "2026-09-11T20:19:58.140",
+      "lastModified": "2026-09-13T07:17:36.477",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: RCU-protect cl_cb_session to fix use-after-free on session teardown After a DESTROY_SESSION the per-session teardown path can free a session while rpciod still holds an inflight callback rpc_task that dereferences clp->cl_cb_session. nfsd4_probe_callback_sync() flushes cl_callback_wq, but once nfsd4_run_cb_work() has called rpc_call_async() the rpc_task lives on rpciod; flushing the workqueue does not wait for it. rpc_shut",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/01c5d5f58a5db9b0ee5afba2e49d3157788687b2",
+        "https://git.kernel.org/stable/c/13bdd486c3aad4fc19e6d8b9c3556a4b4c190b25",
+        "https://git.kernel.org/stable/c/f164eb52b6f3cbf40f07fe379f9f421f88e02f76"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89703",
+      "published": "2026-09-11T20:19:57.537",
+      "lastModified": "2026-09-13T07:17:35.860",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: set SC_STATUS_FREED in nfsd4_drop_revoked_stid for delegations nfsd4_drop_revoked_stid() handles FREE_STATEID for admin-revoked delegations but does not set SC_STATUS_FREED before releasing cl_lock. revoke_delegation() uses this flag to detect whether FREE_STATEID has already processed the delegation -- without it, the freed delegation is added to cl_revoked via list_add(), producing a use-after-free when cl_revoked is lat",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1e4795766719ffd74b8cf0f2fde4a1350f8326bf",
+        "https://git.kernel.org/stable/c/650d370cfbc66a96dd14d517bd704689b5bda4e5",
+        "https://git.kernel.org/stable/c/a6d89032e5c6620d5bb44582a72555ce07bf1c2e",
+        "https://git.kernel.org/stable/c/d832a0587528853d45481d1faf75d4b5d062adaf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89702",
+      "published": "2026-09-11T20:19:57.413",
+      "lastModified": "2026-09-13T07:17:35.723",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: size fh_verify server sockaddr slot by xpt_locallen The nfsd_fh_verify and nfsd_fh_verify_err tracepoints declare the server sockaddr slot sized by xpt_remotelen but fill it from xpt_local using xpt_locallen: TP_STRUCT__entry( ... __sockaddr(server, rqstp->rq_xprt->xpt_remotelen) ... ) TP_fast_assign( ... __assign_sockaddr(server, &rqstp->rq_xprt->xpt_local, rqstp->rq_xprt->xpt_locallen); ... ) When xpt_locallen exceeds xp",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/719a10e3f5f868c3c4ac3cf3648c5775d12034bd",
+        "https://git.kernel.org/stable/c/71d068490098b1d23c63b2345e40675d3a1ca763",
+        "https://git.kernel.org/stable/c/7ff8d6363cffff45654ea85e319f7c0c54226012",
+        "https://git.kernel.org/stable/c/95d064f9828a20ccca5ae90a17be3e2076f25272"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89697",
+      "published": "2026-09-11T20:19:56.843",
+      "lastModified": "2026-09-13T07:17:35.480",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: add fh_want_write() for early-verified SETATTR in nfsd_proc_setattr() The BOTH_TIME_SET branch calls fh_verify() early so setattr_prepare() can inspect the dentry. This causes nfsd_setattr() to skip fh_want_write(), so notify_change() runs without a mount write reference. Add the missing fh_want_write() call after the early fh_verify().",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/15ca3b64a69caa6194bed8f98a20ed90a11c11dd",
+        "https://git.kernel.org/stable/c/4e475be769aa9f7a2c1ce55a2b8592cfccacddcc",
+        "https://git.kernel.org/stable/c/533964d420d385e11b08dd4c56c66ef5dcccaf08",
+        "https://git.kernel.org/stable/c/c4a409b86a92815181a8e9395c6bf1696ad19175"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89689",
+      "published": "2026-09-11T20:19:55.900",
+      "lastModified": "2026-09-13T07:17:34.723",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: don't free session slots that are still in use nfsd4_sequence() can free the very slot it is currently processing. When the session shrinker has reduced se_target_maxslots below se_fchannel.maxreqs, the shrink path checks three conditions before calling free_session_slots(): 1. se_target_maxslots < maxreqs (shrink was advertised) 2. slot->sl_generation == se_slot_gen (slot is up-to-date) 3. seq->maxslots <= se_target_maxsl",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/72d40b103bb03f0124d3a3c8f71a30cbafaf6afa",
+        "https://git.kernel.org/stable/c/b449b134e7762ddf98653a4b1d3e76d2d212ea64",
+        "https://git.kernel.org/stable/c/f5d22e372f4ac3eb287037a488c29691d52a6330"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89688",
+      "published": "2026-09-11T20:19:55.773",
+      "lastModified": "2026-09-13T07:17:34.600",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: drop the stateid, not the stateowner, on seqid_op replay retry In nfs4_preprocess_seqid_op() the stateid is obtained from nfsd4_lookup_stateid(), which holds a reference on the nfs4_stid (sc_count) but takes no reference on the stateowner. openlockstateid() merely casts that stid and likewise takes no reference. When nfsd4_cstate_assign_replay() returns -EAGAIN (the replay owner is being torn down, RP_UNHASHED) it has not ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00843074d9b84824552c9679d423d29500ca5de0",
+        "https://git.kernel.org/stable/c/5e4627d3513e60accfce9d5f4c7fa95251ef93d6",
+        "https://git.kernel.org/stable/c/69ed78b6b947c9257213164678b4edf17533093b",
+        "https://git.kernel.org/stable/c/f7cb90ddc021747fc9abfd4cf5252d425fd34eec"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89686",
+      "published": "2026-09-11T20:19:55.533",
+      "lastModified": "2026-09-13T07:17:34.367",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke nfsd4_alloc_layout_stateid reads fp->fi_deleg_file without holding fi_lock when the parent stateid is a delegation. A concurrent delegation revoke via the laundromat can clear fi_deleg_file under fi_lock, causing nfsd_file_get() to return NULL and triggering the BUG_ON. This race is client-reachable: two NFS clients can trigger it by having one hold a del",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/607a56fea772c1f4f4989d8e255dd4f7192d9604",
+        "https://git.kernel.org/stable/c/97bda8b4284d90897a1f1922e5082ff9e35d7c7e",
+        "https://git.kernel.org/stable/c/c517f27498757e616d2a8fe6d16caad1fee422e6",
+        "https://git.kernel.org/stable/c/ca94ba36172046be6a694a7986f6931e47ed4d51"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89681",
+      "published": "2026-09-11T20:19:54.917",
+      "lastModified": "2026-09-13T07:17:33.890",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix layout fence worker double-reference race The workqueue core clears WORK_STRUCT_PENDING before the callback is invoked, so delayed_work_pending() in lm_breaker_timedout() can return false while the fence worker is already running. This lets the breaker take a duplicate sc_count reference and schedule a new worker that coalesces with the in-progress one. The extra reference is never put, leaking the layout stateid. Repl",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/8580571227451384399b3fa53fcde19848c48e5a",
+        "https://git.kernel.org/stable/c/a278d361e0e8f242211891193d56483a7a9f47a8"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89677",
+      "published": "2026-09-11T20:19:54.393",
+      "lastModified": "2026-09-13T07:17:33.423",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix possible fh_compose of wrong dentry in nfsd4_create_file() dentry_create() can hypothetically provide a different dentry than the one passed in. This could happen, for example, if the exported filesystem is NFS, and the server returned to OPEN a filehandle which matched a directory that was already in the dcache. Clearly this would not be expected! If this were to happen the dentry (child) that was already stored in re",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/033e783709ce99662cf81f6abcad746a8da9d35f",
+        "https://git.kernel.org/stable/c/3e2c79360c6a89975ec5b5a7d4ef937e4db91a27"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89676",
+      "published": "2026-09-11T20:19:54.273",
+      "lastModified": "2026-09-13T07:17:33.310",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix stale s2s_cp_stateids IDR entry for async COPY For an async COPY, nfsd4_copy() called nfs4_init_copy_state() before dup_copy_fields(), so the s2s_cp_stateids IDR was pointed at &u->copy->cp_stateid -- memory in the per-rqstp COMPOUND buffer that is reused by the next request. dup_copy_fields() copies only the value into async_copy, so the IDR slot dangled at the transient buffer for the whole background copy. Any IDR w",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/14b978e8d05ce018d0afbeb6611833ef91713a02",
+        "https://git.kernel.org/stable/c/9b4e5e9ba5ae13808b8a6d229d87c54611ba0e7a",
+        "https://git.kernel.org/stable/c/d0beaee498e11880e72826026db0e9c9890fc114"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89675",
+      "published": "2026-09-11T20:19:54.143",
+      "lastModified": "2026-09-13T07:17:33.177",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix UAF in async copy cancel and shutdown An async copy could be freed or used after free while a teardown caller (OFFLOAD_CANCEL, nfsd4_shutdown_copy, nfsd4_cancel_copy_by_sb) raced the copy kthread: - find_async_copy() bumped copy->refcount but left the copy on clp->async_copies, so the reaper's cleanup_async_copy() could run release_copy_files() concurrently with a cancel/shutdown caller. Both put and NULL nf_src/nf_dst",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/62c0f6eaf050bb9284c1f9cac6ed1770092e6b95",
+        "https://git.kernel.org/stable/c/9031493ef7369d5c59c4bacc96f0c85965f09a98",
+        "https://git.kernel.org/stable/c/a385cf5e016b748babf94cc664e43a26e17db117"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89674",
+      "published": "2026-09-11T20:19:54.013",
+      "lastModified": "2026-09-13T07:17:33.050",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: fix XDR length calculation in nfsd4_ff_encode_layoutget The XDR buffer size calculation in nfsd4_ff_encode_layoutget() has multiple errors that can result in either an out-of-bounds write or leaking uninitialized kernel memory to the client: - fh_len doesn't account for XDR padding on the file handle data - uid and gid lengths use \"8 + len\" but xdr_encode_opaque() actually writes \"4 + xdr_align_size(len)\" bytes - ds_len om",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0380129b1373c437eb35401a174671c8888f4b80",
+        "https://git.kernel.org/stable/c/c81cef6a805dec266c10fc4f83c93d6fcf1a2b43",
+        "https://git.kernel.org/stable/c/e7d9d23ecd9172f05b09bb678ff22db8e361c428",
+        "https://git.kernel.org/stable/c/f9868174af49d207fbaf0c5e055d088a983684af"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89672",
+      "published": "2026-09-11T20:19:53.770",
+      "lastModified": "2026-09-13T07:17:32.927",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: gate nfs2 setacl by argp->mask The NFSACL v2 SETACL path shares the decoder convention used by its v3 sibling: nfsaclsvc_decode_setaclargs() fills in argp->acl_access only when NFS_ACL is set in the request mask and argp->acl_default only when NFS_DFACL is set, leaving the other pointer NULL because the argument buffer is zeroed up to pc_argzero before decode. nfsacld_proc_setacl() then hands both pointers to set_posix_acl",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/37eea38e7898538f0ec5f1eb8b18d8646e4be41c",
+        "https://git.kernel.org/stable/c/a3a7e20ed66d3f04d37883c398da8a113b430769",
+        "https://git.kernel.org/stable/c/e41d173d9dc735cecb15ab7aa63ecab09338f81b",
+        "https://git.kernel.org/stable/c/f951b22dbeec46f2e0fba81cb80d1b0c686b61eb"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89671",
+      "published": "2026-09-11T20:19:53.647",
+      "lastModified": "2026-09-13T07:17:32.797",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: gate nfs3 setacl by argp->mask nfsd3_proc_setacl() calls set_posix_acl() unconditionally for both ACL_TYPE_ACCESS and ACL_TYPE_DEFAULT, passing argp->acl_access and argp->acl_default verbatim. The NFSv3 ACL decoder only populates those pointers when the corresponding mask bit is set: nfs3svc_decode_setaclargs() if (args->mask & NFS_ACL) decode into acl_access if (args->mask & NFS_DFACL) decode into acl_default /* otherwise",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/453d7198a0ab07a12d46e0575861ac7b932da17e",
+        "https://git.kernel.org/stable/c/68a80b26efdff1d09f8ae1773c6a915abb9e191d",
+        "https://git.kernel.org/stable/c/b3bff820d068ea59767d4e91a3258231a879da5f",
+        "https://git.kernel.org/stable/c/ff99ed007f065198fd723152405c22aa558f700b"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89669",
+      "published": "2026-09-11T20:19:53.397",
+      "lastModified": "2026-09-13T07:17:32.543",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: initialize copy-notify stateid before publishing it nfsd4_copy_notify() finished initializing the cpntf state after nfs4_alloc_init_cpntf_state() had already linked it into the s2s_cp_stateids IDR and the parent's sc_cp_list, with cs_count == 1 (the membership reference) and none held for the caller. A racing OFFLOAD_CANCEL (crafted cl_id == nn->s2s_cp_cl_id plus the guessable so_id) could reach manage_cpntf_state() and fr",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/129643893b79f8a3c6b72045f933fbab5ee424ca",
+        "https://git.kernel.org/stable/c/4cdef96892f4fa6e70c405b6e8f2fd6972f3b64b",
+        "https://git.kernel.org/stable/c/a4d7fedcaaf33e60a01e53eafca9041ef966212f",
+        "https://git.kernel.org/stable/c/e08a3dcaca0505f861e344a387f37f94d95dbdc2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89662",
+      "published": "2026-09-11T20:19:52.523",
+      "lastModified": "2026-09-13T07:17:31.767",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent lock owner use-after-free during client teardown __destroy_client() releases a client's open owners, but a lock owner whose only reference is a blocked lock (nbl) stays on cl_ownerstr_hashtbl. client_has_state() does not count a bare owner, so DESTROY_CLIENTID can reach __destroy_client() with such owners present. __destroy_client() then walks the table, calling remove_blocked_locks() on each owner without a refere",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/4804c58f73a80d12df1de323bf97a164f6ee8743",
+        "https://git.kernel.org/stable/c/5e2fa29d223a9a1e6a948e40b109d09081d1decd",
+        "https://git.kernel.org/stable/c/8cf4ff0a7c083dd5e0067f517d63979b74b66649",
+        "https://git.kernel.org/stable/c/a6ead6fff3a7d03e49845f048f7000a2e0d34431"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89660",
+      "published": "2026-09-11T20:19:52.300",
+      "lastModified": "2026-09-13T07:17:31.647",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during admin state revocation A stateid holds only a bare pointer to its nfs4_client; a stateid reference does not pin it. The client survives only because __destroy_client() drains its stateids before free_client() runs. nfsd4_revoke_states() drops nn->client_lock across revoke_one_stid(), which dereferences the client to revoke a stateid and read clp->cl_minorversion. A teardown racing the d",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/549bd9868e9d77b07ea94870940d64342829c6ad",
+        "https://git.kernel.org/stable/c/bf1f948691523282cc4905bc6cd325e0c0b49e6a",
+        "https://git.kernel.org/stable/c/e270e5a0778e5bff852c8862ce9576ce70359393"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89659",
+      "published": "2026-09-11T20:19:52.180",
+      "lastModified": "2026-09-13T07:17:31.523",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during delegation revoke A delegation stateid holds only a bare pointer to its owning nfs4_client and does not keep it alive. The client survives its stateids only because __destroy_client() drains cl_delegations and cl_revoked before free_client() runs. nfs4_laundromat() breaks that invariant: it unhashes an expired delegation from cl_delegations, drops deleg_lock, then revoke_delegation() re",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2a9d637c2a8fd8ac29ad9b29f28d122ef75c1a56",
+        "https://git.kernel.org/stable/c/3c0a53ee0b442348d8d2286d6960d3f07bb3a3d3",
+        "https://git.kernel.org/stable/c/4683ca76b3b7e5808338491c6eb3c20e6b4894d5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89658",
+      "published": "2026-09-11T20:19:52.063",
+      "lastModified": "2026-09-13T07:17:31.400",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during NFSv4.0 revoked-state cleanup nfs40_clean_admin_revoked() takes a stateid reference under clp->cl_lock, drops nn->client_lock, and calls nfsd4_drop_revoked_stid(), which dereferences the stateid's client through s->sc_client->cl_lock. The stateid reference does not pin the client, so a teardown racing the dropped lock can free the client while nfsd4_drop_revoked_stid() is still using it",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0ae0d2b5c5a1b39c0b3c15d96b32a5b0c583d519",
+        "https://git.kernel.org/stable/c/7b4f8a1586c42d3afc3c0ac779af2db7ab1a5c55",
+        "https://git.kernel.org/stable/c/81cf7f1413862f87b078920c838460a6a88aa030",
+        "https://git.kernel.org/stable/c/b413ec5b23e3445dc9c4f273116078e2d4747626"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89656",
+      "published": "2026-09-11T20:19:51.813",
+      "lastModified": "2026-09-13T07:17:31.143",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: libceph: reject buckets with mismatched CRUSH ids crush_decode() stores bucket data by array slot, and the mapper later derives the per-bucket workspace index from the decoded bucket id. A malformed map can therefore make one bucket reuse another bucket's workspace by encoding an id different from -1 - slot. For uniform buckets, the second replica selection expands the source bucket's permutation into that aliased workspace buff",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00562ccd4e88d092b9b851df50fad20442bfeb24",
+        "https://git.kernel.org/stable/c/3516a4131c4e45d62ee4e42e82c36930e8c1fbbd",
+        "https://git.kernel.org/stable/c/3cde4a8302301679937474a5f7a851394cc1bd11",
+        "https://git.kernel.org/stable/c/79900d978158b2d80eef952fc41b9e4dc58d7b83"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89655",
+      "published": "2026-09-11T20:19:51.683",
+      "lastModified": "2026-09-13T07:17:31.013",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: fix UAF in __kick_flushing_caps() on cf entry freed during unlock list_for_each_entry() iterates ci->i_cap_flush_list but drops i_ceph_lock to send cap messages. During the unlock window, handle_cap_flush_ack() can acquire i_ceph_lock, detach cf entries with tid <= flush_tid from the list, release i_ceph_lock, and free them via ceph_free_cap_flush() outside any lock. When the original thread reacquires i_ceph_lock and the ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2701431aa3cc8b23efe6890182e7b04f5e76fab5",
+        "https://git.kernel.org/stable/c/2dba24dcd5050be4b7b119e6f0b01f62203b5d26",
+        "https://git.kernel.org/stable/c/7af4c4f01305b0935adf6d4301b1ec407025485d",
+        "https://git.kernel.org/stable/c/fe46746087b5b9c5bb2d022df6c7819218494ced"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89654",
+      "published": "2026-09-11T20:19:51.540",
+      "lastModified": "2026-09-13T07:17:30.837",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: fix UAF in check_new_map() on session freed during unlock check_new_map() iterates mdsc->sessions[] and for each active session drops mdsc->mutex to perform per-session operations. The forced-close path (rank removed from map) correctly takes a reference on s via ceph_get_mds_session() before releasing mdsc->mutex, but three other paths do not: Path A (address changed): mutex_unlock \u2192 mutex_lock(&s->s_mutex) Path B (reconn",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/21d5be092d947f8d83f76f7ebf3989e7e9230a98",
+        "https://git.kernel.org/stable/c/ee611a7509554c4ca1f54f6aefe592fb1df7ea70"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89653",
+      "published": "2026-09-11T20:19:51.400",
+      "lastModified": "2026-09-13T07:17:30.677",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: reject export_targets ranks >= CEPH_MAX_MDS in mdsmap decode MDSMap export_targets entries are monitor controlled. check_new_map() uses each entry as a bit number in a fixed stack bitmap, so a rank outside the protocol namespace can make set_bit() write past the end of the array. Reject ranks outside CEPH_MAX_MDS while decoding the map. Do not validate against possible_max_rank here because maps may legitimately reference ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/4d298880f82c42383b36946bafde7ccf4d804c9b",
+        "https://git.kernel.org/stable/c/736adee11af36e407ed902264f8b2fb5cf94b62f",
+        "https://git.kernel.org/stable/c/96c3f5fbb0d5386e7111426f047f98cec4586674",
+        "https://git.kernel.org/stable/c/aedc9053d909508a5f56c3f49f885fc030df4730"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89652",
+      "published": "2026-09-11T20:19:51.283",
+      "lastModified": "2026-09-13T07:17:30.550",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: bound copied dentry name length in NFS export get_name ceph_get_name() copies the MDS-supplied name into the caller's NAME_MAX-sized buffer with memcpy(name, rinfo->dname, rinfo->dname_len) and then writes name[rinfo->dname_len] = 0, without checking dname_len against NAME_MAX. A malicious or buggy MDS that returns a LOOKUPNAME reply with dname_len > NAME_MAX overflows the buffer. __get_snap_name() copies rde->name / rde->",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/06fb5e623cdc2402d6bb29be94d9beb9a826ffec",
+        "https://git.kernel.org/stable/c/61d9f27b191b838b96b697ce0bfaee39a138243a",
+        "https://git.kernel.org/stable/c/e7c2fd3893a7f7fcd7e8cf0b2c6348bb1e893df6",
+        "https://git.kernel.org/stable/c/eff8013c5a8916613c742ae5a2cc341cb605c0ae"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89651",
+      "published": "2026-09-11T20:19:51.150",
+      "lastModified": "2026-09-13T07:17:30.417",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: bound MDSCapAuth path and fs_name decode in handle_session() handle_session() decodes the MDSCapAuth records carried by a CEPH_SESSION_OPEN message (msg_version >= 6). For each record the match.path and match.fs_name byte strings are read by first decoding a 32-bit length and then copying that many bytes with the bare ceph_decode_copy(). Unlike the surrounding fields, which all use the _safe decode variants, these two copi",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5f892c767b30e4fb0c744c59f9235c717383d2cd",
+        "https://git.kernel.org/stable/c/77933e22adfe813be2bd10be08d6e950103c3967",
+        "https://git.kernel.org/stable/c/c37db86d2b5e9b57001ccae7e7a727e95a4f9c02",
+        "https://git.kernel.org/stable/c/dc5c7dffda92ef372fa587c444a1c537373df824"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89650",
+      "published": "2026-09-11T20:19:51.023",
+      "lastModified": "2026-09-13T07:17:30.260",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: bound num_export_targets array for mds info v2/v3 ceph_mdsmap_decode() in fs/ceph/mdsmap.c reads num_export_targets from each per-mds info record and advances the decode cursor by num_export_targets * sizeof(u32) without first checking that many bytes remain. The only upper-bound check that catches a runaway cursor (*p > info_end) is gated on info_v >= 4, because info_end is left NULL for info_v 2 and 3. When the monitor s",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/332c444f4dc6fa1e8b8637c9e82d29e97f768656",
+        "https://git.kernel.org/stable/c/3bf7dba8dba9a05774b846affec61a3624ddba38",
+        "https://git.kernel.org/stable/c/58c2d3e954c13694ef6e820a5e9456461bb9e7df",
+        "https://git.kernel.org/stable/c/a3eb169ee297aa99670ba927c659990bd1e453f3"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89649",
+      "published": "2026-09-11T20:19:50.897",
+      "lastModified": "2026-09-13T07:17:30.127",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: bound xattr value length in __build_xattrs() __build_xattrs() decodes the MDS-supplied xattr blob one attribute at a time. For each attribute it reads a 32-bit name length, advances past the name bytes, reads a 32-bit value length, records the value pointer, and advances past the value bytes. The two length fields are read with ceph_decode_32_safe(), but the value bytes themselves are advanced over with a bare \"p += len\" a",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1dd356310b1660215f9a3626580bf8b363ef981e",
+        "https://git.kernel.org/stable/c/38be2f3c41ecaba58bb92dc16603e09ba9fd64f1",
+        "https://git.kernel.org/stable/c/68d541754d6cd3bb98d1fd8314f57e5eb533557d",
+        "https://git.kernel.org/stable/c/b12b3320c81fd72ab36388fb2445fec9c3038f10"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89643",
+      "published": "2026-09-11T20:19:50.090",
+      "lastModified": "2026-09-13T07:17:29.590",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: audit: avoid dropping live tree ref on fsnotify rule autoremove audit_del_rule() is used for both netlink deletion templates and internal fsnotify autoremove. The former passes a parsed template which owns a temporary tree reference; the latter passes the installed entry itself. The unconditional audit_put_tree() at the end of audit_del_rule() assumes the template case. For mixed AUDIT_DIR plus AUDIT_EXE rules, an fsnotify autor",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/583cf579b32d99e3fe4e9c8ecc4d852e3708fbec",
+        "https://git.kernel.org/stable/c/636a99bab36ba27515363d325866c0273ac83b3e",
+        "https://git.kernel.org/stable/c/783f0f0974c156aca630f4ffff248671082a098d",
+        "https://git.kernel.org/stable/c/cf37b61b5420fd4600fe78cf8c24da6e4d9bfe28"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89637",
+      "published": "2026-09-11T20:19:49.370",
+      "lastModified": "2026-09-13T07:17:28.883",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 When a valid primary TRANSACT2 response has been received (mid->resp_buf set, mid->multiRsp true) and a subsequent secondary response causes cifs_check_trans2() to return false -- either because the SMB header is invalid (malformed != 0) or because check2ndT2() rejects the PDU -- handle_mid() overwrites mid->resp_buf with the new buffer (leaki",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5e6533a683f6a851158d9f33fb4ea8f4f25d7f84",
+        "https://git.kernel.org/stable/c/730d0bb19507b9e19c2fe5343109ac618e2fbce5",
+        "https://git.kernel.org/stable/c/9eed72e9534b10a6d9f8f5146feff3db53aebdba"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89636",
+      "published": "2026-09-11T20:19:49.243",
+      "lastModified": "2026-09-13T07:17:28.760",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: clear ce->tgthint in free_tgts() When free_tgts() frees all structures in ce->tlist, ce->tgthint is left pointing to one of the freed cache_dfs_tgt structures. If ce->tgthint is not reset before it is used later, it results in a use-after-free. Set ce->tgthint to NULL in free_tgts() after the elements are freed to reflect that no elements remain.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5baab40404a9393bcc0b7b8f1950bf2c307e0984",
+        "https://git.kernel.org/stable/c/7507bd1885643d0461a6017767492450af1ce2a3",
+        "https://git.kernel.org/stable/c/9ab46a13798a61d9d020b01d4e57efdabe6624fa",
+        "https://git.kernel.org/stable/c/b1b741cf8e7ce1b91d937e23decd3d3358748700"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89635",
+      "published": "2026-09-11T20:19:49.120",
+      "lastModified": "2026-09-13T07:17:28.657",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ksmbd: only rebind the reopened file's own oplock on durable reconnect ksmbd_reopen_durable_fd() walks the inode's m_op_list and rebinds every detached oplock to the reconnecting session: list_for_each_entry_rcu(op, &ci->m_op_list, op_entry, lockdep_is_held(&ci->m_lock)) { if (op->conn) continue; op->conn = ksmbd_conn_get(fp->conn); op->sess = work->sess; } The only key is op->conn == NULL, which every detached durable handle on",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3f220a0a62e6b9b391c9d1f0e6580b05173cc7f7",
+        "https://git.kernel.org/stable/c/74e3ef4630f004c0de40c0540648a5a4033c6c9d"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89634",
+      "published": "2026-09-11T20:19:49.010",
+      "lastModified": "2026-09-13T07:17:28.533",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: fix ALIGN() overflow in symlink_data() error context loop The check added by commit 7d9a7f1f96cd (\"smb/client: fix possible infinite loop and oob read in symlink_data()\") compared the post-ALIGN length against the remaining buffer, but ALIGN() itself can overflow: for ErrorDataLength near UINT32_MAX (e.g. 0xFFFFFFF9), ALIGN(x, 8) wraps to 0, so the subsequent bounds check passes, and the loop advances by zero bytes ",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1f824f61d1df52392eaf0b74dfa5659d724fde30",
+        "https://git.kernel.org/stable/c/62656b024efc21c3230eade1a847f25871c3d2bb",
+        "https://git.kernel.org/stable/c/62a3025983c8c735a3c6fc85a59316f31b59af07",
+        "https://git.kernel.org/stable/c/657372ba6ea50b4474d2a6a610097eae8cd1f3e9"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89633",
+      "published": "2026-09-11T20:19:48.887",
+      "lastModified": "2026-09-13T07:17:28.413",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2() coalesce_t2() computes data pointers directly from server-supplied DataOffset fields with no validation against buffer bounds: data_area_of_tgt = (char *)&pSMBt->hdr.Protocol + get_unaligned_le16(&pSMBt->t2_rsp.DataOffset); data_area_of_src = (char *)&pSMBs->hdr.Protocol + get_unaligned_le16(&pSMBs->t2_rsp.DataOffset); data_area_of_tgt += total_in_tgt; ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/033bc80019f07d158630df4e69b19a49010f54f1",
+        "https://git.kernel.org/stable/c/6343c1da561962688f203362d80d6a3bfa39fa1b",
+        "https://git.kernel.org/stable/c/672cf86aa6aa0fb4012ce4c3b3498df42ad67a4e"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89631",
+      "published": "2026-09-11T20:19:48.640",
+      "lastModified": "2026-09-13T07:17:28.183",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: reject a tree connect response whose byte count is too small CIFSTCon() bounds its strnlen() over the byte area with the server's ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int and converts to a huge size_t. The later subtraction wraps the __u16 bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3be89e8039a85fa3b6cd5f9dcc4c1459eb356c2d",
+        "https://git.kernel.org/stable/c/411e484fe71a7f1028de617447edad9cb6d9d68a",
+        "https://git.kernel.org/stable/c/65deb18359341141d37dc86fc7853511be3c87a7"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89630",
+      "published": "2026-09-11T20:19:48.517",
+      "lastModified": "2026-09-13T07:17:28.067",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: restore the data_offset bound in is_valid_oplock_break() Commit 83bfbd0bb902 (\"cifs: Remove the RFC1002 header from smb_hdr\") changed the quantity this bound is measured against. It used to be srv->total_read minus the 4-byte RFC1002 preamble that total_read then included, so it was the SMB message length. The same commit stopped counting the preamble, and the mechanical substitution to srv->total_read - srv->pdu_si",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5b16a1967a01ad4496a7206a87c3eb16f1df2b05",
+        "https://git.kernel.org/stable/c/ba22f575de9deeae4ae0859ca4315a7698226237"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89614",
+      "published": "2026-09-11T20:19:46.543",
+      "lastModified": "2026-09-13T07:17:26.940",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ntfs: bound the free-cluster bitmap scan to the volume vol->lcn_empty_bits_per_page is sized from vol->nr_clusters at mount, but ntfs_cluster_alloc() bounds its scan of that array by the size of $Bitmap. Those are independent on-disk quantities and the mount-time check only rejects a $Bitmap that is too small, so an image whose $Bitmap covers more clusters than the volume has lets the scan index past the array. A run whose LCN l",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/19cac7902a8ab748e15f98ddaafcf5f8882be21d",
+        "https://git.kernel.org/stable/c/dc15a9f5307d5372aef3b64bf3ed7802f530c471"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89613",
+      "published": "2026-09-11T20:19:46.433",
+      "lastModified": "2026-09-13T07:17:26.840",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ntfs: reject invalid empty mapping pairs Reject an attribute with empty mapping pairs if it has inconsistent highest VCN and size.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/766062a82e1ce4087c7dc077224144dfd34b3661",
+        "https://git.kernel.org/stable/c/b0cc6dbc655e037251874b3e0dd1a760dcf29007"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89612",
+      "published": "2026-09-11T20:19:46.313",
+      "lastModified": "2026-09-13T07:17:26.730",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ntfs: reject invalid MFT LCNs from boot sector The NTFS boot sector stores the MFT and MFTMirr locations as unsigned 64-bit LCNs, but parse_ntfs_boot_sector() decoded them into an s64. A crafted high-bit value could therefore become negative and pass the existing upper-bound check. The invalid value then propagated into the MFT zone allocator and could result in an out-of-bounds access to lcn_empty_bits_per_page.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/8f8420b68a6f05ca2b03779d8208814ec539b9e5",
+        "https://git.kernel.org/stable/c/cc9d09fef78410bcd37ac05168cbd5f6dd75d3d2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89611",
+      "published": "2026-09-11T20:19:46.203",
+      "lastModified": "2026-09-13T07:17:26.617",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ntfs: validate non-resident attribute offsets ntfs_attr_update_meta() shifts the attribute name when converting between non-sparse and sparse attributes. Converting to sparse also adds the compressed_size field before the name and mapping pairs, requiring eight additional bytes in the attribute record. However, the validator does not check that name_offset is within safe boundaries for these operations or that the additional spa",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/a83e82b0ec3ae523028e24813f23f18b43e8fc1c",
+        "https://git.kernel.org/stable/c/cd7b3dc7557faadeea626034e3bac68a449851ef"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89610",
+      "published": "2026-09-11T20:19:46.093",
+      "lastModified": "2026-09-13T07:17:26.507",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ntfs: verify run length exceeding volume boundary The mapping pairs decoder validates that the starting LCN is within the volume but does not check if the run extends beyond the volume boundary. A malformed NTFS image with a crafted mapping pairs array could cause the kernel to access memory beyond the volume boundary, potentially leading to memory corruption and privilege escalation. Add validation to ensure lcn + length stays ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/6e844d4b82434a781b80d02145fd1b17cf90e3c3",
+        "https://git.kernel.org/stable/c/fea9e4488f384c0ef1c0e3d96b565127c1b98447"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89558",
+      "published": "2026-09-11T20:19:39.540",
+      "lastModified": "2026-09-13T07:17:21.907",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: md/raid10: fix still_degraded being inverted in raid10_sync_request() Commit fe6a19d40ceb (\"md/md-bitmap: merge md_bitmap_start_sync() into bitmap_operations\") converted still_degraded from int to bool, but inverted the assignment in the loop that checks whether the array will still be degraded after the current device is recovered: \"still_degraded = 1\" became \"still_degraded = false\". As a result, recovering a device while anot",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00449d752bee9c8787f42ea1bf533a9fb17f9b6b",
+        "https://git.kernel.org/stable/c/0efabe6229dc683dbf6eeebd0f9fddc7971ed420",
+        "https://git.kernel.org/stable/c/47f1441b281decde6954a2fa82b4131637d685ac",
+        "https://git.kernel.org/stable/c/9bb8da6ecb330a5b1ac9b96f1e55f134a7aef1d4"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89555",
+      "published": "2026-09-11T20:19:39.147",
+      "lastModified": "2026-09-13T07:17:21.540",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: mpls: reload header after pskb_may_pull() mpls_select_multipath() calls mpls_multipath_hash() to choose a nexthop when an MPLS route has multiple nexthops. While walking the MPLS label stack, the hash routine caches hdr for the current label. After finding the bottom-of-stack label, it calls pskb_may_pull() before reading the inner IP header. If an skb is constructed with the inner IP header in nonlinear data and insufficient ta",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/29e63b8d9fc150cc191b1c6eb7e16e1247e1b650",
+        "https://git.kernel.org/stable/c/49d38c1b4390412f8950d33dfaee0ccbd17beb81",
+        "https://git.kernel.org/stable/c/d82b90a38c2ca8a0694428eab0e9551c23f2447d",
+        "https://git.kernel.org/stable/c/fed638a248116b8a249bd4202d28e5934bdc65ad"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89551",
+      "published": "2026-09-11T20:19:38.640",
+      "lastModified": "2026-09-13T07:17:19.537",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: xdr_buf_trim: clamp buf->len to avoid underflow xdr_buf_trim() trims `len` bytes from the tail of an xdr_buf by walking the tail, pages, and head iovecs. Each per-section step uses min_t() so it never removes more bytes than that section holds, but the final accounting at the fix_len label subtracts the total bytes actually consumed from buf->len without any clamp: fix_len: buf->len -= (len - trim); When the caller has s",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3f491306dcb673ff5e78e1044ba450c58978774e",
+        "https://git.kernel.org/stable/c/85e9602650e9df07190abe817cee3b4d9bc3df17",
+        "https://git.kernel.org/stable/c/ad0cce80d4af2f74674e8b635d97aa3880e83da8",
+        "https://git.kernel.org/stable/c/e6267cccd7b05cc514e57f2160aa8db85f5c2701"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89550",
+      "published": "2026-09-11T20:19:38.500",
+      "lastModified": "2026-09-13T07:17:18.080",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: svcauth_gss: enforce krb5 token minimum length svcauth_gss_unwrap_priv() validates only an upper bound on the wire-supplied opaque length before handing the buffer to gss_unwrap(): if (len > xdr_stream_remaining(xdr)) goto unwrap_failed; offset = xdr_stream_pos(xdr); ... maj_stat = gss_unwrap(ctx, offset, offset + len, buf); The wire value `len` flows unchanged as the upper bound into the krb5 unwrap path, so a len in [0",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2eed1e6a976a44015c3ee78841fe336796e2b21c",
+        "https://git.kernel.org/stable/c/a919c5c88769cf8fb3ec071e6078d830bf512489",
+        "https://git.kernel.org/stable/c/dd6afc6cab8c5d387d1ed2f069562ef7bdadd651",
+        "https://git.kernel.org/stable/c/de942dd8c2c8358bcad04ce44271954c48924423"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89546",
+      "published": "2026-09-11T20:19:37.960",
+      "lastModified": "2026-09-13T07:17:16.950",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: close backchannel before destroying callback service A backchannel receive can complete a request while the NFS callback service is being torn down. xprt_complete_bc_request() removes the request from bc_pa_list, drops bc_alloc_count, marks the request in use, and then asks xprt_enqueue_bc_request() to hand it to the callback service. If teardown has already cleared xprt->bc_serv, xprt_enqueue_bc_request() currently retu",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3674f780f47d2906b5a0f7199b66973067bdfeca",
+        "https://git.kernel.org/stable/c/6debde9e3e6ae21dcca75837b4247b13ca4ea2b8"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89542",
+      "published": "2026-09-11T20:19:37.380",
+      "lastModified": "2026-09-13T07:17:16.533",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: harden gss_krb5_unwrap_v2 against short tokens gss_krb5_unwrap_v2() reads the EC and RRC header fields at ptr+4 and ptr+6 before validating that the token is at least GSS_KRB5_TOK_HDR_LEN (16) bytes long, and its rotate_left() helper passes buf->len - base to xdr_buf_subsegment() without verifying that base <= buf->len. When a caller hands in a sub-16-byte token, or a token whose declared len leaves base past the end of ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/6959297aaa9572783d620a226d73c3fb94494888",
+        "https://git.kernel.org/stable/c/806584a4b67a7233870c33e5b8f872e76dd02988",
+        "https://git.kernel.org/stable/c/a7894e10572d53eb10109b8d07459cc8d3435811",
+        "https://git.kernel.org/stable/c/dddcb0f4b7e27fac16a78ea9a1c8ec2e8a241087"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89541",
+      "published": "2026-09-11T20:19:37.247",
+      "lastModified": "2026-09-13T07:17:16.397",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: harden gss_unwrap_resp_priv length checks gss_unwrap_resp_priv() validates the RPCSEC_GSS opaque length with offset = (u8 *)(p) - (u8 *)head->iov_base; if (offset + opaque_len > rcv_buf->len) goto unwrap_failed; maj_stat = gss_unwrap(ctx->gc_gss_ctx, offset, offset + opaque_len, rcv_buf); Both operands are u32 and the sum is computed in u32. A reply with opaque_len near 0xffffffff makes offset + opaque_len wrap to a smal",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/87831b92112c81db251d46756d65daa4f91af6a2",
+        "https://git.kernel.org/stable/c/89a15a50f84d32d4b99db86f957427fcbe20a99a",
+        "https://git.kernel.org/stable/c/d395c30d570ca6168f0297b191709927d1258273",
+        "https://git.kernel.org/stable/c/ebcbd2523a8524c3d24e111cdbed8e271d910269"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89538",
+      "published": "2026-09-11T20:19:36.850",
+      "lastModified": "2026-09-13T07:17:16.120",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field gss_krb5_unwrap_v2() sets buf->len to a logical length, which can be much smaller than head[0].iov_len (the allocated receive-page capacity). It then calls xdr_buf_trim() with a trim length derived from the 16-bit \"extra count\" (ec) field in the Kerberos v2 token header. The ec field is authenticated by the post-decrypt memcmp() against the encrypted header copy, so a ra",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1f9856af065b6158271687e9788407b9573fd16f",
+        "https://git.kernel.org/stable/c/880effc943ed82d6811f272ed3307c222b40f4d6",
+        "https://git.kernel.org/stable/c/ad484748eec0a66eac0f13ab53b3fbedb7333c91",
+        "https://git.kernel.org/stable/c/dfcd81ab45613d45996fbf483d4ef54b0ec90ab9"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89537",
+      "published": "2026-09-11T20:19:36.733",
+      "lastModified": "2026-09-13T07:17:16.000",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2 gss_krb5_verify_mic_v2() reads the token ID at ptr[0..1], the flags byte at ptr[2], and padding at ptr[3..7], then passes ptr + GSS_KRB5_TOK_HDR_LEN and cksum_len to gss_krb5_mic_build_sg(). None of these accesses check read_token->len first. The minimum safe token size is GSS_KRB5_TOK_HDR_LEN (16) plus ctx->krb5e->cksum_len (12-24, depending on the enctype). All",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/7a946b2e7207f968902f2147ab9b30726f82f7ab",
+        "https://git.kernel.org/stable/c/b94f6719dcd9f7a609bc5f459f85795900e77d25"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89536",
+      "published": "2026-09-11T20:19:36.613",
+      "lastModified": "2026-09-13T07:17:15.883",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: SUNRPC: wait for in-flight client TLS handshake callback xs_tls_handshake_sync() gives xs_tls_handshake_done() a reference to the lower transport before submitting the handshake request. On timeout or signal, the synchronous waiter drops that reference after calling tls_handshake_cancel(). handshake_req_cancel() returns false when handshake_complete() has already marked the request complete. In that case the completion callback ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/15431820f448e09f8029b670d5c82aa5917d4625",
+        "https://git.kernel.org/stable/c/1de391e8b94e31b45c19c16dbf315e294810c7de",
+        "https://git.kernel.org/stable/c/7fbb6d2ab0391eb8d1f1a68e6bc263ef02cea61b",
+        "https://git.kernel.org/stable/c/a89dd597458848b463d284b15e42a8078beeb046"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89533",
+      "published": "2026-09-11T20:19:36.250",
+      "lastModified": "2026-09-13T07:17:15.510",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: svcrdma: Fix offset arithmetic in read_chunk_range svc_rdma_read_chunk_range() walks a Read chunk's segment list to build a sub-range starting at byte offset and spanning length bytes for a Position-Zero or Call chunk. Two arithmetic defects in the per-segment loop produce wrong DMA lengths and a u32 underflow: pcl_for_each_segment(segment, chunk) { if (offset > segment->rs_length) { offset -= segment->rs_length; continue; } dum",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/4493c96bbd0068fadf69cbae8d13426202e34cdc",
+        "https://git.kernel.org/stable/c/4a44c140cc2f3643a39e258bb0c0ab9d0f494f5e",
+        "https://git.kernel.org/stable/c/6ee4dc7476b3abc92ec1d444533a559f33f59561",
+        "https://git.kernel.org/stable/c/a46b35f213c2426f5d6a0458a8f7e873fc59cdfd"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89532",
+      "published": "2026-09-11T20:19:36.117",
+      "lastModified": "2026-09-13T07:17:15.373",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: svcrdma: Fix pcl_for_each_segment for empty chunks When a parsed chunk list contains a chunk whose ch_segcount is zero, pcl_for_each_segment computes its inclusive upper bound as &chunk->ch_segments[ch_segcount - 1]. ch_segcount is u32, so the subtraction wraps to 0xFFFFFFFF and the bound lands far past the ch_segments flex array. The loop body then walks unrelated memory at sizeof(struct svc_rdma_segment) stride until it faults",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/6d33a7e6bf6c6b293a266a617201285a1ad32c56",
+        "https://git.kernel.org/stable/c/9c5a03c3dc505c0295339b0a1b9e4fe36447e482",
+        "https://git.kernel.org/stable/c/a1c954ca4977a4e6ec73ef92fe48073ec54f9fc8",
+        "https://git.kernel.org/stable/c/b7713a784c59515d0aba558c8f5df6a0164dd3a9"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89530",
+      "published": "2026-09-11T20:19:35.850",
+      "lastModified": "2026-09-13T07:17:15.237",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: svcrdma: Reject inline replies that overflow the pull-up buffer An RPC-over-RDMA client can request a reply, such as an NFS READ payload, without providing a Write list or a Reply chunk to carry it. When such a reply needs more scatter/gather entries than the device's Send Queue supports, svc_rdma_pull_up_needed() selects pull-up and svc_rdma_pull_up_reply_msg() linearizes the whole reply into sctxt->sc_xprt_buf. That buffer is ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0fbe20dfe74b783d255bf389a6ea77aa25dc7860",
+        "https://git.kernel.org/stable/c/1949dd1576f7a8aa161b1330c6125df9d53046d5",
+        "https://git.kernel.org/stable/c/8ec60eb51fae37cd3d334ff26e4a7d6fb21ff7cf",
+        "https://git.kernel.org/stable/c/fcd91b9957462d398792201c239dffaeff1cc8b2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89526",
+      "published": "2026-09-11T20:19:35.383",
+      "lastModified": "2026-09-13T07:17:14.973",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: svcrdma: Validate Read chunk positions before reconstruction The RPC/RDMA Read chunk position field is supplied by the remote client and stored verbatim in the parsed chunk list. xdr_count_read_segments() checks only 4-byte alignment; it never compares the position against the received inline body length. In the single-chunk path, svc_rdma_read_complete_one() splits the head and tail kvecs at ch_position. A position past the inl",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3779b7b9e7d1c8ba4738f9d327de3b0288cefe9b",
+        "https://git.kernel.org/stable/c/577097455d084610fc31e91e6a61c5793b6f04ba",
+        "https://git.kernel.org/stable/c/5ab3f6d882fe07ae5e61d0bcfeea00b9409155c2",
+        "https://git.kernel.org/stable/c/f84ec84d8d4bc65f9ae23372570349687f66fa39"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89495",
+      "published": "2026-09-11T20:19:31.493",
+      "lastModified": "2026-09-13T07:17:12.830",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ocfs2: bound namelen in dlm_migrate_request_handler Patch series \"ocfs2/dlm: bound peer-controlled lengths in the o2dlm\". The o2dlm receive handlers trust u8 length and count fields from the wire without bounding them, so a node in a DLM domain can corrupt or panic any other node with a malformed message. Three defects: - dlm_migrate_request_handler() passes migrate->namelen unchecked to dlm_init_mle(), which memcpy()s it into t",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2487bea2098322669f0563baff53e797486b823f",
+        "https://git.kernel.org/stable/c/de10cd3b062a5235af754925fcf49beb5a1109d4",
+        "https://git.kernel.org/stable/c/ea5b5609305a8437bc955a0834a530c12246d78f",
+        "https://git.kernel.org/stable/c/f8658ee3327f73bd81c0bcd07cdeb5a8527fac98"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89494",
+      "published": "2026-09-11T20:19:31.370",
+      "lastModified": "2026-09-13T07:17:12.703",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ocfs2: validate lengths in dlm_mig_lockres_handler A node receiving a DLM_MIG_LOCKRES message trusts several fields of the peer-supplied dlm_migratable_lockres without validation. num_locks and lockname_len are bounded only on the sending side, and the message is never checked to actually carry num_locks migratable_lock entries. As a result dlm_process_recovery_data() walks mres->ml[0..num_locks) past the kmalloc(data_len) copy ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/50c4cc9183e11f83427efbf770f54851f4471c02",
+        "https://git.kernel.org/stable/c/a8facb1670b4a0612183198e758d9539ef628ed9",
+        "https://git.kernel.org/stable/c/b54e03d9b3697d25f4a0063cf717d459c5e3ad94",
+        "https://git.kernel.org/stable/c/f33041906885f96e190cde54e61ddc69de39e3ee"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89492",
+      "published": "2026-09-11T20:19:31.090",
+      "lastModified": "2026-09-13T07:17:12.417",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ocfs2: validate directory-index entry counts when reading metadata ocfs2_validate_dx_leaf() and ocfs2_validate_dx_root() check the ECC and signature of an indexed-directory block before it reaches higher-level callers, but neither validator bounds the ocfs2_dx_entry_list counts against the capacity of the block that holds them. ocfs2_dx_dir_search() then walks for (i = 0; i < le16_to_cpu(entry_list->de_num_used); i++) dx_entry =",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/b8a5c0c32df2c5b685ceef76ac77e37c7e1dc3ed",
+        "https://git.kernel.org/stable/c/bc70726ddad53c7e9a9a85915bf2415b0d4f42f9",
+        "https://git.kernel.org/stable/c/fcfcba8fe17dbf2c8805690b8cc25e32d81249a4"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89485",
+      "published": "2026-09-11T20:19:30.173",
+      "lastModified": "2026-09-13T07:17:11.770",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: lockd: pin next file across nlm_inspect_file lock-drop nlm_traverse_files() pins the current file with f_count++ across a mutex_unlock for nlm_inspect_file(), but nothing pins the saved next pointer. A concurrent nlm_release_file() can kfree the next file during the unlock window, and the iterator dereferences freed memory on the next loop step. Pin both current and next before the lock-drop. Advance by swapping the pinned curso",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/41f0a6d31615fcae261bf28a0aa50050dc93a401",
+        "https://git.kernel.org/stable/c/526c49cff3f72c3ec74752016380c7567040581b",
+        "https://git.kernel.org/stable/c/c24bdb7df2f34bdc38ca8a73796f5acb40f1830c",
+        "https://git.kernel.org/stable/c/e999a88133654c6dfc68487fb49da5f20dfa2d4f"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89482",
+      "published": "2026-09-11T20:19:29.730",
+      "lastModified": "2026-09-13T07:17:11.460",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nvme-tcp: do not accept C2HData based on blk_rq_payload_bytes() alone Commit 25e5cb780e62 (\"nvme-tcp: fix possible crash in write_zeroes processing\") established that blk_rq_payload_bytes() must not be read without first checking blk_rq_nr_phys_segments(), and recorded the result in nvme_tcp_setup_cmd_pdu() as req->data_len. The receive side was left as it was. The two differ for REQ_OP_WRITE_ZEROES, which has no physical segmen",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3a4aa9e6ad3e35f8e24d5eaf38ee4d437075fb36",
+        "https://git.kernel.org/stable/c/641ad3a30ba560f0a9a610376c568d7b75d2a2aa",
+        "https://git.kernel.org/stable/c/6a01b58263108eaf9869bb6f82f07709240c6589",
+        "https://git.kernel.org/stable/c/b36161701cb366f416afdcf70771d432a7c74753"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89479",
+      "published": "2026-09-11T20:19:29.337",
+      "lastModified": "2026-09-13T07:17:11.070",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: sctp: stop processing a packet once its association is deleted sctp_endpoint_bh_rcv() looks the association up only when chunk->asoc is NULL, and caches the result in chunk->asoc and chunk->transport without taking a reference. A packet that matches no association is handed to the endpoint, so a peer can bundle COOKIE ECHO, SHUTDOWN and SHUTDOWN ACK in one packet. The COOKIE ECHO creates the association, the SHUTDOWN chunk cache",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/47e15a8d12e366d0d261bcbc394394f44418938d",
+        "https://git.kernel.org/stable/c/a713e1b3a265f180ad25a08e17be15d67a2f7149",
+        "https://git.kernel.org/stable/c/ee3f04cf566f6041aa9a0360494fd8db5ade383a",
+        "https://git.kernel.org/stable/c/fa306a40e716c5abcd967475459ce1ebd56e5115"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89478",
+      "published": "2026-09-11T20:19:29.207",
+      "lastModified": "2026-09-13T07:17:10.933",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: sctp: drop a chunk if its transport was removed sctp_rcv() resolves the transport once per packet and leaves it in chunk->transport. The lookup reference, or the one sctp_add_backlog() takes if the socket is owned by userspace, keeps it around until the chunk has been processed. An authenticated ASCONF DEL-IP can remove it in the meantime. sctp_assoc_rm_peer() takes the transport out of the association and calls sctp_transport_f",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/03a9d10ecf71f54b2af8020935f2033d4a132be5",
+        "https://git.kernel.org/stable/c/1035bdef1efb9b1076d1a57b81e08c637ff08ecc",
+        "https://git.kernel.org/stable/c/3537961df2163258bddc230db0e18dc14e925ea6",
+        "https://git.kernel.org/stable/c/c6c86a5e62a4fec36692ddd64b9144b660f71f96"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89448",
+      "published": "2026-09-11T20:19:25.347",
+      "lastModified": "2026-09-13T07:17:09.220",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: iommu/vt-d: Force requesting ACS when tboot is enabled Currently the conditions of requesting ACS in detect_intel_iommu() don't include tboot, leading to a possible misconfiguration with ACS disabled (e.g. due to user opts) while iommu is later forced on by tboot_force_iommu(). Fix it by checking tboot in detect_intel_iommu().",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/45705a6bfdb283f7b3b509010fd617b72f942537",
+        "https://git.kernel.org/stable/c/607432b2618b61df81134be0ef2562b8300c1216",
+        "https://git.kernel.org/stable/c/87bc611c6c98a41c00feb7b06b0c297dd141a2ae",
+        "https://git.kernel.org/stable/c/aaeb81241e802c86be69394f72d49fde3f861fbb"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81002",
+      "published": "2026-09-11T20:19:08.483",
+      "lastModified": "2026-09-13T07:17:06.883",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: xdp: fix zero-copy frame layout xdp_convert_zc_to_xdp_frame() clones an XSK packet into an order-0 page and advertises PAGE_SIZE as its frame size. It allows the copied frame to occupy the page tail needed by skb_shared_info and records zero headroom even when metadata separates the frame header from packet data. An AF_XDP zero-copy packet redirected through cpumap can therefore make the skb overlap skb_shared_info or place it b",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/15d1f3c0dbe7a740f779337deb39f23cd8d002c8",
+        "https://git.kernel.org/stable/c/444216dacdbebd3e52d5e704facafbb230da09e9",
+        "https://git.kernel.org/stable/c/68d7cc5512238693670fc19c7a615df631e10edf",
+        "https://git.kernel.org/stable/c/71283aaa6c65b3cec84caf1dc78560985737641f"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80986",
+      "published": "2026-09-11T20:19:05.180",
+      "lastModified": "2026-09-13T07:17:05.417",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/smc: bound the peer rkey counts in SMC-Rv2 LLC messages On a link whose device has max_recv_sge == 1 there is no shared v2 receive buffer, and smc_llc_save_add_link_rkeys() takes the v2 extension from 44 bytes past the start of the queue entry's inline message: ext = (struct smc_llc_msg_add_link_v2_ext *)(llc_msg + SMC_WR_TX_SIZE); The entry is a 72-byte allocation and the extension starts at offset 68, so ext->num_rkeys at ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2d1e7c5aaa3326e95e2058457f172ca99a9a4577",
+        "https://git.kernel.org/stable/c/486c699a8cde82c1d9b4f443eeab4ddf86358cb0",
+        "https://git.kernel.org/stable/c/5e5d9e6df677d30a2203d257b5fd8b99814fa607"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80981",
+      "published": "2026-09-11T20:19:04.520",
+      "lastModified": "2026-09-13T07:17:05.000",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/smc: fix use-after-free of the LLC qentry in smc_llc_srv_add_link() smc_llc_srv_add_link() keeps add_llc pointing into the queue entry: add_llc = &qentry->msg.add_link; smc_llc.c:1482 ... smc_llc_save_add_link_info(link_new, add_llc); smc_llc.c:1494 smc_llc_flow_qentry_del(&lgr->llc_flow_lcl); smc_llc.c:1495 ... u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ? (u8 *)lgr->wr_rx_buf_v2 : (u8 *)add_llc; smc_llc.c:1504 smc_llc_sav",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/a42a459ef0e54cb0c4b3e43e21cb0e658e664f64",
+        "https://git.kernel.org/stable/c/adef84cc85d449ac28d2b4b4c49cf19619c56e27",
+        "https://git.kernel.org/stable/c/c52a998a223e7e84333306996edec096178d1e95"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80980",
+      "published": "2026-09-11T20:19:04.407",
+      "lastModified": "2026-09-13T07:17:04.887",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/smc: stop killed, freed and out_of_sync sharing a byte The three connection state flags are single-bit bitfields, so they occupy one byte of struct smc_connection and every store to one is a read-modify-write of the other two: u8 killed : 1; u8 freed : 1; u8 out_of_sync : 1; They are not written under a common lock. smc_cdc_msg_validate() sets out_of_sync from the receive tasklet, while smc_conn_kill() sets killed from proce",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2cb7a8d64b7e8ccdc69bbe48fe9c4eaa79c33aec",
+        "https://git.kernel.org/stable/c/313f79149eb337411c64e2c247234b62ef9a3cb9",
+        "https://git.kernel.org/stable/c/db51a8658c11a82432b64999519a269c3aabb447"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80976",
+      "published": "2026-09-11T20:19:03.887",
+      "lastModified": "2026-09-13T07:17:04.323",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: seg6: reset IP6CB after IPv6 decapsulation decap_and_validate() pulls the outer SRv6 headers and makes the inner packet the skb network header. The IPv6 control block still contains values collected while parsing the outer packet, including nhoff and extension-header flags. End.DX6 and End.DT6 route the inner IPv6 packet directly to the IPv6 input path. An unprivileged user can reach End.DT6 from a user and net namespace by inst",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2b154e96fcb3f01fd42765c64e0a56820fbc16eb",
+        "https://git.kernel.org/stable/c/c73fb911e02b9a766c950bc9707f3e3a96ffd702",
+        "https://git.kernel.org/stable/c/cfa186a0857a0f831dfca67b16bbc40ecfdf3280",
+        "https://git.kernel.org/stable/c/f967455fb2a5a2079b9eb5823e9ccf359174bf9f"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80945",
+      "published": "2026-09-11T20:19:00.057",
+      "lastModified": "2026-09-13T07:17:01.827",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: crypto: iaa - unmap dst before software fallback on decompress On a hardware analytics error, decompress retries through the software fallback, which writes req->dst with the CPU while it is still mapped DMA_FROM_DEVICE. With SWIOTLB active the later dma_unmap_sg() copies the stale bounce buffer over req->dst, corrupting the result. Unmap before the fallback runs. The async path unmaps inline; the sync path signals the retry wit",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/94a25930477113730372e0fa2985da4c5ac95c9a",
+        "https://git.kernel.org/stable/c/fc933a4a419ba8a75da28666a018602c44846953",
+        "https://git.kernel.org/stable/c/fcd86180ef78b0e41763faef7c6d2de7dfb50c1a"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80926",
+      "published": "2026-09-11T20:18:56.257",
+      "lastModified": "2026-09-13T07:16:59.460",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ksmbd: fix use-after-free in oplock break notification smb2_oplock_break_noti() reads opinfo->conn without any lock and dereferences it after two allocations which may sleep. When the durable handle owning the oplock is disconnected, session_fd_check() clears opinfo->conn and drops its conn reference under ci->m_lock, and the last ksmbd_conn_put() frees the connection. A break triggered by another connection that races with the ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0e753899627b5e28a9fea8bca98262a6f65a2452",
+        "https://git.kernel.org/stable/c/8cc98db4fc590e6c7d9db6529320982ee16c5d1d",
+        "https://git.kernel.org/stable/c/c8279ae8df68cce9cd3b785e85f7a86c80a46e78"
       ],
       "kev": {
         "in_kev": false
@@ -662,2257 +2618,6 @@
         "https://blog.lexfo.fr/casse-spip-sqli-to-rce.html",
         "https://blog.spip.net/Mise-a-jour-critique-de-securite-sortie-de-SPIP-4-4-18.html",
         "https://www.vulncheck.com/advisories/spip-remote-code-execution-via-editer-objet-php-job-queue-injection"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-72709",
-      "published": "2026-09-11T17:18:58.760",
-      "lastModified": "2026-09-11T18:16:57.770",
-      "vulnStatus": "Deferred",
-      "description": "SPIP before 4.4.18 contains a missing authorization vulnerability in the administrative action endpoints under ecrire/action/ that allows unauthenticated attackers to perform privileged actions by supplying a valid HMAC-SHA256 nonce without any server-side permission check via autoriser(). Attackers can obtain a valid nonce, compute it for any action as the anonymous user, and invoke the editer_auteur action directly over HTTP to reset the password of any user account, including the administrato",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "SPIP SPIP"
-      ],
-      "references": [
-        "https://blog.lexfo.fr/casse-spip-sqli-to-rce.html",
-        "https://blog.spip.net/Mise-a-jour-critique-de-securite-sortie-de-SPIP-4-4-18.html",
-        "https://www.vulncheck.com/advisories/spip-missing-authorization-via-ecrire-action-editer-auteur"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89010",
-      "published": "2026-09-11T15:17:08.357",
-      "lastModified": "2026-09-11T17:35:21.440",
-      "vulnStatus": "Deferred",
-      "description": "WAVLINK WN535M1 and WN535M3 routers running firmware prior to M35M1_V250922 contain an unauthenticated OS command injection vulnerability that allows remote attackers to execute arbitrary commands as root by sending crafted filenames to the sync_server daemon on TCP port 13136. The daemon interpolates attacker-controlled filename input containing shell metacharacters into a shell command string via sprintf() and passes it to system() without sanitization, enabling root-level command execution on",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "WAVLINK Technology WN535M1",
-        "WAVLINK Technology WN535M3"
-      ],
-      "references": [
-        "https://docs.wavlink.xyz/",
-        "https://github.com/camdsmith/wavlink-sync_server-rce/blob/main/README.md",
-        "https://www.vulncheck.com/advisories/wavlink-wn535m1-wn535m3-unauthenticated-os-command-injection-via-sync-server"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89009",
-      "published": "2026-09-11T15:17:08.190",
-      "lastModified": "2026-09-11T17:35:21.440",
-      "vulnStatus": "Deferred",
-      "description": "WAVLINK WN535M1 and WN535M3 routers running firmware prior to M35M1_V250922 contain an unauthenticated arbitrary file write vulnerability that allows remote attackers to overwrite any file on the device by sending a crafted payload to the sync_server daemon on TCP port 13136. The daemon, which runs as root and requires no authentication, accepts a 100-byte filename field in its protocol header without path canonicalization, allowing attackers to supply an absolute path and write arbitrary conten",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-36",
-          "name": "CWE-36"
-        }
-      ],
-      "vendors": [
-        "WAVLINK Technology WN535M1",
-        "WAVLINK Technology WN535M3"
-      ],
-      "references": [
-        "https://docs.wavlink.xyz/",
-        "https://github.com/camdsmith/wavlink-sync_server-rce/blob/main/README.md",
-        "https://www.vulncheck.com/advisories/wavlink-wn535m1-wn535m3-unauthenticated-arbitrary-file-write-via-sync-server"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-71644",
-      "published": "2026-09-11T14:17:32.667",
-      "lastModified": "2026-09-11T16:17:47.023",
-      "vulnStatus": "Received",
-      "description": "An issue in Robotics-STAR-Lab (SYSU STAR Group) RACER Tested affected version: commit abcdef1234567890 allows an attacker to cause unsafe trajectory planning and potential UAV collisions via a missing default case in the FSM that stops publishing swarm trajectories when the drone enters IDLE",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-843",
-          "name": "Type Confusion"
-        }
-      ],
-      "vendors": [],
-      "references": [
-        "https://gist.github.com/DongJiaxin0422/6c39c3c59236bc2c8ec4b4182284fa7e",
-        "https://github.com/Robotics-STAR-Lab/RACER",
-        "https://github.com/Robotics-STAR-Lab/RACER/issues/50"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-84390",
-      "published": "2026-09-11T13:18:18.980",
-      "lastModified": "2026-09-11T18:24:59.400",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "A inclusion of sensitive information in source code vulnerability in Fortinet FortiMonitorOnSight 7.2.4 through 7.2.7, FortiMonitorOnSight 7.2.0 through 7.2.2 may allow attacker to improper access control via <insert attack vector here>",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-540",
-          "name": "CWE-540"
-        }
-      ],
-      "vendors": [
-        "Fortinet FortiMonitorOnSight"
-      ],
-      "references": [
-        "https://fortiguard.fortinet.com/psirt/FG-IR-26-170"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-80462",
-      "published": "2026-09-11T13:18:18.300",
-      "lastModified": "2026-09-11T13:18:18.300",
-      "vulnStatus": "Received",
-      "description": "A vulnerability in the Chef Automate API gateway and identity validation path may allow an unauthenticated actor to gain elevated access to protected Chef Automate functionality under specific conditions.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Progress Software Chef Automate"
-      ],
-      "references": [
-        "https://community.progress.com/s/article/Critical-Security-Bulletin---August-2026---Chef-Automate-Security-Vulnerability"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89259",
-      "published": "2026-09-11T12:16:56.480",
-      "lastModified": "2026-09-11T21:17:57.873",
-      "vulnStatus": "Received",
-      "description": "Hugo is a static site generator. From v0.161.0, Hugo executes Node tools under Node's permission model, but TailwindCSS \u2014 included in the default security.exec.allow list \u2014 requires a highly permissive configuration (--allow-addons, --allow-child-process, --allow-worker). As a result, the restrictions intended by the fix for GHSA-x597-9fr4-5857 could still be bypassed, allowing a Node tool invoked during a build to read and write files outside the project's working directory. Affected versions a",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-250",
-          "name": "CWE-250"
-        }
-      ],
-      "vendors": [
-        "gohugoio hugo"
-      ],
-      "references": [
-        "https://github.com/gohugoio/hugo/security/advisories/GHSA-vrm6-x8vp-mv2r",
-        "https://www.vulncheck.com/advisories/hugo-before-0.165.0-insufficient-permission-restriction-via-tailwindcss"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-14563",
-      "published": "2026-09-11T07:16:46.177",
-      "lastModified": "2026-09-11T17:35:21.440",
-      "vulnStatus": "Deferred",
-      "description": "The advanced-customized-prompts WordPress plugin through 1.0.1 does not verify the password before issuing an authenticated session for a supplied email address in an unauthenticated action, allowing unauthenticated attackers to log in as any registered user, including administrators, or to create arbitrary new accounts.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        }
-      ],
-      "vendors": [
-        "Unknown advanced-customized-prompts"
-      ],
-      "references": [
-        "https://wpscan.com/vulnerability/7c7ad196-dff3-485f-9a50-8705bd796fb3/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-14560",
-      "published": "2026-09-11T07:16:45.980",
-      "lastModified": "2026-09-11T17:35:21.440",
-      "vulnStatus": "Deferred",
-      "description": "The teddy-bear-customize-addon WordPress plugin through 1.0.5 does not properly validate uploaded files, relying on a client-supplied content type and preserving the original filename, allowing unauthenticated attackers to upload arbitrary PHP files and execute code on the server.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [
-        "Unknown teddy-bear-customize-addon"
-      ],
-      "references": [
-        "https://wpscan.com/vulnerability/aba51906-91dc-4e75-ad44-373fe128deee/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-14559",
-      "published": "2026-09-11T07:16:45.877",
-      "lastModified": "2026-09-11T17:35:21.440",
-      "vulnStatus": "Deferred",
-      "description": "The teddy-bear-customize-addon WordPress plugin through 1.0.5 does not verify a user's password before authenticating them, allowing unauthenticated attackers to log in as any registered user, including administrators, by supplying only that user's email address.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        }
-      ],
-      "vendors": [
-        "Unknown teddy-bear-customize-addon"
-      ],
-      "references": [
-        "https://wpscan.com/vulnerability/90cbbed5-9662-4405-88b8-bd55854dccdf/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-8778",
-      "published": "2026-09-11T04:18:04.617",
-      "lastModified": "2026-09-11T21:17:58.797",
-      "vulnStatus": "Deferred",
-      "description": "The MIPL Grouped Checkout Fields for WooCommerce \u2013 Customize & Organize Checkout Fields. plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the `mipl_wc_upload_file` function in all versions up to, and including, 1.2.1. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-434",
-          "name": "Unrestricted Dangerous File Upload"
-        }
-      ],
-      "vendors": [
-        "mulika MIPL Grouped Checkout Fields for WooCommerce. Customize & Organize Checkout Fields."
-      ],
-      "references": [
-        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/include/class-mipl-wc-cf-checkout-block.php#L415",
-        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/mipl-wc-checkout-fields.php#L260",
-        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/include/class-mipl-wc-cf-checkout-block.php#L415",
-        "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/mipl-wc-checkout-fields.php#L260"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-82107",
-      "published": "2026-09-10T22:17:04.220",
-      "lastModified": "2026-09-11T14:56:50.613",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to obtain sensitive information and bypass security restrictions due to improper authentication.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        }
-      ],
-      "vendors": [
-        "IBM DataStage on Cloud Pak for Data"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286562"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-82100",
-      "published": "2026-09-10T22:17:04.090",
-      "lastModified": "2026-09-11T15:17:06.230",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to cause a denial of service due to a path traversal vulnerability.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        }
-      ],
-      "vendors": [
-        "IBM DataStage on Cloud Pak for Data"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286562"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81204",
-      "published": "2026-09-10T22:17:01.580",
-      "lastModified": "2026-09-12T04:16:38.837",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 could allow a remote attacker to execute arbitrary code due to code injection during graph construction.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [
-        "IBM Langflow OSS"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286666"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-80424",
-      "published": "2026-09-10T22:17:01.163",
-      "lastModified": "2026-09-11T14:56:50.613",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated attacker to create arbitrary files due to path traversal during archive extraction.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        }
-      ],
-      "vendors": [
-        "IBM DataStage on Cloud Pak for Data"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286562"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-79724",
-      "published": "2026-09-10T22:17:00.530",
-      "lastModified": "2026-09-12T04:16:38.573",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 could allow a remote attacker to execute arbitrary OS commands due to improper neutralization of special elements used in an OS command.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "IBM Langflow OSS"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286666"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-78573",
-      "published": "2026-09-10T22:16:59.987",
-      "lastModified": "2026-09-11T21:17:16.610",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM ContextForge MCP Gateway 1.0.0 through 1.0.7 could allow a remote attacker to gain administrative access due to the use of default credentials.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-1392",
-          "name": "CWE-1392"
-        }
-      ],
-      "vendors": [
-        "IBM ContextForge MCP Gateway"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286834"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-45764",
-      "published": "2026-09-10T22:16:56.250",
-      "lastModified": "2026-09-11T18:24:59.400",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Suricata is a network Intrusion Detection System, Intrusion Prevention System and Network Security Monitoring engine. Prior to versions 7.0.16 and 8.0.5, a protocol change while processing HTTP/2 traffic could lead to type confusion in Suricata. Crafted traffic may cause Suricata to crash, resulting in denial of service. Versions 7.0.16 and 8.0.5 contain a fix. As a workaround, disable HTTP/2 parsing if it is not required.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-843",
-          "name": "Type Confusion"
-        }
-      ],
-      "vendors": [
-        "OISF suricata"
-      ],
-      "references": [
-        "https://forum.suricata.io/t/suricata-8-0-5-and-7-0-16-released/6315",
-        "https://github.com/OISF/suricata/security/advisories/GHSA-5rvq-72r5-rqhr",
-        "https://redmine.openinfosecfoundation.org/issues/8492"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-19646",
-      "published": "2026-09-10T22:16:55.697",
-      "lastModified": "2026-09-11T18:16:56.877",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "IBM Common Licensing Agent 9.0, Agent 9.0.0.1, Agent 9.0.0.2, ART 9.0, ART 9.0.0.1, and ART 9.0.0.2 could allow a remote attacker to redirect users to an arbitrary domain due to improper validation of the HTTP Host header.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-1149",
-          "name": "CWE-1149"
-        }
-      ],
-      "vendors": [
-        "IBM Common Licensing"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286490"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89094",
-      "published": "2026-09-10T21:17:53.160",
-      "lastModified": "2026-09-10T21:17:53.160",
-      "vulnStatus": "Received",
-      "description": "Forgejo before 16.0.4 allows remote code execution via a crafted template repository because template expansion on files in .forgejo/template is mishandled.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-1336",
-          "name": "CWE-1336"
-        }
-      ],
-      "vendors": [
-        "Forgejo Forgejo"
-      ],
-      "references": [
-        "https://codeberg.org/forgejo/forgejo/milestone/139655",
-        "https://news.ycombinator.com/item?id=49645907"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85025",
-      "published": "2026-09-10T21:17:51.990",
-      "lastModified": "2026-09-12T04:16:44.783",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "IBM Langflow OSS 1.0.0 through 1.11.5 Langflow could allow an unauthenticated attacker to execute arbitrary code and access or modify chat sessions through publicly shared MCP project endpoints due to improper enforcement of public-flow security restrictions and session isolation controls.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-863",
-          "name": "Incorrect Authorization"
-        }
-      ],
-      "vendors": [
-        "IBM Langflow OSS"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7286666"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-75940",
-      "published": "2026-09-10T21:17:44.080",
-      "lastModified": "2026-09-11T15:17:03.967",
-      "vulnStatus": "Deferred",
-      "description": "A vulnerability was reported in Lenovo Health Android Application, distributed exclusively in the Chinese market, that could allow an attacker to access sensitive health-related information.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-798",
-          "name": "Use of Hard-Coded Credentials"
-        }
-      ],
-      "vendors": [
-        "Lenovo Health Application"
-      ],
-      "references": [
-        "https://iknow.lenovo.com.cn/detail/442248"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89086",
-      "published": "2026-09-10T20:17:32.113",
-      "lastModified": "2026-09-10T21:17:52.570",
-      "vulnStatus": "Received",
-      "description": "In the jose package before 0.11.0 for OCaml, library calls to validate an RSA signature only confirm that PKCS #1 decoding succeeds, and proceed to declare the signature valid without the required steps that involve the public key.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-347",
-          "name": "Improper Verification of Cryptographic Signature"
-        }
-      ],
-      "vendors": [
-        "OCaml jose"
-      ],
-      "references": [
-        "https://github.com/ulrikstrid/ocaml-jose/commit/cf17d991ec6a0d1997956b6c7799890f9c28879e",
-        "https://osv.dev/vulnerability/OSEC-2026-19"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89049",
-      "published": "2026-09-10T19:17:42.373",
-      "lastModified": "2026-09-10T19:44:21.980",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "A server-side request forgery issue due to improper validation of equivalent address representations in the port forwarding to remote hosts functionality in Amazon AWS Systems Manager Agent (SSM Agent) before 3.3.4851.0 on all platforms might allow an authenticated remote user to bypass the remote destination denylist and reach link-local endpoints, potentially obtaining the temporary IAM role credentials of a managed instance and acting with that role's permissions from outside the instance, vi",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-918",
-          "name": "Server-Side Request Forgery (SSRF)"
-        },
-        {
-          "id": "CWE-1289",
-          "name": "CWE-1289"
-        }
-      ],
-      "vendors": [
-        "AWS Amazon SSM Agent"
-      ],
-      "references": [
-        "https://aws.amazon.com/security/security-bulletins/2026-107-aws/",
-        "https://github.com/aws/amazon-ssm-agent/releases/tag/3.3.4851.0",
-        "https://github.com/aws/amazon-ssm-agent/security/advisories/GHSA-w9jw-h72g-6hxc"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89042",
-      "published": "2026-09-10T18:18:15.910",
-      "lastModified": "2026-09-11T21:17:56.573",
-      "vulnStatus": "Deferred",
-      "description": "passport-saml-encrypted through 0.1.13 makes SAML signature verification conditional on an optional cert option, allowing attackers to bypass authentication by submitting unsigned SAML responses. Attackers can post forged SAML responses with arbitrary NameID and attributes to the assertion consumer service endpoint to receive authenticated profiles without valid signatures.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-347",
-          "name": "Improper Verification of Cryptographic Signature"
-        }
-      ],
-      "vendors": [
-        "krakenjs passport-saml-encrypted"
-      ],
-      "references": [
-        "https://github.com/krakenjs/passport-saml-encrypted",
-        "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L296",
-        "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L321",
-        "https://github.com/krakenjs/passport-saml-encrypted/issues/29"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88044",
-      "published": "2026-09-10T17:17:08.387",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. From 1.70.0 until 1.75.1, the serve/start RC interface accepts per-server proxyOpt.AuthProxy settings, and the FTP and S3 constructors in cmd/serve/ftp/ftp.go and cmd/serve/s3/server.go incorrectly check the process-global proxy.Opt.AuthProxy value instead. When the global value is empty, the request-local authentication proxy is ignored: FTP falls back to the fixed filesystem with usern",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-863",
-          "name": "Incorrect Authorization"
-        }
-      ],
-      "vendors": [
-        "rclone rclone"
-      ],
-      "references": [
-        "https://github.com/rclone/rclone/commit/739403963abf6f58003c2becd5f7c4ad0d644153",
-        "https://github.com/rclone/rclone/releases/tag/v1.75.1",
-        "https://github.com/rclone/rclone/security/advisories/GHSA-p569-5gjg-9cmj"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85228",
-      "published": "2026-09-10T17:17:06.437",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "An integer overflow in the tensor buffer validation component in Amazon Deep Java Library (DJL) from 0.13.0 through 0.36.0 on all platforms might allow a remote unauthenticated actor to obtain information from adjacent process memory or cause a denial of service via a crafted tensor payload. To remediate this issue, users should upgrade to version 0.37.0 or above.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-190",
-          "name": "Integer Overflow / Wraparound"
-        }
-      ],
-      "vendors": [
-        "Amazon Deep Java Library"
-      ],
-      "references": [
-        "https://aws.amazon.com/security/security-bulletins/2026-106-aws/",
-        "https://github.com/deepjavalibrary/djl/releases/tag/v0.37.0"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-68488",
-      "published": "2026-09-10T17:17:05.437",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "A Time-of-check Time-of-use (TOCTOU) race condition leading to insecure symlink following in Plesk causes local privilege escalation to root via arbitrary file/directory ownership takeover.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.0",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-367",
-          "name": "Time-of-Check Time-of-Use Race Condition"
-        }
-      ],
-      "vendors": [
-        "WebPros Plesk"
-      ],
-      "references": [
-        "https://support.plesk.com/hc/en-us/articles/43248932867351-Vulnerability-in-Plesk-s-Backup-Manager-symlink-race-during-restore-allows-root-privilege-escalation"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-68487",
-      "published": "2026-09-10T17:17:05.310",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Path traversal in Plesk's Backup Manager causes arbitrary file write as root by an authenticated customer.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.0",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-36",
-          "name": "CWE-36"
-        }
-      ],
-      "vendors": [
-        "WebPros Plesk"
-      ],
-      "references": [
-        "https://support.plesk.com/hc/en-us/articles/43248841638551-Vulnerability-in-Plesk-s-Backup-Manager-unsigned-backup-header-allows-path-traversal"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-52098",
-      "published": "2026-09-10T17:17:04.940",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "An issue in Flowise 3.1.2 allows a remote attacker to execute arbitrary code via the /api/v1/prediction/<flowId> endpoint",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [],
-      "references": [
-        "https://github.com/FlowiseAI/Flowise",
-        "https://github.com/FlowiseAI/Flowise/blob/main/packages/server/src/utils/constants.ts",
-        "https://github.com/FlowiseAI/Flowise/blob/main/packages/server/src/utils/validateKey.ts"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88899",
-      "published": "2026-09-10T16:18:12.120",
-      "lastModified": "2026-09-11T21:17:55.460",
-      "vulnStatus": "Deferred",
-      "description": "knowns versions before 0.31.0 fail to properly validate the x-opencode-directory request header in the /api/opencode proxy endpoint. Remote attackers can supply arbitrary directory paths to execute file operations outside the project root on the host system.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-73",
-          "name": "CWE-73"
-        }
-      ],
-      "vendors": [
-        "knowns-dev knowns"
-      ],
-      "references": [
-        "https://github.com/knowns-dev/knowns/blob/v0.30.0/internal/server/server.go#L1283-L1296",
-        "https://github.com/knowns-dev/knowns/commit/37db0561b37b48b8bd035a417d7f1da6258ae657",
-        "https://github.com/knowns-dev/knowns/releases/tag/v0.31.0",
-        "https://github.com/knowns-dev/knowns/security/advisories/GHSA-9h2q-r9fh-f98w"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88018",
-      "published": "2026-09-10T16:18:08.913",
-      "lastModified": "2026-09-10T19:54:25.810",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. Prior to 1.75.1, rclone serve s3 configured with --auth-proxy but without --auth-key allows authPairMiddleware to register any client-chosen accessKeyID with an empty ws.s3Secret. gofakes3 then verifies the request\u2019s SigV4 signature against that same empty secret, while Server.auth passes the access key identifier as both the user and authentication value to the proxy without an independ",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "rclone rclone"
-      ],
-      "references": [
-        "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd",
-        "https://github.com/rclone/rclone/releases/tag/v1.75.1",
-        "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81468",
-      "published": "2026-09-10T16:17:58.157",
-      "lastModified": "2026-09-11T13:18:18.653",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Dell ThinOS 10, versions prior to 2605_10. 2616, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A high privileged attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Dell ThinOS 10"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81467",
-      "published": "2026-09-10T16:17:58.040",
-      "lastModified": "2026-09-11T13:18:18.543",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Dell ThinOS 10, versions prior to 2605_10. 2616, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Dell ThinOS 10"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81048",
-      "published": "2026-09-10T16:17:57.543",
-      "lastModified": "2026-09-11T04:17:57.060",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Dell ThinOS 10, versions prior to 2605_10.2616, contain an Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Remote Code execution",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-77",
-          "name": "Command Injection"
-        }
-      ],
-      "vendors": [
-        "Dell ThinOS 10"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81046",
-      "published": "2026-09-10T16:17:57.417",
-      "lastModified": "2026-09-11T13:18:18.437",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Dell ThinOS 10, versions prior to 2605_10.2616, contain a Protection Mechanism Failure vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Arbitrary Code Execution within the application context.",
-      "cvss": {
-        "score": 9.4,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-284",
-          "name": "Improper Access Control"
-        }
-      ],
-      "vendors": [
-        "Dell ThinOS 10"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-us/000502746/dsa-2026-389-security-update-for-dell-thinos-10-for-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-81800",
-      "published": "2026-09-10T15:17:46.360",
-      "lastModified": "2026-09-11T21:17:19.743",
-      "vulnStatus": "Deferred",
-      "description": "Unauthenticated SQL Injection in Verified Reviews (Avis V\u00e9rifi\u00e9s) <= 2.4.6 versions.",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "Par avisverifies Verified Reviews (Avis V\u00e9rifi\u00e9s)"
-      ],
-      "references": [
-        "https://patchstack.com/database/wordpress/plugin/netreviews/vulnerability/wordpress-verified-reviews-avis-verifies-plugin-2-4-6-sql-injection-vulnerability?_s_id=cve"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88877",
-      "published": "2026-09-10T14:17:16.023",
-      "lastModified": "2026-09-10T15:17:57.790",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "Traefik is a HTTP reverse proxy and load balancer. In versions >= v3.7.0 and <= v3.7.11, the Kubernetes ingress-nginx provider mishandles Ingresses that carry both an authentication annotation and the nginx.ingress.kubernetes.io/from-to-www-redirect annotation. For such Ingresses the provider creates an additional 'sibling' router that matches on the host alone, carries only the RedirectRegex middleware, and still points at the parent router's protected backend service. Because RedirectRegex is ",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-639",
-          "name": "CWE-639"
-        }
-      ],
-      "vendors": [
-        "traefik traefik"
-      ],
-      "references": [
-        "https://github.com/traefik/traefik/security/advisories/GHSA-cjr6-pf59-jq29",
-        "https://www.vulncheck.com/advisories/traefik-3.7.0-authentication-bypass-via-from-to-www-redirect"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88869",
-      "published": "2026-09-10T14:17:14.637",
-      "lastModified": "2026-09-10T16:18:10.990",
-      "vulnStatus": "Deferred",
-      "description": "AVideo through commit c3edcc274c389816d434acadac07ee78eaf330c1 contains a stored cross-site scripting vulnerability in the AD_Server plugin's log.php endpoint that fails to escape the label parameter before storage. An unauthenticated attacker can inject malicious HTML through the label parameter, which is later rendered unsanitized in the admin Ad Types report using jQuery .html(), allowing execution of arbitrary JavaScript in an administrator's browser session.",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-79",
-          "name": "Cross-Site Scripting (XSS)"
-        }
-      ],
-      "vendors": [
-        "WWBN AVideo"
-      ],
-      "references": [
-        "https://github.com/WWBN/AVideo/security/advisories/GHSA-h68w-3r38-wmm8",
-        "https://www.vulncheck.com/advisories/avideo-ad-server-stored-xss-via-log-php-label-parameter"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88864",
-      "published": "2026-09-10T14:17:12.187",
-      "lastModified": "2026-09-10T15:17:57.103",
-      "vulnStatus": "Deferred",
-      "description": "Capgo (capgo.app) fails to restrict direct write access to the public.sso_providers table exposed through Supabase PostgREST. A holder of an ordinary Capgo full API key can insert a row with status='active' and enforce_sso=true, bypassing the intended backend SSO provisioning route (supabase/functions/_backend/private/sso/providers.ts) and its controls: the Enterprise plan requirement, SSO provider creation via the Supabase Management API, DNS TXT domain-ownership verification, the pending_verif",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-284",
-          "name": "Improper Access Control"
-        }
-      ],
-      "vendors": [
-        "Cap-go capgo.app"
-      ],
-      "references": [
-        "https://github.com/Cap-go/capgo.app/security/advisories/GHSA-xg7v-83qv-qfff",
-        "https://www.vulncheck.com/advisories/capgo-sso-provider-authentication-bypass-via-postgrest-direct-write"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-9163",
-      "published": "2026-09-10T13:20:33.663",
-      "lastModified": "2026-09-10T15:13:07.090",
-      "vulnStatus": "Deferred",
-      "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in GIS Informatics GisLab Laboratory Management System allows SQL Injection. This issue affects GisLab Laboratory Management System: from 1.4.03 before 1.5.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "GIS Informatics GisLab Laboratory Management System"
-      ],
-      "references": [
-        "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1063"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-8323",
-      "published": "2026-09-10T09:17:06.250",
-      "lastModified": "2026-09-10T16:18:12.997",
-      "vulnStatus": "Deferred",
-      "description": "URL redirection to untrusted site ('open redirect') vulnerability in Armiya Information Technologies Ltd. Co. Access Control System allows Fake the Source of Data. This issue affects Access Control System: before Versiyon 2.",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-601",
-          "name": "Open Redirect"
-        }
-      ],
-      "vendors": [
-        "Armiya Information Technologies Ltd. Co. Access Control System"
-      ],
-      "references": [
-        "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1061"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88285",
-      "published": "2026-09-10T09:17:05.563",
-      "lastModified": "2026-09-10T16:18:10.260",
-      "vulnStatus": "Deferred",
-      "description": "GeoVision GV-LPC2211 V1.13 exposes a network-accessible PTZ control service without authentication, allowing remote clients to retrieve PTZ information and issue PTZ or raw serial commands.",
-      "cvss": {
-        "score": 9.4,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "GeoVision Inc. GV-LPC2011/LPC2211"
-      ],
-      "references": [
-        "https://www.geovision.com.tw/cyber_security.php"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-88278",
-      "published": "2026-09-10T09:17:04.787",
-      "lastModified": "2026-09-10T16:18:09.483",
-      "vulnStatus": "Deferred",
-      "description": "GeoVision GV-LPC2211 V1.13 fails to enforce WS-Security UsernameToken freshness or nonce reuse protection, allowing a captured PasswordDigest token to be replayed for subsequent ONVIF operations.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-294",
-          "name": "CWE-294"
-        }
-      ],
-      "vendors": [
-        "GeoVision Inc. GV-LPCLPC2011/2211"
-      ],
-      "references": [
-        "https://www.geovision.com.tw/cyber_security.php"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-59679",
-      "published": "2026-09-10T09:17:02.883",
-      "lastModified": "2026-09-10T15:43:03.760",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "fs_read_glyphs() in the libXfont2 font-server client (src/fc/fserve.c) indexes the per-character encoding[] array using num_chars from the FS_QueryXBitmaps16 reply, but that array was allocated with a size derived from num_extents in the separate FS_QueryXExtents16 reply. The two CARD32 fields are never cross-checked. A malicious or compromised font server can send a small num_extents (e.g. 1) in the extents reply, then a large num_chars (e.g. 100000) in the bitmaps reply. This causes attacker-c",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-787",
-          "name": "Out-of-Bounds Write"
-        }
-      ],
-      "vendors": [
-        "SUSE Container suse/kiosk/tigervnc-x11vnc:1.14-63.8",
-        "SUSE Container suse/kiosk/xorg:21.1-83.7",
-        "SUSE Image SLES15-SP6-SAP",
-        "SUSE Image SLES15-SP6-SAP-Azure",
-        "SUSE Image SLES15-SP6-SAP-Azure-3P"
-      ],
-      "references": [
-        "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2026-59679"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-44950",
-      "published": "2026-09-10T09:17:02.490",
-      "lastModified": "2026-09-10T19:17:27.730",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "fs_read_glyphs() in the libXfont2 font-server client (src/fc/fserve.c) copies each glyph's bitmap into a single buffer. Existing checks validates only that the source slice (position, length) lies within the source bitmap buffer. It does not check whether the running destination cursor has exceeded the allocation. A malicious font server can send overlapping source offsets -- for example 1000 glyphs each referencing {position:0, length:64} with nbytes=64. Each individual source range passes the ",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "SUSE Container suse/kiosk/tigervnc-x11vnc:1.14-63.8",
-        "SUSE Container suse/kiosk/xorg:21.1-83.7",
-        "SUSE Image SLES15-SP6-SAP",
-        "SUSE Image SLES15-SP6-SAP-Azure",
-        "SUSE Image SLES15-SP6-SAP-Azure-3P"
-      ],
-      "references": [
-        "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2026-44950"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-80352",
-      "published": "2026-09-10T08:16:59.070",
-      "lastModified": "2026-09-10T16:17:57.120",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Camel K. A YAML injection vulnerability in custom resource configuration allows an authorized CR author to inject arbitrary Kubernetes objects, potentially enabling unauthorized resource creation with the privileges of the operator. This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2. Users are recommended to upgrade to version 2.9.3, 2.10.2 or 2.11.0, which fixes the issue.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Camel K"
-      ],
-      "references": [
-        "https://camel.apache.org/security/CVE-2026-80352.html",
-        "http://www.openwall.com/lists/oss-security/2026/09/10/15"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-80351",
-      "published": "2026-09-10T08:16:58.947",
-      "lastModified": "2026-09-10T16:17:56.967",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Improper neutralization of directives in dynamically evaluated code ('eval injection') vulnerability in Apache Camel K. An improper neutralization of directives in dynamically evaluated Maven configuration allows tenant-controlled repository content to influence code execution within the operator pod, potentially enabling tenants to execute arbitrary code with the privileges of the operator. This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2. Users are recommen",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-95",
-          "name": "CWE-95"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Camel K"
-      ],
-      "references": [
-        "https://camel.apache.org/security/CVE-2026-80351.html",
-        "http://www.openwall.com/lists/oss-security/2026/09/10/14"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-7188",
-      "published": "2026-09-10T08:16:57.893",
-      "lastModified": "2026-09-10T15:13:07.090",
-      "vulnStatus": "Deferred",
-      "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in Armiya Information Technologies Ltd. Co. Access Control System allows SQL Injection. This issue affects Access Control System: before Versiyon 2.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "Armiya Information Technologies Ltd. Co. Access Control System"
-      ],
-      "references": [
-        "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1061"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-78361",
-      "published": "2026-09-10T07:17:03.143",
-      "lastModified": "2026-09-10T15:13:07.090",
-      "vulnStatus": "Deferred",
-      "description": "The zipMoney(Zip Co) Payments Plugin for WooCommerce WordPress plugin before 2.4.0 does not perform any authorisation checks on one of its front-end request handlers, and does not restrict which option name a caller may supply, allowing unauthenticated users to delete arbitrary WordPress options. This can be used to destroy site and access control configuration, deactivate every installed zipMoney(Zip Co) Payments Plugin for WooCommerce WordPress plugin before 2.4.0, and take the site offline.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Unknown zipMoney(Zip Co) Payments Plugin for WooCommerce"
-      ],
-      "references": [
-        "https://wpscan.com/vulnerability/8b9a00f5-d7f5-447d-b109-d15e2cde3885/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-77770",
-      "published": "2026-09-10T07:17:02.943",
-      "lastModified": "2026-09-10T15:13:07.090",
-      "vulnStatus": "Deferred",
-      "description": "The miniOrange 2FA WordPress plugin before 6.3.1, miniOrange 2FA WordPress plugin before 19.3 does not require a validated transaction before deleting site options whose names come from unauthenticated request input, allowing any visitor to delete arbitrary options, which can lock every administrator out of the dashboard or deactivate every miniOrange 2FA WordPress plugin before 6.3.1, miniOrange 2FA WordPress plugin before 19.3 on the site.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Unknown miniOrange 2FA"
-      ],
-      "references": [
-        "https://wpscan.com/vulnerability/68bc7294-1ee6-44a9-9995-3b23b921f750/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-84939",
-      "published": "2026-09-10T06:17:06.460",
-      "lastModified": "2026-09-11T13:06:56.423",
-      "vulnStatus": "Analyzed",
-      "description": "Path traversal vulnerability in Apache FreeMarker template loading mechanism, if the attacker can specify an arbitrary malformed locale identifier to FreeMarker, and the localized lookup configuration setting is enabled (it's by default enabled). This issue affects Apache FreeMarker from 2.2.0 through 2.3.34. Users are recommended to upgrade to version 2.3.35. Disabling localized lookup in previous versions also mitigates this. Note that even in versions affected by this vulnerability, the files",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-23",
-          "name": "CWE-23"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache FreeMarker"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/hrd7o2ylwkkswdyhyzllgqt0f80kyd5y",
-        "http://www.openwall.com/lists/oss-security/2026/09/08/2"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-67593",
-      "published": "2026-09-10T05:17:01.560",
-      "lastModified": "2026-09-10T16:17:45.273",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "A remote attacker can craft an Openwire RemoveSubscriptionInfo command to cause the deletion of a queue on the Artemis broker before the connection authentication and authorization stage or at any time thereafter. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Artemis",
-        "Apache Software Foundation Apache ActiveMQ Artemis"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/zlglnsg8s5xv8n56d15dm5mf00h2d8xs",
-        "http://www.openwall.com/lists/oss-security/2026/09/10/6"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-57967",
-      "published": "2026-09-10T05:17:01.443",
-      "lastModified": "2026-09-10T16:17:16.243",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "An unauthenticated remote attacker can craft a CORE protocol SESSION_REATTACH packet to steal an existing session and assume ongoing execution of the previously authenticated session. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Artemis",
-        "Apache Software Foundation Apache ActiveMQ Artemis"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/fxfjqrdsnksw5f17zs3yqo864lblgv6y",
-        "http://www.openwall.com/lists/oss-security/2026/09/10/5"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-49364",
-      "published": "2026-09-10T05:17:01.230",
-      "lastModified": "2026-09-10T16:17:13.750",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "An unauthenticated network-adjacent attacker can leverage discovery to capture cluster administrative credentials during the initial cluster connection handshake. This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.0.0 through 2.44.0. Users are recommended to upgrade to version 2.57.0, which fixes the issue.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Artemis",
-        "Apache Software Foundation Apache ActiveMQ Artemis"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/4qbgcz3k38q30bfbf7hphtomrdc8l8n8",
-        "http://www.openwall.com/lists/oss-security/2026/09/10/3"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-19583",
-      "published": "2026-09-10T03:16:59.010",
-      "lastModified": "2026-09-11T04:17:24.930",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Velociraptor allows some sensitive artifacts to be gated by additional permissions. For example, the Linux.Sys.BashShell artifact allows arbitrary command execution on endpoints, and so it requires the EXECVE permission to schedule. However, no such check was implemented for client monitoring artifacts. Additionally there was no requirement that client monitoring artifacts carry the CLIENT_EVENTS type. This allows any user who can schedule client monitoring artifacts to also schedule otherwise r",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-732",
-          "name": "Incorrect Permission Assignment"
-        }
-      ],
-      "vendors": [
-        "Rapid7 Velociraptor"
-      ],
-      "references": [
-        "http://docs.velociraptor.app/announcements/advisories/cve-2026-19583/",
-        "https://github.com/Velocidex/velociraptor/pull/4967"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-18351",
-      "published": "2026-09-10T02:16:34.180",
-      "lastModified": "2026-09-10T14:39:13.757",
-      "vulnStatus": "Deferred",
-      "description": "The Drag and Drop File Upload for Elementor Forms plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 1.6.0 via the elementor_file_upload function. This is due to insufficient file type validation in the is_file_type_valid() function, which uses the attacker-controlled 'type' parameter as regex keys in the MIME allowlist, allowing blacklist bypass via a crafted extension that sanitize_file_name() later normalizes to a PHP extension. This makes it pos",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-434",
-          "name": "Unrestricted Dangerous File Upload"
-        }
-      ],
-      "vendors": [
-        "addonsorg Drag and Drop File Upload for Elementor Forms"
-      ],
-      "references": [
-        "https://plugins.svn.wordpress.org/drag-and-drop-file-upload-for-elementor-forms/tags/1.6.0/drag-and-drop-file-upload-for-elementor-forms.php",
-        "https://plugins.svn.wordpress.org/drag-and-drop-file-upload-for-elementor-forms/tags/1.6.0/fields/file_upload.php",
-        "https://plugins.trac.wordpress.org/browser/drag-and-drop-file-upload-for-elementor-forms/tags/1.6.0/fields/file_upload.php#L833",
-        "https://plugins.trac.wordpress.org/changeset/3628051/drag-and-drop-file-upload-for-elementor-forms"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87931",
-      "published": "2026-09-10T00:17:24.737",
-      "lastModified": "2026-09-10T14:39:13.757",
-      "vulnStatus": "Deferred",
-      "description": "A vulnerability has been found in Behavioral Technology Group Pavlok Behavioral Conditioning Wearable up to 20260707. Impacted is an unknown function of the component Apple Notification Center Service Event Handler. The manipulation leads to buffer overflow. The attack must be carried out from within the local network. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-119",
-          "name": "Memory Buffer Boundary Violation"
-        },
-        {
-          "id": "CWE-120",
-          "name": "Buffer Overflow"
-        }
-      ],
-      "vendors": [
-        "Behavioral Technology Group Pavlok Behavioral Conditioning Wearable"
-      ],
-      "references": [
-        "https://doi.org/10.13140/RG.2.2.35058.88009",
-        "https://vuldb.com/cve/CVE-2026-87931",
-        "https://vuldb.com/submit/881885",
-        "https://vuldb.com/vuln/401814"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-71805",
-      "published": "2026-09-09T22:18:19.043",
-      "lastModified": "2026-09-10T16:17:53.127",
-      "vulnStatus": "Deferred",
-      "description": "An arbitrary file upload and path traversal vulnerability exists in LZ-litchi 1.0.0. Unauthenticated remote attackers can upload arbitrary files and write them outside the intended storage directory via the directory parameter in POST /app-api/infra/file/upload.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-434",
-          "name": "Unrestricted Dangerous File Upload"
-        }
-      ],
-      "vendors": [],
-      "references": [
-        "https://github.com/W000i/vuln/issues/9"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-36433",
-      "published": "2026-09-09T21:17:01.983",
-      "lastModified": "2026-09-10T16:17:11.753",
-      "vulnStatus": "Deferred",
-      "description": "An issue in Actions Semiconductor Co. Ltd Tool- Media Player Utilities v.4.46 allows a physically proximate attacker execute arbitrary code via the Production.dll and RdiskUpgrade.exe components",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [],
-      "references": [
-        "https://bytescan.net/CVE/CVE-2026-36433.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87911",
-      "published": "2026-09-09T20:21:02.017",
-      "lastModified": "2026-09-10T15:53:23.707",
-      "vulnStatus": "Deferred",
-      "description": "An OS command injection weakness in the read-only enforcement of the SQL validation component in Amazon awslabs postgres-mcp-server before 1.1.7 might allow an unauthenticated actor to execute operating system commands on the host of a self-managed PostgreSQL server by placing a crafted COPY ... TO PROGRAM statement into content that is processed when an authenticated user interacts with the MCP server in its default read-only mode. To remediate this issue, users should upgrade to version 1.1.7 ",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        },
-        {
-          "id": "CWE-184",
-          "name": "CWE-184"
-        }
-      ],
-      "vendors": [
-        "AWS AWS Labs postgres MCP Server"
-      ],
-      "references": [
-        "https://aws.amazon.com/security/security-bulletins/2026-104-aws/",
-        "https://github.com/awslabs/mcp/security/advisories/GHSA-fph8-pg5w-78fv",
-        "https://pypi.org/project/awslabs.postgres-mcp-server/1.1.7/"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-54694",
-      "published": "2026-09-09T19:17:28.400",
-      "lastModified": "2026-09-10T16:17:14.873",
-      "vulnStatus": "Deferred",
-      "description": "SkillTree is a micro-learning gamification platform. Prior to version 4.4.2, two independent code flaws combine into a single exploitable attack chain, with three distinct exploitation paths of escalating impact. `StringHighlighter.js` builds an HTML string by interpolating raw `value` substrings directly into a template literal with no HTML entity encoding. `HighlightedValue.vue` renders that string \u2014 and all unfiltered plain values \u2014 via Vue's `v-html` directive, which sets `innerHTML`. Separa",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-20",
-          "name": "Improper Input Validation"
-        },
-        {
-          "id": "CWE-79",
-          "name": "Cross-Site Scripting (XSS)"
-        },
-        {
-          "id": "CWE-116",
-          "name": "CWE-116"
-        },
-        {
-          "id": "CWE-183",
-          "name": "CWE-183"
-        },
-        {
-          "id": "CWE-693",
-          "name": "CWE-693"
-        }
-      ],
-      "vendors": [
-        "NationalSecurityAgency skills-service"
-      ],
-      "references": [
-        "https://github.com/NationalSecurityAgency/skills-service/security/advisories/GHSA-hqfg-c8wf-w2g8"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87929",
-      "published": "2026-09-09T17:17:53.840",
-      "lastModified": "2026-09-09T20:14:00.420",
-      "vulnStatus": "Deferred",
-      "description": "MaxSite CMS through 109.6 ships with a hardcoded session encryption key in application/config/config.php that is never changed during installation, allowing unauthenticated attackers to forge administrator session cookies. Attackers can mint a malicious ci_session cookie with administrator privileges by computing an HMAC-SHA1 using the publicly known encryption key, bypassing authentication checks in is_login() and mso_check_allow() functions.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-321",
-          "name": "CWE-321"
-        }
-      ],
-      "vendors": [
-        "MaxSite MaxSite CMS"
-      ],
-      "references": [
-        "https://github.com/EviL0rd/maxsite-cve4/blob/main/2026.09.08-maxsite-cms-hardcoded-session-key-auth-bypass.md",
-        "https://github.com/maxsite/cms",
-        "https://github.com/maxsite/cms/blob/2ca0a0c7d1d71106a25dbb0f2aedaaefbf12802c/application/config/config.php#L230-L254",
-        "https://github.com/maxsite/cms/blob/2ca0a0c7d1d71106a25dbb0f2aedaaefbf12802c/application/maxsite/common/core/init.php#L70-L96"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-79689",
-      "published": "2026-09-09T16:17:07.197",
-      "lastModified": "2026-09-11T13:18:17.583",
-      "vulnStatus": "Analyzed",
-      "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to script injection.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Dell Secure Connect Gateway 5.0 - Application",
-        "Dell Secure Connect Gateway 5.0 - Appliance"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-in/000503426/dsa-2026-382-security-update-for-dell-secure-connect-gateway-virtual-edition-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-67401",
-      "published": "2026-09-09T16:17:03.883",
-      "lastModified": "2026-09-10T04:18:04.630",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "A vulnerability in cPanel allows a mail-enabled account to achieve remote code execution as root through SQLi in EmailTrack component",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.0",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "WebPros cPanel"
-      ],
-      "references": [
-        "https://support.cpanel.net/hc/en-us/articles/43187903921559-Security-CVE-2026-67401-SQL-Injection-Vulnerability-in-cPanel-s-EmailTrack-Functionality-September-8-2026"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-22590",
-      "published": "2026-09-09T16:17:02.387",
-      "lastModified": "2026-09-09T20:16:54.383",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "eprosima Fast DDS is a C++ implementation of the DDS (Data Distribution Service) standard of the OMG (Object Management Group). Versions prior to 2.6.12, 2.14.6, 3.2.4, 3.3.1, and 3.4.2 have a remotely triggerable Out-of-Bounds Read while processing RTPS `DATA_FRAG` submessages. An attacker can craft a `DATA_FRAG` with a large `sampleSize` but a small actual payload, and set `fragmentsInSubmessage` such that the receiver treats the packet as the LAST fragment**. In this LAST-fragment path, Fast-",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-125",
-          "name": "Out-of-Bounds Read"
-        },
-        {
-          "id": "CWE-131",
-          "name": "CWE-131"
-        }
-      ],
-      "vendors": [
-        "eProsima Fast-DDS"
-      ],
-      "references": [
-        "https://github.com/eProsima/Fast-DDS/security/advisories/GHSA-7r7h-hwfj-q626"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-79941",
-      "published": "2026-09-09T15:17:10.363",
-      "lastModified": "2026-09-11T13:18:17.817",
-      "vulnStatus": "Analyzed",
-      "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to script injection.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-77",
-          "name": "Command Injection"
-        }
-      ],
-      "vendors": [
-        "Dell Secure Connect Gateway 5.0 - Application",
-        "Dell Secure Connect Gateway 5.0 - Appliance"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-in/000503426/dsa-2026-382-security-update-for-dell-secure-connect-gateway-virtual-edition-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85103",
-      "published": "2026-09-09T13:20:43.997",
-      "lastModified": "2026-09-10T04:18:18.390",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "A heap-based buffer overflow in VPN certificate ASN.1 decoding may allow an unauthenticated remote attacker to execute arbitrary code on Check Point Quantum Security Management and Quantum Security Gateway systems.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "checkpoint Quantum Security Gateway",
-        "checkpoint Quantum Security Management"
-      ],
-      "references": [
-        "https://support.checkpoint.com/results/sk/sk1000118"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85102",
-      "published": "2026-09-09T13:20:43.793",
-      "lastModified": "2026-09-10T04:18:18.243",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Improper certificate trust validation during VPN negotiation in Check Point Quantum Security Gateway may allow an unauthenticated remote attacker to execute arbitrary code on the Gateway.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-295",
-          "name": "Improper Certificate Validation"
-        }
-      ],
-      "vendors": [
-        "checkpoint Quantum Security Gateway"
-      ],
-      "references": [
-        "https://support.checkpoint.com/results/sk/sk1000117"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-80172",
-      "published": "2026-09-09T12:17:15.057",
-      "lastModified": "2026-09-11T04:17:55.830",
-      "vulnStatus": "Analyzed",
-      "description": "Dell SCG 5.0 Appliance versions prior to 5.36.00.16 and Dell SCG 5.0 Application versions prior to 5.36.00.00, contains an Insufficient Verification of Data Authenticity vulnerability. An unauthenticated attacker with remote access could exploit this, leading to unauthorized access. This vulnerability is considered critical as an unauthenticated attacker can repeatedly reuse a captured request to generate ADMIN access and refresh tokens. Since there is no nonce validation or time limit on reques",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-345",
-          "name": "CWE-345"
-        }
-      ],
-      "vendors": [
-        "Dell Secure Connect Gateway 5.0 - Application",
-        "Dell Secure Connect Gateway 5.0 - Appliance"
-      ],
-      "references": [
-        "https://www.dell.com/support/kbdoc/en-in/000503426/dsa-2026-382-security-update-for-dell-secure-connect-gateway-virtual-edition-multiple-vulnerabilities"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-85978",
-      "published": "2026-09-09T11:17:16.073",
-      "lastModified": "2026-09-09T16:04:24.933",
-      "vulnStatus": "Deferred",
-      "description": "An unauthenticated remote code execution vulnerability exists in the Policy Manager console of Akana API Platform. A path normalization discrepancy between the authentication filter and the servlet dispatcher allows a crafted request to bypass authentication and reach an endpoint that evaluates attacker-supplied script code without sandboxing, resulting in arbitrary code execution. Exploitation requires no authentication or user interaction.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-41",
-          "name": "CWE-41"
-        },
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        },
-        {
-          "id": "CWE-863",
-          "name": "Incorrect Authorization"
-        }
-      ],
-      "vendors": [
-        "Perforce Akana"
-      ],
-      "references": [
-        "https://portal.perforce.com/s/cve/a91Qi000003CcxRIAS/unauthenticated-remote-code-execution-in-akana-policy-manager-console"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-56207",
-      "published": "2026-09-09T11:17:14.827",
-      "lastModified": "2026-09-10T20:38:05.413",
-      "vulnStatus": "Analyzed",
-      "description": "Signature of Bearer token is not verified in last step of SAML2 authentication for Impala's hs2-http interface, allowing altering user name and acting as another user. This issue affects Apache Impala: >=4.0.0. Users are recommended to upgrade to version 4.5.2, which fixes this issue.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-347",
-          "name": "Improper Verification of Cryptographic Signature"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Impala"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/20cov78py0zqzx7dyq39ktythkwn91zs",
-        "http://www.openwall.com/lists/oss-security/2026/09/08/22"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-41871",
-      "published": "2026-09-09T11:17:14.570",
-      "lastModified": "2026-09-10T20:38:51.250",
-      "vulnStatus": "Analyzed",
-      "description": "Missing Authorization, Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Apache Nutch Server (Nutch REST API). This issue affects Apache Nutch: from 1.10 through 1.22. Users are recommended to upgrade to version 1.23, which removes the Nutch Server. If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only. Please, also visit the Apache Nutch security advisories https://nutch.apache.org/",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-470",
-          "name": "CWE-470"
-        },
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Nutch"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/rbr63fx8vlrhzrfknq2l0mg0d0blsl54",
-        "http://www.openwall.com/lists/oss-security/2026/09/08/5"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-41869",
-      "published": "2026-09-09T11:17:14.290",
-      "lastModified": "2026-09-10T20:39:59.543",
-      "vulnStatus": "Analyzed",
-      "description": "Missing Authorization, Improper Resource Shutdown and Job Interruption vulnerability in Apache Nutch Server (Nutch REST API). This issue affects Apache Nutch: from 1.10 through 1.22. Users are recommended to upgrade to version 1.23, which removes the Nutch Server. If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only. Please, also visit the Apache Nutch security advisories https://nutch.apache.org/documentation/security/ .",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-404",
-          "name": "CWE-404"
-        },
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Apache Software Foundation Apache Nutch"
-      ],
-      "references": [
-        "https://lists.apache.org/thread/ps4yhlvo6kdgmksdgb9lv1h4p0oy5fdj",
-        "http://www.openwall.com/lists/oss-security/2026/09/08/3"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-16272",
-      "published": "2026-09-09T09:17:10.720",
-      "lastModified": "2026-09-09T21:17:01.423",
-      "vulnStatus": "Deferred",
-      "description": "Use of less trusted source vulnerability in PayTR Payment and Electronic Money Institution Inc. PayTR Virtual Pos iFrame API (v9x) WHMCS Module allows Exploitation of Trusted Identifiers. This issue affects PayTR Virtual Pos iFrame API (v9x) WHMCS Module: from v9.0.0 before v9.0.3.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-348",
-          "name": "CWE-348"
-        }
-      ],
-      "vendors": [
-        "PayTR Payment and Electronic Money Institution Inc. PayTR Virtual Pos iFrame API (v9x) WHMCS Module"
-      ],
-      "references": [
-        "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1034"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-21096",
-      "published": "2026-09-09T05:17:21.783",
-      "lastModified": "2026-09-11T13:17:07.897",
-      "vulnStatus": "Analyzed",
-      "description": "Heap-based buffer overflow in JPEG decoder of libimagecodec.quram.so prior to SMR Sep-2026 Release 1 allows remote attackers to execute arbitrary code.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Samsung Mobile Samsung Mobile Devices"
-      ],
-      "references": [
-        "https://security.samsungmobile.com/securityUpdate.smsb?year=2026&month=09"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-21095",
-      "published": "2026-09-09T05:17:21.663",
-      "lastModified": "2026-09-11T13:17:07.707",
-      "vulnStatus": "Analyzed",
-      "description": "Heap-based buffer overflow in DNG decoder of libimagecodec.quram.so prior to SMR Sep-2026 Release 1 allows remote attackers to execute arbitrary code.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Samsung Mobile Samsung Mobile Devices"
-      ],
-      "references": [
-        "https://security.samsungmobile.com/securityUpdate.smsb?year=2026&month=09"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87654",
-      "published": "2026-09-09T01:17:23.933",
-      "lastModified": "2026-09-10T04:18:31.987",
-      "vulnStatus": "Analyzed",
-      "description": "Buffer overflow in ANGLE in Google Chrome on on Windows prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/536444790"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87650",
-      "published": "2026-09-09T01:17:23.503",
-      "lastModified": "2026-09-10T04:18:31.810",
-      "vulnStatus": "Analyzed",
-      "description": "Out of bounds read in WebGL in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-125",
-          "name": "Out-of-Bounds Read"
-        }
-      ],
-      "vendors": [
-        "Google Chrome"
-      ],
-      "references": [
-        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html",
-        "https://issues.chromium.org/issues/534912743"
       ],
       "kev": {
         "in_kev": false
