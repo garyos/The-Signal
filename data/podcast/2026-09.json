@@ -2,6 +2,67 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10092",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10092",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10092.mp3",
+      "title": "SANS Stormcast Monday, September 14th, 2026: Self-Expanding Stolen LLM Gateways; PAN-OS Vuln; OpenAI Hacked Ruby; Passkey Themed Social Engineering",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 14th, 2026: Self-Expanding Stolen LLM Gateways; PAN-OS Vuln; OpenAI Hacked Ruby; Passkey Themed Social Engineering",
+      "show_notes": [
+        {
+          "heading": "The Self-Expanding Stolen Inference Supply Chain: An AI Agent Harvesting and Re-Serving LLM Access",
+          "links": [
+            "https://isc.sans.edu/diary/The%20Self-Expanding%20Stolen%20Inference%20Supply%20Chain%3A%20An%20AI%20Agent%20Harvesting%20and%20Re-Serving%20LLM%20Access/33332"
+          ]
+        },
+        {
+          "heading": "CVE-2026-0310 PAN-OS: Buffer Overflow Vulnerability via XML Processing",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-0310"
+          ]
+        },
+        {
+          "heading": "OpenAI agents carried out an undisclosed cyber-attack on RubyGems",
+          "links": [
+            "https://www.rubyhack.ai"
+          ]
+        },
+        {
+          "heading": "Passkey-themed social engineering leads to identity and cloud compromise",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/09/09/passkey-themed-social-engineering-leads-identity-cloud-compromise/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-14T02:00:03+00:00",
+      "duration_seconds": 412,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10092.mp3",
+      "audio_length_bytes": 5770731,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10092",
+      "categories": [
+        "passkey",
+        "openai",
+        "pan-os",
+        "pan",
+        "xml",
+        "llm",
+        "ai",
+        "theft"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10092",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 14, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Renato wrote\n a follow-up to a story that he sort of broke a couple weeks\n ago. And the initial story was just about hackers are\n scanning the internet, trying to find OpenLM endpoints. And\n then they're using or reselling those endpoints in\n order to essentially get AI inference capacity for free.\n Or even make money of it by reselling this capacity. Now,\n the latest attack that Renato has seen is not only them\n using these bots to scan for OpenLM endpoints, but once\n they found them, they will aggregate them under a\n combined API. So that, of course, makes the entire\n resale operation a lot simpler. But then they're also\n using that aggregated API to then have their agents find\n more OpenLM endpoints. So essentially, the inference\n capacity that they're accumulating makes their bots\n smarter, makes it faster, makes it easier for them to\n find more exposed endpoints. Really interesting find here\n how you sort of have these, well, I don't want to call\n them quite self-replicating, but definitely sort of self\n -reinforcing agents that are harvesting LM inference\n capacity by finding these OpenEndpoints. From a\n defensive point of view, hey, have you ever heard of\n authentication? It's still a thing, even though everything\n is AI now. You still want to have some credentials to\n connect to your LM endpoints. In particular, of course, if\n you're then forwarding them to some of these fairly expensive\n models. And on Thursday last week, Palo Alto did publish an\n urgent security advisory. Now, how urgent is this depends a\n little bit on the particular version of the Palo Alto\n Networks firewall you're running. But in the worst\n case, this vulnerability in the XML processor can lead to\n remote code execution as root. In some of the models, it's\n only a denial of service condition. So that's\n definitely then less of an issue. But if your firewall is\n in the, well, execute code as root category, you probably\n want to get this fixed quickly. Now, an attacker does\n need to have access to the control plane. You better\n don't expose that. But of course, a compromised\n administrative workstation or such could certainly then be\n used to launch the attack, even if there is no direct\n exposure of the firewall's control plane. And back in\n May, some OpenAI agents apparently published hundreds,\n if not thousands, of malicious packages to RubyGems. This was\n now revealed by Spencer Kitz, Thomas Larsen and Sidney Fun\n Arks. The three of them being researchers who now basically\n created a write-up of what exactly happened. So in this\n particular incident, the malicious packages that were\n uploaded were, first of all, trying to steal API keys by\n exploiting vulnerability in the RubyGems server. They also\n abused RubyDoc.info in using it to essentially acts a\n proxy, kind of like a server -side request forgery, where\n RubyDoc, that's a service that will build documentation. In\n order to do so, it has to reach out to various websites.\n So that's where the server -side request forgery comes\n in. And yes, then also interesting that these agents,\n which apparently weren't directly, at least, controlled\n by a human, were also then labeling some of their files,\n things like hack.rb or evil .rb. So certainly being\n somewhat self-aware, as the post points out, that what\n they're doing is probably not a good thing. Nevertheless,\n they went ahead and did it. Anyway, so if you're using\n Ruby, take a quick look at this post, particularly\n whether or not you downloaded any packages during that time\n frame, maybe were affected and maybe had your API keys\n exfiltrated. Probably best to change them. And Microsoft\n published a blog post about an attack they have seen recently\n that, well, in some ways used passkeys, but it actually\n didn't exploit a vulnerability in passkeys. If anything, it\n exploited a vulnerability of not using passkeys. Microsoft\n calls this a passkey-themed attack. And essentially what\n happened here was that attackers just used passkeys,\n or the word passkey, I should say, as a ruse to get people\n to fall victims to some of the better kinds of phishing\n websites. Remember, any website where the user decides\n what credential to present is susceptible to phishing. So\n multi-factor authentication, like even the app-style\n authentication, isn't necessarily phishing resistant\n if a website gives you a number that you're supposed to\n enter into an application or that you're supposed to\n acknowledge. Now, what happened here is that\n basically the user was tricked into authenticating with the\n phishing website by claiming that, hey, they must get a\n passkey now. No passkey was ever issued actually here. And\n that then tricked the user into actually falling for the\n phishing site. So poor user thought they do something good\n for security, but got tricked again. From a defensive point\n of view, well, use passkeys. Use them legitimately. Use\n them before the attackers tried to use this ruse\n because, well, they are still phishing resistant. So this\n attack, again, did not attack weakness in passkeys. It\n really more was standard phishing. Well, and this is it\n for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. If you're interested\n in any of my classes, check the show notes for a link or\n just the sans.org website and talk to you again tomorrow.\n Bye.\n Bye. Thank you.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10090",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

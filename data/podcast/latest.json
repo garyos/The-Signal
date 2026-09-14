@@ -1,6 +1,67 @@
 {
-  "fetched_at": "2026-09-13T13:34:51.657538+00:00",
+  "fetched_at": "2026-09-14T08:26:26.105616+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10092",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10092",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10092.mp3",
+      "title": "SANS Stormcast Monday, September 14th, 2026: Self-Expanding Stolen LLM Gateways; PAN-OS Vuln; OpenAI Hacked Ruby; Passkey Themed Social Engineering",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 14th, 2026: Self-Expanding Stolen LLM Gateways; PAN-OS Vuln; OpenAI Hacked Ruby; Passkey Themed Social Engineering",
+      "show_notes": [
+        {
+          "heading": "The Self-Expanding Stolen Inference Supply Chain: An AI Agent Harvesting and Re-Serving LLM Access",
+          "links": [
+            "https://isc.sans.edu/diary/The%20Self-Expanding%20Stolen%20Inference%20Supply%20Chain%3A%20An%20AI%20Agent%20Harvesting%20and%20Re-Serving%20LLM%20Access/33332"
+          ]
+        },
+        {
+          "heading": "CVE-2026-0310 PAN-OS: Buffer Overflow Vulnerability via XML Processing",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-0310"
+          ]
+        },
+        {
+          "heading": "OpenAI agents carried out an undisclosed cyber-attack on RubyGems",
+          "links": [
+            "https://www.rubyhack.ai"
+          ]
+        },
+        {
+          "heading": "Passkey-themed social engineering leads to identity and cloud compromise",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/09/09/passkey-themed-social-engineering-leads-identity-cloud-compromise/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-14T02:00:03+00:00",
+      "duration_seconds": 412,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10092.mp3",
+      "audio_length_bytes": 5770731,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10092",
+      "categories": [
+        "passkey",
+        "openai",
+        "pan-os",
+        "pan",
+        "xml",
+        "llm",
+        "ai",
+        "theft"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10092",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 14, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Renato wrote\n a follow-up to a story that he sort of broke a couple weeks\n ago. And the initial story was just about hackers are\n scanning the internet, trying to find OpenLM endpoints. And\n then they're using or reselling those endpoints in\n order to essentially get AI inference capacity for free.\n Or even make money of it by reselling this capacity. Now,\n the latest attack that Renato has seen is not only them\n using these bots to scan for OpenLM endpoints, but once\n they found them, they will aggregate them under a\n combined API. So that, of course, makes the entire\n resale operation a lot simpler. But then they're also\n using that aggregated API to then have their agents find\n more OpenLM endpoints. So essentially, the inference\n capacity that they're accumulating makes their bots\n smarter, makes it faster, makes it easier for them to\n find more exposed endpoints. Really interesting find here\n how you sort of have these, well, I don't want to call\n them quite self-replicating, but definitely sort of self\n -reinforcing agents that are harvesting LM inference\n capacity by finding these OpenEndpoints. From a\n defensive point of view, hey, have you ever heard of\n authentication? It's still a thing, even though everything\n is AI now. You still want to have some credentials to\n connect to your LM endpoints. In particular, of course, if\n you're then forwarding them to some of these fairly expensive\n models. And on Thursday last week, Palo Alto did publish an\n urgent security advisory. Now, how urgent is this depends a\n little bit on the particular version of the Palo Alto\n Networks firewall you're running. But in the worst\n case, this vulnerability in the XML processor can lead to\n remote code execution as root. In some of the models, it's\n only a denial of service condition. So that's\n definitely then less of an issue. But if your firewall is\n in the, well, execute code as root category, you probably\n want to get this fixed quickly. Now, an attacker does\n need to have access to the control plane. You better\n don't expose that. But of course, a compromised\n administrative workstation or such could certainly then be\n used to launch the attack, even if there is no direct\n exposure of the firewall's control plane. And back in\n May, some OpenAI agents apparently published hundreds,\n if not thousands, of malicious packages to RubyGems. This was\n now revealed by Spencer Kitz, Thomas Larsen and Sidney Fun\n Arks. The three of them being researchers who now basically\n created a write-up of what exactly happened. So in this\n particular incident, the malicious packages that were\n uploaded were, first of all, trying to steal API keys by\n exploiting vulnerability in the RubyGems server. They also\n abused RubyDoc.info in using it to essentially acts a\n proxy, kind of like a server -side request forgery, where\n RubyDoc, that's a service that will build documentation. In\n order to do so, it has to reach out to various websites.\n So that's where the server -side request forgery comes\n in. And yes, then also interesting that these agents,\n which apparently weren't directly, at least, controlled\n by a human, were also then labeling some of their files,\n things like hack.rb or evil .rb. So certainly being\n somewhat self-aware, as the post points out, that what\n they're doing is probably not a good thing. Nevertheless,\n they went ahead and did it. Anyway, so if you're using\n Ruby, take a quick look at this post, particularly\n whether or not you downloaded any packages during that time\n frame, maybe were affected and maybe had your API keys\n exfiltrated. Probably best to change them. And Microsoft\n published a blog post about an attack they have seen recently\n that, well, in some ways used passkeys, but it actually\n didn't exploit a vulnerability in passkeys. If anything, it\n exploited a vulnerability of not using passkeys. Microsoft\n calls this a passkey-themed attack. And essentially what\n happened here was that attackers just used passkeys,\n or the word passkey, I should say, as a ruse to get people\n to fall victims to some of the better kinds of phishing\n websites. Remember, any website where the user decides\n what credential to present is susceptible to phishing. So\n multi-factor authentication, like even the app-style\n authentication, isn't necessarily phishing resistant\n if a website gives you a number that you're supposed to\n enter into an application or that you're supposed to\n acknowledge. Now, what happened here is that\n basically the user was tricked into authenticating with the\n phishing website by claiming that, hey, they must get a\n passkey now. No passkey was ever issued actually here. And\n that then tricked the user into actually falling for the\n phishing site. So poor user thought they do something good\n for security, but got tricked again. From a defensive point\n of view, well, use passkeys. Use them legitimately. Use\n them before the attackers tried to use this ruse\n because, well, they are still phishing resistant. So this\n attack, again, did not attack weakness in passkeys. It\n really more was standard phishing. Well, and this is it\n for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. If you're interested\n in any of my classes, check the show notes for a link or\n just the sans.org website and talk to you again tomorrow.\n Bye.\n Bye. Thank you.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10090",
       "show": "stormcast",
@@ -3403,67 +3464,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9984",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Wednesday, June 24, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Yesterday I\n talked about Fortibleed, the attack where someone did\n compromise Fortinet firewalls and then used that access to\n harvest additional credentials. Well, today it's\n SonicWall. Manuel looked at SonicWall firewalls that he\n worked at as part of his job and such and looked not just\n whether or not they were patched. There were in 2024\n some well-publicized vulnerabilities that allowed\n credential theft and, well, the sonicwall had the same thing\n happen that happened with Fortinet that hackers came in,\n used credentials they harvested earlier and re\n -compromised firewalls after they were patched. Well, so\n what Manuel looked at was how many of these firewalls were\n not just patched but also reconfigured after the patch\n was applied. And one of the saddest part of this of the\n statistics here is that almost none, like 86% of the\n firewalls, did not reconcile their credentials with Active\n Directory. So there were still basically legacy credentials\n on the firewall itself that could have been compromised by\n an attacker or maybe even accounts that an attacker\n created. Also, 80% of the firewalls did not rotate their\n passwords. There are a couple of things here that I think\n are, you know, sort of nice to have. Like, for example, some\n additional filtering of which IP address can actually\n connect to the SSLVPN here. I forgive that for you because\n sometimes that's why you have the VPN in the first place\n because then you have people that travel all over the place\n and you need to provide them with a secure access channel\n back to your network. But then you also had, for example, 36\n nets, like the lowest percentage here among the\n issues that Manuel looked at, of firewalls that basically\n didn't terminate stale sessions. So you could be\n connected for more than 24 hours, not transmit any data\n and still retain that connection. There can be some\n use cases where you want this to have happen, like for some\n kind of data center links or things like this. Not\n necessarily sort of for a road warrior scenario necessarily.\n And yeah, and then of course, also reviewing your logs after\n you patch to make sure that you hadn't already been\n compromised. Actually, I'm surprised that, you know,\n about more than half of users actually do it. And only 43%\n here did not actually perform this. No, sample size there\n was not huge. It was basically just the firewalls that Manuel\n looked at. But still, I think those numbers are probably\n pretty good and sort of point you into the right direction\n as, well, people just apply patches, but don't necessarily\n have sort of that vulnerability management\n lifecycle, where they have specific procedures that you\n have to perform after you apply a patch, like for\n example, look for indicators of compromise if it's an\n already exploited vulnerability. And we have yet\n another major vulnerability that affects a very commonly\n used library, libssh2. libssh2 is used to implement SSH\n clients. So not necessarily just a server, but this is a\n vulnerability that likely affects clients more than it\n affects servers. The problem here is a heap based buffer\n overflow that may lead to remote code execution. To\n exploit this vulnerability, an attacker would have to trick a\n victim to connect to a malicious SSH server. But the\n tricky part here is that this also works for a machine in\n the middle scenario. So this works pre-authification before\n the client, make sure that it actually connects to the right\n server. A patch is available for this vulnerability. Keep\n checking with your respective Linux distributions such if a\n patch is being offered. But if it's not out there yet, when\n you're listening to the podcast, it should be. But lib\n is not the only critical library that we need to talk\n about today. The next one is FFmpeg. FFmpeg is, well, a\n library that is used to pretty much do anything when it comes\n to video and audio processing. I use it for this podcast to\n do things like the subtitles for the videos, for example.\n But the problem with FFmpeg is that it is very optimized for\n a speed kind of library. So it has had issues with not doing\n memory checks and such in the past. Also that a lot of the\n image formats and video formats it has to deal with\n are compressed, which always makes things like getting\n sizes right complex and difficult. So what happened\n here is a heap out of bound write that leads to remote\n code execution. This essentially affects any\n software that uses FFmpeg. These are not just video\n players and such, but also a lot of server side software\n that does, for example, video and audio conversion. That's\n sort of a common use case for FFmpeg. So definitely try to\n get this patch. It can be a little bit complex to figure\n out what actually uses FFmpeg. Effective is the magic YUV\n decoder. So basically how colors are being dealt with at\n compile time. You may disable this decoder if you don't need\n it. But I don't know if a lot of people who are sort of\n manually compiling FFmpeg most just take the ready to go\n package that comes with many of these features enabled by\n default. Well, and this is it for today. So thanks for\n listening. Remember, there will be no podcast Thursday,\n Friday due to my travel schedule. So this is the last\n podcast for this week. Well, I'll talk to you again on\n Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9982",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9982",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9982.mp3",
-      "title": "SANS Stormcast Tuesday, June 23rd, 2026:  Webshells; GitHub Actions Update; Fortibleed Update; Private Access Control Tokens",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, June 23rd, 2026: Webshells; GitHub Actions Update; Fortibleed Update; Private Access Control Tokens",
-      "show_notes": [
-        {
-          "heading": "Webshells Remain Popular",
-          "links": [
-            "https://isc.sans.edu/diary/Webshells%20Remain%20Popular/33096"
-          ]
-        },
-        {
-          "heading": "Safer pull_request_target defaults for GitHub Actions checkout",
-          "links": [
-            "https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/"
-          ]
-        },
-        {
-          "heading": "Private Access Control Tokens",
-          "links": [
-            "https://cloudflare.net/news/news-details/2026/Cloudflare-Collaborates-With-Leading-Browsers-to-Develop-a-Privacy-First-Protocol-For-the-Global-Internet/default.aspx",
-            "https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/"
-          ]
-        },
-        {
-          "heading": "Fortibleed Update",
-          "links": [
-            "https://socradar.io/resources/whitepapers/dismantling-fortibleed-inside-a-russian-fortinet-compromise-operation/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-06-23T02:00:03+00:00",
-      "duration_seconds": 481,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9982.mp3",
-      "audio_length_bytes": 6739002,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9982",
-      "categories": [
-        "fortinet",
-        "fortibleed",
-        "pact",
-        "cloudflare",
-        "gihtub",
-        "actions",
-        "pull_request_target"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9982",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday, June 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n cybersecurity leadership. Web shells. Well, that's a topic\n that keeps coming up and Xavier found a new one on\n GitHub. These web shells are popping up ever so often. This\n one claims to be hard to detect or undetectable. What\n this usually means, it's just too new for signatures to\n actually have been added to standard endpoint protection\n software that's often used to detect web shells. A better\n way often to detect web shells is just to look for\n unauthorized changes than just looking for signatures. Now,\n the way they are typically being deployed is that you\n have some kind of unauthorized file upload vulnerability,\n maybe a remote code execution vulnerability on a web server.\n And then very typical, the first thing that an attacker\n is doing is using that vulnerability to gain\n persistent access by uploading a web shell. So usually a\n little script in whatever language you're using on your\n server. This one, I think, is written in PHP, but they exist\n for pretty much any sort of web application language out\n there. And as a result, well, yeah, better pay attention to\n these web shells. No matter, you know, if the attacker uses\n AI or not, detecting web shells is probably going to\n help you either way. And GitHub is making some\n improvements to the security of its workflows in order to\n prevent some of the more common supply chain attacks.\n The change they made this week is a change to the pull\n request target. So when someone submits a pull request\n with this particular pull request target, you have the\n option to initiate workflows. And these workflows do have\n access to secrets. It's associated with the\n repository. Since essentially anybody can initiate a pull\n request, well, they constraint now when these workflows will\n run. And in particular, if the pull request came from a fork,\n which, well, would basically indicate that someone forked\n your repository, which is possible for any public\n repository, and then use that to submit a pull request,\n which is not an uncommon issue. That's how you submit\n pull requests. But the problem has been that pull request\n target would automatically then initiate actions in these\n workflows. And as a result, well, that led to some of\n these compromises if you didn't secure that pull\n request target accordingly. Now, you can opt out of this\n new behavior. But as GitHub points out in its manuals and\n in the blog post, they posted about this, then you it's\n basically up to you to make sure that the GitHub action is\n secured. And they give you some hints as to how to\n accomplish this. And one of the ongoing issues if you're\n running a website is that this point, a majority of the\n traffic you're seeing is likely created by bots, either\n malicious ones that are scanning your site for\n vulnerabilities, or well, AI agents, which may or may not\n be considered malicious depending on their use case,\n and really just no search engines and others that are\n just spidering your website using automated scripts. While\n sometimes you may want to allow this, quite often, it's\n really more annoying, it can cause a bit of service issues,\n our website often is sort of the victim of that. And the\n there is always a challenge, how do we figure out if a user\n is actually a person and the common solution here is\n CAPTCHAs. However, users don't like CAPTCHAs. CAPTCHAs are\n intrusive, they add friction. So there's a new solution now\n and Cloudflare announced that they're going to support it.\n And when we with Cloudflare support, of course, this is\n becoming sort of a real thing to be looking into, it's\n private access tokens, don't mix them up with personal\n access token, private access tokens, essentially an\n assertion that Cloudflare will generate the first time you\n are solving a CAPTCHA, or if there's another indication\n that you're not a bot that you're a person. So Cloudflare\n will issue that private access token. And it's digitally\n signed, of course, and with that the browser can then\n prove going forward, that it is actually operated by a\n person. And Cloudflare will then sort of act as the broker\n here in order to basically tell other websites, hey, this\n is a person and we don't need to have them solve a CAPTCHA\n again. Sounds like an interesting idea. As far as I\n understand, the standard that's sort of built around\n this is not quite complete yet. So a little bit early to\n comment on all of it. But it is supposed to be privacy\n preserving in the sense that different websites can\n correlate a particular user. So they just know it is a\n human, but they don't necessarily know what human or\n who is actually accessing their site. As a web\n developer, you probably don't really have to do anything\n about this. If you're using CAPTCHA solutions, like for\n example, Cloudflare, that's then sort of automatically\n being taken care of. As part of their CAPTCHA solution. And\n then I quickly want to comment on FortiBleed. I haven't\n mentioned FortiBleed much yet. In particular, it was\n mentioned in the press quite a bit. And part of the reason I\n didn't mention it was because it didn't appear to be that\n much new. Enterprise firewalls. We all know our\n attackers preferred entry point into networks. And\n that's just another case of outdated, meaning unpatched\n firewalls being used to breach corporate networks. But there\n is one detail that made this particular attack so\n devastating. And this again, nothing new, but I think\n something that's often overlooked when it comes to\n compromises of these border gateway devices. And that's\n that hackers used the vantage point of having access to all\n traffic traversing the device to actually then capture\n additional credentials. So this is something that you\n definitely have to consider if you find any kind of gateway\n or firewall or such that was compromised. In particular, if\n some of these devices have the ability to intercept TLS. In\n that case, you must specifically assume that any\n credential being sent through the particular device has been\n compromised and as a result must be changed. This is of\n course a very tough challenge. And I don't say it's easy to\n actually enumerate what you need to change and how you\n need to change it. But yes, that's just makes security\n more fun and complex. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast. And remember, there will be no\n podcast this week on Thursday, Friday. So thanks and talk to\n you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
