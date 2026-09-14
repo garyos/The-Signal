@@ -2,6 +2,2392 @@
   "month": "2026-09",
   "cves": [
     {
+      "id": "CVE-2026-90894",
+      "published": "2026-09-14T10:17:06.133",
+      "lastModified": "2026-09-14T10:17:06.133",
+      "vulnStatus": "Received",
+      "description": "Parallels Desktop runs prl_disp_service as root. Local clients reach it on the world-writable socket /var/run/prl_disp_service.socket. PrlSrv_LoginLocal accepts peer credentials. No Parallels signature. No admin group. After login, PrlSrv_InstallAppliance lets you pick the appliance folder (sVmParentPath). The daemon unpacks with one string, tar -xf \"%1\" -C \"%2\", then Qt QProcess::splitCommand chops that string into words. A quote in the folder name closes early. The leftover text becomes extra ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        },
+        {
+          "id": "CWE-88",
+          "name": "Argument Injection"
+        },
+        {
+          "id": "CWE-269",
+          "name": "Improper Privilege Management"
+        }
+      ],
+      "vendors": [
+        "Parallels Parallels Desktop for Mac"
+      ],
+      "references": [
+        "https://kb.parallels.com/en/131168",
+        "https://www.parallels.com/products/desktop/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90703",
+      "published": "2026-09-14T10:17:05.610",
+      "lastModified": "2026-09-14T10:17:05.610",
+      "vulnStatus": "Received",
+      "description": "A vulnerability has been found in D-Link DWR-M921 1.1.52. The affected element is the function system of the file /boafrm/formDiskCreateShare. Such manipulation of the argument folderpath leads to os command injection. The attack may be launched remotely. The exploit has been disclosed to the public and may be used.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "D-Link DWR-M921"
+      ],
+      "references": [
+        "https://gist.github.com/H3rmesk1t/24a09e799cd873abde6a2a806a030568",
+        "https://vuldb.com/cve/CVE-2026-90703",
+        "https://vuldb.com/submit/917695",
+        "https://vuldb.com/vuln/403245"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90702",
+      "published": "2026-09-14T10:17:05.447",
+      "lastModified": "2026-09-14T10:17:05.447",
+      "vulnStatus": "Received",
+      "description": "A flaw has been found in D-Link DWR-M921 1.1.52. Impacted is the function system of the file /boafrm/formDiskFormat. This manipulation of the argument partition causes os command injection. The attack may be initiated remotely. The exploit has been published and may be used.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "D-Link DWR-M921"
+      ],
+      "references": [
+        "https://gist.github.com/H3rmesk1t/1f7efbf4584ce13222e8b0c669e7784a",
+        "https://vuldb.com/cve/CVE-2026-90702",
+        "https://vuldb.com/submit/917692",
+        "https://vuldb.com/vuln/403244"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90701",
+      "published": "2026-09-14T10:17:05.233",
+      "lastModified": "2026-09-14T10:17:05.233",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was detected in subhajitkhan online-clinic-management-system up to e9ee77a8827a1446220fa07ee693dc4d9a29a578. The affected element is an unknown function of the file listdoctor.php. Performing a manipulation of the argument searchtext results in sql injection. The attack may be initiated remotely. The exploit is now public and may be used. This product uses a rolling release model to deliver continuous updates. As a result, specific version information for affected or updated rele",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        },
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "subhajitkhan online-clinic-management-system"
+      ],
+      "references": [
+        "https://github.com/subhajitkhan/online-clinic-management-system/",
+        "https://github.com/subhajitkhan/online-clinic-management-system/issues/2",
+        "https://vuldb.com/cve/CVE-2026-90701",
+        "https://vuldb.com/submit/916306"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90699",
+      "published": "2026-09-14T09:17:02.530",
+      "lastModified": "2026-09-14T09:17:02.530",
+      "vulnStatus": "Received",
+      "description": "A weakness has been identified in D-Link DWR-M920 1.1.7. This issue affects the function sub_41E60C of the file /boafrm/formPinManageSetup. This manipulation of the argument newPin causes os command injection. The attack can be initiated remotely. The exploit has been made available to the public and could be used for attacks.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "D-Link DWR-M920"
+      ],
+      "references": [
+        "https://github.com/H3rmesk1t/vulnerability-paper/issues/9",
+        "https://vuldb.com/cve/CVE-2026-90699",
+        "https://vuldb.com/submit/916259",
+        "https://vuldb.com/vuln/403232"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90693",
+      "published": "2026-09-14T08:16:35.673",
+      "lastModified": "2026-09-14T08:16:35.673",
+      "vulnStatus": "Received",
+      "description": "A flaw has been found in D-Link DIR-878 120B05. This impacts the function SetWan3Settings of the component WAN Settings. This manipulation of the argument Primary/Secondary causes stack-based buffer overflow. Remote exploitation of the attack is possible.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "D-Link DIR-878"
+      ],
+      "references": [
+        "https://github.com/Amalll-Sec/router-vulnerability-research/blob/main/advisories/d-link/dir-878/SetWan3Settings/README.md",
+        "https://vuldb.com/cve/CVE-2026-90693",
+        "https://vuldb.com/submit/915573",
+        "https://vuldb.com/vuln/403226"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90692",
+      "published": "2026-09-14T07:17:25.263",
+      "lastModified": "2026-09-14T07:17:25.263",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was detected in D-Link DIR-878 120B05. This affects the function SetDynamicDNSIPv6Settings of the component Dynamic DNS IPv6 Settings. The manipulation of the argument IPv6Address/Hostname results in stack-based buffer overflow. The attack may be launched remotely.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "D-Link DIR-878"
+      ],
+      "references": [
+        "https://github.com/Amalll-Sec/router-vulnerability-research/blob/main/advisories/d-link/dir-878/SetDynamicDNSIPv6Settings/README.md",
+        "https://vuldb.com/cve/CVE-2026-90692",
+        "https://vuldb.com/submit/915572",
+        "https://vuldb.com/vuln/403225"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90691",
+      "published": "2026-09-14T07:17:25.080",
+      "lastModified": "2026-09-14T07:17:25.080",
+      "vulnStatus": "Received",
+      "description": "A security vulnerability has been detected in 0x4m4 HexStrike AI up to d689933ff579d839c676c82b231f8e98326c5f04. The impacted element is the function FileOperationsManager of the file hexstrike_server.py of the component API Files Endpoint. The manipulation of the argument filename leads to path traversal. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+      "cvss": {
+        "score": 8.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-22",
+          "name": "Path Traversal"
+        }
+      ],
+      "vendors": [
+        "0x4m4 HexStrike AI"
+      ],
+      "references": [
+        "https://github.com/0x4m4/hexstrike-ai/issues/135",
+        "https://github.com/0x4m4/hexstrike-ai/issues/225",
+        "https://github.com/0x4m4/hexstrike-ai/pull/159",
+        "https://vuldb.com/cve/CVE-2026-90691"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90690",
+      "published": "2026-09-14T07:17:24.880",
+      "lastModified": "2026-09-14T07:17:24.880",
+      "vulnStatus": "Received",
+      "description": "A weakness has been identified in 0x4m4 HexStrike AI up to d689933ff579d839c676c82b231f8e98326c5f04. The affected element is the function subprocess.Popen of the file hexstrike_server.py of the component API Tools Endpoint. Executing a manipulation of the argument additional_args/target/username/password/scan_type/payload can lead to os command injection. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks. This product does not us",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "0x4m4 HexStrike AI"
+      ],
+      "references": [
+        "https://github.com/0x4m4/hexstrike-ai/issues/224",
+        "https://github.com/0x4m4/hexstrike-ai/pull/266",
+        "https://vuldb.com/cve/CVE-2026-90690",
+        "https://vuldb.com/submit/914892"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90689",
+      "published": "2026-09-14T07:17:24.700",
+      "lastModified": "2026-09-14T07:17:24.700",
+      "vulnStatus": "Received",
+      "description": "A security flaw has been discovered in Tenda W20E 15.11.0.61068_1546_841_CN_TDC. Impacted is the function formDelWebAuthWhiteUser. Performing a manipulation of the argument webAuthWhiteUserIndex results in stack-based buffer overflow. The attack can be initiated remotely.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "Tenda W20E"
+      ],
+      "references": [
+        "https://github.com/Amalll-Sec/router-vulnerability-research/blob/main/advisories/Tenda/W20E/formDelWebAuthWhiteUser/README.md",
+        "https://vuldb.com/cve/CVE-2026-90689",
+        "https://vuldb.com/submit/914981",
+        "https://vuldb.com/vuln/403222"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82794",
+      "published": "2026-09-14T07:17:21.617",
+      "lastModified": "2026-09-14T07:17:21.617",
+      "vulnStatus": "Received",
+      "description": "SolarView Compact contains an OS command Injection vulnerability in in Schedule Settings. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. SV-CPT-MC310",
+        "Contec Co., Ltd. SV-CPT-MC310F"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU97753461/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_sv_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82793",
+      "published": "2026-09-14T07:17:21.480",
+      "lastModified": "2026-09-14T07:17:21.480",
+      "vulnStatus": "Received",
+      "description": "Unrestricted upload of file with dangerous type issue exists in Contec CAN 2.0B Communication Wireless LAN / USB Converter Unit. If a specially crafted file is uploaded by a remote authenticated attacker, arbitrary code may be executed on the product.",
+      "cvss": {
+        "score": 7.2,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. CAN-2-WF",
+        "Contec Co., Ltd. CAN-2-USB"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU90314828/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_ph_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82791",
+      "published": "2026-09-14T07:17:21.203",
+      "lastModified": "2026-09-14T07:17:21.203",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in Contec CAN 2.0B Communication Wireless LAN / USB Converter Unit. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. CAN-2-WF",
+        "Contec Co., Ltd. CAN-2-USB"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU90314828/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_ph_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82789",
+      "published": "2026-09-14T07:17:20.920",
+      "lastModified": "2026-09-14T07:17:20.920",
+      "vulnStatus": "Received",
+      "description": "An improper neutralization of directives in dynamically evaluated code ('Eval Injection') issue exists in CONPROSYS HMI System(CHS). If exploited, arbitrary code may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-95",
+          "name": "CWE-95"
+        }
+      ],
+      "vendors": [
+        "Contec CONPROSYS HMI System(CHS)"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82787",
+      "published": "2026-09-14T07:17:20.660",
+      "lastModified": "2026-09-14T07:17:20.660",
+      "vulnStatus": "Received",
+      "description": "Missing authentication for critical function vulnerability exists in CPSL-08P1EN. If this vulnerability is exploited, an affected product may be operated by a remote attacker without authentication.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. CPSL-08P1EN"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82780",
+      "published": "2026-09-14T07:17:19.663",
+      "lastModified": "2026-09-14T07:17:19.663",
+      "vulnStatus": "Received",
+      "description": "Unrestricted upload of file with dangerous type issue exists in CONPROSYS TM Series. If a specially crafted file is uploaded by a remote authenticated attacker, an arbitrary command may be executed on the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd CPS-TM341G5MB-ADSC1-931",
+        "Contec Co., Ltd CPS-TM341MB-ADSC1-931",
+        "Contec Co., Ltd CPS-TM341GMB-ADSC1-931"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82779",
+      "published": "2026-09-14T07:17:19.530",
+      "lastModified": "2026-09-14T07:17:19.530",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in CONPROSYS TM Series. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd CPS-TM341G5MB-ADSC1-931",
+        "Contec Co., Ltd CPS-TM341MB-ADSC1-931",
+        "Contec Co., Ltd CPS-TM341GMB-ADSC1-931"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82777",
+      "published": "2026-09-14T07:17:19.247",
+      "lastModified": "2026-09-14T07:17:19.247",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in CONPROSYS PAC Series. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. Integrated Type CPS-PC341[][]-*-9201",
+        "Contec Co., Ltd. Configurable type CPS-PCS341[][]-DS1-1201"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82774",
+      "published": "2026-09-14T07:17:18.833",
+      "lastModified": "2026-09-14T07:17:18.833",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in CONPROSYS M2M Gateway Series and CONPROSYS M2M Controller Series. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. M2M Gateway Integrated Type CPS-MG341*",
+        "Contec Co., Ltd. M2M Gateway Configurable type CPS-MGS341*",
+        "Contec Co., Ltd. M2M Controller Integrated Type CPS-MC341",
+        "Contec Co., Ltd. M2M Controller Configurable type CPS-MCS341*"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU96551518/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_cps_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82772",
+      "published": "2026-09-14T07:17:18.557",
+      "lastModified": "2026-09-14T07:17:18.557",
+      "vulnStatus": "Received",
+      "description": "Buffer overflow vulnerability exists in Contec EC1000 series. If a remote attacker sends a specially crafted request to the product's web service, an arbitrary program may be executed.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. ECE1000",
+        "Contec Co., Ltd. ECE1020",
+        "Contec Co., Ltd. ECS1020"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82770",
+      "published": "2026-09-14T07:17:18.277",
+      "lastModified": "2026-09-14T07:17:18.277",
+      "vulnStatus": "Received",
+      "description": "Buffer overflow vulnerability exists in Contec RP-WAH-SR Series. If a remote attacker sends a specially crafted request to the product's web service, an arbitrary program may be executed.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. RP-WAH-SR1",
+        "Contec Co., Ltd. RP-WAH-SR2",
+        "Contec Co., Ltd. RP-WAH-SR12",
+        "Contec Co., Ltd. RP-WAH-SR22"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82768",
+      "published": "2026-09-14T07:17:17.980",
+      "lastModified": "2026-09-14T07:17:17.980",
+      "vulnStatus": "Received",
+      "description": "Path traversal vulnerability exists in SGA1000. If this vulnerability is exploited, arbitrary files on the server may be viewed and/or altered by an attacker who can access the product via FTP.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-23",
+          "name": "CWE-23"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. SGA1000"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82766",
+      "published": "2026-09-14T07:17:17.707",
+      "lastModified": "2026-09-14T07:17:17.707",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in SGA1000. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. SGA1000"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82765",
+      "published": "2026-09-14T07:17:17.553",
+      "lastModified": "2026-09-14T10:17:05.110",
+      "vulnStatus": "Received",
+      "description": "Path traversal vulnerability exists in Contec FX5000 series, FX4000 series, and FX3000 series. If this vulnerability is exploited, arbitrary files on the server may be viewed and/or altered by an attacker who can access the product via FTP.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-23",
+          "name": "CWE-23"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. FXA5000",
+        "Contec Co., Ltd. FXA5020",
+        "Contec Co., Ltd. FXA5020-[][]",
+        "Contec Co., Ltd. FXE5000",
+        "Contec Co., Ltd. FXE5000-[][]"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-82762",
+      "published": "2026-09-14T07:17:17.040",
+      "lastModified": "2026-09-14T10:17:04.687",
+      "vulnStatus": "Received",
+      "description": "Improper neutralization of special elements used in an OS command ('OS Command Injection') issue exists in Contec FX5000 series, FX4000 series, and FX3000 series. If this vulnerability is exploited, an arbitrary OS command may be executed by an attacker who can log in to the product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Contec Co., Ltd. FXA5000",
+        "Contec Co., Ltd. FXA5020",
+        "Contec Co., Ltd. FXA5020-[][]",
+        "Contec Co., Ltd. FXE5000",
+        "Contec Co., Ltd. FXE5000-[][]"
+      ],
+      "references": [
+        "https://jvn.jp/en/vu/JVNVU99009004/",
+        "https://www.contec.com/api/downloadlogger?download=/-/media/Contec/support/security-info/2026/contec_security_fl_26091000_en.pdf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-68955",
+      "published": "2026-09-14T07:17:16.663",
+      "lastModified": "2026-09-14T07:17:16.663",
+      "vulnStatus": "Received",
+      "description": "The installer for Rakuten Kobo Desktop Application (Windows version) insecurely loads Dynamic Link Libraries. If there is a crafted DLL at the same directory when invoking the affected installer, arbitrary code may be executed with the privileges of the user who performed the installation.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.0",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-427",
+          "name": "Uncontrolled Search Path Element"
+        }
+      ],
+      "vendors": [
+        "Rakuten Kobo Inc. The installer for Rakuten Kobo Desktop Application (Windows version)"
+      ],
+      "references": [
+        "https://help.kobo.com/hc/en-us/articles/42294089837463-Security-Advisory-Kobo-Desktop-App-Installer",
+        "https://jvn.jp/en/jp/JVN18593874/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-50461",
+      "published": "2026-09-14T07:17:15.653",
+      "lastModified": "2026-09-14T07:17:15.653",
+      "vulnStatus": "Received",
+      "description": "An issue was discovered in the direct_mail (aka Direct Mail) extension through 9.5.1 for TYPO3. The Configuration backend module of the extension allows an authenticated user to write to an arbitrary TSConfig page for folders configured as Direct Mail. Exploiting this may lead to Configuration Injection (TYPO3 10.4 and above) and to Arbitrary Code Execution (TYPO3 9.5 and below). A valid backend user account, with access to the Direct Mail Configuration backend module, is needed to exploit this.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "TYPO3 direct_mail"
+      ],
+      "references": [
+        "https://typo3.org/security/advisory/typo3-ext-sa-2023-011"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-46273",
+      "published": "2026-09-14T06:16:54.647",
+      "lastModified": "2026-09-14T07:17:14.543",
+      "vulnStatus": "Received",
+      "description": "Bonjour Gateway in Extreme Networks IQ Engine before 10.6r1a, and through 10.6r4 before 10.6r5, has an ah_bgd buffer overflow via ah_event_send.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "extremenetworks IQ Engine"
+      ],
+      "references": [
+        "https://extreme-networks.my.site.com/ExtrArticleDetail?an=000115356",
+        "https://extremenetworks.com"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-45858",
+      "published": "2026-09-14T06:16:54.357",
+      "lastModified": "2026-09-14T06:16:54.357",
+      "vulnStatus": "Received",
+      "description": "A directory traversal was identified in Paessler PRTG before 23.4.88.1429 that made it possible to read local files.",
+      "cvss": {
+        "score": 8.6,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-23",
+          "name": "CWE-23"
+        }
+      ],
+      "vendors": [
+        "Paessler PRTG Network Monitor"
+      ],
+      "references": [
+        "https://helpdesk.paessler.com/en/support/solutions/articles/76000076525-what-is-the-vulnerability-fixed-in-prtg-23-4-88-1429-about-",
+        "https://www.paessler.com/prtg/history/stable"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-32803",
+      "published": "2026-09-14T05:16:57.290",
+      "lastModified": "2026-09-14T05:16:57.290",
+      "vulnStatus": "Received",
+      "description": "The ca-certificates package before ca-certificates-2021.2.50-72 for Amazon Linux 2 (AL2) does not properly remove certain TrustCor root certificates from the root store. NOTE: this issue exists because of an incorrect fix for CVE-2022-23491.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-669",
+          "name": "CWE-669"
+        }
+      ],
+      "vendors": [
+        "Amazon ca-certificates"
+      ],
+      "references": [
+        "https://alas.aws.amazon.com/AL2/ALAS-2023-1957.html",
+        "https://explore.alas.aws.amazon.com/CVE-2023-32803.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-28148",
+      "published": "2026-09-14T05:16:56.837",
+      "lastModified": "2026-09-14T05:16:56.837",
+      "vulnStatus": "Received",
+      "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+      "cvss": {
+        "score": 7.2,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-79",
+          "name": "Cross-Site Scripting (XSS)"
+        }
+      ],
+      "vendors": [
+        "Paessler PRTG Network Monitor"
+      ],
+      "references": [
+        "https://www.paessler.com/prtg/history/prtg-23",
+        "https://www.paessler.com/prtg/history/stable"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90680",
+      "published": "2026-09-14T04:16:36.353",
+      "lastModified": "2026-09-14T04:16:36.353",
+      "vulnStatus": "Received",
+      "description": "A security flaw has been discovered in D-Link DIR-823G 1.0.2B05_20181207. The impacted element is the function strcpy of the file /HNAP1/SetStaticRouteSettings of the component HNAP1. The manipulation of the argument PAddress/SubnetMask/Gateway results in stack-based buffer overflow. The attack can be launched remotely.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "D-Link DIR-823G"
+      ],
+      "references": [
+        "https://github.com/Amalll-Sec/router-vulnerability-research/blob/main/advisories/d-link/dir-823g/SetStaticRouteSettings/README.md",
+        "https://vuldb.com/cve/CVE-2026-90680",
+        "https://vuldb.com/submit/914902",
+        "https://vuldb.com/vuln/403213"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90620",
+      "published": "2026-09-14T03:16:37.603",
+      "lastModified": "2026-09-14T03:16:37.603",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was determined in 0x4m4 HexStrike AI up to d689933ff579d839c676c82b231f8e98326c5f04. The impacted element is an unknown function of the file hexstrike_server.py of the component API Command Endpoint. This manipulation causes missing authentication. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. Continious delivery with rolling releases is used by this product. Therefore, no version details of affected nor updated releases are av",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        },
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "0x4m4 HexStrike AI"
+      ],
+      "references": [
+        "https://github.com/0x4m4/hexstrike-ai/issues/223",
+        "https://vuldb.com/cve/CVE-2026-90620",
+        "https://vuldb.com/submit/914813",
+        "https://vuldb.com/vuln/403202"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90619",
+      "published": "2026-09-14T03:16:37.427",
+      "lastModified": "2026-09-14T03:16:37.427",
+      "vulnStatus": "Received",
+      "description": "A vulnerability has been found in 0x4m4 HexStrike AI up to d689933ff579d839c676c82b231f8e98326c5f04. Impacted is an unknown function of the file hexstrike_server.py of the component Execute Endpoint. The manipulation of the argument code/script leads to os command injection. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used. This product is using a rolling release to provide continious delivery. Therefore, no version details for affected",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "0x4m4 HexStrike AI"
+      ],
+      "references": [
+        "https://github.com/0x4m4/hexstrike-ai/issues/222",
+        "https://vuldb.com/cve/CVE-2026-90619",
+        "https://vuldb.com/submit/914810",
+        "https://vuldb.com/vuln/403200"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90618",
+      "published": "2026-09-14T03:16:37.263",
+      "lastModified": "2026-09-14T03:16:37.263",
+      "vulnStatus": "Received",
+      "description": "A flaw has been found in GH05TCREW PentestAgent up to cf882dabea3ed91cef016cdd115e5426315665a2. This issue affects the function LocalRuntime.execute_command of the file runtime/runtime.py of the component LocalRuntime. Executing a manipulation can lead to os command injection. The attack may be performed from remote. The exploit has been published and may be used. The pull request to fix this issue awaits acceptance.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "GH05TCREW PentestAgent"
+      ],
+      "references": [
+        "https://github.com/GH05TCREW/pentestagent/",
+        "https://github.com/GH05TCREW/pentestagent/issues/91",
+        "https://github.com/GH05TCREW/pentestagent/pull/100",
+        "https://vuldb.com/cve/CVE-2026-90618"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90617",
+      "published": "2026-09-14T03:16:37.083",
+      "lastModified": "2026-09-14T03:16:37.083",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was detected in GH05TCREW PentestAgent up to cf882dabea3ed91cef016cdd115e5426315665a2. This vulnerability affects the function run_task of the file interface/main.py of the component MCP HTTP Server. Performing a manipulation results in os command injection. The attack is possible to be carried out remotely. The exploit is now public and may be used. This product adopts a rolling release strategy to maintain continuous delivery. Therefore, version details for affected or updated ",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "GH05TCREW PentestAgent"
+      ],
+      "references": [
+        "https://github.com/GH05TCREW/pentestagent/",
+        "https://github.com/GH05TCREW/pentestagent/issues/90",
+        "https://github.com/GH05TCREW/pentestagent/pull/101",
+        "https://vuldb.com/cve/CVE-2026-90617"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-33963",
+      "published": "2026-09-14T02:17:14.850",
+      "lastModified": "2026-09-14T02:17:14.850",
+      "vulnStatus": "Received",
+      "description": "An issue was discovered in camera in Samsung Mobile Processor Exynos 1330, 1380, 1480, 2400, 1580, 2500, 2600, and 1680. A stack-based buffer overflow occurs when a malformed message is sent to the camera driver, causing a denial of service.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "Samsung Exynos 1330 firmware"
+      ],
+      "references": [
+        "https://semiconductor.samsung.com/support/quality-support/product-security-updates/",
+        "https://semiconductor.samsung.com/support/quality-support/product-security-updates/cve-2026-33963/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-31278",
+      "published": "2026-09-14T02:17:14.080",
+      "lastModified": "2026-09-14T02:17:14.080",
+      "vulnStatus": "Received",
+      "description": "An issue in the /api/v2/setting/adserversetting endpoint of Suprema BioStar 2 before 2.9.12 and and BioStar X before 1.0.2 allows attackers to obtain Active Directory service account credentials in cleartext by supplying a crafted GET request.",
+      "cvss": {
+        "score": 7.7,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-319",
+          "name": "CWE-319"
+        }
+      ],
+      "vendors": [
+        "supremainc BioStar 2"
+      ],
+      "references": [
+        "https://github.com/mda1r/biostar2-ad-credential-exposure",
+        "https://www.supremainc.com"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-23789",
+      "published": "2026-09-14T02:17:13.397",
+      "lastModified": "2026-09-14T02:17:13.397",
+      "vulnStatus": "Received",
+      "description": "An issue was discovered in MFC in Samsung Mobile Processor and Wearable Processor Exynos 850, 1080, 2100, 1280, 2200, 1330, 1380, 1480, 2400, 1580, 2500, 2600, 1680, W920, W930, and W1000. A double-free vulnerability in the Exynos MFC encoder driver (due to improper cleanup of dma_buf references during error handling) leads to kernel memory corruption and potential arbitrary code execution.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-415",
+          "name": "CWE-415"
+        }
+      ],
+      "vendors": [
+        "Samsung Exynos 850 firmware"
+      ],
+      "references": [
+        "https://semiconductor.samsung.com/support/quality-support/product-security-updates/",
+        "https://semiconductor.samsung.com/support/quality-support/product-security-updates/cve-2026-23789/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90608",
+      "published": "2026-09-14T01:16:28.130",
+      "lastModified": "2026-09-14T01:16:28.130",
+      "vulnStatus": "Received",
+      "description": "A flaw has been found in Totolink A3002MU Hh-B20211125.1046. The affected element is the function formPortFw of the file /boafrm/formPortFw of the component boa. This manipulation of the argument service_type causes buffer overflow. It is possible to initiate the attack remotely. The exploit has been published and may be used.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Totolink A3002MU"
+      ],
+      "references": [
+        "https://github.com/SunnyYANGyaya/cuicuishark-sheep-fishIOT/blob/main/ToTolink/A3002MU/bof-formPortFw.md",
+        "https://vuldb.com/cve/CVE-2026-90608",
+        "https://vuldb.com/submit/914016",
+        "https://vuldb.com/vuln/403190"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90607",
+      "published": "2026-09-14T01:16:27.870",
+      "lastModified": "2026-09-14T01:16:27.870",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was detected in Totolink A3002MU Hh-B20211125.1046. Impacted is the function formNewSchedule of the file /boafrm/formNewSchedule of the component boa. The manipulation of the argument submit-url results in buffer overflow. The attack may be performed from remote. The exploit is now public and may be used.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Totolink A3002MU"
+      ],
+      "references": [
+        "https://github.com/SunnyYANGyaya/cuicuishark-sheep-fishIOT/blob/main/ToTolink/A3002MU/bof-formNewSchedule.md",
+        "https://vuldb.com/cve/CVE-2026-90607",
+        "https://vuldb.com/submit/914015",
+        "https://vuldb.com/vuln/403189"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90606",
+      "published": "2026-09-14T00:16:57.617",
+      "lastModified": "2026-09-14T00:16:57.617",
+      "vulnStatus": "Received",
+      "description": "A security vulnerability has been detected in Totolink A3002MU Hh-B20211125.1046. This issue affects the function formIpv6Setup of the file /boafrm/formIpv6Setup of the component boa. The manipulation of the argument static_ipv6 leads to buffer overflow. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Totolink A3002MU"
+      ],
+      "references": [
+        "https://github.com/SunnyYANGyaya/cuicuishark-sheep-fishIOT/blob/main/ToTolink/A3002MU/bof-formIpv6Setup.md",
+        "https://vuldb.com/cve/CVE-2026-90606",
+        "https://vuldb.com/submit/914010",
+        "https://vuldb.com/vuln/403188"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90605",
+      "published": "2026-09-14T00:16:57.447",
+      "lastModified": "2026-09-14T00:16:57.447",
+      "vulnStatus": "Received",
+      "description": "A weakness has been identified in Totolink A3002MU Hh-B20211125.1046. This vulnerability affects the function formFilter of the file /boafrm/formFilter of the component boa. Executing a manipulation of the argument ip6addr can lead to buffer overflow. The attack can be executed remotely. The exploit has been made available to the public and could be used for attacks.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Totolink A3002MU"
+      ],
+      "references": [
+        "https://github.com/SunnyYANGyaya/cuicuishark-sheep-fishIOT/blob/main/ToTolink/A3002MU/bof-formFilter.md",
+        "https://vuldb.com/cve/CVE-2026-90605",
+        "https://vuldb.com/submit/914009",
+        "https://vuldb.com/vuln/403187"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90603",
+      "published": "2026-09-13T23:16:28.703",
+      "lastModified": "2026-09-13T23:16:28.703",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was identified in Anil-matcha Open-Generative-AI up to 1.0.11/2.0.0. Affected by this issue is some unknown functionality of the file /api/upload-binary of the component S3 Upload. Such manipulation of the argument x-proxy-target-url leads to unrestricted upload. The attack may be launched remotely. The name of the patch is f013270957f75e439eaf97eb2a93decb32a4543e. Applying a patch is advised to resolve this issue.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        },
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "Anil-matcha Open-Generative-AI"
+      ],
+      "references": [
+        "https://github.com/Anil-matcha/Open-Generative-AI/",
+        "https://github.com/Anil-matcha/Open-Generative-AI/commit/f013270957f75e439eaf97eb2a93decb32a4543e",
+        "https://github.com/Anil-matcha/Open-Generative-AI/issues/310",
+        "https://vuldb.com/cve/CVE-2026-90603"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90601",
+      "published": "2026-09-13T23:16:28.343",
+      "lastModified": "2026-09-13T23:16:28.343",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was found in getzep graphiti up to 0.30.2. Affected is an unknown function of the file server/graph_service/main.py of the component REST API. The manipulation results in improper authentication. The attack can be launched remotely. The pull request to fix this issue awaits acceptance.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "getzep graphiti"
+      ],
+      "references": [
+        "https://github.com/getzep/graphiti/",
+        "https://github.com/getzep/graphiti/issues/1716",
+        "https://github.com/getzep/graphiti/pull/1739",
+        "https://vuldb.com/cve/CVE-2026-90601"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-15891",
+      "published": "2026-09-13T23:16:27.870",
+      "lastModified": "2026-09-13T23:16:27.870",
+      "vulnStatus": "Received",
+      "description": "The MQTT-SN client keepalive handler process_ping() in subsys/net/lib/mqtt_sn/mqtt_sn.c removes the gateway record after PINGREQ retries are exhausted. It invoked SYS_SLIST_PEEK_HEAD_CONTAINER(&client->gateways, gw, next) but discarded the result. That macro is a pure expression that does not assign to gw, so gw retained its NULL initializer regardless of the list contents. The code then dereferences the NULL gw (gw->gw_id) and passes it to mqtt_sn_gw_destroy(), reaching k_mem_slab_free(&gateway",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-476",
+          "name": "NULL Pointer Dereference"
+        }
+      ],
+      "vendors": [
+        "zephyrproject zephyr"
+      ],
+      "references": [
+        "https://github.com/zephyrproject-rtos/zephyr/commit/bd21e954c36be105a374bbc090623810f1a17ee3",
+        "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-c4g8-4f9p-4746"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90593",
+      "published": "2026-09-13T21:17:02.787",
+      "lastModified": "2026-09-13T21:17:02.787",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was determined in embedded-graphics up to 0.8.2. This affects the function ImageRaw::draw_sub_image of the file src/image/image_raw.rs. Executing a manipulation of the argument width can lead to integer overflow. The attack may be launched remotely. The project was informed of the problem early through an issue report but has not responded yet.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-189",
+          "name": "CWE-189"
+        },
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "embedded-graphics"
+      ],
+      "references": [
+        "https://github.com/embedded-graphics/embedded-graphics/",
+        "https://github.com/embedded-graphics/embedded-graphics/issues/821",
+        "https://vuldb.com/cve/CVE-2026-90593",
+        "https://vuldb.com/submit/913787"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88802",
+      "published": "2026-09-13T21:17:02.323",
+      "lastModified": "2026-09-13T21:17:02.323",
+      "vulnStatus": "Received",
+      "description": "The MDJM Event Management WordPress plugin before 1.7.8.5 and the Mobile Events Manager WordPress plugin through 1.4.8.3 do not check a capability, a nonce or the type of the record before permanently deleting the post identified in a request to their playlist entry removal, allowing unauthenticated attackers to destroy arbitrary posts, pages and media attachments, bypassing the trash.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [],
+      "vendors": [
+        "Unknown MDJM Event Management",
+        "Unknown Mobile Events Manager"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/cac1846c-bbf4-4ad2-8dfb-d7025034a9a7/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-88793",
+      "published": "2026-09-13T21:17:02.197",
+      "lastModified": "2026-09-13T21:17:02.197",
+      "vulnStatus": "Received",
+      "description": "The YouTube Embed WordPress plugin from 10.0 to 10.3 does not perform any authorisation check on one of its AJAX actions, relying only on a nonce it prints on every front-end page, and does not escape the stored data before rendering it, allowing unauthenticated attackers to store arbitrary web scripts which will execute in the session of any user viewing the affected content, including an administrator.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [],
+      "vendors": [
+        "Unknown YouTube Embed"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/7f695b0c-5dbc-4f3e-9b3f-c3558b1729ad/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-85129",
+      "published": "2026-09-13T21:17:02.063",
+      "lastModified": "2026-09-13T21:17:02.063",
+      "vulnStatus": "Received",
+      "description": "The Hoo Companion WordPress plugin 1.0.2 does not have any authorisation or validation checks in one of its import features, and does not sanitise the data submitted to it before storing it as the active theme's settings, allowing unauthenticated attackers to inject arbitrary web scripts which will execute for anyone viewing the site, including administrators. The same request destroys the site's existing theme settings.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [],
+      "vendors": [
+        "Unknown Hoo Companion"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/a50f6ec1-4297-453e-b45f-6fd889b6b0d2/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-81648",
+      "published": "2026-09-13T21:17:01.930",
+      "lastModified": "2026-09-13T21:17:01.930",
+      "vulnStatus": "Received",
+      "description": "The CryptoPayment Gateway WordPress plugin from 1.2.1 to 1.2.2 does not apply an authorization check on one of its AJAX endpoints, allowing unauthenticated users to invoke administrative operations, including deleting arbitrary files on the server, overwriting the payment gateway configuration and recovering stored wallet credentials in cleartext.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Unknown CryptoPayment Gateway"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/9b1490a0-1381-4d22-8086-f75aade4e898/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-74933",
+      "published": "2026-09-13T21:17:01.800",
+      "lastModified": "2026-09-13T21:17:01.800",
+      "vulnStatus": "Received",
+      "description": "The GenieWords WordPress plugin from 1.5.27 to 1.5.34 does not have authorisation checks on some of its REST API and AJAX actions, and decodes stored values before printing them, allowing unauthenticated users to overwrite its configuration and inject arbitrary web scripts that execute on every front-end page.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [],
+      "vendors": [
+        "Unknown GenieWords"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/23dc45bb-e7b6-4cae-81ce-2c6394afb454/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-37008",
+      "published": "2026-09-13T21:17:01.303",
+      "lastModified": "2026-09-13T21:17:01.303",
+      "vulnStatus": "Received",
+      "description": "CrewAI before fb2323b offers a Python blocklist approach that operates at the wrong level of abstraction, a different vulnerability than CVE-2026-2275. Import-time blocking of module names does not address the availability of Python's complete object graph. For example, calling ctypes.CDLL(None) loads the C library without relying in any import statements. In other words, a within-process sandbox cannot merely account for the import system and instead must account for the complete runtime of the",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-424",
+          "name": "CWE-424"
+        }
+      ],
+      "vendors": [
+        "CrewAI CrewAI"
+      ],
+      "references": [
+        "https://docs.python.org/3/library/ctypes.html",
+        "https://github.com/crewAIInc/crewAI/commit/fb2323b3deb3ec62b3965526857e77a2264e4cd0",
+        "https://yerangamage.com/cves/detail/?slug=crewai-sandbox-escape"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-36453",
+      "published": "2026-09-13T21:16:59.947",
+      "lastModified": "2026-09-13T21:16:59.947",
+      "vulnStatus": "Received",
+      "description": "Rhymix before 2.1.31 allows insecure direct object reference, aka RVE-2026-1. Arbitrary files can be accessed via extra variables.",
+      "cvss": {
+        "score": 7.4,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-425",
+          "name": "CWE-425"
+        }
+      ],
+      "vendors": [
+        "Rhymix Rhymix"
+      ],
+      "references": [
+        "https://github.com/rhymix/rhymix/commit/f131a616eb990e2b070a8381c3106ae979d40989",
+        "https://rhymix.org/community/1932364"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-29811",
+      "published": "2026-09-13T20:16:51.020",
+      "lastModified": "2026-09-13T20:16:51.020",
+      "vulnStatus": "Received",
+      "description": "CyberPanel before 2.4.4 attempts to detect an \"alais\" domain (i.e., a second domain that serves the same content as a primary domain; normally spelled \"alias\") via an ORM query filter rather than a Python \"if\" statement.",
+      "cvss": {
+        "score": 7.7,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1025",
+          "name": "CWE-1025"
+        }
+      ],
+      "vendors": [
+        "CyberPanel CyberPanel"
+      ],
+      "references": [
+        "https://github.com/usmannasir/cyberpanel/commit/0a099b1b193946555fbdd387a28486b1521f9961"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90579",
+      "published": "2026-09-13T19:16:53.517",
+      "lastModified": "2026-09-13T19:16:53.517",
+      "vulnStatus": "Received",
+      "description": "A vulnerability has been found in cheshire-cat-ai Cheshire Cat AI up to 1.9.2. This affects the function _authorize_http_key of the file core/cat/factory/custom_auth_handler.py. The manipulation of the argument user_id leads to missing authentication. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        },
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "cheshire-cat-ai Cheshire Cat AI"
+      ],
+      "references": [
+        "https://github.com/cheshire-cat-ai/core/issues/1137",
+        "https://vuldb.com/cve/CVE-2026-90579",
+        "https://vuldb.com/submit/913219",
+        "https://vuldb.com/vuln/403164"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90566",
+      "published": "2026-09-13T16:16:52.670",
+      "lastModified": "2026-09-13T16:16:52.670",
+      "vulnStatus": "Received",
+      "description": "A weakness has been identified in Rizwan17 inventory-management-system up to bfe78a330d01bb26b9daec5dc9ecd5c77900e03f. Affected by this vulnerability is the function createUserAccount of the file register.php of the component Registration Handler. Executing a manipulation of the argument usertype can lead to improper authorization. It is possible to launch the attack remotely. The exploit has been made available to the public and could be used for attacks. This product takes the approach of roll",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-266",
+          "name": "CWE-266"
+        },
+        {
+          "id": "CWE-285",
+          "name": "CWE-285"
+        }
+      ],
+      "vendors": [
+        "Rizwan17 inventory-management-system"
+      ],
+      "references": [
+        "http://github.com/Rizwan17/inventory-management-system/issues/16",
+        "https://vuldb.com/cve/CVE-2026-90566",
+        "https://vuldb.com/submit/912565",
+        "https://vuldb.com/vuln/403151"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90526",
+      "published": "2026-09-13T14:16:50.660",
+      "lastModified": "2026-09-13T14:16:50.660",
+      "vulnStatus": "Received",
+      "description": "A security vulnerability has been detected in SourceCodester School Registration and Fee System 1.0. This impacts an unknown function of the file /bilal/save_class.php. The manipulation of the argument Category leads to sql injection. Remote exploitation of the attack is possible. The exploit has been disclosed publicly and may be used.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        },
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "SourceCodester School Registration and Fee System"
+      ],
+      "references": [
+        "https://github.com/pangdudu24/cve/issues/2",
+        "https://vuldb.com/cve/CVE-2026-90526",
+        "https://vuldb.com/submit/912528",
+        "https://vuldb.com/vuln/403116"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90524",
+      "published": "2026-09-13T14:16:50.340",
+      "lastModified": "2026-09-13T14:16:50.340",
+      "vulnStatus": "Received",
+      "description": "A security flaw has been discovered in jaychouchannel Tourism-Management-System up to 229956e20dbd4a80eeff14535e44d3099502af09. The impacted element is an unknown function of the component Update Endpoint. Performing a manipulation results in missing authentication. The attack may be initiated remotely. The exploit has been released to the public and may be used for attacks. This product uses a rolling release model to deliver continuous updates. As a result, specific version information for aff",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        },
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "jaychouchannel Tourism-Management-System"
+      ],
+      "references": [
+        "https://github.com/jaychouchannel/Tourism-Management-System/",
+        "https://github.com/jaychouchannel/Tourism-Management-System/commit/84d8ec384f669df3985293dab293bb7b477efa64",
+        "https://github.com/jaychouchannel/Tourism-Management-System/issues/11",
+        "https://vuldb.com/cve/CVE-2026-90524"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90523",
+      "published": "2026-09-13T14:16:49.337",
+      "lastModified": "2026-09-13T14:16:49.337",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was identified in jaychouchannel Tourism-Management-System up to 229956e20dbd4a80eeff14535e44d3099502af09. The affected element is an unknown function of the file travel/src/main/java/com/controller/UsersController.java of the component User Register Endpoint. Such manipulation of the argument UsersEntity leads to improper privilege management. The attack can be launched remotely. The exploit is publicly available and might be used. This product does not use versioning. This is w",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-266",
+          "name": "CWE-266"
+        },
+        {
+          "id": "CWE-269",
+          "name": "Improper Privilege Management"
+        }
+      ],
+      "vendors": [
+        "jaychouchannel Tourism-Management-System"
+      ],
+      "references": [
+        "https://github.com/jaychouchannel/Tourism-Management-System/",
+        "https://github.com/jaychouchannel/Tourism-Management-System/commit/84d8ec384f669df3985293dab293bb7b477efa64",
+        "https://github.com/jaychouchannel/Tourism-Management-System/issues/10",
+        "https://vuldb.com/cve/CVE-2026-90523"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90783",
+      "published": "2026-09-13T13:16:29.560",
+      "lastModified": "2026-09-13T13:16:29.560",
+      "vulnStatus": "Received",
+      "description": "MKVToolNix through 101.0 contains a heap buffer overflow in the bundled avilib library's ODML superindex parser due to integer wraparound in 32-bit arithmetic. Attackers can craft a malicious AVI file with oversized entry counts that cause an undersized heap allocation, allowing a heap buffer overflow when the file is parsed with mkvmerge.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-680",
+          "name": "CWE-680"
+        }
+      ],
+      "vendors": [
+        "Moritz Bunkus MKVToolNix"
+      ],
+      "references": [
+        "https://codeberg.org/mbunkus/mkvtoolnix",
+        "https://codeberg.org/mbunkus/mkvtoolnix/commit/1495126138e086080f0163bee27fafbdf956a1d0",
+        "https://codeberg.org/mbunkus/mkvtoolnix/src/tag/release-101.0/lib/avilib-0.6.10/avilib.c#L2552-L2570",
+        "https://www.vulncheck.com/advisories/mkvtoolnix-through-101.0-heap-buffer-overflow-via-avilib-odml-superindex-integer-wraparound"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90522",
+      "published": "2026-09-13T13:16:29.090",
+      "lastModified": "2026-09-13T13:16:29.090",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was determined in jaychouchannel Tourism-Management-System up to d984d172dceca907f8b447efbdb06dc233f7938d. Impacted is the function resetPass of the file UsersController.java of the component Password Recovery. This manipulation causes weak password recovery. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. Continious delivery with rolling releases is used by this product. Therefore, no version details of affected nor updated rele",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-640",
+          "name": "CWE-640"
+        }
+      ],
+      "vendors": [
+        "jaychouchannel Tourism-Management-System"
+      ],
+      "references": [
+        "https://github.com/jaychouchannel/Tourism-Management-System/",
+        "https://github.com/jaychouchannel/Tourism-Management-System/commit/9cb6215ac871f99a90cde763cf003e95ff282283",
+        "https://github.com/jaychouchannel/Tourism-Management-System/issues/13",
+        "https://vuldb.com/cve/CVE-2026-90522"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90780",
+      "published": "2026-09-13T12:17:17.093",
+      "lastModified": "2026-09-13T12:17:17.093",
+      "vulnStatus": "Received",
+      "description": "SIPp through 3.7.7 contains a buffer overflow vulnerability in the get_header() function in src/sip_parser.cpp when processing SIP messages with header content exceeding 20,490 bytes. Unauthenticated remote attackers can send crafted SIP messages with oversized headers to overflow the static buffer and crash the process.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "SIPp sipp"
+      ],
+      "references": [
+        "https://github.com/SIPp/sipp",
+        "https://github.com/SIPp/sipp/blob/v3.7.7/src/sip_parser.cpp#L164-L227",
+        "https://github.com/SIPp/sipp/commit/8ddfb43359703e665041a955543e07f504f80232",
+        "https://github.com/SIPp/sipp/pull/881"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90779",
+      "published": "2026-09-13T12:17:16.960",
+      "lastModified": "2026-09-13T12:17:16.960",
+      "vulnStatus": "Received",
+      "description": "SIPp through 3.7.7 contains a stack buffer overflow vulnerability in createAuthHeader() when processing SIP authentication challenges with oversized algorithm parameters. A malicious SIP server can send a crafted 401 or 407 challenge to corrupt the stack and crash the client process.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "SIPp sipp"
+      ],
+      "references": [
+        "https://github.com/SIPp/sipp",
+        "https://github.com/SIPp/sipp/blob/v3.7.7/src/auth.cpp#L183-L192",
+        "https://github.com/SIPp/sipp/commit/1d4a5622bea34d0b5cdff333e6b5734608e30af7",
+        "https://github.com/SIPp/sipp/pull/880"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90778",
+      "published": "2026-09-13T12:17:16.837",
+      "lastModified": "2026-09-13T12:17:16.837",
+      "vulnStatus": "Received",
+      "description": "SIPp through 3.7.7 contains a buffer overflow vulnerability in get_peer_tag() function when processing SIP To headers with tag parameters of 2049 bytes or more. Unauthenticated remote attackers can send crafted SIP messages with oversized tag parameters to overflow the static buffer and crash the process.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "SIPp sipp"
+      ],
+      "references": [
+        "https://github.com/SIPp/sipp",
+        "https://github.com/SIPp/sipp/blob/v3.7.7/src/sip_parser.cpp#L76-L113",
+        "https://github.com/SIPp/sipp/commit/ddf22d1a54e0396b2e18ebaf4cf5a3fa860e5da4",
+        "https://github.com/SIPp/sipp/pull/879"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90777",
+      "published": "2026-09-13T12:17:16.690",
+      "lastModified": "2026-09-13T12:17:16.690",
+      "vulnStatus": "Received",
+      "description": "ESPnet before 202609 deserializes pretrained model checkpoints using torch.load with weights_only=False, allowing arbitrary code execution from attacker-supplied files. Attackers can craft malicious checkpoint files that execute code during deserialization when loaded through the initialization or fine-tuning path.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "espnet espnet"
+      ],
+      "references": [
+        "https://github.com/espnet/espnet",
+        "https://github.com/espnet/espnet/blob/v.202511/espnet2/torch_utils/load_pretrained_model.py#L99",
+        "https://github.com/espnet/espnet/commit/91ca045fc179f29bc7b7fe05cd852aea65310003",
+        "https://github.com/espnet/espnet/releases/tag/v.202609"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90776",
+      "published": "2026-09-13T12:17:16.547",
+      "lastModified": "2026-09-13T12:17:16.547",
+      "vulnStatus": "Received",
+      "description": "Nodemailer versions 9.1.0 through 10.0.4 contain a quadratic time complexity vulnerability in the addressparser component when parsing email addresses with RFC 5322 comments. Attackers can craft malicious email headers with comment-separated atoms to consume excessive CPU and block the Node.js event loop for several seconds, causing denial of service.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-407",
+          "name": "CWE-407"
+        }
+      ],
+      "vendors": [
+        "nodemailer nodemailer"
+      ],
+      "references": [
+        "https://github.com/nodemailer/nodemailer",
+        "https://github.com/nodemailer/nodemailer/blob/v10.0.4/src/addressparser/index.ts#L251",
+        "https://github.com/nodemailer/nodemailer/commit/c07f17518d25aca8ab2ad66968dcbca538c24b89",
+        "https://github.com/nodemailer/nodemailer/releases/tag/v10.0.5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90516",
+      "published": "2026-09-13T12:17:15.893",
+      "lastModified": "2026-09-13T12:17:15.893",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was found in SourceCodester School Registration and Fee System 1.0. The affected element is an unknown function of the file /bilal/normal/pay_report.php. Performing a manipulation of the argument period results in sql injection. The attack can be initiated remotely. The exploit has been made public and could be used.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        },
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "SourceCodester School Registration and Fee System"
+      ],
+      "references": [
+        "https://github.com/zuojiu567/cve/issues/3",
+        "https://vuldb.com/cve/CVE-2026-90516",
+        "https://vuldb.com/submit/912055",
+        "https://vuldb.com/vuln/403102"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90515",
+      "published": "2026-09-13T12:17:15.147",
+      "lastModified": "2026-09-13T12:17:15.147",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was determined in SourceCodester School Registration and Fee System 1.0. The impacted element is an unknown function of the file /bilal/normal/delete_stud.php. Executing a manipulation of the argument selector[] can lead to sql injection. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        },
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "SourceCodester School Registration and Fee System"
+      ],
+      "references": [
+        "https://github.com/zuojiu567/cve/issues/2",
+        "https://vuldb.com/cve/CVE-2026-90515",
+        "https://vuldb.com/submit/912054",
+        "https://vuldb.com/vuln/403103"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90774",
+      "published": "2026-09-13T11:17:02.163",
+      "lastModified": "2026-09-13T11:17:02.163",
+      "vulnStatus": "Received",
+      "description": "rustypaste before 0.18.1 validates the destination path before applying the optional custom filename HTTP header, allowing attackers to bypass directory-escape checks. Attackers can supply path traversal sequences in the filename header to write files outside the configured upload directory to arbitrary locations.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-22",
+          "name": "Path Traversal"
+        }
+      ],
+      "vendors": [
+        "orhun rustypaste"
+      ],
+      "references": [
+        "https://github.com/orhun/rustypaste",
+        "https://github.com/orhun/rustypaste/blob/v0.18.0/src/paste.rs",
+        "https://github.com/orhun/rustypaste/commit/ac05d552596af4a8429d80f30d11f67117ce02c8",
+        "https://github.com/orhun/rustypaste/issues/622"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90772",
+      "published": "2026-09-13T11:17:01.780",
+      "lastModified": "2026-09-13T11:17:01.780",
+      "vulnStatus": "Received",
+      "description": "Amundsen frontend through 4.3.0 renders table, dashboard, and feature descriptions with dangerouslySetInnerHTML without HTML sanitization in ResourceListItem components. Attackers can inject malicious markup like img elements with onerror handlers into descriptions via the metadata service or Elasticsearch, executing JavaScript in every user's browser that views search results.",
+      "cvss": {
+        "score": 7.6,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-79",
+          "name": "Cross-Site Scripting (XSS)"
+        }
+      ],
+      "vendors": [
+        "amundsen-io amundsen-frontend"
+      ],
+      "references": [
+        "https://github.com/amundsen-io/amundsen",
+        "https://github.com/amundsen-io/amundsen/blob/frontend-4.3.0/frontend/amundsen_application/static/js/components/ResourceListItem/TableListItem/index.tsx",
+        "https://github.com/amundsen-io/amundsen/issues/2362",
+        "https://www.vulncheck.com/advisories/amundsen-frontend-through-4.3.0-stored-xss-via-description"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90770",
+      "published": "2026-09-13T11:17:01.453",
+      "lastModified": "2026-09-13T11:17:01.453",
+      "vulnStatus": "Received",
+      "description": "Spug through 3.4.0 contains a remote code execution vulnerability in the ping_check function that interpolates user-supplied monitor addresses directly into shell commands without validation. Authenticated users with monitor permissions can inject shell metacharacters via the /monitor/run_test/ endpoint to execute arbitrary commands as the Spug process user.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "openspug spug"
+      ],
+      "references": [
+        "https://github.com/openspug/spug",
+        "https://github.com/openspug/spug/blob/v3.4.0/spug_api/apps/monitor/executors.py",
+        "https://github.com/openspug/spug/blob/v3.4.0/spug_api/apps/monitor/views.py",
+        "https://github.com/openspug/spug/commit/97aebf133e1f9cbb35ccebadab1faedfdfe93f42"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90769",
+      "published": "2026-09-13T11:17:01.270",
+      "lastModified": "2026-09-13T11:17:01.270",
+      "vulnStatus": "Received",
+      "description": "Open Notebook before 1.11.0 fails to validate the URL parameter in POST /api/sources endpoint, allowing authenticated users to perform server-side requests to internal services. Attackers can supply arbitrary URLs to read cloud metadata, internal network services, and localhost-bound services through the application server's direct HTTP requests.",
+      "cvss": {
+        "score": 7.7,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-918",
+          "name": "Server-Side Request Forgery (SSRF)"
+        }
+      ],
+      "vendors": [
+        "lfnovo open-notebook"
+      ],
+      "references": [
+        "https://github.com/lfnovo/open-notebook",
+        "https://github.com/lfnovo/open-notebook/blob/8889087e317177d7b6e286342ab34e0c9c01d43e/api/routers/sources.py",
+        "https://github.com/lfnovo/open-notebook/commit/9045ea50196927eac7de647bb5b7009349236fb4",
+        "https://github.com/lfnovo/open-notebook/issues/1284"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90768",
+      "published": "2026-09-13T11:17:01.113",
+      "lastModified": "2026-09-13T11:17:01.113",
+      "vulnStatus": "Received",
+      "description": "CAPEv2 through commit 471ee4b fails to validate task ownership in REST API endpoints, allowing authenticated users to read and delete analyses submitted by other users. Attackers can enumerate all tasks in the system and delete arbitrary analyses by sending requests to task view and delete endpoints without ownership verification.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "kevoreilly CAPEv2"
+      ],
+      "references": [
+        "https://github.com/kevoreilly/CAPEv2",
+        "https://github.com/kevoreilly/CAPEv2/blob/1255b18/web/apiv2/views.py",
+        "https://github.com/kevoreilly/CAPEv2/issues/3162",
+        "https://www.vulncheck.com/advisories/capev2-through-commit-471ee4b-rest-api-task-endpoints-missing-ownership-check"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90562",
+      "published": "2026-09-13T11:17:00.780",
+      "lastModified": "2026-09-13T11:17:00.780",
+      "vulnStatus": "Received",
+      "description": "LangBot before 4.10.11 generates password recovery keys with only 24 bits of entropy and applies no rate limiting to the unauthenticated reset-password endpoint. Remote attackers knowing the administrator email can exhaust the keyspace through concurrent requests to reset the admin password and gain account access.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-331",
+          "name": "CWE-331"
+        }
+      ],
+      "vendors": [
+        "langbot-app LangBot"
+      ],
+      "references": [
+        "https://github.com/langbot-app/LangBot",
+        "https://github.com/langbot-app/LangBot/blob/v4.10.2/src/langbot/pkg/api/http/controller/groups/user.py",
+        "https://github.com/langbot-app/LangBot/blob/v4.10.2/src/langbot/pkg/core/stages/genkeys.py",
+        "https://github.com/langbot-app/LangBot/commit/267232c24f93c515d6fd3f7f81c0676066ab1ab8"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90561",
+      "published": "2026-09-13T11:17:00.613",
+      "lastModified": "2026-09-13T11:17:00.613",
+      "vulnStatus": "Received",
+      "description": "Strapi versions 4.x through 4.26.2 and 5.x before 5.48.1 contain a stored cross-site scripting vulnerability in the content manager WYSIWYG preview component that fails to strip script tags from rich text. An Author-role user can store malicious script tags in rich text fields that execute in an Editor or Super Admin's session when the preview pane is expanded, enabling account takeover.",
+      "cvss": {
+        "score": 8.7,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-79",
+          "name": "Cross-Site Scripting (XSS)"
+        }
+      ],
+      "vendors": [
+        "strapi strapi"
+      ],
+      "references": [
+        "https://github.com/strapi/strapi",
+        "https://github.com/strapi/strapi/blob/v5.46.0/packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/Wysiwyg/PreviewWysiwyg.tsx",
+        "https://github.com/strapi/strapi/commit/875752612c30f951546904a29469e51e17e0ac37",
+        "https://github.com/strapi/strapi/issues/26857"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90514",
+      "published": "2026-09-13T11:17:00.423",
+      "lastModified": "2026-09-13T11:17:00.423",
+      "vulnStatus": "Received",
+      "description": "A vulnerability has been found in SourceCodester School Registration and Fee System 1.0. Impacted is an unknown function of the file /bilal/normal/save_stud.php. Such manipulation of the argument Status leads to sql injection. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        },
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "SourceCodester School Registration and Fee System"
+      ],
+      "references": [
+        "https://github.com/zuojiu567/cve/issues/1",
+        "https://vuldb.com/cve/CVE-2026-90514",
+        "https://vuldb.com/submit/912050",
+        "https://vuldb.com/vuln/403101"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90510",
+      "published": "2026-09-13T11:16:59.827",
+      "lastModified": "2026-09-13T11:16:59.827",
+      "vulnStatus": "Received",
+      "description": "A security vulnerability has been detected in dromara orion-visor up to 2.5.7. This affects the function HostKeyServiceImpl.encryptKey of the file orion-visor-modules/orion-visor-module-asset/orion-visor-module-asset-service/src/main/java/org/dromara/visor/module/asset/service/impl/HostKeyServiceImpl.java. The manipulation leads to use of hard-coded cryptographic key . The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. The project was info",
+      "cvss": {
+        "score": 8.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-320",
+          "name": "CWE-320"
+        },
+        {
+          "id": "CWE-321",
+          "name": "CWE-321"
+        }
+      ],
+      "vendors": [
+        "dromara orion-visor"
+      ],
+      "references": [
+        "https://github.com/dromara/orion-visor/",
+        "https://github.com/dromara/orion-visor/issues/171",
+        "https://github.com/sumo166/CVE-apply/blob/main/dromara-orion-visor/Hardcoded%20AES%20Encryption%20Key%20Enables%20Decryption%20of%20SSH%20Private%20Keys%20and%20Host%20Passwords%20(CWE-321)_en.md",
+        "https://vuldb.com/cve/CVE-2026-90510"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-90509",
       "published": "2026-09-13T10:16:56.117",
       "lastModified": "2026-09-13T10:16:56.117",
@@ -94,6 +2480,87 @@
         "https://vuldb.com/cve/CVE-2026-90498",
         "https://vuldb.com/submit/892896",
         "https://vuldb.com/vuln/403086"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89080",
+      "published": "2026-09-13T06:16:25.637",
+      "lastModified": "2026-09-13T11:16:59.650",
+      "vulnStatus": "Received",
+      "description": "The Really Simple Security WordPress plugin before 9.8.1 does not prevent an unauthenticated request from resetting an account's completed email two-factor enrolment, allowing an attacker who already knows the account's password to bypass the second factor and obtain that user's session, up to administrator.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "Unknown Really Simple Security"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/49546064-5663-40f8-be7c-4f3faa31fa9a/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-86406",
+      "published": "2026-09-13T06:16:25.157",
+      "lastModified": "2026-09-13T11:16:58.793",
+      "vulnStatus": "Received",
+      "description": "The User Registration & Membership WordPress plugin before 5.2.8 does not check the capability of the user making a membership purchase, and does not validate the payment method or the plan submitted with it, allowing any authenticated user such as a subscriber to be granted the WordPress role attached to a paid plan without paying for it. Where the site owner has mapped a plan to a privileged role, this leads to privilege escalation up to administrator.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-269",
+          "name": "Improper Privilege Management"
+        }
+      ],
+      "vendors": [
+        "Unknown User Registration & Membership"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/0fb4ec40-3f92-4c7e-8877-8898b355d78d/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-80071",
+      "published": "2026-09-13T06:16:24.947",
+      "lastModified": "2026-09-13T11:16:58.460",
+      "vulnStatus": "Received",
+      "description": "The User Registration & Membership WordPress plugin before 5.2.8 does not properly restrict who may author a membership plan or validate the plan a user attaches to their own account, allowing authenticated users with Author-level access and above to assign themselves an arbitrary role and escalate their privileges to Administrator.",
+      "cvss": {
+        "score": 7.2,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-269",
+          "name": "Improper Privilege Management"
+        }
+      ],
+      "vendors": [
+        "Unknown User Registration & Membership"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/a4fbdeea-0d3b-466b-b4b6-4c4db277cd1d/"
       ],
       "kev": {
         "in_kev": false
@@ -54840,8 +57307,8 @@
     {
       "id": "CVE-2026-86452",
       "published": "2026-09-07T14:16:56.833",
-      "lastModified": "2026-09-09T15:23:46.460",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-14T07:17:23.740",
+      "vulnStatus": "Modified",
       "description": "Affected versions of MISP permit unauthenticated or weakly constrained request paths to perform persistent work without adequate input bounds or rate limiting. The users/forgot password-reset endpoint accepted an attacker-controlled email value without first imposing a reasonable length bound or validating its format. That value was then used to create an audit log entry and queue a password-reset job, causing the supplied value to be persisted more than once per request. The commit explicitly s",
       "cvss": {
         "score": 7.5,
@@ -69242,7 +71709,7 @@
     {
       "id": "CVE-2026-85150",
       "published": "2026-09-03T13:06:21.910",
-      "lastModified": "2026-09-11T06:16:22.090",
+      "lastModified": "2026-09-14T06:16:57.763",
       "vulnStatus": "Awaiting Analysis",
       "description": "A NULL pointer dereference flaw was found in GStreamer's RTSP support library. The vulnerability occurs while parsing an Authorization or WWW-Authenticate header that uses Digest authentication. Specially crafted whitespace placement around a parameter's terminator can cause an internal length calculation to underflow, leading to a crash of the process parsing the header. On an RTSP server this can be triggered by a remote, unauthenticated attacker sending a single malformed request when the ser",
       "cvss": {
@@ -69258,15 +71725,15 @@
       ],
       "vendors": [
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 7",
         "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 7",
         "Red Hat Red Hat Enterprise Linux 9"
       ],
       "references": [
         "https://access.redhat.com/errata/RHSA-2026:66460",
+        "https://access.redhat.com/errata/RHSA-2026:67145",
         "https://access.redhat.com/security/cve/CVE-2026-85150",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2527936",
-        "https://gitlab.freedesktop.org/gstreamer/gstreamer-security/-/merge_requests/120"
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2527936"
       ],
       "kev": {
         "in_kev": false
@@ -80250,5 +82717,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-13T10:32:57.593086+00:00"
+  "updated_at": "2026-09-14T10:55:50.618793+00:00"
 }
