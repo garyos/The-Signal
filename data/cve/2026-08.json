@@ -12160,7 +12160,7 @@
     {
       "id": "CVE-2026-80671",
       "published": "2026-08-28T08:16:52.410",
-      "lastModified": "2026-08-29T07:16:49.477",
+      "lastModified": "2026-09-14T13:18:48.167",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: perf sched: Fix register_pid() overflow, strcpy, and BUG_ON register_pid() has several issues when processing untrusted perf.data: 1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap to a small value on 32-bit systems when pid is large (e.g. 0x40000000), causing realloc to return a tiny buffer followed by out-of-bounds writes in the initialization loop. 2. Heap buffer overflow: strcpy(task->comm, comm) copies th",
       "cvss": {
@@ -12173,9 +12173,10 @@
         "Linux Linux"
       ],
       "references": [
-        "https://git.kernel.org/stable/c/5949d339f5ec98752d56dcd4e36f619a59d513a5",
-        "https://git.kernel.org/stable/c/5ea1dcc9418c4e06ce29ed5170596f497ba86872",
-        "https://git.kernel.org/stable/c/652cea73b7b7b7c622a2be670e44e3c499c6d49f"
+        "https://git.kernel.org/stable/c/2003918e13f43cf6c5698be3cc9aa3657dd676a8",
+        "https://git.kernel.org/stable/c/22263d241bad753217d545f8085b7ead52e2873b",
+        "https://git.kernel.org/stable/c/261d2b5f4afa0570ca906e553c93811c5abe4590",
+        "https://git.kernel.org/stable/c/29639f00bfa49da7904ba0a499e0da7a0e5d735e"
       ],
       "kev": {
         "in_kev": false
@@ -55935,7 +55936,7 @@
     {
       "id": "CVE-2026-18917",
       "published": "2026-08-20T10:16:40.507",
-      "lastModified": "2026-08-20T16:17:17.847",
+      "lastModified": "2026-09-15T07:16:26.900",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in libvirt. An unprivileged local user could exploit an integer overflow vulnerability in the NodeGetFreePages RPC handler. This flaw allows crafted values to bypass a size check, leading to an undersized memory buffer. Subsequently, real NUMA node data can overwrite this buffer. This heap buffer overflow can corrupt the root libvirt daemon's memory, potentially leading to a denial of service or local privilege escalation.",
       "cvss": {
@@ -92798,9 +92799,9 @@
     {
       "id": "CVE-2026-65346",
       "published": "2026-08-17T22:17:25.293",
-      "lastModified": "2026-08-19T04:17:32.457",
-      "vulnStatus": "Analyzed",
-      "description": "An integer overflow was addressed with improved input validation. This issue is fixed in iOS 26.6.1 and iPadOS 26.6.1, macOS Tahoe 26.6.2. Processing an image may lead to arbitrary code execution.",
+      "lastModified": "2026-09-14T21:17:19.537",
+      "vulnStatus": "Modified",
+      "description": "An integer overflow was addressed with improved input validation. This issue is fixed in iOS 26.6.1 and iPadOS 26.6.1, macOS Sequoia 15.8, macOS Tahoe 26.6.2, tvOS 27, visionOS 27, watchOS 27. Processing an image may lead to arbitrary code execution.",
       "cvss": {
         "score": 8.8,
         "version": "3.1",
@@ -92814,11 +92815,16 @@
       ],
       "vendors": [
         "Apple iOS and iPadOS",
-        "Apple macOS"
+        "Apple macOS",
+        "Apple tvOS",
+        "Apple visionOS",
+        "Apple watchOS"
       ],
       "references": [
         "https://support.apple.com/en-us/148281",
-        "https://support.apple.com/en-us/148282"
+        "https://support.apple.com/en-us/148282",
+        "https://support.apple.com/en-us/149036",
+        "https://support.apple.com/en-us/149037"
       ],
       "kev": {
         "in_kev": false
@@ -92827,9 +92833,9 @@
     {
       "id": "CVE-2026-65343",
       "published": "2026-08-17T22:17:25.200",
-      "lastModified": "2026-08-18T18:58:54.323",
-      "vulnStatus": "Analyzed",
-      "description": "A use after free issue was addressed with improved memory management. This issue is fixed in iOS 26.6.1 and iPadOS 26.6.1, macOS Tahoe 26.6.2. A remote attacker may be able to cause unexpected system termination.",
+      "lastModified": "2026-09-14T21:17:19.163",
+      "vulnStatus": "Modified",
+      "description": "A use after free issue was addressed with improved memory management. This issue is fixed in iOS 26.6.1 and iPadOS 26.6.1, macOS Tahoe 26.6.2, tvOS 27, visionOS 27, watchOS 27. A remote attacker may be able to cause unexpected system termination.",
       "cvss": {
         "score": 7.5,
         "version": "3.1",
@@ -92843,11 +92849,16 @@
       ],
       "vendors": [
         "Apple iOS and iPadOS",
-        "Apple macOS"
+        "Apple macOS",
+        "Apple tvOS",
+        "Apple visionOS",
+        "Apple watchOS"
       ],
       "references": [
         "https://support.apple.com/en-us/148281",
-        "https://support.apple.com/en-us/148282"
+        "https://support.apple.com/en-us/148282",
+        "https://support.apple.com/en-us/149036",
+        "https://support.apple.com/en-us/149037"
       ],
       "kev": {
         "in_kev": false
@@ -92975,9 +92986,9 @@
     {
       "id": "CVE-2026-43794",
       "published": "2026-08-17T22:17:11.457",
-      "lastModified": "2026-08-19T04:17:20.470",
-      "vulnStatus": "Analyzed",
-      "description": "A memory corruption issue was addressed with improved memory handling. This issue is fixed in Safari 26.6.1, iOS 18.7.10 and iPadOS 18.7.10, iOS 26.6.1 and iPadOS 26.6.1, macOS Tahoe 26.6.2. Processing maliciously crafted web content may lead to memory corruption.",
+      "lastModified": "2026-09-14T21:17:11.910",
+      "vulnStatus": "Modified",
+      "description": "A memory corruption issue was addressed with improved memory handling. This issue is fixed in Safari 26.6.1, iOS 18.7.10 and iPadOS 18.7.10, iOS 26.6.1 and iPadOS 26.6.1, macOS Tahoe 26.6.2, tvOS 27, visionOS 27, watchOS 27. Processing maliciously crafted web content may lead to memory corruption.",
       "cvss": {
         "score": 8.8,
         "version": "3.1",
@@ -92992,7 +93003,9 @@
       "vendors": [
         "Apple Safari",
         "Apple iOS and iPadOS",
-        "Apple macOS"
+        "Apple macOS",
+        "Apple tvOS",
+        "Apple visionOS"
       ],
       "references": [
         "https://support.apple.com/en-us/148281",
@@ -99175,7 +99188,7 @@
     {
       "id": "CVE-2026-74565",
       "published": "2026-08-15T13:18:02.013",
-      "lastModified": "2026-08-17T06:19:54.657",
+      "lastModified": "2026-09-14T13:18:45.557",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: make nft_object rhltable per table The nft_object rhltable is global, this allows for accessing objects that are being dismangled from lookup path by other existing netns. Given the nft_obj_destroy() releases the object inmediately, this might lead to use-after-free of these objects that are being released. Make the existing rhltable per table to address this issue to deal with with the nft_rcv_nl_event() p",
       "cvss": {
@@ -99189,9 +99202,9 @@
       ],
       "references": [
         "https://git.kernel.org/stable/c/1948e4f85b855618b5b9a27265f98d816f4cb7cb",
-        "https://git.kernel.org/stable/c/63ba12b664a2cd3220ed43e22c717715f4cc2ae8",
-        "https://git.kernel.org/stable/c/7d4789b58761d9d48d9b5f5e7e0a510c3bbfb3af",
-        "https://git.kernel.org/stable/c/f4f699790590bd0896c48a71e9232a65198f92f0"
+        "https://git.kernel.org/stable/c/4b549d32d34ee765527e63726bb1af984876e776",
+        "https://git.kernel.org/stable/c/523c881661dde67efb44fce38c8eed50a72a57c1",
+        "https://git.kernel.org/stable/c/63ba12b664a2cd3220ed43e22c717715f4cc2ae8"
       ],
       "kev": {
         "in_kev": false
@@ -100644,7 +100657,7 @@
     {
       "id": "CVE-2026-74474",
       "published": "2026-08-15T13:17:52.177",
-      "lastModified": "2026-08-23T13:16:44.120",
+      "lastModified": "2026-09-14T12:17:45.980",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: vxlan: use pskb_network_may_pull() for transmit path header pulls In vxlan_xmit(), arp_reduce(), and vxlan_mdb_entry_skb_get(), pskb_may_pull() was being called to verify the availability of network layer headers (ARP, IPv6/ND, IP/IPv6 MDB keys). However, during transmit skb->data points to the MAC header, so skb_network_offset(skb) is ETH_HLEN (14 bytes). Using pskb_may_pull(skb, len) only checks len bytes from skb->data rather",
       "cvss": {
@@ -100657,10 +100670,10 @@
         "Linux Linux"
       ],
       "references": [
+        "https://git.kernel.org/stable/c/371425d4be7795e9158388af9eee0201e6047410",
         "https://git.kernel.org/stable/c/6146901881f09ef063eb34ad389f63231f8486f5",
         "https://git.kernel.org/stable/c/7076a34b6e33315dc160b4612bfea1c597495585",
-        "https://git.kernel.org/stable/c/94dee751aad627b3645d424b5d0c736d394573e9",
-        "https://git.kernel.org/stable/c/b9553558b48db54ac9273e6b98d7263ef5c1a329"
+        "https://git.kernel.org/stable/c/94dee751aad627b3645d424b5d0c736d394573e9"
       ],
       "kev": {
         "in_kev": false
@@ -102310,7 +102323,7 @@
     {
       "id": "CVE-2026-74378",
       "published": "2026-08-15T06:22:39.597",
-      "lastModified": "2026-08-17T06:19:32.633",
+      "lastModified": "2026-09-14T12:17:45.817",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe get_srq_wqe() reads wqe->dma.num_sge from the shared receive queue buffer, which is mapped into userspace. It validates num_sge against max_sge, but then re-reads the same field to calculate the memcpy size. A concurrent userspace thread can modify num_sge between validation and use, causing a heap buffer overflow when copying the WQE into qp->resp.srq_wqe. Read num_sge into a lo",
       "cvss": {
@@ -102408,7 +102421,7 @@
     {
       "id": "CVE-2026-74371",
       "published": "2026-08-15T06:22:38.857",
-      "lastModified": "2026-08-17T06:19:31.903",
+      "lastModified": "2026-09-14T12:17:45.663",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: bpf: fix BPF_PROG_QUERY OOB write and cgroup backward compat BPF_PROG_QUERY writes back the 'query.revision' field unconditionally to userspace. If userspace passes a smaller 'bpf_attr' structure (e.g. 40 bytes, which was the layout before the addition of 'query.revision'), the kernel performs an out-of-bounds write. Fix this by propagating the user-provided attribute size 'uattr_size' down to the cgroup query handlers, and cond",
       "cvss": {
@@ -102423,6 +102436,7 @@
       "references": [
         "https://git.kernel.org/stable/c/21c4b99b27f3f85b89256e81b3e997dec0a460d0",
         "https://git.kernel.org/stable/c/a7131340d0f95df9a541257dccab5d85e6bcdd2b",
+        "https://git.kernel.org/stable/c/b78eb6efbf052d44a3a14726aa7c7d5aa2e544d7",
         "https://git.kernel.org/stable/c/d3d630e8a7f3421bc2d204b87bdff35b4432a8e3"
       ],
       "kev": {
@@ -102889,7 +102903,7 @@
     {
       "id": "CVE-2026-74334",
       "published": "2026-08-15T06:22:34.280",
-      "lastModified": "2026-08-17T06:19:27.890",
+      "lastModified": "2026-09-14T12:17:45.517",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/nldev: Fix locking when accessing mr->pd Sashiko points out that, due to rereg_mr, the PD is actually variable and all the touches in nldev are racy. Use mr->device instead of mr->pd->device. Getting the PD restrack ID is more tricky. To avoid disturbing all the happy paths, add an rdma_restrack_sync() operation which is sort of like flush_workqueue() or synchronize_irq(): after it returns, all the old nldev touches to the ",
       "cvss": {
@@ -102902,8 +102916,10 @@
         "Linux Linux"
       ],
       "references": [
+        "https://git.kernel.org/stable/c/05e26f34597e9c38bb5b340d86b179b23673869f",
         "https://git.kernel.org/stable/c/1a132ee4e655288d9a0937ea5109a0d038431ae9",
-        "https://git.kernel.org/stable/c/50d5c02ab8e62325548bd3a6e6b758a9dcd6e7c3"
+        "https://git.kernel.org/stable/c/50d5c02ab8e62325548bd3a6e6b758a9dcd6e7c3",
+        "https://git.kernel.org/stable/c/7a0cbb5721a1da81e902d73b6049f85ca8f3fc0a"
       ],
       "kev": {
         "in_kev": false
@@ -103862,7 +103878,7 @@
     {
       "id": "CVE-2026-74268",
       "published": "2026-08-15T06:22:26.183",
-      "lastModified": "2026-08-17T06:19:20.467",
+      "lastModified": "2026-09-14T12:17:45.340",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: tcp: clear sock_ops cb flags before force-closing a child socket A child socket inherits the listener's bpf_sock_ops_cb_flags via sk_clone_lock(). If its setup fails in tcp_v4_syn_recv_sock() / tcp_v6_syn_recv_sock(), the child is freed through put_and_exit, where inet_csk_prepare_forced_close() drops the socket lock and tcp_done() runs without it. If BPF_SOCK_OPS_STATE_CB_FLAG was inherited, tcp_done() -> tcp_set_state() calls ",
       "cvss": {
@@ -103875,9 +103891,10 @@
         "Linux Linux"
       ],
       "references": [
+        "https://git.kernel.org/stable/c/5d5389b2c37ca00da61d1407618ebe15abae0c8b",
+        "https://git.kernel.org/stable/c/71e9c53220abd7f5a45aa4d5e5b420d3479f3a4f",
         "https://git.kernel.org/stable/c/8874dafc9099bc49c2e5ebba030f85d276421f92",
-        "https://git.kernel.org/stable/c/990348e5bb457697c2f1f7f7b65154a3334d9d2b",
-        "https://git.kernel.org/stable/c/ce311bd2e36596f0aa2c92ca86fb3e019ac57eae"
+        "https://git.kernel.org/stable/c/990348e5bb457697c2f1f7f7b65154a3334d9d2b"
       ],
       "kev": {
         "in_kev": false
@@ -107804,7 +107821,7 @@
     {
       "id": "CVE-2026-72255",
       "published": "2026-08-15T06:21:53.127",
-      "lastModified": "2026-08-23T13:16:42.637",
+      "lastModified": "2026-09-14T12:17:44.953",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst The br_netfilter fake rtable is embedded in struct net_bridge and is attached to bridged packets with skb_dst_set_noref(). If such a packet is queued to NFQUEUE, __nf_queue() upgrades that fake dst with skb_dst_force(). At that point the queued skb can hold a real dst reference after bridge teardown has started. The problem is not that every bridged packet needs",
       "cvss": {
@@ -113512,7 +113529,7 @@
     {
       "id": "CVE-2026-16772",
       "published": "2026-08-14T16:16:50.290",
-      "lastModified": "2026-09-03T17:45:20.840",
+      "lastModified": "2026-09-14T22:16:57.260",
       "vulnStatus": "Deferred",
       "description": "In Akaunting versions <= 3.1.21, low\u2011privileged authenticated users can modify their own account to assign themselves the admin role ID, granting full administrator privileges. This vulnerability is caused by a flaw in the `UpdateUser` job, which processes user-supplied role assignments via an unconditional `roles()->sync()` call without verifying whether the caller is authorized to manage roles. Users only require the default `update-auth-profile` permission to access the self-update path and a",
       "cvss": {
@@ -139755,7 +139772,7 @@
     {
       "id": "CVE-2026-62721",
       "published": "2026-08-11T17:18:22.870",
-      "lastModified": "2026-08-16T19:16:56.380",
+      "lastModified": "2026-09-14T18:18:08.877",
       "vulnStatus": "Analyzed",
       "description": "Insufficient granularity of access control in User-Mode Power Service (UMPS) allows an authorized attacker to elevate privileges locally.",
       "cvss": {
@@ -154549,7 +154566,7 @@
     {
       "id": "CVE-2026-19389",
       "published": "2026-08-10T03:16:40.380",
-      "lastModified": "2026-08-18T00:16:52.547",
+      "lastModified": "2026-09-15T08:17:05.400",
       "vulnStatus": "Awaiting Analysis",
       "description": "Multiple integer overflow and underflow vulnerabilities were found in the GStreamer gst-plugins-ugly ASF demuxer (asfdemux) when parsing header objects from crafted ASF, WMV, or WMA files. Insufficient validation of attacker-controlled length and size values can bypass bounds checks and cause out-of-bounds heap reads. This can result in application crash, denial of service, or limited information disclosure when untrusted media is processed.",
       "cvss": {
@@ -157690,7 +157707,7 @@
     {
       "id": "CVE-2026-15816",
       "published": "2026-08-07T11:17:05.100",
-      "lastModified": "2026-09-10T10:17:29.790",
+      "lastModified": "2026-09-14T13:17:34.103",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in dracut. The die() error-handling function writes its message into a shell script under the initramfs emergency-hook directory without properly shell-quoting it. When the message contains data derived from the DHCP ROOT_PATH option, an attacker on the adjacent network who controls a rogue DHCP server can inject a command-substitution sequence that executes as root the next time dracut sources its emergency hook scripts during standard boot-failure handling.",
       "cvss": {
@@ -159524,9 +159541,9 @@
     {
       "id": "CVE-2026-65400",
       "published": "2026-08-06T22:18:14.533",
-      "lastModified": "2026-08-19T04:17:34.547",
-      "vulnStatus": "Analyzed",
-      "description": "An authentication issue was addressed with improved state management. This issue is fixed in macOS Sequoia 15.7.9, macOS Sonoma 14.8.9, macOS Tahoe 26.6.1. An attacker on the network may be able to authenticate to Screen Sharing without valid credentials.",
+      "lastModified": "2026-09-14T21:17:23.433",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "An authentication issue was addressed with improved state management. This issue is fixed in macOS Golden Gate 27, macOS Sequoia 15.7.9, macOS Sonoma 14.8.9, macOS Tahoe 26.6.1, macOS Tahoe 26.7. An attacker on the network may be able to authenticate to Screen Sharing without valid credentials.",
       "cvss": {
         "score": 9.8,
         "version": "3.1",
@@ -159545,7 +159562,7 @@
         "https://support.apple.com/en-us/148170",
         "https://support.apple.com/en-us/148171",
         "https://support.apple.com/en-us/148172",
-        "http://seclists.org/fulldisclosure/2026/Aug/36"
+        "https://support.apple.com/en-us/149035"
       ],
       "kev": {
         "in_kev": true,
@@ -160018,9 +160035,9 @@
     {
       "id": "CVE-2026-48054",
       "published": "2026-08-06T22:17:09.530",
-      "lastModified": "2026-09-08T20:51:43.490",
+      "lastModified": "2026-09-14T18:17:48.623",
       "vulnStatus": "Deferred",
-      "description": "OpenZeppelin Contracts Wizardis a web application to interactively build a contract out of components from OpenZeppelin Contracts. Versions prior to 0.10.9 generate a Hardhat test file (`test/test.ts`) by interpolating user-supplied `opts.name` (ERC20/ERC721) and `opts.uri` (ERC1155) directly into TypeScript string literals at `zip-hardhat.ts:48` and `:50` without any JavaScript string escaping. No authentication is required: an attacker crafts a URL such as `https[:]//wizard[.]openzeppelin[.]co",
+      "description": "OpenZeppelin Contracts Wizard is a web application to interactively build a contract out of components from OpenZeppelin Contracts. Versions prior to 0.10.9 generate a Hardhat test file (`test/test.ts`) by interpolating user-supplied `opts.name` (ERC20/ERC721) and `opts.uri` (ERC1155) directly into TypeScript string literals at `zip-hardhat.ts:48` and `:50` without any JavaScript string escaping. No authentication is required: an attacker crafts a URL such as `https[:]//wizard[.]openzeppelin[.]c",
       "cvss": {
         "score": 8.8,
         "version": "3.1",
@@ -174695,6 +174712,40 @@
       }
     },
     {
+      "id": "CVE-2026-70472",
+      "published": "2026-08-04T19:16:54.680",
+      "lastModified": "2026-09-14T19:01:45.947",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise openai-assistants-vector-store endpoints accept a client-controlled credential parameter and load credentials by id without checking whether that credential belongs to the caller workspace. Route permissions assistants:* only check feature access. The controller passes req.query.credential straight to the service, and the service uses findOneBy({ id: credentialId }), decrypts the cred",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-285",
+          "name": "CWE-285"
+        },
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/d81483b70c997ddf981acc9c49fbd9a02fa345cd",
+        "https://github.com/FlowiseAI/Flowise/pull/6170",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-chm3-vqcf-52rx"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-69703",
       "published": "2026-08-04T19:16:54.130",
       "lastModified": "2026-08-04T20:16:53.663",
@@ -174869,6 +174920,70 @@
         "https://raw.githubusercontent.com/cisagov/CSAF/develop/csaf_files/IT/white/2026/va-26-216-01.json",
         "https://www.cve.org/CVERecord?id=CVE-2017-20241",
         "https://www.keysight.com/us/en/about/quality-and-security/security/product-and-solution-cyber-security/security-advisory-archive/security-advisory--ixchariot-vulnerability.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70470",
+      "published": "2026-08-04T18:16:57.930",
+      "lastModified": "2026-09-14T19:19:38.873",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise validatePythonCodeForDataFrame in packages/components/src/pythonCodeValidator.ts can be bypassed with Unicode homoglyph identifiers, allowing arbitrary Python execution inside Pyodide and full OS command execution on the Flowise host via Pyodide js module interop. The validator gates pyodide.runPythonAsync in packages/components/nodes/agents/CSVAgent/CSVAgent.ts and packages/component",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-184",
+          "name": "CWE-184"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/f4e2794f6a576b94578f2fdafbf49c2fb304626c",
+        "https://github.com/FlowiseAI/Flowise/pull/6499",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-52fh-8v99-63c2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69264",
+      "published": "2026-08-04T18:16:57.027",
+      "lastModified": "2026-09-14T19:20:36.803",
+      "vulnStatus": "Analyzed",
+      "description": "Prior to 3.1.3, Flowise CSVAgent interpolates an attacker-controlled segment of the csvFile data URI directly into a Python source-code template that is then executed by Pyodide. Because Pyodide is loaded with the default js bridge to globalThis, which on Node.js exposes eval and dynamic import, the attacker can break out of the Python string literal, hand a JavaScript string to js.eval, dynamically import Node built-in modules such as fs and child_process, and execute arbitrary file I/O or OS c",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        },
+        {
+          "id": "CWE-95",
+          "name": "CWE-95"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/f4e2794f6a576b94578f2fdafbf49c2fb304626c",
+        "https://github.com/FlowiseAI/Flowise/pull/6499",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-4j8x-x6v7-w9rq"
       ],
       "kev": {
         "in_kev": false
@@ -175313,6 +175428,224 @@
       }
     },
     {
+      "id": "CVE-2026-69263",
+      "published": "2026-08-04T17:17:01.683",
+      "lastModified": "2026-09-14T19:24:10.777",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the mitigation for CVE-2025-8943 blocked -y and --yes flags on npx, but packages/components/nodes/tools/MCP/core.ts denied only PATH, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, and NODE_OPTIONS by exact environment-variable name. Because npm reads configuration from npm_config_* variables, setting npm_config_yes=true reproduced --yes behavior without using a blocked flag, causing npx to auto-install",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-184",
+          "name": "CWE-184"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/a4c4e4988cded15edf725e762560575b889ae351",
+        "https://github.com/FlowiseAI/Flowise/pull/6471",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-xc48-889x-5qmw"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69262",
+      "published": "2026-08-04T17:17:01.547",
+      "lastModified": "2026-09-14T19:41:55.683",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, `DELETE /api/v1/chatflows/:id` authorized requests with checkAnyPermission('chatflows:delete,agentflows:delete'), so possession of either permission was sufficient to reach the delete path. The delete logic then resolved the target record only by id and workspaceId and did not validate the target resource type, allowing a caller with only agentflows:delete to delete a CHATFLOW and a caller wi",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/2f528ceced74afaa95fc7a282965e7788796448b",
+        "https://github.com/FlowiseAI/Flowise/pull/6445",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-p5w8-m249-4r4v"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69259",
+      "published": "2026-08-04T17:17:01.413",
+      "lastModified": "2026-09-14T19:47:08.963",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the SQLite Record Manager node in packages/components/nodes/recordmanager/SQLiteRecordManager/SQLiteRecordManager.ts accepted user-controlled additionalConfig and spread it after the intended database setting, allowing additionalConfig.database to overwrite the SQLite database path. An authenticated attacker using the published Docker image, which ran as root, could write a SQLite database to",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/d07186844263bad057008863037466aff7c3390f",
+        "https://github.com/FlowiseAI/Flowise/pull/6464",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-x3hf-7cj6-3r4m"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69258",
+      "published": "2026-08-04T17:17:01.280",
+      "lastModified": "2026-09-14T19:47:46.573",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the unauthenticated POST /api/v1/prediction/:id endpoint accepted an overrideConfig object and unconditionally spread it into internal flowConfig and flowData objects in packages/server/src/utils/buildChatflow.ts and packages/server/src/utils/index.ts without checking apiOverrideStatus. This allowed unauthenticated attackers to inject arbitrary properties into the flow execution context of an",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-639",
+          "name": "CWE-639"
+        },
+        {
+          "id": "CWE-915",
+          "name": "CWE-915"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/23b997ee5ef9e269b628bad0f56f1ecb86bd2fca",
+        "https://github.com/FlowiseAI/Flowise/pull/6279",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-6vh2-wg4h-4vwj"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69257",
+      "published": "2026-08-04T17:17:00.840",
+      "lastModified": "2026-09-14T19:52:01.927",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise's HTTP security module httpSecurity.ts did not normalize IPv4-mapped IPv6 addresses such as ::ffff:127.0.0.1 and ::ffff:169.254.169.254 before checking them against the deny list. Because ipaddr.js reports these addresses as ipv6 while IPv4 CIDR deny-list entries are ipv4, isDeniedIP() skipped the IPv4 CIDR checks. An attacker who controls DNS resolution for a hostname used by the HTT",
+      "cvss": {
+        "score": 8.6,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-918",
+          "name": "Server-Side Request Forgery (SSRF)"
+        },
+        {
+          "id": "CWE-1389",
+          "name": "CWE-1389"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/0fc769208395641c1411ccdb9c81416e54802155",
+        "https://github.com/FlowiseAI/Flowise/pull/6431",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-c6xh-wv4j-ppv5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69256",
+      "published": "2026-08-04T17:17:00.707",
+      "lastModified": "2026-09-14T19:53:48.650",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the CSVAgent node allowed users to provide Python code that is executed through pyodide; although a denylist blocked dangerous Python constructs, pandas.read_pickle() could deserialize a pickled payload and achieve code execution without matching the denied words. The affected file is flowise-components/nodes/agents/CSVAgent/CSVAgent.ts, where user-supplied customReadCSVFunc is evaluated as p",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/c79fe56a6c249850e96bce9b4859f7a0083e4507",
+        "https://github.com/FlowiseAI/Flowise/pull/6257",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-x6vm-w76m-8j7g"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69255",
+      "published": "2026-08-04T17:17:00.570",
+      "lastModified": "2026-09-14T19:58:41.640",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the CSVAgent in packages/components/nodes/agents/CSVAgent/CSVAgent.ts extracted attacker-controlled CSV data with file.split(',').pop() and interpolated it directly into executable Python as base64_string = \"${base64String}\" before calling Pyodide. The validatePythonCodeForDataFrame() denylist only checked later LLM-generated code and did not validate this initial code block. An authenticated",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/f4e2794f6a576b94578f2fdafbf49c2fb304626c",
+        "https://github.com/FlowiseAI/Flowise/pull/6499",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise%403.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-vmv7-4m6c-3cg5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-63456",
       "published": "2026-08-04T17:16:57.853",
       "lastModified": "2026-08-06T15:40:50.227",
@@ -175511,6 +175844,96 @@
       "references": [
         "https://app.notion.com/p/Multiple-Command-Injection-Vulnerabilities-in-Several-H3C-Network-Devices-3b2797159f158056bfd1c3ba38e7a7b7",
         "https://www.h3c.com"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69254",
+      "published": "2026-08-04T16:16:29.243",
+      "lastModified": "2026-09-14T19:59:27.650",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, executeJavaScriptCode() accepted caller-provided nodeVMOptions and merged them over the default NodeVM security settings in packages/components/src/utils.ts. An authenticated attacker reaching packages/server/src/routes/node-custom-functions/index.ts could run a custom function that imported flowise-components/dist/src/utils.js, called executeJavaScriptCode() again with nodeVMOptions.require.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/3086cb7e323bb96c5a581d3232ef975b0d92183d",
+        "https://github.com/FlowiseAI/Flowise/pull/6306",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-3769-jgqc-cxm7"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69253",
+      "published": "2026-08-04T16:16:29.100",
+      "lastModified": "2026-09-14T19:59:58.067",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to version 3.1.3, several custom-tool components \u2014 AgentAsTool, ChatflowTool, and ExecuteFlow \u2014 ran code in the in-process vm2 sandbox. To build that code, they inserted a user-controlled baseURL value straight into the JavaScript source, for example const url = \"${baseURL}/...\"; . The only check on baseURL was isValidURL , but a valid-looking URL can still contain characters that break out ",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-95",
+          "name": "CWE-95"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/3f257bdc8196082a178da7134a075824401b13b9",
+        "https://github.com/FlowiseAI/Flowise/pull/6417",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-wg86-r78f-74mp"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69252",
+      "published": "2026-08-04T16:16:28.960",
+      "lastModified": "2026-09-14T20:01:38.190",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the /api/v1/files route was protected only by the feat:files feature gate and did not enforce checkPermission on GET or DELETE. A low-privileged authenticated API key with unrelated permissions could call GET /api/v1/files to list files under the organization storage root and DELETE /api/v1/files?path=... to delete files belonging to other workspaces in the same organization because getAllFil",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/bc22bf8baec95b6a3d6e1b3563b4f03491cd6fbb",
+        "https://github.com/FlowiseAI/Flowise/pull/6435",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-wp74-f5hh-5f3r"
       ],
       "kev": {
         "in_kev": false
@@ -175814,6 +176237,63 @@
       ],
       "references": [
         "https://docs.qualcomm.com/product/publicresources/securitybulletin/august-2026-bulletin.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69251",
+      "published": "2026-08-04T15:16:44.430",
+      "lastModified": "2026-09-14T20:09:25.623",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise record manager and agent memory nodes allowed users to set arbitrary TypeORM DataSource options through the additionalConfig input in packages/components/nodes/recordmanager/MySQLRecordManager/MySQLrecordManager.ts, packages/components/nodes/recordmanager/PostgresRecordManager/PostgresRecordManager.ts, packages/components/nodes/recordmanager/SQLiteRecordManager/SQLiteRecordManager.ts,",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise",
+        "FlowiseAI flowise-components"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-g32j-mmxr-gfq5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-69250",
+      "published": "2026-08-04T15:16:44.277",
+      "lastModified": "2026-09-14T20:03:30.460",
+      "vulnStatus": "Analyzed",
+      "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the OAuth2 token refresh endpoint POST /api/v1/oauth2-credential/refresh/:credentialId is unauthenticated by design and performs a server-side HTTP request to the credential-controlled accessTokenUrl without SSRF protections. Runtime validation confirmed that the endpoint was reachable without authentication, triggered outbound POST requests to an attacker-controlled server, reflected the ful",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-639",
+          "name": "CWE-639"
+        }
+      ],
+      "vendors": [
+        "FlowiseAI Flowise"
+      ],
+      "references": [
+        "https://github.com/FlowiseAI/Flowise/commit/da8b251a9a4c59484ceaf6f71df7406aede7bef2",
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise@3.1.3",
+        "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-r745-8hwv-h473"
       ],
       "kev": {
         "in_kev": false
@@ -184123,5 +184603,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-14T10:55:50.491148+00:00"
+  "updated_at": "2026-09-15T10:22:43.470558+00:00"
 }

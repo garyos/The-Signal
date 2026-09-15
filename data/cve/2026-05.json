@@ -18756,7 +18756,7 @@
     {
       "id": "CVE-2026-46090",
       "published": "2026-05-27T14:17:30.547",
-      "lastModified": "2026-07-20T12:19:31.970",
+      "lastModified": "2026-09-14T12:17:41.723",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: ALSA: aloop: Fix peer runtime UAF during format-change stop loopback_check_format() may stop the capture side when playback starts with parameters that no longer match a running capture stream. Commit 826af7fa62e3 (\"ALSA: aloop: Fix racy access at PCM trigger\") moved the peer lookup under cable->lock, but the actual snd_pcm_stop() still runs after dropping that lock. A concurrent close can clear the capture entry from cable->str",
       "cvss": {
@@ -18784,8 +18784,8 @@
       "references": [
         "https://git.kernel.org/stable/c/03f52a9c170431e8f10e156b9dc0dae80b3e9198",
         "https://git.kernel.org/stable/c/345c24b2bcf0923dfae1ab41497351c68214ff76",
-        "https://git.kernel.org/stable/c/5d45e34bf001344e2966dabca1897561bbc9e913",
-        "https://git.kernel.org/stable/c/83bd62fa9620ac98d5d694bde14c50f98c8e7189"
+        "https://git.kernel.org/stable/c/3727a3541788412c393eec236ad228d72efe19c7",
+        "https://git.kernel.org/stable/c/5d45e34bf001344e2966dabca1897561bbc9e913"
       ],
       "kev": {
         "in_kev": false
@@ -34332,7 +34332,7 @@
     {
       "id": "CVE-2026-39821",
       "published": "2026-05-22T16:16:20.410",
-      "lastModified": "2026-09-11T13:17:49.237",
+      "lastModified": "2026-09-14T13:18:24.910",
       "vulnStatus": "Modified",
       "description": "The ToASCII and ToUnicode functions incorrectly accept Punycode-encoded labels that decode to an ASCII-only label. For example, ToUnicode(\"xn--example-.com\") incorrectly returns the name \"example.com\" rather than an error. This behavior can lead to privilege escalation in programs using the idna package. For example, a program which performs privilege checks on the ASCII hostname may reject \"example.com\" but permit \"xn--example-.com\". If that program subsequently converts the ASCII hostname to U",
       "cvss": {
@@ -34508,7 +34508,7 @@
     {
       "id": "CVE-2026-9277",
       "published": "2026-05-22T14:16:30.330",
-      "lastModified": "2026-09-10T13:20:33.933",
+      "lastModified": "2026-09-14T13:19:33.133",
       "vulnStatus": "Deferred",
       "description": "shell-quote's `quote()` function did not validate object-token inputs against the operator model used by `parse()`. The `.op` field was backslash-escaped character by character using `/(.)/g`, which in JavaScript does not match line terminators (\\n, \\r, U+2028, U+2029). A line terminator in `.op` therefore passed through unescaped into the output; POSIX shells treat a literal newline as a command separator, so any content after it would execute as a second command. The vulnerable code path is re",
       "cvss": {
@@ -35248,7 +35248,7 @@
     {
       "id": "CVE-2026-39830",
       "published": "2026-05-22T04:16:22.440",
-      "lastModified": "2026-09-11T13:17:53.970",
+      "lastModified": "2026-09-14T13:18:29.377",
       "vulnStatus": "Modified",
       "description": "A malicious SSH peer could send unsolicited global request responses to fill an internal buffer, blocking the connection's read loop. The blocked goroutine could not be released by calling Close(), resulting in a resource leak per connection. Unsolicited global responses are now discarded.",
       "cvss": {
@@ -37290,8 +37290,8 @@
     {
       "id": "CVE-2026-43502",
       "published": "2026-05-21T13:16:19.520",
-      "lastModified": "2026-07-23T16:10:00.137",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-15T04:18:04.333",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net/rds: handle zerocopy send cleanup before the message is queued A zerocopy send can fail after user pages have been pinned but before the message is attached to the sending socket. The purge path currently infers zerocopy state from rm->m_rs, so an unqueued message can be cleaned up as if it owned normal payload pages. However, zerocopy ownership is really determined by the presence of op_mmp_znotifier, regardless of whether ",
       "cvss": {
         "score": 7.8,
@@ -37302,6 +37302,10 @@
         {
           "id": "NVD-CWE-noinfo",
           "name": "Insufficient Information"
+        },
+        {
+          "id": "CWE-401",
+          "name": "Memory Leak"
         }
       ],
       "vendors": [
@@ -58629,8 +58633,8 @@
     {
       "id": "CVE-2026-6276",
       "published": "2026-05-13T13:01:56.800",
-      "lastModified": "2026-06-17T11:00:35.067",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-15T07:16:29.343",
+      "vulnStatus": "Modified",
       "description": "Using libcurl, when a custom `Host:` header is first set for an HTTP request and a second request is subsequently done using the same *easy handle* but without the custom `Host:` header set, the second request would use stale information and pass on cookies meant for the first host in the second request. Leak them.",
       "cvss": {
         "score": 7.5,
@@ -58638,6 +58642,10 @@
         "severity": "HIGH"
       },
       "cwes": [
+        {
+          "id": "CWE-346",
+          "name": "CWE-346"
+        },
         {
           "id": "CWE-319",
           "name": "CWE-319"
@@ -58659,15 +58667,19 @@
     {
       "id": "CVE-2026-5773",
       "published": "2026-05-13T13:01:56.307",
-      "lastModified": "2026-06-17T10:59:37.340",
-      "vulnStatus": "Analyzed",
-      "description": "libcurl might in some circumstances reuse the wrong connection for SMB(S) transfers. libcurl features a pool of recent connections so that subsequent requests can reuse an existing connection to avoid overhead. When reusing a connection a range of criteria must be met. Due to a logical error in the code, a network transfer operation that was requested by an application could wrongfully reuse an existing SMB connection to the same server that was using a different 'share' than the new subsequent ",
+      "lastModified": "2026-09-15T07:16:28.820",
+      "vulnStatus": "Modified",
+      "description": "libcurl might in some circumstances reuse the wrong connection for SMB(S) transfers. libcurl features a pool of recent connections so that subsequent requests can reuse an existing connection to avoid overhead. When reusing a connection a range of criteria must be met. Due to a logical error in the code, a network transfer operation that was requested by an application could wrongfully reuse an existing SMB connection to the same server that was using a different \"share\" than the new subsequent ",
       "cvss": {
         "score": 7.5,
         "version": "3.1",
         "severity": "HIGH"
       },
       "cwes": [
+        {
+          "id": "CWE-488",
+          "name": "CWE-488"
+        },
         {
           "id": "CWE-918",
           "name": "Server-Side Request Forgery (SSRF)"
@@ -69687,9 +69699,9 @@
     {
       "id": "CVE-2026-43661",
       "published": "2026-05-11T21:19:01.823",
-      "lastModified": "2026-08-17T22:17:06.093",
+      "lastModified": "2026-09-14T21:17:06.590",
       "vulnStatus": "Modified",
-      "description": "A buffer overflow issue was addressed with improved memory handling. This issue is fixed in iOS 18.7.10 and iPadOS 18.7.10, iOS 26.5 and iPadOS 26.5, macOS Sequoia 15.7.8, macOS Sonoma 14.8.8, macOS Tahoe 26.5, tvOS 26.5, watchOS 26.5. Processing a maliciously crafted image may corrupt process memory.",
+      "description": "A buffer overflow issue was addressed with improved memory handling. This issue is fixed in iOS 18.7.10 and iPadOS 18.7.10, iOS 26.5 and iPadOS 26.5, iOS 26.7 and iPadOS 26.7, macOS Sequoia 15.7.8, macOS Sonoma 14.8.8, macOS Tahoe 26.5, tvOS 26.5, watchOS 26.5. Processing a maliciously crafted image may corrupt process memory.",
       "cvss": {
         "score": 7.5,
         "version": "3.1",
@@ -70331,9 +70343,9 @@
     {
       "id": "CVE-2026-28969",
       "published": "2026-05-11T21:18:57.700",
-      "lastModified": "2026-06-17T10:29:25.593",
-      "vulnStatus": "Analyzed",
-      "description": "A use after free issue was addressed with improved memory management. This issue is fixed in iOS 18.7.9 and iPadOS 18.7.9, iOS 26.5 and iPadOS 26.5, macOS Sequoia 15.7.7, macOS Sonoma 14.8.7, macOS Tahoe 26.5, tvOS 26.5, visionOS 26.5, watchOS 26.5. An app may be able to cause unexpected system termination.",
+      "lastModified": "2026-09-14T21:17:06.153",
+      "vulnStatus": "Modified",
+      "description": "A use after free issue was addressed with improved memory management. This issue is fixed in iOS 18.7.9 and iPadOS 18.7.9, iOS 26.5 and iPadOS 26.5, iOS 27 and iPadOS 27, macOS Golden Gate 27, macOS Sequoia 15.7.7, macOS Sequoia 15.8, macOS Sonoma 14.8.7, macOS Tahoe 26.5, macOS Tahoe 26.7, tvOS 26.5, tvOS 27, visionOS 26.5, visionOS 27, watchOS 26.5, watchOS 27. An app may be able to cause unexpected system termination.",
       "cvss": {
         "score": 7.5,
         "version": "3.1",
@@ -82956,7 +82968,7 @@
     {
       "id": "CVE-2026-42499",
       "published": "2026-05-07T20:16:44.540",
-      "lastModified": "2026-09-11T13:17:59.763",
+      "lastModified": "2026-09-14T13:18:35.050",
       "vulnStatus": "Modified",
       "description": "Pathological inputs could cause DoS through consumePhrase when parsing an email address according to RFC 5322.",
       "cvss": {
@@ -82976,10 +82988,10 @@
       ],
       "vendors": [
         "Go standard library net/mail",
-        "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
-        "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9"
+        "Red Hat Red Hat Ansible Automation Platform 2.5 for RHEL 8",
+        "Red Hat Red Hat Ansible Automation Platform 2.5 for RHEL 9",
+        "Red Hat Red Hat Ansible Automation Platform 2.6 for RHEL 9",
+        "Red Hat Red Hat Enterprise Linux 10"
       ],
       "references": [
         "https://go.dev/cl/771520",
@@ -83052,7 +83064,7 @@
     {
       "id": "CVE-2026-39820",
       "published": "2026-05-07T20:16:43.187",
-      "lastModified": "2026-09-11T13:17:48.093",
+      "lastModified": "2026-09-14T13:18:22.260",
       "vulnStatus": "Modified",
       "description": "Well-crafted inputs reaching ParseAddress, ParseAddressList, and ParseDate were able to trigger excessive CPU exhaustion and memory allocations.",
       "cvss": {
@@ -83072,10 +83084,10 @@
       ],
       "vendors": [
         "Go standard library net/mail",
-        "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
-        "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9"
+        "Red Hat Red Hat Ansible Automation Platform 2.5 for RHEL 8",
+        "Red Hat Red Hat Ansible Automation Platform 2.5 for RHEL 9",
+        "Red Hat Red Hat Ansible Automation Platform 2.6 for RHEL 9",
+        "Red Hat Red Hat Enterprise Linux 10"
       ],
       "references": [
         "https://go.dev/cl/759940",
@@ -83090,7 +83102,7 @@
     {
       "id": "CVE-2026-33814",
       "published": "2026-05-07T20:16:42.880",
-      "lastModified": "2026-09-10T13:18:21.310",
+      "lastModified": "2026-09-14T13:18:12.527",
       "vulnStatus": "Modified",
       "description": "When processing HTTP/2 SETTINGS frames, transport will enter an infinite loop of writing CONTINUATION frames if it receives a SETTINGS_MAX_FRAME_SIZE with a value of 0.",
       "cvss": {
@@ -83128,7 +83140,7 @@
     {
       "id": "CVE-2026-33811",
       "published": "2026-05-07T20:16:42.770",
-      "lastModified": "2026-09-11T13:17:36.897",
+      "lastModified": "2026-09-14T13:18:10.693",
       "vulnStatus": "Modified",
       "description": "When using LookupCNAME with the cgo DNS resolver, a very long CNAME response can trigger a double-free of C memory and a crash.",
       "cvss": {
@@ -84551,7 +84563,7 @@
     {
       "id": "CVE-2026-42010",
       "published": "2026-05-07T12:16:17.977",
-      "lastModified": "2026-09-04T13:19:43.050",
+      "lastModified": "2026-09-14T13:18:34.030",
       "vulnStatus": "Modified",
       "description": "A flaw was found in gnutls. Servers configured with RSA-PSK (Rivest\u2013Shamir\u2013Adleman \u2013 Pre-Shared Key) wrongfully matched usernames containing a NUL character with truncated usernames. A remote attacker could exploit this by sending a specially crafted username, leading to an authentication bypass. This vulnerability allows an attacker to gain unauthorized access by circumventing the authentication process.",
       "cvss": {
@@ -90059,7 +90071,7 @@
     {
       "id": "CVE-2026-43198",
       "published": "2026-05-06T12:16:38.857",
-      "lastModified": "2026-07-20T12:19:22.073",
+      "lastModified": "2026-09-14T12:17:40.837",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: tcp: fix potential race in tcp_v6_syn_recv_sock() Code in tcp_v6_syn_recv_sock() after the call to tcp_v4_syn_recv_sock() is done too late. After tcp_v4_syn_recv_sock(), the child socket is already visible from TCP ehash table and other cpus might use it. Since newinet->pinet6 is still pointing to the listener ipv6_pinfo bad things can happen as syzbot found. Move the problematic code in tcp_v6_mapped_child_init() and call this ",
       "cvss": {
@@ -90087,8 +90099,8 @@
       "references": [
         "https://git.kernel.org/stable/c/7178e2a8027423b2af17ab95df73a749a5b72e5b",
         "https://git.kernel.org/stable/c/858d2a4f67ff69e645a43487ef7ea7f28f06deae",
-        "https://git.kernel.org/stable/c/fe89b2f05b854847784f91127319172945c1fadd",
-        "https://access.redhat.com/errata/RHSA-2026:30129"
+        "https://git.kernel.org/stable/c/9ed654e340f4c73bc6f0af2fbc90ac293e645ce0",
+        "https://git.kernel.org/stable/c/a7e761ba55efaa9c49e0afdd304bb78167af3429"
       ],
       "kev": {
         "in_kev": false
@@ -91076,7 +91088,7 @@
     {
       "id": "CVE-2026-43114",
       "published": "2026-05-06T10:16:25.163",
-      "lastModified": "2026-09-09T13:20:05.813",
+      "lastModified": "2026-09-14T13:18:36.590",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nft_set_pipapo_avx2: don't return non-matching entry on expiry New test case fails unexpectedly when avx2 matching functions are used. The test first loads a ranomly generated pipapo set with 'ipv4 . port' key, i.e. nft -f foo. This works. Then, it reloads the set after a flush: (echo flush set t s; cat foo) | nft -f - This is expected to work, because its the same set after all and it was already loaded once. But wit",
       "cvss": {
@@ -91957,7 +91969,7 @@
     {
       "id": "CVE-2026-28780",
       "published": "2026-05-05T22:16:00.390",
-      "lastModified": "2026-09-10T13:18:02.087",
+      "lastModified": "2026-09-14T13:17:54.970",
       "vulnStatus": "Modified",
       "description": "Heap-based Buffer Overflow vulnerability in mod_proxy_ajp of Apache HTTP Server. If mod_proxy_ajp connects to a malicious AJP server this AJP server can send a malicious AJP message back to mod_proxy_ajp and cause it to write 4 attacker controlled bytes after the end of a heap based buffer. This issue affects Apache HTTP Server: through 2.4.66. Users are recommended to upgrade to version 2.4.67, which fixes the issue.",
       "cvss": {
@@ -104430,5 +104442,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-12T09:32:22.625780+00:00"
+  "updated_at": "2026-09-15T10:22:43.106649+00:00"
 }

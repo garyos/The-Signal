@@ -1,0 +1,36 @@
+{
+  "month": "2024-10",
+  "cves": [
+    {
+      "id": "CVE-2024-50029",
+      "published": "2024-10-21T20:15:16.227",
+      "lastModified": "2026-09-14T12:17:33.670",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: hci_conn: Fix UAF in hci_enhanced_setup_sync This checks if the ACL connection remains valid as it could be destroyed while hci_enhanced_setup_sync is pending on cmd_sync leading to the following trace: BUG: KASAN: slab-use-after-free in hci_enhanced_setup_sync+0x91b/0xa60 Read of size 1 at addr ffff888002328ffd by task kworker/u5:2/37 CPU: 0 UID: 0 PID: 37 Comm: kworker/u5:2 Not tainted 6.11.0-rc6-01300-g810be445d8d6",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/18fd04ad856df07733f5bb07e7f7168e7443d393",
+        "https://git.kernel.org/stable/c/867639300759e3e1c5b1e1a5ff89231f263a32a7",
+        "https://git.kernel.org/stable/c/98ccd44002d88cbf4edfc4480df532a3da5a013e",
+        "https://git.kernel.org/stable/c/9b666a0490379c860eab380dec19a864c0bc256b"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    }
+  ],
+  "updated_at": "2026-09-15T10:22:42.479222+00:00"
+}

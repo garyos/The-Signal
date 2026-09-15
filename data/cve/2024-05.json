@@ -2,6 +2,36 @@
   "month": "2024-05",
   "cves": [
     {
+      "id": "CVE-2024-35887",
+      "published": "2024-05-19T09:15:09.837",
+      "lastModified": "2026-09-14T12:17:33.070",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ax25: fix use-after-free bugs caused by ax25_ds_del_timer When the ax25 device is detaching, the ax25_dev_device_down() calls ax25_ds_del_timer() to cleanup the slave_timer. When the timer handler is running, the ax25_ds_del_timer() that calls del_timer() in it will return directly. As a result, the use-after-free bugs could happen, one of the scenarios is shown below: (Thread 1) | (Thread 2) | ax25_ds_timeout() ax25_dev_device_",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/28f2d36ac52225a13e020c2589833f1816a0cfc6",
+        "https://git.kernel.org/stable/c/74204bf9050f7627aead9875fe4e07ba125cb19b",
+        "https://git.kernel.org/stable/c/8a912ef5b7c5d14fb41b9a7935d1df5bb87058bf",
+        "https://git.kernel.org/stable/c/c6a368f9c7af4c14b14d390c2543af8001c9bdb9"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2023-50224",
       "published": "2024-05-03T03:16:10.833",
       "lastModified": "2026-09-03T17:28:42.113",
@@ -39,5 +69,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-05T17:53:51.424822+00:00"
+  "updated_at": "2026-09-15T10:22:42.478935+00:00"
 }

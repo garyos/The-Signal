@@ -838,7 +838,7 @@
     {
       "id": "CVE-2026-3833",
       "published": "2026-04-30T18:16:30.577",
-      "lastModified": "2026-09-10T10:17:31.017",
+      "lastModified": "2026-09-14T13:18:33.013",
       "vulnStatus": "Modified",
       "description": "A flaw was found in gnutls. This vulnerability occurs because gnutls performs case-sensitive comparisons of `nameConstraints` labels, specifically for `dNSName` (DNS) or `rfc822Name` (email) constraints within `excludedSubtrees` or `permittedSubtrees`. A remote attacker can exploit this by crafting a leaf certificate with casing differences in the Subject Alternative Name (SAN), leading to a policy bypass where a certificate that should be rejected is instead accepted. This could result in unaut",
       "cvss": {
@@ -32901,8 +32901,8 @@
     {
       "id": "CVE-2026-40476",
       "published": "2026-04-17T22:16:33.360",
-      "lastModified": "2026-06-17T10:45:20.843",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-14T20:16:43.900",
+      "vulnStatus": "Modified",
       "description": "graphql-go is a Go implementation of GraphQL. In versions 15.31.4 and below, the OverlappingFieldsCanBeMerged validation rule performs O(n\u00b2) pairwise comparisons of fields sharing the same response name. An attacker can send a query with thousands of repeated identical fields, causing excessive CPU usage during validation before execution begins. This is not mitigated by existing QueryDepth or QueryComplexity rules. This issue has been fixed in version 15.31.5.",
       "cvss": {
         "score": 7.5,
@@ -32920,7 +32920,8 @@
       ],
       "references": [
         "https://github.com/webonyx/graphql-php/releases/tag/v15.31.5",
-        "https://github.com/webonyx/graphql-php/security/advisories/GHSA-68jq-c3rv-pcrr"
+        "https://github.com/webonyx/graphql-php/security/advisories/GHSA-68jq-c3rv-pcrr",
+        "http://www.openwall.com/lists/oss-security/2026/09/14/26"
       ],
       "kev": {
         "in_kev": false
@@ -64787,7 +64788,7 @@
     {
       "id": "CVE-2026-5795",
       "published": "2026-04-08T14:16:32.633",
-      "lastModified": "2026-09-09T13:20:32.147",
+      "lastModified": "2026-09-14T13:18:42.263",
       "vulnStatus": "Modified",
       "description": "In Eclipse Jetty, the class JASPIAuthenticator initiates the authentication checks, which set two ThreadLocal variable. Upon returning from the initial checks, there are conditions that cause an early return from the JASPIAuthenticator code without clearing those ThreadLocals. A subsequent request using the same thread inherits the ThreadLocal values, leading to a broken access control and privilege escalation.",
       "cvss": {
@@ -64809,7 +64810,7 @@
         "Eclipse Foundation Eclipse Jetty",
         "Red Hat HawtIO HawtIO 4.4.0",
         "Red Hat Red Hat build of Apache Camel 4.18.1 for Spring Boot 3.5.14",
-        "Red Hat Red Hat Offline Knowledge Portal 1.2.4",
+        "Red Hat Red Hat Offline Knowledge Portal 1.2.12",
         "Red Hat Red Hat Data Grid 8"
       ],
       "references": [
@@ -65943,7 +65944,7 @@
     {
       "id": "CVE-2026-33810",
       "published": "2026-04-08T02:16:03.950",
-      "lastModified": "2026-09-10T13:18:18.447",
+      "lastModified": "2026-09-14T13:18:09.277",
       "vulnStatus": "Modified",
       "description": "When verifying a certificate chain containing excluded DNS constraints, these constraints are not correctly applied to wildcard DNS SANs which use a different case than the constraint. This only affects validation of otherwise trusted certificate chains, issued by a root CA in the VerifyOptions.Roots CertPool, or in the system certificate pool.",
       "cvss": {
@@ -65981,7 +65982,7 @@
     {
       "id": "CVE-2026-32283",
       "published": "2026-04-08T02:16:03.580",
-      "lastModified": "2026-09-11T13:17:28.143",
+      "lastModified": "2026-09-14T13:17:59.200",
       "vulnStatus": "Modified",
       "description": "If one side of the TLS connection sends multiple key update messages post-handshake in a single record, the connection can deadlock, causing uncontrolled consumption of resources. This can lead to a denial of service. This only affects TLS 1.3.",
       "cvss": {
@@ -66049,7 +66050,7 @@
     {
       "id": "CVE-2026-32280",
       "published": "2026-04-08T02:16:03.247",
-      "lastModified": "2026-09-11T13:17:25.780",
+      "lastModified": "2026-09-14T13:17:56.673",
       "vulnStatus": "Modified",
       "description": "During chain building, the amount of work that is done is not correctly limited when a large number of intermediate certificates are passed in VerifyOptions.Intermediates, which can lead to a denial of service. This affects both direct users of crypto/x509 and users of crypto/tls.",
       "cvss": {
@@ -80835,8 +80836,8 @@
     {
       "id": "CVE-2026-23448",
       "published": "2026-04-03T16:16:30.863",
-      "lastModified": "2026-07-24T21:10:00.143",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-14T12:17:40.310",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: usb: cdc_ncm: add ndpoffset to NDP16 nframes bounds check cdc_ncm_rx_verify_ndp16() validates that the NDP header and its DPE entries fit within the skb. The first check correctly accounts for ndpoffset: if ((ndpoffset + sizeof(struct usb_cdc_ncm_ndp16)) > skb_in->len) but the second check omits it: if ((sizeof(struct usb_cdc_ncm_ndp16) + ret * (sizeof(struct usb_cdc_ncm_dpe16))) > skb_in->len) This validates the DPE array ",
       "cvss": {
         "score": 7.8,
@@ -80855,8 +80856,8 @@
       "references": [
         "https://git.kernel.org/stable/c/2aa8a4fa8d5b7d0e1ebcec100e1a4d80a1f4b21a",
         "https://git.kernel.org/stable/c/403f94ddcb36c552fbef51dea735b131e3dcde8b",
-        "https://git.kernel.org/stable/c/789204f980730258c983102c027c375238009c80",
-        "https://git.kernel.org/stable/c/dce9dda0e3707e887977db44407989e9ead26611"
+        "https://git.kernel.org/stable/c/63c35b8fce77a7892e8fa06c540d4943145506eb",
+        "https://git.kernel.org/stable/c/789204f980730258c983102c027c375238009c80"
       ],
       "kev": {
         "in_kev": false
@@ -80865,8 +80866,8 @@
     {
       "id": "CVE-2026-23447",
       "published": "2026-04-03T16:16:30.663",
-      "lastModified": "2026-07-24T21:10:00.143",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-14T12:17:39.423",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: usb: cdc_ncm: add ndpoffset to NDP32 nframes bounds check The same bounds-check bug fixed for NDP16 in the previous patch also exists in cdc_ncm_rx_verify_ndp32(). The DPE array size is validated against the total skb length without accounting for ndpoffset, allowing out-of-bounds reads when the NDP32 is placed near the end of the NTB. Add ndpoffset to the nframes bounds check and use struct_size_t() to express the NDP-plus",
       "cvss": {
         "score": 7.8,
@@ -89560,5 +89561,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-12T09:32:22.531534+00:00"
+  "updated_at": "2026-09-15T10:22:43.024846+00:00"
 }
