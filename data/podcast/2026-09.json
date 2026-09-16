@@ -2,6 +2,64 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10096",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10096",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10096.mp3",
+      "title": "SANS Stormcast Wednesday, September 16th, 2026: MacOS 27 Traffic; Cisco 0-Day; Protecting Active Directory and API Tokens",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, September 16th, 2026: MacOS 27 Traffic; Cisco 0-Day; Protecting Active Directory and API Tokens",
+      "show_notes": [
+        {
+          "heading": "MacOS 27 - First Boot",
+          "links": [
+            "https://isc.sans.edu/diary/MacOS%2027%20-%20First%20Boot/33340"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Email Gateway SQL Injection Vulnerability CVE-2026-76461",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX"
+          ]
+        },
+        {
+          "heading": "Detecting and Mitigating Active Directory Compromises",
+          "links": [
+            "https://www.cisa.gov/resources-tools/resources/detecting-and-mitigating-active-directory-compromises"
+          ]
+        },
+        {
+          "heading": "Protecting Tokens and Assertions from Forgery, Theft, and Misuse",
+          "links": [
+            "https://nvlpubs.nist.gov/nistpubs/ir/2026/NIST.IR.8587.pdf"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-16T02:00:02+00:00",
+      "duration_seconds": 445,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10096.mp3",
+      "audio_length_bytes": 6228183,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10096",
+      "categories": [
+        "tokens",
+        "api",
+        "active directory",
+        "cisco",
+        "macos"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10096",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, September 16th,\n 2026 edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cyber Security. Well, it's a little addition to yesterday's\n Apple update. I did today something I haven't done in a\n while and that's just record the traffic that you should\n expect from a system as you're booting it up for the first\n time until you log in. Well, in this particular case, no\n big surprises. Actually, what surprised me a little bit was\n how similar it was to the last few versions of macOS. Really,\n very little has changed, if anything, really has changed.\n Makes passive operating fingerprinting maybe a little\n bit more difficult for me as a packet geek. Now, in the post,\n I focused on some of the features that may be less\n known, but again, nothing really new. First of all, the\n way IPv6 duplicate address discovery is working here,\n there is sort of an ICMPv6 option, a nonce, a little\n random byte sequence is being added here to prevent some of\n the spoofing and denial of service attacks. DNS traffic,\n nothing really too exciting again, but what we see here\n is, for example, attempting to discover secure DNS servers\n like DNS over HTTPS. Also, one very important host name that\n you have to be a little bit careful with as an Apple user,\n albert.apple.com. That particular host is used to\n verify the association of the device with an Apple ID\n account. So basically, device lock, device activation is\n being done via this account, so don't block it. Also, you\n can't do TLS interception on it because it does TLS\n certificate pinning a couple other host names like this. As\n far as TCP goes, it still uses a fairly conservative Windows\n scale and then just four connections overall. Again, a\n TLS connection to this albert host, the online certificate\n status protocol to verify the certificate for this\n particular host and then two TLS connections to essentially\n set up the push messaging and such in macOS. What surprises\n me actually, the one thing that still hasn't changed is\n when Apple originally switched from Intel to its own ARM\n processors, they did not change the user agent string\n in Safari. Actually, other browsers like Google Chrome\n also haven't changed it. They still say Intel. Apparently,\n that's sort of to provide compatibility issues with some\n websites. And yep, it still says Intel. Now, I think we're\n about sort of six years later. Well, if you're using Cisco's\n secure email gateway, there is a SQL injection vulnerability\n that Cisco patched yesterday. And this vulnerability is\n already being exploited to make things more interesting.\n Everything of course runs as root. And with this SQL\n injection vulnerability, an attacker is able to gain\n arbitrary code execution on your secure email gateway by\n just sending you an email that as Cisco states includes SQL\n code. Now, they also do post some indicators of compromise\n here how you can check your logs for any essentially the\n SQL snippets that you may find there. And they give you a\n couple examples how to do that and what particular sort of\n SQL code to look for. Be a little bit flexible there as\n you're doing the search. That's likely based on the\n current available exploit that they have seen being used in\n the wild. Wouldn't be surprised if there are a\n couple other things that you can do with this vulnerability\n that may not necessarily get caught by the simple crap\n patterns that they have included in the advisory. So\n yeah, get it patched because this does not require access\n to any control plane or such. It just requires sending an\n email, which of course, the secure email gateway has to\n process. So we have another one of those sort of\n authoritative documents that some of the cybersecurity\n agencies worldwide sometimes get together and come up with.\n I'm linking to the CISA version here. But overall, I\n think the other agencies will have their own copy of this\n document. This time, it's about detecting and mitigating\n Active Directory compromises. Yes, Active Directory, I hear\n it's still a thing. In particular, of course, for\n lateral movement, it sort of tends to be one of the\n favorite tools attackers are using. And this document,\n again, very authoritative, very exhaustive, is going over\n all the various misconfigurations that are\n being exploited by these attackers. I think it's about\n 70 pages. It talks about the vulnerabilities, how to\n prevent them, and then also how to detect a compromise,\n which I think is always a real helpful section here to tell\n you what to look for in your logs to see if you have been\n compromised. Because after all, it can get quite tedious\n and difficult to actually enforce all of the right\n configuration of options in Active Directory. Talking\n about government issued recommendations, we also got a\n new interagency communications, as they call\n it from NIST, that talks about how to protect tokens and\n assertions from forgery, theft, and misuse. What this\n really about is, well, this big problem that we are having\n with sort of a proving identity, and particular sort\n of the non-human identities like API access and such, how\n you're going to manage all of the access tokens and such\n that are involved in that very detailed document. Sometimes\n these NIST documents are a little bit too wordy for my\n taste, but I think lots of good points being made and a\n good checklist you can build from this. Technically, these\n documents are really only applying to the US federal\n government, but a lot of other private sector companies,\n governments and other countries and such often use\n them as a guideline to sort of develop their own rules how to\n deal with various security issues. And I think this is\n sort of a real good sort of starting point to build your\n own policies around these ID tokens and assertions. Well,\n this is it for today. So, thanks for listening. Thanks\n for liking. Thanks for recommending and subscribing\n and whatever else this podcast and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10094",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
