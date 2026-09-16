@@ -14402,7 +14402,7 @@
     {
       "id": "CVE-2026-46116",
       "published": "2026-05-28T10:16:27.080",
-      "lastModified": "2026-09-08T09:18:07.767",
+      "lastModified": "2026-09-15T12:17:49.593",
       "vulnStatus": "Undergoing Analysis",
       "description": "In the Linux kernel, the following vulnerability has been resolved: xfrm: defensively unhash xfrm_state lists in __xfrm_state_delete KASAN reproduces a slab-use-after-free in __xfrm_state_delete()'s hlist_del_rcu calls under syzkaller load on linux-6.12.y stable (reproduced on 6.12.47, also reachable via the same code path on torvalds/master and on the ipsec tree). Nine unique signatures cluster in the xfrm_state lifecycle, the load-bearing one being: BUG: KASAN: slab-use-after-free in __hlist_d",
       "cvss": {
@@ -34332,7 +34332,7 @@
     {
       "id": "CVE-2026-39821",
       "published": "2026-05-22T16:16:20.410",
-      "lastModified": "2026-09-14T13:18:24.910",
+      "lastModified": "2026-09-15T12:17:34.803",
       "vulnStatus": "Modified",
       "description": "The ToASCII and ToUnicode functions incorrectly accept Punycode-encoded labels that decode to an ASCII-only label. For example, ToUnicode(\"xn--example-.com\") incorrectly returns the name \"example.com\" rather than an error. This behavior can lead to privilege escalation in programs using the idna package. For example, a program which performs privilege checks on the ASCII hostname may reject \"example.com\" but permit \"xn--example-.com\". If that program subsequently converts the ASCII hostname to U",
       "cvss": {
@@ -35086,7 +35086,7 @@
     {
       "id": "CVE-2026-42508",
       "published": "2026-05-22T04:16:25.440",
-      "lastModified": "2026-09-11T13:18:00.947",
+      "lastModified": "2026-09-15T12:17:45.777",
       "vulnStatus": "Modified",
       "description": "Previously, a revoked 'SignatureKey' belonging to a CA was not correctly checked for revocation. Now, both the 'key' and 'key.SignatureKey' are checked for @revoked.",
       "cvss": {
@@ -35180,7 +35180,7 @@
     {
       "id": "CVE-2026-39832",
       "published": "2026-05-22T04:16:22.663",
-      "lastModified": "2026-09-11T13:17:55.683",
+      "lastModified": "2026-09-15T12:17:40.787",
       "vulnStatus": "Modified",
       "description": "When adding a key to a remote agent constraint extensions such as restrict-destination-v00@openssh.com were not serialized in the request. Destination restrictions were silently stripped when forwarding keys, allowing unrestricted use of the key on the remote host. The client now serializes all constraint extensions. Additionally, the in-memory keyring returned by NewKeyring() now rejects keys with unsupported constraint extensions instead of silently ignoring them.",
       "cvss": {
@@ -35248,7 +35248,7 @@
     {
       "id": "CVE-2026-39830",
       "published": "2026-05-22T04:16:22.440",
-      "lastModified": "2026-09-14T13:18:29.377",
+      "lastModified": "2026-09-15T12:17:39.480",
       "vulnStatus": "Modified",
       "description": "A malicious SSH peer could send unsolicited global request responses to fill an internal buffer, blocking the connection's read loop. The blocked goroutine could not be released by calling Close(), resulting in a resource leak per connection. Unsolicited global responses are now discarded.",
       "cvss": {
@@ -35286,7 +35286,7 @@
     {
       "id": "CVE-2026-39829",
       "published": "2026-05-22T04:16:22.310",
-      "lastModified": "2026-09-11T13:17:52.607",
+      "lastModified": "2026-09-15T12:17:38.050",
       "vulnStatus": "Modified",
       "description": "The RSA and DSA public key parsers did not enforce size limits on key parameters. A crafted public key with an excessively large modulus or DSA parameter could cause several minutes of CPU consumption during signature verification. This could be triggered by unauthenticated clients during public key authentication. RSA moduli are now limited to 8192 bits, and DSA parameters are validated per FIPS 186-2.",
       "cvss": {
@@ -80077,7 +80077,7 @@
     {
       "id": "CVE-2026-43329",
       "published": "2026-05-08T14:16:42.520",
-      "lastModified": "2026-09-01T13:19:31.880",
+      "lastModified": "2026-09-15T12:17:48.337",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: flowtable: strictly check for maximum number of actions The maximum number of flowtable hardware offload actions in IPv6 is: * ethernet mangling (4 payload actions, 2 for each ethernet address) * SNAT (4 payload actions) * DNAT (4 payload actions) * Double VLAN (4 vlan actions, 2 for popping vlan, and 2 for pushing) for QinQ. * Redirect (1 action) Which makes 17, while the maximum is 16. But act_ct supports for tunnel",
       "cvss": {
@@ -82968,7 +82968,7 @@
     {
       "id": "CVE-2026-42499",
       "published": "2026-05-07T20:16:44.540",
-      "lastModified": "2026-09-14T13:18:35.050",
+      "lastModified": "2026-09-15T12:17:44.543",
       "vulnStatus": "Modified",
       "description": "Pathological inputs could cause DoS through consumePhrase when parsing an email address according to RFC 5322.",
       "cvss": {
@@ -83064,7 +83064,7 @@
     {
       "id": "CVE-2026-39820",
       "published": "2026-05-07T20:16:43.187",
-      "lastModified": "2026-09-14T13:18:22.260",
+      "lastModified": "2026-09-15T12:17:33.590",
       "vulnStatus": "Modified",
       "description": "Well-crafted inputs reaching ParseAddress, ParseAddressList, and ParseDate were able to trigger excessive CPU exhaustion and memory allocations.",
       "cvss": {
@@ -83102,7 +83102,7 @@
     {
       "id": "CVE-2026-33814",
       "published": "2026-05-07T20:16:42.880",
-      "lastModified": "2026-09-14T13:18:12.527",
+      "lastModified": "2026-09-15T12:17:26.720",
       "vulnStatus": "Modified",
       "description": "When processing HTTP/2 SETTINGS frames, transport will enter an infinite loop of writing CONTINUATION frames if it receives a SETTINGS_MAX_FRAME_SIZE with a value of 0.",
       "cvss": {
@@ -83140,7 +83140,7 @@
     {
       "id": "CVE-2026-33811",
       "published": "2026-05-07T20:16:42.770",
-      "lastModified": "2026-09-14T13:18:10.693",
+      "lastModified": "2026-09-15T12:17:24.830",
       "vulnStatus": "Modified",
       "description": "When using LookupCNAME with the cgo DNS resolver, a very long CNAME response can trigger a double-free of C memory and a crash.",
       "cvss": {
@@ -84563,7 +84563,7 @@
     {
       "id": "CVE-2026-42010",
       "published": "2026-05-07T12:16:17.977",
-      "lastModified": "2026-09-14T13:18:34.030",
+      "lastModified": "2026-09-15T12:17:43.750",
       "vulnStatus": "Modified",
       "description": "A flaw was found in gnutls. Servers configured with RSA-PSK (Rivest\u2013Shamir\u2013Adleman \u2013 Pre-Shared Key) wrongfully matched usernames containing a NUL character with truncated usernames. A remote attacker could exploit this by sending a specially crafted username, leading to an authentication bypass. This vulnerability allows an attacker to gain unauthorized access by circumventing the authentication process.",
       "cvss": {
@@ -90742,7 +90742,7 @@
     {
       "id": "CVE-2026-43133",
       "published": "2026-05-06T12:16:30.480",
-      "lastModified": "2026-09-10T13:20:10.827",
+      "lastModified": "2026-09-15T12:17:48.040",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: nSVM: Always use vmcb01 in VMLOAD/VMSAVE emulation Commit cc3ed80ae69f (\"KVM: nSVM: always use vmcb01 to for vmsave/vmload of guest state\") made KVM always use vmcb01 for the fields controlled by VMSAVE/VMLOAD, but it missed updating the VMLOAD/VMSAVE emulation code to always use vmcb01. As a result, if VMSAVE/VMLOAD is executed by an L2 guest and is not intercepted by L1, KVM will mistakenly use vmcb02. Always use vmcb01 i",
       "cvss": {
@@ -91088,7 +91088,7 @@
     {
       "id": "CVE-2026-43114",
       "published": "2026-05-06T10:16:25.163",
-      "lastModified": "2026-09-14T13:18:36.590",
+      "lastModified": "2026-09-15T12:17:47.700",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nft_set_pipapo_avx2: don't return non-matching entry on expiry New test case fails unexpectedly when avx2 matching functions are used. The test first loads a ranomly generated pipapo set with 'ipv4 . port' key, i.e. nft -f foo. This works. Then, it reloads the set after a flush: (echo flush set t s; cat foo) | nft -f - This is expected to work, because its the same set after all and it was already loaded once. But wit",
       "cvss": {
@@ -91156,7 +91156,7 @@
     {
       "id": "CVE-2026-43112",
       "published": "2026-05-06T10:16:24.927",
-      "lastModified": "2026-09-10T13:20:10.420",
+      "lastModified": "2026-09-15T12:17:46.460",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: fs/smb/client: fix out-of-bounds read in cifs_sanitize_prepath When cifs_sanitize_prepath is called with an empty string or a string containing only delimiters (e.g., \"/\"), the current logic attempts to check *(cursor2 - 1) before cursor2 has advanced. This results in an out-of-bounds read. This patch adds an early exit check after stripping prepended delimiters. If no path content remains, the function returns NULL. The bug was",
       "cvss": {
@@ -104442,5 +104442,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-15T10:22:43.106649+00:00"
+  "updated_at": "2026-09-16T10:16:30.631650+00:00"
 }
