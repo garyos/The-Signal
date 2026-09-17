@@ -1,6 +1,79 @@
 {
-  "fetched_at": "2026-09-16T13:57:53.818411+00:00",
+  "fetched_at": "2026-09-17T08:17:37.695647+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10098",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10098",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10098.mp3",
+      "title": "SANS Stormcast Thursday, September 17th, 2026: Hospitality Scans; Cisco, Acronis, and Pixel 0-Day; Dynamic Incident Response",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 17th, 2026: Hospitality Scans; Cisco, Acronis, and Pixel 0-Day; Dynamic Incident Response",
+      "show_notes": [
+        {
+          "heading": "Scans Targeting Hospitality Applications",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20Targeting%20Hospitality%20Applications/33344"
+          ]
+        },
+        {
+          "heading": "Cisco Identity Services Engine Authentication Bypass Vulnerability CVE-2026-76460",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5"
+          ]
+        },
+        {
+          "heading": "Acronis Local privilege escalation due to insecure file permissions CVE-2026-87886",
+          "links": [
+            "https://security-advisory.acronis.com/advisories/SEC-10986"
+          ]
+        },
+        {
+          "heading": "Pixel Update Bulletin September 2026",
+          "links": [
+            "https://source.android.com/docs/security/bulletin/pixel/2026/2026-09-01"
+          ]
+        },
+        {
+          "heading": "Dynamic Incident Response (Free E-Book)",
+          "links": [
+            "https://dynamicincidentresponse.com"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-17T02:00:03+00:00",
+      "duration_seconds": 384,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10098.mp3",
+      "audio_length_bytes": 5378911,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10098",
+      "categories": [
+        "dynamic",
+        "incided",
+        "response",
+        "ir",
+        "pixel",
+        "google",
+        "update",
+        "patch",
+        "0-day",
+        "acronis",
+        "plex",
+        "cpanel",
+        "cisco",
+        "hospitality"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10098",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, September 17, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. The last couple days our honeypots got\n hit with a set of requests all coming from the same source\n that indicate a little bit more coordinated but very odd\n attack that targets the hospitality industry. So\n hotels and the like. There's also sort of a little bit\n focus on PBX, so phone systems. The URL that sort of\n made it stick out to me is for a product called PBX in a\n flash hospitality management system. Doesn't really look\n like much like a product when you look at the GitHub repo\n last update about 14 years ago. I think 10 years ago the\n license was updated but none of the code and the code looks\n maybe more like a proof of concept or such because it\n doesn't do any kind of input validation. So lots of SQL\n injection, pretty much any SQL statement in the code base\n that I sort of looked at was suffering from SQL injection.\n I also don't really see any authentication or access\n control in this product. But the intent of the product is\n to help you basically manage PBXs for hotels. There are a\n couple other URLs that are sort of a little bit related\n like UCP and HMS and well slash hotel. Also some more\n standard admin URLs that are being probed by this\n particular actor. What's also unique is the user agent\n phares-sorter. Haven't really seen that one before either.\n So I think right now it's really just odd and sort of\n caught my curiosity. So if anybody has any details about\n these attacks, maybe any insight into what products may\n actually be attacked here. There was also a bug report or\n vulnerability report, I should say, for this PBX in a flash\n product that dated from July. So maybe that sort of got them\n to scan for it. They really don't know. So if you have any\n ideas, please help me out. And Cisco today released an\n advisory alerting its customers that they patched a\n CVSS score 10 vulnerability in the Cisco identity services\n engine. It's an authentication bypass vulnerability. In this\n particular case, the API is not checking all of its\n endpoints, which is a very common problem, of course,\n with APIs. We have had issues like this with Cisco before.\n The identity service engine, as the name implies, it's used\n to essentially manage access to your network devices. So a\n vulnerability here could have far-reaching impact. And that\n also probably justifies the CVSS score of 10. This\n vulnerability has already been exploited. So that makes it\n even worse. As always, don't expose these APIs to the\n public and assume compromise. At this point, Cisco has added\n some indicators of compromise and ways to verify if you were\n attacked to its bulletin. And Acronis, the maker of backup\n software recently published an update fixing some\n vulnerabilities. One of these vulnerabilities is now being\n exploited in the wild. It's a privilege escalation\n vulnerability in their plugin for cPanel and Blesk.\n Privilege escalation vulnerabilities are usually\n not at the top of the list. And I often don't even mention\n them here. But in particular, with cPanel and Blesk, that's\n sort of the systems that you're using to administer\n sort of shared systems that customers may have access to.\n So privilege escalation is certainly a problem for a\n product like this, in particular, if it's already\n being exploited. So make sure you update the updates were\n released five days ago. Well, today's really one of those\n zero days, we do have another one this time in Google's\n Pixel phones. Google did publish its Pixel update\n bulletin for September today. And this update does include a\n fix for their modem code that does prevent an elevation of\n privilege of vulnerability. This includes also the\n September Android updates that were published last week. But\n always a week later, we get then the Pixel specific\n version, which of course does include some of the more\n hardware specific patches like vulnerabilities in the modems\n and other sort of specific hardware devices. Well, if\n you're in instant response, there is a great new free\n ebook that Josh Wright published for SANS. Josh, if\n you're not familiar with him, a great person and great\n instant responses. He's also responsible for our SEC 504\n class that deals a lot with some of the instant response\n aspects. But this particular ebook also introduces some of\n the more modern concepts when it comes to instant response.\n Very well done. And lots of great things that you have\n here. Also lots of contributions from the\n community in this book. So take a look. It's free and the\n link will be in the show notes. Well, and this is it\n for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10096",
       "show": "stormcast",
@@ -3416,67 +3489,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9990",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Wednesday, July 1st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Riyadh,\n Saudi Arabia. And this episode is brought to you by the SANS\n .edu Graduate Certificate Program in Industrial Control\n System Security. Well, Apple did release updates this week\n with that security patches for iOS, iPadOS, MacOS and Safari.\n So this lineup is a little bit different than what we usually\n see from Apple. Apple typically updates all of its\n operating systems. And also, well, we don't really have the\n same number of vulnerabilities being addressed as usual, but\n a smaller number, 28 vulnerabilities total. Most of\n these vulnerabilities are WebKit vulnerabilities, and\n that also explains the focus on iOS and MacOS. The other\n operating systems like watchOS and such, of course, are less\n exposed to WebKit. There are a couple of kernel\n vulnerabilities that are also being addressed here, and\n these vulnerabilities will potentially also affect the\n other operating systems like watchOS, OS, VisionOS and\n TVOS. So I expect that there will be an update for the\n other operating systems relatively shortly. Part of\n the reasoning behind this update was also that some of\n these vulnerabilities had already been addressed in beta\n versions of the next major release of iOS, iPadOS and\n MacOS. And MDR company Blackpoint did release a blog\n post outlining a recent intrusion that they have\n observed against SimpleHelp. SimpleHelp is one of those\n remote tech support platforms. So enterprises use it to\n basically be able to reach out and support systems across\n their network. And it suffered, well, not even two\n weeks ago from an OpenID Connect bypass. So that\n essentially allowed an off vacation bypass and an\n attacker is able to authenticate as a technician.\n And with that able to then reach out to remote systems\n that are connected to this particular SimpleHelp\n instance. What Blackpoint observed is that the attacker\n did deploy fairly obfuscated JavaScript file, they call it\n jQuery.js, but it's not related to the well known\n jQuery framework. And this JavaScript file is then\n executed via node.js and used to deploy additional malware.\n In particular, they observed credential stealers. So in\n this case, the attacker went after the usual sort of as age\n and cloud credentials and such likely to further compromise\n affected networks. Haven't seen the ransom word word here\n in this particular write up, but wouldn't be surprised if\n this particular vulnerability, which isn't all that terrible\n hard to exploit, would soon be used also to deploy\n ransomware. That just sort of fits what this type of\n vulnerability is often used for. At Mozilla's Odin Lab\n published a blog post outlining an interesting\n attack against, well, yet again, cloning a repository\n from Git. Doesn't have to be GitHub, really sort of any\n kind of repository here would work. And the trick they're\n playing here is that if you're using an AI agent in order to\n help you with the cloning and then ask it to execute the\n actual code that was downloaded. Well, there will\n be an error message that you first need to initialize to\n init the software that you just downloaded. And that,\n well, in itself isn't really all that suspicious. But what\n that triggers is a DNS lookup that will then download\n additional code in the form of a text record and execute it.\n So the trick here is that the repository as downloaded is\n clean. It does not contain any malware and the malware is\n really just loaded as the repository is initialized\n using the DNS lookup. Pretty neat. Just talked in class\n today about all the ways how you can use DNS as a covert\n channel. Yet another sort of little trick that you can play\n here with DNS. Well, and that's it for today. Thanks\n for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9988",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9988",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9988.mp3",
-      "title": "SANS Stormcast Tuesday, June 30th, 2026: Favicon Recon Automation; Targeting Messaging; Gemini CLI vuln; IPv6 Frag Escape",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, June 30th, 2026: Favicon Recon Automation; Targeting Messaging; Gemini CLI vuln; IPv6 Frag Escape",
-      "show_notes": [
-        {
-          "heading": "Adding some Automation to the favicon.ico method of Host Recon",
-          "links": [
-            "https://isc.sans.edu/diary/Adding%20some%20Automation%20to%20the%20favicon.ico%20method%20of%20Host%20Recon/33110"
-          ]
-        },
-        {
-          "heading": "Russian Intelligence Services Continue to Target Commercial Messaging Applications",
-          "links": [
-            "https://www.ic3.gov/PSA/2026/PSA260626"
-          ]
-        },
-        {
-          "heading": "Google Gemini CLI Vulnerability CVE-2026-12537",
-          "links": [
-            "https://github.com/advisories/GHSA-jj69-4grx-fqj5"
-          ]
-        },
-        {
-          "heading": "IPv6 Frag Escape",
-          "links": [
-            "https://github.com/sgkdev/ipv6_frag_escape"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-06-30T02:25:12+00:00",
-      "duration_seconds": 324,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9988.mp3",
-      "audio_length_bytes": 4543789,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9988",
-      "categories": [
-        "google",
-        "gemini",
-        "cli",
-        "messenger",
-        "ipv6",
-        "container",
-        "escape",
-        "favicon"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9988",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday June 30th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Riyadh,\n Saudi Arabia. And this episode is brought to you by the SANS\n .edu graduate certificate program in industrial control\n system security. One of the critical parts of any\n penetration test is reconnaissance and identifying\n resources at risk that need to be considered as part of the\n scope of a penetration test. Well, one way to find web\n services that may be related to a particular entity is to\n look for favorite icons. Websites typically use company\n logos and the like as favorite icons. So different websites\n having the same favorite icon are likely maintained by the\n same organization. And there is a neat way of doing this.\n There is a hash you can calculate for the favorite\n icon of a website and then you can search Shodan for this\n hash. Well, Rob is talking here in today's diary about\n how to use the information retrieved from Shodan, in\n particular if you are receiving a lot of hits, to\n more automate than the collection of the data and do\n some initial citing of the data to see which resources\n may apply and may need to be tested. And the FBI is warning\n yet again of attacks against messaging services, in\n particular Signal. Now, these attacks are currently,\n according to the FBI, being used against targets of high\n intelligence value. Likely the attacker is related to the\n Russian government. But the attacks are simple enough\n where I think, well, criminals will probably use the same\n technique pretty soon if they are not already using this\n technique. The goal here is to gain access to the backup\n recovery key. What you will receive is a message via\n Signal or other messenger services that will basically\n instruct you to create a backup recovery key. Usually\n some kind of ruse is being used, like your account or\n your messages are about to be deleted. And it's sometimes\n sort of framed like this is actually a key that helps you\n to back up your messages, which, well, it's not really\n in this case. So the victim is then tricked into copy pasting\n the backup recovery key to the attacker's message. And with\n that, the attacker now gains access of the victim's\n account. One interesting tidbit here is if you realize\n that you fell for this particular ruse, you are\n deleting your account, you're creating a new account, but\n you're still using the same phone number. Well, the backup\n recovery key will remain valid, will remain the same\n key. So that technique of deleting the account, setting\n up a new account, doesn't work if you retain the same phone\n number associated with the account. And Google is\n worrying about vulnerability in the command line interface\n for its Gemini AI tools. This is yet again one of those\n vulnerabilities that's exploitable if a developer is\n checking out a repository. The only thing an attacker here\n needs to do is convince the victim to check out a\n repository with a malicious .gemini.env file. This then\n can lead to arbitrary code execution. Google assigned\n this vulnerability a CVS score of 10. And I have to admit,\n the next vulnerability I'm going to talk about, well, it\n initially caught my eye for all the wrong reasons, because\n I saw, hey, it's IPv6 fragmentation related. And\n yes, it is. But this is not a vulnerability that's actually\n exploitable by sending IPv6 packets remotely across the\n network. This vulnerability discovered by Massimoiano\n -Oldani does take advantage of some memory allocation issues\n with IPv6 buffers in the operating system and takes\n advantage of the vulnerability in such a way that an\n unprivileged user can use the vulnerability to actually gain\n access to a root shell on the host. So a complete container\n escape, which given the prevalence of containers and\n how many people are relying on them for some kind of security\n isolation is certainly a severe problem and something\n that does deserve some attention. Not all Linux\n variants and distributions are vulnerable. It relies on\n buffers not properly being cleared between use, but some\n major vulnerable distributions, like, for\n example, CentOS, are doing just that. They're not\n clearing out these buffers, so they are vulnerable. Well, and\n this is it for today. So thanks for listening. Thanks\n for liking. Thanks for recommending this podcast. And\n as always, talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
