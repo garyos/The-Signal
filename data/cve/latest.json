@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-09-16T10:16:31.599127+00:00",
+  "generated_at": "2026-09-17T10:22:32.293054+00:00",
   "cves": [
+    {
+      "id": "CVE-2026-76460",
+      "published": "2026-09-16T21:17:21.430",
+      "lastModified": "2026-09-17T04:18:01.527",
+      "vulnStatus": "Received",
+      "description": "A vulnerability in an API of Cisco Identity Services Engine (ISE) could allow an unauthenticated, remote attacker to bypass authentication. This vulnerability is due to insufficient authentication control on an API endpoint. An attacker could exploit this vulnerability by sending a crafted request to an affected API endpoint. A successful exploit could allow the attacker to gain unauthorized access to the affected device by bypassing the web-based management interface.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-648",
+          "name": "CWE-648"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76460"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-09-16",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      }
+    },
     {
       "id": "CVE-2026-76461",
       "published": "2026-09-14T17:17:51.113",
@@ -234,6 +266,41 @@
       }
     },
     {
+      "id": "CVE-2026-58704",
+      "published": "2026-09-15T19:17:32.297",
+      "lastModified": "2026-09-17T04:17:54.930",
+      "vulnStatus": "Analyzed",
+      "description": "In Cellular Modem, there is a possible permission bypass due to a logic error in the code. This could lead to remote (proximal/adjacent) escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-285",
+          "name": "CWE-285"
+        },
+        {
+          "id": "CWE-693",
+          "name": "CWE-693"
+        }
+      ],
+      "vendors": [
+        "Google Android"
+      ],
+      "references": [
+        "https://source.android.com/docs/security/bulletin/pixel/2026/2026-09-01",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-58704"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-09-16",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      }
+    },
+    {
       "id": "CVE-2026-87491",
       "published": "2026-09-09T01:17:05.887",
       "lastModified": "2026-09-10T12:49:02.630",
@@ -441,10 +508,1794 @@
       }
     },
     {
+      "id": "CVE-2026-87796",
+      "published": "2026-09-17T05:17:02.123",
+      "lastModified": "2026-09-17T05:17:02.123",
+      "vulnStatus": "Received",
+      "description": "The Multi Uploader for Gravity Forms plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 1.1.9 via the move_file function. This is due to insufficient file type validation during chunked upload handling. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-434",
+          "name": "Unrestricted Dangerous File Upload"
+        }
+      ],
+      "vendors": [
+        "sh1zen Multi Uploader for Gravity Forms"
+      ],
+      "references": [
+        "https://plugins.trac.wordpress.org/browser/gf-multi-uploader/tags/1.1.9/GFMUAddon.class.php#L125",
+        "https://plugins.trac.wordpress.org/browser/gf-multi-uploader/tags/1.1.9/inc/GFMUHandlePluploader.class.php#L257",
+        "https://plugins.trac.wordpress.org/browser/gf-multi-uploader/tags/1.1.9/inc/GFMU_FileUploader.php#L319",
+        "https://plugins.trac.wordpress.org/browser/gf-multi-uploader/tags/1.1.9/inc/GFMU_FileUploader.php#L322"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-61594",
+      "published": "2026-09-16T22:17:03.047",
+      "lastModified": "2026-09-16T22:17:03.047",
+      "vulnStatus": "Received",
+      "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, the live (WebSocket) transport authorizes a mount via `check_view_auth`, not Django's `View.dispatch()` chain. As a result, standard Django authorization \u2014 `LoginRequiredMixin`, `PermissionRequiredMixin`, `UserPassesTestMixin`, `@method_decorator(login_required, name=\"dispatch\")`, and custom `dispatch()` guards \u2014 and the djust admin extension's staff gate (applie",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        },
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "djust-org djust"
+      ],
+      "references": [
+        "https://github.com/djust-org/djust/releases/tag/v1.0.7",
+        "https://github.com/djust-org/djust/security/advisories/GHSA-xhhm-f6hp-2qwj"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92805",
+      "published": "2026-09-16T21:17:30.267",
+      "lastModified": "2026-09-16T21:17:30.267",
+      "vulnStatus": "Received",
+      "description": "UVdesk Community Skeleton through 1.1.8 fails to authenticate or validate installation state on wizard endpoints in ConfigureHelpdesk controller actions. Unauthenticated attackers can repoint the database and create super administrator accounts by submitting crafted requests to wizard endpoints, gaining full control of the instance.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "uvdesk community-skeleton"
+      ],
+      "references": [
+        "https://github.com/uvdesk/community-skeleton",
+        "https://github.com/uvdesk/community-skeleton/blob/6f35040/src/Resources/config/routes.yaml#L1-L35",
+        "https://github.com/uvdesk/community-skeleton/issues/926",
+        "https://www.vulncheck.com/advisories/uvdesk-community-skeleton-through-1.1.8-missing-authentication-on-the-installation-wizard"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92787",
+      "published": "2026-09-16T21:17:28.023",
+      "lastModified": "2026-09-16T21:17:28.023",
+      "vulnStatus": "Received",
+      "description": "Feast through 0.66.0 fails to verify JWT token signatures before establishing user identity, allowing attackers to bypass all role-based access control by presenting an unverified token with a hardcoded claim value. Attackers can obtain trusted internal identity and gain unchecked read and write access to all entities, feature views, data sources, and permission policies on the server.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-798",
+          "name": "Use of Hard-Coded Credentials"
+        }
+      ],
+      "vendors": [
+        "feast-dev feast"
+      ],
+      "references": [
+        "https://github.com/feast-dev/feast",
+        "https://github.com/feast-dev/feast/blob/f296d4b/infra/charts/feast-feature-server/templates/deployment.yaml#L46-L47",
+        "https://github.com/feast-dev/feast/blob/f296d4b/sdk/python/feast/permissions/auth/oidc_token_parser.py#L152-L156",
+        "https://github.com/feast-dev/feast/blob/v0.66.0/sdk/python/feast/permissions/security_manager.py#L248-L264"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-75513",
+      "published": "2026-09-16T21:17:13.440",
+      "lastModified": "2026-09-16T21:17:13.563",
+      "vulnStatus": "Deferred",
+      "description": "Marten is a .NET Transactional Document DB and Event Store on PostgreSQL. From version 7.0.0 until 9.13.0, several Marten LINQ and tenant-management paths interpolate runtime, potentially attacker-controlled strings into single-quoted SQL literals without escaping or parameterization. The primary confirmed vector is a dictionary indexer key used by Where filters in src/Marten/Linq/Members/Dictionaries/DictionaryItemMember.cs. Additional affected sinks include SelectParser.cs, DatabaseScopedTenan",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-89",
+          "name": "SQL Injection"
+        }
+      ],
+      "vendors": [
+        "JasperFx marten"
+      ],
+      "references": [
+        "https://github.com/JasperFx/marten/commit/61882d0424854cb48703f08bdb246894ac576bed",
+        "https://github.com/JasperFx/marten/pull/4911",
+        "https://github.com/JasperFx/marten/releases/tag/9.13.0",
+        "https://github.com/JasperFx/marten/security/advisories/GHSA-rfx3-98h7-v3xp"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20332",
+      "published": "2026-09-16T21:17:10.480",
+      "lastModified": "2026-09-17T04:17:44.230",
+      "vulnStatus": "Received",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Secure Adaptive Security Appliance Software, Cisco Secure Firewall Threat Defense Software and Cisco Secure Firewall Management Center Software engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. &nbsp; The vulnerabilities tracked by CVE-2026-20332 are related to improper",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Adaptive Security Appliance (ASA) Software",
+        "Cisco Cisco Secure Firewall Management Center (FMC)",
+        "Cisco Cisco Secure Firewall Threat Defense (FTD) Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20284",
+      "published": "2026-09-16T21:17:09.090",
+      "lastModified": "2026-09-17T04:17:40.157",
+      "vulnStatus": "Received",
+      "description": "A vulnerability in the SXP REST API of Cisco ISE could allow an authenticated, remote attacker to conduct SQL injection attacks. This vulnerability is due to insufficient validation of user-supplied input in REST API calls. An attacker could exploit this vulnerability by sending crafted input to an affected device. A successful exploit could allow the attacker to view or modify data on the underlying database for the affected device. In single-node deployments, successful exploitation of this vu",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-943",
+          "name": "CWE-943"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-mult-vul-ymSsTLCc"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-76423",
+      "published": "2026-09-16T20:17:28.717",
+      "lastModified": "2026-09-17T04:18:01.213",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the REST API of Cisco ISE and Cisco ISE-PIC could allow an unauthenticated, remote attacker to gain administrative access to an affected device. This vulnerability is due to the REST API web service being exposed with insufficient authorization checks. An attacker could exploit this vulnerability by sending a crafted HTTP request to the exposed REST API port. A successful exploit could allow the attacker to read and modify ISE configuration and identity data with administrativ",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-290",
+          "name": "CWE-290"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-multi-hrP9jQSQ"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20341",
+      "published": "2026-09-16T20:17:24.193",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the sftunnel inter-device communication protocol of Cisco Secure FMC Software could allow an authenticated, remote attacker to obtain&nbsp;root privileges. This vulnerability is due to unsecured deserialization of untrusted data over the sftunnel management connection. An attacker could exploit this vulnerability by sending crafted sftunnel remote procedure calls (RPCs). A successful exploit could allow the attacker to gain root privileges on a device that is running Cisco Sec",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Management Center (FMC)"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-mulivulns-4PsnFwvx"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20330",
+      "published": "2026-09-16T20:17:23.810",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Secure Adaptive Security Appliance Software, Cisco Secure Firewall Threat Defense Software and Cisco Secure Firewall Management Center Software engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. &nbsp; The vulnerabilities tracked by CVE-2026-20330 are related to improper",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-707",
+          "name": "CWE-707"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Adaptive Security Appliance (ASA) Software",
+        "Cisco Cisco Secure Firewall Management Center (FMC)",
+        "Cisco Cisco Secure Firewall Threat Defense (FTD) Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20329",
+      "published": "2026-09-16T20:17:23.600",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Secure Adaptive Security Appliance Software, Cisco Secure Firewall Threat Defense Software and Cisco Secure Firewall Management Center Software engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. &nbsp; The vulnerabilities tracked by CVE-2026-20329 are related to issues c",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-703",
+          "name": "CWE-703"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Adaptive Security Appliance (ASA) Software",
+        "Cisco Cisco Secure Firewall Management Center (FMC)",
+        "Cisco Cisco Secure Firewall Threat Defense (FTD) Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20326",
+      "published": "2026-09-16T20:17:23.480",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Nexus Dashboard engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20326 are related to missing authentication for critical function issues that are grouped under the Common Weakness Enumeration (CWE) CWE-306.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Nexus Dashboard"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ndw1-psFvnrg"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20325",
+      "published": "2026-09-16T20:17:23.347",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Nexus Dashboard&nbsp;engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20325 are related to improper neutralization of special elements used in a command issue that are grouped under the Common Weakness Enumeration (CWE) CWE-77.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Nexus Dashboard"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ndw1-psFvnrg"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20324",
+      "published": "2026-09-16T20:17:23.180",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the sftunnel inter-device communication protocol of Cisco Secure Firewall Management Center (FMC) Software could allow an authenticated, remote attacker to execute arbitrary commands as root. This vulnerability exists because a registered sftunnel peer has incorrect permissions to write an arbitrary file to any location on the device. An attacker could exploit this vulnerability by hijacking the sftunnel communication connection or being a valid registered sftunnel peer and se",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Management Center (FMC)"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-sftunn-codex-c3O4Jft2"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20322",
+      "published": "2026-09-16T20:17:23.040",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Nexus Dashboard&nbsp;engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20322 are related to improper access control issues that are grouped under the Common Weakness Enumeration (CWE) CWE-284.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Nexus Dashboard"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ndw1-psFvnrg"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20242",
+      "published": "2026-09-16T20:17:22.697",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the External Database Access feature of Cisco Secure Firewall Management Center (FMC) Software could allow an unauthenticated, remote attacker to execute arbitrary commands as&nbsp;root on an affected device. This vulnerability is due to insecure deserialization of a user-supplied Java byte stream from a host that is configured in the external database access list. An attacker could exploit this vulnerability by sending a crafted, serialized Java byte stream to a specific TCP ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Management Center (FMC)"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-javarce-y2NypXwk"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20237",
+      "published": "2026-09-16T20:17:22.407",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC), engineering teams have conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20237 are related to improper input validation issues that are grouped under the Common Weaknes",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-20",
+          "name": "Improper Input Validation"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20211",
+      "published": "2026-09-16T20:17:22.200",
+      "lastModified": "2026-09-17T04:17:36.827",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in Cisco ISE could allow an authenticated, remote attacker to execute arbitrary commands on the underlying operating system of an affected device. To exploit this vulnerability, the attacker must have valid high-privileged administrative credentials. This vulnerability is due to insecure deserialization of Java objects by the affected software. An attacker could exploit this vulnerability by sending a crafted serialized Java object to an affected device. A successful exploit coul",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-rce-se7bYU57"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20194",
+      "published": "2026-09-16T20:17:22.047",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC), engineering teams have conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20194 are related to incorrect resource transfer between spheres that are grouped under the Com",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-669",
+          "name": "CWE-669"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20192",
+      "published": "2026-09-16T20:17:21.900",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC) engineering teams have conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20192 are related to improper access control issues that are grouped under the Common Weakness E",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-284",
+          "name": "Improper Access Control"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20176",
+      "published": "2026-09-16T20:17:21.747",
+      "lastModified": "2026-09-17T04:17:36.643",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in Cisco ISE could allow an authenticated, remote attacker to execute arbitrary commands on the underlying operating system of an affected device. To exploit this vulnerability, the attacker must have valid high-privileged administrative credentials. This vulnerability is due to insufficient validation of user-supplied input. An attacker could exploit this vulnerability by sending a crafted HTTP request to an affected device. A successful exploit could allow the attacker to obtai",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-rce-se7bYU57"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20130",
+      "published": "2026-09-16T20:17:21.607",
+      "lastModified": "2026-09-16T20:35:23.620",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC), engineering teams have conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20130 are related to improper neutralization of special elements issues that are grouped under ",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-74",
+          "name": "CWE-74"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-73456",
+      "published": "2026-09-16T19:17:32.270",
+      "lastModified": "2026-09-17T04:18:00.263",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Under certain circumstances on affected platforms running Arista EOS with gRPC Network Packet Sampling Interface (gNPSI) enabled, an unauthenticated gNPSI client can craft a malicious request to allow arbitrary code execution, granting an attacker full administrative control over the compromised switch.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "Arista Networks EOS"
+      ],
+      "references": [
+        "https://www.arista.com/en/support/advisories-notices/security-advisory/24714-security-advisory-0158"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92720",
+      "published": "2026-09-16T18:17:22.990",
+      "lastModified": "2026-09-16T18:17:22.990",
+      "vulnStatus": "Received",
+      "description": "Kubero through 3.1.1 fails to apply authentication guards to the notifications API endpoints, allowing unauthenticated attackers to read webhook secrets and service URLs. Attackers can retrieve stored credentials and register malicious webhooks to intercept pipeline events or suppress alerting by deleting existing configurations.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "kubero-dev kubero"
+      ],
+      "references": [
+        "https://github.com/kubero-dev/kubero",
+        "https://github.com/kubero-dev/kubero/blob/v3.1.1/server/src/main.ts",
+        "https://github.com/kubero-dev/kubero/blob/v3.1.1/server/src/notifications/notifications.controller.ts#L23-L33",
+        "https://github.com/kubero-dev/kubero/issues/753"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92717",
+      "published": "2026-09-16T18:17:22.540",
+      "lastModified": "2026-09-16T18:17:22.540",
+      "vulnStatus": "Received",
+      "description": "Covenant through 0.6 registers the CovenantHub SignalR hub without an Authorize attribute, allowing unauthenticated callers to invoke CreateHttpListener and receive a signed JWT token. Attackers can use the obtained token to authenticate against the entire operator API and access grunts, credentials, binaries, events, and the operator roster.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "cobbr Covenant"
+      ],
+      "references": [
+        "https://github.com/cobbr/Covenant",
+        "https://github.com/cobbr/Covenant/blob/v0.6/Covenant/Core/CovenantService.cs#L3958-L3975",
+        "https://github.com/cobbr/Covenant/blob/v0.6/Covenant/Hubs/CovenantHub.cs#L28-L33",
+        "https://github.com/cobbr/Covenant/issues/406"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92716",
+      "published": "2026-09-16T18:17:22.390",
+      "lastModified": "2026-09-16T18:17:22.390",
+      "vulnStatus": "Received",
+      "description": "Shuffle through 2.2.1 contains a cross-tenant privilege escalation vulnerability in the HandleApiGeneration endpoint that allows administrators to reset and read API keys of non-administrator users in other organizations. Attackers with admin privileges in one organization can supply arbitrary user IDs to generate valid API keys for users in different organizations, enabling account takeover across tenant boundaries.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-639",
+          "name": "CWE-639"
+        }
+      ],
+      "vendors": [
+        "Shuffle Shuffle"
+      ],
+      "references": [
+        "https://github.com/Shuffle/Shuffle",
+        "https://github.com/Shuffle/shuffle-shared/blob/v1.2.50/shared.go#L9888-L9912",
+        "https://github.com/Shuffle/shuffle-shared/commit/c1b582e91b429bc7d5ad02e6c22f98234ec67615",
+        "https://github.com/geo-chen/oss/blob/main/shuffle.md"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92398",
+      "published": "2026-09-16T17:18:19.417",
+      "lastModified": "2026-09-16T18:17:19.550",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was found in Ruijie RG-EW3000GX EW_3.0(1)B11P380. Affected by this issue is some unknown functionality of the file /etc/rg_config/admin of the component user_list_note Module. Performing a manipulation of the argument Name results in os command injection. It is possible to initiate the attack remotely. The exploit has been made public and could be used.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Ruijie RG-EW3000GX"
+      ],
+      "references": [
+        "https://github.com/FoundTL/RG-EW3000GX/blob/main/RG-EW3000GX_user_list_note.md",
+        "https://vuldb.com/cve/CVE-2026-92398",
+        "https://vuldb.com/submit/940182",
+        "https://vuldb.com/vuln/405550"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-76420",
+      "published": "2026-09-16T17:18:09.330",
+      "lastModified": "2026-09-17T04:18:01.007",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the internal configuration of the Apache JServ Protocol (AJP)&nbsp;connector for Cisco Secure FMC Software could allow an unauthenticated, remote attacker to impersonate a peer device. This vulnerability is due to incorrect initialization of encryption parameters for the AJP connector at boot time. An attacker could exploit this vulnerability by sending crafted packets to the AJP connector. A&nbsp;successful exploit could allow the attacker to execute commands as root and&nbsp",
+      "cvss": {
+        "score": 9.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-285",
+          "name": "CWE-285"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Management Center (FMC)"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc2-multivulns-HXgcqRG"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20331",
+      "published": "2026-09-16T17:17:17.107",
+      "lastModified": "2026-09-17T04:17:41.327",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Secure Adaptive Security Appliance Software, Cisco Secure Firewall Threat Defense Software and Cisco Secure Firewall Management Center Software engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. &nbsp; The vulnerabilities tracked by CVE-2026-20331 are related to the fail",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-693",
+          "name": "CWE-693"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Adaptive Security Appliance (ASA) Software",
+        "Cisco Cisco Secure Firewall Management Center (FMC)",
+        "Cisco Cisco Secure Firewall Threat Defense (FTD) Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20307",
+      "published": "2026-09-16T17:17:16.973",
+      "lastModified": "2026-09-17T04:17:40.957",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the web-based management interface of Cisco ISE could allow an authenticated, remote attacker to execute arbitrary commands on the underlying operating system of an affected device. To exploit this vulnerability, the attacker must have at least low-privileged administrative credentials. This vulnerability is due to insecure deserialization of a user-supplied Java byte stream. An attacker could exploit this vulnerability by sending a crafted serialized Java object to the web-ba",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-rce-se7bYU57"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20306",
+      "published": "2026-09-16T17:17:16.857",
+      "lastModified": "2026-09-17T04:17:40.777",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the REST API of Cisco ISE and ISE-PIC could allow an authenticated, remote attacker to perform command injection attacks on the underlying operating system and elevate privileges to root. To exploit this vulnerability, the attacker must have valid administrative credentials. This vulnerability is due to improper validation of user-supplied input. An attacker could exploit this vulnerability by sending crafted commands to the web-based management interface of an affected device",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-cmd-inj-e2CuZCYZ"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20305",
+      "published": "2026-09-16T17:17:16.707",
+      "lastModified": "2026-09-17T04:17:40.540",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "A vulnerability in the diagnostic tools of Cisco ISE and ISE-PIC could allow an authenticated, remote attacker to perform command injection attacks on the underlying operating system and elevate privileges to&nbsp;root. To exploit this vulnerability, the attacker must have valid administrative credentials. This vulnerability is due to improper validation of user-supplied input. An attacker could exploit this vulnerability by sending crafted commands to the web-based management interface of an af",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-cmd-inj-e2CuZCYZ"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-20234",
+      "published": "2026-09-16T17:17:16.537",
+      "lastModified": "2026-09-17T04:17:37.290",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "As part of Cisco's ongoing commitment to proactive security and product quality, the Cisco Identity Services Engine (ISE) and Cisco ISE Passive Identity Connector (ISE-PIC) engineering teams have conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities. The vulnerabilities tracked by CVE-2026-20234 are related to insufficiently protected credentials issues that are grouped under the Comm",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-522",
+          "name": "Insufficiently Protected Credentials"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Identity Services Engine Software",
+        "Cisco Cisco ISE Passive Identity Connector"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92397",
+      "published": "2026-09-16T16:17:22.960",
+      "lastModified": "2026-09-16T20:17:48.090",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability has been found in Ruijie RG-EW3000GX EW_3.0(1)B11P380. Affected by this vulnerability is the function cc_set of the file unifyframe-sgi.elf of the component configChange. Such manipulation of the argument data.url leads to os command injection. The attack may be performed from remote. The exploit has been disclosed to the public and may be used.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "Ruijie RG-EW3000GX"
+      ],
+      "references": [
+        "https://github.com/FoundTL/RG-EW3000GX/blob/main/RG-EW3000GX_unifyframe-sgi.elf.md",
+        "https://vuldb.com/cve/CVE-2026-92397",
+        "https://vuldb.com/submit/940161",
+        "https://vuldb.com/vuln/405549"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-70416",
+      "published": "2026-09-16T16:17:14.953",
+      "lastModified": "2026-09-16T20:37:16.870",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "Dell ObjectScale, versions prior to 4.4.0.0, contains a Deserialization of Untrusted Data vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Remote execution.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Dell ObjectScale"
+      ],
+      "references": [
+        "https://www.dell.com/support/kbdoc/en-in/000505935/dsa-2026-393-security-update-for-dell-objectscale-multiple-vulnerabilities"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2025-59953",
+      "published": "2026-09-16T16:17:03.010",
+      "lastModified": "2026-09-16T16:17:03.010",
+      "vulnStatus": "Received",
+      "description": "LMDeploy is a toolkit for compressing, deploying, and serving large language models. Starting in version 0.9.1 and prior to version 0.10.2, the LMdeploy implements an rpc server (AsyncRPCServer in zmq_rpc.py) for supporting the RPC communications. In its core functionality call_and_response(), I found it will directly use the pickles.loads() to deserialize the received messages without any sanitization, hence resulting in a remote code execution vulnerability by this RPC server. Version 0.10.2 c",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "InternLM lmdeploy"
+      ],
+      "references": [
+        "https://github.com/InternLM/lmdeploy/releases/tag/v0.10.2",
+        "https://github.com/InternLM/lmdeploy/security/advisories/GHSA-5h8j-6crg-7rmw"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-92395",
+      "published": "2026-09-16T15:19:01.857",
+      "lastModified": "2026-09-16T19:40:00.317",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "@fastify/proxy-addr is a Fastify plugin that determines a request's client address behind trusted reverse proxies, and it backs Fastify request.ip and request.ips. In versions 3.0.0 through 5.1.0, a trust subnet written in IPv4-mapped IPv6 notation with an IPv4-sized prefix, such as ::ffff:10.0.0.0/8 instead of the correct ::ffff:10.0.0.0/104, is accepted without error but trusts every IPv4 address on the internet rather than the block it names. Because the socket peer then becomes trusted at ho",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-290",
+          "name": "CWE-290"
+        },
+        {
+          "id": "CWE-348",
+          "name": "CWE-348"
+        },
+        {
+          "id": "CWE-697",
+          "name": "CWE-697"
+        }
+      ],
+      "vendors": [
+        "@fastify/proxy-addr @fastify/proxy-addr"
+      ],
+      "references": [
+        "https://cna.openjsf.org/security-advisories.html",
+        "https://github.com/fastify/proxy-addr/security/advisories/GHSA-8cmm-mhw6-v7xq"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-91843",
+      "published": "2026-09-16T14:17:13.947",
+      "lastModified": "2026-09-17T04:18:10.730",
+      "vulnStatus": "Received",
+      "description": "A stack overflow during the unauthenticated login process may allow an attacker to run arbitrary code remotely with root privileges.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-121",
+          "name": "CWE-121"
+        }
+      ],
+      "vendors": [
+        "checkpoint Quantum Security Management"
+      ],
+      "references": [
+        "https://support.checkpoint.com/results/sk/sk1000155"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90049",
+      "published": "2026-09-16T11:17:18.263",
+      "lastModified": "2026-09-16T15:18:27.710",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: skbuff: don't skb_tx_error() the source skb in skb_zerocopy() skb_zerocopy() copies frags from @from into @to. On an skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive operation on the source skb the copy helper does not own. That completes @from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the SKBFL_SHARED_FRAG page-ownership marker. Both callers already report the failure on their own drop ",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/04dd250a78e268af3e7124beb1dc10ec1dd88d60",
+        "https://git.kernel.org/stable/c/767ec2a65cc022d303b0c9c12811e7db22057341",
+        "https://git.kernel.org/stable/c/8069643ae64dfdf634b6c78c7f622e5323031436",
+        "https://git.kernel.org/stable/c/849bdb83123760a865bcb2970127f4c0b9423ba3"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90048",
+      "published": "2026-09-16T11:17:18.140",
+      "lastModified": "2026-09-16T15:18:27.570",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: fs/ntfs3: fix slab-out-of-bounds write in ni_create_attr_list() ni_create_attr_list() allocates a fixed buffer of al_aligned(record_size) (== record_size) bytes and then walks every attribute of the primary MFT record, writing one ATTR_LIST_ENTRY per attribute and advancing the cursor by le_size(name_len), with no check against the end of the buffer; the total size is only computed after the loop. A minimum-size resident attribu",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/7c4841e2a62794a3bab7c1ff0540580f387e377f",
+        "https://git.kernel.org/stable/c/7e9aee7e4d9767cc3e423b3beecb01c7ebb6bbcd",
+        "https://git.kernel.org/stable/c/a84f3db72561c4d9281c5ff721ce46b9ffa7f30e",
+        "https://git.kernel.org/stable/c/d07e281f2a7710502985d6f80b95ddac8f4e81d5"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90042",
+      "published": "2026-09-16T11:17:17.450",
+      "lastModified": "2026-09-16T15:18:26.873",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: properly decrypt filenames in vmalloc() buffers The fscrypt subsystem uses the scatterlist crypto API, inheriting its requirement that any buffers are in the linear mapping region. However, the messenger client uses kvmalloc() to create buffers for messages, which will occasionally place those buffers in the vmalloc() region when physical memory fragmentation doesn't permit a large enough kmalloc(). The various callers of ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/110747ff535e3d98ac17d68dbd056bb6ef000e23",
+        "https://git.kernel.org/stable/c/3b467c68803d7c7e82678289e598afd44faa6101",
+        "https://git.kernel.org/stable/c/e939fc6a7bd969a58a150b7f188c1047138403e3"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90038",
+      "published": "2026-09-16T11:17:17.010",
+      "lastModified": "2026-09-16T15:18:26.650",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during export state revocation nfsd4_revoke_export_states() has the same use-after-free as nfsd4_revoke_states(): it drops nn->client_lock across revoke_one_stid() and the following read of clp->cl_minorversion, but the stateid reference it holds does not pin the client. A teardown racing the dropped lock can free the client while revoke_one_stid() still dereferences it. exportfs -u drives thi",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2108de53568a64936a0da3e04d85c35df98d3fb6",
+        "https://git.kernel.org/stable/c/c05ae58fe06ce2ac34312f649e71c3596bdde358"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90037",
+      "published": "2026-09-16T11:17:16.910",
+      "lastModified": "2026-09-16T15:18:26.540",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during close_lru reaping An nfs4_openowner left on nn->close_lru after its final CLOSE keeps its last closed stateid in oo_last_closed_stid, holding only a raw pointer to its nfs4_client. The laundromat reaps timed-out entries, drops nn->client_lock, and calls nfs4_put_stid(), which dereferences the client through cl_lock. Nothing pins the client across that window, so a concurrent force_expir",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2330b788d732f43668b965b3105b37ceb276dfea",
+        "https://git.kernel.org/stable/c/83dd59ac1c3455c2c7d8ddb582d980a13199b9b3",
+        "https://git.kernel.org/stable/c/e57a9ed34ea8c17e831de59b8f1a6b2d80d347a1"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90036",
+      "published": "2026-09-16T11:17:16.803",
+      "lastModified": "2026-09-16T15:18:26.420",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: NFSD: Prevent client use-after-free during blocked-lock reaping A bare lock owner -- its only remaining reference a blocked lock on nn->blocked_locks_lru -- holds a raw pointer to its nfs4_client but no reference keeping the client alive. When the per-net laundromat reaps such a lock, freeing the nbl drops the owner reference held through flc_owner, and the final nfs4_put_stateowner() takes the client's cl_lock. Because the laun",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/6fedb2eaff77554ca7a0deffd2e8bc0d6e8b38b0",
+        "https://git.kernel.org/stable/c/9026932ac8be4d0ae01db47f23619a98cc57b671",
+        "https://git.kernel.org/stable/c/cd489b03587378645fe0d20142a33f1ed60bac98"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90012",
+      "published": "2026-09-16T11:17:13.890",
+      "lastModified": "2026-09-16T15:18:24.870",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: spi: Fix DMA mapping ownership on partial map failure If RX mapping fails after TX mapping succeeds, __spi_map_msg() unmaps TX but leaves tx_sg_mapped set. If TX mapping fails on a later transfer, mappings created for earlier transfers remain active. In both cases, cur_{tx,rx}_dma_dev have not yet been updated because they are assigned only after every transfer has been mapped. The subsequent spi_unmap_msg() may therefore unmap ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/367cea239fc93094e5c16a72724800e0358f5c46",
+        "https://git.kernel.org/stable/c/5def8b6aaad44603740786262b95b6f77df52a1c",
+        "https://git.kernel.org/stable/c/a38051fa2ddedbc8ec15292c55e276880ec5b9a4",
+        "https://git.kernel.org/stable/c/cc8354213ad6bd5fb8cc05a3fa3701188d086626"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-90011",
+      "published": "2026-09-16T11:17:13.760",
+      "lastModified": "2026-09-16T15:18:24.763",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: target: iscsi: Reserve a terminator byte for the login payload iscsi_target_check_login_request() rejects a login PDU whose DataSegmentLength exceeds MAX_KEY_VALUE_PAIRS, but the test is '>' and login->req_buf is allocated with exactly MAX_KEY_VALUE_PAIRS bytes. Since iscsit_get_login_rx() receives payload_length + padding bytes, where padding = ((-payload_length) & 3); any payload_length from 8189 to 8192 fills the whole ",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1624bff4c5118ad494d50ad94d44f22064667a7f",
+        "https://git.kernel.org/stable/c/3ddf3ea291a0ef2ea93b82e158960ac2cc42302b",
+        "https://git.kernel.org/stable/c/5fac79f248c37774d1dd761406f83d25ca6ff8e4",
+        "https://git.kernel.org/stable/c/6b589ef9d5f6cdc70d2b4f269ca6cf26b5ebb076"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89990",
+      "published": "2026-09-16T11:17:10.133",
+      "lastModified": "2026-09-16T15:18:22.800",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ceph: lock mutex in ceph_mds_check_access() MDS session OPEN handling replaces mdsc->s_cap_auths under mdsc->mutex, freeing the previous array and its strings. ceph_mds_check_access() traverses this array without holding the mutex. A concurrent session reopen can therefore free the array while it is being inspected, resulting in a use-after-free like this: Unable to handle kernel paging request at virtual address 003aaad64b2c8bb",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/729c1ff670ece6f3d4b1738365a0b2f90d487523",
+        "https://git.kernel.org/stable/c/a61c6ae1dae2611082b831b4aaa780878099c012",
+        "https://git.kernel.org/stable/c/ca5bfea2045ef2eb3305cf2a9d8da549b76c37d3",
+        "https://git.kernel.org/stable/c/df1a97d5313fccadb08390306d49b194fb027392"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89972",
+      "published": "2026-09-16T11:17:07.953",
+      "lastModified": "2026-09-16T15:18:21.637",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nvme: add missing SRCU grace period in error path nvme_alloc_ns() error path at out_unlink_ns removes ns from the namespace head siblings list with list_del_rcu(&ns->siblings) but does not wait for SRCU readers before freeing the namespace struct. Multipath code iterates the head->list under srcu_read_lock() in nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent reader can still hold a reference to ns when kfree(",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/76023560d60f10b4f808941163aa2975f1631683",
+        "https://git.kernel.org/stable/c/d663944dbad81bb0e3635d7090db4713e6300858",
+        "https://git.kernel.org/stable/c/ef248d5de4469fb6bbaf8dbe0c4c47800080d648"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89970",
+      "published": "2026-09-16T11:17:07.660",
+      "lastModified": "2026-09-16T15:18:21.387",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nvmet-auth: Synchronize timeout work during SQ teardown nvmet_auth_sq_free() cancels auth_expired_work with cancel_delayed_work(). If the work has already started, cancellation does not wait for the callback. Transport teardown can consequently free or reuse the queue containing struct nvmet_sq while nvmet_auth_expired_work() still accesses that SQ. Add a teardown-specific helper that synchronously drains the delayed work before",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/664022fa1c93f4eba09ef5ee02411b9709dd7a93",
+        "https://git.kernel.org/stable/c/7555ddd60af72df2862dd8f9b730a9848577edda",
+        "https://git.kernel.org/stable/c/c17c87bde6d6f5252a6a6f0a94b2430164aa28d5",
+        "https://git.kernel.org/stable/c/c3c126a6142a1335bc8c34a5607c39cf01daf295"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89969",
+      "published": "2026-09-16T11:17:07.527",
+      "lastModified": "2026-09-16T15:18:21.240",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nvmet-tcp: fix out-of-bounds write when receiving an over-long PDU nvmet_tcp_try_recv_pdu() reads a PDU header into the fixed 128-byte queue->pdu union, then computes the remaining payload length as queue->left = hdr->hlen - queue->offset + hdgst; and reads that many more bytes into &queue->pdu + queue->offset, without ever bounding the result against sizeof(queue->pdu). A struct nvme_tcp_icreq_pdu is itself 128 bytes, exactly t",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/14cc5a7e77731497d5bea70f3bb05df7eda982e4",
+        "https://git.kernel.org/stable/c/3a385e0c39efbe34db8edd95900c123113ae3450",
+        "https://git.kernel.org/stable/c/4f84d42c53c49557fb1ef285c683b0a81b576c74",
+        "https://git.kernel.org/stable/c/58dc6035b79c4c73c0cbf9ec9f68a7f117b2b3e6"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89930",
+      "published": "2026-09-16T11:17:02.290",
+      "lastModified": "2026-09-16T15:18:18.933",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: nVMX: Service local TLB flushes on failed nested VM-Enter KVM services local TLB flushes on \"full\" nested VM-Exits (through __nested_vmx_vmexit()), but not if a nested VM-Enter fails (e.g. due to failed VMCS checks in nested_vmx_enter_non_root_mode()). However, it is possible that KVM had queued TLB flushes that need to be performed, even if the nested VM-Enter was not successful. For example, if VPID is disabled for L2 (vi",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/05a0b701d1089fb57beeb8982f23c3bbafe0fa8b",
+        "https://git.kernel.org/stable/c/1025b938dc439b75c720a568a855a13eeb245686",
+        "https://git.kernel.org/stable/c/312cdb6d8940827dea63a7a52fb714a5049f06d1",
+        "https://git.kernel.org/stable/c/62c3ee4c9f0e2efef5157358b3549e50ede96d73"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89918",
+      "published": "2026-09-16T11:17:00.867",
+      "lastModified": "2026-09-16T15:18:18.010",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Correctly handle end of VA space TLBI invalidation Our TLB invalidation by VA code is based on comparing two ranges, one defined by the TLB, and one defined by the TLBI instruction. Each range is defined by a start and a size. However, the way the comparison is done doesn't account for address rollover, as it compares an address with (base + size). This works nicely until this expression represent the last page/block",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/34af2c3e31f91a739dc175459fdbd99ed952b457",
+        "https://git.kernel.org/stable/c/c624731ca6fe59ad8909ce4108301aa7560a91d6",
+        "https://git.kernel.org/stable/c/ce447651a52ec077694172af10c4fffb11f56c43"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89916",
+      "published": "2026-09-16T11:17:00.657",
+      "lastModified": "2026-09-16T15:18:17.883",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Make VNCR invalidation participate in MMU invalidation retry A VNCR TLB invalidation can occur on one vcpu while another vcpu is faulting in this same page. Without correctly handling this, we can end up with the following scenario: - vcpu A walks the PTs to translate VNCR - before vcpu A is able to grab the MMU lock to insert the TLB, vcpu B updates the S1 PTs with an invalid entry, and issues a TLBI S1E2 for this V",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/11ee3faab4f1755d126bead9f882e75a7a677860",
+        "https://git.kernel.org/stable/c/2b7324f3a0c1072b9d578b8d42f199506753f26e",
+        "https://git.kernel.org/stable/c/d8580e7aa189b0c6c5bb4d94b8352728a7c35bbd"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89915",
+      "published": "2026-09-16T11:17:00.553",
+      "lastModified": "2026-09-16T15:18:17.760",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Remove VM-wide VNCR mapping counter The global VNCR mapping counter is used to decide whether an L1 provided VNCR page is mapped in L0 on any CPU at the point of dealing with a TLB invalidation. It is incremented when a mapping is made in the fixmap, and decremented when unmapped. As it turns out, this tracking has several flaws: - we are trying to invalidate TLBs, and the mapping is only an opportunistic consequence",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5453b85c7ebb605febac3df42021f9471663f051",
+        "https://git.kernel.org/stable/c/87c2bbf189829dce4aaada8f82e3d54ccc037976",
+        "https://git.kernel.org/stable/c/c55bc773b6e814406658fae7dc5c15f639ed816e"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89914",
+      "published": "2026-09-16T11:17:00.443",
+      "lastModified": "2026-09-16T15:18:17.647",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Sign-extend VA for range-based TLBI invalidation When the decode_range_tlbi() helper was moved to be used for S1 TLBIs, the required sign extension was omitted. Add it. As a result, special care must be taken to not overflow PA bits when this is used for S2 invalidation.",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2393470085649f0b973ecceb26fe8fc71edde0c1",
+        "https://git.kernel.org/stable/c/3feb83918e30f0472e058224b926ebfe8a064fac",
+        "https://git.kernel.org/stable/c/72bce82c4171bf330919ff1b64dc0a36c254ec7d"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89857",
+      "published": "2026-09-16T11:16:53.573",
+      "lastModified": "2026-09-16T15:18:13.657",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: qla2xxx: Hold qpair lock when sending NVMe LS reject qla_nvme_ls_reject_iocb() allocates from and advances the request ring through __qla2x00_alloc_iocbs() (which assumes the hardware_lock is held) and qla2x00_start_iocbs() (which advances the ring and rings the request-in doorbell), but takes no lock itself. Two of its callers invoke it without the producer lock held: - qla_nvme_xmt_ls_rsp(), the NVMe-FC .xmt_ls_rsp trans",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/11834e5773e20fd3742d7eb900876e66b9e7d029",
+        "https://git.kernel.org/stable/c/7eb618877503edbf17aa65e357a81bda1fc8f163",
+        "https://git.kernel.org/stable/c/b02ff132017b28222187ebcf95ce7f4cb576cd36",
+        "https://git.kernel.org/stable/c/b3a362466db6b8ec47cc537ac641ac197fa69b5d"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89847",
+      "published": "2026-09-16T11:16:51.990",
+      "lastModified": "2026-09-16T15:18:12.967",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: qla2xxx: Avoid double completion in async IOCB timeout qla2x00_async_iocb_timeout() tries to abort a timed-out async IOCB. When qla24xx_async_abort_cmd() fails, both the SRB_LOGIN_CMD path and the SRB_CTRL_VP/default path scan outstanding_cmds[] for the SRB and then call sp->done(sp, QLA_FUNCTION_TIMEOUT) unconditionally, without checking whether the SRB was actually found and removed. If the response ISR completes the sam",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/6e217a9482eabbd8b29847be334c74cf468d3544",
+        "https://git.kernel.org/stable/c/71a7b6e3c7f121439f51a058e53d4a8e05b63dec",
+        "https://git.kernel.org/stable/c/7257b5e1fb6c9387714f66e01b79ec82b717eede",
+        "https://git.kernel.org/stable/c/845d4abd92cd2f97551356c8b281ad6e197acb07"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89846",
+      "published": "2026-09-16T11:16:51.853",
+      "lastModified": "2026-09-16T15:18:12.823",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: qla2xxx: Bound rsp_info_len to avoid OOB sense-data read In qla2x00_status_entry(), the FWI2 status path advances sense_data and shrinks par_sense_len by rsp_info_len: if (IS_FWI2_CAPABLE(ha)) { sense_data += rsp_info_len; par_sense_len -= rsp_info_len; } rsp_info_len is a 32-bit value taken directly from the target's FCP response (sf.rsp_data_len), while par_sense_len is the IOCB data area size (28 bytes for 24xx, 60 byte",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/125b12861c726e58448bb95d55b04851fb131d1f",
+        "https://git.kernel.org/stable/c/6b08c0cb110a1fba92f99d655020198489699815",
+        "https://git.kernel.org/stable/c/be75ab791c9b3baca66c70ce03443afebc83acda",
+        "https://git.kernel.org/stable/c/ca6d880d6c70cb7946e7b3e05d7285f271b6d99e"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-86106",
+      "published": "2026-09-16T11:16:43.783",
+      "lastModified": "2026-09-16T20:36:52.890",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "An unauthenticated actor with network access to the private HA interconnect may trigger sensitive HA peer functions without verification. This could result in elevated command execution on Edge units where HA is enabled.",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Arista Networks VeloCloud Edge"
+      ],
+      "references": [
+        "https://www.arista.com/en/support/advisories-notices/security-advisory/24735-security-advisory-0179"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-73453",
+      "published": "2026-09-16T10:16:52.043",
+      "lastModified": "2026-09-17T04:17:59.823",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "An unauthenticated P4Runtime (Programming Protocol-Independent Packet Processors Runtime) client can achieve arbitrary code execution under certain conditions on affected platforms running Arista EOS configured with P4Runtime. P4Runtime is disabled by default in Arista EOS. By crafting a malicious packet during the initiation of a P4Runtime session, an attacker can obtain complete administrative control over the compromised switch. This issue was discovered internally by Arista, and the company ",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "Arista Networks EOS"
+      ],
+      "references": [
+        "https://www.arista.com/en/support/advisories-notices/security-advisory/24730-security-advisory-0174"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89788",
+      "published": "2026-09-16T09:17:09.590",
+      "lastModified": "2026-09-16T15:18:09.007",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ksmbd: fix tree connection use-after-free in smb2_tree_connect() ksmbd_tree_conn_connect() publishes a new tree connection in sess->tree_conns with a single reference and returns its pointer to smb2_tree_connect(). The handler continues to initialize the object and build the response after publication. A concurrent session logoff can erase the connection and drop that reference, freeing the object while the handler still uses it",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/4e30fbd26e84efa2e5cbec4eb11e126ac0c79313",
+        "https://git.kernel.org/stable/c/b5ec6c462aab1062cf5d1e667ba7c6442f737055"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89786",
+      "published": "2026-09-16T09:17:09.330",
+      "lastModified": "2026-09-16T15:18:08.860",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ext4: fix out-of-bounds read in ext4_read_inline_dir() ext4_read_inline_dir() can read a dirent header past the end of its inline buffer, triggering a slab-out-of-bounds read during getdents64(): BUG: KASAN: slab-out-of-bounds in __ext4_check_dir_entry Read of size 2 at addr ffff88800f3dd23c by task exploit/148 ... __ext4_check_dir_entry ext4_read_inline_dir iterate_dir The dirent payload lives in a buffer of exactly inline_size",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1a1dea633b724a1c042dbcdb1fed27f410916688",
+        "https://git.kernel.org/stable/c/36bf17bb90cdf7a623499b624b05acde4d2feef5",
+        "https://git.kernel.org/stable/c/5fd20d4e50dd6e460b3ea8e4396f8553d4526f8f",
+        "https://git.kernel.org/stable/c/6702c7da86d8cdb88d0fc57166286e115ffeb8c0"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89783",
+      "published": "2026-09-16T09:17:08.930",
+      "lastModified": "2026-09-16T15:18:08.720",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full The depth check in xfrm6_input_addr() is off by one: if (1 + sp->len == XFRM_MAX_DEPTH) goto drop; ... sp->xvec[sp->len++] = x; xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode receive path re-enters IPv6 input via xfrm_trans_reinject() with that secpath preserved. If the inner packet carries a destination-options HAO option or a ty",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0f679e0523ddfff3fb554336ceb874b0e51e9cd3",
+        "https://git.kernel.org/stable/c/48996649222e95008cdb98cd58579e3fc8e5ee06",
+        "https://git.kernel.org/stable/c/5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc",
+        "https://git.kernel.org/stable/c/5f35a29a5eed3d80befd32050843ac88dea3d61a"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89779",
+      "published": "2026-09-16T09:17:08.387",
+      "lastModified": "2026-09-16T15:18:07.320",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: fs/ntfs3: validate ef->size covers the record's name and value When an EA record has a non-zero ef->size, ntfs_read_ea() only checks that the record fits in the remaining buffer (ea_size > bytes), not that ef->size is large enough to hold the record's own name_len + 1 + elength. A crafted image can pass validation with, e.g., ef->size = 24 but elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of the undersize",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/077df8464cf24f8ffc82fb6efec2ae600686e699",
+        "https://git.kernel.org/stable/c/28a924c7e67e6d71abeb04860b61166fecb027fc",
+        "https://git.kernel.org/stable/c/aab1880058ac767d3ea9388a9a7221c776c22c44",
+        "https://git.kernel.org/stable/c/b27e68ad818a4ca2cef8f35f97e75d756714c818"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89778",
+      "published": "2026-09-16T09:17:08.253",
+      "lastModified": "2026-09-16T15:18:07.167",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: isofs: fix out-of-bounds page array access on empty zisofs block zisofs_uncompress_block()'s empty-block fast path returns pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the decompression path which returns bytes produced relative to poffset. zisofs_fill_pages() uses that return to advance its page cursor, so when the zisofs block size is below PAGE_SIZE and a sub-page block leaves poffset partway into a page, a fol",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/68d4d3e78150c7ed7d1195af63ad1e6ace30c661",
+        "https://git.kernel.org/stable/c/85904076cece72ee3194646ad7ac8e6659d999aa",
+        "https://git.kernel.org/stable/c/8b994ac5778a725982fd6a8a3afcaa068d4a93e3",
+        "https://git.kernel.org/stable/c/9c6eace8d07e90f038c89eb3b756d65a7e259d48"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-89775",
+      "published": "2026-09-16T09:17:07.850",
+      "lastModified": "2026-09-16T18:17:19.027",
+      "vulnStatus": "Received",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: Handle negative S1 walk levels in VNCR TLB size evaluation Computing the effects of a TLB invalidation involves looking at the size of the mapping cached by the TLB. For S1 mappings such as VNCR, this is deducted from the combination of the base granule size and the mapping level. However, this implies that the S1 MMU is *on*. When the MMU is off, we indicate this with the level being set to a \"creative\" value of -12",
+      "cvss": {
+        "score": 9.3,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1c9fca34b9625a67a7f1a03c8604f3df760c6c49",
+        "https://git.kernel.org/stable/c/8053393680d4fa3eb962667d2be95dd39f0940e5",
+        "https://git.kernel.org/stable/c/be54a70067c7dbe1381157e8a238fa4b16ea9c05",
+        "http://www.openwall.com/lists/oss-security/2026/09/16/14"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-27565",
       "published": "2026-09-16T08:16:39.740",
-      "lastModified": "2026-09-16T08:16:39.740",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T19:17:14.183",
+      "vulnStatus": "Awaiting Analysis",
       "description": "An unauthenticated remote attacker can upload a malicious IODD file that places and executes a shell script with root privileges. The shell script remains active even after a reboot.",
       "cvss": {
         "score": 9.8,
@@ -476,8 +2327,8 @@
     {
       "id": "CVE-2026-27546",
       "published": "2026-09-16T08:16:36.850",
-      "lastModified": "2026-09-16T08:16:36.850",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T19:17:10.840",
+      "vulnStatus": "Awaiting Analysis",
       "description": "An unauthenticated remote attacker can exploit an authentication bypass in the _account_log function to log in as an admin, even when accounts are properly configured.",
       "cvss": {
         "score": 9.8,
@@ -509,8 +2360,8 @@
     {
       "id": "CVE-2026-73447",
       "published": "2026-09-16T07:16:37.087",
-      "lastModified": "2026-09-16T07:16:37.087",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-17T04:17:59.623",
+      "vulnStatus": "Awaiting Analysis",
       "description": "A privileged attacker can exploit certain operation to execute arbitrary commands with root privileges, leading to full device compromise. An authenticated user can exploit gRPC Network Security Interface (gNSI) Certz service on Arista EOS-based products to escalate privileges and execute arbitrary OS commands via a crafted Certz Rotate request. The Bootz service is also affected.",
       "cvss": {
         "score": 9.1,
@@ -536,8 +2387,8 @@
     {
       "id": "CVE-2026-14349",
       "published": "2026-09-16T04:17:58.777",
-      "lastModified": "2026-09-16T04:17:58.777",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T19:17:06.020",
+      "vulnStatus": "Deferred",
       "description": "The TrueBooker \u2013 Appointment Booking and Scheduler System plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.2.3. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to modify the email address of arbitrary user accounts, including administrators, which can be leveraged to reset the account's password and gain access to it.",
       "cvss": {
         "score": 9.8,
@@ -564,8 +2415,8 @@
     {
       "id": "CVE-2026-12793",
       "published": "2026-09-16T04:17:56.110",
-      "lastModified": "2026-09-16T04:17:56.110",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T17:53:40.500",
+      "vulnStatus": "Deferred",
       "description": "The JetFormBuilder \u2014 Dynamic Blocks Form Builder plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 3.6.2. This is due to the plugin not validating that a submitted form ID belongs to a JetFormBuilder form before parsing the referenced post's content as form schema and executing an Advanced Validation server-side callback. This makes it possible for unauthenticated attackers to create a new administrator-level user account.",
       "cvss": {
         "score": 9.8,
@@ -592,7 +2443,7 @@
     {
       "id": "CVE-2026-81855",
       "published": "2026-09-15T22:17:03.197",
-      "lastModified": "2026-09-15T22:17:03.197",
+      "lastModified": "2026-09-16T19:17:43.623",
       "vulnStatus": "Received",
       "description": "A hardcoded cryptographic client authentication key vulnerability exists in the robot testing framework component of W\u00e4rtsil\u00e4 FOS-Onboard.",
       "cvss": {
@@ -621,8 +2472,8 @@
     {
       "id": "CVE-2026-78225",
       "published": "2026-09-15T22:17:02.870",
-      "lastModified": "2026-09-15T22:17:02.870",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T19:30:28.743",
+      "vulnStatus": "Deferred",
       "description": "A hardcoded cryptographic server key vulnerability exists in the deployer-ng Update Controller component of W\u00e4rtsil\u00e4 FOS-Onboard.",
       "cvss": {
         "score": 9.0,
@@ -650,7 +2501,7 @@
     {
       "id": "CVE-2026-73807",
       "published": "2026-09-15T22:16:58.683",
-      "lastModified": "2026-09-15T22:16:58.683",
+      "lastModified": "2026-09-16T19:17:32.787",
       "vulnStatus": "Received",
       "description": "The mySCADA myPRO Manager command API does not properly enforce authentication for privileged functions. An unauthenticated attacker with network access to the affected API could exploit this vulnerability to access privileged management functions.",
       "cvss": {
@@ -679,8 +2530,8 @@
     {
       "id": "CVE-2026-73437",
       "published": "2026-09-15T22:16:58.220",
-      "lastModified": "2026-09-15T22:16:58.220",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-17T04:17:57.743",
+      "vulnStatus": "Awaiting Analysis",
       "description": "On affected platforms running Arista EOS with Dynamic Host Configuration Protocol (DHCP) relay configured, an unauthenticated attacker with network access could send a crafted DHCP reply packet from an IP address that is not configured as a helper address, and the relay agent would forward it to clients without validating the source. This could allow the attacker to supply clients with malicious network configuration parameters, potentially resulting in traffic interception or denial of service ",
       "cvss": {
         "score": 9.6,
@@ -706,7 +2557,7 @@
     {
       "id": "CVE-2026-61560",
       "published": "2026-09-15T22:16:58.040",
-      "lastModified": "2026-09-15T22:16:58.040",
+      "lastModified": "2026-09-16T14:17:06.550",
       "vulnStatus": "Received",
       "description": "`@zereight/mcp-gitlab` is a Model Context Protocol server for GitLab. Prior to version 2.1.27, the SSE transport mode (`SSE=true`) exposes all MCP tools without any authentication. The `upload_markdown` tool reads arbitrary files from the server's local filesystem via an unsanitized `file_path` parameter and uploads them to a GitLab project. Combined, any unauthenticated network-reachable attacker can read `/proc/self/environ` to steal the server's `GITLAB_PERSONAL_ACCESS_TOKEN` and achieve full",
       "cvss": {
@@ -736,8 +2587,8 @@
     {
       "id": "CVE-2026-91939",
       "published": "2026-09-15T21:16:48.957",
-      "lastModified": "2026-09-15T21:16:48.957",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-16T20:21:01.047",
+      "vulnStatus": "Deferred",
       "description": "Cotonti 1.0.0 Comments plugin passes the ci GET parameter to unserialize() without allowed_classes restriction, allowing unauthenticated attackers to instantiate arbitrary PHP classes with attacker-controlled properties. Attackers can exploit PHP object injection through crafted serialized payloads to trigger gadget chains and achieve database manipulation or code execution.",
       "cvss": {
         "score": 9.8,
@@ -766,8 +2617,8 @@
     {
       "id": "CVE-2026-91749",
       "published": "2026-09-15T21:16:48.833",
-      "lastModified": "2026-09-16T00:17:29.510",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-17T04:18:10.540",
+      "vulnStatus": "Awaiting Analysis",
       "description": "Use after free in Workers in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Critical)",
       "cvss": {
         "score": 9.6,
@@ -792,10 +2643,66 @@
       }
     },
     {
+      "id": "CVE-2026-91738",
+      "published": "2026-09-15T21:16:47.397",
+      "lastModified": "2026-09-17T04:18:09.587",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Improper input validation in ANGLE in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to potentially execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: Medium)",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-20",
+          "name": "Improper Input Validation"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html",
+        "https://issues.chromium.org/issues/536450979"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-91729",
+      "published": "2026-09-15T21:16:46.263",
+      "lastModified": "2026-09-17T04:18:08.230",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Use after free in DigitalCredentials in Google Chrome prior to 153.0.8010.47 allowed a remote attacker leveraging social engineering to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html",
+        "https://issues.chromium.org/issues/557206809"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-91728",
       "published": "2026-09-15T21:16:46.130",
-      "lastModified": "2026-09-16T00:17:22.110",
-      "vulnStatus": "Received",
+      "lastModified": "2026-09-17T04:18:08.060",
+      "vulnStatus": "Undergoing Analysis",
       "description": "Integer overflow in V8 in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page. (Chromium security severity: High)",
       "cvss": {
         "score": 9.6,
@@ -820,9 +2727,93 @@
       }
     },
     {
+      "id": "CVE-2026-91718",
+      "published": "2026-09-15T21:16:44.807",
+      "lastModified": "2026-09-17T04:18:05.690",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Use after free in Core in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html",
+        "https://issues.chromium.org/issues/553133215"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-91716",
+      "published": "2026-09-15T21:16:44.563",
+      "lastModified": "2026-09-17T04:18:05.470",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Use after free in Auth in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html",
+        "https://issues.chromium.org/issues/554558368"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-91710",
+      "published": "2026-09-15T21:16:43.800",
+      "lastModified": "2026-09-17T04:18:04.777",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "Use after free in WebAppInstalls in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to execute arbitrary code outside the sandbox via a crafted HTML page. (Chromium security severity: High)",
+      "cvss": {
+        "score": 9.6,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Google Chrome"
+      ],
+      "references": [
+        "https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0541751186.html",
+        "https://issues.chromium.org/issues/553132148"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-66890",
       "published": "2026-09-15T21:16:42.090",
-      "lastModified": "2026-09-15T21:16:42.090",
+      "lastModified": "2026-09-16T18:17:11.220",
       "vulnStatus": "Received",
       "description": "The affected products use hard-coded credentials, which could allow remote access to files with root privileges where FTP is reachable.",
       "cvss": {
@@ -847,2011 +2838,6 @@
         "https://digital-watchdog.com/downloads/",
         "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-258-01.json",
         "https://www.cisa.gov/news-events/ics-advisories/icsa-26-258-01"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-66887",
-      "published": "2026-09-15T21:16:41.930",
-      "lastModified": "2026-09-15T21:16:41.930",
-      "vulnStatus": "Received",
-      "description": "The affected products are missing authorization on state-changing CGIs and session checks are not performed.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-862",
-          "name": "Missing Authorization"
-        }
-      ],
-      "vendors": [
-        "Digital Watchdog VMAX A1 G4 DVR",
-        "Digital Watchdog VMAX IP G4 NVR",
-        "Digital Watchdog VMAX A1 PLUS",
-        "Digital Watchdog VA1G4 Recorder",
-        "Digital Watchdog VG4 Recorder"
-      ],
-      "references": [
-        "https://digital-watchdog.com/downloads/",
-        "https://github.com/cisagov/CSAF/blob/develop/csaf_files/OT/white/2026/icsa-26-258-01.json",
-        "https://www.cisa.gov/news-events/ics-advisories/icsa-26-258-01"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-61568",
-      "published": "2026-09-15T21:16:41.570",
-      "lastModified": "2026-09-15T21:16:41.570",
-      "vulnStatus": "Received",
-      "description": "`@zereight/mcp-gitlab` is a Model Context Protocol server for GitLab. Versions prior to 2.1.30 expose the Streamable HTTP MCP endpoint without an effective Host or Origin allowlist. A malicious web page can use DNS rebinding to route browser requests to a victim's local MCP listener while preserving an attacker-controlled `Host` and `Origin`. The server accepts those headers and reaches the MCP initialization path instead of rejecting the request at the HTTP boundary. Version 2.1.30 contains a p",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-350",
-          "name": "CWE-350"
-        }
-      ],
-      "vendors": [
-        "zereight gitlab-mcp"
-      ],
-      "references": [
-        "https://github.com/zereight/gitlab-mcp/commit/52207c6f5c0e7a39e9235d491225edbb562a0290",
-        "https://github.com/zereight/gitlab-mcp/pull/555",
-        "https://github.com/zereight/gitlab-mcp/releases/tag/v2.1.30",
-        "https://github.com/zereight/gitlab-mcp/security/advisories/GHSA-vmp7-252j-cwp7"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-61559",
-      "published": "2026-09-15T21:16:41.390",
-      "lastModified": "2026-09-15T21:16:41.390",
-      "vulnStatus": "Received",
-      "description": "`@zereight/mcp-gitlab` is a Model Context Protocol server for GitLab. Starting in version 0.0.1 and prior to version 2.1.27, when the environment variable `ENABLE_DYNAMIC_API_URL=true` is set, the server reads the `X-GitLab-API-URL` HTTP request header and uses it as the base URL for all outbound GitLab API calls made within that request. The server validates that the value is a well-formed URL (`new URL(dynamicApiUrl)`) but applies no allowlist or hostname restriction. The server then attaches ",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-918",
-          "name": "Server-Side Request Forgery (SSRF)"
-        }
-      ],
-      "vendors": [
-        "zereight gitlab-mcp"
-      ],
-      "references": [
-        "https://github.com/zereight/gitlab-mcp/commit/6ffb4cc70706fd05b1ab80901676bc2998b6db6d",
-        "https://github.com/zereight/gitlab-mcp/pull/625",
-        "https://github.com/zereight/gitlab-mcp/releases/tag/v2.1.27",
-        "https://github.com/zereight/gitlab-mcp/security/advisories/GHSA-2h44-8472-frjj"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-54337",
-      "published": "2026-09-15T21:16:36.920",
-      "lastModified": "2026-09-15T21:16:36.920",
-      "vulnStatus": "Received",
-      "description": "Fireshare facilitates self-hosted media and link sharing. Prior to version 1.6.14, an argument Injection in the video upload function allows unauthenticated attacker to write/overwrite system files. Version 1.6.14 fixes the issue.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-88",
-          "name": "Argument Injection"
-        }
-      ],
-      "vendors": [
-        "ShaneIsrael fireshare"
-      ],
-      "references": [
-        "https://github.com/ShaneIsrael/fireshare/security/advisories/GHSA-hmh2-6g84-q8jx"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-89040",
-      "published": "2026-09-15T20:19:20.240",
-      "lastModified": "2026-09-15T20:19:20.240",
-      "vulnStatus": "Received",
-      "description": "Tencent Mass Service Engine in Cluster (MSEC) allows a remote, unauthenticated attacker to send a crafted POST request including ../ and gain root access on the target device. An attacker who uploads a webshell can execute arbitrary code as root.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        }
-      ],
-      "vendors": [
-        "Tencent Mass Service Engine in Cluster (MSEC)"
-      ],
-      "references": [
-        "https://github.com/Tencent/MSEC",
-        "https://raw.githubusercontent.com/cisagov/CSAF/develop/csaf_files/IT/white/2026/va-26-258-02.json",
-        "https://www.cve.org/CVERecord?id=CVE-2026-89040"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87230",
-      "published": "2026-09-15T20:19:11.513",
-      "lastModified": "2026-09-15T20:19:11.513",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. While the vulnerability is in Oracle Hyperion Financial Management, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result ",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87223",
-      "published": "2026-09-15T20:19:10.630",
-      "lastModified": "2026-09-15T20:19:10.630",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data an",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87217",
-      "published": "2026-09-15T20:19:09.983",
-      "lastModified": "2026-09-15T23:19:13.370",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data as",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87214",
-      "published": "2026-09-15T20:19:09.660",
-      "lastModified": "2026-09-15T20:19:09.660",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. While the vulnerability is in Oracle Hyperion Financial Management, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result ",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87189",
-      "published": "2026-09-15T20:19:06.840",
-      "lastModified": "2026-09-15T20:19:06.840",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows high privileged attacker with network access via Oracle Net to compromise Oracle Hyperion Financial Management. While the vulnerability is in Oracle Hyperion Financial Management, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can r",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87188",
-      "published": "2026-09-15T20:19:06.727",
-      "lastModified": "2026-09-15T23:19:13.243",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in takeover of Oracle Hyperion Financial Management. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS ",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87186",
-      "published": "2026-09-15T20:19:06.507",
-      "lastModified": "2026-09-15T20:19:06.507",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with access to the physical communication segment attached to the hardware where the Oracle Hyperion Financial Management executes to compromise Oracle Hyperion Financial Management. While the vulnerability is in Oracle Hyperion Financial Management, attacks may signifi",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87184",
-      "published": "2026-09-15T20:19:06.290",
-      "lastModified": "2026-09-15T23:19:13.113",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via SQL to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in takeover of Oracle Hyperion Financial Management. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS V",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87176",
-      "published": "2026-09-15T20:19:05.403",
-      "lastModified": "2026-09-15T23:19:12.983",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via TCP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data as ",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87175",
-      "published": "2026-09-15T20:19:05.297",
-      "lastModified": "2026-09-15T23:19:12.853",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via TCP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data as ",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87173",
-      "published": "2026-09-15T20:19:05.073",
-      "lastModified": "2026-09-15T23:19:12.723",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via TCP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data as ",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87172",
-      "published": "2026-09-15T20:19:04.970",
-      "lastModified": "2026-09-15T20:19:04.970",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. While the vulnerability is in Oracle Hyperion Financial Management, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result i",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87170",
-      "published": "2026-09-15T20:19:04.747",
-      "lastModified": "2026-09-15T23:19:12.593",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Financial Management product of Oracle Hyperion (component: Security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Financial Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Financial Management accessible data as",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Financial Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87129",
-      "published": "2026-09-15T20:18:59.933",
-      "lastModified": "2026-09-15T23:19:12.467",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Data Relationship Management product of Oracle Hyperion (component: Access and security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Data Relationship Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Data Relatio",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Data Relationship Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-87128",
-      "published": "2026-09-15T20:18:59.820",
-      "lastModified": "2026-09-15T23:19:12.333",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Hyperion Data Relationship Management product of Oracle Hyperion (component: Access and security). The supported version that is affected is 11.2.26.0.000. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hyperion Data Relationship Management. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Data Relatio",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Hyperion Data Relationship Management"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83462",
-      "published": "2026-09-15T20:18:55.030",
-      "lastModified": "2026-09-15T23:19:06.670",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Mobile Application Server product of Oracle E-Business Suite (component: MWA Terminal Server). Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via TCP to compromise Oracle Mobile Application Server. Successful attacks of this vulnerability can result in takeover of Oracle Mobile Application Server. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Mobile Application Server"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83452",
-      "published": "2026-09-15T20:18:53.950",
-      "lastModified": "2026-09-15T23:19:06.547",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Document Management and Collaboration product of Oracle E-Business Suite (component: Internal Operations). Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Document Management and Collaboration. Successful attacks of this vulnerability can result in takeover of Oracle Document Management and Collaboration. CVSS 3.1 Base Score 9.8 (Confidentiality,",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Document Management and Collaboration"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83355",
-      "published": "2026-09-15T20:18:49.020",
-      "lastModified": "2026-09-15T23:19:06.417",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Enterprise Manager for Fusion Middleware product of Oracle Enterprise Manager (component: Metrics). Supported versions that are affected are 13.5 and 24.1. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Enterprise Manager for Fusion Middleware. Successful attacks of this vulnerability can result in takeover of Oracle Enterprise Manager for Fusion Middleware. CVSS 3.1 Base Score 9.8 (Confidentiality, I",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Enterprise Manager for Fusion Middleware"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83339",
-      "published": "2026-09-15T20:18:47.243",
-      "lastModified": "2026-09-15T23:19:06.283",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Enterprise Capture product of Oracle Fusion Middleware (component: Client Bundle). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebCenter Enterprise Capture. Successful attacks of this vulnerability can result in takeover of Oracle WebCenter Enterprise Capture. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availa",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Enterprise Capture"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83327",
-      "published": "2026-09-15T20:18:45.880",
-      "lastModified": "2026-09-15T23:19:06.163",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Applications Framework product of Oracle E-Business Suite (component: Personalization). Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via SOAP to compromise Oracle Applications Framework. Successful attacks of this vulnerability can result in takeover of Oracle Applications Framework. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Applications Framework"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83283",
-      "published": "2026-09-15T20:18:40.927",
-      "lastModified": "2026-09-15T23:19:06.040",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Business Intelligence Enterprise Edition product of Oracle Analytics (component: Platform Security). The supported version that is affected is 12.2.1.4.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Business Intelligence Enterprise Edition. Successful attacks of this vulnerability can result in takeover of Oracle Business Intelligence Enterprise Edition. CVSS 3.1 Base Score 9.8 (Confidentiality, In",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Business Intelligence Enterprise Edition"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83282",
-      "published": "2026-09-15T20:18:40.820",
-      "lastModified": "2026-09-15T20:18:40.820",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Business Intelligence Enterprise Edition product of Oracle Analytics (component: Platform Security). The supported version that is affected is 12.2.1.4.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Business Intelligence Enterprise Edition. While the vulnerability is in Oracle Business Intelligence Enterprise Edition, attacks may significantly impact additional products (scope change). Successful at",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Business Intelligence Enterprise Edition"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83269",
-      "published": "2026-09-15T20:18:39.290",
-      "lastModified": "2026-09-15T23:19:05.917",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle BI Publisher product of Oracle Analytics (component: BI Platform Security). Supported versions that are affected are 8.2.0.0.0, 12.2.1.4.0 and 26.01.0.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle BI Publisher. Successful attacks of this vulnerability can result in takeover of Oracle BI Publisher. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle BI Publisher"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83268",
-      "published": "2026-09-15T20:18:39.180",
-      "lastModified": "2026-09-15T20:18:39.180",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle BI Publisher product of Oracle Analytics (component: BI Platform Security). Supported versions that are affected are 8.2.0.0.0, 12.2.1.4.0 and 26.01.0.0.0. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle BI Publisher. While the vulnerability is in Oracle BI Publisher, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of ",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle BI Publisher"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83261",
-      "published": "2026-09-15T20:18:38.403",
-      "lastModified": "2026-09-15T23:19:05.790",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Product Lifecycle Analytics product of Oracle Supply Chain (component: Core). The supported version that is affected is 3.6.1. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Product Lifecycle Analytics. Successful attacks of this vulnerability can result in takeover of Oracle Product Lifecycle Analytics. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Product Lifecycle Analytics"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83260",
-      "published": "2026-09-15T20:18:38.293",
-      "lastModified": "2026-09-15T20:18:38.293",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Agile PLM product of Oracle Supply Chain (component: Event Java PX). The supported version that is affected is 9.3.6. Easily exploitable vulnerability allows high privileged attacker with network access via T3, IIOP to compromise Oracle Agile PLM. While the vulnerability is in Oracle Agile PLM, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracle Agile PLM. CVSS 3.1 Base Score 9.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Agile PLM"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83232",
-      "published": "2026-09-15T20:18:35.080",
-      "lastModified": "2026-09-15T23:19:05.673",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Data Integrator product of Oracle Fusion Middleware (component: Console / Repository Explorer). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Data Integrator. Successful attacks of this vulnerability can result in takeover of Oracle Data Integrator. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS V",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Data Integrator"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83229",
-      "published": "2026-09-15T20:18:34.743",
-      "lastModified": "2026-09-15T20:18:34.743",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel CRM Deployment product of Oracle Siebel CRM (component: Siebel Management Console). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Siebel CRM Deployment. While the vulnerability is in Siebel CRM Deployment, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Siebel CRM Deplo",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Siebel CRM Deployment"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83202",
-      "published": "2026-09-15T20:18:31.763",
-      "lastModified": "2026-09-15T23:19:05.550",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel CRM Deployment product of Oracle Siebel CRM (component: Server Infrastructure). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Siebel CRM Deployment. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Siebel CRM Deployment accessible data as well as unauthorized access to cri",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Siebel CRM Deployment"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83201",
-      "published": "2026-09-15T20:18:31.640",
-      "lastModified": "2026-09-15T23:19:05.430",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel CRM Deployment product of Oracle Siebel CRM (component: Server Infrastructure). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Siebel CRM Deployment. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Siebel CRM Deployment accessible data as well as unauthorized access to cri",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Siebel CRM Deployment"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83197",
-      "published": "2026-09-15T20:18:31.167",
-      "lastModified": "2026-09-15T20:18:31.167",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel Apps - Financial Services product of Oracle Siebel CRM (component: Financial Accounts). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Siebel Apps - Financial Services. Successful attacks of this vulnerability can result in unauthorized access to critical data or complete access to all Siebel Apps - Financial Services accessible data and unauthorized abilit",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Siebel Apps - Financial Services"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83196",
-      "published": "2026-09-15T20:18:31.057",
-      "lastModified": "2026-09-15T20:18:31.057",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel CRM Deployment product of Oracle Siebel CRM (component: Server Infrastructure). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Siebel CRM Deployment. While the vulnerability is in Siebel CRM Deployment, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Siebel CRM Deploymen",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Siebel CRM Deployment"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83154",
-      "published": "2026-09-15T20:18:26.193",
-      "lastModified": "2026-09-15T23:19:05.310",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Siebel CRM End User product of Oracle Siebel CRM (component: Open UI). Supported versions that are affected are 17.0-26.7. Easily exploitable vulnerability allows unauthenticated attacker with network access via SOAP to compromise Siebel CRM End User. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Siebel CRM End User accessible data as well as unauthorized access to critical data or comple",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Siebel CRM End User"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83151",
-      "published": "2026-09-15T20:18:25.857",
-      "lastModified": "2026-09-15T23:19:05.180",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Service Delivery Platform product of Oracle Fusion Middleware (component: Messaging Enabler). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via SOAP to compromise Service Delivery Platform. Successful attacks of this vulnerability can result in takeover of Service Delivery Platform. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vect",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Service Delivery Platform"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83149",
-      "published": "2026-09-15T20:18:25.637",
-      "lastModified": "2026-09-15T20:18:25.637",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in Oracle Application Testing Suite. The supported version that is affected is 13.3.0.1. Easily exploitable vulnerability allows low privileged attacker having Test Manager for Web Apps privilege with network access via HTTP to compromise Oracle Application Testing Suite. While the vulnerability is in Oracle Application Testing Suite, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in unauthorized access to cr",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Application Testing Suite"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83108",
-      "published": "2026-09-15T20:18:21.000",
-      "lastModified": "2026-09-15T23:19:05.053",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. Successful attacks of this vulnerability can result in takeover of Oracle Forms. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83107",
-      "published": "2026-09-15T20:18:20.893",
-      "lastModified": "2026-09-15T20:18:20.893",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle Forms. While the vulnerability is in Oracle Forms, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracle Forms. C",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83105",
-      "published": "2026-09-15T20:18:20.667",
-      "lastModified": "2026-09-15T20:18:20.667",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Difficult to exploit vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. While the vulnerability is in Oracle Forms, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracle Forms.",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83104",
-      "published": "2026-09-15T20:18:20.553",
-      "lastModified": "2026-09-15T23:19:04.933",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via TCP to compromise Oracle Forms. Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle Forms accessible data as well as unauthorized access to",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83103",
-      "published": "2026-09-15T20:18:20.440",
-      "lastModified": "2026-09-15T20:18:20.440",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle Forms. While the vulnerability is in Oracle Forms, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracle Forms. C",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83100",
-      "published": "2026-09-15T20:18:20.113",
-      "lastModified": "2026-09-15T23:19:04.800",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. Successful attacks of this vulnerability can result in takeover of Oracle Forms. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83099",
-      "published": "2026-09-15T20:18:20.007",
-      "lastModified": "2026-09-15T23:19:04.673",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. While the vulnerability is in Oracle Forms, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracle Forms. C",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83098",
-      "published": "2026-09-15T20:18:19.877",
-      "lastModified": "2026-09-15T23:19:04.550",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. Successful attacks of this vulnerability can result in takeover of Oracle Forms. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83095",
-      "published": "2026-09-15T20:18:19.427",
-      "lastModified": "2026-09-15T23:19:04.430",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. Successful attacks of this vulnerability can result in takeover of Oracle Forms. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83094",
-      "published": "2026-09-15T20:18:19.313",
-      "lastModified": "2026-09-15T23:19:04.307",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Forms product of Oracle Fusion Middleware (component: Forms Services, C/S, Charmode). Supported versions that are affected are 12.2.1.19.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Forms. Successful attacks of this vulnerability can result in takeover of Oracle Forms. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Forms"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83066",
-      "published": "2026-09-15T20:18:15.443",
-      "lastModified": "2026-09-15T23:19:04.180",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via T3, IIOP to compromise Oracle Internet Directory. Successful attacks of this vulnerability can result in takeover of Oracle Internet Directory. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Ve",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83064",
-      "published": "2026-09-15T20:18:15.150",
-      "lastModified": "2026-09-15T20:18:15.150",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Portal product of Oracle Fusion Middleware (component: Runtime Tools). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle WebCenter Portal. While the vulnerability is in Oracle WebCenter Portal, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Portal"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83062",
-      "published": "2026-09-15T20:18:14.907",
-      "lastModified": "2026-09-15T23:19:04.057",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via LDAP to compromise Oracle Internet Directory. Successful attacks of this vulnerability can result in takeover of Oracle Internet Directory. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83061",
-      "published": "2026-09-15T20:18:14.790",
-      "lastModified": "2026-09-15T23:19:03.933",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via LDAP to compromise Oracle Internet Directory. Successful attacks of this vulnerability can result in takeover of Oracle Internet Directory. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83060",
-      "published": "2026-09-15T20:18:14.680",
-      "lastModified": "2026-09-15T23:19:03.807",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via LDAP to compromise Oracle Internet Directory. Successful attacks of this vulnerability can result in takeover of Oracle Internet Directory. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83059",
-      "published": "2026-09-15T20:18:14.563",
-      "lastModified": "2026-09-15T23:19:03.680",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via LDAP to compromise Oracle Internet Directory. While the vulnerability is in Oracle Internet Directory, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in tak",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83058",
-      "published": "2026-09-15T20:18:14.450",
-      "lastModified": "2026-09-15T20:18:14.450",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via LDAP to compromise Oracle Internet Directory. While the vulnerability is in Oracle Internet Directory, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in take",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83057",
-      "published": "2026-09-15T20:18:14.340",
-      "lastModified": "2026-09-15T20:18:14.340",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via LDAP to compromise Oracle Internet Directory. While the vulnerability is in Oracle Internet Directory, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in take",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83056",
-      "published": "2026-09-15T20:18:14.230",
-      "lastModified": "2026-09-15T20:18:14.230",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via LDAP to compromise Oracle Internet Directory. While the vulnerability is in Oracle Internet Directory, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in take",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83055",
-      "published": "2026-09-15T20:18:14.113",
-      "lastModified": "2026-09-15T20:18:14.113",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via LDAP to compromise Oracle Internet Directory. While the vulnerability is in Oracle Internet Directory, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in take",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83054",
-      "published": "2026-09-15T20:18:14.000",
-      "lastModified": "2026-09-15T23:19:03.550",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Internet Directory product of Oracle Fusion Middleware (component: OID LDAP Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via LDAP to compromise Oracle Internet Directory. Successful attacks of this vulnerability can result in takeover of Oracle Internet Directory. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Internet Directory"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83043",
-      "published": "2026-09-15T20:18:12.743",
-      "lastModified": "2026-09-15T20:18:12.743",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Portal product of Oracle Fusion Middleware (component: Composer). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebCenter Portal. Successful attacks require human interaction from a person other than the attacker and while the vulnerability is in Oracle WebCenter Portal, attacks may significantly impact additional products ",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Portal"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83042",
-      "published": "2026-09-15T20:18:12.633",
-      "lastModified": "2026-09-15T23:19:03.427",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Identity Manager product of Oracle Fusion Middleware (component: OIM Legacy UI). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Identity Manager. Successful attacks of this vulnerability can result in takeover of Oracle Identity Manager. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle Identity Manager"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83040",
-      "published": "2026-09-15T20:18:12.410",
-      "lastModified": "2026-09-15T20:18:12.410",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Portal product of Oracle Fusion Middleware (component: Portlet Services). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via SOAP to compromise Oracle WebCenter Portal. Successful attacks require human interaction from a person other than the attacker and while the vulnerability is in Oracle WebCenter Portal, attacks may significantly impact additional p",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Portal"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83039",
-      "published": "2026-09-15T20:18:12.297",
-      "lastModified": "2026-09-15T20:18:12.297",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Portal product of Oracle Fusion Middleware (component: Composer). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle WebCenter Portal. While the vulnerability is in Oracle WebCenter Portal, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of Oracl",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Portal"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83038",
-      "published": "2026-09-15T20:18:12.187",
-      "lastModified": "2026-09-15T20:18:12.187",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: TopLink Integration). Supported versions that are affected are 12.2.1.4.0, 14.1.1.0.0, 14.1.2.0.0 and 15.1.1.0.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle WebLogic Server. While the vulnerability is in Oracle WebLogic Server, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebLogic Server"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83037",
-      "published": "2026-09-15T20:18:12.077",
-      "lastModified": "2026-09-15T23:19:03.297",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Sites product of Oracle Fusion Middleware (component: WebCenter Sites). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebCenter Sites. Successful attacks of this vulnerability can result in takeover of Oracle WebCenter Sites. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Sites"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83036",
-      "published": "2026-09-15T20:18:11.970",
-      "lastModified": "2026-09-15T23:19:03.170",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Sites product of Oracle Fusion Middleware (component: WebCenter Sites). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebCenter Sites. Successful attacks of this vulnerability can result in takeover of Oracle WebCenter Sites. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Sites"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83035",
-      "published": "2026-09-15T20:18:11.853",
-      "lastModified": "2026-09-15T23:19:03.043",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Sites product of Oracle Fusion Middleware (component: WebCenter Sites). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebCenter Sites. Successful attacks of this vulnerability can result in takeover of Oracle WebCenter Sites. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Sites"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83031",
-      "published": "2026-09-15T20:18:11.370",
-      "lastModified": "2026-09-15T20:18:11.370",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebCenter Sites product of Oracle Fusion Middleware (component: WebCenter Sites). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle WebCenter Sites. While the vulnerability is in Oracle WebCenter Sites, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in takeover of O",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle WebCenter Sites"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83029",
-      "published": "2026-09-15T20:18:11.037",
-      "lastModified": "2026-09-15T20:18:11.037",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Managed File Transfer product of Oracle Fusion Middleware (component: MFT Runtime Server). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.0.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Managed File Transfer. While the vulnerability is in Oracle Managed File Transfer, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can re",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Managed File Transfer"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83027",
-      "published": "2026-09-15T20:18:10.757",
-      "lastModified": "2026-09-15T20:18:10.757",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle Identity Manager Connector product of Oracle Fusion Middleware (component: Core). Supported versions that are affected are 12.2.1.4.0 and 14.1.2.1.0. Easily exploitable vulnerability allows unauthenticated attacker with access to the physical communication segment attached to the hardware where the Oracle Identity Manager Connector executes to compromise Oracle Identity Manager Connector. While the vulnerability is in Oracle Identity Manager Connector, attacks may sig",
-      "cvss": {
-        "score": 9.3,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Oracle Corporation Oracle Identity Manager Connector"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-83021",
-      "published": "2026-09-15T20:18:09.777",
-      "lastModified": "2026-09-15T23:19:02.920",
-      "vulnStatus": "Received",
-      "description": "Vulnerability in the Oracle WebLogic Server product of Oracle Fusion Middleware (component: Web Container). Supported versions that are affected are 12.2.1.4.0, 14.1.1.0.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebLogic Server. While the vulnerability is in Oracle WebLogic Server, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in ta",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        },
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        }
-      ],
-      "vendors": [
-        "Oracle Corporation Oracle WebLogic Server"
-      ],
-      "references": [
-        "https://www.oracle.com/security-alerts/cspusep2026.html"
       ],
       "kev": {
         "in_kev": false

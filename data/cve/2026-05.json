@@ -14364,7 +14364,7 @@
     {
       "id": "CVE-2026-46117",
       "published": "2026-05-28T10:16:27.203",
-      "lastModified": "2026-09-09T13:20:15.763",
+      "lastModified": "2026-09-16T13:17:59.973",
       "vulnStatus": "Undergoing Analysis",
       "description": "In the Linux kernel, the following vulnerability has been resolved: RDMA/mana: Remove user triggerable WARN_ON() in mana_ib_create_qp_rss() Sashiko points out that the user can specify WQs sharing the same CQ as a part of the uAPI and this will trigger the WARN_ON() then go on to corrupt the kernel. Just reject it outright and fail the QP creation.",
       "cvss": {
@@ -19269,7 +19269,7 @@
     {
       "id": "CVE-2026-46054",
       "published": "2026-05-27T14:17:25.043",
-      "lastModified": "2026-08-26T13:19:10.190",
+      "lastModified": "2026-09-16T13:17:59.623",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: selinux: fix overlayfs mmap() and mprotect() access checks The existing SELinux security model for overlayfs is to allow access if the current task is able to access the top level file (the \"user\" file) and the mounter's credentials are sufficient to access the lower level file (the \"backing\" file). Unfortunately, the current code does not properly enforce these access controls for both mmap() and mprotect() operations on overla",
       "cvss": {
@@ -19976,7 +19976,7 @@
     {
       "id": "CVE-2026-45998",
       "published": "2026-05-27T14:17:17.407",
-      "lastModified": "2026-09-09T13:20:15.190",
+      "lastModified": "2026-09-16T13:17:59.330",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: rxrpc: Fix potential UAF after skb_unshare() failure If skb_unshare() fails to unshare a packet due to allocation failure in rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread()) will be NULL'd out. This will likely cause the call to trace_rxrpc_rx_done() to oops. Fix this by moving the unsharing down to where rxrpc_input_call_event() calls rxrpc_input_call_packet(). There are a number of places prior to that w",
       "cvss": {
@@ -19998,8 +19998,8 @@
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
         "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
-        "Red Hat Red Hat Enterprise Linux 9.4 Update Services for SAP Solutions",
-        "Red Hat Red Hat Enterprise Linux 9.6 Extended Update Support"
+        "Red Hat Red Hat Enterprise Linux 9.2 Update Services for SAP Solutions",
+        "Red Hat Red Hat Enterprise Linux 9.4 Update Services for SAP Solutions"
       ],
       "references": [
         "https://git.kernel.org/stable/c/1f2740150f904bfa60e4bad74d65add3ccb5e7f8",
@@ -35248,7 +35248,7 @@
     {
       "id": "CVE-2026-39830",
       "published": "2026-05-22T04:16:22.440",
-      "lastModified": "2026-09-15T12:17:39.480",
+      "lastModified": "2026-09-16T13:17:53.697",
       "vulnStatus": "Modified",
       "description": "A malicious SSH peer could send unsolicited global request responses to fill an internal buffer, blocking the connection's read loop. The blocked goroutine could not be released by calling Close(), resulting in a resource leak per connection. Unsolicited global responses are now discarded.",
       "cvss": {
@@ -35286,7 +35286,7 @@
     {
       "id": "CVE-2026-39829",
       "published": "2026-05-22T04:16:22.310",
-      "lastModified": "2026-09-15T12:17:38.050",
+      "lastModified": "2026-09-16T13:17:52.280",
       "vulnStatus": "Modified",
       "description": "The RSA and DSA public key parsers did not enforce size limits on key parameters. A crafted public key with an excessively large modulus or DSA parameter could cause several minutes of CPU consumption during signature verification. This could be triggered by unauthenticated clients during public key authentication. RSA moduli are now limited to 8192 bits, and DSA parameters are validated per FIPS 186-2.",
       "cvss": {
@@ -74905,7 +74905,7 @@
     {
       "id": "CVE-2026-45186",
       "published": "2026-05-10T07:16:07.883",
-      "lastModified": "2026-08-25T13:19:12.733",
+      "lastModified": "2026-09-16T13:17:58.967",
       "vulnStatus": "Modified",
       "description": "In libexpat before 2.8.1, the computational complexity of attribute name collision checks allows a denial of service via moderately sized crafted XML input.",
       "cvss": {
@@ -83102,7 +83102,7 @@
     {
       "id": "CVE-2026-33814",
       "published": "2026-05-07T20:16:42.880",
-      "lastModified": "2026-09-15T12:17:26.720",
+      "lastModified": "2026-09-16T13:17:43.937",
       "vulnStatus": "Modified",
       "description": "When processing HTTP/2 SETTINGS frames, transport will enter an infinite loop of writing CONTINUATION frames if it receives a SETTINGS_MAX_FRAME_SIZE with a value of 0.",
       "cvss": {
@@ -91088,7 +91088,7 @@
     {
       "id": "CVE-2026-43114",
       "published": "2026-05-06T10:16:25.163",
-      "lastModified": "2026-09-15T12:17:47.700",
+      "lastModified": "2026-09-16T13:17:57.820",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nft_set_pipapo_avx2: don't return non-matching entry on expiry New test case fails unexpectedly when avx2 matching functions are used. The test first loads a ranomly generated pipapo set with 'ipv4 . port' key, i.e. nft -f foo. This works. Then, it reloads the set after a flush: (echo flush set t s; cat foo) | nft -f - This is expected to work, because its the same set after all and it was already loaded once. But wit",
       "cvss": {
@@ -104442,5 +104442,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-16T10:16:30.631650+00:00"
+  "updated_at": "2026-09-17T10:22:31.473682+00:00"
 }

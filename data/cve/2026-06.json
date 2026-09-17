@@ -7984,7 +7984,7 @@
     {
       "id": "CVE-2026-14164",
       "published": "2026-06-30T07:16:32.170",
-      "lastModified": "2026-09-14T13:17:33.447",
+      "lastModified": "2026-09-17T09:16:38.713",
       "vulnStatus": "Awaiting Analysis",
       "description": "A double free issue has been identified in libarchive's RAR5 reader. During parsing of a specially crafted RAR5 archive, the filtered_buf pointer may remain stale after being freed during unpacking state reinitialization. Subsequent processing of another archive entry can trigger a second free of the same memory region, resulting in a double-free condition. Successful exploitation may cause applications using the vulnerable libarchive API to terminate unexpectedly, leading to a denial of service",
       "cvss": {
@@ -17014,7 +17014,7 @@
     {
       "id": "CVE-2026-49486",
       "published": "2026-06-26T08:16:23.830",
-      "lastModified": "2026-06-26T19:16:41.907",
+      "lastModified": "2026-09-16T15:17:37.280",
       "vulnStatus": "Modified",
       "description": "The Apache Airflow FTP provider's `FTPSHook.get_conn()` created an `ftplib.FTP_TLS` connection but never called `prot_p()`, so although the control channel was TLS-protected the data channel was transmitted in cleartext. Any deployment using `FTPSHook` or `FTPSFileTransmitOperator` to move files over FTPS exposed file contents and credentials-in-transit to a network attacker able to observe the data connection. Upgrade apache-airflow-providers-ftp to `3.15.1` or later, which issues `PROT P` to e",
       "cvss": {
@@ -28547,7 +28547,7 @@
     {
       "id": "CVE-2026-53071",
       "published": "2026-06-24T17:17:20.843",
-      "lastModified": "2026-09-09T13:20:28.350",
+      "lastModified": "2026-09-16T13:18:02.357",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: l2cap: Add missing chan lock in l2cap_ecred_reconf_rsp l2cap_ecred_reconf_rsp() calls l2cap_chan_del() without holding l2cap_chan_lock(). Every other l2cap_chan_del() caller in the file acquires the lock first. A remote BLE device can send a crafted L2CAP ECRED reconfiguration response to corrupt the channel list while another thread is iterating it. Add l2cap_chan_hold() and l2cap_chan_lock() before l2cap_chan_del(),",
       "cvss": {
@@ -28569,8 +28569,8 @@
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10",
         "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 6"
+        "Red Hat Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support",
+        "Red Hat Red Hat Enterprise Linux 8.4 Extended Update Support Long-Life Add-On"
       ],
       "references": [
         "https://git.kernel.org/stable/c/0ccd75c51f620374086f359e906917676e699a1c",
@@ -29342,7 +29342,7 @@
     {
       "id": "CVE-2026-53016",
       "published": "2026-06-24T17:17:12.893",
-      "lastModified": "2026-09-09T13:20:28.020",
+      "lastModified": "2026-09-16T13:18:01.940",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: crypto: ccp - copy IV using skcipher ivsize AF_ALG rfc3686-ctr-aes-ccp requests pass an 8-byte IV to the driver. ccp_aes_complete() restores AES_BLOCK_SIZE bytes into the caller's IV buffer while RFC3686 skciphers expose an 8-byte IV, so the restore overruns the provided buffer. Use crypto_skcipher_ivsize() to copy only the algorithm's IV length.",
       "cvss": {
@@ -29362,10 +29362,10 @@
       ],
       "vendors": [
         "Linux Linux",
-        "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
-        "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 8.6 Advanced Mission Critical Update Support"
+        "Red Hat Red Hat Enterprise Linux 9",
+        "Red Hat Red Hat Enterprise Linux 6",
+        "Red Hat Red Hat Enterprise Linux 7",
+        "Red Hat Red Hat Enterprise Linux AppStream EUS (v. 10.0)"
       ],
       "references": [
         "https://git.kernel.org/stable/c/227c1e1d9e2aa4cfc65ba446d5690da1f546cda4",
@@ -29478,7 +29478,7 @@
     {
       "id": "CVE-2026-53006",
       "published": "2026-06-24T17:17:11.750",
-      "lastModified": "2026-09-09T13:20:27.423",
+      "lastModified": "2026-09-16T13:18:01.563",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: ipv6: fix possible UAF in icmpv6_rcv() Caching saddr and daddr before pskb_pull() is problematic since skb->head can change. Remove these temporary variables: - We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr when net_dbg_ratelimited() is called in the slow path. - Avoid potential future misuse after pskb_pull() call.",
       "cvss": {
@@ -29640,7 +29640,7 @@
     {
       "id": "CVE-2026-53000",
       "published": "2026-06-24T17:17:11.047",
-      "lastModified": "2026-09-09T13:20:26.890",
+      "lastModified": "2026-09-16T13:18:01.290",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nat: use kfree_rcu to release ops Florian Westphal says: \"Historically this is not an issue, even for normal base hooks: the data path doesn't use the original nf_hook_ops that are used to register the callbacks. However, in v5.14 I added the ability to dump the active netfilter hooks from userspace. This code will peek back into the nf_hook_ops that are available at the tail of the pointer-array blob used by the data",
       "cvss": {
@@ -36372,7 +36372,7 @@
     {
       "id": "CVE-2026-48746",
       "published": "2026-06-22T23:16:30.490",
-      "lastModified": "2026-09-01T13:19:37.290",
+      "lastModified": "2026-09-16T13:18:00.653",
       "vulnStatus": "Modified",
       "description": "vLLM is an inference and serving engine for large language models (LLMs). From 0.3.0 until 0.22.0, a vulnerability in ASGI web servers and starlette's trust on those web servers enables an authentication bypass of the OpenAI API AuthenticationMiddleware. It allows to use the API without providing the configured VLLM_API_KEY or --api-key. This vulnerability is fixed in 0.22.0.",
       "cvss": {
@@ -37529,7 +37529,7 @@
     {
       "id": "CVE-2026-54280",
       "published": "2026-06-22T18:16:46.670",
-      "lastModified": "2026-06-26T19:35:51.760",
+      "lastModified": "2026-09-16T20:15:00.917",
       "vulnStatus": "Analyzed",
       "description": "AIOHTTP is an asynchronous HTTP client/server framework for asyncio and Python. Prior to 3.14.1, payload resources are not closed correctly when a client disconnects in the middle of a write. If a payload is using an open file or similar limited resource, then an attacker may be able to cause resource starvation temporarily until garbage collection or similar closes the file. This vulnerability is fixed in 3.14.1.",
       "cvss": {
@@ -63009,7 +63009,7 @@
     {
       "id": "CVE-2026-0156",
       "published": "2026-06-16T20:16:26.240",
-      "lastModified": "2026-07-06T16:16:27.683",
+      "lastModified": "2026-09-16T17:17:14.313",
       "vulnStatus": "Modified",
       "description": "In checkSsrcCollisionOnRcv of RtpSession.cpp, there is a possible memory safety issue due to a missing null check. This could lead to remote denial of service with no additional execution privileges needed. User interaction is not needed for exploitation.",
       "cvss": {
@@ -63301,6 +63301,33 @@
       }
     },
     {
+      "id": "CVE-2026-0144",
+      "published": "2026-06-16T20:16:25.170",
+      "lastModified": "2026-09-16T17:17:13.817",
+      "vulnStatus": "Modified",
+      "description": "In writeAocCommand of AocAudioCodec.cpp, there is a possible memory safety issue due to a missing bounds check. This could lead to remote denial of service with no additional execution privileges needed. User interaction is not needed for exploitation.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Google Android"
+      ],
+      "references": [
+        "https://source.android.com/docs/security/bulletin/pixel/2026/2026-06-01"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-0143",
       "published": "2026-06-16T20:16:25.083",
       "lastModified": "2026-06-17T16:43:40.767",
@@ -63400,6 +63427,37 @@
         {
           "id": "CWE-416",
           "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Google Android"
+      ],
+      "references": [
+        "https://source.android.com/docs/security/bulletin/pixel/2026/2026-06-01"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-0136",
+      "published": "2026-06-16T20:16:24.440",
+      "lastModified": "2026-09-16T17:17:13.213",
+      "vulnStatus": "Modified",
+      "description": "In Modem, there is a possible out of bounds read due to a missing bounds check. This could lead to remote denial of service with no additional execution privileges needed. User interaction is not needed for exploitation.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        },
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
         }
       ],
       "vendors": [
@@ -82040,7 +82098,7 @@
     {
       "id": "CVE-2026-6893",
       "published": "2026-06-10T20:17:29.807",
-      "lastModified": "2026-09-15T12:17:52.943",
+      "lastModified": "2026-09-17T08:17:01.710",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in dracut. A remote attacker on the adjacent network can exploit this vulnerability by providing specially crafted DHCP (Dynamic Host Configuration Protocol) options, such as a malicious hostname, to a system using dracut's legacy DHCP path. These options are improperly handled and written into temporary shell scripts without proper escaping, leading to command injection. This allows the attacker to achieve root code execution within the initramfs, potentially compromising the s",
       "cvss": {
@@ -94033,7 +94091,7 @@
     {
       "id": "CVE-2026-46316",
       "published": "2026-06-09T13:16:36.887",
-      "lastModified": "2026-07-30T12:18:51.120",
+      "lastModified": "2026-09-16T13:18:00.307",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: KVM: arm64: vgic-its: Drop the translation cache reference only for the erased entry vgic_its_invalidate_cache() walks the per-ITS translation cache with xa_for_each() and drops the cache's reference on each entry with vgic_put_irq(). It puts the iterated pointer, though, rather than the value returned by xa_erase(). The function is called from contexts that do not exclude one another: the ITS command handlers hold its_lock, the",
       "cvss": {
@@ -110660,7 +110718,7 @@
     {
       "id": "CVE-2026-25550",
       "published": "2026-06-04T18:16:28.747",
-      "lastModified": "2026-09-02T17:17:34.150",
+      "lastModified": "2026-09-16T16:17:07.137",
       "vulnStatus": "Awaiting Analysis",
       "description": "Seagull Software BarTender 2010, 2016, and 2019 contain an unauthenticated remote code execution vulnerability in the .NET Remoting service exposed on TCP port 7375 via BtSystem.Service.exe. The service registers an unauthenticated singleton endpoint \u2014 BarTenderSystem for BarTender 2016 <= R9, and DataServiceSingleton for BarTender 2019 <= R10 \u2014 configured with BinaryServerFormatterSinkProvider and TypeFilterLevel set to Full. An unauthenticated remote attacker can exploit .NET Remoting object u",
       "cvss": {
@@ -122693,5 +122751,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-16T10:16:30.732439+00:00"
+  "updated_at": "2026-09-17T10:22:31.552869+00:00"
 }
