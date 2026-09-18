@@ -7984,7 +7984,7 @@
     {
       "id": "CVE-2026-14164",
       "published": "2026-06-30T07:16:32.170",
-      "lastModified": "2026-09-17T09:16:38.713",
+      "lastModified": "2026-09-17T19:16:37.177",
       "vulnStatus": "Awaiting Analysis",
       "description": "A double free issue has been identified in libarchive's RAR5 reader. During parsing of a specially crafted RAR5 archive, the filtered_buf pointer may remain stale after being freed during unpacking state reinitialization. Subsequent processing of another archive entry can trigger a second free of the same memory region, resulting in a double-free condition. Successful exploitation may cause applications using the vulnerable libarchive API to terminate unexpectedly, leading to a denial of service",
       "cvss": {
@@ -17836,9 +17836,9 @@
     {
       "id": "CVE-2025-71338",
       "published": "2026-06-25T22:16:59.520",
-      "lastModified": "2026-07-01T15:00:51.743",
-      "vulnStatus": "Analyzed",
-      "description": "Flowise contains a path traversal vulnerability in the /api/v1/document-store/loader/process endpoint that allows unauthenticated attackers to write arbitrary files to the filesystem. Attackers can exploit unsanitized fileName parameters with ../ sequences to overwrite critical files like package.json and achieve remote code execution when the application restarts.",
+      "lastModified": "2026-09-17T19:16:36.377",
+      "vulnStatus": "Modified",
+      "description": "Flowise through 2.2.7 fails to sanitize path segments in the document-store loader endpoint, allowing unauthenticated attackers to write files outside the storage directory. Attackers can use parent-directory sequences to escape the storage directory and overwrite application files loaded at boot for remote code execution.",
       "cvss": {
         "score": 9.8,
         "version": "3.1",
@@ -17854,6 +17854,7 @@
         "Flowise Flowise"
       ],
       "references": [
+        "https://github.com/FlowiseAI/Flowise/releases/tag/flowise%402.2.7-patch.1",
         "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-8vvx-qvq9-5948",
         "https://www.vulncheck.com/advisories/flowise-arbitrary-file-write-to-remote-code-execution-via-document-store-api"
       ],
@@ -23520,8 +23521,8 @@
     {
       "id": "CVE-2026-53176",
       "published": "2026-06-25T09:16:34.953",
-      "lastModified": "2026-07-15T01:16:30.467",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-09-17T12:18:24.437",
+      "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: IB/isert: Reject login PDUs shorter than ISER_HEADERS_LEN In drivers/infiniband/ulp/isert/ib_isert.c, isert_login_recv_done() computes the login request payload length as wc->byte_len minus ISER_HEADERS_LEN with no lower bound, and login_req_len is a signed int. A remote iSER initiator can post a login Send work request carrying fewer than ISER_HEADERS_LEN (76) bytes, so the subtraction underflows and login_req_len becomes negat",
       "cvss": {
         "score": 9.8,
@@ -29640,7 +29641,7 @@
     {
       "id": "CVE-2026-53000",
       "published": "2026-06-24T17:17:11.047",
-      "lastModified": "2026-09-16T13:18:01.290",
+      "lastModified": "2026-09-17T12:18:24.163",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nat: use kfree_rcu to release ops Florian Westphal says: \"Historically this is not an issue, even for normal base hooks: the data path doesn't use the original nf_hook_ops that are used to register the callbacks. However, in v5.14 I added the ability to dump the active netfilter hooks from userspace. This code will peek back into the nf_hook_ops that are available at the tail of the pointer-array blob used by the data",
       "cvss": {
@@ -29658,8 +29659,8 @@
         "Linux Linux",
         "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6"
+        "Red Hat Red Hat Enterprise Linux 9.6 Extended Update Support",
+        "Red Hat Red Hat Enterprise Linux 10"
       ],
       "references": [
         "https://git.kernel.org/stable/c/32fdd2e38e7435a368d88f5977a7d6585ebc8b0e",
@@ -31451,7 +31452,7 @@
     {
       "id": "CVE-2026-56223",
       "published": "2026-06-24T13:16:33.067",
-      "lastModified": "2026-06-25T14:03:58.163",
+      "lastModified": "2026-09-17T18:16:49.943",
       "vulnStatus": "Deferred",
       "description": "Capgo before 12.128.2 contains a cross-domain SSO account takeover vulnerability in the provision-user endpoint that allows attackers to merge arbitrary victim accounts based on email match without validating SSO provider domain authorization. An attacker with enterprise org admin access and a malicious IdP can forge SAML assertions containing victim email addresses to trigger account merge and gain full access to victim accounts, organizations, and data.",
       "cvss": {
@@ -46707,7 +46708,7 @@
     {
       "id": "CVE-2026-55200",
       "published": "2026-06-17T20:17:28.667",
-      "lastModified": "2026-07-14T22:17:17.183",
+      "lastModified": "2026-09-17T17:04:42.983",
       "vulnStatus": "Analyzed",
       "description": "libssh2 through 1.11.1, fixed in commit 7acf3df contains an out-of-bounds write vulnerability in ssh2_transport_read() that fails to enforce upper bounds on packet_length field. Remote attackers can send crafted SSH packets with excessively large packet_length values to corrupt heap memory and achieve remote code execution.",
       "cvss": {
@@ -46972,7 +46973,7 @@
     {
       "id": "CVE-2026-55196",
       "published": "2026-06-17T19:18:13.203",
-      "lastModified": "2026-06-23T03:16:41.597",
+      "lastModified": "2026-09-17T18:16:48.030",
       "vulnStatus": "Deferred",
       "description": "Hermes WebUI before 0.51.409 contains an authentication bypass vulnerability in passkey registration endpoints that allows unauthenticated remote attackers to register arbitrary passkeys. When HERMES_WEBUI_PASSKEY=1 is enabled with no existing credentials, POST /api/auth/passkey/register/options and POST /api/auth/passkey/register endpoints are accessible without authentication, allowing attackers to claim the first passkey and gain permanent administrative control.",
       "cvss": {
@@ -47002,7 +47003,7 @@
     {
       "id": "CVE-2026-53871",
       "published": "2026-06-17T19:18:11.023",
-      "lastModified": "2026-06-18T14:17:30.240",
+      "lastModified": "2026-09-17T18:16:45.297",
       "vulnStatus": "Deferred",
       "description": "Hermes WebUI before 0.51.368 contains an authorization bypass vulnerability in the get_profile_cookie() function that accepts unauthenticated profile names from the hermes_profile cookie. An authenticated attacker can forge the hermes_profile cookie value to bypass profile-scoped authorization checks and access sessions, files, and resources across different profiles.",
       "cvss": {
@@ -75710,7 +75711,7 @@
     {
       "id": "CVE-2026-44172",
       "published": "2026-06-12T18:16:34.123",
-      "lastModified": "2026-07-30T12:18:41.053",
+      "lastModified": "2026-09-17T12:18:20.307",
       "vulnStatus": "Modified",
       "description": "MariaDB server is a community developed fork of MySQL server. In versions 3.3.18 and 3.4.8, an application that was taking non-validated user input, escaping it with mysql_real_escape_string() and sending it to the database using text protocol and big5 character set was vulnerable to SQL injections, even though mysql_real_escape_string() was supposed to prevent them. This issue has been patched in versions 3.3.19 and 3.4.9.",
       "cvss": {
@@ -79422,7 +79423,7 @@
     {
       "id": "CVE-2026-52860",
       "published": "2026-06-11T19:16:47.773",
-      "lastModified": "2026-08-24T13:19:11.700",
+      "lastModified": "2026-09-17T12:18:23.923",
       "vulnStatus": "Modified",
       "description": "Vim is an open source, command line text editor. Prior to version 9.2.0597, Vim's Python omni-completion executes reconstructed function and class definitions from the current buffer with exec() as part of populating the completion dictionary. Python evaluates function default values, parameter annotations, and class base expressions at definition time, so a hostile buffer can execute attacker-controlled Python expressions during omni-completion. The existing g:pythoncomplete_allow_import mitiga",
       "cvss": {
@@ -82098,7 +82099,7 @@
     {
       "id": "CVE-2026-6893",
       "published": "2026-06-10T20:17:29.807",
-      "lastModified": "2026-09-17T08:17:01.710",
+      "lastModified": "2026-09-17T19:16:53.463",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in dracut. A remote attacker on the adjacent network can exploit this vulnerability by providing specially crafted DHCP (Dynamic Host Configuration Protocol) options, such as a malicious hostname, to a system using dracut's legacy DHCP path. These options are improperly handled and written into temporary shell scripts without proper escaping, leading to command injection. This allows the attacker to achieve root code execution within the initramfs, potentially compromising the s",
       "cvss": {
@@ -120005,7 +120006,7 @@
     {
       "id": "CVE-2026-43958",
       "published": "2026-06-01T19:16:47.970",
-      "lastModified": "2026-07-22T07:10:00.107",
+      "lastModified": "2026-09-17T19:16:47.900",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in rrdcached, a component of rrdtool. A local attacker with access to a rrdcached socket can exploit a stack-based buffer overflow by sending an oversized CREATE request. This vulnerability can lead to a denial of service by crashing the daemon or potentially allow for arbitrary code execution, impacting the integrity and confidentiality of data.",
       "cvss": {
@@ -120021,16 +120022,16 @@
       ],
       "vendors": [
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 10.0 Extended Update Support",
         "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Enterprise Linux 9",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 6"
       ],
       "references": [
         "https://access.redhat.com/errata/RHSA-2026:33731",
         "https://access.redhat.com/errata/RHSA-2026:34155",
         "https://access.redhat.com/errata/RHSA-2026:34156",
-        "https://access.redhat.com/security/cve/CVE-2026-43958"
+        "https://access.redhat.com/errata/RHSA-2026:68702"
       ],
       "kev": {
         "in_kev": false
@@ -122751,5 +122752,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-17T10:22:31.552869+00:00"
+  "updated_at": "2026-09-18T10:01:11.491985+00:00"
 }

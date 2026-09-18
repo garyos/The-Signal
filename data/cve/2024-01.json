@@ -2,6 +2,48 @@
   "month": "2024-01",
   "cves": [
     {
+      "id": "CVE-2024-21626",
+      "published": "2024-01-31T22:15:53.780",
+      "lastModified": "2026-09-17T12:17:08.273",
+      "vulnStatus": "Modified",
+      "description": "runc is a CLI tool for spawning and running containers on Linux according to the OCI specification. In runc 1.1.11 and earlier, due to an internal file descriptor leak, an attacker could cause a newly-spawned container process (from runc exec) to have a working directory in the host filesystem namespace, allowing for a container escape by giving access to the host filesystem (\"attack 2\"). The same attack could be used by a malicious image to allow a container process to gain access to the host f",
+      "cvss": {
+        "score": 8.6,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-403",
+          "name": "CWE-403"
+        },
+        {
+          "id": "CWE-668",
+          "name": "Exposure of Resource to Wrong Sphere"
+        },
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        }
+      ],
+      "vendors": [
+        "opencontainers runc",
+        "Red Hat OCP-Tools-4.15-RHEL-8",
+        "Red Hat Red Hat Enterprise Linux 7 Extras",
+        "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 8.2 Advanced Update Support"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/176993/runc-1.1.11-File-Descriptor-Leak-Privilege-Escalation.html",
+        "http://www.openwall.com/lists/oss-security/2024/02/01/1",
+        "http://www.openwall.com/lists/oss-security/2024/02/02/3",
+        "https://github.com/opencontainers/runc/commit/02120488a4c0fc487d1ed2867e901eeed7ce8ecf"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2023-52251",
       "published": "2024-01-25T21:15:08.787",
       "lastModified": "2026-09-08T19:17:43.673",
@@ -58,5 +100,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-17T10:22:31.213591+00:00"
+  "updated_at": "2026-09-18T10:01:10.914513+00:00"
 }

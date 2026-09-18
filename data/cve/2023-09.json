@@ -4,9 +4,9 @@
     {
       "id": "CVE-2023-4622",
       "published": "2023-09-06T14:15:12.193",
-      "lastModified": "2026-09-11T16:12:18.457",
-      "vulnStatus": "Analyzed",
-      "description": "A use-after-free vulnerability in the Linux kernel's af_unix component can be exploited to achieve local privilege escalation. The unix_stream_sendpage() function tries to add data to the last skb in the peer's recv queue without locking the queue. Thus there is a race where unix_stream_sendpage() could access an skb locklessly that is being released by garbage collection, resulting in use-after-free. We recommend upgrading past commit 790c2f9d15b594350ae9bca7b236f2b1859de02c.",
+      "lastModified": "2026-09-17T20:16:47.693",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free vulnerability in the Linux kernel's af_unix component can be exploited to achieve local privilege escalation. The unix_stream_sendpage() function tries to add data to the last skb in the peer's recv queue without locking the queue. Thus there is a race where unix_stream_sendpage() could access an skb locklessly that is being released by garbage collection, resulting in use-after-free. We recommend upgrading past commit 790c2f9d15b594350ae9bca7b236f2b1859de02c (or backported equi",
       "cvss": {
         "score": 7.0,
         "version": "3.1",
@@ -24,13 +24,137 @@
       "references": [
         "http://packetstormsecurity.com/files/175963/Kernel-Live-Patch-Security-Notice-LSN-0099-1.html",
         "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-6.1.y&id=790c2f9d15b594350ae9bca7b236f2b1859de02c",
-        "https://kernel.dance/790c2f9d15b594350ae9bca7b236f2b1859de02c",
-        "https://lists.debian.org/debian-lts-announce/2023/10/msg00027.html"
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4821df2ffe38d629170edc266e65fa05970e0745",
+        "https://kernel.dance/790c2f9d15b594350ae9bca7b236f2b1859de02c"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-4781",
+      "published": "2023-09-05T19:15:49.207",
+      "lastModified": "2026-09-17T17:59:09.700",
+      "vulnStatus": "Analyzed",
+      "description": "Heap-based Buffer Overflow in GitHub repository vim/vim prior to 9.0.1873.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-122",
+          "name": "CWE-122"
+        }
+      ],
+      "vendors": [
+        "vim vim/vim"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Oct/24",
+        "https://github.com/vim/vim/commit/f6d28fe2c95c678cc3202cc5dc825a3fcc709e93",
+        "https://huntr.dev/bounties/c867eb0a-aa8b-4946-a621-510350673883",
+        "https://lists.debian.org/debian-lts-announce/2023/09/msg00035.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-4752",
+      "published": "2023-09-04T14:15:08.450",
+      "lastModified": "2026-09-17T17:59:05.257",
+      "vulnStatus": "Analyzed",
+      "description": "Use After Free in GitHub repository vim/vim prior to 9.0.1858.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "vim vim/vim"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Oct/24",
+        "https://github.com/vim/vim/commit/ee9166eb3b41846661a39b662dc7ebe8b5e15139",
+        "https://huntr.dev/bounties/85f62dd7-ed84-4fa2-b265-8a369a318757",
+        "https://lists.debian.org/debian-lts-announce/2023/09/msg00035.html"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-4750",
+      "published": "2023-09-04T14:15:08.263",
+      "lastModified": "2026-09-17T17:58:55.230",
+      "vulnStatus": "Analyzed",
+      "description": "Use After Free in GitHub repository vim/vim prior to 9.0.1857.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "vim vim/vim"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Oct/24",
+        "https://github.com/vim/vim/commit/fc68299d436cf87453e432daa77b6d545df4d7ed",
+        "https://huntr.dev/bounties/1ab3ebdf-fe7d-4436-b483-9a586e03b0ea",
+        "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/I56ITJAFMFAQ2G3BMGTCGM3GS62V2DTR/"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2023-4751",
+      "published": "2023-09-03T19:15:43.677",
+      "lastModified": "2026-09-17T17:58:59.463",
+      "vulnStatus": "Analyzed",
+      "description": "Heap-based Buffer Overflow in GitHub repository vim/vim prior to 9.0.1331.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-122",
+          "name": "CWE-122"
+        },
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "vim vim/vim"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Oct/24",
+        "https://github.com/vim/vim/commit/e1121b139480f53d1b06f84f3e4574048108fa0b",
+        "https://huntr.dev/bounties/db7be8d6-6cb7-4ae5-9c4e-805423afa378",
+        "https://support.apple.com/kb/HT213984"
       ],
       "kev": {
         "in_kev": false
       }
     }
   ],
-  "updated_at": "2026-09-12T09:32:22.349123+00:00"
+  "updated_at": "2026-09-18T10:01:10.913783+00:00"
 }
