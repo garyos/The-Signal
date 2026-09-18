@@ -1,6 +1,73 @@
 {
-  "fetched_at": "2026-09-17T14:02:10.896095+00:00",
+  "fetched_at": "2026-09-18T07:51:01.136645+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10100",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10100",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10100.mp3",
+      "title": "SANS Stormcast Friday, September 18th, 2026: LousivLaoder Analysis; Issabel Framework 0-Day; Cyber Decoys; CISA Vuln Bulletin; Unbound Vulnerability",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 18th, 2026: LousivLaoder Analysis; Issabel Framework 0-Day; Cyber Decoys; CISA Vuln Bulletin; Unbound Vulnerability",
+      "show_notes": [
+        {
+          "heading": "LausivLoader analysis, or how to pass data between malware stages",
+          "links": [
+            "https://isc.sans.edu/diary/LausivLoader%20analysis%2C%20or%20how%20to%20pass%20data%20between%20malware%20stages/33348"
+          ]
+        },
+        {
+          "heading": "Issabel Framework Hard-coded JWT Key RCE CVE-2026-89026",
+          "links": [
+            "https://www.vulncheck.com/advisories/issabel-pbx-hard-coded-jwt-key-rce-via-pbxapi-manager-originate"
+          ]
+        },
+        {
+          "heading": "Using Cyber Decoys to Strengthen Detection and Response",
+          "links": [
+            "https://www.cisa.gov/sites/default/files/2026-09/using-cyber-decoys-to-strengthen-detection-and-response_508c.pdf"
+          ]
+        },
+        {
+          "heading": "CISA to Sunset Weekly Vulnerability Bulletin on September 28, 2026",
+          "links": [
+            "https://content.govdelivery.com/accounts/USDHSCISA/bulletins/42b055b"
+          ]
+        },
+        {
+          "heading": "Unbound Vulnerability",
+          "links": [
+            "https://nlnetlabs.nl/projects/unbound/security-advisories/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-18T02:00:02+00:00",
+      "duration_seconds": 424,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10100.mp3",
+      "audio_length_bytes": 5941446,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10100",
+      "categories": [
+        "unbound",
+        "cisa",
+        "decoys",
+        "vulnerabilities",
+        "bulletin",
+        "issabel",
+        "pbx",
+        "lousivloader"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10100",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. In diaries\n today, we have Jan analyze some interesting piece of\n malware that led him to an instance of loss of loader.\n What happened here was, first of all, a somewhat targeted\n email arriving. Luckily, the email was detected by anti\n -malware and also would have been blocked by, well, your\n usual DKM and SPF precautions, which the sender domain had\n enabled properly. But where it got interesting was when Jan\n actually analyzed the malware itself. And there are two\n components to the malware that are playing together. The\n first component is obfuscated JavaScript. And Jan does a\n great job in sort of showing how to de-obfuscate this\n JavaScript. And then some PowerShell is being called.\n But the JavaScript and the PowerShell are exchanging\n information via environment variables. So this certainly\n sort of throws a wrench into a lot of reverse engineering\n pipelines and such. Because first, you need to go through\n the JavaScript, which actually will then create an encryption\n key that is used to then decrypt part of the\n PowerShell. Well, yesterday I talked about tags and scans\n for a fairly obscure PBX control framework. Today we\n have news of a much more popular framework, the ISSABEL\n framework, which is used to control PBXs, basically phone\n systems, via web applications. Well, this particular\n framework contained a hard -coded JWT key, so basically\n the secret key being used to sign these JSON web tokens.\n With that key, it was possible to essentially bypass\n authentication. The result was that you could actually\n execute arbitrary code on any kind of asterisk server that\n was linked to an ISSABEL framework frontend. A patch\n has been submitted to this, but exploitation has already\n been observed in the wild by the Shadowserver Foundation.\n And one of my favorite things in security and defense, of\n course, is deception with honeypots, honey tokens, or,\n well, any number of decoys. CISA published an interesting\n document about using cyber decoys to strengthen detection\n and response. That's the title of the document. And what it\n essentially does is it sort of goes through the process that\n you should follow if you're planning to deploy decoys.\n Now, again, I'm a huge fan of this concept overall. The part\n that has often been missing is sort of an enterprise-wide\n framework, particularly for larger organizations, for\n enterprises, to deploy these kind of decoys. And there have\n been a number of products that try to do this. None of them,\n I think, really sort of took off. My personal opinion is\n always that one reason why decoys are often not deployed\n or then discontinued after they're being deployed is,\n well, two little false positives. You don't really\n see them working unless they actually get hit by an attack.\n But either way, if you're interested in decoys, if you\n want to sort of have a more structured process in\n deploying them, well, this document really has some nice\n ideas and sort of frameworks to actually follow. And we\n have another victim of the ever-increasing number of\n vulnerabilities. CISA decided to sunset its weekly\n vulnerability bulletin. This was a list basically of all\n vulnerabilities. And, well, that, of course, has become\n rather unwieldy lately. So what CISA is now saying is,\n well, they're no longer going to publish this. The final one\n will be on September 28th, so end of the month. And beyond\n that, they're referring to the more risk-based approaches\n like the known exploit list and other feats, of course,\n that CISA publishes to essentially identify\n vulnerabilities that matter. Interesting approach, of\n course, and I completely understand why a list of all\n these vulnerabilities may no longer really be all that\n feasible. Since, of course, we still have our at-risk\n newsletter, and we intend to continue to maintain that for\n now. We have sort of made some adjustments to it over the\n last year to, again, try to prioritize rank\n vulnerabilities better to sort of have the ones that matter\n sort of bubble more to the top. And Unbound fixed two\n heap-based buffer overflows in its software. One of them may\n lead to unauthenticated remote code execution. Both of these\n vulnerabilities are related to DNSSEC, and the first one that\n may lead to remote code execution is one of those\n decompression issues where you have these compressed records.\n If they're pointing to themselves, you actually can\n end up with an overly large record that then fills the\n buffer. Sounds a little bit similar to like an older\n Microsoft DNS vulnerability that was like in a SICK\n record. I think not the DNSSEC, but sort of a\n precursor record. So maybe a little bit related to that.\n Either way, try to get this patched. Unbound is a DNS\n resolver often used sort of in small gateways and such. So\n IoT-style devices. That's where you often find Unbound.\n As a result, some of these devices don't always have\n strong protections against the exploitation of buffer\n overflows like address space, random layouts, and things\n like this. So that's why you really want to patch this and\n make sure that you are up to date, that your firmware for\n your router is up to date. Well, and that's it for today.\n Thanks for listening. Thanks for liking. Thanks for\n recommending. Thanks for subscribing. Next week, I'll\n be in Vegas at our science conference. I'll be teaching\n our Defending Web Application class. Actually, completely\n newly redone version of that class. So hope to see some of\n you there. I'll have plenty of stickers with me. Also spread\n some of them around. And we'll, as always, talk to you\n again on Monday. Bye. overall Thank you.\n Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10098",
       "show": "stormcast",
@@ -3436,59 +3503,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9992",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, July 2nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Riyadh,\n Saudi Arabia. And this episode is brought to you by the SANS\n .edu Graduate Certificate Program in Purple Team\n Operations. That is a reminder, there will be no\n podcast tomorrow on Friday, part because of July 4th and\n also because of my travel schedule. Xavier came across a\n real interesting phishing email. Now this particular\n phishing email targets MetaMask. MetaMask is an app\n and a browser extension used for crypto coins or crypto\n coin wallet and of course with that attractive target. But\n the approach they are taking here for phishing is a little\n bit different. Now MetaMask, like many websites,\n particularly if they are crypto coin related, does\n require and encourage to use multi-factor authentication.\n So that basically renders some of the simple phishing\n attempts useless. But in this particular case, the attacker\n is going after a secret phrase the user establishes in order\n to reset their authentication option. So when you're signing\n up for MetaMask as part of the signup process, this secret\n phrase is established. It's not used to usually login.\n It's used more as a password recovery token, as a backup in\n case you're losing your username and second factor.\n And that's exactly what the attacker is abusing here. So\n essentially the password reset feature. The problem here of\n course is how do you securely recover an account if the\n second factor is lost. A lot of websites and such are\n relying on a type of sort of one-time password or a secret\n random string that's established when you're\n setting up the second factor. And that of course is still\n phishable as this particular attempt shows. Personally, I\n haven't really actually come up with sort of a great secure\n and still usable and reasonably easy and cheap to\n implement solution to solve the lost second factor\n problem. Usually we talk about Adobe patches on Patch\n Tuesday, which was two weeks ago. But it looks like Adobe\n is making some changes to how they are going to release\n patches. In part because customers are of course asking\n for a faster patch cycle. Adobe now is adopting a two\n -week patch release cycle. So you will get new Adobe patches\n on the second and the fourth Tuesday of each month. And\n this month, well they started for the first time. It got\n patches for 11 different products. Two of my favorites\n are among them ColdFusion and Adobe Acrobat Reader. Both of\n them do contain arbitrary code execution vulnerabilities. So\n definitely something that you do want to address. In\n particular of course, as usual with the ColdFusion product,\n which tends to be a little bit more exposed. And I'll talk\n about having to deal with more and more patches and\n vulnerabilities. Google released an update for Google\n Chrome patching this month 382 vulnerabilities. Now, last\n month we had a new record release with something like\n 400 or so vulnerabilities being patched. So the number\n is going down. But it looks like this may at least for now\n be sort of the new normal to have like hundreds of\n vulnerabilities being patched each month. Or how often\n Google decides to release new versions of Google Chrome. So\n a year ago or so it was more like a dozen or so that we had\n each month or in each release. So this is certainly sort of\n an order of magnitude increase to what we used to have. The\n hope of course is that eventually, well, they'll find\n all the bugs. But so far it looks like there are still\n plenty of vulnerabilities to find. According to Joseph Cox\n with 404 Media, Apple's Hide by Email service does contain\n an unpatched vulnerability that allows attackers to\n unmask the identity behind these temporary and anonymous\n email addresses that Apple makes available to its Apple\n Plus customers. The problem here is that if you are\n sending an email with an oversized attachment to the\n email address, you're getting a bounce back because he's\n stating that the attachment is too large. And as part of the\n bounce, the actual email address of the user that is\n obfuscated supposedly behind the hide my email address is\n revealed. So this is one of those bugs where, well, the\n attachment isn't blocked when it's initially received by\n Apple's mail server, but only after they attempt to actually\n deliver it to the actual email address of the owner of the\n particular account. So be careful with these anonymous\n email servers in general. There are usually some leaks\n like this in the service, not the first time that you would\n have like bounces revealing the actual identity of a\n particular email user. But of course, you still also have\n the issue with HTML emails and the like that may load content\n from third party sites that then an attacker is able to\n follow up on or identify the source of the request for.\n Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending and\n any kind of feedback for this podcast. Remember, no podcast\n tomorrow. So, talk to you again on Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9990",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9990",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9990.mp3",
-      "title": "SANS Stormcast Wednesday, July 1st, 2026: Apple Patches; SimpleHelp Exploit; Git DNS Tricks;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, July 1st, 2026: Apple Patches; SimpleHelp Exploit; Git DNS Tricks;",
-      "show_notes": [
-        {
-          "heading": "June 2026 Apple Updates",
-          "links": [
-            "https://isc.sans.edu/diary/June%202026%20Apple%20Updates/33114"
-          ]
-        },
-        {
-          "heading": "SimpleHelp Exploit used to reply TaskWeaver",
-          "links": [
-            "https://blackpointcyber.com/blog/a-djinn-in-the-machine-taskweavers-node-js-intrusion-chain/"
-          ]
-        },
-        {
-          "heading": "DNS Tricks to Load Malware into Cloned Repository",
-          "links": [
-            "https://0din.ai/blog/clone-this-repo-and-i-own-your-machine"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-01T02:00:03+00:00",
-      "duration_seconds": 293,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9990.mp3",
-      "audio_length_bytes": 4102689,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9990",
-      "categories": [
-        "simplehelp",
-        "taskweaver",
-        "apple",
-        "ios",
-        "macos",
-        "safari"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9990",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, July 1st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Riyadh,\n Saudi Arabia. And this episode is brought to you by the SANS\n .edu Graduate Certificate Program in Industrial Control\n System Security. Well, Apple did release updates this week\n with that security patches for iOS, iPadOS, MacOS and Safari.\n So this lineup is a little bit different than what we usually\n see from Apple. Apple typically updates all of its\n operating systems. And also, well, we don't really have the\n same number of vulnerabilities being addressed as usual, but\n a smaller number, 28 vulnerabilities total. Most of\n these vulnerabilities are WebKit vulnerabilities, and\n that also explains the focus on iOS and MacOS. The other\n operating systems like watchOS and such, of course, are less\n exposed to WebKit. There are a couple of kernel\n vulnerabilities that are also being addressed here, and\n these vulnerabilities will potentially also affect the\n other operating systems like watchOS, OS, VisionOS and\n TVOS. So I expect that there will be an update for the\n other operating systems relatively shortly. Part of\n the reasoning behind this update was also that some of\n these vulnerabilities had already been addressed in beta\n versions of the next major release of iOS, iPadOS and\n MacOS. And MDR company Blackpoint did release a blog\n post outlining a recent intrusion that they have\n observed against SimpleHelp. SimpleHelp is one of those\n remote tech support platforms. So enterprises use it to\n basically be able to reach out and support systems across\n their network. And it suffered, well, not even two\n weeks ago from an OpenID Connect bypass. So that\n essentially allowed an off vacation bypass and an\n attacker is able to authenticate as a technician.\n And with that able to then reach out to remote systems\n that are connected to this particular SimpleHelp\n instance. What Blackpoint observed is that the attacker\n did deploy fairly obfuscated JavaScript file, they call it\n jQuery.js, but it's not related to the well known\n jQuery framework. And this JavaScript file is then\n executed via node.js and used to deploy additional malware.\n In particular, they observed credential stealers. So in\n this case, the attacker went after the usual sort of as age\n and cloud credentials and such likely to further compromise\n affected networks. Haven't seen the ransom word word here\n in this particular write up, but wouldn't be surprised if\n this particular vulnerability, which isn't all that terrible\n hard to exploit, would soon be used also to deploy\n ransomware. That just sort of fits what this type of\n vulnerability is often used for. At Mozilla's Odin Lab\n published a blog post outlining an interesting\n attack against, well, yet again, cloning a repository\n from Git. Doesn't have to be GitHub, really sort of any\n kind of repository here would work. And the trick they're\n playing here is that if you're using an AI agent in order to\n help you with the cloning and then ask it to execute the\n actual code that was downloaded. Well, there will\n be an error message that you first need to initialize to\n init the software that you just downloaded. And that,\n well, in itself isn't really all that suspicious. But what\n that triggers is a DNS lookup that will then download\n additional code in the form of a text record and execute it.\n So the trick here is that the repository as downloaded is\n clean. It does not contain any malware and the malware is\n really just loaded as the repository is initialized\n using the DNS lookup. Pretty neat. Just talked in class\n today about all the ways how you can use DNS as a covert\n channel. Yet another sort of little trick that you can play\n here with DNS. Well, and that's it for today. Thanks\n for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
       "transcript_checked": true
     }
   ]

@@ -2,6 +2,73 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10100",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10100",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10100.mp3",
+      "title": "SANS Stormcast Friday, September 18th, 2026: LousivLaoder Analysis; Issabel Framework 0-Day; Cyber Decoys; CISA Vuln Bulletin; Unbound Vulnerability",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 18th, 2026: LousivLaoder Analysis; Issabel Framework 0-Day; Cyber Decoys; CISA Vuln Bulletin; Unbound Vulnerability",
+      "show_notes": [
+        {
+          "heading": "LausivLoader analysis, or how to pass data between malware stages",
+          "links": [
+            "https://isc.sans.edu/diary/LausivLoader%20analysis%2C%20or%20how%20to%20pass%20data%20between%20malware%20stages/33348"
+          ]
+        },
+        {
+          "heading": "Issabel Framework Hard-coded JWT Key RCE CVE-2026-89026",
+          "links": [
+            "https://www.vulncheck.com/advisories/issabel-pbx-hard-coded-jwt-key-rce-via-pbxapi-manager-originate"
+          ]
+        },
+        {
+          "heading": "Using Cyber Decoys to Strengthen Detection and Response",
+          "links": [
+            "https://www.cisa.gov/sites/default/files/2026-09/using-cyber-decoys-to-strengthen-detection-and-response_508c.pdf"
+          ]
+        },
+        {
+          "heading": "CISA to Sunset Weekly Vulnerability Bulletin on September 28, 2026",
+          "links": [
+            "https://content.govdelivery.com/accounts/USDHSCISA/bulletins/42b055b"
+          ]
+        },
+        {
+          "heading": "Unbound Vulnerability",
+          "links": [
+            "https://nlnetlabs.nl/projects/unbound/security-advisories/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-18T02:00:02+00:00",
+      "duration_seconds": 424,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10100.mp3",
+      "audio_length_bytes": 5941446,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10100",
+      "categories": [
+        "unbound",
+        "cisa",
+        "decoys",
+        "vulnerabilities",
+        "bulletin",
+        "issabel",
+        "pbx",
+        "lousivloader"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10100",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. In diaries\n today, we have Jan analyze some interesting piece of\n malware that led him to an instance of loss of loader.\n What happened here was, first of all, a somewhat targeted\n email arriving. Luckily, the email was detected by anti\n -malware and also would have been blocked by, well, your\n usual DKM and SPF precautions, which the sender domain had\n enabled properly. But where it got interesting was when Jan\n actually analyzed the malware itself. And there are two\n components to the malware that are playing together. The\n first component is obfuscated JavaScript. And Jan does a\n great job in sort of showing how to de-obfuscate this\n JavaScript. And then some PowerShell is being called.\n But the JavaScript and the PowerShell are exchanging\n information via environment variables. So this certainly\n sort of throws a wrench into a lot of reverse engineering\n pipelines and such. Because first, you need to go through\n the JavaScript, which actually will then create an encryption\n key that is used to then decrypt part of the\n PowerShell. Well, yesterday I talked about tags and scans\n for a fairly obscure PBX control framework. Today we\n have news of a much more popular framework, the ISSABEL\n framework, which is used to control PBXs, basically phone\n systems, via web applications. Well, this particular\n framework contained a hard -coded JWT key, so basically\n the secret key being used to sign these JSON web tokens.\n With that key, it was possible to essentially bypass\n authentication. The result was that you could actually\n execute arbitrary code on any kind of asterisk server that\n was linked to an ISSABEL framework frontend. A patch\n has been submitted to this, but exploitation has already\n been observed in the wild by the Shadowserver Foundation.\n And one of my favorite things in security and defense, of\n course, is deception with honeypots, honey tokens, or,\n well, any number of decoys. CISA published an interesting\n document about using cyber decoys to strengthen detection\n and response. That's the title of the document. And what it\n essentially does is it sort of goes through the process that\n you should follow if you're planning to deploy decoys.\n Now, again, I'm a huge fan of this concept overall. The part\n that has often been missing is sort of an enterprise-wide\n framework, particularly for larger organizations, for\n enterprises, to deploy these kind of decoys. And there have\n been a number of products that try to do this. None of them,\n I think, really sort of took off. My personal opinion is\n always that one reason why decoys are often not deployed\n or then discontinued after they're being deployed is,\n well, two little false positives. You don't really\n see them working unless they actually get hit by an attack.\n But either way, if you're interested in decoys, if you\n want to sort of have a more structured process in\n deploying them, well, this document really has some nice\n ideas and sort of frameworks to actually follow. And we\n have another victim of the ever-increasing number of\n vulnerabilities. CISA decided to sunset its weekly\n vulnerability bulletin. This was a list basically of all\n vulnerabilities. And, well, that, of course, has become\n rather unwieldy lately. So what CISA is now saying is,\n well, they're no longer going to publish this. The final one\n will be on September 28th, so end of the month. And beyond\n that, they're referring to the more risk-based approaches\n like the known exploit list and other feats, of course,\n that CISA publishes to essentially identify\n vulnerabilities that matter. Interesting approach, of\n course, and I completely understand why a list of all\n these vulnerabilities may no longer really be all that\n feasible. Since, of course, we still have our at-risk\n newsletter, and we intend to continue to maintain that for\n now. We have sort of made some adjustments to it over the\n last year to, again, try to prioritize rank\n vulnerabilities better to sort of have the ones that matter\n sort of bubble more to the top. And Unbound fixed two\n heap-based buffer overflows in its software. One of them may\n lead to unauthenticated remote code execution. Both of these\n vulnerabilities are related to DNSSEC, and the first one that\n may lead to remote code execution is one of those\n decompression issues where you have these compressed records.\n If they're pointing to themselves, you actually can\n end up with an overly large record that then fills the\n buffer. Sounds a little bit similar to like an older\n Microsoft DNS vulnerability that was like in a SICK\n record. I think not the DNSSEC, but sort of a\n precursor record. So maybe a little bit related to that.\n Either way, try to get this patched. Unbound is a DNS\n resolver often used sort of in small gateways and such. So\n IoT-style devices. That's where you often find Unbound.\n As a result, some of these devices don't always have\n strong protections against the exploitation of buffer\n overflows like address space, random layouts, and things\n like this. So that's why you really want to patch this and\n make sure that you are up to date, that your firmware for\n your router is up to date. Well, and that's it for today.\n Thanks for listening. Thanks for liking. Thanks for\n recommending. Thanks for subscribing. Next week, I'll\n be in Vegas at our science conference. I'll be teaching\n our Defending Web Application class. Actually, completely\n newly redone version of that class. So hope to see some of\n you there. I'll have plenty of stickers with me. Also spread\n some of them around. And we'll, as always, talk to you\n again on Monday. Bye. overall Thank you.\n Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10098",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
