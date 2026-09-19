@@ -34646,6 +34646,42 @@
       }
     },
     {
+      "id": "CVE-2025-39964",
+      "published": "2025-10-13T14:15:34.737",
+      "lastModified": "2026-09-19T04:17:48.307",
+      "vulnStatus": "Analyzed",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg Issuing two writes to the same af_alg socket is bogus as the data will be interleaved in an unpredictable fashion. Furthermore, concurrent writes may create inconsistencies in the internal socket state. Disallow this by adding a new ctx->write field that indiciates exclusive ownership for writing.",
+      "cvss": {
+        "score": 5.5,
+        "version": "3.1",
+        "severity": "MEDIUM"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0f28c4adbc4a97437874c9b669fd7958a8c6d6ce",
+        "https://git.kernel.org/stable/c/1b34cbbf4f011a121ef7b2d7d6e6920a036d5285",
+        "https://git.kernel.org/stable/c/1f323a48e9b5ebfe6dc7d130fdf5c3c0e92a07c8",
+        "https://git.kernel.org/stable/c/45bcf60fe49b37daab1acee57b27211ad1574042"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-09-18",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      }
+    },
+    {
       "id": "CVE-2025-37729",
       "published": "2025-10-13T14:15:34.533",
       "lastModified": "2026-06-17T09:15:19.737",
@@ -54221,5 +54257,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-18T10:01:11.029481+00:00"
+  "updated_at": "2026-09-19T09:41:35.228258+00:00"
 }
