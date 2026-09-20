@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T09:41:36.347710+00:00",
+  "generated_at": "2026-09-20T10:01:18.006990+00:00",
   "cves": [
     {
       "id": "CVE-2026-76460",
@@ -541,6 +541,154 @@
       }
     },
     {
+      "id": "CVE-2026-94084",
+      "published": "2026-09-20T02:16:53.717",
+      "lastModified": "2026-09-20T02:16:53.717",
+      "vulnStatus": "Received",
+      "description": "Suricata before 8.0.7 has an Http2ThreadMultiBuf use-after-free when a transaction is inspected by rules that use http.response_header with and without a transform.",
+      "cvss": {
+        "score": 9.4,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "OISF Suricata"
+      ],
+      "references": [
+        "https://forum.suricata.io/t/suricata-8-0-7-released/6467",
+        "https://github.com/OISF/suricata/commit/1d66355dc8737bb2ae7a198115b3067e3ad49808",
+        "https://github.com/OISF/suricata/compare/suricata-8.0.6...suricata-8.0.7"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-94083",
+      "published": "2026-09-20T02:16:53.520",
+      "lastModified": "2026-09-20T02:16:53.520",
+      "vulnStatus": "Received",
+      "description": "Suricata before 8.0.7 has a DoH2 type confusion that can cause an invalid free, because cleanup code for the HTTP2 state is executed even though the actual state is HTTP1 (when there is a DoH2 request with an HTTP1 to HTTP2 upgrade). This requires app-layer.protocols.doh2 to be enabled, which is the default in 8.x versions.",
+      "cvss": {
+        "score": 9.4,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-843",
+          "name": "Type Confusion"
+        }
+      ],
+      "vendors": [
+        "OISF Suricata"
+      ],
+      "references": [
+        "https://forum.suricata.io/t/suricata-8-0-7-released/6467",
+        "https://github.com/OISF/suricata/commit/e574009add9c208f319e1d9d15b3bb1229c88074",
+        "https://github.com/OISF/suricata/compare/suricata-8.0.6...suricata-8.0.7"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-93958",
+      "published": "2026-09-20T02:16:53.307",
+      "lastModified": "2026-09-20T02:16:53.307",
+      "vulnStatus": "Received",
+      "description": "A vulnerability was found in D-Link R95 BE9500_1.00.16. This vulnerability affects the function system of the file /bin/ssi of the component DHMAPI. The manipulation of the argument NTPServer results in os command injection. The attack can be executed remotely. The exploit has been made public and could be used.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "D-Link R95"
+      ],
+      "references": [
+        "https://github.com/FoundTL/D-Link-R95-BE9500",
+        "https://vuldb.com/cve/CVE-2026-93958",
+        "https://vuldb.com/submit/944149",
+        "https://vuldb.com/vuln/407917"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-93985",
+      "published": "2026-09-19T12:16:41.873",
+      "lastModified": "2026-09-19T12:16:41.873",
+      "vulnStatus": "Received",
+      "description": "OpenPanel js-runtime through commit bad75bdd contains a sandbox escape vulnerability in the JavaScript webhook template validator that fails to block computed member access to constructor chains. Attackers with project write access can create webhook templates using computed property notation to access Function constructor and execute arbitrary code in the worker process.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "Openpanel-dev openpanel"
+      ],
+      "references": [
+        "https://github.com/Openpanel-dev/openpanel/security/advisories/GHSA-6f7h-cvp6-w9w5",
+        "https://www.vulncheck.com/advisories/openpanel-js-runtime-javascript-template-sandbox-escape-rce"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-78030",
+      "published": "2026-09-19T11:16:37.667",
+      "lastModified": "2026-09-20T01:16:30.017",
+      "vulnStatus": "Received",
+      "description": "DBI versions before 1.653 for Perl load arbitrary modules via unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM. DBD::DBM passes the dbm_type and dbm_mldbm connect attributes to require without checking that the value names a module. require treats a path-shaped string as a literal filename and does not consult @INC, so the attribute chooses the file that Perl loads and runs. The MLDBM::Serializer:: prefix that DBD::DBM prepends to dbm_mldbm is not a boundary: only the :: separators are ",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-470",
+          "name": "CWE-470"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://github.com/perl5-dbi/dbi/commit/315c6ce703b8b3cbe9188062d9ec80730293554a.patch",
+        "https://github.com/perl5-dbi/dbi/security/advisories/GHSA-wqmw-wqwx-3fr7",
+        "https://metacpan.org/release/HMBRAND/DBI-1.653/changes",
+        "http://www.openwall.com/lists/oss-security/2026/09/19/4"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
       "id": "CVE-2026-93742",
       "published": "2026-09-19T09:16:34.740",
       "lastModified": "2026-09-19T09:16:34.740",
@@ -569,6 +717,33 @@
         "https://vuldb.com/cve/CVE-2026-93742",
         "https://vuldb.com/submit/914021",
         "https://vuldb.com/vuln/407552"
+      ],
+      "kev": {
+        "in_kev": false
+      }
+    },
+    {
+      "id": "CVE-2026-86591",
+      "published": "2026-09-19T07:16:33.063",
+      "lastModified": "2026-09-19T14:17:00.907",
+      "vulnStatus": "Received",
+      "description": "The Botiga Pro WordPress plugin before 1.6.5 does not perform any authorisation checks on one of its REST routes, allowing unauthenticated users to update arbitrary WordPress options with arbitrary values, which could lead to privilege escalation and a full site takeover. The same route also allows unauthenticated users to store arbitrary web scripts which are then executed on every page of the site's front end, as well as to move arbitrary posts to the trash.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-862",
+          "name": "Missing Authorization"
+        }
+      ],
+      "vendors": [
+        "Unknown Botiga Pro"
+      ],
+      "references": [
+        "https://wpscan.com/vulnerability/e2389a60-16c2-4750-b85e-a82b91390b30/"
       ],
       "kev": {
         "in_kev": false
@@ -611,7 +786,7 @@
     {
       "id": "CVE-2026-92229",
       "published": "2026-09-19T03:17:17.040",
-      "lastModified": "2026-09-19T03:17:17.040",
+      "lastModified": "2026-09-19T14:17:03.963",
       "vulnStatus": "Received",
       "description": "The The Forminator Forms \u2013 Contact Form, Payment Form & Custom Form Builder plugin for WordPress is vulnerable to arbitrary shortcode execution in all versions up to, and including, 1.57.2. This is due to the software allowing users to execute an action that does not properly validate a value before running do_shortcode. This makes it possible for unauthenticated attackers to execute arbitrary shortcodes.",
       "cvss": {
@@ -641,7 +816,7 @@
     {
       "id": "CVE-2026-89274",
       "published": "2026-09-19T03:17:16.587",
-      "lastModified": "2026-09-19T03:17:16.587",
+      "lastModified": "2026-09-19T14:17:03.127",
       "vulnStatus": "Received",
       "description": "The WP Recipe Maker plugin for WordPress is vulnerable to Arbitrary Shortcode Execution in all versions up to, and including, 10.8.1. The vulnerability exists because `WPRM_Metadata::sanitize_metadata()` recursively calls `do_shortcode()` on every scalar field of the recipe's structured metadata array \u2014 including the `reviewBody` field, which is populated verbatim from the `comment_content` of approved `wprm-comment-rating` comments \u2014 without sanitizing or stripping shortcode tokens before execu",
       "cvss": {
@@ -671,7 +846,7 @@
     {
       "id": "CVE-2026-84434",
       "published": "2026-09-19T03:17:15.573",
-      "lastModified": "2026-09-19T03:17:15.573",
+      "lastModified": "2026-09-19T14:17:00.363",
       "vulnStatus": "Received",
       "description": "The Gravity Forms plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 3.1.0.4 via the upload_file function. This is due to a mismatch between the field validation pipeline and the file persistence pipeline, where hidden file upload fields bypass extension validation and a rejected file's intact upload state is later passed to upload_file() without re-validation. This makes it possible for unauthenticated attackers to upload files that may be executab",
       "cvss": {
@@ -859,7 +1034,7 @@
     {
       "id": "CVE-2026-84082",
       "published": "2026-09-18T20:17:27.743",
-      "lastModified": "2026-09-18T20:17:27.743",
+      "lastModified": "2026-09-19T15:17:05.647",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 could allow a remote attacker to execute arbitrary SQL commands due to improper neutralization of special elements used in an SQL command.",
       "cvss": {
@@ -886,7 +1061,7 @@
     {
       "id": "CVE-2026-84078",
       "published": "2026-09-18T20:17:27.480",
-      "lastModified": "2026-09-18T20:17:27.480",
+      "lastModified": "2026-09-19T15:17:05.430",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 is vulnerable to a missing authentication vulnerability in the LoadBalancerServlet. An unauthenticated user can access privileged load-balancer operations, potentially resulting in unauthorized actions and impact to the integrity and availability of the affected system.",
       "cvss": {
@@ -913,7 +1088,7 @@
     {
       "id": "CVE-2026-84075",
       "published": "2026-09-18T20:17:27.103",
-      "lastModified": "2026-09-18T20:17:27.103",
+      "lastModified": "2026-09-19T15:17:05.217",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 could allow a remote attacker to bypass security restrictions due to missing authentication for the ChangeTrackerServlet.",
       "cvss": {
@@ -940,7 +1115,7 @@
     {
       "id": "CVE-2026-84073",
       "published": "2026-09-18T20:17:26.830",
-      "lastModified": "2026-09-18T20:17:26.830",
+      "lastModified": "2026-09-19T15:17:04.983",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 could allow a remote authenticated attacker to execute arbitrary SQL commands due to improper neutralization of special elements used in an SQL command.",
       "cvss": {
@@ -967,7 +1142,7 @@
     {
       "id": "CVE-2026-84064",
       "published": "2026-09-18T20:17:26.440",
-      "lastModified": "2026-09-18T20:17:26.440",
+      "lastModified": "2026-09-19T15:17:04.757",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 could allow a remote authenticated attacker to execute arbitrary SQL commands due to improper neutralization of special elements used in an SQL command.",
       "cvss": {
@@ -1021,7 +1196,7 @@
     {
       "id": "CVE-2026-82967",
       "published": "2026-09-18T20:17:25.513",
-      "lastModified": "2026-09-18T20:17:25.513",
+      "lastModified": "2026-09-19T15:17:04.430",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 is vulnerable to an authentication bypass that allows an unauthenticated remote attacker to bypass IP-based access controls and access the Guardium management interface.",
       "cvss": {
@@ -1048,7 +1223,7 @@
     {
       "id": "CVE-2026-82832",
       "published": "2026-09-18T20:17:24.643",
-      "lastModified": "2026-09-18T20:17:24.643",
+      "lastModified": "2026-09-19T15:17:03.770",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 could allow a remote authenticated attacker to execute arbitrary code due to improper neutralization of input during web page generation.",
       "cvss": {
@@ -1075,7 +1250,7 @@
     {
       "id": "CVE-2026-82340",
       "published": "2026-09-18T20:17:24.517",
-      "lastModified": "2026-09-18T20:17:24.517",
+      "lastModified": "2026-09-19T15:17:03.500",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 is vulnerable to unauthenticated insecure deserialization and attacker-controlled reflective method dispatch in the Change Audit System (CAS) listener. A network attacker able to reach TCP port 16017 may submit crafted serialized messages and potentially cause unintended code execution in the Guardium appliance.",
       "cvss": {
@@ -1129,7 +1304,7 @@
     {
       "id": "CVE-2026-80442",
       "published": "2026-09-18T20:17:23.343",
-      "lastModified": "2026-09-18T20:17:23.343",
+      "lastModified": "2026-09-19T15:17:02.547",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 is vulnerable to an authenticated OS command injection vulnerability in the exportCertificate functionality. Successful exploitation could allow an attacker to execute unauthorized commands and impact the confidentiality, integrity, and availability of the affected system.",
       "cvss": {
@@ -1156,7 +1331,7 @@
     {
       "id": "CVE-2026-80441",
       "published": "2026-09-18T20:17:23.217",
-      "lastModified": "2026-09-18T20:17:23.217",
+      "lastModified": "2026-09-19T15:17:02.430",
       "vulnStatus": "Received",
       "description": "IBM Guardium Data Protection 12.2 is vulnerable to an unauthenticated second-order SQL injection vulnerability in the generateInsertQuery functionality of change-tracker-data.sql. A remote attacker could inject malicious SQL that is subsequently processed by the application, potentially resulting in compromise of the confidentiality, integrity, and availability of the affected system.",
       "cvss": {
@@ -1183,7 +1358,7 @@
     {
       "id": "CVE-2026-75878",
       "published": "2026-09-18T20:17:21.363",
-      "lastModified": "2026-09-18T20:17:21.363",
+      "lastModified": "2026-09-19T15:17:00.883",
       "vulnStatus": "Received",
       "description": "IBM Sterling File Gateway could allow a remote attacker to bypass authentication and obtain a fully authenticated session due to improper authentication via an unvalidated SSO header.",
       "cvss": {
@@ -1536,7 +1711,7 @@
     {
       "id": "CVE-2026-81321",
       "published": "2026-09-18T17:17:01.953",
-      "lastModified": "2026-09-18T19:03:28.367",
+      "lastModified": "2026-09-19T15:17:02.830",
       "vulnStatus": "Deferred",
       "description": "CM2507 IP cameras store configured wireless network credentials in cleartext within the device filesystem. An attacker who obtains filesystem access through physical access, a debugging interface, or another vulnerability could recover the configured network identifier and pre-shared key.",
       "cvss": {
@@ -2810,193 +2985,6 @@
         "https://github.com/HappySeaFox/sail/commit/fa24bceb93958ad665dbc3cf6b49a1079ab12559",
         "https://github.com/HappySeaFox/sail/releases/tag/v1.0.0",
         "https://github.com/HappySeaFox/sail/security/advisories/GHSA-744p-cqg2-m33h"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-54618",
-      "published": "2026-09-17T20:16:51.823",
-      "lastModified": "2026-09-17T20:16:51.823",
-      "vulnStatus": "Received",
-      "description": "Obsidian Web MCP is a secure remote MCP server for Obsidian vaults. Prior to 0.2.0, /oauth/authorize issues an authorization code without a login, consent, or session check, and /oauth/token can exchange that code for the static VAULT_MCP_TOKEN without authenticating a client. An unauthenticated remote caller who can reach the intended tunnel deployment can therefore call /mcp and use vault_read, vault_write, vault_search, vault_list, vault_move, and vault_delete against the entire vault. Option",
-      "cvss": {
-        "score": 9.4,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-306",
-          "name": "Missing Authentication for Critical Function"
-        },
-        {
-          "id": "CWE-522",
-          "name": "Insufficiently Protected Credentials"
-        },
-        {
-          "id": "CWE-601",
-          "name": "Open Redirect"
-        }
-      ],
-      "vendors": [
-        "jimprosser obsidian-web-mcp"
-      ],
-      "references": [
-        "https://github.com/jimprosser/obsidian-web-mcp/commit/e4924f096ee7494a7999d6c0cceca9be08e48eef",
-        "https://github.com/jimprosser/obsidian-web-mcp/pull/30",
-        "https://github.com/jimprosser/obsidian-web-mcp/releases/tag/v0.2.0",
-        "https://github.com/jimprosser/obsidian-web-mcp/security/advisories/GHSA-hwhg-mrjc-8g43"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-54617",
-      "published": "2026-09-17T19:16:51.003",
-      "lastModified": "2026-09-18T19:16:43.177",
-      "vulnStatus": "Received",
-      "description": "GravitLauncher is an open-source Minecraft launcher based on sashok724's v3. Prior to 5.7.12, an unauthenticated remote actor can send a raw HTTP request target without a leading slash to the default LaunchServer file server on port 9274. FileServerHandler.channelRead0 in components/launchserver/src/main/java/pro/gravit/launchserver/socket/handlers/fileserver/FileServerHandler.java strips the first request-target character and resolves the remaining path against updatesDir without re-normalizing",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        },
-        {
-          "id": "CWE-200",
-          "name": "Exposure of Sensitive Information"
-        },
-        {
-          "id": "CWE-522",
-          "name": "Insufficiently Protected Credentials"
-        }
-      ],
-      "vendors": [
-        "GravitLauncher Launcher"
-      ],
-      "references": [
-        "https://github.com/GravitLauncher/Launcher/commit/8114a1d4cfbcaab4c1c337d921597805d71dee3b",
-        "https://github.com/GravitLauncher/Launcher/releases/tag/v5.7.12",
-        "https://github.com/GravitLauncher/Launcher/security/advisories/GHSA-5g75-477j-2c2f"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-47252",
-      "published": "2026-09-17T19:16:48.083",
-      "lastModified": "2026-09-17T20:16:49.803",
-      "vulnStatus": "Received",
-      "description": "Anyquery is an SQL query engine built on top of SQLite. Prior to 0.4.5, authenticated users with INSERT or UPDATE access to affected macOS virtual tables can execute operating-system commands because the Chrome plugin and equivalent Brave, Edge, and Safari variants interpolate a SQL-controlled URL into AppleScript or JXA source passed to osascript. In plugins/chrome/tabs.go, tabsTable.Insert() passes the URL through fmt.Sprintf(newTabScript, url), and tabsTable.Update() uses fmt.Sprintf(setURLSc",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-94",
-          "name": "Code Injection"
-        }
-      ],
-      "vendors": [
-        "julien040 anyquery",
-        "anyquery github.com/julien040/anyquery/plugins/brave",
-        "anyquery github.com/julien040/anyquery/plugins/chrome",
-        "anyquery github.com/julien040/anyquery/plugins/edge",
-        "anyquery github.com/julien040/anyquery/plugins/reminders"
-      ],
-      "references": [
-        "https://github.com/julien040/anyquery/commit/33769e03bd4b0f76d7a20a4188cce7153f6db1c9",
-        "https://github.com/julien040/anyquery/releases/tag/0.4.5",
-        "https://github.com/julien040/anyquery/security/advisories/GHSA-hrj8-hjv8-mgwc"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-54053",
-      "published": "2026-09-17T18:16:45.857",
-      "lastModified": "2026-09-17T18:16:45.857",
-      "vulnStatus": "Received",
-      "description": "Many Notes is a Markdown note-taking web application designed for simplicity. Prior to 0.16.0, the ZIP vault import implemented in app/Actions/ProcessImportedVault.php accepts archive filenames containing parent-directory traversal segments. An authenticated user can write arbitrary files outside the importing user's vault and into other users' vaults, including overwriting existing files. Disguised SVG content can be placed in another user's vault and execute stored cross-site scripting when th",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        }
-      ],
-      "vendors": [
-        "brufdev many-notes"
-      ],
-      "references": [
-        "https://github.com/brufdev/many-notes/commit/1b3288fa9671002e72e38b7fcd5d226673ba0cae",
-        "https://github.com/brufdev/many-notes/releases/tag/v0.16.0",
-        "https://github.com/brufdev/many-notes/security/advisories/GHSA-wg8j-9c2g-xh6r"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-92489",
-      "published": "2026-09-17T17:17:51.007",
-      "lastModified": "2026-09-18T18:18:13.037",
-      "vulnStatus": "Received",
-      "description": "In the Linux kernel, the following vulnerability has been resolved: xfrm: Fix skb double-free in xfrm_dev_direct_output() A return value other than 1 from local_out() means that the skb has been consumed or its ownership was transferred. xfrm_dev_direct_output() nevertheless frees the skb on this path, causing a double-free when netfilter drops the packet and invalidating any other owner. Return the local_out() result directly, matching the ownership handling in xfrm_output_resume().",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Linux Linux"
-      ],
-      "references": [
-        "https://git.kernel.org/stable/c/02deb637e965950148752a304dd1471212dd6470",
-        "https://git.kernel.org/stable/c/2aed51fc58d9ce450e2c116efb956160fd06fa02",
-        "https://git.kernel.org/stable/c/56a347950e661c1a7f8f31c43a2ea53c2323b6f4",
-        "https://git.kernel.org/stable/c/621871b696b108026bf4b44ed4085ffa2102f417"
-      ],
-      "kev": {
-        "in_kev": false
-      }
-    },
-    {
-      "id": "CVE-2026-90414",
-      "published": "2026-09-17T17:17:43.923",
-      "lastModified": "2026-09-18T18:17:58.263",
-      "vulnStatus": "Received",
-      "description": "In the Linux kernel, the following vulnerability has been resolved: IB/isert: reject PDUs declaring more data than was received isert_recv_done() hands each received PDU to the opcode handlers without ever looking at wc->byte_len, the number of bytes the HCA actually placed in the receive descriptor. The handlers then copy that many bytes - the data-segment length the initiator declared in the BHS (ntoh24(hdr->dlength), via the derived unsol_data_len / imm_data_len) - out of the fixed-size descr",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Linux Linux"
-      ],
-      "references": [
-        "https://git.kernel.org/stable/c/274b1ad7e78338710864c4b4235bb1ce7e7107f9",
-        "https://git.kernel.org/stable/c/2a6b8f88fb7ee51714a1922a039225bdcaf12855",
-        "https://git.kernel.org/stable/c/352dc85324b29f5c85876f2666f3158b645e3f18",
-        "https://git.kernel.org/stable/c/39da0b7e1f530347d284cebcfc5b5afa90a173bf"
       ],
       "kev": {
         "in_kev": false
