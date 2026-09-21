@@ -20,8 +20,16 @@
         be distributable on its own (e.g. mirrored into a separate repo as a
         standalone product), so nothing it links to may not exist there.
     It still reads the same underlying JSON feeds (data/feed, data/cve,
-    data/breaches, data/leaktracker, data/attack, data/podcast) plus a new
-    data/ads/ folder for sponsor placements — see adSlide()/loadAds() below.
+    data/breaches, data/leaktracker, data/attack, data/podcast) plus
+    data/ads/campaigns/ for sponsor placements — see adSlide()/loadAds()
+    below. Ad campaigns are managed by a separate, unlinked internal tool
+    (admin/index.html) which generates data/ads/campaigns/<id>.json + its
+    index.json; this file only ever reads them, never config/orgs/
+    (deliberately excluded from every mirror — this file is meant to be a
+    fully self-contained, distributable one). Each campaign carries a
+    snapshot of its organization's licensing status/expiry taken at the time
+    it was last saved in the admin tool, which is what campaignIsLive() below
+    checks — see admin/index.html's Help tab for the full mechanics.
   */
   :root {
     --ink: #05070a;
@@ -295,8 +303,9 @@
   }
   .ad-advertiser {
     font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--text-dim);
-    text-transform: uppercase; margin-bottom: 6px;
+    text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
   }
+  .ad-logo { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; border: 1px solid var(--line); }
 
   .tap-zone { position: absolute; top: 88px; bottom: 96px; z-index: 15; pointer-events: none; }
   .tap-left { left: 0; width: 30%; }
@@ -452,13 +461,44 @@
   }
 
   const AD_TIER_WEIGHT = { premium: 3, pro: 2, standard: 1 };
-  const AD_FILES = ["standard", "pro", "premium"];
 
+  // Single source of truth for "does this campaign render right now" —
+  // deliberately duplicated (not shared) from admin/index.html's identical
+  // isLive(), matching how every cross-cutting helper on this site already
+  // works (escapeHtml, wireDragToDismiss, etc. are all duplicated the same
+  // way rather than imported). See admin/index.html's Help tab for the full
+  // writeup of why each condition exists.
+  function campaignIsLive(entry, today) {
+    today = today || new Date().toISOString().slice(0, 10);
+    if (!entry.active) return false;
+    const snap = entry.org_snapshot || {};
+    if (snap.status !== "active") return false;
+    if (snap.exp && snap.exp < today) return false;
+    if (entry.reservation_mode === "persistent") return true;
+    if (entry.start_date && today < entry.start_date) return false;
+    if (entry.end_date && today > entry.end_date) return false;
+    return true;
+  }
+
+  // The index carries just enough (active/schedule/org_snapshot) to decide
+  // liveness without downloading a single campaign's full file — those
+  // carry the base64 logo/image data URIs, which can be a genuinely large
+  // fetch, so a campaign that isn't live right now never pays for that.
   async function loadAds() {
-    const results = await Promise.allSettled(AD_FILES.map(f => loadJson(`data/ads/${f}.json`)));
+    let index;
+    try {
+      index = await loadJson("data/ads/campaigns/index.json");
+    } catch (err) {
+      console.error("ad campaign index failed to load", err);
+      return [];
+    }
+    const liveEntries = (index.campaigns || []).filter((e) => campaignIsLive(e));
+    const results = await Promise.allSettled(liveEntries.map((e) => loadJson(`data/ads/campaigns/${e.id}.json`)));
     return results
-      .map(r => (r.status === "fulfilled" ? r.value : null))
-      .filter(ad => ad && ad.active !== false && ad.link)
+      .map((r) => (r.status === "fulfilled" ? r.value : null))
+      // Re-checked against the full file's own fields (not just the index
+      // entry) in case the two have drifted out of sync on disk.
+      .filter((c) => c && campaignIsLive(c) && c.creative && c.creative.link)
       .sort((a, b) => (AD_TIER_WEIGHT[b.tier] || 0) - (AD_TIER_WEIGHT[a.tier] || 0));
   }
 
@@ -648,16 +688,17 @@
   }
 
   function adSlide(ad) {
+    const cr = ad.creative || {};
     return {
       key: "ad", duration: 6500,
-      actions: [{ label: ad.cta_label || "Learn more ↗", href: ad.link, external: true }],
+      actions: [{ label: cr.cta_label || "Learn more ↗", href: cr.link, external: true }],
       html: `
         <div class="kind-tag ad">Sponsored</div>
         <div class="ad-card">
-          ${ad.image_url ? `<img class="ad-image" src="${escapeHtml(ad.image_url)}" alt="" loading="lazy">` : ""}
-          <div class="ad-advertiser">${escapeHtml(ad.advertiser || "")}</div>
-          <h1 class="redact">${escapeHtml(ad.product || "")}</h1>
-          <p class="dossier-text">${escapeHtml(ad.tagline || "")}</p>
+          ${cr.image_data_uri ? `<img class="ad-image" src="${escapeHtml(cr.image_data_uri)}" alt="" loading="lazy">` : ""}
+          <div class="ad-advertiser">${cr.logo_data_uri ? `<img class="ad-logo" src="${escapeHtml(cr.logo_data_uri)}" alt="">` : ""}${escapeHtml(cr.advertiser || "")}</div>
+          <h1 class="redact">${escapeHtml(cr.product || "")}</h1>
+          <p class="dossier-text">${escapeHtml(cr.tagline || "")}</p>
         </div>
       `,
     };
