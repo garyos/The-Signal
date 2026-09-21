@@ -2,6 +2,71 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10102",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10102",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10102.mp3",
+      "title": "SANS Stormcast Monday, September 21st, 2026: HTTP Query; Docker Escape; Brevo ClickFix Attack; LastPass Fake GitHub Repo",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 21st, 2026: HTTP Query; Docker Escape; Brevo ClickFix Attack; LastPass Fake GitHub Repo",
+      "show_notes": [
+        {
+          "heading": "HTTP QUERY Method: The Grey Zone Between GET and POST",
+          "links": [
+            "https://isc.sans.edu/diary/HTTP%20QUERY%20Method%3A%20The%20Grey%20Zone%20Between%20GET%20And%20POST./33352"
+          ]
+        },
+        {
+          "heading": "Simple MacOS Docker Escape",
+          "links": []
+        },
+        {
+          "heading": "https://www.accomplish.ai/blog/escaping-dockers-hypervisor/  CVE-2026-77179",
+          "links": []
+        },
+        {
+          "heading": "Brevo ClickFix Compromise",
+          "links": [
+            "https://status.brevo.com/incidents/01M2QBC4EZ24ZACW6SWQYVW8N3/write-up"
+          ]
+        },
+        {
+          "heading": "LastPass (and other) lookalike GitHub Repo and Kernel Module Infostealer",
+          "links": [
+            "https://blog.lastpass.com/posts/lastpass-delphos-report-rapuncel-infostealer"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-21T05:15:12+00:00",
+      "duration_seconds": 444,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10102.mp3",
+      "audio_length_bytes": 6219072,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10102",
+      "categories": [
+        "lastpass",
+        "github",
+        "rapuncel",
+        "delphos",
+        "brevo",
+        "clickfix",
+        "macos",
+        "docker",
+        "http",
+        "query"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10102",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Industrial Control System Security. In last Friday's\n diary, Xavier took a look at a quite new HTTP method and\n that's the query method. This method was introduced to solve\n a problem with REST APIs. In REST APIs, requests that do\n not make any changes but just request data are supposed to\n be GET requests. They're often referred to as SAVE requests\n because well they don't make any changes. However, GET\n queries, well they must not contain a body limiting about\n the data that you can submit with the request. Like if you\n have a more complex query string, it may not fit. There\n is no actually official upper limit to how long a URL can be\n but many browsers cab it at like four to eight kilobytes,\n which sounds big but again if you want to do something more\n complex may not be sufficient. So, what he came up with was\n the query method. It's essentially a GET method but\n allowing for a body and what Xavier is going over here is\n well how is it supported by different browsers, different\n clients and also middleware which of course these middle\n boxes are often being used for security tasks. So, Xavier for\n example enumerates which ones just outright block them or\n just allow them unchecked. The other issue here is that is\n the reason also that well now the body actually matters and\n for example well query can be cached. That's explicitly\n allowed in the standard but many proxies when they're\n caching they only consider the URL and the headers. So, they\n may not consider the body which of course could lead to\n cache poisoning. Well, Xavier has a nice little table there\n summarizing all the results so if you are working with rest\n apis and consider implementing some apis that take advantage\n of the query method definitely take a look. I'm not often\n talking about container escapes but a new docker\n escape exploit in docker on the mac is interesting for how\n easy it is to exploit. To start out with the attacker\n opens a file with the same name of a file that actually\n exists on the host and the attacker keeps the file open\n that's important here. Now the file is also located inside a\n directory that the attacker created as well on the host.\n So, really the only thing the attacker needs to do is create\n those two files the directory and the file and then the\n attacker deletes the file but because the file is still held\n open the node id will continue to persist. Next the attacker\n deletes the folder that contained the file and replace\n it with a symlink. The host will now follow the symlink to\n the host which provides access to any file on the host and\n yeah it's always easy of course to find some file like\n a .cshrc file or so that can be used that is known to\n exist. So, that makes this really sort of a very quick\n and easy container escape only takes three lines of bash in\n the proof of concept. Thanks for accomplish. AI to actually\n hold back a little bit on releasing all these details\n because fix for this particular vulnerability has\n been released end of August and early September.\n And then we got sort of an interesting mix of the almost\n 10 year old mage card attack and click fix. Attackers\n compromised bravo a company selling messaging solutions in\n order to use their messaging solutions to use their\n software to\n use their software. So, the attacker was able to use the\n software to use the software to use the software. Now, the\n attacker gained access to bravo's cloudflare API key and\n this API key was not restricted. So, the attacker\n could then set up a worker injecting javascript into web\n pages associated with a bravo customers. And the end result\n was that affected pages displayed a click fix style\n capture that tricked victims to execute code that installed\n malware on their system. Now, sadly, the bravo advisor is\n really short in details about this particular malware.\n They're really more concerned telling us that their customer\n information apparently was not compromised. just their\n customers systems were compromised. Beeping computer\n flagged a file uploaded to VirusTotal as associated with\n the attack. So far, this file has only gotten one hit among\n the 50 plus scanners hosted by VirusTotal. Freevo is now\n looking into solutions to better manage its API keys.\n Always good to at least improve after being hit by an\n attack.\n And password manager LastPass reports in its blog that it\n was one of 40 companies that an attacker attempted to\n impersonate on GitHub. So, nothing here wrong with\n LastPass. Just someone impersonated LastPass, set up\n fake GitHub repositories that then basically offered the\n password manager or password. something that looked like it\n for download, which contained interestingly a kernel driver\n that was actually tested by Microsoft. So, it was trusted\n by the kernel that then led to privilege escalation and the\n malware was able to disable numerous anti-malware\n products. leveraging this kernel module. Once it settled\n in, the malware went ahead and stole credentials. Again,\n nothing here really wrong with LastPass. If anything, they\n paid attention to actually identify these malicious\n GitHub repositories. Other companies were affected as\n well as stated by LastPass. And as usual, well, not just\n with password managers. Be careful where you download\n your software from.\n Well, and this is it for today. Thanks again for\n listening, subscribing, recommending this podcast. And\n if you are here in Vegas at the SANS event, well, I'll try\n to keep some stickers around. But if you don't find them\n like on the hallways or so, then please see me in my\n classroom. I'll be teaching SEC 522, our web application\n security class here. And otherwise, talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10100",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

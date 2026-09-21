@@ -1,6 +1,71 @@
 {
-  "fetched_at": "2026-09-20T13:23:44.378298+00:00",
+  "fetched_at": "2026-09-21T08:27:56.936773+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10102",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10102",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10102.mp3",
+      "title": "SANS Stormcast Monday, September 21st, 2026: HTTP Query; Docker Escape; Brevo ClickFix Attack; LastPass Fake GitHub Repo",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 21st, 2026: HTTP Query; Docker Escape; Brevo ClickFix Attack; LastPass Fake GitHub Repo",
+      "show_notes": [
+        {
+          "heading": "HTTP QUERY Method: The Grey Zone Between GET and POST",
+          "links": [
+            "https://isc.sans.edu/diary/HTTP%20QUERY%20Method%3A%20The%20Grey%20Zone%20Between%20GET%20And%20POST./33352"
+          ]
+        },
+        {
+          "heading": "Simple MacOS Docker Escape",
+          "links": []
+        },
+        {
+          "heading": "https://www.accomplish.ai/blog/escaping-dockers-hypervisor/  CVE-2026-77179",
+          "links": []
+        },
+        {
+          "heading": "Brevo ClickFix Compromise",
+          "links": [
+            "https://status.brevo.com/incidents/01M2QBC4EZ24ZACW6SWQYVW8N3/write-up"
+          ]
+        },
+        {
+          "heading": "LastPass (and other) lookalike GitHub Repo and Kernel Module Infostealer",
+          "links": [
+            "https://blog.lastpass.com/posts/lastpass-delphos-report-rapuncel-infostealer"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-21T05:15:12+00:00",
+      "duration_seconds": 444,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10102.mp3",
+      "audio_length_bytes": 6219072,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10102",
+      "categories": [
+        "lastpass",
+        "github",
+        "rapuncel",
+        "delphos",
+        "brevo",
+        "clickfix",
+        "macos",
+        "docker",
+        "http",
+        "query"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10102",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Industrial Control System Security. In last Friday's\n diary, Xavier took a look at a quite new HTTP method and\n that's the query method. This method was introduced to solve\n a problem with REST APIs. In REST APIs, requests that do\n not make any changes but just request data are supposed to\n be GET requests. They're often referred to as SAVE requests\n because well they don't make any changes. However, GET\n queries, well they must not contain a body limiting about\n the data that you can submit with the request. Like if you\n have a more complex query string, it may not fit. There\n is no actually official upper limit to how long a URL can be\n but many browsers cab it at like four to eight kilobytes,\n which sounds big but again if you want to do something more\n complex may not be sufficient. So, what he came up with was\n the query method. It's essentially a GET method but\n allowing for a body and what Xavier is going over here is\n well how is it supported by different browsers, different\n clients and also middleware which of course these middle\n boxes are often being used for security tasks. So, Xavier for\n example enumerates which ones just outright block them or\n just allow them unchecked. The other issue here is that is\n the reason also that well now the body actually matters and\n for example well query can be cached. That's explicitly\n allowed in the standard but many proxies when they're\n caching they only consider the URL and the headers. So, they\n may not consider the body which of course could lead to\n cache poisoning. Well, Xavier has a nice little table there\n summarizing all the results so if you are working with rest\n apis and consider implementing some apis that take advantage\n of the query method definitely take a look. I'm not often\n talking about container escapes but a new docker\n escape exploit in docker on the mac is interesting for how\n easy it is to exploit. To start out with the attacker\n opens a file with the same name of a file that actually\n exists on the host and the attacker keeps the file open\n that's important here. Now the file is also located inside a\n directory that the attacker created as well on the host.\n So, really the only thing the attacker needs to do is create\n those two files the directory and the file and then the\n attacker deletes the file but because the file is still held\n open the node id will continue to persist. Next the attacker\n deletes the folder that contained the file and replace\n it with a symlink. The host will now follow the symlink to\n the host which provides access to any file on the host and\n yeah it's always easy of course to find some file like\n a .cshrc file or so that can be used that is known to\n exist. So, that makes this really sort of a very quick\n and easy container escape only takes three lines of bash in\n the proof of concept. Thanks for accomplish. AI to actually\n hold back a little bit on releasing all these details\n because fix for this particular vulnerability has\n been released end of August and early September.\n And then we got sort of an interesting mix of the almost\n 10 year old mage card attack and click fix. Attackers\n compromised bravo a company selling messaging solutions in\n order to use their messaging solutions to use their\n software to\n use their software. So, the attacker was able to use the\n software to use the software to use the software. Now, the\n attacker gained access to bravo's cloudflare API key and\n this API key was not restricted. So, the attacker\n could then set up a worker injecting javascript into web\n pages associated with a bravo customers. And the end result\n was that affected pages displayed a click fix style\n capture that tricked victims to execute code that installed\n malware on their system. Now, sadly, the bravo advisor is\n really short in details about this particular malware.\n They're really more concerned telling us that their customer\n information apparently was not compromised. just their\n customers systems were compromised. Beeping computer\n flagged a file uploaded to VirusTotal as associated with\n the attack. So far, this file has only gotten one hit among\n the 50 plus scanners hosted by VirusTotal. Freevo is now\n looking into solutions to better manage its API keys.\n Always good to at least improve after being hit by an\n attack.\n And password manager LastPass reports in its blog that it\n was one of 40 companies that an attacker attempted to\n impersonate on GitHub. So, nothing here wrong with\n LastPass. Just someone impersonated LastPass, set up\n fake GitHub repositories that then basically offered the\n password manager or password. something that looked like it\n for download, which contained interestingly a kernel driver\n that was actually tested by Microsoft. So, it was trusted\n by the kernel that then led to privilege escalation and the\n malware was able to disable numerous anti-malware\n products. leveraging this kernel module. Once it settled\n in, the malware went ahead and stole credentials. Again,\n nothing here really wrong with LastPass. If anything, they\n paid attention to actually identify these malicious\n GitHub repositories. Other companies were affected as\n well as stated by LastPass. And as usual, well, not just\n with password managers. Be careful where you download\n your software from.\n Well, and this is it for today. Thanks again for\n listening, subscribing, recommending this podcast. And\n if you are here in Vegas at the SANS event, well, I'll try\n to keep some stickers around. But if you don't find them\n like on the hallways or so, then please see me in my\n classroom. I'll be teaching SEC 522, our web application\n security class here. And otherwise, talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10100",
       "show": "stormcast",
@@ -3439,70 +3504,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9994",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday, July 6, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n undergraduate certificate program in cybersecurity\n fundamentals. Last week when I covered Apple's updates, I did\n mention that they felt a little bit different than what\n we usually saw for Apple. They weren't really sort of an\n emergency update where we had some very specific exploited\n vulnerabilities being fixed, but they also weren't just a\n big broad update. We usually saw where we get patches for\n every single of Apple's products. We only got them\n sort of for the iOS, macOS and Safari with a heavy focus on\n WebKit vulnerabilities. And that sort of also explains the\n inclusion of Safari. Well, Reuters now published that\n this is apparently sort of a new strategy going forward\n from Apple when it comes to patches and releasing security\n updates. They're no longer necessarily going to wait for\n the next major update. So currently we are like on iOS,\n macOS of 25. Sorry, 26.5. The next sort of update would then\n be 26.6. But what they released basically last week\n were vulnerabilities they fixed in some of the betas for\n 26.6. And they didn't really want to wait until 26.6 is\n released. So they accelerated the release of these patches.\n And that's something that we should expect in the future.\n So basically expect more and sort of more incremental\n security updates from Apple that aren't necessarily sort\n of bundled in with some of the feature updates that we have\n seen in the past. When talking about discovering and\n exploiting vulnerabilities with the aid of AI, clients,\n vielleicht more or agendas. They don't have to worry about\n what we are The next slide is by Plinus Elder. Elder Plinus\n has released a new tool T3MP3ST. And what's sort of\n unique about it is, it's not a new model than there are now a\n number of them that can be used to find vulnerabilities\n and exploit them. Instead, it's really more a harness\n that can then be used for existing coding agents that\n you already use. So if you're using anything like cloud or\n such, or even your local model to code, well, you can use\n T3MP3ST in order to then use that model to find\n vulnerabilities and also create exploits for them the\n advantage is well as sort of pointed out in the readme file\n that you don't have yet another token bill of course\n now it goes against whatever tokens you're using with these\n existing models on the other hand I sort of I'm really\n interested in trying it out with local models with you\n know it's of course more interesting because they have\n more control over what models are using and also what\n safeguards these models may be implementing and run zero\n published a blog post with details regarding seven\n different flaws in fat FS everybody listening to this\n podcast probably has heard about the fat file system the\n good old sort of no Windows style file system well it's of\n course often used for anything kind of that mounts SD cards\n USB media and one of the popular open source\n implementations is fatFS so if you have an IOT device for\n example that can mount an SDcard it probably runs fat FS\n the library to implement the fat file system seven of these\n bugs were now disclosed and many of them allowing\n arbitrary code execution this is in particular a problem for\n IOT devices you don't always need to physically mount a\n file system like some kind of ISO file or something like\n this can often be used to mount then a virtual drive to\n a system and trigger some of these vulnerabilities which\n could of course be exploited in for privilege escalation\n and open WRT did release an update that fixes a number of\n interesting security vulnerabilities version 25.12\n .5 don't usually mention them and nothing here sort of\n screams patch now but certainly even your open\n source devices need to be updated occasionally and we\n have seen all the havoc that attackers are creating with\n sort of no border security devices like that none of\n these is sort of unauthenticated device\n takeover type vulnerabilities there are a number of approach\n escalation vulnerabilities also some DHCP related\n vulnerabilities that can be exploited by network adjacent\n devices so not exactly sort of a remote attacker as always\n you never really should expose the admin interfaces of any\n device like this to the internet use VPNs and such for\n it but on the other hand there's also an SH update here\n that fixes some SCP issues in this release well and that's\n it for today so thanks for listening thanks for liking\n and subscribing to this podcast and as always talk to\n you again tomorrow bye\n you",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9992",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9992",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9992.mp3",
-      "title": "SANS Stormcast Thursday, July 2nd, 2026: MetaMask Phishing; Adobe Patches; Google Chrome Patches; Apple Hide-My-Email Vuln",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, July 2nd, 2026: MetaMask Phishing; Adobe Patches; Google Chrome Patches; Apple Hide-My-Email Vuln",
-      "show_notes": [
-        {
-          "heading": "Why Ask Credentials If There Are Secret Codes?",
-          "links": [
-            "https://isc.sans.edu/diary/Why%20Ask%20Credentials%20If%20There%20Are%20Secret%20Codes%3F/33118"
-          ]
-        },
-        {
-          "heading": "Adobe Patches and Updated Patch Release Policy",
-          "links": [
-            "https://helpx.adobe.com/security/Home.html",
-            "https://blog.adobe.com/security/protecting-customers-faster-how-adobe-is-responding-to-ai-accelerated-vulnerability-discovery"
-          ]
-        },
-        {
-          "heading": "Google Chrome Update (link had issues loading while recording)",
-          "links": [
-            "https://chromereleases.googleblog.com/2026/06/stable-channel-update-for-desktop_0175352312.html"
-          ]
-        },
-        {
-          "heading": "Apple Hide My Email Vulnerability",
-          "links": [
-            "https://www.404media.co/apple-hide-my-email-vulnerability-reveals-peoples-real-email-addresses/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-02T02:00:02+00:00",
-      "duration_seconds": 375,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9992.mp3",
-      "audio_length_bytes": 5254134,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9992",
-      "categories": [
-        "metamask",
-        "phishing",
-        "crypto",
-        "mfa",
-        "adobe",
-        "google",
-        "chrome",
-        "patches",
-        "apple",
-        "hide-my-email"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9992",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, July 2nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Riyadh,\n Saudi Arabia. And this episode is brought to you by the SANS\n .edu Graduate Certificate Program in Purple Team\n Operations. That is a reminder, there will be no\n podcast tomorrow on Friday, part because of July 4th and\n also because of my travel schedule. Xavier came across a\n real interesting phishing email. Now this particular\n phishing email targets MetaMask. MetaMask is an app\n and a browser extension used for crypto coins or crypto\n coin wallet and of course with that attractive target. But\n the approach they are taking here for phishing is a little\n bit different. Now MetaMask, like many websites,\n particularly if they are crypto coin related, does\n require and encourage to use multi-factor authentication.\n So that basically renders some of the simple phishing\n attempts useless. But in this particular case, the attacker\n is going after a secret phrase the user establishes in order\n to reset their authentication option. So when you're signing\n up for MetaMask as part of the signup process, this secret\n phrase is established. It's not used to usually login.\n It's used more as a password recovery token, as a backup in\n case you're losing your username and second factor.\n And that's exactly what the attacker is abusing here. So\n essentially the password reset feature. The problem here of\n course is how do you securely recover an account if the\n second factor is lost. A lot of websites and such are\n relying on a type of sort of one-time password or a secret\n random string that's established when you're\n setting up the second factor. And that of course is still\n phishable as this particular attempt shows. Personally, I\n haven't really actually come up with sort of a great secure\n and still usable and reasonably easy and cheap to\n implement solution to solve the lost second factor\n problem. Usually we talk about Adobe patches on Patch\n Tuesday, which was two weeks ago. But it looks like Adobe\n is making some changes to how they are going to release\n patches. In part because customers are of course asking\n for a faster patch cycle. Adobe now is adopting a two\n -week patch release cycle. So you will get new Adobe patches\n on the second and the fourth Tuesday of each month. And\n this month, well they started for the first time. It got\n patches for 11 different products. Two of my favorites\n are among them ColdFusion and Adobe Acrobat Reader. Both of\n them do contain arbitrary code execution vulnerabilities. So\n definitely something that you do want to address. In\n particular of course, as usual with the ColdFusion product,\n which tends to be a little bit more exposed. And I'll talk\n about having to deal with more and more patches and\n vulnerabilities. Google released an update for Google\n Chrome patching this month 382 vulnerabilities. Now, last\n month we had a new record release with something like\n 400 or so vulnerabilities being patched. So the number\n is going down. But it looks like this may at least for now\n be sort of the new normal to have like hundreds of\n vulnerabilities being patched each month. Or how often\n Google decides to release new versions of Google Chrome. So\n a year ago or so it was more like a dozen or so that we had\n each month or in each release. So this is certainly sort of\n an order of magnitude increase to what we used to have. The\n hope of course is that eventually, well, they'll find\n all the bugs. But so far it looks like there are still\n plenty of vulnerabilities to find. According to Joseph Cox\n with 404 Media, Apple's Hide by Email service does contain\n an unpatched vulnerability that allows attackers to\n unmask the identity behind these temporary and anonymous\n email addresses that Apple makes available to its Apple\n Plus customers. The problem here is that if you are\n sending an email with an oversized attachment to the\n email address, you're getting a bounce back because he's\n stating that the attachment is too large. And as part of the\n bounce, the actual email address of the user that is\n obfuscated supposedly behind the hide my email address is\n revealed. So this is one of those bugs where, well, the\n attachment isn't blocked when it's initially received by\n Apple's mail server, but only after they attempt to actually\n deliver it to the actual email address of the owner of the\n particular account. So be careful with these anonymous\n email servers in general. There are usually some leaks\n like this in the service, not the first time that you would\n have like bounces revealing the actual identity of a\n particular email user. But of course, you still also have\n the issue with HTML emails and the like that may load content\n from third party sites that then an attacker is able to\n follow up on or identify the source of the request for.\n Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending and\n any kind of feedback for this podcast. Remember, no podcast\n tomorrow. So, talk to you again on Monday. Bye.",
       "transcript_checked": true
     }
   ]
