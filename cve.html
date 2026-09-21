@@ -89,6 +89,7 @@
   .chip[data-sev="LOW"].active, .chip[data-sev="UNRATED"].active { color: var(--text); }
   .chip.kev-toggle.active { color: var(--red); border-color: var(--red); }
   .chip.epss-toggle.active { color: var(--orange); border-color: var(--orange); }
+  .chip.news-toggle.active { color: var(--green); border-color: var(--green); }
   .chip .dot { width: 6px; height: 6px; display: inline-block; background: currentColor; }
 
   select#category-filter, select#scope-select, select#sort-select, select#page-size-select {
@@ -162,6 +163,9 @@
   }
   .epss-badge {
     color: var(--orange); border: 1px solid var(--orange); padding: 1px 6px; font-size: 9.5px; letter-spacing: 0.06em;
+  }
+  .news-badge {
+    color: var(--green); border: 1px solid var(--green); padding: 1px 6px; font-size: 9.5px; letter-spacing: 0.06em;
   }
   .entry h2 { font-size: 15.5px; font-weight: 500; margin: 0 0 6px; line-height: 1.4; font-family: var(--font-mono); }
   .entry p { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; margin: 0 0 8px; font-family: var(--font-sans); }
@@ -385,6 +389,7 @@
       <span class="chip active" data-sev="UNRATED"><span class="dot"></span>unrated</span>
       <span class="chip kev-toggle" id="kev-toggle"><span class="dot"></span>KEV only</span>
       <span class="chip epss-toggle" id="epss-toggle"><span class="dot"></span>high EPSS only</span>
+      <span class="chip news-toggle" id="news-toggle"><span class="dot"></span>in the news only</span>
       <select id="category-filter"><option value="all">all categories</option></select>
       <input id="vendor-filter" list="vendor-datalist" type="text" placeholder="vendor / product…" />
       <datalist id="vendor-datalist"></datalist>
@@ -407,6 +412,7 @@
         <option value="modified">recently modified</option>
         <option value="cvss">CVSS score (high–low)</option>
         <option value="epss">EPSS score (high–low)</option>
+        <option value="news">media mentions (high–low)</option>
       </select>
       <span>·</span>
       <span>show</span>
@@ -987,9 +993,9 @@
   let currentScope = "latest";  // "latest" | "all" | "<month-key>"
   let currentPage = 1;
 
-  const SORTS = ["recent", "modified", "cvss", "epss"];
+  const SORTS = ["recent", "modified", "cvss", "epss", "news"];
   const DEFAULT_FILTERS = () => ({
-    severities: new Set(SEVERITIES), category: "all", kevOnly: false, epssOnly: false,
+    severities: new Set(SEVERITIES), category: "all", kevOnly: false, epssOnly: false, newsOnly: false,
     vendor: "", dateFrom: "", dateTo: "", search: "", pageSize: 100, sort: "recent",
   });
 
@@ -1005,6 +1011,7 @@
         category: p.category || "all",
         kevOnly: !!p.kevOnly,
         epssOnly: !!p.epssOnly,
+        newsOnly: !!p.newsOnly,
         vendor: p.vendor || "",
         dateFrom: p.dateFrom || "",
         dateTo: p.dateTo || "",
@@ -1018,7 +1025,7 @@
   }
   function saveFilters() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      severities: Array.from(filters.severities), category: filters.category, kevOnly: filters.kevOnly, epssOnly: filters.epssOnly,
+      severities: Array.from(filters.severities), category: filters.category, kevOnly: filters.kevOnly, epssOnly: filters.epssOnly, newsOnly: filters.newsOnly,
       vendor: filters.vendor, dateFrom: filters.dateFrom, dateTo: filters.dateTo, search: filters.search, pageSize: filters.pageSize, sort: filters.sort,
     }));
   }
@@ -1069,8 +1076,9 @@
   }
 
   // Deep-link support (used by dashboard.html's / index.html's click-through
-  // links): ?severity=, ?kev=1, ?epss=1, ?category=<CWE name>, ?vendor=<name>,
-  // ?search=<term>, ?dateFrom=, ?dateTo=, ?scope=<all|latest|month-key>, ?sort=.
+  // links): ?severity=, ?kev=1, ?epss=1, ?news=1, ?category=<CWE name>,
+  // ?vendor=<name>, ?search=<term>, ?dateFrom=, ?dateTo=,
+  // ?scope=<all|latest|month-key>, ?sort=.
   // A vendor/category/date/search link defaults the *scope* to "all" (unless
   // scope is given explicitly) — the thing being searched for could easily
   // sit outside the "recent & severe" ~100-record window, and searching only
@@ -1081,6 +1089,7 @@
     if (severity && SEVERITIES.includes(severity.toUpperCase())) filters.severities = new Set([severity.toUpperCase()]);
     if (p.get("kev")) filters.kevOnly = true;
     if (p.get("epss")) filters.epssOnly = true;
+    if (p.get("news")) filters.newsOnly = true;
     if (p.get("category")) filters.category = p.get("category");
     if (p.get("vendor")) filters.vendor = p.get("vendor");
     if (p.get("search")) filters.search = p.get("search");
@@ -1138,6 +1147,16 @@
     epssToggle.addEventListener("click", () => {
       filters.epssOnly = !filters.epssOnly;
       epssToggle.classList.toggle("active", filters.epssOnly);
+      currentPage = 1;
+      saveFilters();
+      render();
+    });
+
+    const newsToggle = document.getElementById("news-toggle");
+    newsToggle.classList.toggle("active", filters.newsOnly);
+    newsToggle.addEventListener("click", () => {
+      filters.newsOnly = !filters.newsOnly;
+      newsToggle.classList.toggle("active", filters.newsOnly);
       currentPage = 1;
       saveFilters();
       render();
@@ -1214,6 +1233,7 @@
       document.querySelectorAll(".chip[data-sev]").forEach(c => c.classList.add("active"));
       kevToggle.classList.remove("active");
       epssToggle.classList.remove("active");
+      newsToggle.classList.remove("active");
       document.getElementById("category-filter").value = "all";
       document.getElementById("vendor-filter").value = "";
       document.getElementById("date-from").value = "";
@@ -1292,6 +1312,8 @@
       sorted.sort((a, b) => (b.cvss ? b.cvss.score : -1) - (a.cvss ? a.cvss.score : -1));
     } else if (sort === "epss") {
       sorted.sort((a, b) => (b.epss ? b.epss.score : -1) - (a.epss ? a.epss.score : -1));
+    } else if (sort === "news") {
+      sorted.sort((a, b) => ((b.media && b.media.mention_count) || 0) - ((a.media && a.media.mention_count) || 0));
     } else {
       sorted.sort((a, b) => (b.published || "").localeCompare(a.published || ""));
     }
@@ -1305,6 +1327,7 @@
       if (!filters.severities.has(severityOf(c))) return false;
       if (filters.kevOnly && !c.kev.in_kev) return false;
       if (filters.epssOnly && !(c.epss && c.epss.score >= EPSS_HIGH_RISK_THRESHOLD)) return false;
+      if (filters.newsOnly && !(c.media && c.media.in_news)) return false;
       if (filters.category !== "all" && !(c.cwes || []).some(w => w.name === filters.category)) return false;
       if (vendorTerm && !(c.vendors || []).some(v => v.toLowerCase().includes(vendorTerm))) return false;
       if (filters.dateFrom && (c.published || "").slice(0, 10) < filters.dateFrom) return false;
@@ -1353,6 +1376,7 @@
           <span>${(c.published || "").slice(0, 10)}</span>
           ${c.kev.in_kev ? `<span class="kev-badge">KEV</span>` : ""}
           ${c.epss ? `<span class="epss-badge">EPSS ${(c.epss.score * 100).toFixed(0)}%</span>` : ""}
+          ${c.media && c.media.in_news ? `<span class="news-badge">IN THE NEWS</span>` : ""}
         </div>
         <h2>${escapeHtml(c.id)}</h2>
         <p>${escapeHtml(c.description)}</p>
@@ -1382,6 +1406,7 @@
         <div class="meta-cell"><span>Published</span><b>${(c.published || "—").slice(0, 10)}</b></div>
         <div class="meta-cell"><span>Last modified</span><b>${(c.lastModified || "—").slice(0, 10)}</b></div>
         ${c.epss ? `<div class="meta-cell"><span>EPSS (30-day exploit odds)</span><b>${(c.epss.score * 100).toFixed(1)}% · ${(c.epss.percentile * 100).toFixed(0)}th pct</b></div>` : ""}
+        ${c.media && c.media.in_news ? `<div class="meta-cell"><span>Media coverage</span><b>${c.media.mention_count} mention${c.media.mention_count === 1 ? "" : "s"} · ${escapeHtml(c.media.sources.slice(0, 2).join(", "))}${c.media.sources.length > 2 ? ` +${c.media.sources.length - 2}` : ""}</b></div>` : ""}
       </div>
 
       ${c.cwes.length ? `

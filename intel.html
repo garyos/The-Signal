@@ -583,6 +583,7 @@
           <div class="meta-cell"><span>Published</span><b>${(cve.published || "—").slice(0, 10)}</b></div>
           <div class="meta-cell"><span>Last modified</span><b>${(cve.lastModified || "—").slice(0, 10)}</b></div>
           ${cve.epss ? `<div class="meta-cell"><span>EPSS (30-day exploit odds)</span><b>${(cve.epss.score * 100).toFixed(1)}% · ${(cve.epss.percentile * 100).toFixed(0)}th pct</b></div>` : ""}
+          ${cve.media && cve.media.in_news ? `<div class="meta-cell"><span>Media coverage</span><b>${cve.media.mention_count} mention${cve.media.mention_count === 1 ? "" : "s"} · ${escapeHtml(cve.media.sources.slice(0, 2).join(", "))}${cve.media.sources.length > 2 ? ` +${cve.media.sources.length - 2}` : ""}</b></div>` : ""}
         </div>
         ${(cve.cwes || []).length ? `
           <div class="section-title">Weakness categories</div>
@@ -853,12 +854,22 @@
     return (c.epss && typeof c.epss.score === "number") ? c.epss.score : 0;
   }
 
+  // Media coverage is a much weaker signal than EPSS (a real predictive
+  // model) so it only ever breaks a tie left after severity+EPSS, same
+  // "attackers will see it is prevalent" reasoning fetch_cve.py's own
+  // sort_key() documents -- never enough on its own to outrank either.
+  function cveInNews(c) {
+    return !!(c.media && c.media.in_news);
+  }
+
   function rankCvesBySeverityThenDate(list) {
     return [...list].sort((a, b) => {
       const sevDiff = cveSeverityRank(a) - cveSeverityRank(b);
       if (sevDiff !== 0) return sevDiff;
       const epssDiff = cveEpssScore(b) - cveEpssScore(a);
       if (epssDiff !== 0) return epssDiff;
+      const newsDiff = (cveInNews(b) ? 1 : 0) - (cveInNews(a) ? 1 : 0);
+      if (newsDiff !== 0) return newsDiff;
       return (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0);
     });
   }
