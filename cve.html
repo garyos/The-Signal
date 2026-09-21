@@ -88,6 +88,7 @@
   .chip[data-sev="MEDIUM"].active { color: var(--blue); }
   .chip[data-sev="LOW"].active, .chip[data-sev="UNRATED"].active { color: var(--text); }
   .chip.kev-toggle.active { color: var(--red); border-color: var(--red); }
+  .chip.epss-toggle.active { color: var(--orange); border-color: var(--orange); }
   .chip .dot { width: 6px; height: 6px; display: inline-block; background: currentColor; }
 
   select#category-filter, select#scope-select, select#page-size-select {
@@ -157,6 +158,9 @@
   .entry[data-severity="LOW"] .tag, .entry[data-severity="UNRATED"] .tag { color: var(--text-dim); }
   .kev-badge {
     color: var(--red); border: 1px solid var(--red); padding: 1px 6px; font-size: 9.5px; letter-spacing: 0.06em;
+  }
+  .epss-badge {
+    color: var(--orange); border: 1px solid var(--orange); padding: 1px 6px; font-size: 9.5px; letter-spacing: 0.06em;
   }
   .entry h2 { font-size: 15.5px; font-weight: 500; margin: 0 0 6px; line-height: 1.4; font-family: var(--font-mono); }
   .entry p { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; margin: 0 0 8px; font-family: var(--font-sans); }
@@ -379,6 +383,7 @@
       <span class="chip active" data-sev="LOW"><span class="dot"></span>low</span>
       <span class="chip active" data-sev="UNRATED"><span class="dot"></span>unrated</span>
       <span class="chip kev-toggle" id="kev-toggle"><span class="dot"></span>KEV only</span>
+      <span class="chip epss-toggle" id="epss-toggle"><span class="dot"></span>high EPSS only</span>
       <select id="category-filter"><option value="all">all categories</option></select>
       <input id="vendor-filter" list="vendor-datalist" type="text" placeholder="vendor / product…" />
       <datalist id="vendor-datalist"></datalist>
@@ -966,6 +971,7 @@
   const SEVERITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "UNRATED"];
   const PAGE_SIZES = [40, 100, 250];
   const STORAGE_KEY = "signal-cve-filters-v2";
+  const EPSS_HIGH_RISK_THRESHOLD = 0.5;   // mirrors scripts/fetch_cve.py's retention threshold
 
   let indexData = null;
   let currentCves = [];         // full pool for the current scope, pre-filter/pre-page
@@ -973,7 +979,7 @@
   let currentPage = 1;
 
   const DEFAULT_FILTERS = () => ({
-    severities: new Set(SEVERITIES), category: "all", kevOnly: false,
+    severities: new Set(SEVERITIES), category: "all", kevOnly: false, epssOnly: false,
     vendor: "", dateFrom: "", dateTo: "", search: "", pageSize: 100,
   });
 
@@ -988,6 +994,7 @@
         severities: new Set(p.severities || SEVERITIES),
         category: p.category || "all",
         kevOnly: !!p.kevOnly,
+        epssOnly: !!p.epssOnly,
         vendor: p.vendor || "",
         dateFrom: p.dateFrom || "",
         dateTo: p.dateTo || "",
@@ -1000,7 +1007,7 @@
   }
   function saveFilters() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      severities: Array.from(filters.severities), category: filters.category, kevOnly: filters.kevOnly,
+      severities: Array.from(filters.severities), category: filters.category, kevOnly: filters.kevOnly, epssOnly: filters.epssOnly,
       vendor: filters.vendor, dateFrom: filters.dateFrom, dateTo: filters.dateTo, search: filters.search, pageSize: filters.pageSize,
     }));
   }
@@ -1051,7 +1058,7 @@
   }
 
   // Deep-link support (used by dashboard.html's / index.html's click-through
-  // links): ?severity=, ?kev=1, ?category=<CWE name>, ?vendor=<name>,
+  // links): ?severity=, ?kev=1, ?epss=1, ?category=<CWE name>, ?vendor=<name>,
   // ?search=<term>, ?dateFrom=, ?dateTo=, ?scope=<all|latest|month-key>.
   // A vendor/category/date/search link defaults the *scope* to "all" (unless
   // scope is given explicitly) — the thing being searched for could easily
@@ -1062,6 +1069,7 @@
     const severity = p.get("severity");
     if (severity && SEVERITIES.includes(severity.toUpperCase())) filters.severities = new Set([severity.toUpperCase()]);
     if (p.get("kev")) filters.kevOnly = true;
+    if (p.get("epss")) filters.epssOnly = true;
     if (p.get("category")) filters.category = p.get("category");
     if (p.get("vendor")) filters.vendor = p.get("vendor");
     if (p.get("search")) filters.search = p.get("search");
@@ -1108,6 +1116,16 @@
     kevToggle.addEventListener("click", () => {
       filters.kevOnly = !filters.kevOnly;
       kevToggle.classList.toggle("active", filters.kevOnly);
+      currentPage = 1;
+      saveFilters();
+      render();
+    });
+
+    const epssToggle = document.getElementById("epss-toggle");
+    epssToggle.classList.toggle("active", filters.epssOnly);
+    epssToggle.addEventListener("click", () => {
+      filters.epssOnly = !filters.epssOnly;
+      epssToggle.classList.toggle("active", filters.epssOnly);
       currentPage = 1;
       saveFilters();
       render();
@@ -1174,6 +1192,7 @@
       currentPage = 1;
       document.querySelectorAll(".chip[data-sev]").forEach(c => c.classList.add("active"));
       kevToggle.classList.remove("active");
+      epssToggle.classList.remove("active");
       document.getElementById("category-filter").value = "all";
       document.getElementById("vendor-filter").value = "";
       document.getElementById("date-from").value = "";
@@ -1247,6 +1266,7 @@
     const filtered = currentCves.filter(c => {
       if (!filters.severities.has(severityOf(c))) return false;
       if (filters.kevOnly && !c.kev.in_kev) return false;
+      if (filters.epssOnly && !(c.epss && c.epss.score >= EPSS_HIGH_RISK_THRESHOLD)) return false;
       if (filters.category !== "all" && !(c.cwes || []).some(w => w.name === filters.category)) return false;
       if (vendorTerm && !(c.vendors || []).some(v => v.toLowerCase().includes(vendorTerm))) return false;
       if (filters.dateFrom && (c.published || "").slice(0, 10) < filters.dateFrom) return false;
@@ -1294,6 +1314,7 @@
           <span>CVSS ${score}</span>
           <span>${(c.published || "").slice(0, 10)}</span>
           ${c.kev.in_kev ? `<span class="kev-badge">KEV</span>` : ""}
+          ${c.epss ? `<span class="epss-badge">EPSS ${(c.epss.score * 100).toFixed(0)}%</span>` : ""}
         </div>
         <h2>${escapeHtml(c.id)}</h2>
         <p>${escapeHtml(c.description)}</p>
@@ -1322,6 +1343,7 @@
       <div class="meta-grid" style="margin-top:16px;">
         <div class="meta-cell"><span>Published</span><b>${(c.published || "—").slice(0, 10)}</b></div>
         <div class="meta-cell"><span>Last modified</span><b>${(c.lastModified || "—").slice(0, 10)}</b></div>
+        ${c.epss ? `<div class="meta-cell"><span>EPSS (30-day exploit odds)</span><b>${(c.epss.score * 100).toFixed(1)}% · ${(c.epss.percentile * 100).toFixed(0)}th pct</b></div>` : ""}
       </div>
 
       ${c.cwes.length ? `

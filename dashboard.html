@@ -140,6 +140,7 @@
   .bar-fill.critical { background: var(--red); }
   .bar-fill.high { background: var(--amber); }
   .bar-fill.kev { background: var(--purple); }
+  .bar-fill.epss { background: var(--orange); }
   .bar-fill.amber { background: var(--amber); }
   .bar-fill.green { background: var(--green); }
   .bar-fill.blue { background: var(--blue); }
@@ -165,6 +166,7 @@
   .badge.critical { color: var(--red); }
   .badge.high { color: var(--amber); }
   .badge.kev { color: var(--purple); }
+  .badge.epss { color: var(--orange); }
   .badge.raas { color: var(--amber); }
   .badge.active { color: var(--green); }
 
@@ -1068,13 +1070,15 @@
     const critical = sumMonths(d.cveIndex, "critical");
     const high = sumMonths(d.cveIndex, "high");
     const kev = sumMonths(d.cveIndex, "kev");
+    const epssHigh = sumMonths(d.cveIndex, "epss_high");
     const max = Math.max(critical, high, 1);
     const body = `
       ${barRow("Critical", critical, max, "critical", "cve.html?severity=CRITICAL")}
       ${barRow("High", high, max, "high", "cve.html?severity=HIGH")}
       ${barRow("Known Exploited (KEV)", kev, max, "kev", "cve.html?kev=1")}
+      ${barRow("High EPSS (likely exploited)", epssHigh, max, "epss", "cve.html?epss=1")}
     `;
-    return panel("CVE severity", `Critical &amp; High severity CVEs on record, plus CISA KEV overlap`, body, "span-4");
+    return panel("CVE severity", `Critical &amp; High severity CVEs on record, plus CISA KEV and EPSS overlap`, body, "span-4");
   }
 
   function renderTopVendorsPanel(d) {
@@ -1097,6 +1101,7 @@
           <span class="badge ${sev.toLowerCase()}">${sev}</span>
           <span>CVSS ${score}</span>
           ${c.kev && c.kev.in_kev ? `<span class="badge kev">KEV</span>` : ""}
+          ${c.epss ? `<span class="badge epss">EPSS ${(c.epss.score * 100).toFixed(0)}%</span>` : ""}
         </div>
         <div class="lr-title">${escapeHtml(c.id)} — ${escapeHtml((c.description || "").slice(0, 90))}${(c.description || "").length > 90 ? "…" : ""}</div>
       </a>`;

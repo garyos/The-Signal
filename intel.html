@@ -542,6 +542,7 @@
         <div class="meta-grid">
           <div class="meta-cell"><span>Published</span><b>${(cve.published || "—").slice(0, 10)}</b></div>
           <div class="meta-cell"><span>Last modified</span><b>${(cve.lastModified || "—").slice(0, 10)}</b></div>
+          ${cve.epss ? `<div class="meta-cell"><span>EPSS (30-day exploit odds)</span><b>${(cve.epss.score * 100).toFixed(1)}% · ${(cve.epss.percentile * 100).toFixed(0)}th pct</b></div>` : ""}
         </div>
         ${(cve.cwes || []).length ? `
           <div class="section-title">Weakness categories</div>
@@ -804,10 +805,19 @@
     return sev === "CRITICAL" ? 0 : sev === "HIGH" ? 1 : 2;
   }
 
+  // EPSS score if we have one, else 0 -- CVEs with no EPSS data (older
+  // records not yet refreshed, or genuinely unscored) simply fall to the
+  // bottom of their severity bucket rather than being excluded.
+  function cveEpssScore(c) {
+    return (c.epss && typeof c.epss.score === "number") ? c.epss.score : 0;
+  }
+
   function rankCvesBySeverityThenDate(list) {
     return [...list].sort((a, b) => {
       const sevDiff = cveSeverityRank(a) - cveSeverityRank(b);
       if (sevDiff !== 0) return sevDiff;
+      const epssDiff = cveEpssScore(b) - cveEpssScore(a);
+      if (epssDiff !== 0) return epssDiff;
       return (cveDate(b)?.getTime() || 0) - (cveDate(a)?.getTime() || 0);
     });
   }
