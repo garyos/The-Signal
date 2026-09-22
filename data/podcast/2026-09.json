@@ -2,6 +2,59 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10104",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10104",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10104.mp3",
+      "title": "SANS Stormcast Tuesday, September 22nd, 2026: PNG Stego Analysis; NPM BTree Malware; Pi-Hole Advisory",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, September 22nd, 2026: PNG Stego Analysis; NPM BTree Malware; Pi-Hole Advisory",
+      "show_notes": [
+        {
+          "heading": "TerminalFix PNG Steganography",
+          "links": [
+            "https://isc.sans.edu/diary/TerminalFix%3A%20PNG%20Steganography/33318"
+          ]
+        },
+        {
+          "heading": "NPM Btree Malware Campaign Without Install Script",
+          "links": [
+            "https://checkmarx.com/zero-post/npm-btree-malware-campaign-affects-millions-of-downloads-no-need-for-install-script/"
+          ]
+        },
+        {
+          "heading": "Pi-Hole Update and Advisory",
+          "links": [
+            "https://github.com/pi-hole/FTL/security/advisories/GHSA-2794-hrj8-5jg9"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-22T03:50:10+00:00",
+      "duration_seconds": 342,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10104.mp3",
+      "audio_length_bytes": 4789736,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10104",
+      "categories": [
+        "pihole",
+        "npm",
+        "btree",
+        "termianlfix",
+        "png",
+        "steganography"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10104",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, September 22, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ulrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Today's diary comes from Didier and\n Didier wrote about an image that was used as part of a\n terminal fix campaign that Microsoft did recently write\n about. Now what was interesting about this PNG\n file is that it's 100% valid PNG file. It's not one of\n those cases where the executable is just sort of\n being added as garbage data at the end of a PNG file.\n Instead, the executable itself is encoded inside the PNG\n pixel data. So actual steganography, what's a little\n bit different from how steganography is usually used\n is that typically only a couple bits are being changed\n in the image for normal steganography. While here the\n entire image data was the executable. So the image\n itself while it's still displayed didn't really\n display any real image per se just more or less noise with\n some lines through it. Now what was interesting here also\n is that when you just looked at the image data itself, you\n did not recognize the actual PE data like the typical\n headers and such that you see in PE files. Instead, what you\n saw was well what looked like sort of garbage. What the\n trick being used here was that PNG files can be encoded by\n really just encoding the differences in pixel values\n and that had to be undone that encoding or obfuscation in\n this particular case in order to arrive at the actual pixel\n data. Now, DDA of course has a python tool for that that he\n shared that's pngdump.py and DDA's diary walks you through\n how to use this tool to decode and extract the executable\n from this particular file. And check marks discovered yet\n another supply chain attack against NPM. They called it\n the B3 melder campaign because the library that's being\n introduced here is called indexed B3 apparently to mimic\n a legitimate sorted B3 library. What makes this\n campaign different and noteworthy is that it takes a\n different approach than what we have seen often in the past\n from running malicious code. Usually in the past, the\n supply chain attacks have heavily relied on install\n script. So whenever the developer installs the\n library, there is an option to run install scripts and those\n install scripts were then usually exploiting the system\n in part because that way even if the library is never used\n the malicious code still runs. It only really runs them on\n the developer's system. Now, GitHub and many detection\n techniques and such relied recently on identifying these\n malicious install scripts. So in order to evade this kind of\n detection, this particular library does not use the\n install script. Instead, it just executes the malicious\n code as part of the library's own code. So the drawback here\n is that the attacker needs to wait for the code to actually\n execute. It does not run immediately after installing\n the library. But then again, that's probably not such a\n long stretch. And well, they this particular malware does\n evade most current detection techniques, which as\n checkmarks points out leads to the library actually still\n being in GitHub as of checkmarks writing their post.\n What can you do about this? Well, not really much other\n than being careful what you're installing. In particular, of\n course, these sort of naming conflicts or similar names\n that has always been sort of that good old typo squatting a\n kind of technique that has been heavily used. This\n particular malware does also heavily relied on blockchains\n for command and control and in order to exchange crypto keys.\n And then we got an update for a Pi-Hole, something should\n probably take serious and patch as you get around to it.\n Out of the four vulnerabilities, two of them\n are remote code execution vulnerabilities. However, they\n do require authenticated sessions. So only if you're\n running it like a no password mode, that may be not an\n issue. And of course, you would also have to expose the\n Pi-Hole for the attacker to be able to access the web\n interface. So like I said, nothing really super urgent,\n but the all of your tools should be patched. And it's a\n reminder to occasionally also check in on your Pi-Hole.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for subscribing as always. And\n talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10102",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

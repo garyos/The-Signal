@@ -1,6 +1,59 @@
 {
-  "fetched_at": "2026-09-21T15:34:05.849734+00:00",
+  "fetched_at": "2026-09-22T08:08:28.382160+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10104",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10104",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10104.mp3",
+      "title": "SANS Stormcast Tuesday, September 22nd, 2026: PNG Stego Analysis; NPM BTree Malware; Pi-Hole Advisory",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, September 22nd, 2026: PNG Stego Analysis; NPM BTree Malware; Pi-Hole Advisory",
+      "show_notes": [
+        {
+          "heading": "TerminalFix PNG Steganography",
+          "links": [
+            "https://isc.sans.edu/diary/TerminalFix%3A%20PNG%20Steganography/33318"
+          ]
+        },
+        {
+          "heading": "NPM Btree Malware Campaign Without Install Script",
+          "links": [
+            "https://checkmarx.com/zero-post/npm-btree-malware-campaign-affects-millions-of-downloads-no-need-for-install-script/"
+          ]
+        },
+        {
+          "heading": "Pi-Hole Update and Advisory",
+          "links": [
+            "https://github.com/pi-hole/FTL/security/advisories/GHSA-2794-hrj8-5jg9"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-22T03:50:10+00:00",
+      "duration_seconds": 342,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10104.mp3",
+      "audio_length_bytes": 4789736,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10104",
+      "categories": [
+        "pihole",
+        "npm",
+        "btree",
+        "termianlfix",
+        "png",
+        "steganography"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10104",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, September 22, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ulrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Today's diary comes from Didier and\n Didier wrote about an image that was used as part of a\n terminal fix campaign that Microsoft did recently write\n about. Now what was interesting about this PNG\n file is that it's 100% valid PNG file. It's not one of\n those cases where the executable is just sort of\n being added as garbage data at the end of a PNG file.\n Instead, the executable itself is encoded inside the PNG\n pixel data. So actual steganography, what's a little\n bit different from how steganography is usually used\n is that typically only a couple bits are being changed\n in the image for normal steganography. While here the\n entire image data was the executable. So the image\n itself while it's still displayed didn't really\n display any real image per se just more or less noise with\n some lines through it. Now what was interesting here also\n is that when you just looked at the image data itself, you\n did not recognize the actual PE data like the typical\n headers and such that you see in PE files. Instead, what you\n saw was well what looked like sort of garbage. What the\n trick being used here was that PNG files can be encoded by\n really just encoding the differences in pixel values\n and that had to be undone that encoding or obfuscation in\n this particular case in order to arrive at the actual pixel\n data. Now, DDA of course has a python tool for that that he\n shared that's pngdump.py and DDA's diary walks you through\n how to use this tool to decode and extract the executable\n from this particular file. And check marks discovered yet\n another supply chain attack against NPM. They called it\n the B3 melder campaign because the library that's being\n introduced here is called indexed B3 apparently to mimic\n a legitimate sorted B3 library. What makes this\n campaign different and noteworthy is that it takes a\n different approach than what we have seen often in the past\n from running malicious code. Usually in the past, the\n supply chain attacks have heavily relied on install\n script. So whenever the developer installs the\n library, there is an option to run install scripts and those\n install scripts were then usually exploiting the system\n in part because that way even if the library is never used\n the malicious code still runs. It only really runs them on\n the developer's system. Now, GitHub and many detection\n techniques and such relied recently on identifying these\n malicious install scripts. So in order to evade this kind of\n detection, this particular library does not use the\n install script. Instead, it just executes the malicious\n code as part of the library's own code. So the drawback here\n is that the attacker needs to wait for the code to actually\n execute. It does not run immediately after installing\n the library. But then again, that's probably not such a\n long stretch. And well, they this particular malware does\n evade most current detection techniques, which as\n checkmarks points out leads to the library actually still\n being in GitHub as of checkmarks writing their post.\n What can you do about this? Well, not really much other\n than being careful what you're installing. In particular, of\n course, these sort of naming conflicts or similar names\n that has always been sort of that good old typo squatting a\n kind of technique that has been heavily used. This\n particular malware does also heavily relied on blockchains\n for command and control and in order to exchange crypto keys.\n And then we got an update for a Pi-Hole, something should\n probably take serious and patch as you get around to it.\n Out of the four vulnerabilities, two of them\n are remote code execution vulnerabilities. However, they\n do require authenticated sessions. So only if you're\n running it like a no password mode, that may be not an\n issue. And of course, you would also have to expose the\n Pi-Hole for the attacker to be able to access the web\n interface. So like I said, nothing really super urgent,\n but the all of your tools should be patched. And it's a\n reminder to occasionally also check in on your Pi-Hole.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for subscribing as always. And\n talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10102",
       "show": "stormcast",
@@ -3446,64 +3499,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9996",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday July 7th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. This episode is brought to you by the SANS.edu\n Graduate Certificate Program in Cybersecurity Engineering.\n Today I wrote a quick diary about, well, less well-known\n DNS records. I noticed recently in my home network\n that there were a couple of lookups for NAPTR records.\n And while this was a record I wasn't really familiar with,\n it has been around, it has been defined for a while since\n around 2000. That's when the RFC was released and the\n record itself looked, well, interesting and somewhat\n dangerous in that it allows you to rewrite results using\n regular expressions. And we all know regular expressions,\n lots of sort of implementation issues around that. Well, it\n turns out it wasn't an attack, it was normal traffic.\n Apparently it's used as part of the rich communication\n services that's the underlying protocol that's being used for\n RCS. So RCS has been introduced in recent years and\n particularly the last couple of years been deployed more\n and more with iOS and Google and Android replacing SMS more\n and more with RCS.\n So RCS is essentially a more modern version of SMS. It gets\n rid of some of sort of the old really sort of voice network\n based craft that sort of stuck around with SMS and makes it\n more a standard internet protocol for IP using SIP as\n one of its sort of transport mechanisms here for the\n messages. The NAPTR records are here used without actually\n taking advantage of the regular expressions. They're\n really just used to communicate essentially where\n to connect to. I've seen them for Verizon and AT&T in my\n network, but of course know what exact records you'll see\n will depend on your telecommunication provider\n that you are using. I also got a comment to this on LinkedIn\n and the user here commented that there is apparently an\n international e-invoicing protocol that does take\n advantage of NAPTR records. Wasn't familiar with that\n protocol and not sure how widely it is being used, but\n appears to be an international standard. So maybe more\n visible sort of in some multinational companies or so\n that may be taking advantage of that protocol. As always,\n watch your DNS traffic. Watch out for these odd records and\n try to understand what's going on. And again, it's often not\n malicious. It's just a new technology that has been\n deployed in the network, and it's often good to know about\n these new technologies. And we have a new version of OpenSSH\n 10.4. It fixes a number of security issues. None of them\n I would call sort of urgent or critical. There are a couple\n of interesting ones with SFTP where a client could be\n tricked into writing files into the wrong directory. So\n that may be worth paying some attention to. But there are\n also some new features, for example, some post-quantum\n signature algorithms that are now supported. With OpenSSH,\n what you'll usually find is that you won't see OpenSSH\n version 10.4 in current distributions for a while. But\n many of the security features are sometimes backported to\n older versions. So definitely watch out for new updates,\n even if they're not called OpenSSH 10.4. And BeyondTrust\n has released an advisory identifying four different\n recently patched vulnerabilities. Two of these\n vulnerabilities do allow authentication bypass, which,\n well, for an authentication product like BeyondTrust, of\n course, is critical. They don't specify which exact\n configurations are vulnerable. But as part of the advisory,\n they state that only specific configurations are vulnerable.\n Of course, that's not very helpful. And you better apply\n the patch if you self-host BeyondTrust. Interestingly,\n you need to apply the April rollup here. So it appears\n that the April rollup did patch some so far undisclosed\n vulnerabilities. And Socket .dev has a good blog post with\n updates regarding some of the recent supply chain attacks.\n In particular, what they're focusing on is a North Korean\n threat actor that often deploys harmless-looking\n patches and pull requests to legitimate GitHub repos and\n then does trick developers to actually use these particular\n repos as part of fake job interviews. Now, what I found\n particularly interesting here is that they're going through\n some steps to make it more difficult to detect the\n malicious modifications. They do, for example, alter the Git\n history in that way. It's more difficult to identify like,\n you know, what particular changes were made recently to\n a particular GitHub repository. And that, of\n course, makes it more difficult to identify the\n altered JavaScript files. Now, they historically have mostly\n been using NPM and Node.js, but lately have also been\n branching out to Go and to Google Chrome extensions. That\n would be, as always, careful with this. And I think the\n main takeaway here is that you can't just sort of, you know,\n rely on a quick eyeballing of the Git history in order to\n identify some of these malicious changes. Well,\n thanks for listening. Thanks for liking. Thanks for\n subscribing. And as always, if you like this particular\n podcast, please recommend it to others and talk to you\n again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9994",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9994",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9994.mp3",
-      "title": "SANS Stormcast Monday, July 6th, 2026: Apple Patch Policy; FatFS Vulns; OpenWRT; Multi-Agent Offensive AI;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, July 6th, 2026: Apple Patch Policy; FatFS Vulns; OpenWRT; Multi-Agent Offensive AI;",
-      "show_notes": [
-        {
-          "heading": "Apple Updated Patch Policy",
-          "links": [
-            "https://www.reuters.com/business/apple-says-it-is-releasing-updates-early-response-ai-cybersecurity-concerns-2026-06-29/"
-          ]
-        },
-        {
-          "heading": "T3MP3ST multi-agent offensive-security framework",
-          "links": [
-            "https://github.com/elder-plinius/T3MP3ST"
-          ]
-        },
-        {
-          "heading": "Seven FatFs bugs, one very large blast radius",
-          "links": [
-            "https://www.runzero.com/blog/fatfs-bugs/"
-          ]
-        },
-        {
-          "heading": "OpenWRT Releases v25.12.5",
-          "links": [
-            "https://github.com/openwrt/openwrt/releases"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-06T11:36:06+00:00",
-      "duration_seconds": 350,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9994.mp3",
-      "audio_length_bytes": 4898791,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9994",
-      "categories": [
-        "openwrt",
-        "fatfs",
-        "t3mp3st",
-        "apple",
-        "ai"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9994",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday, July 6, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n undergraduate certificate program in cybersecurity\n fundamentals. Last week when I covered Apple's updates, I did\n mention that they felt a little bit different than what\n we usually saw for Apple. They weren't really sort of an\n emergency update where we had some very specific exploited\n vulnerabilities being fixed, but they also weren't just a\n big broad update. We usually saw where we get patches for\n every single of Apple's products. We only got them\n sort of for the iOS, macOS and Safari with a heavy focus on\n WebKit vulnerabilities. And that sort of also explains the\n inclusion of Safari. Well, Reuters now published that\n this is apparently sort of a new strategy going forward\n from Apple when it comes to patches and releasing security\n updates. They're no longer necessarily going to wait for\n the next major update. So currently we are like on iOS,\n macOS of 25. Sorry, 26.5. The next sort of update would then\n be 26.6. But what they released basically last week\n were vulnerabilities they fixed in some of the betas for\n 26.6. And they didn't really want to wait until 26.6 is\n released. So they accelerated the release of these patches.\n And that's something that we should expect in the future.\n So basically expect more and sort of more incremental\n security updates from Apple that aren't necessarily sort\n of bundled in with some of the feature updates that we have\n seen in the past. When talking about discovering and\n exploiting vulnerabilities with the aid of AI, clients,\n vielleicht more or agendas. They don't have to worry about\n what we are The next slide is by Plinus Elder. Elder Plinus\n has released a new tool T3MP3ST. And what's sort of\n unique about it is, it's not a new model than there are now a\n number of them that can be used to find vulnerabilities\n and exploit them. Instead, it's really more a harness\n that can then be used for existing coding agents that\n you already use. So if you're using anything like cloud or\n such, or even your local model to code, well, you can use\n T3MP3ST in order to then use that model to find\n vulnerabilities and also create exploits for them the\n advantage is well as sort of pointed out in the readme file\n that you don't have yet another token bill of course\n now it goes against whatever tokens you're using with these\n existing models on the other hand I sort of I'm really\n interested in trying it out with local models with you\n know it's of course more interesting because they have\n more control over what models are using and also what\n safeguards these models may be implementing and run zero\n published a blog post with details regarding seven\n different flaws in fat FS everybody listening to this\n podcast probably has heard about the fat file system the\n good old sort of no Windows style file system well it's of\n course often used for anything kind of that mounts SD cards\n USB media and one of the popular open source\n implementations is fatFS so if you have an IOT device for\n example that can mount an SDcard it probably runs fat FS\n the library to implement the fat file system seven of these\n bugs were now disclosed and many of them allowing\n arbitrary code execution this is in particular a problem for\n IOT devices you don't always need to physically mount a\n file system like some kind of ISO file or something like\n this can often be used to mount then a virtual drive to\n a system and trigger some of these vulnerabilities which\n could of course be exploited in for privilege escalation\n and open WRT did release an update that fixes a number of\n interesting security vulnerabilities version 25.12\n .5 don't usually mention them and nothing here sort of\n screams patch now but certainly even your open\n source devices need to be updated occasionally and we\n have seen all the havoc that attackers are creating with\n sort of no border security devices like that none of\n these is sort of unauthenticated device\n takeover type vulnerabilities there are a number of approach\n escalation vulnerabilities also some DHCP related\n vulnerabilities that can be exploited by network adjacent\n devices so not exactly sort of a remote attacker as always\n you never really should expose the admin interfaces of any\n device like this to the internet use VPNs and such for\n it but on the other hand there's also an SH update here\n that fixes some SCP issues in this release well and that's\n it for today so thanks for listening thanks for liking\n and subscribing to this podcast and as always talk to\n you again tomorrow bye\n you",
       "transcript_checked": true
     }
   ]
