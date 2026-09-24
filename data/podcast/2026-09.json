@@ -2,6 +2,70 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10108",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10108",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10108.mp3",
+      "title": "SANS Stormcast Thursday, September 24th, 2026: Macfinger ClickFix; Malicious Terraform; MikroTik and F5 Big IP Vulnerability Details",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 24th, 2026: Macfinger ClickFix; Malicious Terraform; MikroTik and F5 Big IP Vulnerability Details",
+      "show_notes": [
+        {
+          "heading": "Macfinger ClickFix Campaign",
+          "links": [
+            "https://isc.sans.edu/diary/Macfinger%20ClickFix%20campaign/33360"
+          ]
+        },
+        {
+          "heading": "Graphalgo campaign spreads to Terraform providers and Go Modules",
+          "links": [
+            "https://www.aikido.dev/blog/graphalgo-terraform-go-modules"
+          ]
+        },
+        {
+          "heading": "MikroTik vulnerabilities technical analysis,",
+          "links": [
+            "https://cert.pl/en/posts/2026/09/mikrotrick-technical-analysis/"
+          ]
+        },
+        {
+          "heading": "F5 Big-IP Vulnerability Details CVE-2026-94127",
+          "links": [
+            "https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "podscan_ceKfRJw0F1fvyCUUhxsyFRhNvabT1TnF",
+          "links": []
+        }
+      ],
+      "published": "2026-09-24T03:50:11+00:00",
+      "duration_seconds": 356,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10108.mp3",
+      "audio_length_bytes": 4993833,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10108",
+      "categories": [
+        "f5",
+        "big-ip",
+        "mitrotik",
+        "graphalgo",
+        "terraform",
+        "clickfix",
+        "macfinger"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10108",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, September 24th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cloud\n Security. Well, to start out with, we have a diary by Brad\n today, again, doing some interesting malware analysis\n using network traffic. This particular sample is part of a\n click fix campaign that Brad calls MacFinger. The name\n comes from, well, this particular campaign targeting\n Macs and using some fingerprinting in order to\n figure out if they are actually targeting here or are\n connected to a Mac. Now, the click fix campaign itself uses\n a number of compromised sites, nothing really all that\n special on this end. But then it includes the actual capture\n that implements the click fix campaign again from legitimate\n but compromised sites, a trick that attackers like to use in\n order to bypass some reputation filters that\n defenders may have deployed. Once the victim is falling for\n the click fix campaign and copy pasting the script into\n the terminal, the exploitation starts and ends up with an\n info stealer in the end. Aikido published a blog post\n detailing a very specific supply chain attack. They call\n it the Craft Algo campaign. And the first thing that's\n odd, different about this campaign is that it actually\n takes advantage of malicious Terraform providers. Now,\n these Terraform providers will load Go modules that implement\n a remote admin tool, but they'll only load these Go\n modules if there is a very specific Docker container name\n and network ID present on the system. Only the SHA-56 hash\n is included in the malware, so it's unclear what this exact\n name is. But Aikido assumes that this attack was supposed\n to target a very specific organization. Now, why would\n someone install these malicious Terraform providers?\n The reason here is typosquatting that they mimic\n very popular Docker-related Terraform providers. If you're\n interested in more details, please refer to the Aikido\n blog. And the Polish cert has published a detailed write-up\n regarding two vulnerabilities that MicroTik recently patched\n in its router OS. If you remember, I talked about this\n when it was first reported that there was a vulnerability\n in MicroTik's router OS, specifically in the SH daemon\n that is delivered as part of a router OS, that allowed for an\n authentication bypass via SH and complete compromise of the\n router. Now, MicroTik did release patches, but no\n details about what exactly happened. The Polish cert is\n now filling this gap and they discovered two distinct\n vulnerabilities. One is a re -key during the authentication\n process with the SH server that bypasses authentication.\n The other part, and that's actually sort of the neatest\n part here I find in some ways, is in order to exploit this\n vulnerability, a username of dash two or minus two was\n used. Well, it turns out that that actually redirects the\n input to the SH daemon from the client. So that's another\n part here of the authentication bypass.\n Interesting write-up and definitely if you're running\n MicroTik, make sure you're up to date. Remember, this was\n also an SH daemon that's unique to MicroTik. So this is\n not a standard SH implementation like DropBear\n or OpenSH that they're deploying as part of a router\n OS. And yesterday I talked about an exploited\n vulnerability that was patched in F5's Big-IP devices. Well,\n today, we got the, as usual, quite entertaining write-up\n from WatchTowr about this vulnerability. The problem is,\n well, in hindsight, relatively straightforward. It's a buffer\n overflow in the auth header. You need a bit more than 16\n kilobytes of data in order to trigger this buffer overflow.\n And WatchTowr, in reversing the patch released, basically\n found that they had no length check on that value at all.\n And the patch was essentially just adding this length check\n to the value before it's being copied into the buffer. The\n auth header can be quite large sometimes depending on what\n kind of tokens you use. So 16 kilobytes may not be that\n outrageous last actually a little bit longer than 16\n kilobytes. But anyway, no matter the link, you still\n have to check that you're not copying any more than that\n into the respective buffer. Well, and that's it for today.\n So thanks again for listening, for subscribing, for liking.\n And yeah, also, if you have a minute, then please leave a\n good comment on your favorite podcast platform, like Apple\n Podcasts or whatever you're using to listen to this\n podcast. Thanks and talk to you again tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10106",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

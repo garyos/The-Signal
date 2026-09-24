@@ -1,6 +1,70 @@
 {
-  "fetched_at": "2026-09-23T14:00:45.930440+00:00",
+  "fetched_at": "2026-09-24T08:01:43.228036+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10108",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10108",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10108.mp3",
+      "title": "SANS Stormcast Thursday, September 24th, 2026: Macfinger ClickFix; Malicious Terraform; MikroTik and F5 Big IP Vulnerability Details",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 24th, 2026: Macfinger ClickFix; Malicious Terraform; MikroTik and F5 Big IP Vulnerability Details",
+      "show_notes": [
+        {
+          "heading": "Macfinger ClickFix Campaign",
+          "links": [
+            "https://isc.sans.edu/diary/Macfinger%20ClickFix%20campaign/33360"
+          ]
+        },
+        {
+          "heading": "Graphalgo campaign spreads to Terraform providers and Go Modules",
+          "links": [
+            "https://www.aikido.dev/blog/graphalgo-terraform-go-modules"
+          ]
+        },
+        {
+          "heading": "MikroTik vulnerabilities technical analysis,",
+          "links": [
+            "https://cert.pl/en/posts/2026/09/mikrotrick-technical-analysis/"
+          ]
+        },
+        {
+          "heading": "F5 Big-IP Vulnerability Details CVE-2026-94127",
+          "links": [
+            "https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "podscan_ceKfRJw0F1fvyCUUhxsyFRhNvabT1TnF",
+          "links": []
+        }
+      ],
+      "published": "2026-09-24T03:50:11+00:00",
+      "duration_seconds": 356,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10108.mp3",
+      "audio_length_bytes": 4993833,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10108",
+      "categories": [
+        "f5",
+        "big-ip",
+        "mitrotik",
+        "graphalgo",
+        "terraform",
+        "clickfix",
+        "macfinger"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10108",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, September 24th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cloud\n Security. Well, to start out with, we have a diary by Brad\n today, again, doing some interesting malware analysis\n using network traffic. This particular sample is part of a\n click fix campaign that Brad calls MacFinger. The name\n comes from, well, this particular campaign targeting\n Macs and using some fingerprinting in order to\n figure out if they are actually targeting here or are\n connected to a Mac. Now, the click fix campaign itself uses\n a number of compromised sites, nothing really all that\n special on this end. But then it includes the actual capture\n that implements the click fix campaign again from legitimate\n but compromised sites, a trick that attackers like to use in\n order to bypass some reputation filters that\n defenders may have deployed. Once the victim is falling for\n the click fix campaign and copy pasting the script into\n the terminal, the exploitation starts and ends up with an\n info stealer in the end. Aikido published a blog post\n detailing a very specific supply chain attack. They call\n it the Craft Algo campaign. And the first thing that's\n odd, different about this campaign is that it actually\n takes advantage of malicious Terraform providers. Now,\n these Terraform providers will load Go modules that implement\n a remote admin tool, but they'll only load these Go\n modules if there is a very specific Docker container name\n and network ID present on the system. Only the SHA-56 hash\n is included in the malware, so it's unclear what this exact\n name is. But Aikido assumes that this attack was supposed\n to target a very specific organization. Now, why would\n someone install these malicious Terraform providers?\n The reason here is typosquatting that they mimic\n very popular Docker-related Terraform providers. If you're\n interested in more details, please refer to the Aikido\n blog. And the Polish cert has published a detailed write-up\n regarding two vulnerabilities that MicroTik recently patched\n in its router OS. If you remember, I talked about this\n when it was first reported that there was a vulnerability\n in MicroTik's router OS, specifically in the SH daemon\n that is delivered as part of a router OS, that allowed for an\n authentication bypass via SH and complete compromise of the\n router. Now, MicroTik did release patches, but no\n details about what exactly happened. The Polish cert is\n now filling this gap and they discovered two distinct\n vulnerabilities. One is a re -key during the authentication\n process with the SH server that bypasses authentication.\n The other part, and that's actually sort of the neatest\n part here I find in some ways, is in order to exploit this\n vulnerability, a username of dash two or minus two was\n used. Well, it turns out that that actually redirects the\n input to the SH daemon from the client. So that's another\n part here of the authentication bypass.\n Interesting write-up and definitely if you're running\n MicroTik, make sure you're up to date. Remember, this was\n also an SH daemon that's unique to MicroTik. So this is\n not a standard SH implementation like DropBear\n or OpenSH that they're deploying as part of a router\n OS. And yesterday I talked about an exploited\n vulnerability that was patched in F5's Big-IP devices. Well,\n today, we got the, as usual, quite entertaining write-up\n from WatchTowr about this vulnerability. The problem is,\n well, in hindsight, relatively straightforward. It's a buffer\n overflow in the auth header. You need a bit more than 16\n kilobytes of data in order to trigger this buffer overflow.\n And WatchTowr, in reversing the patch released, basically\n found that they had no length check on that value at all.\n And the patch was essentially just adding this length check\n to the value before it's being copied into the buffer. The\n auth header can be quite large sometimes depending on what\n kind of tokens you use. So 16 kilobytes may not be that\n outrageous last actually a little bit longer than 16\n kilobytes. But anyway, no matter the link, you still\n have to check that you're not copying any more than that\n into the respective buffer. Well, and that's it for today.\n So thanks again for listening, for subscribing, for liking.\n And yeah, also, if you have a minute, then please leave a\n good comment on your favorite podcast platform, like Apple\n Podcasts or whatever you're using to listen to this\n podcast. Thanks and talk to you again tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10106",
       "show": "stormcast",
@@ -3416,65 +3480,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10000",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, July 9th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Master's Degree Program in Information\n Security Engineering. And today we got from Xavier a new\n tool, the Stack Simulator. It's a web-based tool that\n Xavier created and that you can use. And what it's really\n about is whenever you're dealing with exploit\n development or if you're dealing with, for example,\n reversing malware, one of the important concepts to master\n is, well, how does the stack work? How do programs use the\n stack? And that is what this tool is about. It's really a\n learning tool to allow you to explore how sort of different\n values are passed in the stack, how, for example,\n commands can be executed, how pointers can be manipulated.\n And, well, give it a try, play with it. Like, it's really\n more learning tool. And so for anybody here sort of new to\n this kind of work, like reverse engineering and\n exploit development, probably a nice tool to go along with\n whatever classes you're taking. Xavier did develop\n this for our reversing malware class, Forensic 6.10. Well,\n I'm talking about tools. I figured we can also include\n another tool here that I just came across this week and I\n think some of you may be interested in, and that's root\n as role. So typically when you're dealing with Linux,\n what you usually do in order to assign elevated privileges\n to another user is sudo. That's the good old tool, has\n been around forever and, well, has caused problems forever\n with its approach to really sort of transferring all user\n rights instead of having sort of that more granular\n capabilities scheme and such that we have in modern Unix\n systems. But sudo pretty much sort of kind of ignores some\n of that and just gives you the full privileges of the other\n user. Well, root as role takes the other approach. You can\n now basically assign very specific capabilities or\n privileges to a particular user. You don't have to give\n them all rights associated with a particular user's\n account. And you can basically constrain how these rights can\n be used. Looks like a real interesting tool. Big problem,\n however, is it's not integrated in any major\n distributions other than Arch Linux. So Ubuntu, Red Hat and\n users like that. You have to compile it from scratch and\n then install it, which of course in many production\n environments is probably a little bit too cumbersome. But\n take a look and see if you find it useful. Well, and\n let's close it out with a little bit supply chain\n issues. One of the solutions that are often being offered\n in order to gain back some control over your supply chain\n is things like Git signatures and looking at Git commit\n hashes in order to better, well, figure out who created a\n certain commit and what actually changed and to\n identify specific commits. Jacob Ganesan from Carnegie\n Mellon University did publish a paper showing how, well,\n these signatures may not be as good as we thought. The\n problem here is in particular GitHub, but also some of the\n local Git implementations don't necessarily normalize\n whatever is being signed here. And, well, an attacker can\n essentially determine what parts of a particular Git\n commit are actually being added to a hash and a\n signature and what actually is being signed. And in doing so,\n it's possible to create a second Git commit with an\n identical hash and a valid signature with that. So that's\n certainly something to be aware of. There are a couple\n of solutions being offered here. In part, of course,\n these are bug fixes that need to be applied to Git and\n GitHub to fix some of these issues. But at this point,\n just awareness of the issue is probably already going to help\n somewhat. So take a look at the paper and see how these\n attacks exactly work and how to detect them. Well, and that\n it is for today. So thanks again for listening. Thanks\n for liking. Thanks for recommending this podcast and\n talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-9998",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "9998",
-      "guid": "https://traffic.libsyn.com/securitypodcast/9998.mp3",
-      "title": "SANS Stormcast Wednesday, July 8th, 2026: Odd DNS; AnyDesk Phishing; Tenda Backdoor; GitLost",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, July 8th, 2026: Odd DNS; AnyDesk Phishing; Tenda Backdoor; GitLost",
-      "show_notes": [
-        {
-          "heading": "More Odd DNS Records: NIMLOC",
-          "links": [
-            "https://isc.sans.edu/diary/More%20Odd%20DNS%20Records%3A%20NIMLOC/33128"
-          ]
-        },
-        {
-          "heading": "From Invoice to AnyDesk: Uncovering a Phishing Campaign Targeting  Russian Aerospace Organizations",
-          "links": [
-            "https://www.seqrite.com/blog/from-invoice-to-anydesk-uncovering-a-phishing-campaign-targeting-russian-aerospace-organizations/"
-          ]
-        },
-        {
-          "heading": "Tenda firmware (multiple versions) contains hidden authentication backdoor",
-          "links": [
-            "https://kb.cert.org/vuls/id/213560"
-          ]
-        },
-        {
-          "heading": "GitLost: GitHub AI Agent Leak",
-          "links": [
-            "https://noma.security/wp-content/uploads/GitLostWorkflow_2.gif"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-08T02:00:02+00:00",
-      "duration_seconds": 440,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/9998.mp3",
-      "audio_length_bytes": 6164996,
-      "episode_link": "https://isc.sans.edu/podcastdetail/9998",
-      "categories": [
-        "gitlost",
-        "github",
-        "tenda",
-        "anydesk",
-        "nimloc",
-        "dns"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=9998",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, July 8th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. Well, in diaries today, I wrote up about yet\n another odd DNS record. Yesterday, I talked about\n these NAPTR records. Well, today it's NIMLOC,\n which is something that I saw in my Zeek logs for quite a\n while, but never really sort of, you know, wrote up really\n what it's about. So definitely wanted to take care of that.\n And this is, I don't know, it's not a mistake that Zeek\n makes you calling it NIMLOC. It's actually the correct way\n to label it. I would have probably labeled it as net\n bias. So what's going on here is there is a DNS type of 32\n and that type has been defined twice. It was originally\n defined for the good old net bias name lookups, the port\n 137 lookups. Well, that protocol, of course, got sort\n of obsoleted and now it's no longer being used. And then\n there was this other protocol Nimrod. It's sort of a routing\n protocol. And, well, that's also obsolete, but it's newer\n than the net bias protocol. And the official IANA list of\n DNS types assigns type 32 to NIMLOC. So that's what Zeek\n is using, even though what you're actually looking at, if\n you're seeing these records, is net bias traffic on port\n 137. And that sort of also distinguishes it from the\n usual DNS traffic. Zeek still writes it to its DNS logs. And\n that's why you may come across this record. So, yeah,\n interesting history here. Ignore it for the most part.\n Doesn't seem to be anything bad. I see it from my Macs,\n actually, not really from Windows systems. But that's\n another story about, you know, how some operating systems\n keep these obsolete protocols around. And Segrite published\n a blog post detailing a recent interesting phishing attack\n that relied on AnyDesk. AnyDesk, of course, is\n legitimate help desk software that used to remotely access\n systems. So nothing really bad about it. But, of course,\n software like this is also very useful to attackers. And\n that's what's happening here. So the victim first receives\n an email. That email claims to be some kind of bill or some\n technical specification or such. And then what looks like\n a PDF is actually executable. And, yes, that's also password\n protected for sort of added protection from scanning.\n Well, the drop pod that's being installed then is not\n really downloading malware per se. Instead, it downloads a\n tray minimizer to basically hide software that's running.\n And then runs AnyDesk and uses the tray minimizer to hide the\n fact that AnyDesk is running. And then AnyDesk is basically\n being used as a persistent mechanism to connect to the\n infected system. Now, I want to point out that while\n AnyDesk, of course, is normal software, you definitely\n should track the use of any kind of remote control\n software like that. You can do that via network detection.\n But also on the endpoint, usually most EDR software will\n have the ability to flag software like AnyDesk. And you\n likely only have like one or two different sort of packages\n that you routinely use legitimately for remote\n access. And then having anything different or new\n being installed should certainly raise an alert.\n Also, there's plenty of activity here that sort of\n gives you opportunity for detection. Like, for example,\n the drop bar. Things like, you know, encrypted attachments\n that then contain executables. And typically for an\n attachment, you can still check the file type, even if\n it is encrypted. Like, you still see the file names and\n such. So make sure your detection software is able to\n do that, you know, in particular on mail gateways\n and the like, to detect the encrypted executables if\n they're being sent as an attachment. Changes to then\n your scheduler and such, of course, also should be\n flagged. And if you're using any devices made by 10DAN,\n that would be a router or a switch. Well, there is a\n hidden authentication backdoor that you should be aware of.\n And there is no patch. Now, the actual password is a\n configuration parameter. So you may be able to at least\n override it in the configuration file in order to\n basically not at least have the default backdoor password.\n But the way it works is that when you're entering your\n credentials, you're using a password and the password is\n not valid. It will also then check if the password that you\n used is this backdoor password. And then no matter\n the username, you will always be logged in as an\n administrator. And we have yet an example of, well, a pattern\n that I keep seeing being exploited. This is really just\n sort of the latest example of a vulnerability like this. The\n main problem here is that developers are allowing, well,\n basically anybody to file an issue, a complaint, a bug\n report for their software, and then use automatic AI agents\n to parse these issues and respond to them. And, well,\n that just is going wrong. You will have malicious actors\n that are then using various types of prompt injection in\n order to, for example, in this case, extract secrets. This\n particular issue here is with the GitHub agent. And the\n attacker is able then to basically extract any secrets\n that this agent has access to. The pattern, like I said,\n isn't unique to this particular sort of setup. We\n have had a number of different reports of issues like this.\n This is just sort of the latest example of it. Be\n really careful if you're allowing any kind of LM agent\n to read and respond to untrusted input. Well, it\n should be obvious. And if you're doing this, then make\n sure that these agents are very constrained in as to what\n kind of information they have access to. Well, and this is\n it for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. And, as always, talk\n to you again tomorrow. Bye. Bye. Bye.",
       "transcript_checked": true
     }
   ]
