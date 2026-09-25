@@ -1,6 +1,66 @@
 {
-  "fetched_at": "2026-09-24T13:57:42.446856+00:00",
+  "fetched_at": "2026-09-25T08:26:39.616501+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10110",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10110",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10110.mp3",
+      "title": "SANS Stormcast Friday, September 25th, 2026: Tricky Phishing URL; MacSync Malware Update; SolarWinds Observable Patch",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 25th, 2026: Tricky Phishing URL; MacSync Malware Update; SolarWinds Observable Patch",
+      "show_notes": [
+        {
+          "heading": "One URL, Three Different Tricks",
+          "links": [
+            "https://isc.sans.edu/diary/33366"
+          ]
+        },
+        {
+          "heading": "Send GitLab an email, push to main",
+          "links": [
+            "https://www.aikido.dev/blog/gitlab-email-push-to-main"
+          ]
+        },
+        {
+          "heading": "macOS MacSync Malware Update",
+          "links": [
+            "https://securelist.com/macsync-new-version/121383/"
+          ]
+        },
+        {
+          "heading": "SolarWinds Observability Self-Hosted 2026.2.3",
+          "links": [
+            "https://documentation.solarwinds.com/en/success_center/orionplatform/content/release_notes/hco_2026-2-3_release_notes.htm"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-25T03:45:12+00:00",
+      "duration_seconds": 430,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10110.mp3",
+      "audio_length_bytes": 6020677,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10110",
+      "categories": [
+        "solarwinds",
+        "macos",
+        "macsync",
+        "malware",
+        "patch",
+        "gitlab",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10110",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 25th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And today's episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Industrial Control Systems Security. First story comes\n from Xavier. Xavier looked at, well, an interesting phishing\n email with a URL that as Xavier analyzed it uses three\n different tricks. Now, first of all, it uses the good old\n user info field, which has often been abused in phishing.\n It's where in old style browsers, you were able to\n prefix a URL with a username and a password. These days,\n they should pretty much be ignored, but well, still works\n in the sense that you still end up at the actual URL that\n follows that username. Now, the first trick here that the\n attacker used was to make the username password part\n actually unique to the particular email. So that\n makes filtering a little bit more difficult. Also, the host\n name is actually invalid. The first label of the host name\n ends in two dashes. Well, host names or labels cannot end in\n two dashes or dashes at all, according to the RFC. But as\n so many things, it will just work. In the end, of course,\n we do have the email address that the particular phishing\n attack went to, which will then be used in order to pre\n fill any phishing page with the right email address and\n often things like logos for the particular trusted domain.\n So it's an interesting URL being used here, something\n that definitely can be blocked, but may not be\n blocked because, well, it may not be recognized even as a\n valid URL, or may be wrongly characterized as the trusted\n host name, not the one that the attacker is actually\n using, due to the use of multiple ad symbols in the\n URL. Well, in second day in a row that we have a story from\n aikido. This particular story affects GitLab. And while\n maybe technically not a vulnerability, it's certainly\n a significant weakness. GitLab allows you to configure an\n email address that can be used to send various requests to\n your GitLab repositories. Now the trick with these email\n addresses is that they include a secret, basically a random\n string, that is the only thing that really authenticates\n these email addresses. What makes the thing even worse is\n that, well, these email addresses have wide reaching\n permissions. Now the email address ends, for example,\n with dash issue, which would allow you to add an issue. But\n by changing this suffix, different features are\n available to anybody who knows the secret string. How would\n an attacker learn about the email address and the secret\n string? Well, apparently, according to aikido, some\n users of GitLab may not properly understand the power\n of these email addresses. And it may be sounding benign to\n the user to provide, for example, as part of a readme,\n an email address with the dash issue suffix to their\n customers in order to allow them to easily report issues\n with the application. On the other hand, it's pretty\n straightforward to then change the suffix to other features\n that are available via via these email addresses, like,\n for example, push or merge requests with the email\n address, just by sending a simple email to the particular\n address. Apparently, it's not possible to limit the from\n address, which wouldn't be all that strong anyway, but still\n a little bit better, or apply other restrictions to the\n addresses once they are defined. And Kaspersky found a\n new version of the Mac sync malware. Now, this malware\n typically spreads via click fix exploits, but has also\n been found to impersonate, for example, crypto coin wallets.\n One particular case, the attacker even set up a\n complete webpage for the crypto coin wallet application\n to make it look more legit. Now, where things get a little\n bit different now is, and I think that's the most\n interesting part of this, that the part of the payload is\n actually retrieved via the iCloud calendar. So by\n retrieving and syncing calendar entries, the payload\n is being retrieved to the system.\n And the other part of the Mac sync is that it is not the\n same as the main thing that you typically find in\n organizations. And even on the host of endpoint defenses, it\n may even evade some of the techniques that they're using,\n because well, it never really sort of is received via the\n network, at least not in a visible way. The other part\n that changed with Mac sync is that it now uses binaries,\n compiled Objective C or Swift code, and no longer just uses\n scripting languages.\n And SolarWinds released update for SolarWinds observability.\n So if you're self hosting this product, you may want to\n consider updating. Now, both vulnerabilities are remote\n code execution vulnerabilities. Neither of\n the vulnerabilities does require authentication.\n However, one requires specific insecure, so known insecure\n configuration that's not default. The other one does\n require specific communication modes to be enabled. I would\n still try to get this patch that just in case that a\n configuration changes later, wouldn't really rely on just\n running the right not vulnerable configuration from\n protecting you here in the longer term. Well, and that's\n it for today. So thanks again for listening. Thanks for\n liking. Thanks for subscribing. Thanks for\n leaving good comments about this podcast in your favorite\n podcast platform. And talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10108",
       "show": "stormcast",
@@ -39,10 +99,6 @@
           "links": [
             "https://www.sans.org/profiles/dr-johannes-ullrich"
           ]
-        },
-        {
-          "heading": "podscan_ceKfRJw0F1fvyCUUhxsyFRhNvabT1TnF",
-          "links": []
         }
       ],
       "published": "2026-09-24T03:50:11+00:00",
@@ -3421,65 +3477,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10002",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday July 10th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recorded today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n graduate certificate program in industrial control systems\n security. As a reminder, of course, next week we'll start\n with SANSFire. If you see me around in DC during SANSFire,\n I usually have some Internet Storm Center stickers with me\n or such. So just look me up and I'll also do a keynote\n outlining some of the future things that we envision for\n Internet Storm Center. So that'll be Monday evening.\n Jason Callahan, one of our undergranted interns, did\n today contribute a kind of nice interesting diary about\n what I used to call graffiti bots. So these are bots,\n business systems that are scanning just the Internet\n that aren't really sort of attacking buttons that just\n leave a message behind the logs. And in this particular\n case, well, it's helped me escape from Belarus, news,\n please, is the message that's being spread here. It's inside\n the user agent. It's also as part of the URL that is being\n used. Now this particular bot looks for HTTP and for SSH. It\n does attempt a small list of username and passwords when it\n hits an open SSH or Telnet port. But beyond that really\n doesn't do much but spread itself. I've had a couple of\n these in the past that basically just for sort of\n leaving messages in the logs. Sometimes maybe a cross that\n scripting exploit has happened in the past. But for the most\n part, really just know either getting people to talk about a\n message, which I guess they accomplished here by me\n covering it. Sometimes also just the URL then hoping that\n administrators or so will click on it. We had even one\n bot I haven't seen in quite a while that basically had a\n message kind of associating it with our Internet Storm\n Center, kind of implicating us in being the origin of these\n scans, which of course not ever so often led to an angry\n email hitting our inbox. And then important update for\n macOS users. macOS 28 is going to seize support for encrypted\n macOS extended file system formatted disks. So it only\n affects the encrypted version of it. Now to put a little bit\n in perspective, so this is macOS 28, which will not be\n released this year. This is next year's release. So you\n have about a year and a half or so until macOS 28 is likely\n going to hit your systems. Until then, the macOS extended\n file system format will still be fully supported, including\n the encrypted version of it. Now beyond that, you may have\n problems also the current file system, the Apple file system.\n Well, it was introduced about 10 years ago. So we're talking\n essentially about systems that were essentially first, you\n know, created about 10 years ago. Of course, there was a\n transition period where people may have still used the macOS\n extended file system format instead of the sort of default\n Apple file system format. I think one thing to be like\n careful about this is if you have old backup disks around\n or maybe they kept some old laptop or such in a closet. I\n sometimes have done that, you know, just in case you need a\n file of it. Well, the laptop will, if it's still physically\n okay, still boot and the file system will all work. But you\n won't be able to mount these disks. If you just kept the\n disk, not the actual system, you won't be able to mount\n these disks to modern systems come macOS 28. So before that,\n you at least need to decrypt the systems, which you can do\n non-destructively or even better, you need to copy them\n over to a more modern file system like an Apple file\n system. But that of course requires copying the complete\n content. There's no sort of simple in-place conversion for\n that. And Google released an update for Google Chrome\n fixing 27 security vulnerabilities. Now, none of\n them is already being exploited, which is always a\n good thing. But what's sort of noteworthy here is the last\n few updates we had had like hundreds of vulnerabilities.\n And one of the reasoning that was stated for the large\n number of vulnerabilities was, well, the use of AI tools and\n finding these vulnerabilities. Seeing that this time around,\n we only got 27 vulnerabilities, maybe an\n indicator that we actually, well, are now tending like to\n a lower number. So maybe actually, you know,\n vulnerabilities are getting fixed and we'll end up with\n less vulnerabilities. I'll give it a couple months to\n really, you know, come to a conclusion here. But the first\n hopefully good indicator. And Microsoft released an update\n to its advisory for the Rogue Planet vulnerability. This was\n one of those Microsoft Defender privilege escalation\n vulnerabilities that the Nightmare Eclipse published.\n It was first noted by Microsoft on June 16th. So a\n little bit less than a month ago. Well, there is now a\n patch available for it. The patch comes in the form of an\n updated scanning engine for Microsoft Defender. So it\n should be applied automatically by Microsoft\n Defender. You can also if you want to double check, check\n the version number of the scanning engine. So it's not a\n rule update, it's a scanning engine update. But those\n updates are pretty much continuously. So within a day\n or so, you should probably have the new scanning engine\n loaded. Well, and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing. Thanks\n for recommending this podcast and talk to you again on\n Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10000",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10000",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10000.mp3",
-      "title": "SANS Stormcast Thursday, July 9th, 2026: Stack Simulator; RootAsRole; Hoymiles; Git Hash Malleability",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, July 9th, 2026: Stack Simulator; RootAsRole; Hoymiles; Git Hash Malleability",
-      "show_notes": [
-        {
-          "heading": "My Stack Simulator https://isc.sans.edu/diary/My%20Stack%20Simulator/33138",
-          "links": []
-        },
-        {
-          "heading": "RootAsRole",
-          "links": [
-            "https://github.com/LeChatP/RootAsRole"
-          ]
-        },
-        {
-          "heading": "Hoymiles Inverter Vulnerability",
-          "links": [
-            "https://www.ccc.de/system/uploads/382/original/hoymiles_dtu_vuln.pdf"
-          ]
-        },
-        {
-          "heading": "Git Hash Chain Malleability",
-          "links": [
-            "https://arxiv.org/abs/2607.02820"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-09T02:00:02+00:00",
-      "duration_seconds": 295,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10000.mp3",
-      "audio_length_bytes": 4138842,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10000",
-      "categories": [
-        "gith",
-        "github",
-        "hoymiles",
-        "solar",
-        "rootasrole",
-        "sudo",
-        "stack",
-        "simulator"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10000",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, July 9th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I'm recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Master's Degree Program in Information\n Security Engineering. And today we got from Xavier a new\n tool, the Stack Simulator. It's a web-based tool that\n Xavier created and that you can use. And what it's really\n about is whenever you're dealing with exploit\n development or if you're dealing with, for example,\n reversing malware, one of the important concepts to master\n is, well, how does the stack work? How do programs use the\n stack? And that is what this tool is about. It's really a\n learning tool to allow you to explore how sort of different\n values are passed in the stack, how, for example,\n commands can be executed, how pointers can be manipulated.\n And, well, give it a try, play with it. Like, it's really\n more learning tool. And so for anybody here sort of new to\n this kind of work, like reverse engineering and\n exploit development, probably a nice tool to go along with\n whatever classes you're taking. Xavier did develop\n this for our reversing malware class, Forensic 6.10. Well,\n I'm talking about tools. I figured we can also include\n another tool here that I just came across this week and I\n think some of you may be interested in, and that's root\n as role. So typically when you're dealing with Linux,\n what you usually do in order to assign elevated privileges\n to another user is sudo. That's the good old tool, has\n been around forever and, well, has caused problems forever\n with its approach to really sort of transferring all user\n rights instead of having sort of that more granular\n capabilities scheme and such that we have in modern Unix\n systems. But sudo pretty much sort of kind of ignores some\n of that and just gives you the full privileges of the other\n user. Well, root as role takes the other approach. You can\n now basically assign very specific capabilities or\n privileges to a particular user. You don't have to give\n them all rights associated with a particular user's\n account. And you can basically constrain how these rights can\n be used. Looks like a real interesting tool. Big problem,\n however, is it's not integrated in any major\n distributions other than Arch Linux. So Ubuntu, Red Hat and\n users like that. You have to compile it from scratch and\n then install it, which of course in many production\n environments is probably a little bit too cumbersome. But\n take a look and see if you find it useful. Well, and\n let's close it out with a little bit supply chain\n issues. One of the solutions that are often being offered\n in order to gain back some control over your supply chain\n is things like Git signatures and looking at Git commit\n hashes in order to better, well, figure out who created a\n certain commit and what actually changed and to\n identify specific commits. Jacob Ganesan from Carnegie\n Mellon University did publish a paper showing how, well,\n these signatures may not be as good as we thought. The\n problem here is in particular GitHub, but also some of the\n local Git implementations don't necessarily normalize\n whatever is being signed here. And, well, an attacker can\n essentially determine what parts of a particular Git\n commit are actually being added to a hash and a\n signature and what actually is being signed. And in doing so,\n it's possible to create a second Git commit with an\n identical hash and a valid signature with that. So that's\n certainly something to be aware of. There are a couple\n of solutions being offered here. In part, of course,\n these are bug fixes that need to be applied to Git and\n GitHub to fix some of these issues. But at this point,\n just awareness of the issue is probably already going to help\n somewhat. So take a look at the paper and see how these\n attacks exactly work and how to detect them. Well, and that\n it is for today. So thanks again for listening. Thanks\n for liking. Thanks for recommending this podcast and\n talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

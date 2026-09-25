@@ -2,6 +2,66 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10110",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10110",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10110.mp3",
+      "title": "SANS Stormcast Friday, September 25th, 2026: Tricky Phishing URL; MacSync Malware Update; SolarWinds Observable Patch",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 25th, 2026: Tricky Phishing URL; MacSync Malware Update; SolarWinds Observable Patch",
+      "show_notes": [
+        {
+          "heading": "One URL, Three Different Tricks",
+          "links": [
+            "https://isc.sans.edu/diary/33366"
+          ]
+        },
+        {
+          "heading": "Send GitLab an email, push to main",
+          "links": [
+            "https://www.aikido.dev/blog/gitlab-email-push-to-main"
+          ]
+        },
+        {
+          "heading": "macOS MacSync Malware Update",
+          "links": [
+            "https://securelist.com/macsync-new-version/121383/"
+          ]
+        },
+        {
+          "heading": "SolarWinds Observability Self-Hosted 2026.2.3",
+          "links": [
+            "https://documentation.solarwinds.com/en/success_center/orionplatform/content/release_notes/hco_2026-2-3_release_notes.htm"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-25T03:45:12+00:00",
+      "duration_seconds": 430,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10110.mp3",
+      "audio_length_bytes": 6020677,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10110",
+      "categories": [
+        "solarwinds",
+        "macos",
+        "macsync",
+        "malware",
+        "patch",
+        "gitlab",
+        "phishing"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10110",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, September 25th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Las\n Vegas, Nevada. And today's episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Industrial Control Systems Security. First story comes\n from Xavier. Xavier looked at, well, an interesting phishing\n email with a URL that as Xavier analyzed it uses three\n different tricks. Now, first of all, it uses the good old\n user info field, which has often been abused in phishing.\n It's where in old style browsers, you were able to\n prefix a URL with a username and a password. These days,\n they should pretty much be ignored, but well, still works\n in the sense that you still end up at the actual URL that\n follows that username. Now, the first trick here that the\n attacker used was to make the username password part\n actually unique to the particular email. So that\n makes filtering a little bit more difficult. Also, the host\n name is actually invalid. The first label of the host name\n ends in two dashes. Well, host names or labels cannot end in\n two dashes or dashes at all, according to the RFC. But as\n so many things, it will just work. In the end, of course,\n we do have the email address that the particular phishing\n attack went to, which will then be used in order to pre\n fill any phishing page with the right email address and\n often things like logos for the particular trusted domain.\n So it's an interesting URL being used here, something\n that definitely can be blocked, but may not be\n blocked because, well, it may not be recognized even as a\n valid URL, or may be wrongly characterized as the trusted\n host name, not the one that the attacker is actually\n using, due to the use of multiple ad symbols in the\n URL. Well, in second day in a row that we have a story from\n aikido. This particular story affects GitLab. And while\n maybe technically not a vulnerability, it's certainly\n a significant weakness. GitLab allows you to configure an\n email address that can be used to send various requests to\n your GitLab repositories. Now the trick with these email\n addresses is that they include a secret, basically a random\n string, that is the only thing that really authenticates\n these email addresses. What makes the thing even worse is\n that, well, these email addresses have wide reaching\n permissions. Now the email address ends, for example,\n with dash issue, which would allow you to add an issue. But\n by changing this suffix, different features are\n available to anybody who knows the secret string. How would\n an attacker learn about the email address and the secret\n string? Well, apparently, according to aikido, some\n users of GitLab may not properly understand the power\n of these email addresses. And it may be sounding benign to\n the user to provide, for example, as part of a readme,\n an email address with the dash issue suffix to their\n customers in order to allow them to easily report issues\n with the application. On the other hand, it's pretty\n straightforward to then change the suffix to other features\n that are available via via these email addresses, like,\n for example, push or merge requests with the email\n address, just by sending a simple email to the particular\n address. Apparently, it's not possible to limit the from\n address, which wouldn't be all that strong anyway, but still\n a little bit better, or apply other restrictions to the\n addresses once they are defined. And Kaspersky found a\n new version of the Mac sync malware. Now, this malware\n typically spreads via click fix exploits, but has also\n been found to impersonate, for example, crypto coin wallets.\n One particular case, the attacker even set up a\n complete webpage for the crypto coin wallet application\n to make it look more legit. Now, where things get a little\n bit different now is, and I think that's the most\n interesting part of this, that the part of the payload is\n actually retrieved via the iCloud calendar. So by\n retrieving and syncing calendar entries, the payload\n is being retrieved to the system.\n And the other part of the Mac sync is that it is not the\n same as the main thing that you typically find in\n organizations. And even on the host of endpoint defenses, it\n may even evade some of the techniques that they're using,\n because well, it never really sort of is received via the\n network, at least not in a visible way. The other part\n that changed with Mac sync is that it now uses binaries,\n compiled Objective C or Swift code, and no longer just uses\n scripting languages.\n And SolarWinds released update for SolarWinds observability.\n So if you're self hosting this product, you may want to\n consider updating. Now, both vulnerabilities are remote\n code execution vulnerabilities. Neither of\n the vulnerabilities does require authentication.\n However, one requires specific insecure, so known insecure\n configuration that's not default. The other one does\n require specific communication modes to be enabled. I would\n still try to get this patch that just in case that a\n configuration changes later, wouldn't really rely on just\n running the right not vulnerable configuration from\n protecting you here in the longer term. Well, and that's\n it for today. So thanks again for listening. Thanks for\n liking. Thanks for subscribing. Thanks for\n leaving good comments about this podcast in your favorite\n podcast platform. And talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10108",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
@@ -39,10 +99,6 @@
           "links": [
             "https://www.sans.org/profiles/dr-johannes-ullrich"
           ]
-        },
-        {
-          "heading": "podscan_ceKfRJw0F1fvyCUUhxsyFRhNvabT1TnF",
-          "links": []
         }
       ],
       "published": "2026-09-24T03:50:11+00:00",
