@@ -1,6 +1,67 @@
 {
-  "fetched_at": "2026-09-27T14:30:21.281209+00:00",
+  "fetched_at": "2026-09-28T09:13:59.818696+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10112",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10112",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10112.mp3",
+      "title": "SANS Stormcast Monday, September 28th, 2026: Macfinger Details; NetScaler 0-Day; KiteWorks 0-Day; ShinyHunters and PeopleSoft",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 28th, 2026: Macfinger Details; NetScaler 0-Day; KiteWorks 0-Day; ShinyHunters and PeopleSoft",
+      "show_notes": [
+        {
+          "heading": "A Closer Look at Malware From the Macfinger ClickFix Campaign",
+          "links": [
+            "https://isc.sans.edu/diary/A%20Closer%20Look%20at%20Malware%20From%20the%20Macfinger%20ClickFix%20Campaign/33368"
+          ]
+        },
+        {
+          "heading": "Citrix NetScaler ADC and Citrix NetScaler Gateway Security Bulletin for CVE-2026-88771 through CVE-2026-88778",
+          "links": [
+            "https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778/"
+          ]
+        },
+        {
+          "heading": "KiteWorks Urges Customers to Shut Down Servers",
+          "links": [
+            "https://www.heise.de/en/news/Imminent-Zero-Day-Attack-KiteWorks-Urges-Customers-to-Shut-Down-Servers-11466375.html"
+          ]
+        },
+        {
+          "heading": "ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft",
+          "links": [
+            "https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-renewed-mass-exploitation-campaign-targeting-oracle-peoplesoft"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-28T02:00:02+00:00",
+      "duration_seconds": 400,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10112.mp3",
+      "audio_length_bytes": 5600796,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10112",
+      "categories": [
+        "shinyhunters",
+        "peoplesoft",
+        "waf",
+        "kiteworks",
+        "citrix",
+        "netscaler",
+        "adc",
+        "macfinger"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10112",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 28th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. On Friday, Brad posted a diary\n that's a follow-up to a diary he actually posted a couple\n days earlier. That diary dealt with the MacFinger ClickFix\n campaign and back then Brad identified the eventual\n payload being installed as the Atomic macOS dealer or AMOS.\n Well, it turns out that this wasn't quite right or at least\n Brad isn't certain if it was this particular Steeler or\n maybe a new variant of it or maybe something somewhat\n different that sort of took some inspirations from AMOS\n Steeler. A couple differences here that Brad points out is\n that this Steeler, for example, does use WebSocket in\n order to exfiltrate data. Another sort of little odd\n thing about this Steeler is that it comes in two versions.\n It comes in the ARM and the x86-64 version. It does not\n come as a unified binary that you could use in macOS in\n order to essentially support both architectures. Well, the\n attacker then also exfiltrates data via post requests, but\n the bulk of the command control appears to be\n happening via the WebSocket connection, which may be done\n to evade some data leakage protection products. Well, if\n you need more details, indicators of compromise,\n specifically to the InfoSteeler that was detected\n here, please refer to Brad's diary. Well, the big story\n this weekend was certainly the exploitation of two unpatched\n vulnerabilities in Citrix Netscaler ADC and Citrix\n Netscaler Gateway. This originally sort of emerged as\n sort of a rumor on Friday. Apparently, an information\n security agency in the Netherlands did advise its\n constituency to turn off any Citrix Netscalers on Sunday.\n Citrix then released a patch fixing a total of eight\n vulnerabilities and stating that two of these\n vulnerabilities, both remote code execution\n vulnerabilities, are currently being exploited. The other six\n vulnerabilities aren't really all that harmless either. So\n if you have, for example, HTTP request smuggling, which then\n could be used to essentially attack systems behind Citrix\n Netscaler. Also, feature policy bypass due to improper\n HTTP URL-based expression usage. This is the lowest one\n according to CVSS score with 7.0. But we have a few 8.8\n ones, including one that's sort of interesting here.\n Yeah, there is a TCP initial sequence number prediction of\n vulnerability. Now, in this case, you need to have the TCP\n configuration enabled in Netscaler ADC or Netscaler\n Gateway again. So get these patched, get these patched\n quickly. I don't want to recommend anybody just turn\n off Netscaler just because I know that these are usually\n systems that protect a number of different web applications\n and like. So disabling them is probably going to cause some\n significant disruption of your business. But on the other\n hand, ransomware is going to disrupt your business too. So\n carefully, way off the pros and cons here. And yes,\n definitely, this is a patch that you probably want to rush\n out if you're using Citrix Netscaler. And talking about\n shutting down servers, Kiteworks urged its customers\n to shut down servers on Saturday. So yes, this news is\n coming a bit late. But if you didn't get the message, you\n may want to check in with Kiteworks to see what exactly\n happened there, because I couldn't really find a lot of\n details. The main source here is Heise.de, the German IT\n news outlet. They got a hold of an email that Kiteworks\n sent to customers. And yes, it specified a very specific six\n hour window on Saturday where you should shut down your\n Kiteworks server. Again, this is a secure messaging\n platform. So certainly a critical piece of IT\n infrastructure. Kiteworks did state to Heise that this was\n due to a zero day attack. Now I'm not sure how shutting it\n down for six hours is supposed to help here, whether or not\n there was a patch deployed afterwards. I didn't found an\n indication for this. But again, this may have just been\n communicated to customers directly and not via any\n public channels. So please double check with Kiteworks.\n And Mandiant is reporting that Shiny Hunters continues to\n target Oracle PeopleSoft. And they're targeting June 2026\n vulnerability. But they are now bypassing web application\n firewalls. So remember, if you're using a web application\n firewall to protect yourself from exploitation, it's\n usually time limited protection attackers will find\n ways around it. And the workaround here appears to be\n pretty straightforward and simple, where they're just URL\n encoding one of the letters in the URL, something that\n actually most web application firewalls that I'm aware of\n should be able to handle. But apparently there are\n sufficient number of firewalls that don't. And that leads\n sort of to a renewed search of exploitation of PeopleSoft by\n Shiny Hunters. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending this\n podcast. As always, special thanks for leaving good\n comments on your favorite podcast platform. And that's\n it for today. And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10110",
       "show": "stormcast",
@@ -3416,67 +3477,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10004",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday July 13th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Washington DC. This\n episode is brought to you by the SANS.edu Master's Degree\n Program in Information Security Engineering. If you\n are a user of the Progres Sharefile Server made by\n Progres Software, you probably received an email in the last\n couple days stating, and I quote here from the email, you\n must manually shut down the server hosting your storage\n zone controllers. This is a critical additional step to\n ensure the safety of your data. End quote. Essentially\n what they are saying is that if your Sharefile Storage Zone\n controller is exposed to the internet, there is a credible\n external security threat, as they are calling it, that\n targets these kind of systems. And yes, your best bet is to\n shut things down. And it also then states that you can\n expect to hear from us in the next 24 hours. Well, this\n email was sent more than 24 hours ago. So I'm not sure if\n anybody has received the email since then. At least I haven't\n seen anything publicly posted. There is nothing really on the\n Progres website. There is on the status website for\n Sharefile a note that there is an unresolved issue. But\n again, it's still marked as unresolved. So nothing really\n seems to be released here in terms of like a patch, a fix\n or a configuration update or anything like that. Remember\n that Progres software has been at the center of a number of\n significant ransomware incidents in the past. So\n certainly they have been targeted. And I would highly\n recommend that you follow their advice. And Biterly\n published a blog post with details regarding several\n vulnerabilities in the U-Boot bootloader. Now, U-Boot is a\n very popular bootloader. I see it a lot in networking\n equipment, IoT and the like. It's not necessarily as\n popular as some or as well known, I should say, as some\n of the less popular bootloaders that you sort of\n see in Linux and such like Krupp and the like. But still\n very important, very frequently used, but often\n used sort of more behind the scenes. Binerly found a number\n of vulnerabilities here. And the problem with a\n vulnerability in a bootloader is that essentially someone\n could then use invalid, corrupt, malicious operating\n system images and as a result sort of lead to a further\n permanent compromise of the system. I have to point out\n that Binerly here went the extra mile. They didn't just\n publish a blog post complaining about the\n vulnerabilities. They worked with the U-Boot maintainers.\n It's an open source project and even provided some patches\n for these vulnerabilities. So patches are available.\n Applying them will be a little bit tricky because usually you\n get it sort of as part of the device firmware. So you may\n have to wait here for the vendor to sort of step up and\n incorporate these patches into respective updates. Well, then\n we have the next chapter in the Nightmare Eclipse saga.\n Last week, Microsoft published a fix for the rogue planet\n vulnerabilities. This was a privilege escalation in\n Microsoft Defender. According to Nightmare Eclipse, there is\n a bug in that fix that allows the attacker to essentially\n just lock the entire disk. Basically, all the free space\n is being locked so that to any other process it appears that\n the data disk is full. Interesting vulnerability.\n Don't think it's all that terrible secure. Also,\n exploitation, while outlined in the post by Nightmare\n Eclipse, isn't terribly straightforward. Certainly\n something I think that one can live with in a fix that\n actually prevents approach escalation vulnerability. And\n I guess now it's up to Microsoft to provide the next\n round here in form of a fix for this vulnerability. Well,\n then Cisco is the latest vendor to join others in\n releasing patches more frequently. Reason of course\n is AI and the faster development lifecycle for\n exploits. So Cisco will now release patches twice a month\n on the second and fourth Wednesday of each month and\n still provide a seven day advance notice to customers.\n Well and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending and subscribing.\n And today I'll also be speaking here at Science Fire\n in DC at 7pm about some of the future ideas we are having\n with the Internet Storm Center, how to improve our\n honeypots with the use of AI. And I hope to see some of you\n there and thanks and talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10002",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10002",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10002.mp3",
-      "title": "SANS Stormcast Friday, July 10th, 2026: Belarus Graffiti Bot @sans_edu; Discontinuing Mac OS Ext. FS; Chrome Update; Rogue Planet Patch",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, July 10th, 2026: Belarus Graffiti Bot @sans_edu; Discontinuing Mac OS Ext. FS; Chrome Update; Rogue Planet Patch",
-      "show_notes": [
-        {
-          "heading": "_HELP_ME_ESCAPE_FROM_BELARUS_PLEASE_ [Guest Diary]",
-          "links": [
-            "https://isc.sans.edu/diary/_HELP_ME_ESCAPE_FROM_BELARUS_PLEASE_%20%5BGuest%20Diary%5D/33130"
-          ]
-        },
-        {
-          "heading": "Apple Discontinuing Support for Encrypted Mac OS Extended disks in macOS 28",
-          "links": [
-            "https://support.apple.com/en-us/125615"
-          ]
-        },
-        {
-          "heading": "Google Chrome Update",
-          "links": [
-            "https://chromereleases.googleblog.com/2026/07/stable-channel-update-for-desktop_01162222768.html"
-          ]
-        },
-        {
-          "heading": "Microsoft Patches Rogue Planet Vulnerability CVE-2026-50656",
-          "links": [
-            "https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50656/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-10T02:00:03+00:00",
-      "duration_seconds": 396,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10002.mp3",
-      "audio_length_bytes": 5555377,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10002",
-      "categories": [
-        "microsoft",
-        "rogue planet",
-        "nightmare eclypse",
-        "google",
-        "chrome",
-        "apple",
-        "apfs",
-        "belarus"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10002",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Friday July 10th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recorded today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n graduate certificate program in industrial control systems\n security. As a reminder, of course, next week we'll start\n with SANSFire. If you see me around in DC during SANSFire,\n I usually have some Internet Storm Center stickers with me\n or such. So just look me up and I'll also do a keynote\n outlining some of the future things that we envision for\n Internet Storm Center. So that'll be Monday evening.\n Jason Callahan, one of our undergranted interns, did\n today contribute a kind of nice interesting diary about\n what I used to call graffiti bots. So these are bots,\n business systems that are scanning just the Internet\n that aren't really sort of attacking buttons that just\n leave a message behind the logs. And in this particular\n case, well, it's helped me escape from Belarus, news,\n please, is the message that's being spread here. It's inside\n the user agent. It's also as part of the URL that is being\n used. Now this particular bot looks for HTTP and for SSH. It\n does attempt a small list of username and passwords when it\n hits an open SSH or Telnet port. But beyond that really\n doesn't do much but spread itself. I've had a couple of\n these in the past that basically just for sort of\n leaving messages in the logs. Sometimes maybe a cross that\n scripting exploit has happened in the past. But for the most\n part, really just know either getting people to talk about a\n message, which I guess they accomplished here by me\n covering it. Sometimes also just the URL then hoping that\n administrators or so will click on it. We had even one\n bot I haven't seen in quite a while that basically had a\n message kind of associating it with our Internet Storm\n Center, kind of implicating us in being the origin of these\n scans, which of course not ever so often led to an angry\n email hitting our inbox. And then important update for\n macOS users. macOS 28 is going to seize support for encrypted\n macOS extended file system formatted disks. So it only\n affects the encrypted version of it. Now to put a little bit\n in perspective, so this is macOS 28, which will not be\n released this year. This is next year's release. So you\n have about a year and a half or so until macOS 28 is likely\n going to hit your systems. Until then, the macOS extended\n file system format will still be fully supported, including\n the encrypted version of it. Now beyond that, you may have\n problems also the current file system, the Apple file system.\n Well, it was introduced about 10 years ago. So we're talking\n essentially about systems that were essentially first, you\n know, created about 10 years ago. Of course, there was a\n transition period where people may have still used the macOS\n extended file system format instead of the sort of default\n Apple file system format. I think one thing to be like\n careful about this is if you have old backup disks around\n or maybe they kept some old laptop or such in a closet. I\n sometimes have done that, you know, just in case you need a\n file of it. Well, the laptop will, if it's still physically\n okay, still boot and the file system will all work. But you\n won't be able to mount these disks. If you just kept the\n disk, not the actual system, you won't be able to mount\n these disks to modern systems come macOS 28. So before that,\n you at least need to decrypt the systems, which you can do\n non-destructively or even better, you need to copy them\n over to a more modern file system like an Apple file\n system. But that of course requires copying the complete\n content. There's no sort of simple in-place conversion for\n that. And Google released an update for Google Chrome\n fixing 27 security vulnerabilities. Now, none of\n them is already being exploited, which is always a\n good thing. But what's sort of noteworthy here is the last\n few updates we had had like hundreds of vulnerabilities.\n And one of the reasoning that was stated for the large\n number of vulnerabilities was, well, the use of AI tools and\n finding these vulnerabilities. Seeing that this time around,\n we only got 27 vulnerabilities, maybe an\n indicator that we actually, well, are now tending like to\n a lower number. So maybe actually, you know,\n vulnerabilities are getting fixed and we'll end up with\n less vulnerabilities. I'll give it a couple months to\n really, you know, come to a conclusion here. But the first\n hopefully good indicator. And Microsoft released an update\n to its advisory for the Rogue Planet vulnerability. This was\n one of those Microsoft Defender privilege escalation\n vulnerabilities that the Nightmare Eclipse published.\n It was first noted by Microsoft on June 16th. So a\n little bit less than a month ago. Well, there is now a\n patch available for it. The patch comes in the form of an\n updated scanning engine for Microsoft Defender. So it\n should be applied automatically by Microsoft\n Defender. You can also if you want to double check, check\n the version number of the scanning engine. So it's not a\n rule update, it's a scanning engine update. But those\n updates are pretty much continuously. So within a day\n or so, you should probably have the new scanning engine\n loaded. Well, and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing. Thanks\n for recommending this podcast and talk to you again on\n Monday. Bye.",
       "transcript_checked": true
     }
   ]

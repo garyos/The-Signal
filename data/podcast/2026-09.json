@@ -2,6 +2,67 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10112",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10112",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10112.mp3",
+      "title": "SANS Stormcast Monday, September 28th, 2026: Macfinger Details; NetScaler 0-Day; KiteWorks 0-Day; ShinyHunters and PeopleSoft",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, September 28th, 2026: Macfinger Details; NetScaler 0-Day; KiteWorks 0-Day; ShinyHunters and PeopleSoft",
+      "show_notes": [
+        {
+          "heading": "A Closer Look at Malware From the Macfinger ClickFix Campaign",
+          "links": [
+            "https://isc.sans.edu/diary/A%20Closer%20Look%20at%20Malware%20From%20the%20Macfinger%20ClickFix%20Campaign/33368"
+          ]
+        },
+        {
+          "heading": "Citrix NetScaler ADC and Citrix NetScaler Gateway Security Bulletin for CVE-2026-88771 through CVE-2026-88778",
+          "links": [
+            "https://community.citrix.com/techzone-blogs/110_security-updates/netscaler-adc-and-netscaler-gateway-security-bulletin-for-cve-2026-88771-through-cve-2026-88778/"
+          ]
+        },
+        {
+          "heading": "KiteWorks Urges Customers to Shut Down Servers",
+          "links": [
+            "https://www.heise.de/en/news/Imminent-Zero-Day-Attack-KiteWorks-Urges-Customers-to-Shut-Down-Servers-11466375.html"
+          ]
+        },
+        {
+          "heading": "ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft",
+          "links": [
+            "https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-renewed-mass-exploitation-campaign-targeting-oracle-peoplesoft"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-28T02:00:02+00:00",
+      "duration_seconds": 400,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10112.mp3",
+      "audio_length_bytes": 5600796,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10112",
+      "categories": [
+        "shinyhunters",
+        "peoplesoft",
+        "waf",
+        "kiteworks",
+        "citrix",
+        "netscaler",
+        "adc",
+        "macfinger"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10112",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, September 28th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. On Friday, Brad posted a diary\n that's a follow-up to a diary he actually posted a couple\n days earlier. That diary dealt with the MacFinger ClickFix\n campaign and back then Brad identified the eventual\n payload being installed as the Atomic macOS dealer or AMOS.\n Well, it turns out that this wasn't quite right or at least\n Brad isn't certain if it was this particular Steeler or\n maybe a new variant of it or maybe something somewhat\n different that sort of took some inspirations from AMOS\n Steeler. A couple differences here that Brad points out is\n that this Steeler, for example, does use WebSocket in\n order to exfiltrate data. Another sort of little odd\n thing about this Steeler is that it comes in two versions.\n It comes in the ARM and the x86-64 version. It does not\n come as a unified binary that you could use in macOS in\n order to essentially support both architectures. Well, the\n attacker then also exfiltrates data via post requests, but\n the bulk of the command control appears to be\n happening via the WebSocket connection, which may be done\n to evade some data leakage protection products. Well, if\n you need more details, indicators of compromise,\n specifically to the InfoSteeler that was detected\n here, please refer to Brad's diary. Well, the big story\n this weekend was certainly the exploitation of two unpatched\n vulnerabilities in Citrix Netscaler ADC and Citrix\n Netscaler Gateway. This originally sort of emerged as\n sort of a rumor on Friday. Apparently, an information\n security agency in the Netherlands did advise its\n constituency to turn off any Citrix Netscalers on Sunday.\n Citrix then released a patch fixing a total of eight\n vulnerabilities and stating that two of these\n vulnerabilities, both remote code execution\n vulnerabilities, are currently being exploited. The other six\n vulnerabilities aren't really all that harmless either. So\n if you have, for example, HTTP request smuggling, which then\n could be used to essentially attack systems behind Citrix\n Netscaler. Also, feature policy bypass due to improper\n HTTP URL-based expression usage. This is the lowest one\n according to CVSS score with 7.0. But we have a few 8.8\n ones, including one that's sort of interesting here.\n Yeah, there is a TCP initial sequence number prediction of\n vulnerability. Now, in this case, you need to have the TCP\n configuration enabled in Netscaler ADC or Netscaler\n Gateway again. So get these patched, get these patched\n quickly. I don't want to recommend anybody just turn\n off Netscaler just because I know that these are usually\n systems that protect a number of different web applications\n and like. So disabling them is probably going to cause some\n significant disruption of your business. But on the other\n hand, ransomware is going to disrupt your business too. So\n carefully, way off the pros and cons here. And yes,\n definitely, this is a patch that you probably want to rush\n out if you're using Citrix Netscaler. And talking about\n shutting down servers, Kiteworks urged its customers\n to shut down servers on Saturday. So yes, this news is\n coming a bit late. But if you didn't get the message, you\n may want to check in with Kiteworks to see what exactly\n happened there, because I couldn't really find a lot of\n details. The main source here is Heise.de, the German IT\n news outlet. They got a hold of an email that Kiteworks\n sent to customers. And yes, it specified a very specific six\n hour window on Saturday where you should shut down your\n Kiteworks server. Again, this is a secure messaging\n platform. So certainly a critical piece of IT\n infrastructure. Kiteworks did state to Heise that this was\n due to a zero day attack. Now I'm not sure how shutting it\n down for six hours is supposed to help here, whether or not\n there was a patch deployed afterwards. I didn't found an\n indication for this. But again, this may have just been\n communicated to customers directly and not via any\n public channels. So please double check with Kiteworks.\n And Mandiant is reporting that Shiny Hunters continues to\n target Oracle PeopleSoft. And they're targeting June 2026\n vulnerability. But they are now bypassing web application\n firewalls. So remember, if you're using a web application\n firewall to protect yourself from exploitation, it's\n usually time limited protection attackers will find\n ways around it. And the workaround here appears to be\n pretty straightforward and simple, where they're just URL\n encoding one of the letters in the URL, something that\n actually most web application firewalls that I'm aware of\n should be able to handle. But apparently there are\n sufficient number of firewalls that don't. And that leads\n sort of to a renewed search of exploitation of PeopleSoft by\n Shiny Hunters. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending this\n podcast. As always, special thanks for leaving good\n comments on your favorite podcast platform. And that's\n it for today. And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10110",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
