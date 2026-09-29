@@ -2,6 +2,68 @@
   "month": "2026-09",
   "episodes": [
     {
+      "id": "stormcast-10114",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10114",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10114.mp3",
+      "title": "SANS Stormcast Tuesday, September 29th, 2026: MacOS/iOS 0-Day Patch; macOS priv. escalation 0-day; File Notification Attacks",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, September 29th, 2026: MacOS/iOS 0-Day Patch; macOS priv. escalation 0-day; File Notification Attacks",
+      "show_notes": [
+        {
+          "heading": "Apple Emergency Patch for iOS 26, macOS26, macOS15 (CVE-2026-86950)",
+          "links": [
+            "https://isc.sans.edu/diary/Apple%20Emergency%20Patch%20for%20iOS%2026%2C%20macOS26%2C%20macOS15%20%28CVE-2026-86950%29/33376",
+            "https://support.apple.com/en-us/100100"
+          ]
+        },
+        {
+          "heading": "Proof of concept for macOS CoreServices Priv. Escalation (CVE-2026-43786)",
+          "links": [
+            "https://github.com/Malwation/CVE-2026-43786"
+          ]
+        },
+        {
+          "heading": "NeedyMantis: Unpacking a post-compromise malware family used in targeted operations",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/09/28/needymantis-unpacking-a-post-compromise-malware-family-used-in-targeted-operations/"
+          ]
+        },
+        {
+          "heading": "File Notification Attacks https://inoti.fyi/pubs/file-notification-attacks.pdf",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-29T02:00:02+00:00",
+      "duration_seconds": 393,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10114.mp3",
+      "audio_length_bytes": 5511300,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10114",
+      "categories": [
+        "file notifications",
+        "needymantis",
+        "websocket",
+        "dll",
+        "poc",
+        "macos",
+        "coreseervice",
+        "ios",
+        "patch",
+        "0-day"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10114",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday September 29th edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Ottawa, Canada. And\n this episode is brought to you by the SANS.edu Graduate\n Certificate Program in Incident Response. Well today\n we got some interesting patches from Apple. Apple\n released patches or updates for pretty much all of its\n operating systems, but only the last generation of its\n operating systems actually got security fixes. These security\n fixes do apply a patch for one individual vulnerability in\n core graphics. It's exploited currently in the wild and\n Apple has been notified of this exploitation by the Meta\n Product Security Team. So this is a patch that you want to\n apply if you're still running iOS 26 or macOS 26. They even\n released an update for macOS 15. The updates that were\n released for the 27 versions of the operating systems,\n again, they do not include any security content, but just\n functional issues. So that's the usual cleanup release that\n we often have seen sort of a couple weeks after a\n particular major version of the operating system was\n released by Apple. And then let's stick with Apple here\n for another story. We do have a proof of concept for a local\n privilege escalation vulnerability. This\n vulnerability was patched two weeks ago. So in the last\n security update that we got for macOS, it's a privilege\n escalation vulnerability in macOS core services. The\n reason I mention it is that I don't see a lot of proof of\n concept code like this being published for these macOS\n vulnerabilities. And core services has had issues with\n privilege escalations in the past. So assumption is it will\n have privilege escalations in the future, which of course\n means with a proof of concept like this being available, it\n may be easier for attackers to then exploit these future\n vulnerabilities. So take them a bit more serious. Microsoft\n published something that definitely the threat hunters\n in the audience will like, and that's a write-up of Needy\n Mantis. Needy Mantis is one of these more sophisticated\n command control tools that's being deployed as an implant\n after the initial compromise. Microsoft believes this sort\n of came out of the same group that also is associated with a\n daemon tool, some of the supply chain compromises.\n Kaspersky apparently did write about it. Now a couple\n interesting things here, and again, particular from sort of\n a detection and response point of view, this malware does use\n some legitimate DLLs it will find on the system. So if you\n have, for example, tight VNC or curl and other tools like\n this installed on the system, it will use the features via\n the DLLs that are deployed by the tools. So if you are\n finding that this implant uses some of these DLLs, well,\n don't just simply erase them. Double check first whether or\n not these tools are supposed to be installed and whether\n these DLLs are still legitimate that you're\n finding. Also again, more use of WebSocket here for data\n exfiltration. Interesting, some little twist here where\n it does send a set cookie header that also exfiltrates\n some details about the system it's installed on. The first\n install of the malware is very basic, only has a couple\n different commands, but most importantly, it has the\n ability to load additional modules. And that's something\n that we have definitely seen quite commonly these days in\n more advanced malware that they basically don't want to\n give away everything the malware can do right away, but\n then only sort of load specific modules as needed.\n And then we got a really interesting research paper,\n probably not the most critical attack, but one of those neat\n things that I think makes you think a little bit deeper\n about operating systems, at least that I ever so often\n like these types of attacks. This comes from several\n research researchers at the Graz University of Technology\n in Austria. And it's about file notifications. So all\n operating systems, Windows, Linux, Mac OS have to some\n extent the ability to notify software whenever a file\n changes. And that's quite important. If you, for\n example, have an editor or so that changes a file, you\n automatically want to, for example, recompile software\n whenever the file changes. And so you can subscribe to these\n file notifications. But what surprised me is that it's\n possible for an attacker to receive notifications for\n files that the attacker actually doesn't even have\n read access to. So in this case, the attacker just has to\n know what the file is being called, and then they're able\n to subscribe to these events. And that's, of course,\n particularly interesting when you're talking about editor\n files, where the file may be updated as the user types. And\n that, of course, gives you then some insight into\n keystroke rhythms and maybe potentially into the content\n of specific file. So one of those interesting sort of site\n channel attacks emerges then out of the ability to actually\n receive these file notifications. More details in\n the paper. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing to this\n podcast and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10112",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

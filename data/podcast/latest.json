@@ -1,6 +1,68 @@
 {
-  "fetched_at": "2026-09-28T17:15:22.310320+00:00",
+  "fetched_at": "2026-09-29T09:22:12.729137+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10114",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10114",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10114.mp3",
+      "title": "SANS Stormcast Tuesday, September 29th, 2026: MacOS/iOS 0-Day Patch; macOS priv. escalation 0-day; File Notification Attacks",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, September 29th, 2026: MacOS/iOS 0-Day Patch; macOS priv. escalation 0-day; File Notification Attacks",
+      "show_notes": [
+        {
+          "heading": "Apple Emergency Patch for iOS 26, macOS26, macOS15 (CVE-2026-86950)",
+          "links": [
+            "https://isc.sans.edu/diary/Apple%20Emergency%20Patch%20for%20iOS%2026%2C%20macOS26%2C%20macOS15%20%28CVE-2026-86950%29/33376",
+            "https://support.apple.com/en-us/100100"
+          ]
+        },
+        {
+          "heading": "Proof of concept for macOS CoreServices Priv. Escalation (CVE-2026-43786)",
+          "links": [
+            "https://github.com/Malwation/CVE-2026-43786"
+          ]
+        },
+        {
+          "heading": "NeedyMantis: Unpacking a post-compromise malware family used in targeted operations",
+          "links": [
+            "https://www.microsoft.com/en-us/security/blog/2026/09/28/needymantis-unpacking-a-post-compromise-malware-family-used-in-targeted-operations/"
+          ]
+        },
+        {
+          "heading": "File Notification Attacks https://inoti.fyi/pubs/file-notification-attacks.pdf",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-09-29T02:00:02+00:00",
+      "duration_seconds": 393,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10114.mp3",
+      "audio_length_bytes": 5511300,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10114",
+      "categories": [
+        "file notifications",
+        "needymantis",
+        "websocket",
+        "dll",
+        "poc",
+        "macos",
+        "coreseervice",
+        "ios",
+        "patch",
+        "0-day"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10114",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday September 29th edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Ottawa, Canada. And\n this episode is brought to you by the SANS.edu Graduate\n Certificate Program in Incident Response. Well today\n we got some interesting patches from Apple. Apple\n released patches or updates for pretty much all of its\n operating systems, but only the last generation of its\n operating systems actually got security fixes. These security\n fixes do apply a patch for one individual vulnerability in\n core graphics. It's exploited currently in the wild and\n Apple has been notified of this exploitation by the Meta\n Product Security Team. So this is a patch that you want to\n apply if you're still running iOS 26 or macOS 26. They even\n released an update for macOS 15. The updates that were\n released for the 27 versions of the operating systems,\n again, they do not include any security content, but just\n functional issues. So that's the usual cleanup release that\n we often have seen sort of a couple weeks after a\n particular major version of the operating system was\n released by Apple. And then let's stick with Apple here\n for another story. We do have a proof of concept for a local\n privilege escalation vulnerability. This\n vulnerability was patched two weeks ago. So in the last\n security update that we got for macOS, it's a privilege\n escalation vulnerability in macOS core services. The\n reason I mention it is that I don't see a lot of proof of\n concept code like this being published for these macOS\n vulnerabilities. And core services has had issues with\n privilege escalations in the past. So assumption is it will\n have privilege escalations in the future, which of course\n means with a proof of concept like this being available, it\n may be easier for attackers to then exploit these future\n vulnerabilities. So take them a bit more serious. Microsoft\n published something that definitely the threat hunters\n in the audience will like, and that's a write-up of Needy\n Mantis. Needy Mantis is one of these more sophisticated\n command control tools that's being deployed as an implant\n after the initial compromise. Microsoft believes this sort\n of came out of the same group that also is associated with a\n daemon tool, some of the supply chain compromises.\n Kaspersky apparently did write about it. Now a couple\n interesting things here, and again, particular from sort of\n a detection and response point of view, this malware does use\n some legitimate DLLs it will find on the system. So if you\n have, for example, tight VNC or curl and other tools like\n this installed on the system, it will use the features via\n the DLLs that are deployed by the tools. So if you are\n finding that this implant uses some of these DLLs, well,\n don't just simply erase them. Double check first whether or\n not these tools are supposed to be installed and whether\n these DLLs are still legitimate that you're\n finding. Also again, more use of WebSocket here for data\n exfiltration. Interesting, some little twist here where\n it does send a set cookie header that also exfiltrates\n some details about the system it's installed on. The first\n install of the malware is very basic, only has a couple\n different commands, but most importantly, it has the\n ability to load additional modules. And that's something\n that we have definitely seen quite commonly these days in\n more advanced malware that they basically don't want to\n give away everything the malware can do right away, but\n then only sort of load specific modules as needed.\n And then we got a really interesting research paper,\n probably not the most critical attack, but one of those neat\n things that I think makes you think a little bit deeper\n about operating systems, at least that I ever so often\n like these types of attacks. This comes from several\n research researchers at the Graz University of Technology\n in Austria. And it's about file notifications. So all\n operating systems, Windows, Linux, Mac OS have to some\n extent the ability to notify software whenever a file\n changes. And that's quite important. If you, for\n example, have an editor or so that changes a file, you\n automatically want to, for example, recompile software\n whenever the file changes. And so you can subscribe to these\n file notifications. But what surprised me is that it's\n possible for an attacker to receive notifications for\n files that the attacker actually doesn't even have\n read access to. So in this case, the attacker just has to\n know what the file is being called, and then they're able\n to subscribe to these events. And that's, of course,\n particularly interesting when you're talking about editor\n files, where the file may be updated as the user types. And\n that, of course, gives you then some insight into\n keystroke rhythms and maybe potentially into the content\n of specific file. So one of those interesting sort of site\n channel attacks emerges then out of the ability to actually\n receive these file notifications. More details in\n the paper. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing to this\n podcast and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10112",
       "show": "stormcast",
@@ -3414,69 +3476,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10006",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, July 14, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Washington, D.C.\n And this episode is brought to you by the SANS.edu Graduate\n Certificate Program in Cybersecurity Engineering.\n Manuel today wrote up an interesting trend that he has\n been observing in a site that he is watching. Well, it's\n just a basic web server, but more and more it is being hit\n by requests for MCP connections. So the model\n control protocol that's commonly used with AI, as well\n as requests for AI credentials. For a long time\n we have seen a lot of requests for like .env files and the\n like, essentially files that typically contain credentials.\n But what Manuel is seeing and that sort of matches our\n global data as well. More and more of these scans are\n looking for credentials specifically associated with\n AI models. With the goal of course being that some of\n these credentials could be abused by the attacker to gain\n access to free to the attacker AI tokens. Now the MCP\n connection attempts are also interesting. First of all,\n many of them are just checking for the presence of the slash\n MCP URL. Of course, if there's a 404 coming back, the URL\n doesn't exist and the attacker knows that this is not at\n least the right access for the API. Well, but a couple of\n requests that Manuel observed also contained the full MCP\n compliant payload to initiate a new connections. So\n definitely attackers are looking for these services to\n again likely abuse them for their own purposes. And CISA\n together with a few other self information security related\n federal organizations and the FBI has published some\n guidance on how to better protect your routers. Now the\n routers we're talking about here are more sort of the ISP\n enterprise routers, not your home router, which of course\n is often the target of attacks. The guidance here is\n specific to exploits that have been observed in recent\n attacks. attacks by Russian threat actors. So none of\n these attacks are really new, but there are really a couple\n of nuances here. I think they're often overlooked. For\n example, with SNMP, well, implement and only allow SNMP\n version three. I see that often missed. I often see SNMP\n version one, version two still enabled. Well, just in case\n you need it, it's insecure. It uses simple community strings\n for authentication that are easily guessed and sniffed off\n the wire. So definitely something that you should\n avoid. Secure passwords that should be really table stakes.\n What I find particularly interesting is a reference\n here to Cisco smart install. Cisco routers by default come\n in the smart install enabled configuration. And the goal\n here is really that you can basically deploy one of these\n routers and then remotely configure it. So in order to\n configure it from scratch, there is usually no\n authentication involved. But even after you configured the\n router, this smart install feature often remains enabled,\n allowing essentially anybody to reconfigure your router. So\n definitely this is, I think, the number one part here I\n take away from this guidance because I've seen this even\n mentioned with some of the volt-typhoon breaches and\n such that Cisco smart install here was used in order to gain\n access and change configurations of routers.\n Also, basically, you know, firewall best practices block\n some of the common ports used by protocols that really\n shouldn't be used across the internet like SNMP, TFTP and\n SMI. So these protocols should really not be exposed and\n their access should be limited to the local network. And\n Proofpoint documented an interesting and somewhat\n unexpected behavior from EntraID that is apparently\n being abused by some threat groups in order to brute force\n usernames and passwords. So whenever you send a request to\n EntraID to verify username and password, in particular, when\n you're using the resource owner flow, you will send a\n client ID that is identifying the application, basically\n sending the request and the username and password. What\n these attackers do is that they use random, non-existing\n client IDs that are correctly formatted. They use UUID\n version 4 format, these client IDs. What happens in the logs\n in this case with EntraID is that the application name is\n not populated since, well, no application with this ID\n exists. The login will also fail. However, the attacker\n will get back information about whether the username or\n the password were correct. So that way the attacker is still\n able to enumerate valid users and also verify whether or not\n a particular password they're attempting to use does exist,\n whether it's valid for this particular account. But since\n administrators often summarize by application name in order\n to find, for example, suspicious frequent requests\n from particular unregistered applications. Well, since\n there is no name, these events often go overlooked and are\n not recognized as brute forcing. So what Proofpoint\n recommends here is that you specifically look for any\n events where the application name is not populated as this\n may be an indicator for the, this kind of brute forcing.\n And the other problem of course, is since the login\n fails. Because if the attacker is getting back a result that\n yes, the username and password is correct, well, it still\n didn't result in the login success. So if you're just\n looking for login success, for example, from odd\n applications, well, you will not get any hits. So if you're\n using EntraID, take a look at this Proofpoint block. They go\n into more detail about how to detect and how to search for\n these types of events. Well, ahead of patch Tuesday, I want\n to mention at least one vulnerability and that would\n be one published today or advisory for it published\n today by backup company Veeam. It's a remote code execution\n vulnerability, but it does require credentials. However,\n they can be any domain user. Well, and this is it for\n today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. Thanks for everybody\n who attended my talk today here at Sands Fire and well,\n talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10004",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10004",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10004.mp3",
-      "title": "SANS Stormcast Monday, July 13th, 2026: Progress Sharefile Shutdown; U-Boot Vuln; More Nightmare Eclipse; Cisco AI Response",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, July 13th, 2026: Progress Sharefile Shutdown; U-Boot Vuln; More Nightmare Eclipse; Cisco AI Response",
-      "show_notes": [
-        {
-          "heading": "Progress Sharefile Emergency Shutdown Notice",
-          "links": [
-            "https://status.sharefile.com",
-            "https://www.reddit.com/r/sysadmin/comments/1usohco/psa_shutdown_your_sharefile_storage_zone/",
-            "https://www.bleepingcomputer.com/news/security/progress-urges-sharefile-customers-to-shut-down-servers-over-credible-threat/"
-          ]
-        },
-        {
-          "heading": "U-Boot Vulnerabilities",
-          "links": [
-            "https://www.binarly.io/blog/unfit-to-boot-breaking-u-boots-fit-signature-verification"
-          ]
-        },
-        {
-          "heading": "Nightmare Eclipse Releases Next Microsoft Defender Exploit",
-          "links": [
-            "https://blog.projectnightcrawler.dev/posts/2026-07-09-some-interesting-findings-in-windows-defender/"
-          ]
-        },
-        {
-          "heading": "Cisco Increases Patch Cadence",
-          "links": [
-            "https://blogs.cisco.com/security/strengthening-the-foundation-a-predictable-customer-focused-response-to-ai-accelerated-vulnerability-discovery"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-13T02:00:03+00:00",
-      "duration_seconds": 332,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10004.mp3",
-      "audio_length_bytes": 4648860,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10004",
-      "categories": [
-        "cisco",
-        "patches",
-        "nightmare eclipes",
-        "defender",
-        "microsoft",
-        "progress",
-        "sharefile",
-        "u-boot"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10004",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday July 13th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Washington DC. This\n episode is brought to you by the SANS.edu Master's Degree\n Program in Information Security Engineering. If you\n are a user of the Progres Sharefile Server made by\n Progres Software, you probably received an email in the last\n couple days stating, and I quote here from the email, you\n must manually shut down the server hosting your storage\n zone controllers. This is a critical additional step to\n ensure the safety of your data. End quote. Essentially\n what they are saying is that if your Sharefile Storage Zone\n controller is exposed to the internet, there is a credible\n external security threat, as they are calling it, that\n targets these kind of systems. And yes, your best bet is to\n shut things down. And it also then states that you can\n expect to hear from us in the next 24 hours. Well, this\n email was sent more than 24 hours ago. So I'm not sure if\n anybody has received the email since then. At least I haven't\n seen anything publicly posted. There is nothing really on the\n Progres website. There is on the status website for\n Sharefile a note that there is an unresolved issue. But\n again, it's still marked as unresolved. So nothing really\n seems to be released here in terms of like a patch, a fix\n or a configuration update or anything like that. Remember\n that Progres software has been at the center of a number of\n significant ransomware incidents in the past. So\n certainly they have been targeted. And I would highly\n recommend that you follow their advice. And Biterly\n published a blog post with details regarding several\n vulnerabilities in the U-Boot bootloader. Now, U-Boot is a\n very popular bootloader. I see it a lot in networking\n equipment, IoT and the like. It's not necessarily as\n popular as some or as well known, I should say, as some\n of the less popular bootloaders that you sort of\n see in Linux and such like Krupp and the like. But still\n very important, very frequently used, but often\n used sort of more behind the scenes. Binerly found a number\n of vulnerabilities here. And the problem with a\n vulnerability in a bootloader is that essentially someone\n could then use invalid, corrupt, malicious operating\n system images and as a result sort of lead to a further\n permanent compromise of the system. I have to point out\n that Binerly here went the extra mile. They didn't just\n publish a blog post complaining about the\n vulnerabilities. They worked with the U-Boot maintainers.\n It's an open source project and even provided some patches\n for these vulnerabilities. So patches are available.\n Applying them will be a little bit tricky because usually you\n get it sort of as part of the device firmware. So you may\n have to wait here for the vendor to sort of step up and\n incorporate these patches into respective updates. Well, then\n we have the next chapter in the Nightmare Eclipse saga.\n Last week, Microsoft published a fix for the rogue planet\n vulnerabilities. This was a privilege escalation in\n Microsoft Defender. According to Nightmare Eclipse, there is\n a bug in that fix that allows the attacker to essentially\n just lock the entire disk. Basically, all the free space\n is being locked so that to any other process it appears that\n the data disk is full. Interesting vulnerability.\n Don't think it's all that terrible secure. Also,\n exploitation, while outlined in the post by Nightmare\n Eclipse, isn't terribly straightforward. Certainly\n something I think that one can live with in a fix that\n actually prevents approach escalation vulnerability. And\n I guess now it's up to Microsoft to provide the next\n round here in form of a fix for this vulnerability. Well,\n then Cisco is the latest vendor to join others in\n releasing patches more frequently. Reason of course\n is AI and the faster development lifecycle for\n exploits. So Cisco will now release patches twice a month\n on the second and fourth Wednesday of each month and\n still provide a seven day advance notice to customers.\n Well and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending and subscribing.\n And today I'll also be speaking here at Science Fire\n in DC at 7pm about some of the future ideas we are having\n with the Internet Storm Center, how to improve our\n honeypots with the use of AI. And I hope to see some of you\n there and thanks and talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
