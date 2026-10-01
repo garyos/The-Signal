@@ -1,6 +1,67 @@
 {
-  "fetched_at": "2026-09-30T15:31:03.309400+00:00",
+  "fetched_at": "2026-10-01T09:40:06.482366+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10118",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10118",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10118.mp3",
+      "title": "SANS Stormcast Thursday, October 1st, 2026: Cisco Catalyst SD-WAN Manager 0-day; Watchguard AP RCE; OpenBao/Vault RCE; Post Quantum Certs",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 1st, 2026: Cisco Catalyst SD-WAN Manager 0-day; Watchguard AP RCE; OpenBao/Vault RCE; Post Quantum Certs",
+      "show_notes": [
+        {
+          "heading": "Cisco Catalyst SD-WAN Manager API Authentication Bypass Vulnerability CVE-2026-76504",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU"
+          ]
+        },
+        {
+          "heading": "WatchGuard AP Command Injection in Internal Management API Allows Command Execution",
+          "links": [
+            "https://psirt.watchguard.com/CVE-2026-86102/"
+          ]
+        },
+        {
+          "heading": "A Realistic Code Execution Exploit Chain in OpenBao and Vault",
+          "links": [
+            "https://control-plane.io/posts/unauthed-to-rce-in-vault-and-openbao/"
+          ]
+        },
+        {
+          "heading": "Building a post-quantum certificate authority with Merkle Tree Certificates",
+          "links": [
+            "https://blog.cloudflare.com/pq-ca-with-mtcs/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-01T02:00:02+00:00",
+      "duration_seconds": 307,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10118.mp3",
+      "audio_length_bytes": 4306774,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10118",
+      "categories": [
+        "merkle tree",
+        "certificate",
+        "post-quantum",
+        "quantum-safe",
+        "openbao",
+        "vault",
+        "watchguard",
+        "cisco"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10118",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 1st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, every day is zero day these days and we\n have another one from Cisco. This one affects the Cisco\n Catalyst SD-WAN manager. It's yet another API authentication\n bypass vulnerability and according to Cisco, it's one\n of those URI encoding issues. So if you URI encode part of\n the URL and send it to the API, it won't be recognized\n properly because apparently to Cisco, URI encoding is\n something completely new that's really not worth\n testing in their critical security products. A patch has\n been made available and this vulnerability has already been\n exploited and I bet probably by highly sophisticated\n attackers because nobody else could figure out URI encoding.\n Better make sure that you double check whether or not\n you have already been compromised ahead of this\n patch being released. Another zero day but still something\n that you probably want to patch. WatchGuard release an\n update for its access points. The internal management API\n allows command execution. Doesn't state if it does\n require authentication but the same patch also fixes another\n vulnerability that actually bypasses access control. So\n that may not really be an issue in this particular case.\n Not yet exploited so you may still have a couple days to\n patch this vulnerability. And then we got a critical patch\n for HashiCorp's vault as well as for OpenBow. OpenBow is an\n open source fork of vault so no surprise that it suffers\n from similar vulnerabilities. And I think this particular\n issue was actually sort of discovered using OpenBow. Now\n this one is actually a complex vulnerability. Some of these\n vulnerabilities that yes, you know, can happen. And one of\n the root issues here is actually four different\n vulnerabilities that have sort of been chained together to\n gain then command execution. But one of the root issue here\n that sort of gets the exploit chain started is that an\n attacker is able to essentially get an authorized\n certificate using the ACME protocol. So basically a bad\n implementation of the ACME protocol gets it all started.\n And since all of these modern credential systems rely\n heavily on certificates like your Spire and Spiffy kind of\n protocols that are implemented here by OpenBow and Vault.\n Well, that then sort of gets it basically started and then\n leads over three additional steps to remote code\n execution. So definitely get this addressed, get it\n addressed quickly, given the huge importance of these\n products in security architecture. And then a great\n blog post by Cloudflare explaining how they're going\n to move forward as a certificate authority, in\n particular when it comes to post-quantum certificates. So\n with the standards now solidifying around post\n -quantum cryptography and the TLS and now certificates,\n Cloudflare is going ahead and actually starting to deploy\n some of this in their infrastructure. One of the\n challenges with post-quantum certificates is that they're\n about 40 times the size of good old fashioned non-quantum\n safe certificates. Well, they have some interesting\n solutions here that have been developed and incorporated\n into the standards or at least draft standards in part at\n this point. One of them, Merkle trees, where you no\n longer need the entire certificate being sent forth\n and back, but really sort of just proofs of presence inside\n a Merkle tree in order to verify the certificates. Well,\n interesting stuff here. Too much for this podcast, but if\n you have an hour or so, certainly worthwhile reading\n up on it to really understand how this works, because this,\n again, is going to be deployed soon by Cloudflare and likely\n others as well. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing to this\n podcast and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10116",
       "show": "stormcast",
@@ -3407,66 +3468,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10010",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday July 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington DC. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Well today Guy gave a talk in the evening\n here at SANSFIRE about the honeypot and some of the\n additions that Guy created for the honeypot like our SIEM.\n And with that Guy also made live and made available a new\n version of the SIEM for the DShield honeypot. The two most\n notable additions is the addition of Suricata logs to\n the honeypot dashboard. And then also the addition of the\n Cowrie TTY logs. Cowrie, the honeypot that we are using for\n SSH and Telnet traffic, has the ability to log all the\n commands that an attacker may send to the honeypot. And this\n new addition to the dashboard will summarize these commands\n and also allow you to look up which particular attacker did\n execute what attacks against the honeypot. So you're\n getting more insight into what they actually attempt to do in\n the nice format of a Kibana interface. Well, given the\n size of yesterday's Microsoft patch used the update, it's no\n surprise that, well, we have some problems with this\n update. Microsoft today announced that there is an\n incompatibility with Dell devices that use the Intel\n Innovative Platform Framework or IPF. The drivers installed\n with this framework are in conflict with some of these\n patches and are causing problems. So Microsoft\n temporarily has disabled the update for these devices. If\n you are affected, you may see some changes in performance,\n power consumption or system behavior. Some people have\n reported overheating of the devices. A fix should be\n available in the next few days. And of course, we do\n still have some patches that were released by vendors other\n than Microsoft to talk about. Zoom, for example, did release\n an update for Zoom Workplace for Windows. Apparently, an\n improper input validation issue does allow\n unauthenticated account takeover over the network.\n Zoom rated this with a CVSS score of 9.8 and an update is\n available for you to download and install. And these had\n published a blog post with details regarding 11 shim\n bootloaders. They found that were still valid, still\n recognized by secure boot as authentic and they could have\n been used to essentially launch any other insecure\n bootloader. An attacker could have used this to completely\n compromise systems and essentially bypass secure\n boot. ESET found these bootloader or the shim\n bootloaders really quite a while ago, notified Microsoft.\n Microsoft did disable or basically revoke these\n bootloaders in the June update. So not this month. And\n well, kind of a good move from ESET to give us a month to\n apply all these patches before they're coming forward and\n announcing these findings publicly. Well, and that's it\n for today. So thanks for listening. Thanks for liking.\n Thanks for subscribing. Thanks for recommending this podcast\n and talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10008",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10008",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10008.mp3",
-      "title": "SANS Stormcast Wednesday, July 15th, 2026: Microsoft Patches; New MSFT Priv Escalation; Progress ShareFile 0-Day; Grok Exfiltration",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, July 15th, 2026: Microsoft Patches; New MSFT Priv Escalation; Progress ShareFile 0-Day; Grok Exfiltration",
-      "show_notes": [
-        {
-          "heading": "Microsoft Patch Tuesday July 2026 - The AI Acopolypse is Here",
-          "links": [
-            "https://isc.sans.edu/diary/Microsoft%20Patch%20Tuesday%20July%202026%20-%20The%20AI%20Acopolypse%20is%20Here%20/33154"
-          ]
-        },
-        {
-          "heading": "LegacyHive : Windows user profile service arbitrary hive load elevation of privileges vulnerability",
-          "links": [
-            "https://git.projectnightcrawler.dev/NightmareEclipse/LegacyHive"
-          ]
-        },
-        {
-          "heading": "Progress confirms ShareFile zero-day flaw behind Storage Zone shutdown",
-          "links": [
-            "https://www.bleepingcomputer.com/news/security/progress-confirms-sharefile-zero-day-flaw-behind-storage-zone-shutdown/"
-          ]
-        },
-        {
-          "heading": "xAI/Grok Exfiltrating Data and Secrets",
-          "links": [
-            "https://cereblab.com"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-15T02:00:02+00:00",
-      "duration_seconds": 405,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10008.mp3",
-      "audio_length_bytes": 5669350,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10008",
-      "categories": [
-        "grok",
-        "xai",
-        "progress",
-        "sharefile",
-        "storage",
-        "legacyhive",
-        "microsoft"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10008",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, July 15, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington DC. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Well, of\n course, it's Patch Tuesday and this was a special Patch\n Tuesday. We got 622 different vulnerabilities addressed by\n Microsoft and that doesn't even include the 400 plus\n vulnerabilities in Chromium that also affect Microsoft\n Edge. Now that of course was a little bit pre-announced by\n Microsoft. Microsoft stated to expect larger Patch Tuesdays\n because of AI helping them find more vulnerabilities. And\n I believe the largest sort of Patch Tuesday we had before\n this one was probably something around 200\n vulnerabilities. So we got about a factor of 3. Now, it's\n hard to identify vulnerabilities that really\n stick out in this set. But there are two vulnerabilities\n that are already being exploited. One is an Active\n Directory Federation Services Elevation of Privileges.\n Essentially the privileges aren't as fine-grained as they\n should be and that has already been exploited. Microsoft\n rates this vulnerability as important. And then we do have\n another Microsoft SharePoint server vulnerability. There is\n also an elevation of privilege vulnerabilities. Microsoft\n only considers this vulnerability moderate. In\n addition to these two exploited vulnerabilities, we\n have a third that is disclosed but not yet exploited. And\n that's a Windows BitLocker security feature bypass\n vulnerability. Now we have heard a lot from Nightmare\n Clips on that topic. It's possible that this is one of\n the Nightmare Clips vulnerabilities. It doesn't\n state so in the advisory. It just credits Anonymous with\n discovering the vulnerability. But the real question is now\n what does this really mean to you trying to apply these\n patches? Well, there are a few products with really a large\n number of vulnerabilities being addressed here. And what\n this really means is that the number of patches really\n didn't increase. At least not by as much as the number of\n patched vulnerabilities suggests. So your workload\n doesn't necessarily increase that much. It does increase\n but not as much as the number of vulnerabilities makes it\n look like. Don't tell your boss still say that you need\n more help, but you probably do need. And that may be a good\n reason to justify this additional help. So apply the\n patches, move on. Like for example, the Chromium or the\n Microsoft Edge vulnerabilities. 400\n vulnerabilities, but it's really just one update that\n you need to apply to Chromium. It's not that you're sort of\n going to pick and choose which vulnerabilities you're going\n to patch. You don't even really have the option to do\n this. And with Patch Tuesday, of course, we also get patches\n from other vendors, not just Microsoft. And one that sticks\n out today, which is not sort of a usual Patch Tuesday\n participant, is SonicWall. SonicWall released an update\n for its SMA 1000 series appliance. And one of the\n vulnerabilities, a server-side request forgery, not only has\n a perfect CVSS score of 10.0, but apparently is already\n being exploited. Server-side request forgery\n vulnerabilities can often be used then to reach internal\n APIs and retrieve credentials via the vulnerability.\n SonicWall does not get into the details here why this is a\n 10.0 vulnerability, but likely something along these lines\n that then allows the attacker to fully take over the\n appliance. And last week I mentioned that Progress\n Software did ask its customers to shut down their storage\n zone controllers if they were exposed to the Internet. It\n was widely assumed that this is due to an actively\n exploited server-side vulnerability. And that has\n now been confirmed by Progress. Now it could find\n sort of a public statement on a website, but Bleeping\n Computer does quote some statements that they received\n from Progress. So yes, there was a server-side\n vulnerability. Yes, it was actively exploited. That\n triggered the warning and the request to shut down these\n sharefile storage zone controllers. Today Progress\n did release a patch for this vulnerability and this patch\n is supposed to address the issue that was exploited. So\n after you applied the patch, you should be good in putting\n your storage zone controllers back into production. And the\n AI companies will have reaffirmed their odd\n relationship with intellectual property with XAI's CROC\n uploading entire Git repositories from users\n running the coding CLI and well with that also uploading\n any secrets. Even if specifically told not to open\n specific files, CROC still opened these files and then\n send them to Google Drive that apparently was used by XAI to\n collect this data. Elon Musk has since publicly confirmed\n the findings by this researcher who founded\n XeroPLAB is the moniker that a researcher is going by. And\n Elon Musk also stated that they will immediately delete\n the collected data, but no word yet as to why this data\n was collected. If there was any kind of need to do so in\n order to help their AI functionality or if it was\n used for training or other purposes. Well, and this is it\n for today. So thanks for listening. Thanks for liking,\n recommending and sharing this podcast. And as always talk to\n you again tomorrow. Bye. Bye. Bye. Bye. Bye. Bye. Bye. Bye.\n Bye. Bye.",
       "transcript_checked": true
     }
   ]

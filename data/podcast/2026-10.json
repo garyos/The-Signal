@@ -1,0 +1,66 @@
+{
+  "month": "2026-10",
+  "episodes": [
+    {
+      "id": "stormcast-10118",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10118",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10118.mp3",
+      "title": "SANS Stormcast Thursday, October 1st, 2026: Cisco Catalyst SD-WAN Manager 0-day; Watchguard AP RCE; OpenBao/Vault RCE; Post Quantum Certs",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 1st, 2026: Cisco Catalyst SD-WAN Manager 0-day; Watchguard AP RCE; OpenBao/Vault RCE; Post Quantum Certs",
+      "show_notes": [
+        {
+          "heading": "Cisco Catalyst SD-WAN Manager API Authentication Bypass Vulnerability CVE-2026-76504",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU"
+          ]
+        },
+        {
+          "heading": "WatchGuard AP Command Injection in Internal Management API Allows Command Execution",
+          "links": [
+            "https://psirt.watchguard.com/CVE-2026-86102/"
+          ]
+        },
+        {
+          "heading": "A Realistic Code Execution Exploit Chain in OpenBao and Vault",
+          "links": [
+            "https://control-plane.io/posts/unauthed-to-rce-in-vault-and-openbao/"
+          ]
+        },
+        {
+          "heading": "Building a post-quantum certificate authority with Merkle Tree Certificates",
+          "links": [
+            "https://blog.cloudflare.com/pq-ca-with-mtcs/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-01T02:00:02+00:00",
+      "duration_seconds": 307,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10118.mp3",
+      "audio_length_bytes": 4306774,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10118",
+      "categories": [
+        "merkle tree",
+        "certificate",
+        "post-quantum",
+        "quantum-safe",
+        "openbao",
+        "vault",
+        "watchguard",
+        "cisco"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10118",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 1st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, every day is zero day these days and we\n have another one from Cisco. This one affects the Cisco\n Catalyst SD-WAN manager. It's yet another API authentication\n bypass vulnerability and according to Cisco, it's one\n of those URI encoding issues. So if you URI encode part of\n the URL and send it to the API, it won't be recognized\n properly because apparently to Cisco, URI encoding is\n something completely new that's really not worth\n testing in their critical security products. A patch has\n been made available and this vulnerability has already been\n exploited and I bet probably by highly sophisticated\n attackers because nobody else could figure out URI encoding.\n Better make sure that you double check whether or not\n you have already been compromised ahead of this\n patch being released. Another zero day but still something\n that you probably want to patch. WatchGuard release an\n update for its access points. The internal management API\n allows command execution. Doesn't state if it does\n require authentication but the same patch also fixes another\n vulnerability that actually bypasses access control. So\n that may not really be an issue in this particular case.\n Not yet exploited so you may still have a couple days to\n patch this vulnerability. And then we got a critical patch\n for HashiCorp's vault as well as for OpenBow. OpenBow is an\n open source fork of vault so no surprise that it suffers\n from similar vulnerabilities. And I think this particular\n issue was actually sort of discovered using OpenBow. Now\n this one is actually a complex vulnerability. Some of these\n vulnerabilities that yes, you know, can happen. And one of\n the root issues here is actually four different\n vulnerabilities that have sort of been chained together to\n gain then command execution. But one of the root issue here\n that sort of gets the exploit chain started is that an\n attacker is able to essentially get an authorized\n certificate using the ACME protocol. So basically a bad\n implementation of the ACME protocol gets it all started.\n And since all of these modern credential systems rely\n heavily on certificates like your Spire and Spiffy kind of\n protocols that are implemented here by OpenBow and Vault.\n Well, that then sort of gets it basically started and then\n leads over three additional steps to remote code\n execution. So definitely get this addressed, get it\n addressed quickly, given the huge importance of these\n products in security architecture. And then a great\n blog post by Cloudflare explaining how they're going\n to move forward as a certificate authority, in\n particular when it comes to post-quantum certificates. So\n with the standards now solidifying around post\n -quantum cryptography and the TLS and now certificates,\n Cloudflare is going ahead and actually starting to deploy\n some of this in their infrastructure. One of the\n challenges with post-quantum certificates is that they're\n about 40 times the size of good old fashioned non-quantum\n safe certificates. Well, they have some interesting\n solutions here that have been developed and incorporated\n into the standards or at least draft standards in part at\n this point. One of them, Merkle trees, where you no\n longer need the entire certificate being sent forth\n and back, but really sort of just proofs of presence inside\n a Merkle tree in order to verify the certificates. Well,\n interesting stuff here. Too much for this podcast, but if\n you have an hour or so, certainly worthwhile reading\n up on it to really understand how this works, because this,\n again, is going to be deployed soon by Cloudflare and likely\n others as well. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing to this\n podcast and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    }
+  ]
+}
