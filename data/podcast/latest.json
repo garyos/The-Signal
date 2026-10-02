@@ -1,6 +1,67 @@
 {
-  "fetched_at": "2026-10-01T15:54:04.267781+00:00",
+  "fetched_at": "2026-10-02T09:14:15.195499+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10120",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10120",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10120.mp3",
+      "title": "SANS Stormcast Friday, October 2nd, 2026: ScreenConnect Abuse; ChatGPT Abuse; Spoofing iCloud; Proton Mail display name",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 2nd, 2026: ScreenConnect Abuse; ChatGPT Abuse; Spoofing iCloud; Proton Mail display name",
+      "show_notes": [
+        {
+          "heading": "ScreenConnect Client (Ab)used by Attackers",
+          "links": [
+            "https://isc.sans.edu/diary/ScreenConnect+Client+Abused+by+Attackers/33388/#comments"
+          ]
+        },
+        {
+          "heading": "Attackers abuse ChatGPT to deliver RAT via ClickFix",
+          "links": [
+            "https://www.huntress.com/blog/chatgpt-custom-gpts-clickfix-rat?_sp=51406044-aa1d-4278-a4e7-adb5b8ef84b2.1790890760100"
+          ]
+        },
+        {
+          "heading": "Spoofing iCloud From Address",
+          "links": [
+            "https://sec-consult.com/blog/detail/from-anyoneicloudcom-spoofing-arbitrary-apple-icloud-identities/"
+          ]
+        },
+        {
+          "heading": "Sender spoofing in Proton Mail via display-name homograph",
+          "links": [
+            "https://alonsovidales.github.io/protonmail-sender-spoofing/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-02T02:00:02+00:00",
+      "duration_seconds": 396,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10120.mp3",
+      "audio_length_bytes": 5552813,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10120",
+      "categories": [
+        "icloud",
+        "proton",
+        "mail",
+        "email",
+        "from",
+        "chatgpt",
+        "clickfix",
+        "screenconnect"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10120",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 2nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Incident Response. Xavier today is walking us through a\n real simple attack that doesn't require any malware\n and will actually use a legitimate remote admin tool,\n not one of the malicious ones that we often see. In this\n particular case, it uses Screen Connect and this is not\n really a problem with Screen Connect itself. It could have\n been done with many similar tools. So the way these tools\n are often used is to provide remote assistance to users,\n users that are often not very technically versed. And as a\n result, it's easy to set up these tools. So what the\n attacker does here is that they email you a copy of\n Screen Connect, again, a legitimate copy of Screen\n Connect, that includes a configuration that once Screen\n Connect is started will immediately connect with the\n attacker and provide the attacker with remote access to\n the system. So here, replace attacker with tech support,\n and you kind of can see how this is a legitimate feature\n that is quite useful. I've mentioned this before here in\n this podcast, but you must control these remote admin\n tools. Many, many attacks are using legitimate remote admin\n tools. Sometimes they install them on your system. Sometimes\n they do use remote admin tools that they may already find\n installed on your system. So it's not always the ones that\n the attacker installed, but maybe some that you installed\n to help instrument the network for the attacker. And Huntress\n is observing the abuse of OpenAI's custom GPT feature in\n order to deliver phishing messages and essentially\n directing users to click-fix attack. The way this works is\n that OpenAI, at least up to now, has a feature that allows\n you to create what they're calling custom GPTs. So\n instead of sending a user to the default ChatGPT website,\n you send them to a custom version of yours, which is\n still a valid, it's still ChatGPT you're sending them\n to, but this version now comes with a number of additional\n instructions, often used to tailor responses for a\n specific audience or to solve specific types of problems. So\n you can include essentially special prompts and documents\n and such that are being used to create the answer. And\n hackers are using this feature to then deliver back a link to\n the click-fix page, which will then attack the user, well,\n the way click-fix does attack users by making them copy\n -paste strings into the terminal. So from a user point\n of view, that's really hard to detect because you're going to\n a legitimate ChatGPT website. Also sort of from an automatic\n defense point of view, that's also not that easy to figure\n out that you're not going to the default page, but to a\n user-created page. And many of these custom GPTs are useful\n and are definitely something that your users may want to\n experiment with occasionally. Now, I believe that this\n custom GPT feature is actually going away in ChatGPT. So this\n may just be a temporary problem now, but definitely\n something to keep on the radar. And SecConsult did\n publish an interesting blog post with details how it was\n possible to spoof Apple iCloud identities. It's a problem\n that many sort of cloud providers have that they are\n delivering emails for a wide range of users. So they all\n have their own mechanism that you're only able to send email\n for email addresses that are actually assigned to you.\n Similar with iCloud. Now, the other problem, of course,\n then, is that SMTP is, as so many protocols, a little bit\n more flexible than some people sometimes imagine. And one\n feature that's particularly causing issues here is how\n lines are terminated. The standard requires carriage\n return line feed, but by creatively injecting some\n carriage returns without a line feed, you can confuse\n Apple iCloud, or you were able to confuse Apple iCloud as to\n what the actual from header is. And with this, you were\n able to then spoof the from address, essentially send\n email from another iCloud identity than the one assigned\n to you. Another notable issue here, and part of the reason\n why I did mention this particular story is that\n SecConsult was amazingly patient in actually releasing\n the details about this vulnerability. They originally\n reported it to Apple back in 2024, and then after a lot of\n forth and back, well, finally, this issue is now patched.\n There was a similar issue here with ProtonMail. Well, not\n quite sure if it's really similar, but in that case, the\n email spoofing actually used homographs, so basically\n letters that look alike, in particular Unicode letters\n that look alike, in order to impersonate others' names.\n That has not been patched yet, and in my opinion, it's a\n lesser issue in some ways, because while you're still\n presenting what was supposed to show up there, it's just\n sort of the nature of Unicode that you have multiple letters\n that look alike. Well, and that's it for today. Any CRDs\n can wait till Monday, turn off your IDS alerts on the\n weekend, so you won't get bothered by any of them, and\n we'll talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10118",
       "show": "stormcast",
@@ -3406,68 +3467,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10012",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday July 17th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Washington DC. This\n episode is brought to you by the SANS.edu Graduate\n Certificate Program in Purple Team Operations. Thanks to\n listener Gebhardt for pointing me to a study published by the\n German Federal Information Security Office that did in\n detail dissect Windows Hello for Business. It's part of a\n larger effort of the office to better understand and document\n some of the internals of Windows. In this particular\n study, they spent 169 pages looking at all the details and\n some of the potential security shortcomings of Windows Hello\n for Business. They're focusing on the business part of it\n because that's of course where people are more interested in\n all of these details. A couple of interesting findings here.\n So, first of all, the different security modes that\n you have available in Windows Hello. The enhanced sign-in\n security or ESS is quite important as it turns out as\n it ensures that some of the biometric data is actually\n protected by the TPM and not just stored as an encrypted\n file on the file system. Also surprising to me is that the\n biometric use of this feature actually does not give you\n additional entropy in how keys are being generated for\n Windows Hello compared to just a simple PIN. They do however\n point out that there are a number of advantages of doing\n biometrics over a PIN. One being that a PIN is easily\n lost without the user knowing that it was lost while in\n order to use the biometrics the attacker would have to\n steal the device which is much easier to discover than a\n stolen PIN. So, that's I think some important lessons here.\n They're also pointing out, I think that's not surprising to\n me, that if you have multiple users on the device that your\n risk increases. And then in doing some of the reverse\n analysis, they actually are uncovering some of the sort of\n not well documented features in Windows Hello and how they\n exactly work and how all of these different sort of bits\n and pieces of this larger ecosystem are exactly fitting\n together. So interesting document definitely if you are\n deploying Windows Hello for Business worthwhile read. It\n does fill a number of important gaps that are sort\n of left by the usual used Microsoft documentation of the\n feature. And of course, always good to sort of see a thorough\n reverse analysis and also documentation of security\n relevant features from a more independent agency.\n And F5 published its second major security announcement\n for its web server NGINX. It affects both NGINX Plus as\n well as the open source version of NGINX. And the\n vulnerable feature here are map expressions. Now, these\n map expressions or map directives are often used in\n order to, well, direct traffic like for A-B testing, I've\n seen it being used, or just to, for example, take things\n like a user agent and then split traffic based on the\n user agent. So for basically sort of a little bit more\n advanced routing features in NGINX. This is a heap based\n buffer overflow. So at least it's a denial of service\n vulnerability in order to be exploitable for remote code\n execution. Well, that really only works if address space\n layout randomization is not enabled. I would expect that\n most systems running NGINX will have it enabled. NGINX is\n not necessarily a server that I often see, for example, in\n IoT devices or such that don't use ASLR. So with that, get it\n patched, get it updated, but it does require fairly\n specific configurations. And again, with ASLR enabled, it's\n likely only exploitable as a denial of service. So let me\n have another heap based buffer overflow, this time in 7-zip.\n It affects the XZ decompression. The advisory\n was published by the Zeroday Initiative and reported to the\n 7-zip maintainers in early June. Well, they do have a\n patch available now, which led to the coordinated release of\n these details by the Zeroday Initiative. So if you're\n running 7-zip, well, be ready for some updates. Well and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing and recommending this podcast\n and talk to you again on Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10010",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10010",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10010.mp3",
-      "title": "SANS Stormcast Thursday, July 16th, 2026: DShield SIEM Update; MSFT Patches vs. Intel IPF; Zoom Patch; Forgotten UEFI Shims",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, July 16th, 2026: DShield SIEM Update; MSFT Patches vs. Intel IPF; Zoom Patch; Forgotten UEFI Shims",
-      "show_notes": [
-        {
-          "heading": "DShield SIEM Update",
-          "links": [
-            "https://isc.sans.edu/diary/Recent%20DShield%20SIEM%20Update/33156"
-          ]
-        },
-        {
-          "heading": "Microsoft Patch Tuesday vs. Dell Intel Innovation Platform Framework (IPF) drivers",
-          "links": [
-            "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/07/july-14-2026-kb5101650-os-builds-26200-8875-and-26100-8875"
-          ]
-        },
-        {
-          "heading": "Zoom Account Takeover Patch",
-          "links": [
-            "https://www.zoom.com/en/trust/security-bulletin/zsb-26014/"
-          ]
-        },
-        {
-          "heading": "Forgotten UEFI shims undermining Secure Boot",
-          "links": [
-            "https://www.welivesecurity.com/en/eset-research/forgotten-uefi-shims-undermining-secure-boot/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-16T02:40:10+00:00",
-      "duration_seconds": 245,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10010.mp3",
-      "audio_length_bytes": 3436288,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10010",
-      "categories": [
-        "uefi",
-        "boot",
-        "zoom",
-        "patch",
-        "intel",
-        "dell",
-        "ipf",
-        "siem",
-        "dshield"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10010",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday July 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington DC. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Well today Guy gave a talk in the evening\n here at SANSFIRE about the honeypot and some of the\n additions that Guy created for the honeypot like our SIEM.\n And with that Guy also made live and made available a new\n version of the SIEM for the DShield honeypot. The two most\n notable additions is the addition of Suricata logs to\n the honeypot dashboard. And then also the addition of the\n Cowrie TTY logs. Cowrie, the honeypot that we are using for\n SSH and Telnet traffic, has the ability to log all the\n commands that an attacker may send to the honeypot. And this\n new addition to the dashboard will summarize these commands\n and also allow you to look up which particular attacker did\n execute what attacks against the honeypot. So you're\n getting more insight into what they actually attempt to do in\n the nice format of a Kibana interface. Well, given the\n size of yesterday's Microsoft patch used the update, it's no\n surprise that, well, we have some problems with this\n update. Microsoft today announced that there is an\n incompatibility with Dell devices that use the Intel\n Innovative Platform Framework or IPF. The drivers installed\n with this framework are in conflict with some of these\n patches and are causing problems. So Microsoft\n temporarily has disabled the update for these devices. If\n you are affected, you may see some changes in performance,\n power consumption or system behavior. Some people have\n reported overheating of the devices. A fix should be\n available in the next few days. And of course, we do\n still have some patches that were released by vendors other\n than Microsoft to talk about. Zoom, for example, did release\n an update for Zoom Workplace for Windows. Apparently, an\n improper input validation issue does allow\n unauthenticated account takeover over the network.\n Zoom rated this with a CVSS score of 9.8 and an update is\n available for you to download and install. And these had\n published a blog post with details regarding 11 shim\n bootloaders. They found that were still valid, still\n recognized by secure boot as authentic and they could have\n been used to essentially launch any other insecure\n bootloader. An attacker could have used this to completely\n compromise systems and essentially bypass secure\n boot. ESET found these bootloader or the shim\n bootloaders really quite a while ago, notified Microsoft.\n Microsoft did disable or basically revoke these\n bootloaders in the June update. So not this month. And\n well, kind of a good move from ESET to give us a month to\n apply all these patches before they're coming forward and\n announcing these findings publicly. Well, and that's it\n for today. So thanks for listening. Thanks for liking.\n Thanks for subscribing. Thanks for recommending this podcast\n and talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

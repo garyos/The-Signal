@@ -2,6 +2,67 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10120",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10120",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10120.mp3",
+      "title": "SANS Stormcast Friday, October 2nd, 2026: ScreenConnect Abuse; ChatGPT Abuse; Spoofing iCloud; Proton Mail display name",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 2nd, 2026: ScreenConnect Abuse; ChatGPT Abuse; Spoofing iCloud; Proton Mail display name",
+      "show_notes": [
+        {
+          "heading": "ScreenConnect Client (Ab)used by Attackers",
+          "links": [
+            "https://isc.sans.edu/diary/ScreenConnect+Client+Abused+by+Attackers/33388/#comments"
+          ]
+        },
+        {
+          "heading": "Attackers abuse ChatGPT to deliver RAT via ClickFix",
+          "links": [
+            "https://www.huntress.com/blog/chatgpt-custom-gpts-clickfix-rat?_sp=51406044-aa1d-4278-a4e7-adb5b8ef84b2.1790890760100"
+          ]
+        },
+        {
+          "heading": "Spoofing iCloud From Address",
+          "links": [
+            "https://sec-consult.com/blog/detail/from-anyoneicloudcom-spoofing-arbitrary-apple-icloud-identities/"
+          ]
+        },
+        {
+          "heading": "Sender spoofing in Proton Mail via display-name homograph",
+          "links": [
+            "https://alonsovidales.github.io/protonmail-sender-spoofing/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-02T02:00:02+00:00",
+      "duration_seconds": 396,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10120.mp3",
+      "audio_length_bytes": 5552813,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10120",
+      "categories": [
+        "icloud",
+        "proton",
+        "mail",
+        "email",
+        "from",
+        "chatgpt",
+        "clickfix",
+        "screenconnect"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10120",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 2nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Incident Response. Xavier today is walking us through a\n real simple attack that doesn't require any malware\n and will actually use a legitimate remote admin tool,\n not one of the malicious ones that we often see. In this\n particular case, it uses Screen Connect and this is not\n really a problem with Screen Connect itself. It could have\n been done with many similar tools. So the way these tools\n are often used is to provide remote assistance to users,\n users that are often not very technically versed. And as a\n result, it's easy to set up these tools. So what the\n attacker does here is that they email you a copy of\n Screen Connect, again, a legitimate copy of Screen\n Connect, that includes a configuration that once Screen\n Connect is started will immediately connect with the\n attacker and provide the attacker with remote access to\n the system. So here, replace attacker with tech support,\n and you kind of can see how this is a legitimate feature\n that is quite useful. I've mentioned this before here in\n this podcast, but you must control these remote admin\n tools. Many, many attacks are using legitimate remote admin\n tools. Sometimes they install them on your system. Sometimes\n they do use remote admin tools that they may already find\n installed on your system. So it's not always the ones that\n the attacker installed, but maybe some that you installed\n to help instrument the network for the attacker. And Huntress\n is observing the abuse of OpenAI's custom GPT feature in\n order to deliver phishing messages and essentially\n directing users to click-fix attack. The way this works is\n that OpenAI, at least up to now, has a feature that allows\n you to create what they're calling custom GPTs. So\n instead of sending a user to the default ChatGPT website,\n you send them to a custom version of yours, which is\n still a valid, it's still ChatGPT you're sending them\n to, but this version now comes with a number of additional\n instructions, often used to tailor responses for a\n specific audience or to solve specific types of problems. So\n you can include essentially special prompts and documents\n and such that are being used to create the answer. And\n hackers are using this feature to then deliver back a link to\n the click-fix page, which will then attack the user, well,\n the way click-fix does attack users by making them copy\n -paste strings into the terminal. So from a user point\n of view, that's really hard to detect because you're going to\n a legitimate ChatGPT website. Also sort of from an automatic\n defense point of view, that's also not that easy to figure\n out that you're not going to the default page, but to a\n user-created page. And many of these custom GPTs are useful\n and are definitely something that your users may want to\n experiment with occasionally. Now, I believe that this\n custom GPT feature is actually going away in ChatGPT. So this\n may just be a temporary problem now, but definitely\n something to keep on the radar. And SecConsult did\n publish an interesting blog post with details how it was\n possible to spoof Apple iCloud identities. It's a problem\n that many sort of cloud providers have that they are\n delivering emails for a wide range of users. So they all\n have their own mechanism that you're only able to send email\n for email addresses that are actually assigned to you.\n Similar with iCloud. Now, the other problem, of course,\n then, is that SMTP is, as so many protocols, a little bit\n more flexible than some people sometimes imagine. And one\n feature that's particularly causing issues here is how\n lines are terminated. The standard requires carriage\n return line feed, but by creatively injecting some\n carriage returns without a line feed, you can confuse\n Apple iCloud, or you were able to confuse Apple iCloud as to\n what the actual from header is. And with this, you were\n able to then spoof the from address, essentially send\n email from another iCloud identity than the one assigned\n to you. Another notable issue here, and part of the reason\n why I did mention this particular story is that\n SecConsult was amazingly patient in actually releasing\n the details about this vulnerability. They originally\n reported it to Apple back in 2024, and then after a lot of\n forth and back, well, finally, this issue is now patched.\n There was a similar issue here with ProtonMail. Well, not\n quite sure if it's really similar, but in that case, the\n email spoofing actually used homographs, so basically\n letters that look alike, in particular Unicode letters\n that look alike, in order to impersonate others' names.\n That has not been patched yet, and in my opinion, it's a\n lesser issue in some ways, because while you're still\n presenting what was supposed to show up there, it's just\n sort of the nature of Unicode that you have multiple letters\n that look alike. Well, and that's it for today. Any CRDs\n can wait till Monday, turn off your IDS alerts on the\n weekend, so you won't get bothered by any of them, and\n we'll talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10118",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
