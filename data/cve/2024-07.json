@@ -2,6 +2,47 @@
   "month": "2024-07",
   "cves": [
     {
+      "id": "CVE-2024-41045",
+      "published": "2024-07-29T15:15:12.873",
+      "lastModified": "2026-10-03T11:17:30.193",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: bpf: Defer work in bpf_timer_cancel_and_free Currently, the same case as previous patch (two timer callbacks trying to cancel each other) can be invoked through bpf_map_update_elem as well, or more precisely, freeing map elements containing timers. Since this relies on hrtimer_cancel as well, it is prone to the same deadlock situation as the previous patch. It would be sufficient to use hrtimer_try_to_cancel to fix this problem,",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/5eaa11c500ed07f505f86cec07d5593a71927e26",
+        "https://git.kernel.org/stable/c/7aa5a19279c3639ae8b758b63f05d0c616a39fa1",
+        "https://git.kernel.org/stable/c/a6fcd19d7eac1335eb76bc16b6a66b7f574d1d69"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00269,
+        "percentile": 0.17288,
+        "date": "2026-10-03"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-5971",
       "published": "2024-07-08T21:15:12.480",
       "lastModified": "2026-09-04T15:17:27.827",
@@ -36,8 +77,8 @@
       },
       "epss": {
         "score": 0.02921,
-        "percentile": 0.86571,
-        "date": "2026-10-02"
+        "percentile": 0.86578,
+        "date": "2026-10-03"
       },
       "media": {
         "in_news": false,
@@ -48,5 +89,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-03T10:33:24.004559+00:00"
+  "updated_at": "2026-10-04T11:15:01.766600+00:00"
 }
