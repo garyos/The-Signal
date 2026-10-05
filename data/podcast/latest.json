@@ -1,6 +1,67 @@
 {
-  "fetched_at": "2026-10-04T14:33:09.657744+00:00",
+  "fetched_at": "2026-10-05T09:53:30.095557+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10122",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10122",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10122.mp3",
+      "title": "SANS Stormcast Monday, October 5th, 2026: Funny User-Agents; FortMail 0-Day; GitLab Patch; macOS Full Disk Access",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, October 5th, 2026: Funny User-Agents; FortMail 0-Day; GitLab Patch; macOS Full Disk Access",
+      "show_notes": [
+        {
+          "heading": "User Agent Strings Curiosities",
+          "links": [
+            "https://isc.sans.edu/diary/User%20Agent%20Strings%20Curiosities/33394"
+          ]
+        },
+        {
+          "heading": "FortiMail Improper limitation of a pathname to a restricted directory CVE-2026-104286",
+          "links": [
+            "https://fortiguard.fortinet.com/psirt/FG-IR-26-175"
+          ]
+        },
+        {
+          "heading": "Critical GitLab Vulnerability CVE-2026-90970",
+          "links": [
+            "https://docs.gitlab.com/releases/patches/other-patches/patch-release-gitlab-ai-gateway-19-4-1-released/"
+          ]
+        },
+        {
+          "heading": "Updates to Full Disk Access in macOS",
+          "links": [
+            "https://developer.apple.com/news/?id=p6zjojqw"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-05T02:00:02+00:00",
+      "duration_seconds": 444,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10122.mp3",
+      "audio_length_bytes": 6213445,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10122",
+      "categories": [
+        "macos",
+        "disc access",
+        "gitlab",
+        "ai gateway",
+        "fortimail",
+        "fortinet",
+        "0-day",
+        "user-agents"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10122",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, October 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. In Diaries this weekend, Didier talked\n about, well, funny user agent strings. Didier's Honeypot, as\n all of our Honeypots are of course collecting lots and\n lots of HTTP requests and some of them come with a little bit\n odd or interesting user agent strings. We already had the\n one that the hacker basically claims in user agent string\n that they're in Belarus and he helped me escape from Belarus.\n User agent string, of course, has made the rounds for quite\n a while. There are also, of course, some user agent\n strings that are from companies that are scanning\n the internet for their own commercial or research\n purposes. Quite a few variations, for example, of\n Claudebot, for example. We also have famously Palo Alto.\n They're pretty aggressively scanning web applications as\n well. They have their own user agent string. Now, whenever\n you do scans like this, it's of course always good to\n identify who originated the scans. So these kind of\n strings are certainly useful. A URL where you can learn more\n about the scan, where you can opt out or an email address\n that you can contact in case the scan causes problems.\n Treat them, of course, also with a grain of salt. They are\n not always correct. They are sometimes spoofed. Famously,\n years ago, we had some bot that used as a user agent like\n the SANS ISC scanner. No, we are not affiliated with this.\n And another thing to consider before you sort of start your\n own scanning of the internet project, we're currently\n tracking 40, 50 different organizations already doing\n that. So take a look if some of the researchers are willing\n to share their data or something's just easier to buy\n a data set like this than running your own scanner and\n scanning the internet yet again. There's a very large\n percentage these days of scans that our honeypots are\n detecting that are affiliated with these internet-wide\n research scans. So, well, just don't add to the noise. From a\n defensive point of view, definitely makes sense to\n block some of these user agents. Yes, real attackers\n will not use these user agents, but it does\n substantially cut down on the noise and can also help with\n some load issues on your web applications. And on Friday, I\n told you that I'll give you a break with a zero-day attacks\n for the weekend. Well, so we have to catch up today.\n Thursday, Fortinet did release an update for 40 mail. This\n fixes a vulnerability that was already exploited at the time.\n It's a path traversal vulnerability. We had quite a\n few of them, but this one isn't quite as stupid as some\n of the others. It's not a Yarl encoding. It's the null byte\n or the null character cause issues. Typically, when\n attackers sort of are tall enough to get beyond Yarl\n encoding, that's not the next thing they're looking at. And\n in this case, it does allow an unauthenticated hacker to\n write arbitrary files on the underlying system. And with\n that, they achieve remote code execution. This vulnerability\n is linked to the identity -based encryption or IBE\n feature in Fortinet Mail. So one option is instead of\n patching, you may want to turn it off. If you don't use it,\n maybe turn it off anyway. The identity-based encryption\n Fortinet Mail is a feature where you can add certain\n keywords to the subject line, like Fortinet Mail\n Confidential and such. And then Fortinet Mail will\n automatically encrypt the email before it's being sent\n out to the recipient. So if you're not using this feature,\n may as well turn it off. Who knows what other little Easter\n eggs are hidden in that feature that attackers may\n take advantage of. Fortinet also provides some of the\n indicators of compromise that you may be seeing in your logs\n if you are attacked by the attackers that they have\n spotted taking advantage of this vulnerability prior to\n the patch being released. And if you're running GitLab on\n -premise, there's a critical update for you for the AI\n gateway. This does allow an attacker to manipulate some of\n the workflows that you have configured, which then of\n course can lead to code execution and a compromise of\n the AI gateway. Again, only an issue if you run it locally.\n The cloud stuff has been taken care of by GitLab already.\n Nothing you have to do in this particular case. And for a\n while now, Apple has restricted access of\n applications to the file system and they kind of\n encourage developers to sort of take a sandbox approach\n here for files needed by the application. But occasionally,\n of course, applications need access, for example, your home\n directory, download directory, or other locations on the file\n system. And well, there is this permission system where\n you can assign these permissions to particular\n applications. Usually you see like the famous pop-up\n messages asking for permission. Now, one easy\n shortcut around all of this for developers is to just ask\n for full disk access. Apple has put developers now at\n notice stating that they're reviewing how this full disk\n access is granted, whether or not applications really need\n it. One interesting point they're making is that this\n not only puts the user's data at risk, but in particular, if\n data from communication applications, messengers and\n such is exposed, it also puts data at risk that belongs\n actually more to people communicating with the user.\n So we'll see what this will exactly involve. There is not\n a lot of detail here yet, just that Apple in future versions\n of macOS macOS is likely going to a more fine-grained access\n system or where full disk access isn't really full disk,\n but full disk minus some critical locations. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking, subscribing, and thanks for leaving good\n comments on your favorite podcast platform. And talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10120",
       "show": "stormcast",
@@ -3415,58 +3476,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10014",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday July 20th, 2026 edition\n of the SANS Internet Storm Centers Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Penetration Testing and\n Ethical Hacking. Well, today's Storm Center Diaries from our\n good old friend Hikvision and some new scans that we are\n seeing for the Hikvision Open Intelligent Security API. This\n API, often abbreviated as IS API, is used essentially to\n remote control these cameras and configure them. It's a\n fairly straightforward REST API using basic or digest\n authentication. Now, the scans we are seeing, they are\n looking for the system slash status endpoint. That\n particular endpoint essentially sort of\n fingerprints the camera or the DVR that the cameras are\n connected to. I believe this is really more sort of a\n reconnaissance scan we are seeing here. Not an actual\n attack yet. But I haven't really seen sort of scans for\n this particular URL before. So I figure that maybe someone\n found something new here. Could be used for brute\n forcing because this particular endpoint is always\n available on these cameras. And as a result, it could for\n example, look for 400 errors. Whether or not it doesn't\n exist like a 404 or maybe a 401 or 403 error if\n authentication fails. And late last week, we had multiple\n news outlets report about LG monitors installing adware and\n well also spyware on users systems. Now, maybe a little\n bit surprised that you have software being installed by\n your monitor. But essentially what the LG is taking\n advantage of here is the Windows device manager and\n Windows update, which automatically can install\n software like drivers, but also control panels on your\n system as new hardware is installed. And it's supposed\n to make basically the install experience more streamlined\n and easier for the user. But of course, the manufacturer\n can install whatever software they wish on your system. And\n LG took it upon himself to basically show us how far you\n can push this feature. What they're installing is the on\n -screen control plus software. It's also quite difficult to\n remove the software from the system. You have to delete\n certain registry hive to really get rid of the\n software. And if you have an older LG monitor, you're not\n safe due to Windows update. Always looking for a new\n software for your hardware to install. You may also be\n exposed to this malware. Now, according to some reports, in\n particular Gamer Nexus has sort of looked into this at\n some detail. The number one ad you'll see is for McGaffey\n Antivirus, which of course is a little bit ironic right\n there. But well, it isn't the first time that you sort of\n have sort of these aggressive ads in particular, usually\n from pre-installed software. But this is software that's\n not sort of pre-installed by the vendor of your computer.\n It's being installed by the monitor on first detection of\n the monitor by your system. I'll add a link to the Gamer\n Nexus video, which does have a little more detail also about\n other things that LG is doing with their smart TV. And maybe\n I'll also link to one or two of the news articles. But\n you'll probably have no problem finding them yourself\n with a quick Google search. And AI community website\n Hugging Face did publish an advisory disclosing a breach\n that recently happened and compromised credentials at\n Hugging Face. A little bit ironic here that they actually\n say it was sort of a full AI agent led attack that did\n compromise Hugging Face. And after the attacker gained\n initial access by actually feeding a data set to a\n pipeline that exposed the code execution vulnerability, they\n then pivoted and harvested cloud and cluster credentials.\n Hugging Face recommends rotating access tokens and\n reviewing account activity if you're using Hugging Face.\n They don't state that they have any evidence at this\n point that user credentials were harvested, but they also\n ask users to let them know if they find any issues after\n reviewing their account activity. Also, Hugging Face\n does state that in order to analyze the incident, they\n actually took advantage of some AI tools. It's not a bad\n write up a little bit short at this point. But given that the\n attack just happened, I think they're still going to fill in\n some of the blanks here. And usually I don't talk about\n WordPress vulnerabilities because they're pretty much\n always plugin vulnerabilities. Not just too many of them to\n talk about. But thanks to Searchlight Cyber Security\n Research Team, we now have a remote code execution\n vulnerability in WordPress core. Apparently, the root\n cause issue here is a SQL injection vulnerability. It\n can be exploited without authentication via the\n WordPress REST API. Now, one fix here that's being\n suggested by Searchlight Cyber is to disable anonymous access\n to this API. WordPress has released update a patch to\n address this vulnerability. Any WordPress version, version\n 6.9 or 7.0 is vulnerable unless you just installed the\n latest and greatest one for 6 .9 or 7.0. So another option\n you also have is install additional sort of plugins\n that will then block access to the vulnerable API. But what\n you really should do is just install the patch. And then,\n of course, also check whether or not it makes sense to\n disable access to the API from random users on the internet.\n Well, and this is it for today. So thanks again for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And as always, talk to you again tomorrow. Bye.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10012",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10012",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10012.mp3",
-      "title": "SANS Stormcast Friday, July 17th, 2026: Windows Hello for Business; NGINX Vuln; 7-zip vuln",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, July 17th, 2026: Windows Hello for Business; NGINX Vuln; 7-zip vuln",
-      "show_notes": [
-        {
-          "heading": "German Federal Information Security Office Analyzes Windows Hello for Business",
-          "links": [
-            "https://www.heise.de/en/news/BSI-dissects-Windows-Hello-Where-Microsoft-s-login-reaches-its-limits-11366125.html",
-            "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Studies/Windows_dissected/AP1_Windows-Hello-for-Business.pdf?__blob=publicationFile&v=7"
-          ]
-        },
-        {
-          "heading": "NGINX Vulnerability",
-          "links": [
-            "https://my.f5.com/manage/s/article/K000162097"
-          ]
-        },
-        {
-          "heading": "7-Zip XZ Decompression CVE-2026-14266",
-          "links": [
-            "https://www.zerodayinitiative.com/advisories/ZDI-26-444/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-17T02:00:02+00:00",
-      "duration_seconds": 335,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10012.mp3",
-      "audio_length_bytes": 4700898,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10012",
-      "categories": [
-        "7zip",
-        "nginx",
-        "windows",
-        "hello"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10012",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Friday July 17th, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Washington DC. This\n episode is brought to you by the SANS.edu Graduate\n Certificate Program in Purple Team Operations. Thanks to\n listener Gebhardt for pointing me to a study published by the\n German Federal Information Security Office that did in\n detail dissect Windows Hello for Business. It's part of a\n larger effort of the office to better understand and document\n some of the internals of Windows. In this particular\n study, they spent 169 pages looking at all the details and\n some of the potential security shortcomings of Windows Hello\n for Business. They're focusing on the business part of it\n because that's of course where people are more interested in\n all of these details. A couple of interesting findings here.\n So, first of all, the different security modes that\n you have available in Windows Hello. The enhanced sign-in\n security or ESS is quite important as it turns out as\n it ensures that some of the biometric data is actually\n protected by the TPM and not just stored as an encrypted\n file on the file system. Also surprising to me is that the\n biometric use of this feature actually does not give you\n additional entropy in how keys are being generated for\n Windows Hello compared to just a simple PIN. They do however\n point out that there are a number of advantages of doing\n biometrics over a PIN. One being that a PIN is easily\n lost without the user knowing that it was lost while in\n order to use the biometrics the attacker would have to\n steal the device which is much easier to discover than a\n stolen PIN. So, that's I think some important lessons here.\n They're also pointing out, I think that's not surprising to\n me, that if you have multiple users on the device that your\n risk increases. And then in doing some of the reverse\n analysis, they actually are uncovering some of the sort of\n not well documented features in Windows Hello and how they\n exactly work and how all of these different sort of bits\n and pieces of this larger ecosystem are exactly fitting\n together. So interesting document definitely if you are\n deploying Windows Hello for Business worthwhile read. It\n does fill a number of important gaps that are sort\n of left by the usual used Microsoft documentation of the\n feature. And of course, always good to sort of see a thorough\n reverse analysis and also documentation of security\n relevant features from a more independent agency.\n And F5 published its second major security announcement\n for its web server NGINX. It affects both NGINX Plus as\n well as the open source version of NGINX. And the\n vulnerable feature here are map expressions. Now, these\n map expressions or map directives are often used in\n order to, well, direct traffic like for A-B testing, I've\n seen it being used, or just to, for example, take things\n like a user agent and then split traffic based on the\n user agent. So for basically sort of a little bit more\n advanced routing features in NGINX. This is a heap based\n buffer overflow. So at least it's a denial of service\n vulnerability in order to be exploitable for remote code\n execution. Well, that really only works if address space\n layout randomization is not enabled. I would expect that\n most systems running NGINX will have it enabled. NGINX is\n not necessarily a server that I often see, for example, in\n IoT devices or such that don't use ASLR. So with that, get it\n patched, get it updated, but it does require fairly\n specific configurations. And again, with ASLR enabled, it's\n likely only exploitable as a denial of service. So let me\n have another heap based buffer overflow, this time in 7-zip.\n It affects the XZ decompression. The advisory\n was published by the Zeroday Initiative and reported to the\n 7-zip maintainers in early June. Well, they do have a\n patch available now, which led to the coordinated release of\n these details by the Zeroday Initiative. So if you're\n running 7-zip, well, be ready for some updates. Well and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing and recommending this podcast\n and talk to you again on Monday. Bye.",
       "transcript_checked": true
     }
   ]

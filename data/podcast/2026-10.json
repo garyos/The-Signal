@@ -2,6 +2,67 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10122",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10122",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10122.mp3",
+      "title": "SANS Stormcast Monday, October 5th, 2026: Funny User-Agents; FortMail 0-Day; GitLab Patch; macOS Full Disk Access",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, October 5th, 2026: Funny User-Agents; FortMail 0-Day; GitLab Patch; macOS Full Disk Access",
+      "show_notes": [
+        {
+          "heading": "User Agent Strings Curiosities",
+          "links": [
+            "https://isc.sans.edu/diary/User%20Agent%20Strings%20Curiosities/33394"
+          ]
+        },
+        {
+          "heading": "FortiMail Improper limitation of a pathname to a restricted directory CVE-2026-104286",
+          "links": [
+            "https://fortiguard.fortinet.com/psirt/FG-IR-26-175"
+          ]
+        },
+        {
+          "heading": "Critical GitLab Vulnerability CVE-2026-90970",
+          "links": [
+            "https://docs.gitlab.com/releases/patches/other-patches/patch-release-gitlab-ai-gateway-19-4-1-released/"
+          ]
+        },
+        {
+          "heading": "Updates to Full Disk Access in macOS",
+          "links": [
+            "https://developer.apple.com/news/?id=p6zjojqw"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-05T02:00:02+00:00",
+      "duration_seconds": 444,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10122.mp3",
+      "audio_length_bytes": 6213445,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10122",
+      "categories": [
+        "macos",
+        "disc access",
+        "gitlab",
+        "ai gateway",
+        "fortimail",
+        "fortinet",
+        "0-day",
+        "user-agents"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10122",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, October 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. In Diaries this weekend, Didier talked\n about, well, funny user agent strings. Didier's Honeypot, as\n all of our Honeypots are of course collecting lots and\n lots of HTTP requests and some of them come with a little bit\n odd or interesting user agent strings. We already had the\n one that the hacker basically claims in user agent string\n that they're in Belarus and he helped me escape from Belarus.\n User agent string, of course, has made the rounds for quite\n a while. There are also, of course, some user agent\n strings that are from companies that are scanning\n the internet for their own commercial or research\n purposes. Quite a few variations, for example, of\n Claudebot, for example. We also have famously Palo Alto.\n They're pretty aggressively scanning web applications as\n well. They have their own user agent string. Now, whenever\n you do scans like this, it's of course always good to\n identify who originated the scans. So these kind of\n strings are certainly useful. A URL where you can learn more\n about the scan, where you can opt out or an email address\n that you can contact in case the scan causes problems.\n Treat them, of course, also with a grain of salt. They are\n not always correct. They are sometimes spoofed. Famously,\n years ago, we had some bot that used as a user agent like\n the SANS ISC scanner. No, we are not affiliated with this.\n And another thing to consider before you sort of start your\n own scanning of the internet project, we're currently\n tracking 40, 50 different organizations already doing\n that. So take a look if some of the researchers are willing\n to share their data or something's just easier to buy\n a data set like this than running your own scanner and\n scanning the internet yet again. There's a very large\n percentage these days of scans that our honeypots are\n detecting that are affiliated with these internet-wide\n research scans. So, well, just don't add to the noise. From a\n defensive point of view, definitely makes sense to\n block some of these user agents. Yes, real attackers\n will not use these user agents, but it does\n substantially cut down on the noise and can also help with\n some load issues on your web applications. And on Friday, I\n told you that I'll give you a break with a zero-day attacks\n for the weekend. Well, so we have to catch up today.\n Thursday, Fortinet did release an update for 40 mail. This\n fixes a vulnerability that was already exploited at the time.\n It's a path traversal vulnerability. We had quite a\n few of them, but this one isn't quite as stupid as some\n of the others. It's not a Yarl encoding. It's the null byte\n or the null character cause issues. Typically, when\n attackers sort of are tall enough to get beyond Yarl\n encoding, that's not the next thing they're looking at. And\n in this case, it does allow an unauthenticated hacker to\n write arbitrary files on the underlying system. And with\n that, they achieve remote code execution. This vulnerability\n is linked to the identity -based encryption or IBE\n feature in Fortinet Mail. So one option is instead of\n patching, you may want to turn it off. If you don't use it,\n maybe turn it off anyway. The identity-based encryption\n Fortinet Mail is a feature where you can add certain\n keywords to the subject line, like Fortinet Mail\n Confidential and such. And then Fortinet Mail will\n automatically encrypt the email before it's being sent\n out to the recipient. So if you're not using this feature,\n may as well turn it off. Who knows what other little Easter\n eggs are hidden in that feature that attackers may\n take advantage of. Fortinet also provides some of the\n indicators of compromise that you may be seeing in your logs\n if you are attacked by the attackers that they have\n spotted taking advantage of this vulnerability prior to\n the patch being released. And if you're running GitLab on\n -premise, there's a critical update for you for the AI\n gateway. This does allow an attacker to manipulate some of\n the workflows that you have configured, which then of\n course can lead to code execution and a compromise of\n the AI gateway. Again, only an issue if you run it locally.\n The cloud stuff has been taken care of by GitLab already.\n Nothing you have to do in this particular case. And for a\n while now, Apple has restricted access of\n applications to the file system and they kind of\n encourage developers to sort of take a sandbox approach\n here for files needed by the application. But occasionally,\n of course, applications need access, for example, your home\n directory, download directory, or other locations on the file\n system. And well, there is this permission system where\n you can assign these permissions to particular\n applications. Usually you see like the famous pop-up\n messages asking for permission. Now, one easy\n shortcut around all of this for developers is to just ask\n for full disk access. Apple has put developers now at\n notice stating that they're reviewing how this full disk\n access is granted, whether or not applications really need\n it. One interesting point they're making is that this\n not only puts the user's data at risk, but in particular, if\n data from communication applications, messengers and\n such is exposed, it also puts data at risk that belongs\n actually more to people communicating with the user.\n So we'll see what this will exactly involve. There is not\n a lot of detail here yet, just that Apple in future versions\n of macOS macOS is likely going to a more fine-grained access\n system or where full disk access isn't really full disk,\n but full disk minus some critical locations. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking, subscribing, and thanks for leaving good\n comments on your favorite podcast platform. And talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10120",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
