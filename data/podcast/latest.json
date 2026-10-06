@@ -1,6 +1,57 @@
 {
-  "fetched_at": "2026-10-06T09:40:45.552098+00:00",
+  "fetched_at": "2026-10-06T15:38:01.355806+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10124",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10124",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10124.mp3",
+      "title": "SANS Stormcast Tuesday, October 6th, 2026: cowrie tty Logs; Another Netscaler 0-Day; Exchange Patch",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, October 6th, 2026: cowrie tty Logs; Another Netscaler 0-Day; Exchange Patch",
+      "show_notes": [
+        {
+          "heading": "TTY Logs and the Data it Captures",
+          "links": [
+            "https://isc.sans.edu/diary/TTY%20Logs%20and%20the%20Data%20it%20Captures/33396"
+          ]
+        },
+        {
+          "heading": "Citrix Netscaler SAML Vulnerability (0-Day) CVE-2026-88779",
+          "links": [
+            "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+            "https://community.citrix.com/techzone-blogs/110_security-updates/understanding-and-addressing-cve-2026-88779-in-citrix-netscaler-adc-and-citrix-netscaler-gateway/"
+          ]
+        },
+        {
+          "heading": "Microsoft Exchange September 2026 V2 Update  CVE-2026-96940",
+          "links": [
+            "https://techcommunity.microsoft.com/blog/exchange/released-september-2026-v2-exchange-server-security-updates/4561718"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-06T11:45:11+00:00",
+      "duration_seconds": 368,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10124.mp3",
+      "audio_length_bytes": 5153467,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10124",
+      "categories": [
+        "exchange update",
+        "ctirix",
+        "netscaler"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10124",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, October 6, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. And in today's diary, Guy is taking a look at\n the Kaori TTY Logs. So these TTY Logs essentially capture\n the interaction of the attacker with the honeypot.\n And Kaori comes with some neat tools to, for example, play\n them back. That's one of the tools, at least when I first\n started working with Kaori, I thought was real neat and\n helpful. But if you have a lot of logs, as you tend to have,\n if you're running the honeypot for a while, then you probably\n want to query them a little more efficiently in\n summarizing them. And that's what Guy is going over here.\n Now Guy is creating and maintaining this scene that's\n sort of part of our honeypot. It uses Elasticsearch, so we\n can use Elasticsearch queries to basically figure out what\n is happening. One type of command that attackers really\n like is playing and manipulating the cron tab. So\n what that's usually used for is, first of all, to figure\n out if there are any cron jobs already running for particular\n users. That could indicate a prior compromise or could be\n abused, but also to gain persistence on a system.\n Attackers love to schedule cron jobs. So that's sort of\n one of the things that Guy is looking at. And then also some\n of the other events that were created in the TTY Logs, like,\n for example, attackers fingerprinting honeypots or\n changing the environment to suit their purposes. Also,\n another very common thing that's being done by attackers\n is trying to remove competing scripts from prior\n compromises. It's also a repeating pattern in these TTY\n Logs. So if you're running Cowry, if you're interested in\n what Guy is doing here with Elasticsearch and such, well,\n take a look at the diary from today. And following with our\n motto for the last few episodes that every day is\n zero day, it's Netscaler's turn again. Yes, I double\n -checked. It's a new vulnerability in Netscaler.\n This time only denial of service. It's not a remote\n code execution or an authentication bypass issue,\n even though it does affect SAML. So if you have Citrix\n Netscaler configured as a SAML identity provider or as a\n relying party, you may be vulnerable. And yes, it's\n already exploited. It doesn't state so in the advisory, but\n Citrix did publish a separate blog post with a couple of\n additional details. It is a buffer overflow, but then\n again, not all buffer overflows are exploitable for\n an actual remote code execution, but often then lead\n to a denial of service. So this does make sense. Anyway,\n double-check and yes, patch Netscaler again. And Microsoft\n on Friday published another update for Exchange. They call\n this the September 2026 version 2 update, and it does\n patch one more vulnerability that didn't get covered in the\n September patch Tuesday update. Now, there's one\n vulnerability again that's being addressed here. This\n vulnerability is a privilege escalation vulnerability that\n is being addressed. It's not yet exploited, but it states\n in the notes about this vulnerability that\n exploitation or exploitability is more likely for this\n vulnerability. So it's not that terribly difficult to\n exploit it. Definitely get taken care of this. Of course,\n patching Exchange can always be a little bit tricky. They\n also mention, I think, some issues with calendar files\n that this update introduces. So there's some known issues\n here that you should review before applying the update.\n And then last week, we also got a Debian Linux update, and\n I didn't cover it back then. I usually don't cover these\n updates, but I want to give it at least of an honorable\n mention because a couple of listeners have asked about\n this. I think it's 1,300 -something vulnerabilities\n being updated with this particular patch. A lot of\n these are basically Linux kernel patches that they are\n porting now into the Debian distribution. They also\n announced, I think it was a little bit longer, that\n they're going to release more frequent kernel updates,\n which, of course, may require more frequent system reboots.\n So keep that in mind as you're applying these updates. Well,\n and that's it for today. So thanks again for listening.\n Thanks for liking. Thanks for subscribing. And special\n thanks for everybody who is leaving comments about this\n podcast in your favorite podcast platform. Don't\n forget, we are available on YouTube if you like the video\n format. And also like Amazon Alexa and a couple other\n outlets. Still working on the Google Music podcast. They\n have some issues because there's also a YouTube channel\n associated with it. So still trying to work this out.\n Thanks and talk to you again tomorrow. Bye. Bye.\n Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "darknetdiaries-180",
       "show": "darknetdiaries",
@@ -3406,59 +3457,6 @@
       "transcript_format": "vtt",
       "transcript": null,
       "transcript_checked": false
-    },
-    {
-      "id": "stormcast-10016",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10016",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10016.mp3",
-      "title": "SANS Stormcast Tuesday, July 21st, 2026: More Wordpress Details; HOLLOWGRAPH MSFT Calendar Abuse; Gitea Vulnerability",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, July 21st, 2026: More Wordpress Details; HOLLOWGRAPH MSFT Calendar Abuse; Gitea Vulnerability",
-      "show_notes": [
-        {
-          "heading": "WordPress Exploitation Underway (CVE-2026-63030)",
-          "links": [
-            "https://isc.sans.edu/diary/WordPress%20Exploitation%20Underway%20%28CVE-2026-63030%29/33168"
-          ]
-        },
-        {
-          "heading": "HOLLOWGRAPH: Turning Microsoft 365 Calendars into Covert Command-and-Control Channels",
-          "links": [
-            "https://www.group-ib.com/blog/hollowgraph-microsoft-365/"
-          ]
-        },
-        {
-          "heading": "Gitea Vulnerablity CVE-2026-58443",
-          "links": [
-            "https://github.com/go-gitea/gitea/security/advisories/GHSA-xxjv-752h-3vp2"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-21T02:00:02+00:00",
-      "duration_seconds": 516,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10016.mp3",
-      "audio_length_bytes": 7223825,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10016",
-      "categories": [
-        "calendar",
-        "microsoft",
-        "o365",
-        "gitea",
-        "wordpress",
-        "exploitation"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10016",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday, July 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Industrial Control System Security. Well, yesterday I\n mentioned the WordPress vulnerability that had an\n exploit available and yes, was already actively exploited.\n Today I took the time to set up a vulnerable WordPress\n instance and a reader also suggested or sent me some logs\n that they collected about an actual exploit attempt using\n this WP2 shell vulnerability. We now also got a CVE number\n for the vulnerability 2026-63030. The initial advisory\n didn't include that yet. And with WordPress extensions, we\n usually don't get the CVE numbers. But again, this is a\n vulnerability in WordPress core. And like I mentioned, I\n set up a vulnerable instance myself, just going through the\n standard install instructions of WordPress without loading\n any special extensions. The instance was vulnerable. So\n there's nothing you need to configure enable or such in\n order to be vulnerable. As soon as the REST API is\n exposed, you are vulnerable. Now, a couple things about the\n exploit attempts that we have seen. They often use a very\n obvious user agent. So that would be a first quick fix\n here to try to filter these user agents, like the one that\n I wrote up here used the actual CVE number as a user\n agent. You also have things like WP2 shell test. That's\n often used by the scanning scripts that are looking for\n vulnerable servers. The standard actions that I've\n seen observed so far really fall into kind of two\n categories. The first one is just basic reconnaissance,\n basically checking if a particular instance is\n vulnerable. There are a couple of different things that\n attackers are doing. Some basically just send a very\n small sort of request just to see if they get a response\n back from the REST APIs. Others are then actually doing\n some SQL injection. So they're actually looking for the\n vulnerability and just retrieving some data from the\n database to check whether or not you're vulnerable. Well,\n once the recon returns the system is vulnerable, the most\n common thing that I've seen so far is that the attacker then\n installs a simple web shell. Now, the individual that sent\n me the actual attempt that they captured, they later also\n saw that the attacker added an admin account. It's not\n actually clear at this point if they use the vulnerability\n for this, or if they use the web shell in order to add the\n admin account to the system. The web shell is located in\n the cache directory for WordPress. And it's a very\n common technique in WordPress. WordPress sets up this cache\n directory and well based on nature of the directory, the\n web server must have write access to this directory. Also\n PHP code inside the directory is executed. And with that,\n well, you pretty much get a fairly straightforward place\n to write a file by dumping data from the database and\n then executing it. A couple of things about sort of no\n configuration options as such that may make WordPress here\n less vulnerable. MySQL by default doesn't allow you to\n write data into random directories or write data sort\n of into files at all. Now, when you're setting up the\n MySQL user for WordPress, the instructions just tell you,\n hey, you know, give it all privileges. There may be some\n ways to sort of further constrain that MySQL also has\n some global settings that constrain what directories\n files can be written to. I haven't looked deep enough\n into whether or not WordPress or MySQL for WordPress\n actually has to write to the cache directory or whether\n that's only done by PHP itself. So that's sort of one\n of the options you have. Now, from an incident response\n point of view, definitely check for new accounts being\n added to MySQL and then check this cache directory for any\n web shells that may be left behind by an attacker. And\n that may give you a little bit more insight as to what the\n attacker attempted to accomplish. If you're then\n looking at like, you know, web logs and try to figure out\n what commands possibly were sent to the web shell. Also,\n from an incident response perspective, don't just delete\n the web shell. Don't just remove the accounts. Well, you\n don't know what else happened in particular. There are lots\n of different web shells and you may not really have\n sufficient logging in your system to figure out what an\n attacker did. So as always, you very much should attempt a\n complete rebuild of the system. The interesting part\n here is the database, you know, how much of that you\n retain from the from the system. Because again, you\n know, there may be some settings that may have been\n altered or such that then amount to a backdoor. And\n Group IB has an interesting write up about malware they're\n calling HoloGraph. This malware takes advantage of the\n Microsoft Graph API that's been used for various\n Microsoft cloud products in this case, in particular\n calendars. So essentially uses calendar messages in order to\n essentially remote control your systems. The goal, of\n course, here is to sort of, you know, basically be below\n the radar and fit in with all the other calendar and\n Microsoft 365 messages that you may have in your network.\n We all know that we're using the tools and with that, of\n course, it can get quite difficult to police and really\n find some good metrics of to observe these messages. Even\n if you have the capability to intercept the messages can be\n difficult to really identify malicious ones. In this\n particular case, actually, yes, you can monitor these\n graph library calls, but there's also a simpler way to\n detect the infection. And that's DNS. The malware does\n not just use the graph API. It also uses DNS as a covert\n channel, in particular to exchange key material. And\n with that specific patterns in the DNS host names that are\n being requested. So that may be a little bit simpler kind\n of to write rules for than to go after the graph API. Of\n course, depending on how your network is instrumented. Let\n me have a new wall of Gitea. Gitea is sort of a little bit\n of GitHub lite that you can self-host. It's not just a Git\n repository, but also provides some CI/CD integrations. So\n if you want to have something that basically can be\n integrated in your development pipeline and provide some of\n these sort of functionalities that we usually get from\n GitHub, but you're unhappy with GitHub and rather have\n something self-hosted, that's your solution. Lately, I've\n seen a couple of critical vulnerabilities in GitI. So,\n Fikir, it's worthwhile mentioning that. As always,\n keep this software up to date. And this is also software you\n probably don't want to expose to the world. Well, and this\n is it for today. So thanks for liking. Thanks for\n subscribing. Thanks for recommending this podcast. And\n talk to you again tomorrow. Bye.",
-      "transcript_checked": true
     }
   ]
 }
