@@ -2,6 +2,73 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10126",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10126",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10126.mp3",
+      "title": "SANS Stormcast Wednesday, October 7th, 2026: RMM Tools; libHEIF RCE; Sonicwall SMA1000, OpenSSH updates, DNSSEC KSK Rollover",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, October 7th, 2026: RMM Tools; libHEIF RCE; Sonicwall SMA1000, OpenSSH updates, DNSSEC KSK Rollover",
+      "show_notes": [
+        {
+          "heading": "More RMM Tools In the Wild",
+          "links": [
+            "https://isc.sans.edu/diary/More%20RMM%20Tools%20In%20the%20Wild/33400"
+          ]
+        },
+        {
+          "heading": "WORDPRESS LIBHEIF RCE",
+          "links": [
+            "https://fortbridge.co.uk/research/wordpress-libheif-rce/"
+          ]
+        },
+        {
+          "heading": "SONICWALL SMA1000 SERIES APPLIANCES Vulnerabilities CVE-2026-102255, CVE-2026-102256, CVE-2026-102257, CVE-2026-102258",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0017"
+          ]
+        },
+        {
+          "heading": "OpenSSH 10.6 Released",
+          "links": [
+            "https://seclists.org/oss-sec/2026/q4/58"
+          ]
+        },
+        {
+          "heading": "DNSSEC Root Key Signing Key Rollover",
+          "links": [
+            "https://blog.cloudflare.com/root-ksk-2024-rollover/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-07T02:00:02+00:00",
+      "duration_seconds": 403,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10126.mp3",
+      "audio_length_bytes": 5644230,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10126",
+      "categories": [
+        "dnssec",
+        "ksk",
+        "openssh",
+        "sonicwall",
+        "wordpress",
+        "libheif",
+        "heif",
+        "rmm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10126",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, October 7th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by our SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. In Diaries today we have Xavier talking\n about yet another abuse of a valid remote management tool.\n In this particular case it's a tool by ActionOne called Agent\n or A1 Agent it's sometimes referred to. This again is a\n legitimate Windows remote management, remote monitoring\n tool that sort of includes some VPN-like encryption\n abilities and the like. Well, really all that an attacker\n kind of likes to have. And in this case it's being installed\n via a malicious PDF. The PDF arrives as a fake Adobe update\n and actually just the other day I was talking to someone\n that we don't really see many Adobe Flash Player updates\n anymore. Maybe people understand now that this\n software no longer exists. Well, this actor here still\n attempts to do that. It's the usual fake PDF invoice that\n you're getting here. Xavier talks a little bit about how\n to analyze this sample and it uses this action item where\n you can basically open a URL as you open the PDF in order\n to then direct the victim to the next site. The first stage\n of the malware in this case a simple Visual Basic script\n that will then download the actual malware or well\n actually not malware here. I guess in this case the actual\n remote management tool. So as I said before, monitor these\n remote management tools and make sure that any traffic you\n are seeing comes from approved legitimate tools. Again, you\n can't really trust too much into antivirus and endpoint\n detection here because they often don't flag these tools\n because they're valid software. And Fort Bridge\n showed how vulnerability in libHEIF can be used for\n remote code execution. Now, libHEIF is for the HEIF or\n HEIF file format that has become popular. I think Apple\n sort of started that file format. And lately, that's why\n I mentioned this particular issue. There have been a\n number of vulnerabilities tied to vulnerabilities in the HEIF\n parsers like libHEIF. So it's definitely something to keep\n an eye on if you are parsing HEIF images. If you're using\n any open source or commercial libraries for that matter, not\n sure what exactly exists here in the commercial space.\n Definitely watch for updates. There's a lot of effort\n currently in finding these type of vulnerabilities in\n HEIF implementations. And the insecure security appliance of\n the day is SonicWall's SMA-1000, the friend of the show.\n We had him quite a few times before. This time it's a CVSS\n score 10 vulnerability. It's a server-side request forgery\n vulnerability that does allow an unauthenticated user to\n essentially perform arbitrary actions. Not a ton of detail\n here. It sort of also talks about alternate control path\n or so. Doesn't mention a different sort of URL string\n bypass or anything like that. But the way the server-side\n request forgery vulnerabilities typically work\n is that you have an internal service listening on loopback.\n Because it's listening on loopback, well, it doesn't\n really do any kind of authentication access control.\n And you can use the server -side request forgery\n vulnerability to use the front -end as a proxy to reach these\n internal services. And OpenSSH released version 10.6. This\n version does, of course, fix vulnerabilities. But the\n reason I mention it is not a specific vulnerability.\n Nothing really too critical here. But two additional\n remarks that come with this release. One is the OpenSSH\n project. Like everybody is receiving a lot of submissions\n that were created by AI. So you will see more frequent\n releases of OpenSSH to address these vulnerabilities. And\n secondly, they're also pointing out, and I think\n that's a real good point. People receiving these bug\n reports often complain about duplicate reports. But what\n they're saying is that, well, the real problem here is since\n they get duplicate reports, these vulnerabilities are now\n really not that hard to find. So if they get these reports,\n it means others probably that didn't report it also have\n that information. And so delaying patches really\n doesn't buy you any time here. And that's, you know, again,\n why they're moving forward with a more accelerated\n release schedule. They're not suggesting a specific rhythm\n here or anything like this. They are just saying that\n releases will be published more frequently. And well,\n since DNS is my favorite internet protocol, I must\n mention that October 11th, the key signing key for the root\n zone is going to change. This is only the second time that\n this key has been updated. First time actually turned out\n to be a little bit messy. Since then, they did make a\n lot of improvements with automatic key rotation and\n things like that. The key has been published for, I think,\n over a year now. I'll link to a blog post by Cloudflare that\n has additional details on how to check if your resolver is\n ready for this new key. Well, and that's it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing. By the way, next week I will be in Amsterdam.\n So if anybody is at the SANS event in Amsterdam, look me\n up. And that's it for today. Talk to you again tomorrow.\n Bye. All right. Bye. Bye. Bye. Bye, bye. Bye. Bye. Bye, bye.\n Bye. Bye. Bye. Bye. Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10124",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
