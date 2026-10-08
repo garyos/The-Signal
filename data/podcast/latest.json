@@ -1,6 +1,69 @@
 {
-  "fetched_at": "2026-10-07T15:59:24.507756+00:00",
+  "fetched_at": "2026-10-08T09:48:43.451195+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10128",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10128",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10128.mp3",
+      "title": "SANS Stormcast Thursday, October 8th, 2026: Atlassian Vulnerabilities; ccTLD Compormise; Outlook blocking .msix",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 8th, 2026: Atlassian Vulnerabilities; ccTLD Compormise; Outlook blocking .msix",
+      "show_notes": [
+        {
+          "heading": "Scans for Atlassian vulnerablity (CVE-2026-21589)",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20for%20Atlassian%20vulnerablity%20%28CVE-2026-21589%29/33406"
+          ]
+        },
+        {
+          "heading": ".gh, .sl and .as ccTLD Compromise",
+          "links": [
+            "https://blog.google/security/chromes-response-to-recent-cctld-registry-hijacks/"
+          ]
+        },
+        {
+          "heading": "Cisco Nexus 3000 and 9000 Series Switches Remote Code Execution Vulnerabilities",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ngoam-rce-LWKQ4BU"
+          ]
+        },
+        {
+          "heading": "Outlook Blocking MSIX Files",
+          "links": [
+            "https://www.bleepingcomputer.com/news/microsoft/microsoft-outlook-to-block-msix-attachments-used-in-attacks/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-08T02:00:02+00:00",
+      "duration_seconds": 418,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10128.mp3",
+      "audio_length_bytes": 5854424,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10128",
+      "categories": [
+        "msix",
+        "outlook",
+        "microsoft",
+        "cisco",
+        "nexus",
+        "nx-os",
+        "patches",
+        "atlassian",
+        "vulnerability",
+        "exploits"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10128",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 8, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, and in Diaries Today, I wrote up some\n scans that we're seeing against an Atlassian\n vulnerability that has just been patched. October 5th is\n when Atlassian did publish the patches. Well, we also now\n have a write-up from Watchtower as of yesterday\n with details regarding the vulnerability and proof-of\n -concept exploit strings. And exactly these proof-of-concept\n exploit strings are what we are seeing in our honeypot\n logs. So these are not yet what I would call sort of full\n -fledged exploits. But in this case, it's a little bit tricky\n to see those full-fledged exploits. So just to describe\n the vulnerability a little bit. First of all, the\n indicator of the attack here is that you have two colons in\n the URL. The vulnerability here is based on these two\n colons then being replaced with a slash. Because, well,\n Atlassian figured to sanitize some of its URLs, it replaces\n a slash with two colons. But then also has a feature to\n undo this obfuscation. And that's exactly sort of what's\n hitting here. And that, of course, bypasses a lot of the\n traditional filters for directory traversal. With this\n vulnerability, an attacker is able to read arbitrary files.\n The problem is the attacker must know what file to read.\n There is no way to sort of get a simple directory listing or\n something like this using this vulnerability. So these\n initial attacks are looking for web.xml or in one case for\n a bitbucket for URL rewrite .xml. These are files that are\n always present in these products. And that's sort of\n why they are being selected. Similar to how attackers often\n use Etsy password in order to sort of play an experiment\n with directory traversal attacks. However, Etsy\n password doesn't work in this case. Because the\n vulnerability is restricted to the actual application's\n directory. So there is no way to break out of this\n application's directory. Either way, get this patched.\n It affects multiple products. So Jera, Bitbucket, Confluence\n are the ones that we have seen the exploit strings for. Check\n with Atlassian that you get everything patched. And yes,\n again, as usual, a good watchtower write-up. If you\n want to know more details about how this vulnerability\n works and, well, what went wrong here. And well, yet\n again, we had some country -level, top-level domains\n compromised or the registrar for these top-level domains.\n In fact, it was .gh, .sl, and .as. That's for Ghana, Sierra\n Leone, and American Samoa. Now, the problem, of course,\n with DNS is that DNS is also a security protocol, even\n though, well, it doesn't call itself that. But once the\n attacker was able to compromise DNS for these top\n -level domains, they were able to get TLS certificates for a\n number of domains hosted within these countries.\n Affected were also local Google sites, for example. And\n as a result, Google Chrome did add affected certificates to\n its block list. So they should show up as revoked now. This\n is sadly something that keeps happening, that random country\n -level registrars are being compromised. Now, they're\n actually in some ways sometimes less secure than\n some of the newer, some of these vanity domain names.\n Because, well, they're just older. So from the beginning\n of the Internet, they were often handed to some private\n companies without a lot of oversight and such. So that\n way, they often end up getting compromised. And, of course,\n what attackers usually try to do once they compromise one of\n these country-level domains, that they select a couple of\n popular websites and then redirect them to phishing or\n malware sites. And apparently, something along these lines\n happened here as well. Luckily, the attack didn't\n last terribly long, but long enough for attackers to obtain\n these invalid certificates. And users of Cisco Nexus\n switches and, well, NXOS, please look at the latest\n updates released by Cisco today and yesterday. Well,\n there are about nine different vulnerabilities being patched,\n a couple of them critical. The critical vulnerabilities\n appear to affect specifically the operation, administration,\n and maintenance feature, OAM, either for VXLAN or for MPLS.\n So if you're using that, definitely make sure that\n you're updating. That sort of enables exploitation of the\n vulnerability. But either way, there's a couple of remote\n code execution vulnerabilities here that do not require any\n authentication. But they do require that the attacker is\n able to send compromised packets to the switch, which,\n depending on where your switch is located, what your\n architecture looks like, may or may not be possible. And\n Microsoft is whacking the mole again and blocking two\n additional extensions from being downloaded from Outlook,\n MSIX and MSIX Bundle. Both of these extensions are\n associated with install packages, so essentially\n executables that you shouldn't just receive via email and\n download and then run. I guess Microsoft could just stop it\n and block all extensions and force people to use plain text\n email, as they're supposed to do anyway. But not quite there\n yet, but we are two extensions closer. Well, and that's it\n for today. Thanks for listening. Thanks for liking.\n Thanks for subscribing. Thanks for recommending. And also\n take a look at the classes I'll be teaching in the near\n future in the show notes. Thanks and talk to you again\n tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10126",
       "show": "stormcast",
@@ -3424,68 +3487,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10020",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, July 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in Applied\n Cybersecurity. Going over our web honeypot logs today, I saw\n two things that I talked about in the past, the first time at\n least I've seen them together, and that's GeoServer and the\n Rondo Botnet. Now GeoServer is one of those big Java\n applications that helps you process geolocation data. It's\n often used for geographic information systems to\n essentially prepare maps for various purposes. I don't\n think there are a ton of them exposed on the internet, but I\n guess sufficient systems that they are worthwhile scanning\n by those botnets. The vulnerability being attacked\n here is an older one. 2024 is when that vulnerability was\n originally made public. It's an expat expression evaluation\n issue. Now, the botnet that's scanning for it is the Rondo\n botnet. And Rondo is sort of one of those, I would say a\n little bit old-fashioned, funny kind of botnets. It has\n this Chicago rap theme to it. And if you're currently going\n to the website where it originally pulled down the\n bash script, well, you're getting sort of the typical\n for this botnet sort of advertisement for this Chicago\n rapper. No idea how they're related. If it's just a fan\n that wrote the botnet or how this exactly happened. But\n yes, of course, the site is still compromised because it\n now hosts that video. So sometimes these botnets, if\n you're not requesting the file from an IP address that's\n currently being scanned, well, you're getting different\n responses back. There's also sort of that little HTML\n comment on the top. You won't find it here. So I guess maybe\n that's directed at people like me that would like to get the\n SH file that's supposed to be downloaded. Well, after\n getting more than 400 vulnerabilities patched in the\n Linux kernel late last week, today we got the July critical\n patch update from Oracle. Now, even after changing their\n patch cycle from quarterly to monthly, well, we see AI doing\n its work here. And we got patches for 1,449 different\n vulnerabilities. Now, this being Oracle, of course, there\n are many, many different products involved in this\n particular update. I noticed quite a few updates for JD\n Edwards. So if you're running that, that may be of interest.\n And then also a lot of updates for some of the sort of Oracle\n Commerce, Oracle Communications Cloud products.\n So definitely you have to also check, you know, which\n components here you have installed. There's really too\n much here to sort of go over every single patch that, or\n even sort of do a summary that does it somewhat justice. And\n the one patch or the one vulnerabilities have stuck out\n to me was a 9.9 vulnerability in Oracle's database. So this\n is just the straightforward Oracle database. Definitely\n something to take a close look at if you are running Oracle\n database. Well, and then we got a little bit, sort of\n resolution from OpenAI. What exactly happened in the\n hugging face case? So according to OpenAI, they did\n test their latest model, GPT-5 .6 Sol. And the intent was to\n test it against an internal benchmark inside a sandbox.\n And apparently the model escaped and then decided to\n attack hugging face. Now, I don't see hugging face as a\n competitor to OpenAI in any way. So I don't think it was\n an attack against the competitor. To me, this sounds\n very much like a publicity stunt and that this escape was\n maybe not all that accidental, given how much sort of press\n Anthropic got with their fatal model and some of the exploit\n discoveries around that. Maybe OpenAI wanted to do a little\n bit better and did sort of that escape from the jail in\n order to attack another AI related website. Checkpoint\n released its July security advisory. Now, they're stating\n that they're also using AI in order to find vulnerabilities.\n They're patching three vulnerabilities here, at least\n three that they're listing. But they also state that they\n applied various hardening techniques and such that are\n not necessarily sort of pointed out as\n vulnerabilities. They're calling this a jumbo patch and\n it applies to the firewall product as well as to their\n admin console products. Now, there's one vulnerability here\n that's worth pointing out. It's an authentication bypass\n with a smart console login. This has a CVS score of 9.3\n and is already exploited in the wild. They're saying there\n was a handful of customers that was affected by this. I'm\n not sure how many customers fit into a hand. But anyway,\n definitely do apply it. And now, given that the patch is\n out and of course the patch will be diffed and there's\n already an exploit available. Probably won't take too long\n to see more widespread exploitation of this\n vulnerability. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing and\n talk to you again tomorrow. Bye. Bye.\n Bye. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10018",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10018",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10018.mp3",
-      "title": "SANS Stormcast Wednesday, July 22nd, 2026: Captive Portals; Critical Serv-U and Zimbra Update; Apple Hide-My-Email fix",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, July 22nd, 2026: Captive Portals; Critical Serv-U and Zimbra Update; Apple Hide-My-Email fix",
-      "show_notes": [
-        {
-          "heading": "Captive Portal Detection",
-          "links": [
-            "https://isc.sans.edu/diary/Captive%20Portal%20Detection/33172"
-          ]
-        },
-        {
-          "heading": "Critical SolarWinds Serv-U Update",
-          "links": [
-            "https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_2026-3_release_notes.htm"
-          ]
-        },
-        {
-          "heading": "Zimbra Update with Critical Security Fixes",
-          "links": [
-            "https://blog.zimbra.com/2026/07/patch-release-update-zimbra-10-1-20/"
-          ]
-        },
-        {
-          "heading": "Apple Fixed Hide My E-Mail Leak",
-          "links": [
-            "https://www.404media.co/apple-fixes-hide-my-email-vulnerability-after-404-media-coverage/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-22T02:00:02+00:00",
-      "duration_seconds": 330,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10018.mp3",
-      "audio_length_bytes": 4627613,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10018",
-      "categories": [
-        "apple",
-        "e-mail",
-        "privacy",
-        "zimbra",
-        "hide-my",
-        "solarwinds",
-        "serv-u",
-        "captive",
-        "portal"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10018",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday July 22nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's degree program in Applied\n Cybersecurity. Well today I figured let's move away from\n WordPress if you are running it if you aren't patched that\n you're compromised and well with that move on to something\n well less threat related and that's how different operating\n systems do detect if they are behind a captive portal.\n Anybody who has ever used any kind of public Wi-Fi network\n probably has observed these captive portals some kind of\n login screen that you have to go through in order to connect\n to the internet. So to support this very common practice\n operating systems and browsers have implemented a couple\n different methods how they are detected if they are behind\n such a captive portal and then of course also how to direct\n the user to the correct URL in order to sign in. This traffic\n sometimes shows up sort of as odd and unexplained traffic in\n the network because users don't really consciously visit\n these URLs. It's also HTTP traffic because for the\n captive portal to then redirect the user well can't\n be HTTPS because then the certificate check would fail.\n So summarized here a couple of the URLs being used by the\n major operating systems as well as Firefox and Chrome who\n do sort of their own little trick in order to figure out\n if they are behind such a captive portal. And then we\n got an interesting update from SolarWinds for their Serv-U\n product. This update does fix 16 different vulnerabilities.\n 15 of them so all but one are rated critical with a CVSS\n score of 9.1. The one vulnerability that I think is\n particularly interesting is 2026 28304. It's an arbitrary\n code execution vulnerability. And for all the other\n vulnerability it states that the user must be like\n administrator access or must have a domain account or like\n well nothing like this in this particular vulnerability. So I\n assume it's unauthenticated and it allows execution of\n code remotely as root. They're saying the impact is lower for\n Windows deployments. I'm not really that familiar with Serv-U\n to know what the difference here is. Obviously\n there is no root user on Windows. Maybe they have a\n little bit more privilege separation or such to not\n become an administrator on Windows. But definitely you\n must apply this update if you have SolarWinds Serv-U\n exposed given how quickly attackers are these days\n developing new exploits. An open source webmail project\n Zimbra did release a new update to its product. This\n update fixes a number of interesting security\n vulnerabilities. The most critical one here is a command\n injection vulnerability in the SNMP monitoring component. Now\n in order to be vulnerable you have to actually enable SNMP\n notifications and this was already disclosed like back in\n June but now is rolled into this update. I hope you don't\n allow SNMP in and out of your network but well I've seen\n worse things happening in the past. So that's I think the\n first thing you should check and then definitely apply this\n update. The other updates are a number of cross-site\n scripting issues which are always interesting and\n exploitable often for these kind of webmail systems. In\n particular if the export can be delivered via an email. The\n other vulnerabilities I don't really consider that\n extraordinary dangerous because many of them or all\n the others really require some kind of authenticated access.\n And a couple of weeks ago I did mention that Apple's Hide\n My Email system had a vulnerability that leaked the\n actual user's email address if an oversized email was sent to\n the Hide My Email address. Well a 404 media who\n originally reported about this vulnerability now states that\n the vulnerability has been fixed. Apparently it has\n already been fixed a couple weeks ago there was no\n official announcement about this from Apple but 404 media\n now was able to confirm it's fixed. Well and this is it for\n today so thanks for listening, thanks for liking, thanks for\n subscribing and sharing to this podcast and as always\n talk to you again tomorrow. Bye!",
       "transcript_checked": true
     }
   ]

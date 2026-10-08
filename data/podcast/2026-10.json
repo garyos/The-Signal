@@ -2,6 +2,69 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10128",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10128",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10128.mp3",
+      "title": "SANS Stormcast Thursday, October 8th, 2026: Atlassian Vulnerabilities; ccTLD Compormise; Outlook blocking .msix",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 8th, 2026: Atlassian Vulnerabilities; ccTLD Compormise; Outlook blocking .msix",
+      "show_notes": [
+        {
+          "heading": "Scans for Atlassian vulnerablity (CVE-2026-21589)",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20for%20Atlassian%20vulnerablity%20%28CVE-2026-21589%29/33406"
+          ]
+        },
+        {
+          "heading": ".gh, .sl and .as ccTLD Compromise",
+          "links": [
+            "https://blog.google/security/chromes-response-to-recent-cctld-registry-hijacks/"
+          ]
+        },
+        {
+          "heading": "Cisco Nexus 3000 and 9000 Series Switches Remote Code Execution Vulnerabilities",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ngoam-rce-LWKQ4BU"
+          ]
+        },
+        {
+          "heading": "Outlook Blocking MSIX Files",
+          "links": [
+            "https://www.bleepingcomputer.com/news/microsoft/microsoft-outlook-to-block-msix-attachments-used-in-attacks/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-08T02:00:02+00:00",
+      "duration_seconds": 418,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10128.mp3",
+      "audio_length_bytes": 5854424,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10128",
+      "categories": [
+        "msix",
+        "outlook",
+        "microsoft",
+        "cisco",
+        "nexus",
+        "nx-os",
+        "patches",
+        "atlassian",
+        "vulnerability",
+        "exploits"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10128",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 8, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, and in Diaries Today, I wrote up some\n scans that we're seeing against an Atlassian\n vulnerability that has just been patched. October 5th is\n when Atlassian did publish the patches. Well, we also now\n have a write-up from Watchtower as of yesterday\n with details regarding the vulnerability and proof-of\n -concept exploit strings. And exactly these proof-of-concept\n exploit strings are what we are seeing in our honeypot\n logs. So these are not yet what I would call sort of full\n -fledged exploits. But in this case, it's a little bit tricky\n to see those full-fledged exploits. So just to describe\n the vulnerability a little bit. First of all, the\n indicator of the attack here is that you have two colons in\n the URL. The vulnerability here is based on these two\n colons then being replaced with a slash. Because, well,\n Atlassian figured to sanitize some of its URLs, it replaces\n a slash with two colons. But then also has a feature to\n undo this obfuscation. And that's exactly sort of what's\n hitting here. And that, of course, bypasses a lot of the\n traditional filters for directory traversal. With this\n vulnerability, an attacker is able to read arbitrary files.\n The problem is the attacker must know what file to read.\n There is no way to sort of get a simple directory listing or\n something like this using this vulnerability. So these\n initial attacks are looking for web.xml or in one case for\n a bitbucket for URL rewrite .xml. These are files that are\n always present in these products. And that's sort of\n why they are being selected. Similar to how attackers often\n use Etsy password in order to sort of play an experiment\n with directory traversal attacks. However, Etsy\n password doesn't work in this case. Because the\n vulnerability is restricted to the actual application's\n directory. So there is no way to break out of this\n application's directory. Either way, get this patched.\n It affects multiple products. So Jera, Bitbucket, Confluence\n are the ones that we have seen the exploit strings for. Check\n with Atlassian that you get everything patched. And yes,\n again, as usual, a good watchtower write-up. If you\n want to know more details about how this vulnerability\n works and, well, what went wrong here. And well, yet\n again, we had some country -level, top-level domains\n compromised or the registrar for these top-level domains.\n In fact, it was .gh, .sl, and .as. That's for Ghana, Sierra\n Leone, and American Samoa. Now, the problem, of course,\n with DNS is that DNS is also a security protocol, even\n though, well, it doesn't call itself that. But once the\n attacker was able to compromise DNS for these top\n -level domains, they were able to get TLS certificates for a\n number of domains hosted within these countries.\n Affected were also local Google sites, for example. And\n as a result, Google Chrome did add affected certificates to\n its block list. So they should show up as revoked now. This\n is sadly something that keeps happening, that random country\n -level registrars are being compromised. Now, they're\n actually in some ways sometimes less secure than\n some of the newer, some of these vanity domain names.\n Because, well, they're just older. So from the beginning\n of the Internet, they were often handed to some private\n companies without a lot of oversight and such. So that\n way, they often end up getting compromised. And, of course,\n what attackers usually try to do once they compromise one of\n these country-level domains, that they select a couple of\n popular websites and then redirect them to phishing or\n malware sites. And apparently, something along these lines\n happened here as well. Luckily, the attack didn't\n last terribly long, but long enough for attackers to obtain\n these invalid certificates. And users of Cisco Nexus\n switches and, well, NXOS, please look at the latest\n updates released by Cisco today and yesterday. Well,\n there are about nine different vulnerabilities being patched,\n a couple of them critical. The critical vulnerabilities\n appear to affect specifically the operation, administration,\n and maintenance feature, OAM, either for VXLAN or for MPLS.\n So if you're using that, definitely make sure that\n you're updating. That sort of enables exploitation of the\n vulnerability. But either way, there's a couple of remote\n code execution vulnerabilities here that do not require any\n authentication. But they do require that the attacker is\n able to send compromised packets to the switch, which,\n depending on where your switch is located, what your\n architecture looks like, may or may not be possible. And\n Microsoft is whacking the mole again and blocking two\n additional extensions from being downloaded from Outlook,\n MSIX and MSIX Bundle. Both of these extensions are\n associated with install packages, so essentially\n executables that you shouldn't just receive via email and\n download and then run. I guess Microsoft could just stop it\n and block all extensions and force people to use plain text\n email, as they're supposed to do anyway. But not quite there\n yet, but we are two extensions closer. Well, and that's it\n for today. Thanks for listening. Thanks for liking.\n Thanks for subscribing. Thanks for recommending. And also\n take a look at the classes I'll be teaching in the near\n future in the show notes. Thanks and talk to you again\n tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10126",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
