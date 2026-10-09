@@ -2,6 +2,98 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10130",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10130",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10130.mp3",
+      "title": "SANS Stormcast Friday, October 9th, 2026: AI Agent Forensics; AI-Assisted Attack on South Korean Banks; IDN Typosquatting; Cisco Finesse SSRF (CVE-2026-20362)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 9th, 2026: AI Agent Forensics; AI-Assisted Attack on South Korean Banks; IDN Typosquatting; Cisco Finesse SSRF (CVE-2026-20362)",
+      "show_notes": [
+        {
+          "heading": "In today's episode: new scripts for reconstructing AI agent activity during forensic investigations, an attacker's Claude chat history recovered after breaches at South Korean financial institutions, internationalized domain name (IDN) lookalikes that still get past Chrome, and an unpatched Cisco Finesse server-side request forgery (SSRF) vulnerability.",
+          "links": []
+        },
+        {
+          "heading": "Reconstructing AI Agent Activity: Two New Scripts for Forensic Review",
+          "links": []
+        },
+        {
+          "heading": "Jim Clausing released two scripts that turn the logs left behind by the OpenCode and Hermes AI agents into searchable JSON, so incident responders can see what an AI agent did on an attacker's or a victim's system.",
+          "links": [
+            "https://isc.sans.edu/diary/Reconstructing%20AI%20Agent%20Activity%3A%20Two%20New%20Scripts%20for%20Forensic%20Review/33410"
+          ]
+        },
+        {
+          "heading": "Unknown Threat Actor Uses AI-Driven ARTEX to Target South Korean Finance",
+          "links": []
+        },
+        {
+          "heading": "While investigating breaches at South Korean financial institutions, CrowdStrike recovered the attacker's CLAUDE.md file and Claude chat history, a rare look at how a low-skill \"prompt kiddie\" uses AI to run an attack.",
+          "links": [
+            "https://www.crowdstrike.com/en-us/blog/unknown-threat-actor-uses-artex-to-target-south-korean-finance/"
+          ]
+        },
+        {
+          "heading": "Turning IDN Edge Cases into Typosquats",
+          "links": []
+        },
+        {
+          "heading": "Attackers can still register convincing lookalike domains using Unicode characters that resemble Latin letters but are not on Chrome's list of known confusables. One test domain impersonating Apple displayed in Chrome but not in Safari.",
+          "links": [
+            "https://haveibeensquatted.com/blog/turning-idn-edge-cases-into-typosquats"
+          ]
+        },
+        {
+          "heading": "Cisco Finesse SSRF Vulnerability (CVE-2026-20362)",
+          "links": []
+        },
+        {
+          "heading": "Cisco disclosed an unauthenticated server-side request forgery vulnerability in the Cisco Finesse web-based management interface, rated High (CVSS 7.2). Details are already public, there is no workaround, and fixed releases are not expected until January or February 2027.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-finesse-ssrf-mmSuyugS"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-09T07:52:03+00:00",
+      "duration_seconds": 374,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10130.mp3",
+      "audio_length_bytes": 5249190,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10130",
+      "categories": [
+        "ai agent",
+        "ai agent forensics",
+        "incident response",
+        "opencode",
+        "hermes",
+        "claude",
+        "crowdstrike",
+        "artex",
+        "south korea",
+        "financial sector",
+        "idn",
+        "internationalized domain names",
+        "homograph",
+        "typosquatting",
+        "lookalike domains",
+        "unicode confusables",
+        "chrome",
+        "safari",
+        "cisco"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10130",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 9th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, attackers these days like AI agents.\n They may use them on their own system in order to orchestrate\n the attack and conduct some of the attack activity. But they\n may also interact with AI agents on the victim's host in\n order to breach additional systems or just to figure out\n what a particular victim was doing with this AI agent and\n what this agent may have access to. So Jim Clausing\n wrote two scripts that allow you to reconstruct the\n activity that these AI agents performed. This is pulled from\n logs these AI agents leave behind, but then represented\n in a more easily parsable, searchable JSON format. The\n two examples that Jim has is OpenCode and Hermes as two\n agents that his scripts are covering. And yes, he used, of\n course, these tools also to create those scripts. And if\n you run any AI agents, maybe they can help you figure out\n how to better monitor their activities. In particular, for\n I think these days, any kind of forensics investigations,\n you probably want to look at how AI agents were involved.\n And again, don't forget that the victim side's AI agent\n may also be an interesting source of logs here, not just\n the attackers, which, of course, you may not always\n have access to. So as I just mentioned that usually we\n don't have access to the AI agent or chat logs from the\n attacker, well, CrowdStrike got lucky. Recently, some\n South Korean financial institutions were attacked and\n in part successfully breached by an attacker. And\n investigating the attack, CrowdStrike, on one of the\n systems involved in the attack, came across the\n CLAUDE.md file of the attacker. And with that also then gained\n access to essentially the attacker's chat history with\n Claude. Well, it really shows that instead of click kiddies\n or script kiddies, we now have prompt kiddies. This attacker\n was definitely not sophisticated, but it gives an\n interesting insight in the mindset of the attacker and\n how these attackers operate. Hopefully also helping\n defenders better understand these attacks and better\n protect against them. But also for pen testers, sort of a\n scenario to consider if you're thinking about emulating a\n particular type of attacker. And then international domain\n names are in the news again as a form of typosquatting where\n you can come up with lookalike domain names. This is a\n problem that's really one of those whack-a-mole problems\n between browsers and attackers. So the initial\n problem was that I can just replace one letter in a domain\n name with a lookalike Unicode letter and then basically\n impersonate any arbitrary domain. Now, this was then\n eliminated by browsers like Google Chrome, not allowing\n the mix of different character sets. So you can't mix a Latin\n letter A with a Cyrillic letter A. Now, then of course\n attackers came up with domain names that used all, let's\n say, Cyrillic letters. And that way, of course, it\n slipped through these checks. Now, the next step was where\n Chrome again, sort of leading this, did eliminate lookalike\n letters, these confusables. They're known confusable\n letters. So there's a list of them that's built in the\n browser and they're used to check for these type of\n attacks. Well, the latest round now is that there are\n letters that are close, but not officially confusables. So\n that way, it's still possible to get a fairly good lookalike\n domain name, but it's not detected by Google Chrome. And\n Google Chrome is here the major sort of browser they\n investigated. Safari, as the other big browser, is usually\n much more forgiving and likely to display these international\n character sets. Interestingly, the one sort of test domain\n name they registered that impersonates Apple, does\n actually not show up in Safari, but it does work in\n Google Chrome. So we'll see what the next round here is,\n if the list of confusable letters will be expanded. But\n of course, there's sort of a sliding scale here, where a\n letter may be considered confusable or not. And that,\n of course, also depends often on how operating systems and\n fonts display these letters. And Cisco published an\n advisory regarding Cisco Finesse. Now, this advisory is\n only rated as high. It's yet another server-side request\n forgery. I think yesterday we had SonicWall with one of\n these vulnerabilities. In this case, however, the impact is\n limited. It only allows limited access to sensitive\n information. However, there is no patch available, and\n details about the vulnerability have already\n been made public. This is why Cisco did publish this\n advisory, but looks like it may take until early next year\n for a patch to be made available. Cisco does not\n offer any workarounds until then. Well, and that's it for\n today. So thanks again for listening. Thanks for liking.\n Thanks for subscribing to this podcast. And talk to you again\n on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10128",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

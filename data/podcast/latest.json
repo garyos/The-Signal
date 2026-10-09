@@ -1,6 +1,98 @@
 {
-  "fetched_at": "2026-10-08T16:01:38.373204+00:00",
+  "fetched_at": "2026-10-09T09:53:05.312857+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10130",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10130",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10130.mp3",
+      "title": "SANS Stormcast Friday, October 9th, 2026: AI Agent Forensics; AI-Assisted Attack on South Korean Banks; IDN Typosquatting; Cisco Finesse SSRF (CVE-2026-20362)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 9th, 2026: AI Agent Forensics; AI-Assisted Attack on South Korean Banks; IDN Typosquatting; Cisco Finesse SSRF (CVE-2026-20362)",
+      "show_notes": [
+        {
+          "heading": "In today's episode: new scripts for reconstructing AI agent activity during forensic investigations, an attacker's Claude chat history recovered after breaches at South Korean financial institutions, internationalized domain name (IDN) lookalikes that still get past Chrome, and an unpatched Cisco Finesse server-side request forgery (SSRF) vulnerability.",
+          "links": []
+        },
+        {
+          "heading": "Reconstructing AI Agent Activity: Two New Scripts for Forensic Review",
+          "links": []
+        },
+        {
+          "heading": "Jim Clausing released two scripts that turn the logs left behind by the OpenCode and Hermes AI agents into searchable JSON, so incident responders can see what an AI agent did on an attacker's or a victim's system.",
+          "links": [
+            "https://isc.sans.edu/diary/Reconstructing%20AI%20Agent%20Activity%3A%20Two%20New%20Scripts%20for%20Forensic%20Review/33410"
+          ]
+        },
+        {
+          "heading": "Unknown Threat Actor Uses AI-Driven ARTEX to Target South Korean Finance",
+          "links": []
+        },
+        {
+          "heading": "While investigating breaches at South Korean financial institutions, CrowdStrike recovered the attacker's CLAUDE.md file and Claude chat history, a rare look at how a low-skill \"prompt kiddie\" uses AI to run an attack.",
+          "links": [
+            "https://www.crowdstrike.com/en-us/blog/unknown-threat-actor-uses-artex-to-target-south-korean-finance/"
+          ]
+        },
+        {
+          "heading": "Turning IDN Edge Cases into Typosquats",
+          "links": []
+        },
+        {
+          "heading": "Attackers can still register convincing lookalike domains using Unicode characters that resemble Latin letters but are not on Chrome's list of known confusables. One test domain impersonating Apple displayed in Chrome but not in Safari.",
+          "links": [
+            "https://haveibeensquatted.com/blog/turning-idn-edge-cases-into-typosquats"
+          ]
+        },
+        {
+          "heading": "Cisco Finesse SSRF Vulnerability (CVE-2026-20362)",
+          "links": []
+        },
+        {
+          "heading": "Cisco disclosed an unauthenticated server-side request forgery vulnerability in the Cisco Finesse web-based management interface, rated High (CVSS 7.2). Details are already public, there is no workaround, and fixed releases are not expected until January or February 2027.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-finesse-ssrf-mmSuyugS"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-09T07:52:03+00:00",
+      "duration_seconds": 374,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10130.mp3",
+      "audio_length_bytes": 5249190,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10130",
+      "categories": [
+        "ai agent",
+        "ai agent forensics",
+        "incident response",
+        "opencode",
+        "hermes",
+        "claude",
+        "crowdstrike",
+        "artex",
+        "south korea",
+        "financial sector",
+        "idn",
+        "internationalized domain names",
+        "homograph",
+        "typosquatting",
+        "lookalike domains",
+        "unicode confusables",
+        "chrome",
+        "safari",
+        "cisco"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10130",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 9th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, attackers these days like AI agents.\n They may use them on their own system in order to orchestrate\n the attack and conduct some of the attack activity. But they\n may also interact with AI agents on the victim's host in\n order to breach additional systems or just to figure out\n what a particular victim was doing with this AI agent and\n what this agent may have access to. So Jim Clausing\n wrote two scripts that allow you to reconstruct the\n activity that these AI agents performed. This is pulled from\n logs these AI agents leave behind, but then represented\n in a more easily parsable, searchable JSON format. The\n two examples that Jim has is OpenCode and Hermes as two\n agents that his scripts are covering. And yes, he used, of\n course, these tools also to create those scripts. And if\n you run any AI agents, maybe they can help you figure out\n how to better monitor their activities. In particular, for\n I think these days, any kind of forensics investigations,\n you probably want to look at how AI agents were involved.\n And again, don't forget that the victim side's AI agent\n may also be an interesting source of logs here, not just\n the attackers, which, of course, you may not always\n have access to. So as I just mentioned that usually we\n don't have access to the AI agent or chat logs from the\n attacker, well, CrowdStrike got lucky. Recently, some\n South Korean financial institutions were attacked and\n in part successfully breached by an attacker. And\n investigating the attack, CrowdStrike, on one of the\n systems involved in the attack, came across the\n CLAUDE.md file of the attacker. And with that also then gained\n access to essentially the attacker's chat history with\n Claude. Well, it really shows that instead of click kiddies\n or script kiddies, we now have prompt kiddies. This attacker\n was definitely not sophisticated, but it gives an\n interesting insight in the mindset of the attacker and\n how these attackers operate. Hopefully also helping\n defenders better understand these attacks and better\n protect against them. But also for pen testers, sort of a\n scenario to consider if you're thinking about emulating a\n particular type of attacker. And then international domain\n names are in the news again as a form of typosquatting where\n you can come up with lookalike domain names. This is a\n problem that's really one of those whack-a-mole problems\n between browsers and attackers. So the initial\n problem was that I can just replace one letter in a domain\n name with a lookalike Unicode letter and then basically\n impersonate any arbitrary domain. Now, this was then\n eliminated by browsers like Google Chrome, not allowing\n the mix of different character sets. So you can't mix a Latin\n letter A with a Cyrillic letter A. Now, then of course\n attackers came up with domain names that used all, let's\n say, Cyrillic letters. And that way, of course, it\n slipped through these checks. Now, the next step was where\n Chrome again, sort of leading this, did eliminate lookalike\n letters, these confusables. They're known confusable\n letters. So there's a list of them that's built in the\n browser and they're used to check for these type of\n attacks. Well, the latest round now is that there are\n letters that are close, but not officially confusables. So\n that way, it's still possible to get a fairly good lookalike\n domain name, but it's not detected by Google Chrome. And\n Google Chrome is here the major sort of browser they\n investigated. Safari, as the other big browser, is usually\n much more forgiving and likely to display these international\n character sets. Interestingly, the one sort of test domain\n name they registered that impersonates Apple, does\n actually not show up in Safari, but it does work in\n Google Chrome. So we'll see what the next round here is,\n if the list of confusable letters will be expanded. But\n of course, there's sort of a sliding scale here, where a\n letter may be considered confusable or not. And that,\n of course, also depends often on how operating systems and\n fonts display these letters. And Cisco published an\n advisory regarding Cisco Finesse. Now, this advisory is\n only rated as high. It's yet another server-side request\n forgery. I think yesterday we had SonicWall with one of\n these vulnerabilities. In this case, however, the impact is\n limited. It only allows limited access to sensitive\n information. However, there is no patch available, and\n details about the vulnerability have already\n been made public. This is why Cisco did publish this\n advisory, but looks like it may take until early next year\n for a patch to be made available. Cisco does not\n offer any workarounds until then. Well, and that's it for\n today. So thanks again for listening. Thanks for liking.\n Thanks for subscribing to this podcast. And talk to you again\n on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10128",
       "show": "stormcast",
@@ -3428,65 +3520,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10022",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday, July 24th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. This episode is brought to you by\n the SANS.edu Master's Degree Program in Information\n Security Engineering. The OpenAI versus Hugging Face\n incident does still dominate the news and Renato today\n wrote up as his diary for the day a summary of it with some\n lessons learned that I think are quite valuable here. So\n first of all, that if you have some kind of sandbox or so for\n your agent, it's typically not providing the security\n isolation that you expect. It's for many agents really\n just more of a guideline. Secondly, well, there's this\n assimility problem around guardrails that Hugging Face\n ran into where their models actually refused to analyze\n some of the evidence or respond because of guardrails\n they ran into. So that's an interesting, I think, lesson\n to take away from this. And then, of course, well, how did\n it actually get in? What were the vulnerabilities? And here,\n non-human identities, API keys and stuff like this still sort\n of played a major role here. So that's something that, of\n course, a lot of human -initiated exploits and\n intrusions are leveraging as well. So definitely something\n that you probably want to restrict and control. A couple\n times in the past, I've mentioned cross-site scripting\n vulnerabilities in Zimbra. So just fitting that, Sisa, in\n conjunction with other cybersecurity agencies, has\n published an advisory how a Russian state-sponsored actor\n is using cross-site scripting vulnerabilities to attack\n Zimbra users. So Zimbra, like all webmail systems, is\n struggling with cross-site scripting. You have to\n essentially display HTML email with cascading style sheets\n inside the user's browser and, of course, keep it properly\n separated from the rest of the page. There are some tricks\n like iframes and such that can help, but ultimately this has\n been a very difficult problem. And this is one example how\n these kind vulnerabilities are being attacked. In this case,\n it was the cascading style sheet that triggered the cross\n -site scripting vulnerability. And the attacker used it to\n display a username and password dialogue inside the\n webmail's user interface. So there was really no good way\n for the user to distinguish it from the normal username and\n password dialogue. Once the user entered the username and\n password, then, of course, the credentials were sent to the\n attacker. They also took a second factor if that was\n used. So again, remember, not all second factor\n authentication is phishing resistant. It's essentially\n kind of phishing what's happening here, even though it\n happens inside the page. Something like pass keys or\n some other 502 authentication would not be vulnerable to\n this particular attack. I have no idea if Zimbra supports it.\n Haven't really used Zimbra myself in a while. But anyway,\n so real good example of how these type of attacks are\n being exploited, even if you're up to date in your\n patches. Probably a good read if you're using Zimbra or a\n similar self-hosted webmail system because, well, like I\n said, they all tend to have very similar vulnerabilities\n like this. And we got a blog post by the Ukrainian cert\n with details regarding, well, other probably Russian\n attacks, at least target attacks against Ukraine that\n take advantage of Notepad++. Now, in this case, there's\n actually not a vulnerability being used, even though that's\n a little bit disputed here. The problem is that an\n attacker essentially sending a phishing email, tricking a\n user into expanding a malicious zip file, and then\n placing a DLL inside the extension folder for\n Notepad++. While this DLL essentially replicates a\n normal extension, it does include additional malicious\n functionality. There is a dispute whether or not a user\n should be able to replace a DLL like this. However, this\n is like how these extensions are installed in Notepad++. So\n I kind of agree here with Notepad++ that this is not\n really a vulnerability. It's really just how the product is\n supposed to work. It's not the user actually willingly\n installing a malicious extension. Like that's what we\n usually had in other products like Visual Studio Code and\n such. Not sure if that's happening with Notepad++ here\n as well. But in this case, no, the user really just unzips\n the file and the file opens and looks pretty normal, but\n has the side mission here of actually replacing and\n injecting that DLL. Well, earlier this week, I talked\n about how the calendar tool in Office 365 can be abused as a\n cover channel. Well, there is no shortage in cover channels.\n The latest here from Cisco is msaRAT. This particular tool\n is actually based in Rust, so I guess it's more secure, but\n it also uses the browser in order to connect to the\n malicious site. So the command control channel uses Chrome's\n DevTools protocol. It's an API that developer tools can hook\n into to basically send requests and receive responses\n via Google Chrome. That, of course, makes it a little bit\n more difficult to identify this traffic because when\n you're looking at the processes on your system,\n well, the traffic originates from Chrome. There's a lot of\n weird traffic that goes from and to browsers, so it's easy\n to kind of discard this as yet another odd kind of browser\n behavior and not actually follow through with it and\n look at the source that it's actually initiated by the\n malware. Well, and this is it for today. So thanks for\n listening. Thanks for liking, recommending, and for\n subscribing to this podcast, and talk to you again on\n Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10020",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10020",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10020.mp3",
-      "title": "SANS Stormcast Thursday, July 23rd, 2026: Rondo and Geoserver; Oracle Patches; Checkpoint  0-day; OpenAI vs Huggingface",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, July 23rd, 2026: Rondo and Geoserver; Oracle Patches; Checkpoint 0-day; OpenAI vs Huggingface",
-      "show_notes": [
-        {
-          "heading": "Rondo Meets Geoserver",
-          "links": [
-            "https://isc.sans.edu/diary/Rondo%20Meets%20Geoserver/33176"
-          ]
-        },
-        {
-          "heading": "Oracle July Patch Update",
-          "links": [
-            "https://www.oracle.com/security-alerts/cpujul2026.html"
-          ]
-        },
-        {
-          "heading": "OpenAI and Hugging Face partner to address security incident during model evaluation",
-          "links": [
-            "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
-          ]
-        },
-        {
-          "heading": "Checkpoint July 2026 Security Advisory (CVE-2026-16232)",
-          "links": [
-            "https://blog.checkpoint.com/security/security-advisory-action-required-active-exploitation-of-check-point-smartconsole-authentication-bypass-cve-2026-16232/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-23T02:00:03+00:00",
-      "duration_seconds": 386,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10020.mp3",
-      "audio_length_bytes": 5414087,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10020",
-      "categories": [
-        "checkpoint",
-        "openai",
-        "huggingface",
-        "oracle",
-        "rondo",
-        "geoserver"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10020",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, July 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in Applied\n Cybersecurity. Going over our web honeypot logs today, I saw\n two things that I talked about in the past, the first time at\n least I've seen them together, and that's GeoServer and the\n Rondo Botnet. Now GeoServer is one of those big Java\n applications that helps you process geolocation data. It's\n often used for geographic information systems to\n essentially prepare maps for various purposes. I don't\n think there are a ton of them exposed on the internet, but I\n guess sufficient systems that they are worthwhile scanning\n by those botnets. The vulnerability being attacked\n here is an older one. 2024 is when that vulnerability was\n originally made public. It's an expat expression evaluation\n issue. Now, the botnet that's scanning for it is the Rondo\n botnet. And Rondo is sort of one of those, I would say a\n little bit old-fashioned, funny kind of botnets. It has\n this Chicago rap theme to it. And if you're currently going\n to the website where it originally pulled down the\n bash script, well, you're getting sort of the typical\n for this botnet sort of advertisement for this Chicago\n rapper. No idea how they're related. If it's just a fan\n that wrote the botnet or how this exactly happened. But\n yes, of course, the site is still compromised because it\n now hosts that video. So sometimes these botnets, if\n you're not requesting the file from an IP address that's\n currently being scanned, well, you're getting different\n responses back. There's also sort of that little HTML\n comment on the top. You won't find it here. So I guess maybe\n that's directed at people like me that would like to get the\n SH file that's supposed to be downloaded. Well, after\n getting more than 400 vulnerabilities patched in the\n Linux kernel late last week, today we got the July critical\n patch update from Oracle. Now, even after changing their\n patch cycle from quarterly to monthly, well, we see AI doing\n its work here. And we got patches for 1,449 different\n vulnerabilities. Now, this being Oracle, of course, there\n are many, many different products involved in this\n particular update. I noticed quite a few updates for JD\n Edwards. So if you're running that, that may be of interest.\n And then also a lot of updates for some of the sort of Oracle\n Commerce, Oracle Communications Cloud products.\n So definitely you have to also check, you know, which\n components here you have installed. There's really too\n much here to sort of go over every single patch that, or\n even sort of do a summary that does it somewhat justice. And\n the one patch or the one vulnerabilities have stuck out\n to me was a 9.9 vulnerability in Oracle's database. So this\n is just the straightforward Oracle database. Definitely\n something to take a close look at if you are running Oracle\n database. Well, and then we got a little bit, sort of\n resolution from OpenAI. What exactly happened in the\n hugging face case? So according to OpenAI, they did\n test their latest model, GPT-5 .6 Sol. And the intent was to\n test it against an internal benchmark inside a sandbox.\n And apparently the model escaped and then decided to\n attack hugging face. Now, I don't see hugging face as a\n competitor to OpenAI in any way. So I don't think it was\n an attack against the competitor. To me, this sounds\n very much like a publicity stunt and that this escape was\n maybe not all that accidental, given how much sort of press\n Anthropic got with their fatal model and some of the exploit\n discoveries around that. Maybe OpenAI wanted to do a little\n bit better and did sort of that escape from the jail in\n order to attack another AI related website. Checkpoint\n released its July security advisory. Now, they're stating\n that they're also using AI in order to find vulnerabilities.\n They're patching three vulnerabilities here, at least\n three that they're listing. But they also state that they\n applied various hardening techniques and such that are\n not necessarily sort of pointed out as\n vulnerabilities. They're calling this a jumbo patch and\n it applies to the firewall product as well as to their\n admin console products. Now, there's one vulnerability here\n that's worth pointing out. It's an authentication bypass\n with a smart console login. This has a CVS score of 9.3\n and is already exploited in the wild. They're saying there\n was a handful of customers that was affected by this. I'm\n not sure how many customers fit into a hand. But anyway,\n definitely do apply it. And now, given that the patch is\n out and of course the patch will be diffed and there's\n already an exploit available. Probably won't take too long\n to see more widespread exploitation of this\n vulnerability. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing and\n talk to you again tomorrow. Bye. Bye.\n Bye. Bye.",
       "transcript_checked": true
     }
   ]
