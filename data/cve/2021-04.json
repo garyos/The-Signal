@@ -2,6 +2,46 @@
   "month": "2021-04",
   "cves": [
     {
+      "id": "CVE-2020-36327",
+      "published": "2021-04-29T03:15:08.710",
+      "lastModified": "2026-10-08T21:17:30.120",
+      "vulnStatus": "Modified",
+      "description": "Bundler 1.16.0 through 2.2.9 and 2.2.11 through 2.2.16 sometimes chooses a dependency source based on the highest gem version number, which means that a rogue gem found at a public source may be chosen, even if the intended choice was a private gem that is a dependency of another private gem that is explicitly depended on by the application. NOTE: it is not correct to use CVE-2021-24105 for every \"Dependency Confusion\" issue in every product.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://bundler.io/blog/2021/02/15/a-more-secure-bundler-we-fixed-our-source-priorities.html",
+        "https://github.com/rubygems/rubygems/issues/3982",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/MWXHK5UUHVSHF7HTHMX6JY3WXDVNIHSL/",
+        "https://mensfeld.pl/2021/02/rubygems-dependency-confusion-attack-side-of-things/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.06307,
+        "percentile": 0.93432,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2021-20023",
       "published": "2021-04-20T12:15:12.587",
       "lastModified": "2026-10-01T21:17:16.097",
@@ -34,7 +74,95 @@
       "epss": {
         "score": 0.51689,
         "percentile": 0.98921,
-        "date": "2026-10-07"
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2021-29428",
+      "published": "2021-04-13T20:15:21.797",
+      "lastModified": "2026-10-08T22:17:08.813",
+      "vulnStatus": "Modified",
+      "description": "In Gradle before version 7.0, on Unix-like systems, the system temporary directory can be created with open permissions that allow multiple users to create and delete files within it. Gradle builds could be vulnerable to a local privilege escalation from an attacker quickly deleting and recreating files in the system temporary directory. This vulnerability impacted builds using precompiled script plugins written in Kotlin DSL and tests for Gradle plugins written using ProjectBuilder or TestKit. ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-378",
+          "name": "CWE-378"
+        },
+        {
+          "id": "CWE-379",
+          "name": "CWE-379"
+        }
+      ],
+      "vendors": [
+        "gradle gradle"
+      ],
+      "references": [
+        "https://docs.gradle.org/7.0/release-notes.html#security-advisories",
+        "https://github.com/gradle/gradle/pull/15240",
+        "https://github.com/gradle/gradle/pull/15654",
+        "https://github.com/gradle/gradle/security/advisories/GHSA-89qm-pxvm-p336"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00542,
+        "percentile": 0.4378,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2021-23369",
+      "published": "2021-04-12T14:15:14.383",
+      "lastModified": "2026-10-08T22:17:07.613",
+      "vulnStatus": "Modified",
+      "description": "The package handlebars before 4.7.7 are vulnerable to Remote Code Execution (RCE) when selecting certain compiling options to compile templates coming from an untrusted source.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "handlebars"
+      ],
+      "references": [
+        "https://github.com/handlebars-lang/handlebars.js/commit/b6d3de7123eebba603e321f04afdbae608e8fea8",
+        "https://github.com/handlebars-lang/handlebars.js/commit/f0589701698268578199be25285b2ebea1c1e427",
+        "https://security.netapp.com/advisory/ntap-20210604-0008/",
+        "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARS-1074950"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.07028,
+        "percentile": 0.94023,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -76,8 +204,8 @@
       },
       "epss": {
         "score": 0.16639,
-        "percentile": 0.96948,
-        "date": "2026-10-07"
+        "percentile": 0.9695,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -88,5 +216,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-08T12:12:02.062076+00:00"
+  "updated_at": "2026-10-09T12:06:23.347389+00:00"
 }

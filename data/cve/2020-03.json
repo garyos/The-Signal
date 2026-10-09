@@ -2,6 +2,252 @@
   "month": "2020-03",
   "cves": [
     {
+      "id": "CVE-2020-6079",
+      "published": "2020-03-24T21:15:14.427",
+      "lastModified": "2026-10-08T22:17:02.147",
+      "vulnStatus": "Modified",
+      "description": "An exploitable denial-of-service vulnerability exists in the resource allocation handling of Videolabs libmicrodns 0.1.0. When encountering errors while parsing mDNS messages, some allocated data is not freed, possibly leading to a denial-of-service condition via resource exhaustion. An attacker can send one mDNS message repeatedly to trigger this vulnerability through decoding of the domain name performed by rr_decode.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-401",
+          "name": "Memory Leak"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-1002",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.03146,
+        "percentile": 0.87544,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6078",
+      "published": "2020-03-24T21:15:14.363",
+      "lastModified": "2026-10-08T22:17:01.993",
+      "vulnStatus": "Modified",
+      "description": "An exploitable denial-of-service vulnerability exists in the message-parsing functionality of Videolabs libmicrodns 0.1.0. When parsing mDNS messages in mdns_recv, the return value of the mdns_read_header function is not checked, leading to an uninitialized variable usage that eventually results in a null pointer dereference, leading to service crash. An attacker can send a series of mDNS messages to trigger this vulnerability.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-252",
+          "name": "CWE-252"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-1001",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.03146,
+        "percentile": 0.87544,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6077",
+      "published": "2020-03-24T21:15:14.300",
+      "lastModified": "2026-10-08T22:17:01.833",
+      "vulnStatus": "Modified",
+      "description": "An exploitable denial-of-service vulnerability exists in the message-parsing functionality of Videolabs libmicrodns 0.1.0. When parsing mDNS messages, the implementation does not properly keep track of the available data in the message, possibly leading to an out-of-bounds read that would result in a denial of service. An attacker can send an mDNS message to trigger this vulnerability.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-1000",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02504,
+        "percentile": 0.84252,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6073",
+      "published": "2020-03-24T21:15:14.237",
+      "lastModified": "2026-10-08T22:17:01.683",
+      "vulnStatus": "Modified",
+      "description": "An exploitable denial-of-service vulnerability exists in the TXT record-parsing functionality of Videolabs libmicrodns 0.1.0. When parsing the RDATA section in a TXT record in mDNS messages, multiple integer overflows can be triggered, leading to a denial of service. An attacker can send an mDNS message to trigger this vulnerability.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-0996",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02504,
+        "percentile": 0.84252,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6072",
+      "published": "2020-03-24T21:15:14.143",
+      "lastModified": "2026-10-08T22:17:01.530",
+      "vulnStatus": "Modified",
+      "description": "An exploitable code execution vulnerability exists in the label-parsing functionality of Videolabs libmicrodns 0.1.0. When parsing compressed labels in mDNS messages, the rr_decode function's return value is not checked, leading to a double free that could be exploited to execute arbitrary code. An attacker can send an mDNS message to trigger this vulnerability.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-415",
+          "name": "CWE-415"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-0995",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.03799,
+        "percentile": 0.89728,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6071",
+      "published": "2020-03-24T21:15:14.067",
+      "lastModified": "2026-10-08T22:17:01.353",
+      "vulnStatus": "Modified",
+      "description": "An exploitable denial-of-service vulnerability exists in the resource record-parsing functionality of Videolabs libmicrodns 0.1.0. When parsing compressed labels in mDNS messages, the compression pointer is followed without checking for recursion, leading to a denial of service. An attacker can send an mDNS message to trigger this vulnerability.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-674",
+          "name": "CWE-674"
+        }
+      ],
+      "vendors": [
+        "Videolabs"
+      ],
+      "references": [
+        "https://security.gentoo.org/glsa/202005-10",
+        "https://talosintelligence.com/vulnerability_reports/TALOS-2020-0994",
+        "https://www.debian.org/security/2020/dsa-4671"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02504,
+        "percentile": 0.84252,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2020-0796",
       "published": "2020-03-12T16:15:15.627",
       "lastModified": "2026-10-01T20:17:17.727",
@@ -40,7 +286,53 @@
       "epss": {
         "score": 0.9981,
         "percentile": 0.99958,
-        "date": "2026-10-07"
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-5258",
+      "published": "2020-03-10T18:15:12.123",
+      "lastModified": "2026-10-08T22:17:00.517",
+      "vulnStatus": "Modified",
+      "description": "In affected versions of dojo (NPM package), the deepCopy method is vulnerable to Prototype Pollution. Prototype Pollution refers to the ability to inject properties into existing JavaScript language construct prototypes, such as objects. An attacker manipulates these attributes to overwrite, or pollute, a JavaScript application object prototype of the base object by injecting other values. This has been patched in versions 1.12.8, 1.13.7, 1.14.6, 1.15.3 and 1.16.2",
+      "cvss": {
+        "score": 7.7,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        },
+        {
+          "id": "CWE-1321",
+          "name": "Prototype Pollution"
+        }
+      ],
+      "vendors": [
+        "dojo dojo"
+      ],
+      "references": [
+        "https://github.com/dojo/dojo/commit/20a00afb68f5587946dc76fbeaa68c39bda2171d",
+        "https://github.com/dojo/dojo/security/advisories/GHSA-jxfh-8wgv-vfr2",
+        "https://lists.apache.org/thread.html/r3638722360d7ae95f874280518b8d987d799a76df7a9cd78eac33a1b%40%3Cusers.qpid.apache.org%3E",
+        "https://lists.apache.org/thread.html/r665fcc152bd0fec9f71511a6c2435ff24d3a71386b01b1a6df326fd3%40%3Cusers.qpid.apache.org%3E"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04023,
+        "percentile": 0.90321,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -78,8 +370,8 @@
       },
       "epss": {
         "score": 0.01869,
-        "percentile": 0.78685,
-        "date": "2026-10-07"
+        "percentile": 0.78698,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -118,8 +410,8 @@
       },
       "epss": {
         "score": 0.01887,
-        "percentile": 0.78876,
-        "date": "2026-10-07"
+        "percentile": 0.78887,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -132,8 +424,8 @@
     {
       "id": "CVE-2020-9054",
       "published": "2020-03-04T20:15:10.750",
-      "lastModified": "2026-10-07T18:17:09.643",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-10-08T13:38:30.407",
+      "vulnStatus": "Analyzed",
       "description": "Multiple ZyXEL network-attached storage (NAS) devices running firmware version 5.21 contain a pre-authentication command injection vulnerability, which may allow a remote, unauthenticated attacker to execute arbitrary code on a vulnerable device. ZyXEL NAS devices achieve authentication by using the weblogin.cgi CGI executable. This program fails to properly sanitize the username parameter that is passed to it. If the username parameter contains certain characters, it can allow command injection",
       "cvss": {
         "score": 9.8,
@@ -168,7 +460,7 @@
       "epss": {
         "score": 0.99988,
         "percentile": 0.99984,
-        "date": "2026-10-07"
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -210,8 +502,140 @@
       },
       "epss": {
         "score": 0.01146,
-        "percentile": 0.65772,
-        "date": "2026-10-07"
+        "percentile": 0.65794,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2019-14893",
+      "published": "2020-03-02T21:15:17.520",
+      "lastModified": "2026-10-08T22:16:50.270",
+      "vulnStatus": "Modified",
+      "description": "A flaw was discovered in FasterXML jackson-databind in all versions before 2.9.10 and 2.10.0, where it would permit polymorphic deserialization of malicious objects using the xalan JNDI gadget when used in conjunction with polymorphic type handling methods such as `enableDefaultTyping()` or when @JsonTypeInfo is using `Id.CLASS` or `Id.MINIMAL_CLASS` or in any other way which ObjectMapper.readValue might instantiate objects from unsafe sources. An attacker could use this flaw to execute arbitrar",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        },
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Red Hat jackson-databind"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHSA-2020:0729",
+        "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-14893",
+        "https://github.com/FasterXML/jackson-databind/issues/2469",
+        "https://lists.apache.org/thread.html/r1b103833cb5bc8466e24ff0ecc5e75b45a705334ab6a444e64e840a0%40%3Cissues.bookkeeper.apache.org%3E"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04091,
+        "percentile": 0.90465,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2019-14892",
+      "published": "2020-03-02T17:15:17.813",
+      "lastModified": "2026-10-08T21:17:14.407",
+      "vulnStatus": "Modified",
+      "description": "A flaw was discovered in jackson-databind in versions before 2.9.10, 2.8.11.5 and 2.6.7.3, where it would permit polymorphic deserialization of a malicious object using commons-configuration 1 and 2 JNDI classes. An attacker could use this flaw to execute arbitrary code.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        },
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [
+        "Red Hat jackson-databind"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHSA-2020:0729",
+        "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2019-14892",
+        "https://github.com/FasterXML/jackson-databind/issues/2462",
+        "https://lists.apache.org/thread.html/r1b103833cb5bc8466e24ff0ecc5e75b45a705334ab6a444e64e840a0%40%3Cissues.bookkeeper.apache.org%3E"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05622,
+        "percentile": 0.92743,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-9548",
+      "published": "2020-03-02T04:15:11.077",
+      "lastModified": "2026-10-08T19:16:55.590",
+      "vulnStatus": "Modified",
+      "description": "FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to br.com.anteros.dbcp.AnterosDBCPConfig (aka anteros-core).",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-502",
+          "name": "Deserialization of Untrusted Data"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://github.com/FasterXML/jackson-databind/issues/2634",
+        "https://lists.apache.org/thread.html/r35d30db00440ef63b791c4b7f7acb036e14d4a23afa2a249cb66c0fd%40%3Cissues.zookeeper.apache.org%3E",
+        "https://lists.apache.org/thread.html/r9464a40d25c3ba1a55622db72f113eb494a889656962d098c70c5bb1%40%3Cdev.zookeeper.apache.org%3E",
+        "https://lists.apache.org/thread.html/r98c9b6e4c9e17792e2cd1ec3e4aa20b61a791939046d3f10888176bb%40%3Cissues.zookeeper.apache.org%3E"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.18921,
+        "percentile": 0.97232,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -250,8 +674,8 @@
       },
       "epss": {
         "score": 0.18383,
-        "percentile": 0.97163,
-        "date": "2026-10-07"
+        "percentile": 0.97165,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -290,8 +714,8 @@
       },
       "epss": {
         "score": 0.04613,
-        "percentile": 0.91435,
-        "date": "2026-10-07"
+        "percentile": 0.91443,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -302,5 +726,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-08T12:13:14.464556+00:00"
+  "updated_at": "2026-10-09T12:06:23.339520+00:00"
 }

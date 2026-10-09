@@ -2,6 +2,48 @@
   "month": "2023-11",
   "cves": [
     {
+      "id": "CVE-2023-30590",
+      "published": "2023-11-28T20:15:07.480",
+      "lastModified": "2026-10-08T22:17:24.300",
+      "vulnStatus": "Modified",
+      "description": "The generateKeys() API function returned from crypto.createDiffieHellman() only generates missing (or outdated) keys, that is, it only generates a private key if none has been set yet, but the function is also needed to compute the corresponding public key after calling setPrivateKey(). However, the documentation says this API call: \"Generates private and public Diffie-Hellman key values\". The documented behavior is very different from the actual behavior, and this difference could easily lead t",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-Other",
+          "name": "Other / Not Yet Mapped"
+        }
+      ],
+      "vendors": [
+        "NodeJS Node"
+      ],
+      "references": [
+        "https://lists.debian.org/debian-lts-announce/2024/03/msg00029.html",
+        "https://nodejs.org/en/blog/vulnerability/june-2023-security-releases",
+        "https://lists.debian.org/debian-lts-announce/2024/09/msg00029.html",
+        "https://security.netapp.com/advisory/ntap-20241101-0011/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01462,
+        "percentile": 0.72808,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2023-34054",
       "published": "2023-11-28T09:15:07.147",
       "lastModified": "2026-09-04T18:59:12.370",
@@ -29,8 +71,48 @@
       },
       "epss": {
         "score": 0.00914,
-        "percentile": 0.58863,
-        "date": "2026-10-07"
+        "percentile": 0.58882,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-30585",
+      "published": "2023-11-28T02:15:42.077",
+      "lastModified": "2026-10-08T22:17:23.563",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability has been identified in the Node.js (.msi version) installation process, specifically affecting Windows users who install Node.js using the .msi installer. This vulnerability emerges during the repair operation, where the \"msiexec.exe\" process, running under the NT AUTHORITY\\SYSTEM context, attempts to read the %USERPROFILE% environment variable from the current user's registry. The issue arises when the path referenced by the %USERPROFILE% environment variable does not exist. In ",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "NodeJS Node"
+      ],
+      "references": [
+        "https://nodejs.org/en/blog/vulnerability/june-2023-security-releases",
+        "https://security.netapp.com/advisory/ntap-20241101-0011/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01467,
+        "percentile": 0.72915,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -72,8 +154,89 @@
       },
       "epss": {
         "score": 0.00219,
-        "percentile": 0.11354,
-        "date": "2026-10-07"
+        "percentile": 0.11363,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-41139",
+      "published": "2023-11-23T04:15:07.467",
+      "lastModified": "2026-10-08T22:17:24.803",
+      "vulnStatus": "Modified",
+      "description": "A maliciously crafted STP file when parsed through Autodesk AutoCAD 2024 and 2023 can be used to dereference an untrusted pointer. This vulnerability, along with other vulnerabilities, could lead to code execution in the current process.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-822",
+          "name": "CWE-822"
+        },
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        }
+      ],
+      "vendors": [
+        "Autodesk AutoCAD, Advance Steel and Civil 3D"
+      ],
+      "references": [
+        "https://www.autodesk.com/trust/security-advisories/adsk-sa-2023-0018"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00275,
+        "percentile": 0.18311,
+        "date": "2026-10-08"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-48161",
+      "published": "2023-11-22T06:15:43.123",
+      "lastModified": "2026-10-08T22:17:25.460",
+      "vulnStatus": "Modified",
+      "description": "Buffer Overflow vulnerability in GifLib Project GifLib v.5.2.1 allows a local attacker to obtain sensitive information via the DumpSCreen2RGB function in gif2rgb.c",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [],
+      "references": [
+        "https://github.com/tacetool/TACE#cve-2023-48161",
+        "https://sourceforge.net/p/giflib/bugs/167/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00425,
+        "percentile": 0.34805,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -112,8 +275,8 @@
       },
       "epss": {
         "score": 0.01124,
-        "percentile": 0.65235,
-        "date": "2026-10-07"
+        "percentile": 0.65258,
+        "date": "2026-10-08"
       },
       "media": {
         "in_news": false,
@@ -124,5 +287,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-08T12:13:14.473745+00:00"
+  "updated_at": "2026-10-09T12:06:23.361572+00:00"
 }
