@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE SIGNAL — Weekly Report 2026-W41</title>
+<style>
+  :root {
+    --ink: #0a0e14; --ink-raised: #10151d; --ink-input: #0d1219; --line: #1e2733;
+    --text: #d7dde5; --text-dim: #7d8998;
+    --amber: #ffb020; --red: #ff5c5c; --blue: #5ac8ff; --green: #4fd58a;
+    --purple: #c792ea; --teal: #2dd4bf; --orange: #ff9f4a; --indigo: #7c8cff;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { margin: 0; padding: 0; background: var(--ink); color: var(--text); font-family: var(--font-sans); }
+  .frame { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+  header.masthead { border-bottom: 2px solid var(--indigo); padding-bottom: 16px; margin-bottom: 20px; }
+  header.masthead .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--indigo); text-transform: uppercase; margin-bottom: 6px; }
+  header.masthead h1 { font-size: 26px; font-weight: 700; margin: 0 0 6px; letter-spacing: 0.01em; }
+  header.masthead .range { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dim); }
+  .version-badge { display: inline-block; font-family: var(--font-mono); font-size: 10px; color: var(--indigo); border: 1px solid var(--indigo); padding: 2px 8px; margin-left: 8px; letter-spacing: 0.04em; }
+  .top-nav { font-family: var(--font-mono); font-size: 11px; margin-top: 10px; }
+  .top-nav a { color: var(--text-dim); text-decoration: none; margin-right: 14px; }
+  .top-nav a:hover { color: var(--indigo); }
+
+  .section { margin: 30px 0; }
+  .section-title { font-size: 16px; font-weight: 700; letter-spacing: 0.01em; margin: 0 0 4px; border-left: 3px solid var(--indigo); padding-left: 10px; }
+  .subsection-title { font-size: 13.5px; font-weight: 700; margin: 18px 0 2px; color: var(--text); }
+  .panel-sub { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin: 4px 0 14px; line-height: 1.5; }
+
+  .exec-summary { font-size: 14px; line-height: 1.7; background: var(--ink-raised); border: 1px solid var(--line); border-left: 3px solid var(--indigo); padding: 16px 18px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 16px; }
+  .stat-card { background: var(--ink-raised); padding: 14px 12px; text-align: center; }
+  .sc-value { font-family: var(--font-sans); font-size: 22px; font-weight: 700; }
+  .sc-label { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+  .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .panel { background: var(--ink-raised); padding: 14px 16px; page-break-inside: avoid; }
+  .panel h3 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim); margin: 0 0 4px; font-weight: 500; }
+  .bar-row { font-family: var(--font-mono); font-size: 10.5px; margin: 8px 0; }
+  .bar-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 3px; }
+  .bl-label { color: var(--text-dim); line-height: 1.35; }
+  .bl-count { color: var(--text-dim); white-space: nowrap; flex: 0 0 auto; }
+  .bl-track { height: 6px; background: rgba(255,255,255,0.06); }
+  .bl-fill { height: 100%; }
+  .empty-note, .more-note { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); padding: 6px 0; }
+
+  .entry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  .entry-grid.single-col { grid-template-columns: 1fr; }
+  .entry-card { border: 1px solid var(--line); border-left: 3px solid var(--indigo); background: var(--ink-raised); padding: 12px 14px; page-break-inside: avoid; }
+  .entry-card h4 { margin: 4px 0 6px; font-size: 13px; font-weight: 600; line-height: 1.35; }
+  .entry-card h4 a { color: var(--text); text-decoration: none; }
+  .entry-card p { margin: 0; font-size: 11.5px; line-height: 1.5; color: var(--text-dim); }
+  .ec-meta { display: flex; gap: 10px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.03em; align-items: center; }
+  .ec-sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin-top: 6px; }
+  .ec-refs { margin-top: 6px; font-family: var(--font-mono); font-size: 10.5px; }
+  .ec-refs a { color: var(--blue); text-decoration: none; margin-right: 10px; }
+
+  .badge { font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 2px; letter-spacing: 0.04em; }
+  .badge.critical { background: rgba(255,92,92,0.16); color: var(--red); }
+  .badge.high { background: rgba(255,176,32,0.16); color: var(--amber); }
+  .badge.medium { background: rgba(90,200,255,0.16); color: var(--blue); }
+  .badge.low, .badge.info, .badge.unrated { background: rgba(125,137,152,0.16); color: var(--text-dim); }
+  .badge.kev { background: rgba(255,92,92,0.22); color: var(--red); border: 1px solid var(--red); }
+  .badge.epss { background: rgba(255,159,74,0.18); color: var(--orange); border: 1px solid var(--orange); }
+  .badge.news { background: rgba(45,212,191,0.16); color: var(--teal); border: 1px solid var(--teal); }
+  .badge.source { background: rgba(124,140,255,0.16); color: var(--indigo); }
+  .badge.group { background: rgba(199,146,234,0.16); color: var(--purple); }
+
+  table.changelog { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 10px; }
+  table.changelog th, table.changelog td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  table.changelog th { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); background: var(--ink-raised); }
+
+  footer { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); line-height: 1.7; }
+  footer a { color: var(--text-dim); }
+
+  @media (max-width: 680px) { .panel-grid, .stat-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <header class="masthead">
+      <div class="kicker">THE SIGNAL // WEEKLY INTELLIGENCE REPORT</div>
+      <h1>Week 2026-W41<span class="version-badge">template v1.2</span></h1>
+      <div class="range">5 Oct 2026 – 11 Oct 2026 (UTC) · generated 12 Oct 2026, 02:41 UTC</div>
+      <div class="top-nav"><a href="../reports.html">‹ Reports Archive</a><a href="../index.html">‹ Home</a></div>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">Executive Summary</h2>
+      <div class="exec-summary">Between 5 October and 11 October 2026, THE SIGNAL captured 232 threat-feed articles across 10 sources, 51 tagged Critical and 40 tagged High severity. 1278 new CVE records were published, including 298 Critical and 980 High severity. The ransomware tracker logged 185 new victim postings across 41 active groups. 4 newly disclosed breaches were added, covering approximately 7,849,399 exposed records. Research coverage added 3 deep-dive write-ups across 2 specialist publications.</div>
+    </section>
+
+    
+    <section class="section">
+      <h2 class="section-title">Dashboard View</h2>
+      <div class="stat-grid"><div class="stat-card"><div class="sc-value">232</div><div class="sc-label">Feed articles</div></div><div class="stat-card"><div class="sc-value">1,278</div><div class="sc-label">CVEs published</div></div><div class="stat-card"><div class="sc-value">0</div><div class="sc-label">KEV CVEs</div></div><div class="stat-card"><div class="sc-value">3</div><div class="sc-label">Research write-ups</div></div><div class="stat-card"><div class="sc-value">185</div><div class="sc-label">Ransomware victims</div></div><div class="stat-card"><div class="sc-value">4</div><div class="sc-label">Breaches disclosed</div></div></div>
+      <div class="panel-grid"><div class="panel"><h3>Feed severity breakdown</h3><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Critical</span><span class="bl-count">51</span></div><div class="bl-track"><div class="bl-fill" style="width:40%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">High</span><span class="bl-count">40</span></div><div class="bl-track"><div class="bl-fill" style="width:31%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Medium</span><span class="bl-count">13</span></div><div class="bl-track"><div class="bl-fill" style="width:10%;background:var(--blue)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Info</span><span class="bl-count">128</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--text-dim)"></div></div></div></div><div class="panel"><h3>Volume by feed source</h3><div class="bar-row"><div class="bar-row-top"><span class="bl-label">BleepingComputer</span><span class="bl-count">55</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">The Hacker News</span><span class="bl-count">53</span></div><div class="bl-track"><div class="bl-fill" style="width:96%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">SecurityWeek</span><span class="bl-count">46</span></div><div class="bl-track"><div class="bl-fill" style="width:84%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">The Record</span><span class="bl-count">37</span></div><div class="bl-track"><div class="bl-fill" style="width:67%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Dark Reading</span><span class="bl-count">21</span></div><div class="bl-track"><div class="bl-fill" style="width:38%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">SANS ISC</span><span class="bl-count">10</span></div><div class="bl-track"><div class="bl-fill" style="width:18%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Microsoft Security Blog</span><span class="bl-count">4</span></div><div class="bl-track"><div class="bl-fill" style="width:7%;background:var(--amber)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Krebs on Security</span><span class="bl-count">2</span></div><div class="bl-track"><div class="bl-fill" style="width:4%;background:var(--amber)"></div></div></div><div class="more-note">+ 2 more source(s) (4 article(s) not shown)</div></div><div class="panel"><h3>Top CVE categories (CWE)</h3><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Deserialization of Untrusted Data</span><span class="bl-count">63</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">SQL Injection</span><span class="bl-count">27</span></div><div class="bl-track"><div class="bl-fill" style="width:43%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Missing Authentication for Critical Function</span><span class="bl-count">21</span></div><div class="bl-track"><div class="bl-fill" style="width:33%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Code Injection</span><span class="bl-count">15</span></div><div class="bl-track"><div class="bl-fill" style="width:24%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">OS Command Injection</span><span class="bl-count">14</span></div><div class="bl-track"><div class="bl-fill" style="width:22%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Unrestricted Dangerous File Upload</span><span class="bl-count">13</span></div><div class="bl-track"><div class="bl-fill" style="width:21%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Improper Authentication</span><span class="bl-count">13</span></div><div class="bl-track"><div class="bl-fill" style="width:21%;background:var(--red)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Out-of-Bounds Write</span><span class="bl-count">11</span></div><div class="bl-track"><div class="bl-fill" style="width:17%;background:var(--red)"></div></div></div><div class="more-note">+ 63 more CWE categor(ies) (153 occurrence(s) not shown)</div></div><div class="panel"><h3>Top research categories</h3><div class="bar-row"><div class="bar-row-top"><span class="bl-label">AI &amp; Automation</span><span class="bl-count">1</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--teal)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">SOC</span><span class="bl-count">1</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--teal)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Global Cyber Attack Reports</span><span class="bl-count">1</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--teal)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Detection Engineering</span><span class="bl-count">1</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--teal)"></div></div></div></div><div class="panel"><h3>Most active ransomware groups</h3><div class="bar-row"><div class="bar-row-top"><span class="bl-label">thegentlemen</span><span class="bl-count">37</span></div><div class="bl-track"><div class="bl-fill" style="width:100%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">qilin</span><span class="bl-count">23</span></div><div class="bl-track"><div class="bl-fill" style="width:62%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">safepay</span><span class="bl-count">12</span></div><div class="bl-track"><div class="bl-fill" style="width:32%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">UmBra</span><span class="bl-count">10</span></div><div class="bl-track"><div class="bl-fill" style="width:27%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">SilentRansomGroup</span><span class="bl-count">8</span></div><div class="bl-track"><div class="bl-fill" style="width:22%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">N0n</span><span class="bl-count">6</span></div><div class="bl-track"><div class="bl-fill" style="width:16%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">incransom</span><span class="bl-count">6</span></div><div class="bl-track"><div class="bl-fill" style="width:16%;background:var(--purple)"></div></div></div><div class="bar-row"><div class="bar-row-top"><span class="bl-label">Eclipse</span><span class="bl-count">6</span></div><div class="bl-track"><div class="bl-fill" style="width:16%;background:var(--purple)"></div></div></div><div class="more-note">+ 33 more group(s) (77 victim posting(s) not shown)</div></div></div>
+    </section>
+    
+    
+    <section class="section">
+      <h2 class="section-title">CVE Detail — Critical &amp; Known-Exploited</h2>
+      <div class="panel-sub">Source: NVD (nvd.nist.gov), cross-referenced against CISA's Known Exploited Vulnerabilities catalog.</div>
+      <div class="entry-grid">
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 3%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105110" target="_blank" rel="noopener noreferrer">CVE-2026-105110</a></h4>
+          <p>OS Command Injection in the login.xgi CGI endpoint in Iskratel Innbox GPON ONT devices allows an unauthenticated remote attacker to execute arbitrary commands as root via the CLI parameter.</p>
+          <div class="ec-sub">CWE: OS Command Injection, Missing Authentication for Critical Function</div>
+          <div class="ec-sub">Vendors: Iskratel Innbox</div>
+          <div class="ec-refs"><a href="https://github.com/BlackHatExploitation/innbox_root" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 10.0</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-06</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105484" target="_blank" rel="noopener noreferrer">CVE-2026-105484</a></h4>
+          <p>A security vulnerability has been detected in TOTOLINK X6000R 9.4.0cu.652_B20230116. The impacted element is the function firmware_check of the file /cgi-bin/cstecgi.cgi of the component UploadFirmwar…</p>
+          <div class="ec-sub">CWE: Command Injection, OS Command Injection</div>
+          <div class="ec-sub">Vendors: TOTOLINK X6000R</div>
+          <div class="ec-refs"><a href="https://vuldb.com/cve/CVE-2026-105484" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://vuldb.com/submit/984434" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://vuldb.com/vuln/413619" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107780" target="_blank" rel="noopener noreferrer">CVE-2026-107780</a></h4>
+          <p>Dromara Skyeye through commit 003549ae5615bd114ba5bb8ddf6a8e8ead97c321 contains an OS command injection vulnerability in the unauthenticated /post/TtsController/textToSpeech endpoint via the format pa…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: dromara skyeye</div>
+          <div class="ec-refs"><a href="https://github.com/dromara/skyeye" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/dromara/skyeye/blob/003549ae5615bd114ba5bb8ddf6a8e8ead97c321/skyeye-promote/skyeye-common/src/main/java/com/skyeye/common/service/impl/TtsServiceImpl.java#L105-L166" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/dromara/skyeye/issues/29" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.6</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-06</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-91140" target="_blank" rel="noopener noreferrer">CVE-2026-91140</a></h4>
+          <p>An OS command injection vulnerability in the shell-based temporary-file cleanup instructions in Progress Software Autonomous REST Connector GenAI Agents ARCGenAI-Generator version 2.0 allows an attack…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: Progress Software Autonomous REST Connector GenAI Agents</div>
+          <div class="ec-refs"><a href="https://community.progress.com/s/article/Progress-DataDirect-Critical-Security-Alert-Bulletin-September-2026-CVE-2026-91140" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/progress/datadirect-arc-ai-model-gen/commit/7ede6d96eb033d647ffdcabf8d8069c098293575" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.9</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-106126" target="_blank" rel="noopener noreferrer">CVE-2026-106126</a></h4>
+          <p>A command injection vulnerability in the Active Directory Events Listener of Tenable Identity Exposure (SaaS) allows an authenticated, low-privileged attacker to execute arbitrary commands as SYSTEM o…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: Tenable, Inc. Tenable Identity Exposure (SaaS)</div>
+          <div class="ec-refs"><a href="https://www.tenable.com/security/tns-2026-27" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107703" target="_blank" rel="noopener noreferrer">CVE-2026-107703</a></h4>
+          <p>@enmaso/node-convert through 1.0.0 contains an OS command injection vulnerability in convert.js that allows attackers to execute shell commands via unsanitized filepath and convertTo arguments. Attack…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: enmaso @enmaso/node-convert</div>
+          <div class="ec-refs"><a href="https://gist.github.com/R3tro16/5a508fcfddfb0dfe66a0a53437ede74c" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/enmaso/node-convert" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/enmaso/node-convert/blob/143e4d76244e2daac57eef59d8ed5983e33ee4fb/convert.js#L4-L15" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 2%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107704" target="_blank" rel="noopener noreferrer">CVE-2026-107704</a></h4>
+          <p>The image_optimizer Ruby gem 1.3.0 through 1.9.0 contains an OS command injection vulnerability in ImageOptimizer#identify_format that allows attackers to execute commands by supplying a crafted image…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: jtescher image_optimizer</div>
+          <div class="ec-refs"><a href="https://gist.github.com/R3tro16/a99a058d24a06692721a6a3fade9649d" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/jtescher/image_optimizer" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/jtescher/image_optimizer/blob/v1.9.0/lib/image_optimizer.rb#L37-L47" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 1%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107699" target="_blank" rel="noopener noreferrer">CVE-2026-107699</a></h4>
+          <p>ppt2png through 0.0.6 contains an OS command injection vulnerability that allows attackers to execute operating system commands by supplying unsanitized input or output path arguments. Attackers can a…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: tzwm ppt2png</div>
+          <div class="ec-refs"><a href="https://gist.github.com/R3tro16/2daadc08b282c48d41203d1125d7632a" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/tzwm/ppt2png" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/tzwm/ppt2png/blob/8c68eba7af943de27422b12c6e224d28587af7ae/ppt2png.js#L5-L35" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 1%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-107459" target="_blank" rel="noopener noreferrer">CVE-2026-107459</a></h4>
+          <p>The SecuShare Pro developed by Openfind has an OS Command Injection vulnerability. Unauthenticated remote attackers can inject arbitrary OS commands and execute them on the server.</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: Openfind SecuShare Pro</div>
+          <div class="ec-refs"><a href="https://www.twcert.org.tw/en/cp-139-11255-bce41-2.html" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://www.twcert.org.tw/tw/cp-132-11254-9c206-1.html" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 1%</span>
+            
+            <span>2026-10-05</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-104711" target="_blank" rel="noopener noreferrer">CVE-2026-104711</a></h4>
+          <p>Improper neutralization of special elements used in an expression language statement (&#x27;Expression Language Injection&#x27;) vulnerability in Apache Struts. If the application is configured to use the legac…</p>
+          <div class="ec-sub">CWE: CWE-917</div>
+          <div class="ec-sub">Vendors: Apache Software Foundation Apache Struts</div>
+          <div class="ec-refs"><a href="https://cwiki.apache.org/confluence/display/WW/S2-075" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="http://www.openwall.com/lists/oss-security/2026/10/05/10" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.1</span>
+            
+            <span class="badge epss">EPSS 1%</span>
+            
+            <span>2026-10-06</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105793" target="_blank" rel="noopener noreferrer">CVE-2026-105793</a></h4>
+          <p>Microsoft UFO is an open-source framework for intelligent automation across devices and platforms. Prior to 3.0.9, the press_key tool in ufo/client/mcp/http_servers/mobile_mcp_server.py accepts a free…</p>
+          <div class="ec-sub">CWE: OS Command Injection</div>
+          <div class="ec-sub">Vendors: microsoft UFO</div>
+          <div class="ec-refs"><a href="https://github.com/microsoft/UFO/commit/a538791043327a0c33731d5be428867a5fd71794" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/microsoft/UFO/releases/tag/v3.0.9" target="_blank" rel="noopener noreferrer">reference ↗</a> · <a href="https://github.com/microsoft/UFO/security/advisories/GHSA-5cjx-4375-4877" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta">
+            <span class="badge critical">CRITICAL</span>
+            <span>CVSS 9.8</span>
+            
+            <span class="badge epss">EPSS 1%</span>
+            
+            <span>2026-10-08</span>
+          </div>
+          <h4><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-88131" target="_blank" rel="noopener noreferrer">CVE-2026-88131</a></h4>
+          <p>Deserialization of untrusted data in Microsoft Dataverse allows an unauthorized attacker to execute code over a network.</p>
+          <div class="ec-sub">CWE: Deserialization of Untrusted Data</div>
+          <div class="ec-sub">Vendors: Microsoft Microsoft Dataverse</div>
+          <div class="ec-refs"><a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-88131" target="_blank" rel="noopener noreferrer">reference ↗</a></div>
+        </div></div>
+      <div class="more-note">+ 286 more Critical/KEV/high-EPSS CVE(s) not shown — see cve.html for the full list.</div>
+    </section>
+    
+    
+    <section class="section">
+      <h2 class="section-title">Research Detail</h2>
+      <div class="panel-sub">Every deep-dive write-up published this week — credited to its originating publication, linking straight through.</div>
+      <div class="entry-grid">
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge source">Elastic Security Labs</span><span>Thu, 08 Oct 2026</span></div>
+          <h4><a href="https://www.elastic.co/security-labs/blog/ai-soc-automation-alertzero" target="_blank" rel="noopener noreferrer">Introducing AlertZero: Inbox zero for your alert queue</a></h4>
+          <p>AlertZero brings AI SOC automation to Elastic Security with four agents, one job each, so the queue stops setting your priorities. Nothing changes in your environment without your approval.</p>
+          <div class="ec-sub">AI &amp; Automation, SOC</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge source">Check Point Research</span><span>Mon, 05 Oct 2026</span></div>
+          <h4><a href="https://research.checkpoint.com/2026/5th-october-threat-intelligence-report/" target="_blank" rel="noopener noreferrer">5th October – Threat Intelligence Report</a></h4>
+          <p>For the latest discoveries in cyber research for the week of 5th October, please download our Threat Intelligence Bulletin.</p>
+          <div class="ec-sub">Global Cyber Attack Reports</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge source">Elastic Security Labs</span><span>Mon, 05 Oct 2026</span></div>
+          <h4><a href="https://www.elastic.co/security-labs/threat-command/elastic-siem-detection-rule-tags" target="_blank" rel="noopener noreferrer">Behind the tags: How Elastic SIEM grades 1,781 detection rules on noise, speed, and threat coverage</a></h4>
+          <p>This article explains how Elastic SIEM uses a monthly automated telemetry pipeline to score prebuilt detection rules across noise, performance, threat, and profile dimensions, helping security teams d…</p>
+          <div class="ec-sub">Detection Engineering</div>
+        </div></div>
+    </section>
+    
+    
+    <section class="section">
+      <h2 class="section-title">Notable Feed Items</h2>
+      <div class="panel-sub">Critical and High severity news items from this week, credited to their publisher.</div>
+      <div class="entry-grid">
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Sun, 11 Oct 2026 09:54:34 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/p7-darksword-ios-exploit-kit-adds.html" target="_blank" rel="noopener noreferrer">P7 DarkSword iOS Exploit Kit Adds Crypto Wallet Data Theft and Remote Commands</a></h4>
+          <p>Cybersecurity researchers have disclosed details of a previously unseen variant of the DarkSword iOS exploit kit called P7 DarkSword. &quot;Compared with the variants we usually observe, P7 reduces its on-…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Sat, 10 Oct 2026 14:48:45 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/anthropic-cuts-live-internet-access-for.html" target="_blank" rel="noopener noreferrer">Anthropic Cuts Live Internet Access for Internal AI Tests After Claude Exploits Injection Flaws</a></h4>
+          <p>Anthropic on Friday said it&#x27;s cutting off live internet access for all its internal evaluations following the discovery of new incidents in which its artificial intelligence (AI) models exhibited misa…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">Krebs on Security</span><span>Sat, 10 Oct 2026 00:17:42 +0000</span></div>
+          <h4><a href="https://krebsonsecurity.com/2026/10/fbi-arrests-founder-of-ransomware-negotiation-firm/" target="_blank" rel="noopener noreferrer">FBI Arrests Executive at Ransomware Negotiation Firm</a></h4>
+          <p>Agents with the Federal Bureau of Investigation (FBI) on Thursday arrested the co-founder of a Canadian cybersecurity firm in connection with an investigation into the ShinyHunters hacking group that …</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Sat, 10 Oct 2026 00:44:28 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/credential-stealing-github-actions.html" target="_blank" rel="noopener noreferrer">Credential-Stealing GitHub Actions Workflows Planted in Tens of Thousands of Repositories</a></h4>
+          <p>Cybersecurity researchers have disclosed details of an ongoing credential-theft campaign that has compromised two high-profile open-source maintainer accounts to push a malicious workflow into over 34…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">The Record</span><span>Fri, 09 Oct 2026 18:45:00 GMT</span></div>
+          <h4><a href="https://therecord.media/japan-germany-ransomware-arrest" target="_blank" rel="noopener noreferrer">Japan confirms arrest of Russian Qilin operative, extradition to Germany</a></h4>
+          <p>Japan’s National Police Agency confirmed the arrest and extradition to Germany of a Russian national accused of being involved in the Qilin ransomware gang.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 13:17:23 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/unpatched-ahsaycbs-flaws-exploited-to-deploy-webshells-mine-crypto/" target="_blank" rel="noopener noreferrer">Unpatched AhsayCBS flaws exploited to deploy webshells, mine crypto</a></h4>
+          <p>Threat actors are exploiting one critical and one medium-severity vulnerability still unpatched in the AhsayCBS backup management platform to deploy webshells and cryptocurrency miners. [...]</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 11:38:56 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/germany-arrests-alleged-core-qilin-ransomware-member-after-extradition/" target="_blank" rel="noopener noreferrer">Germany arrests alleged core Qilin ransomware member after extradition</a></h4>
+          <p>Germany has arrested a Russian national suspected of being a leading member of the Qilin ransomware group following extradition from Japan earlier this month. [...]</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 10:01:11 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/how-to-keep-ai-agents-within-their-permissions/" target="_blank" rel="noopener noreferrer">How to keep AI agents within their permissions</a></h4>
+          <p>AI agents can use valid credentials to perform actions beyond their assigned permissions, creating risks that traditional access controls may not prevent. Token Security explains how organizations can…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 18:29:22 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/researchers-publish-working-exploit-for.html" target="_blank" rel="noopener noreferrer">Researchers Publish Working Exploit for Pre-Auth AnyDesk Linux Flaw That Gives Root Access</a></h4>
+          <p>Security researchers have published a full working exploit for a pre-authentication remote code execution flaw in AnyDesk Linux that gives attackers root access before anyone approves the connection. …</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 18:17:28 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/anthropic-launches-free-ai.html" target="_blank" rel="noopener noreferrer">Anthropic Launches Free AI Vulnerability Scanner for Open-Source Projects</a></h4>
+          <p>Anthropic on Thursday unveiled OSS Scanner as an opt-in vulnerability scanner to help secure the open-source ecosystem using artificial intelligence (AI). &quot;It&#x27;s an opt-in service informed by our exper…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 18:17:26 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/attackers-exploit-ahsaycbs-flaws-to.html" target="_blank" rel="noopener noreferrer">Attackers Exploit AhsayCBS Flaws to Deploy XMRig Miners Disguised as Microsoft Edge</a></h4>
+          <p>Threat actors have been observed exploiting two recently disclosed flaws in the AhsayCBS backup utility to seize control of affected devices and deploy web shells and XMRig cryptocurrency miners. Deta…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 08:32:16 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/max-severity-sonicwall-sma1000-flaw-now-exploited-in-attacks/" target="_blank" rel="noopener noreferrer">Max severity SonicWall SMA1000 flaw now exploited in attacks</a></h4>
+          <p>Attackers are exploiting a maximum-severity vulnerability in SonicWall SMA1000 appliances (CVE-2026-102255) that was patched on Tuesday, three days ago. [...]</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 17:51:51 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/flax-typhoon-exploits-five-flaws-as.html" target="_blank" rel="noopener noreferrer">Flax Typhoon Exploits Five Flaws as CISA Sets October 11 Deadline for Federal Agencies</a></h4>
+          <p>The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday added five security flaws to its Known Exploited Vulnerabilities (KEV) catalog, following their abuse by a China-linked thr…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 17:00:00 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/the-ai-velocity-paradox-why-security-is.html" target="_blank" rel="noopener noreferrer">The AI Velocity Paradox: Why Security Is Decades Behind AI Ambition</a></h4>
+          <p>As enterprises race to deploy autonomous AI agents to accelerate business, a new report reveals they are tethered to security architectures built for a different era. The &quot;Horizons of Identity Securit…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">SecurityWeek</span><span>Fri, 09 Oct 2026 10:23:42 +0000</span></div>
+          <h4><a href="https://www.securityweek.com/unpatched-ahsaycbs-vulnerabilities-exploited-in-the-wild/" target="_blank" rel="noopener noreferrer">Unpatched AhsayCBS Vulnerabilities Exploited in the Wild</a></h4>
+          <p>The flaws, CVE-2026-105133 and CVE-2026-105134, allow attackers to bypass authentication and inject OS commands.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">SecurityWeek</span><span>Fri, 09 Oct 2026 08:36:37 +0000</span></div>
+          <h4><a href="https://www.securityweek.com/us-disrupts-chinese-state-sponsored-hacking-tools/" target="_blank" rel="noopener noreferrer">US Disrupts Chinese State-Sponsored Hacking Tools</a></h4>
+          <p>Flax Typhoon and other APTs used MicroScan and FishHub to scan and hack US and foreign critical infrastructure.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 04:27:42 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/citrix-warns-admins-to-patch-new-netscaler-rce-flaw-immediately/" target="_blank" rel="noopener noreferrer">Citrix warns admins to patch new NetScaler RCE flaw immediately</a></h4>
+          <p>Citrix has warned IT administrators to patch systems immediately against a new critical vulnerability affecting NetScaler ADC networking appliances and NetScaler Gateway secure remote access solutions…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 13:56:17 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/three-teams-demonstrate-remote-hacks-of.html" target="_blank" rel="noopener noreferrer">Three Teams Demonstrate Remote Hacks of Fully Patched Google Pixel 10 at Pwn2Own</a></h4>
+          <p>Three research teams broke into Google&#x27;s Pixel 10 on October 8 at Pwn2Own Ireland, a hacking contest in Cork whose rules require every target to be fully patched. The contest pays researchers to show …</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">SecurityWeek</span><span>Fri, 09 Oct 2026 08:19:33 +0000</span></div>
+          <h4><a href="https://www.securityweek.com/anthropic-fast-tracks-ai-bug-reports-to-oss-maintainers-taps-11-firms-for-ot-security/" target="_blank" rel="noopener noreferrer">Anthropic Fast-Tracks AI Bug Reports to OSS Maintainers, Taps 11 Firms for OT Security</a></h4>
+          <p>OSS Scanner sends unreviewed, model-generated vulnerability reports to open source maintainers that opt in.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 13:41:33 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/citrix-patches-critical-netscaler-flaw.html" target="_blank" rel="noopener noreferrer">Citrix Patches Critical NetScaler Flaw That Could Enable RCE in SAML Deployments</a></h4>
+          <p>Citrix has released patches for yet another critical security flaw impacting NetScaler ADC and NetScaler Gateway that could result in remote code execution or denial-of-service (DoS) under certain con…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">SecurityWeek</span><span>Fri, 09 Oct 2026 06:53:53 +0000</span></div>
+          <h4><a href="https://www.securityweek.com/citrix-urges-immediate-patching-of-critical-netscaler-vulnerability/" target="_blank" rel="noopener noreferrer">Citrix Urges Immediate Patching of Critical NetScaler Vulnerability</a></h4>
+          <p>The security defect, tracked as CVE-2026-107406, could lead to remote code execution or denial-of-service.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge high">HIGH</span><span class="badge source">SecurityWeek</span><span>Fri, 09 Oct 2026 06:39:55 +0000</span></div>
+          <h4><a href="https://www.securityweek.com/google-pixel-10-exploits-earned-hackers-560000-at-pwn2own/" target="_blank" rel="noopener noreferrer">Google Pixel 10 Exploits Earned Hackers $560,000 at Pwn2Own</a></h4>
+          <p>$1.2 million was paid out at Pwn2Own Ireland 2026 for exploits targeting phones, printers, smart speakers, smart home hubs, and AI infrastructure and coding tools.</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">The Hacker News</span><span>Fri, 09 Oct 2026 12:09:29 +0530</span></div>
+          <h4><a href="https://thehackernews.com/2026/10/fbi-seizes-7-domains-disrupts-flax.html" target="_blank" rel="noopener noreferrer">FBI Seizes 7 Domains, Disrupts Flax Typhoon Tools Used in Critical Infrastructure Intrusions</a></h4>
+          <p>The U.S. Federal Bureau of Investigation (FBI) and Department of Justice (DoJ) have announced the disruption of malicious tools used by a China-linked advanced persistent threat group known as Flax Ty…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">BleepingComputer</span><span>Fri, 09 Oct 2026 01:41:04 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/hackers-earn-1262000-for-98-zero-days-at-pwn2own-ireland/" target="_blank" rel="noopener noreferrer">Hackers get $1,262,000 for 98 zero-days at Pwn2Own Ireland</a></h4>
+          <p>The Pwn2Own Ireland 2026 hacking contest has concluded, with hackers collecting $1,262,000 in rewards after exploiting 98 zero-day flaws. [...]</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge critical">CRITICAL</span><span class="badge source">BleepingComputer</span><span>Thu, 08 Oct 2026 17:42:51 -0400</span></div>
+          <h4><a href="https://www.bleepingcomputer.com/news/security/fbi-disrupts-chinese-hacking-tools-used-to-breach-critical-infrastructure/" target="_blank" rel="noopener noreferrer">FBI disrupts Chinese hacking tools used to breach critical infrastructure</a></h4>
+          <p>The FBI has seized seven domains used by Chinese state-sponsored hackers known as Flax Typhoon to operate two hacking tools, MicroScan and FishHub, used in attacks that breached critical infrastructur…</p>
+        </div></div>
+    </section>
+    
+    
+    <section class="section">
+      <h2 class="section-title">Ransomware &amp; Breach Activity</h2>
+      <h3 class="subsection-title">Ransomware victim postings</h3><div class="panel-sub">Source: leak-site postings tracked via ransomware.live, linking to the original posting where captured.</div><div class="entry-grid">
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>MA</span><span>2026-10-11</span></div>
+          <h4>CNESTEN</h4>
+          <div class="ec-sub">Government &amp; Defense</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>US</span><span>2026-10-11</span></div>
+          <h4>Friendship Christian School</h4>
+          <div class="ec-sub">Education</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">N0n</span><span>—</span><span>2026-10-11</span></div>
+          <h4>Company #5</h4>
+          <div class="ec-sub">Not Found</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">N0n</span><span>—</span><span>2026-10-11</span></div>
+          <h4>Company #4</h4>
+          <div class="ec-sub">Not Found</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">rhysida</span><span>US</span><span>2026-10-11</span></div>
+          <h4>Charles E. Tabor AAL LLC</h4>
+          <div class="ec-sub">Other</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">dragonforce</span><span>PE</span><span>2026-10-11</span></div>
+          <h4>TQC S.A.</h4>
+          <div class="ec-sub">Manufacturing</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>CO</span><span>2026-10-11</span></div>
+          <h4>Confipetrol</h4>
+          <div class="ec-sub">Energy &amp; Utilities</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">dragonforce</span><span>TW</span><span>2026-10-10</span></div>
+          <h4>TEXMA International Co., Ltd</h4>
+          <div class="ec-sub">Manufacturing</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">thegentlemen</span><span>TH</span><span>2026-10-10</span></div>
+          <h4>Royal Thai Air Force</h4>
+          <div class="ec-sub">Government &amp; Defense</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">UmBra</span><span>EG</span><span>2026-10-10</span></div>
+          <h4>Helwan University (HITU)</h4>
+          <div class="ec-sub">Education</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">Redact</span><span>US</span><span>2026-10-10</span></div>
+          <h4>DexCom</h4>
+          <div class="ec-sub">Healthcare</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>CO</span><span>2026-10-10</span></div>
+          <h4>ACI Proyectos SAS</h4>
+          <div class="ec-sub">Other</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>AR</span><span>2026-10-10</span></div>
+          <h4>Secretaría de Modernización e Innovación del Municipio</h4>
+          <div class="ec-sub">Government &amp; Defense</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">exitium</span><span>JP</span><span>2026-10-10</span></div>
+          <h4>KOIKE Sanso Kogoyo Co. Ltd.</h4>
+          <div class="ec-sub">Manufacturing</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">rhysida</span><span>—</span><span>2026-10-10</span></div>
+          <h4>Gress Clark Young &amp; Schoepper</h4>
+          <div class="ec-sub">Professional Services</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>US</span><span>2026-10-10</span></div>
+          <h4>Glenhardie Country Club</h4>
+          <div class="ec-sub">Hospitality</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">qilin</span><span>CL</span><span>2026-10-10</span></div>
+          <h4>LD Constructora</h4>
+          <div class="ec-sub">Manufacturing</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">incransom</span><span>CA</span><span>2026-10-10</span></div>
+          <h4>hsc.mb.ca</h4>
+          <div class="ec-sub">Healthcare</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">Deadlock</span><span>US</span><span>2026-10-09</span></div>
+          <h4>Saber1</h4>
+          <div class="ec-sub">Not Found</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">Deadlock</span><span>ES</span><span>2026-10-09</span></div>
+          <h4>idi pharma</h4>
+          <div class="ec-sub">Healthcare</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">safepay</span><span>CH</span><span>2026-10-09</span></div>
+          <h4>hoteldelfinolugano.ch</h4>
+          <div class="ec-sub">Hospitality</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">safepay</span><span>DE</span><span>2026-10-09</span></div>
+          <h4>dwi-bau.de</h4>
+          <div class="ec-sub">Other</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">chaos</span><span>US</span><span>2026-10-09</span></div>
+          <h4>astranahealth.com</h4>
+          <div class="ec-sub">Healthcare</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">Panzer</span><span>SG</span><span>2026-10-09</span></div>
+          <h4>Supreme Energy</h4>
+          <div class="ec-sub">Energy &amp; Utilities</div>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span class="badge group">Panzer</span><span>—</span><span>2026-10-09</span></div>
+          <h4>solutend</h4>
+          <div class="ec-sub">Technology</div>
+        </div></div><div class="more-note">+ 160 more victim posting(s) not shown — see leaktracker.html for the full list.</div>
+      <h3 class="subsection-title">Disclosed breaches</h3><div class="panel-sub">Source: Have I Been Pwned.</div><div class="entry-grid">
+        <div class="entry-card">
+          <div class="ec-meta"><span>neogen.com</span><span>435,963 records</span></div>
+          <h4><a href="https://haveibeenpwned.com/PwnedWebsites#Neogen" target="_blank" rel="noopener noreferrer">Neogen</a></h4>
+          <p>In August 2026, the food and animal safety organisation Neogen was the target of a ShinyHunters &quot;pay or leak&quot; extortion attempt . The group later published data it claimed had been obtained from Neoge…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span>cyrusone.com</span><span>373,460 records</span></div>
+          <h4><a href="https://haveibeenpwned.com/PwnedWebsites#CyrusOne" target="_blank" rel="noopener noreferrer">CyrusOne</a></h4>
+          <p>In August 2026, data centre operator CyrusOne was the target of a ShinyHunters &quot;pay or leak&quot; extortion attempt . The group subsequently published data allegedly obtained from the company, which includ…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span>doublecounter.gg</span><span>274,922 records</span></div>
+          <h4><a href="https://haveibeenpwned.com/PwnedWebsites#DoubleCounter" target="_blank" rel="noopener noreferrer">Double Counter</a></h4>
+          <p>In October 2026, the Discord server protection service Double Counter suffered a data breach attributed to a vulnerability in the Metabase analytics tool . In its disclosure notice, Double Counter adv…</p>
+        </div>
+        <div class="entry-card">
+          <div class="ec-meta"><span>angelone.in</span><span>6,765,054 records</span></div>
+          <h4><a href="https://haveibeenpwned.com/PwnedWebsites#AngelOne" target="_blank" rel="noopener noreferrer">Angel One</a></h4>
+          <p>In July 2024, the Indian stock brokerage firm Angel One confirmed that data leaked online related to a breach that occurred in April 2023 . The leaked data included 7.9M user records containing 6.8M u…</p>
+        </div></div>
+    </section>
+    
+    
+    <section class="section">
+      <h2 class="section-title">Report Versioning</h2>
+      <div class="panel-sub">
+        This report format is under active development and is expected to change between editions —
+        new sections, refined statistics, and better attribution as the underlying data pipeline improves.
+        This edition was generated using <b>template v1.2</b>.
+      </div>
+      <table class="changelog"><thead><tr><th>Version</th><th>Date</th><th>Notes</th></tr></thead><tbody><tr><td>v1.2</td><td>2026-09-08</td><td>Every page of the PDF now has a real, colored top/bottom margin — including where a table or paragraph continues right after a page break, not just the first page — via a blank (no title, no page numbers) header/footer used solely to paint that space; report files renamed to a descriptive the-signal-weekly-report-&lt;week&gt; pattern instead of the bare ISO week code. Fixed a real stats bug: breakdown tables (sources, CWEs, vendors, categories, ransomware groups) now disclose &quot;+N more&quot; when capped at their top-8 display instead of silently truncating, after one shipped with a total that didn&#x27;t reconcile. Ransomware victim postings are no longer linked (their source is a Tor .onion address, unsuitable for this report). The full report layout is now also published as its own HTML page, not just as a PDF-conversion input.</td></tr><tr><td>v1.1</td><td>2026-09-08</td><td>PDF is now a purpose-built print document (cover page, table of contents, numbered sections, real data tables with repeating headers, narrative analysis paragraphs) rendered from its own layout, not a screenshot of the web-view report — full-bleed dark theme to every page edge. Web-view dashboard panels no longer truncate long category/vendor names.</td></tr><tr><td>v1.0</td><td>2026-09-08</td><td>Initial report format: executive summary, dashboard view, and detail sections for CVEs, research articles, notable feed items, and ransomware/breach activity.</td></tr></tbody></table>
+    </section>
+    
+
+    <footer>
+      <div>Sources: NVD &amp; CISA KEV (CVE Detail) · publisher sites (Research Detail, Notable Feed Items) ·
+      ransomware.live (Ransomware) · Have I Been Pwned (Breaches). Every headline above links to its original source.</div>
+      <div style="margin-top:6px">THE SIGNAL is a static threat-intelligence console — this report is generated automatically from its accumulating datasets and is not independently verified analysis.</div>
+    </footer>
+  </div>
+</body>
+</html>
