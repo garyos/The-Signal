@@ -2,6 +2,86 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10132",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10132",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10132.mp3",
+      "title": "SANS Stormcast Monday, October 12th, 2026: TLP Overuse; AgentCorruption SSRF in Amazon Bedrock Agents; Palo Alto GlobalProtect VPN Exploited by Ransomware (CVE-2026-0257)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, October 12th, 2026: TLP Overuse; AgentCorruption SSRF in Amazon Bedrock Agents; Palo Alto GlobalProtect VPN Exploited by Ransomware (CVE-2026-0257)",
+      "show_notes": [
+        {
+          "heading": "In today's episode: why the Traffic Light Protocol (TLP) should not replace internal data classification, a server-side request forgery (SSRF) flaw in Amazon Bedrock AI agents that exposed credentials through the EC2 instance metadata service (IMDS), and ransomware groups exploiting a Palo Alto Networks GlobalProtect authentication bypass.",
+          "links": []
+        },
+        {
+          "heading": "Why TLP Should Not Replace Your Internal Information Classification",
+          "links": []
+        },
+        {
+          "heading": "The Traffic Light Protocol from FIRST defines who threat intelligence may be shared with, from TLP:CLEAR to TLP:RED, but not how to protect it in transit. Organizations still need their own classification and safeguards, such as encryption, instead of sending TLP:AMBER data in plain email.",
+          "links": [
+            "https://isc.sans.edu/forums/diary/Why%20TLP%20should%20not%20replace%20your%20internal%20information%20classification/33414/"
+          ]
+        },
+        {
+          "heading": "AgentCorruption: How A Single Prompt Collapsed The Entire Cloud Security Model",
+          "links": []
+        },
+        {
+          "heading": "Zenity Labs found a now-fixed server-side request forgery vulnerability in Amazon Bedrock AI agents. A prompt could make an agent fetch and reveal credentials from the EC2 instance metadata service, made possible by IMDSv1 and overly broad permissions. Restrict the URLs your AI agents can reach and always use IMDSv2.",
+          "links": [
+            "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model"
+          ]
+        },
+        {
+          "heading": "Palo Alto GlobalProtect VPN Vulnerability Exploited by Ransomware (CVE-2026-0257)",
+          "links": []
+        },
+        {
+          "heading": "ReliaQuest reports ransomware actors exploiting an authentication bypass in Palo Alto Networks PAN-OS GlobalProtect and Prisma Access to open unauthorized VPN sessions. Patch VPN gateways, and keep VPN clients updated too.",
+          "links": [
+            "https://x.com/ReliaQuestTR/status/2108647641240465707",
+            "https://security.paloaltonetworks.com/CVE-2026-0257"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-12T02:00:02+00:00",
+      "duration_seconds": 332,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10132.mp3",
+      "audio_length_bytes": 4652101,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10132",
+      "categories": [
+        "tlp",
+        "agentcorruption",
+        "zenity",
+        "amazon bedrock",
+        "aws",
+        "ec2",
+        "imds",
+        "ssrf",
+        "palo alto",
+        "pan-os",
+        "globalprotect",
+        "prisma access",
+        "vpn",
+        "ransomware",
+        "netscaler",
+        "cve-2026-0257"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10132",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday October 12th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Amsterdam, Netherlands. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Jan this weekend wrote about the\n Traffic Light Protocol and how it is often in his experience\n overused by organization to replace some internal\n classification schemes. So first of all, the Traffic\n Light Protocol was developed by FIRST and its intent is to\n specify who particular threat intelligence usually is\n supposed to be shared with. And it goes all the way from\n clear, which is basically public information, to red,\n which is information that may not be shared at all. What the\n Traffic Light Protocol does not specify is how this\n information should be shared. So for example, if you're\n looking at the AMBER range where you have certain\n organizations that you may share this particular\n information with, it doesn't specify should you encrypt it\n or what safeguards you should enable in order to prevent\n this information from being shared with anybody but the\n designated recipient. And I've often seen actually\n information like this being shared in plain emails, which\n in many cases may not necessarily be what you're\n supposed to be doing to safeguard this data. So keep\n that in mind when you're using the Traffic Light Protocol.\n It's really just about who you share the information with,\n not how you actually ensure that the information is\n safeguarded. And I think I mentioned a couple times\n before that one of the vulnerabilities that you may\n expose yourself with AI agents is server-side request\n forgery. AI agents often have the ability to reach out to\n other websites in order to retrieve information and well,\n that's the typical pattern that can be used for server\n -side request forgery. Researchers from Zenity Labs\n did now identify just this vulnerability in Amazon's AI\n Bedrock agents. Now Amazon has fixed this vulnerability now,\n but the basic issue here is the very classic server-side\n request forgery issue where a script running inside a\n virtual machine inside Amazon's EC2 is able to reach\n out the metadata service. And as a result, it's possible to\n retrieve credentials. And that's exactly what happened\n here, where a user would be able to trick the agent into\n receiving and revealing credentials that were stored\n in the metadata service. And then the attacker could use\n these credentials. There were a couple of issues here with\n this that enabled this vulnerability. One was the use\n of version one of the IMDS, the instance metadata service,\n not version two. And secondly, also the privileges were quite\n wide open to allow access that the agent probably didn't even\n need. So again, this has been fixed by Amazon at this point,\n but it is a bad pattern that I've seen over and over. And\n if you're developing agents or anything like this, please be\n aware that you must restrict what URLs they have access to.\n And yes, the IMDS version one, version two issue is a common\n problem. Also make sure you always use version two of the\n instance metadata service, because that one is more\n hardened against these type of server-side request forgery\n vulnerabilities. And this last week, we had a number of\n NetScaler vulnerabilities. So first of all, a reminder, make\n sure that you're up to date. It's really easy to miss one\n of these vulnerabilities. I had to double check a couple\n times today to make sure that I have them all covered. But\n also these vulnerabilities are exploited or these type of\n vulnerabilities. ReliaQuest now is reporting that they're\n seeing ransomware being deployed via Palo Alto\n vulnerability. So this is PAN-OS, GlobalProtect and\n Prisma Access. All of these VPN, SSL VPN and similar\n vulnerabilities are heavily being targeted in particular\n by ransomware actors, because that's usually the part that\n you must expose to the world. So that makes it really\n difficult to set up any additional mitigating controls\n for these type of vulnerabilities. So double\n check, make sure your VPN endpoints are properly\n patched. Also, don't forget to update the clients ever so\n often. There are, and I don't always mention them in the\n podcast, but there are sort of ongoing issues with privilege\n escalation vulnerabilities in these clients. So definitely,\n this is a big target these days. So make sure that you're\n up to date. Well, and that's it for today. So thanks again\n for listening. Thanks for liking. Thanks for\n recommending and subscribing to this podcast. And talk to\n you again tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10130",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
