@@ -1,6 +1,86 @@
 {
-  "fetched_at": "2026-10-12T18:28:35.334281+00:00",
+  "fetched_at": "2026-10-13T09:57:24.188577+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10134",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10134",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10134.mp3",
+      "title": "SANS Stormcast Tuesday, October 13th, 2026: GitLab CI/CD RCE (CVE-2026-97229); Let\u2019s Encrypt 64-Day Certificates; Midnight Mimosa Pre-Installed Android Malware; Progress MarkLogic Patches",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, October 13th, 2026: GitLab CI/CD RCE (CVE-2026-97229); Let\u2019s Encrypt 64-Day Certificates; Midnight Mimosa Pre-Installed Android Malware; Progress MarkLogic Patches",
+      "show_notes": [
+        {
+          "heading": "In today's episode: a critical GitLab integer overflow that allows unauthenticated code execution, Let s Encrypt moving to 64-day TLS certificates in February 2027, Midnight Mimosa malware pre-installed on cheap Android phones, and Progress MarkLogic security updates.",
+          "links": []
+        },
+        {
+          "heading": "CVE-2026-97229 - Integer Overflow Issue in CI/CD Regular Expression Compiler Impacts GitLab CE/EE",
+          "links": []
+        },
+        {
+          "heading": "An integer overflow in GitLab's CI/CD regular expression compiler lets unauthenticated users execute arbitrary code on self-managed GitLab servers. It was reported responsibly through HackerOne, and no public exploit is known yet. Patch on-premises installations quickly.",
+          "links": [
+            "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/#cve-2026-97229---integer-overflow-issue-in-cicd-regular-expression-compiler-impacts-gitlab-ceee"
+          ]
+        },
+        {
+          "heading": "Let s Encrypt 64-Day Certificate Lifetimes Coming Feb 2027",
+          "links": []
+        },
+        {
+          "heading": "Let s Encrypt staging certificates drop to 64 days on October 14th, and all new production certificates follow on February 10th, 2027. Test your automation now, and adjust certificate expiration alerts for shorter-lived certificates.",
+          "links": [
+            "https://letsencrypt.org/2026/10/07/64-day-certs.html"
+          ]
+        },
+        {
+          "heading": "Midnight Mimosa: Malware Pre-Installed on Android Phones",
+          "links": []
+        },
+        {
+          "heading": "Bitdefender found Midnight Mimosa malware pre-installed on cheap Android phones sold under flagship-like names such as S25 Ultra and i17 Pro. The malware disables the Google Play Store to evade detection and supports clickjacking, a proxy botnet, and ad fraud.",
+          "links": [
+            "https://www.bitdefender.com/en-us/blog/labs/midnight-mimosa-malware"
+          ]
+        },
+        {
+          "heading": "Progress MarkLogic Critical Security Alert Bulletin   October 2026",
+          "links": []
+        },
+        {
+          "heading": "Progress released October 2026 updates for the MarkLogic data management platform and NoSQL database, with some vulnerabilities rated CVSS 9.9. The most severe let users with low-level query privileges execute arbitrary code, partly through a legacy API that is still enabled.",
+          "links": [
+            "https://community.progress.com/s/article/Marklogic-Critical-Security-Alert-Bulletin-October-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-13T02:00:02+00:00",
+      "duration_seconds": 338,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10134.mp3",
+      "audio_length_bytes": 4740329,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10134",
+      "categories": [
+        "gitlab",
+        "ci/cd",
+        "let\u2019s encrypt",
+        "tls certificates",
+        "midnight mimosa",
+        "android malware",
+        "marklogic"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10134",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday October 13th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Amsterdam, Netherlands. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in\n Cybersecurity Fundamentals. Let's start the day with\n GitLab. I don't cover every GitLab vulnerability, but this\n one does, I think, deserve a mention. It's an integer\n overflow issue in the CI/CD regular expression compiler\n and it does allow unauthenticated users to\n execute arbitrary code on the GitLab server. Given how\n critical GitLab is for organizations using it as part\n of their supply chain, it certainly must be addressed\n quickly. I'm not aware of an exploit being available\n publicly for this particular issue. It was reported\n responsibly by a researcher via HackerOne. So it wasn't\n something that was leaked first and then later published\n by GitLab. Only in fact, if you are running GitLab, of\n course, on-premise, if you're using GitLab's cloud\n solutions, that should not really be an issue. And Let's\n Encrypt published a blog post to prepare users of the\n reduced certificate lifetime coming up in February next\n year. Starting October 14th, so two days from now, the\n certificate lifetime of the staging environment will be\n reduced to 64 days. So that will give you a chance to\n experiment with it. But then starting February 10th next\n year, we'll see the same happening to any live\n certificates. So this will not affect certificates you\n already have, but then past February, any new certificates\n will only be valid for 64 days. And the blog post gives\n you a couple of tips on what to look for and how to get\n ready for these ever decreasing certificate\n lifetimes. I've been playing with the short-lived\n certificates from Let's Encrypt that are valid only 7\n days in one of my domains now. I think that's a worthwhile\n experiment for you to conduct where you basically set up one\n of the less important domains of you with these 7-day\n certificates. So to test that extreme case, pretty easy to\n do that. And one of the things that I noted was any kind of\n alerts you have that will tell you that a certificate is\n about to expire, you of course have to adjust them. Because\n many of them these days are going to trigger as soon as\n the certificate is only valid for 7 days. So you basically\n have a constant trigger in this particular case.\n Bitdefender has a real detailed nice write-up about\n malware that they discovered on certified pre-pwned Android\n phones. They call this Midnight Mimosa and again this\n comes pre-installed on the phone so there's nothing that\n the user would install. Interestingly, many of the\n affected phones try to mimic some of the flagship phones\n but are of course much cheaper and go by names like S25 Ultra\n or i17 Pro. Sort of mimicking some of the Samsung and Apple\n flagship phone names. Haven't seen a picture of the phone\n itself to see whether or not they mimic also the look of\n these phones. The malware is quite sophisticated and hard\n to detect by the user. It also selectively, for example,\n disables the Google Play Store in order to evade detection.\n And does offer features like clickjacking and a proxy\n botnet that an attacker could use to their advantage. And a\n number of other ways how they either inject ads or trick\n users to click on ads and that way increase their revenue.\n And finally for today, if you are using Progress Software,\n MarkLogic, Data Management Platform and NoSQL database.\n Well, they released their October 2026 updates. Some of\n the vulnerabilities are rated with a CVSS score of 9.9.\n However, most of them are sort of in the more privilege\n escalation of vulnerability scale. The more severe ones do\n allow users with the query ability, which is a fairly low\n level privilege in this system, to execute arbitrary\n code. So that's certainly something that should be\n addressed. Interesting also that some of these\n vulnerabilities stem from a legacy API that's still\n enabled in these systems. And well, so definitely apply the\n update as you get around to it. Well, and that's it for\n today. So thanks again for listening. Thanks for liking.\n Thanks for recommending. And well, special thanks also for\n any feedback that I receive as to which products I missed\n should have covered. Or which products maybe I should not\n have covered. Or any other mistakes or so. Please let me\n know. And that's it for today. Thanks and talk to you again\n tomorrow. Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10132",
       "show": "stormcast",
@@ -3480,69 +3560,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10026",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, July 28, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Penetration Testing and\n Ethical Hacking. Our honeypots picked up a variation of\n Spring Boot heap dump scans. So in Spring Boot, the Java\n framework, there is an endpoint actuator slash heap\n dump. If you access this particular endpoint, you get,\n well, as the name implies, a heap dump back. Heap dump in\n Java is essentially what the core dump is in binary\n programs. And it includes essentially a memory snapshot\n of the process. Memory snapshots then tend to include\n things like credentials, API keys, and all kinds of other\n interesting confidential stuff. What's a little bit\n different here is that the attacker is using an admin\n slash API prefix to the endpoint. This is not that\n terribly unusual. It's easily configured within Spring Boot.\n They're not assuming that the endpoint is not password\n protected. There has been a vulnerability where people did\n install Spring Boot, then didn't password protect the\n actuator heap dump endpoint. In this case, they're\n attempting some simple passwords, like for example,\n username admin, password admin. Well, still works. It's\n the AIH, but admin admin still apparently gets you all the\n credentials that you need. And the vBulletin Secure\n Disclosure technical team released details regarding new\n vulnerability in vBulletin. vBulletin is still very\n popular bulletin board software installed on I don't\n know how many, but a lot of different websites. The\n vulnerability is a standard remote code execution\n vulnerabilities. Data is being passed to the PHP exec\n function. Never a good idea. In particular, if all you do\n is attempting some simple cleanup, removing some sort of\n bad characters. Well, as always, they were not complete\n in their cleanup. And now we have a remote code execution.\n Remember, when you're doing an exec call or such, first of\n all, you shouldn't really be doing it. And if you must do\n it, they're more secure APIs, exec v and such that separate\n the code from the command line arguments that give you a\n slightly better chance of actually not landing in this\n very well known old trap. And if you're using Microsoft's\n defender solution for Linux, well, Microsoft did recently\n push out an update that prevents defender from\n restarting if the system is being rebooted. Now, this is\n an update to their scanning engine, which usually is\n enabled by default. And the problem here is if you\n received the bad update, and then you rebooted the system\n before the next update that fixed the problem was\n installed. Well, in that case, defender didn't start and will\n also not update automatically. So you must basically follow\n Microsoft's manual remediation steps in order to get Windows\n defender to launch again. Windows defender for servers\n is a very popular solution for Linux these days. So yes,\n Microsoft does make some of its software for Linux as\n well. And MongoDB released patches for 26 different\n vulnerabilities. And now many of them are rated high. There\n is one vulnerability that's rated critical, because it\n does allow for some memory corruption and also corruption\n of data inside the database. Now, this is not exploitable\n in the default configuration, you must enable the compute\n mode and you must use a standalone MongoDB instance.\n Compute mode is usually not enabled. In this case, the\n external attacker would then have to send BSON data, so\n binary JSON data to the MongoDB database. And then the\n aggregation pipeline will lead to the memory corruption. So\n definitely something that you do want to update. Like I\n said, there are also a number of high vulnerabilities, many\n of them leading to various denial of service conditions.\n And yes, it doesn't appear to be that some of them are that\n terribly difficult to exploit. Well, and this is it for\n today. So thanks for listening. Thanks for liking.\n Thanks for subscribing to this podcast. And talk to you again\n tomorrow. Bye.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10024",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10024",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10024.mp3",
-      "title": "SANS Stormcast Monday, July 27th, 2026: ESAFENET CDG Scans; DNS Poisoning; macOS Gatekeeper bypass; GitHub and PyPi updates",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, July 27th, 2026: ESAFENET CDG Scans; DNS Poisoning; macOS Gatekeeper bypass; GitHub and PyPi updates",
-      "show_notes": [
-        {
-          "heading": "Scans for ESAFENET CDG 3 Document Management System Weak Logins",
-          "links": [
-            "https://isc.sans.edu/diary/Scans%20for%20ESAFENET%20CDG%203%20Document%20Management%20System%20Weak%20Logins/33184"
-          ]
-        },
-        {
-          "heading": "DNS Poisoning Tactics Expand to Hospitality Wi-Fi",
-          "links": [
-            "https://reliaquest.com/blog/threat-spotlight-dns-poisoning-tactics-expand-to-hospitality/"
-          ]
-        },
-        {
-          "heading": "Silent Replacement of Trusted macOS App Executables",
-          "links": [
-            "https://mysk.blog/2026/07/23/macos-overwrite-app-executables/"
-          ]
-        },
-        {
-          "heading": "GitHub and PyPi Defense updates",
-          "links": [
-            "https://github.blog/security/supply-chain-security/the-case-for-a-cooldown-why-dependabot-now-waits-before-issuing-version-updates/",
-            "https://blog.pypi.org/posts/2026-07-22-releases-now-reject-new-files-after-14-days/",
-            "https://www.bleepingcomputer.com/news/security/github-pypi-add-time-absed-defenses-against-supply-chain-attacks/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-27T02:00:02+00:00",
-      "duration_seconds": 429,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10024.mp3",
-      "audio_length_bytes": 6011675,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10024",
-      "categories": [
-        "github",
-        "pypi",
-        "dns",
-        "wifi",
-        "hotel",
-        "macos",
-        "applications",
-        "gatekeeper"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10024",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday, July 27th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida, but teaching online this week in\n London. And this episode is brought to you by the SANS.edu\n Undergraduate Certificate Program in Cybersecurity\n Fundamentals. This weekend, I noticed some scans for\n eSafeNet CDG3. This is not the first time we saw scans for\n this particular product. A couple of years ago, a cross\n -site scripting vulnerability was discovered in the product\n and we saw some scans around that time. There are really\n sort of three vulnerabilities that are commonly being quoted\n for this particular product. One is the cross-site\n scripting vulnerability. Then there's a SQL injection\n vulnerability. And the one that we see scans right now\n for is for hard-coded passwords. That's probably the\n most straightforward one to exploit when it comes to\n eSafeNet CDG. This is a product mainly focusing on the\n Chinese market. All their website and such is in\n Chinese. Now, the product itself builds itself as a\n secure document management, the leakage prevention system.\n The vulnerabilities, well, the fixed password stuff is pretty\n bad, but I think are sort of in line with what we typically\n see with these kinds of expensive products that are\n proposing to be more secure than others. But, well, still\n have some of the same vulnerabilities. And\n ReliaQuest has a good write-up of some recent attacks that\n supposedly were perpetrated by some Russian threat actors\n that targeted hospitality Wi -Fi gateways. So, they're\n going after the gateway, not the access point necessarily,\n unless sometimes they are the same thing. The goal here is\n to change DNS settings and then redirect DNS requests to\n a malicious DNS server that will return, well, bad\n responses. In particular, they appear to be going for Outlook\n 365 credentials. Definitely make sure that your users are\n aware of bad TLS pop-ups and such and are taking them\n serious. Of course, often in sort of these public Wi-Fi\n networks, users may be a little bit accustomed to these\n bad TLS pop-ups because often the login pages and such for\n these captive portals are often presenting bad TLS\n certificates. So, that's certainly a problem. Last\n week, I wrote a little bit about how different operating\n systems recognize these captive portals and then do\n respective redirects. There's always a chance that these\n redirects are also hijacked and being redirected to a\n malicious sign-in page like for Outlook 365 that may trick\n a user into relinquishing their credentials. It's really\n time for some kind of phishing. Safe authentication,\n pass keys and the like come to mind again. And what typically\n is done, even with default Outlook 365, if you do have\n multi-factor authentication, isn't strictly speaking\n phishing safe. And Apple users, be aware there is an\n interesting technique that malicious actors could use to\n replace applications on your system without Apple's own\n gatekeeper system catching it. This was published by Talal\n Hosh Bakri and Tommy Misk. They reported to Apple, but\n Apple apparently has, after looking at it for about a\n month, closed the report and does not intend to fix it. The\n exploit here is pretty straightforward. It's possible\n to archive an application that the user installed and then\n replace it basically by restoring the archive. But,\n well, when restoring, you don't actually have to restore\n the same archive. You could replace the application. Now,\n Apple has this gatekeeper system that is sort of a basic\n antivirus that will check the executable assets being loaded\n the first time. But, well, it's only loaded, it's only\n executed on the first time. So, later on, gatekeeper is no\n longer involved. And that, of course, is being exploited\n here. That gatekeeper considers the application now\n safe and will no longer change it, even after the user has\n replaced it with the altered archive. Interesting\n vulnerability. And I think certainly something that Apple\n should probably address, but it only applies to\n applications that user installed. So, no applications\n that were installed via the App Store is affected by this\n particular issue. So, basically do some good\n controls, change controllers or file change control on your\n system to prevent this from happening. The attacker does\n need execution rights on the system. But, of course, if the\n attacker can trick you into installing another\n application, they may be able to rewrite an already\n installed application on the system. And we have some\n updates from GitHub as well as from PyPy regarding recent\n supply chain attacks. First of all, GitHub, of course, for\n quite a while now has its Dependabot feature where you\n can get automatically alerted of new updates to any packages\n that you're using. And also have them automatically\n applied in the term of pull requests that are\n automatically generated. Well, GitHub will now wait three\n days before it suggests some update in order to eliminate\n some of these sort of fairly fastly discovered and such\n supply chain attacks like the ones we had in the recent\n months and such. Now, PyPy, on the other hand, takes a little\n bit of different approach. PyPy, of course, manages\n Python packages and authors are only allowed to add new\n files to new releases of their Python package within 14 days.\n So, after 14 days, they have to label it as a new release,\n which, of course, could trigger then again some\n additional reviews. Well, and this is it for today. So,\n thanks for listening. Thanks for liking. Thanks for\n subscribing to this podcast. And talk to you again\n tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
