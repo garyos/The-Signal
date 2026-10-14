@@ -2,6 +2,95 @@
   "month": "2020-04",
   "cves": [
     {
+      "id": "CVE-2020-1752",
+      "published": "2020-04-30T17:15:13.067",
+      "lastModified": "2026-10-14T09:17:18.887",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free vulnerability introduced in glibc upstream version 2.14 was found in the way the tilde expansion was carried out. Directory paths containing an initial tilde followed by a valid username were affected by this issue. A local attacker could exploit this flaw by creating a specially crafted path that, when processed by the glob function, would potentially lead to arbitrary code execution. This was fixed in version 2.32.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "GNU Libc glibc",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-1752",
+        "https://lists.apache.org/thread.html/r58af02e294bd07f487e2c64ffc0a29b837db5600e33b6e698b9d696b%40%3Cissues.bookkeeper.apache.org%3E",
+        "https://lists.apache.org/thread.html/rf4c02775860db415b4955778a131c2795223f61cb8c6a450893651e4%40%3Cissues.bookkeeper.apache.org%3E",
+        "https://lists.debian.org/debian-lts-announce/2022/10/msg00021.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00535,
+        "percentile": 0.43581,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-12243",
+      "published": "2020-04-28T19:15:12.267",
+      "lastModified": "2026-10-14T10:17:25.933",
+      "vulnStatus": "Modified",
+      "description": "In filter.c in slapd in OpenLDAP before 2.4.50, LDAP search filters with nested boolean expressions can result in denial of service (daemon crash).",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-674",
+          "name": "CWE-674"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://lists.opensuse.org/opensuse-security-announce/2020-05/msg00016.html",
+        "https://bugs.openldap.org/show_bug.cgi?id=9202",
+        "https://git.openldap.org/openldap/openldap/-/blob/OPENLDAP_REL_ENG_2_4/CHANGES",
+        "https://git.openldap.org/openldap/openldap/-/commit/98464c11df8247d6a11b52e294ba5dd4f0380440"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04423,
+        "percentile": 0.91157,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2020-1967",
       "published": "2020-04-21T14:15:11.287",
       "lastModified": "2026-10-08T21:17:24.923",
@@ -32,8 +121,8 @@
       },
       "epss": {
         "score": 0.53336,
-        "percentile": 0.98965,
-        "date": "2026-10-12"
+        "percentile": 0.98967,
+        "date": "2026-10-13"
       },
       "media": {
         "in_news": false,
@@ -70,8 +159,141 @@
       },
       "epss": {
         "score": 0.01715,
-        "percentile": 0.76781,
-        "date": "2026-10-12"
+        "percentile": 0.76817,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-1751",
+      "published": "2020-04-17T19:15:14.437",
+      "lastModified": "2026-10-14T09:17:18.640",
+      "vulnStatus": "Modified",
+      "description": "An out-of-bounds write vulnerability was found in glibc before 2.31 when handling signal trampolines on PowerPC. Specifically, the backtrace function did not properly check the array bounds when storing the frame address, resulting in a denial of service or potential code execution. The highest threat from this vulnerability is to system availability.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Red Hat glibc",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-1751",
+        "https://security.gentoo.org/glsa/202006-04",
+        "https://security.netapp.com/advisory/ntap-20200430-0002/",
+        "https://sourceware.org/bugzilla/show_bug.cgi?id=25423"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00537,
+        "percentile": 0.43715,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-11656",
+      "published": "2020-04-09T03:15:11.410",
+      "lastModified": "2026-10-14T10:17:24.240",
+      "vulnStatus": "Modified",
+      "description": "In SQLite through 3.31.1, the ALTER TABLE implementation has a use-after-free, as demonstrated by an ORDER BY clause that belongs to a compound SELECT statement.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://cert-portal.siemens.com/productcert/pdf/ssa-389290.pdf",
+        "https://security.FreeBSD.org/advisories/FreeBSD-SA-20:22.sqlite.asc",
+        "https://security.gentoo.org/glsa/202007-26",
+        "https://security.netapp.com/advisory/ntap-20200416-0001/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0761,
+        "percentile": 0.94437,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-11655",
+      "published": "2020-04-09T03:15:11.363",
+      "lastModified": "2026-10-14T09:17:18.097",
+      "vulnStatus": "Modified",
+      "description": "SQLite through 3.31.1 allows attackers to cause a denial of service (segmentation fault) via a malformed window-function query because the AggInfo object's initialization is mishandled.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-665",
+          "name": "CWE-665"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://cert-portal.siemens.com/productcert/pdf/ssa-389290.pdf",
+        "https://lists.debian.org/debian-lts-announce/2020/05/msg00006.html",
+        "https://lists.debian.org/debian-lts-announce/2020/08/msg00037.html",
+        "https://security.FreeBSD.org/advisories/FreeBSD-SA-20:22.sqlite.asc"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0434,
+        "percentile": 0.90998,
+        "date": "2026-10-13"
       },
       "media": {
         "in_news": false,
@@ -110,8 +332,8 @@
       },
       "epss": {
         "score": 0.0578,
-        "percentile": 0.92927,
-        "date": "2026-10-12"
+        "percentile": 0.92938,
+        "date": "2026-10-13"
       },
       "media": {
         "in_news": false,
@@ -150,8 +372,105 @@
       },
       "epss": {
         "score": 0.03714,
-        "percentile": 0.89513,
-        "date": "2026-10-12"
+        "percentile": 0.89531,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-11501",
+      "published": "2020-04-03T13:15:13.170",
+      "lastModified": "2026-10-14T09:17:17.877",
+      "vulnStatus": "Modified",
+      "description": "GnuTLS 3.6.x before 3.6.13 uses incorrect cryptography for DTLS. The earliest affected version is 3.6.3 (2018-07-16) because of an error in a 2017-10-06 commit. The DTLS client always uses 32 '\\0' bytes instead of a random value, and thus contributes no randomness to a DTLS negotiation. This breaks the security guarantees of the DTLS protocol.",
+      "cvss": {
+        "score": 7.4,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-330",
+          "name": "Use of Insufficiently Random Values"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://lists.opensuse.org/opensuse-security-announce/2020-04/msg00015.html",
+        "https://gitlab.com/gnutls/gnutls/-/commit/5b595e8e52653f6c5726a4cdd8fddeb6e83804d2",
+        "https://gitlab.com/gnutls/gnutls/-/issues/960",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ILMOWPKMTZAIMK5F32TUMO34XCABUCFJ/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.03388,
+        "percentile": 0.88528,
+        "date": "2026-10-13"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2020-6096",
+      "published": "2020-04-01T22:15:18.503",
+      "lastModified": "2026-10-14T09:17:19.140",
+      "vulnStatus": "Modified",
+      "description": "An exploitable signed comparison vulnerability exists in the ARMv7 memcpy() implementation of GNU glibc 2.30.9000. Calling memcpy() (on ARMv7 targets that utilize the GNU glibc implementation) with a negative value for the 'num' parameter results in a signed comparison vulnerability. If an attacker underflows the 'num' parameter to memcpy(), this vulnerability could lead to undefined behavior such as writing to out-of-bounds memory and potentially remote code execution. Furthermore, this memcpy(",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-195",
+          "name": "CWE-195"
+        },
+        {
+          "id": "CWE-191",
+          "name": "CWE-191"
+        },
+        {
+          "id": "CWE-681",
+          "name": "CWE-681"
+        }
+      ],
+      "vendors": [
+        "GNU glibc",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://lists.apache.org/thread.html/rf9fa47ab66495c78bb4120b0754dd9531ca2ff0430f6685ac9b07772%40%3Cdev.mina.apache.org%3E",
+        "https://lists.debian.org/debian-lts-announce/2022/10/msg00021.html",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/SPYXTDOOB4PQGTYAMZAZNJIB3FF6YQXI/",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/URXOIA2LDUKHQXK4BE55BQBRI6ZZG3Y6/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05354,
+        "percentile": 0.92471,
+        "date": "2026-10-13"
       },
       "media": {
         "in_news": false,
@@ -162,5 +481,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-13T12:54:12.975902+00:00"
+  "updated_at": "2026-10-14T10:32:58.606280+00:00"
 }
