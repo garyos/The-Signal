@@ -2,6 +2,107 @@
   "month": "2022-08",
   "cves": [
     {
+      "id": "CVE-2022-3028",
+      "published": "2022-08-31T16:15:11.867",
+      "lastModified": "2026-10-14T14:17:22.580",
+      "vulnStatus": "Modified",
+      "description": "A race condition was found in the Linux kernel's IP framework for transforming packets (XFRM subsystem) when multiple calls to xfrm_probe_algs occurred simultaneously. This flaw could allow a local attacker to potentially trigger an out-of-bounds write or leak kernel heap memory by performing an out-of-bounds read and copying it into a socket.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-667",
+          "name": "CWE-667"
+        },
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        },
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://github.com/torvalds/linux/commit/ba953a9d89a00c078b85f4b190bc1dde66fe16b5",
+        "https://lists.debian.org/debian-lts-announce/2022/10/msg00000.html",
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/F3MYP7WX4PNE6RCITVXA43CECBZT4CL6/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00211,
+        "percentile": 0.10541,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-1271",
+      "published": "2022-08-31T16:15:09.347",
+      "lastModified": "2026-10-14T13:17:17.760",
+      "vulnStatus": "Modified",
+      "description": "An arbitrary file write vulnerability was found in GNU gzip's zgrep utility. When zgrep is applied on the attacker's chosen file name (for example, a crafted file name), this can overwrite an attacker's content to an arbitrary attacker-selected file. This flaw occurs due to insufficient validation when processing filenames with two or more newlines where selected content and the target file names are embedded in crafted multi-line file names. This flaw allows a remote, low privileged attacker to",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-179",
+          "name": "CWE-179"
+        },
+        {
+          "id": "CWE-20",
+          "name": "Improper Input Validation"
+        }
+      ],
+      "vendors": [
+        "gzip, xz-utils",
+        "Siemens RUGGEDCOM APE1808",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://access.redhat.com/security/cve/CVE-2022-1271",
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2073310",
+        "https://git.tukaani.org/?p=xz.git%3Ba=commit%3Bh=69d1b3fc29677af8ade8dc15dba83f0589cb63d6",
+        "https://lists.gnu.org/r/bug-gzip/2022-04/msg00011.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0507,
+        "percentile": 0.92193,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2022-1199",
       "published": "2022-08-29T15:15:10.527",
       "lastModified": "2026-09-11T16:18:07.107",
@@ -36,8 +137,97 @@
       },
       "epss": {
         "score": 0.02033,
-        "percentile": 0.80565,
-        "date": "2026-10-13"
+        "percentile": 0.80673,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-2959",
+      "published": "2022-08-25T18:15:10.303",
+      "lastModified": "2026-10-14T14:17:22.303",
+      "vulnStatus": "Modified",
+      "description": "A race condition was found in the Linux kernel's watch queue due to a missing lock in pipe_resize_ring(). The specific flaw exists within the handling of pipe buffers. The issue results from the lack of proper locking when performing operations on an object. This flaw allows a local user to crash the system or escalate their privileges on the system.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-667",
+          "name": "CWE-667"
+        },
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://github.com/torvalds/linux/commit/189b0ddc245139af81198d1a3637cac74f96e13a",
+        "https://security.netapp.com/advisory/ntap-20230214-0005/",
+        "https://www.zerodayinitiative.com/advisories/ZDI-22-1165/",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0038,
+        "percentile": 0.303,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-2978",
+      "published": "2022-08-24T16:15:12.010",
+      "lastModified": "2026-10-14T14:17:22.440",
+      "vulnStatus": "Modified",
+      "description": "A flaw use after free in the Linux kernel NILFS file system was found in the way user triggers function security_inode_alloc to fail with following call to function nilfs_mdt_destroy. A local user could use this flaw to crash the system or potentially escalate their privileges on the system.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00034.html",
+        "https://lore.kernel.org/linux-fsdevel/20220816040859.659129-1-dzm91%40hust.edu.cn/T/#u",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00243,
+        "percentile": 0.14422,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -80,9 +270,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00746,
-        "percentile": 0.53596,
-        "date": "2026-10-13"
+        "score": 0.00799,
+        "percentile": 0.55597,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -129,9 +319,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.01758,
-        "percentile": 0.77389,
-        "date": "2026-10-13"
+        "score": 0.02066,
+        "percentile": 0.80995,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -172,8 +362,52 @@
       },
       "epss": {
         "score": 0.00532,
-        "percentile": 0.43405,
-        "date": "2026-10-13"
+        "percentile": 0.43583,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2021-28861",
+      "published": "2022-08-23T01:15:07.617",
+      "lastModified": "2026-10-14T12:17:11.267",
+      "vulnStatus": "Modified",
+      "description": "Python 3.x through 3.10 has an open redirection vulnerability in lib/http/server.py due to no protection against multiple (/) at the beginning of URI path which may leads to information disclosure. NOTE: this is disputed by a third party because the http.server.html documentation page states \"Warning: http.server is not recommended for production. It only implements basic security checks.\"",
+      "cvss": {
+        "score": 7.4,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-601",
+          "name": "Open Redirect"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://bugs.python.org/issue43223",
+        "https://github.com/python/cpython/pull/24848",
+        "https://github.com/python/cpython/pull/93879",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/2TRINJE3INWDVIHIABW4L2NP3RUSK7BJ/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02535,
+        "percentile": 0.84634,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -214,8 +448,8 @@
       },
       "epss": {
         "score": 0.00482,
-        "percentile": 0.39837,
-        "date": "2026-10-13"
+        "percentile": 0.40019,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -256,8 +490,8 @@
       },
       "epss": {
         "score": 0.00534,
-        "percentile": 0.43556,
-        "date": "2026-10-13"
+        "percentile": 0.43734,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -298,8 +532,8 @@
       },
       "epss": {
         "score": 0.02629,
-        "percentile": 0.85128,
-        "date": "2026-10-13"
+        "percentile": 0.85211,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -341,8 +575,190 @@
       },
       "epss": {
         "score": 0.01751,
-        "percentile": 0.77289,
-        "date": "2026-10-13"
+        "percentile": 0.7742,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-1012",
+      "published": "2022-08-05T16:15:11.370",
+      "lastModified": "2026-10-14T13:17:15.887",
+      "vulnStatus": "Modified",
+      "description": "A memory leak problem was found in the TCP source port generation algorithm in net/ipv4/tcp.c due to the small table perturb size. This flaw may allow an attacker to information leak and may cause a denial of service problem.",
+      "cvss": {
+        "score": 8.2,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-401",
+          "name": "Memory Leak"
+        }
+      ],
+      "vendors": [
+        "Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2064604",
+        "https://lore.kernel.org/lkml/20220427065233.2075-1-w%401wt.eu/T/",
+        "https://security.netapp.com/advisory/ntap-20221020-0006/",
+        "https://cert-portal.siemens.com/productcert/html/ssa-561322.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04117,
+        "percentile": 0.90621,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-37434",
+      "published": "2022-08-05T07:15:07.240",
+      "lastModified": "2026-10-14T18:17:03.630",
+      "vulnStatus": "Modified",
+      "description": "zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow in inflate in inflate.c via a large gzip header extra field. NOTE: only applications that call inflateGetHeader are affected. Some common applications bundle the affected zlib source code but may be unable to call inflateGetHeader (e.g., see the nodejs/node reference).",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        },
+        {
+          "id": "CWE-120",
+          "name": "Buffer Overflow"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM ROX MX5000",
+        "Siemens RUGGEDCOM ROX MX5000RE"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2022/Oct/37",
+        "http://seclists.org/fulldisclosure/2022/Oct/38",
+        "http://seclists.org/fulldisclosure/2022/Oct/41",
+        "http://seclists.org/fulldisclosure/2022/Oct/42"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.18972,
+        "percentile": 0.97263,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-35737",
+      "published": "2022-08-03T06:15:07.690",
+      "lastModified": "2026-10-14T18:17:01.163",
+      "vulnStatus": "Modified",
+      "description": "SQLite 1.0.12 through 3.39.x before 3.39.2 sometimes allows an array-bounds overflow if billions of bytes are used in a string argument to a C API.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-129",
+          "name": "CWE-129"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://blog.trailofbits.com/2022/10/25/sqlite-vulnerability-july-2022-library-api/",
+        "https://kb.cert.org/vuls/id/720344",
+        "https://security.gentoo.org/glsa/202210-40",
+        "https://security.netapp.com/advisory/ntap-20220915-0009/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.22774,
+        "percentile": 0.97704,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-2509",
+      "published": "2022-08-01T14:15:09.890",
+      "lastModified": "2026-10-14T13:17:21.447",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability found in gnutls. This security flaw happens because of a double free error occurs during verification of pkcs7 signatures in gnutls_pkcs7_verify function.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-415",
+          "name": "CWE-415"
+        }
+      ],
+      "vendors": [
+        "GnuTLS",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://access.redhat.com/security/cve/CVE-2022-2509",
+        "https://lists.debian.org/debian-lts-announce/2022/08/msg00002.html",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/6FL27JS3VM74YEQU7PGB62USO3KSBYZX/",
+        "https://lists.gnupg.org/pipermail/gnutls-help/2022-July/004746.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01988,
+        "percentile": 0.80232,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -353,5 +769,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:32:58.614467+00:00"
+  "updated_at": "2026-10-15T10:23:07.166732+00:00"
 }

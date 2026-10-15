@@ -2,6 +2,224 @@
   "month": "2022-12",
   "cves": [
     {
+      "id": "CVE-2022-42898",
+      "published": "2022-12-25T06:15:09.427",
+      "lastModified": "2026-10-14T19:16:52.490",
+      "vulnStatus": "Modified",
+      "description": "PAC parsing in MIT Kerberos 5 (aka krb5) before 1.19.4 and 1.20.x before 1.20.1 has integer overflows that may lead to remote code execution (in KDC, kadmind, or a GSS or Kerberos application server) on 32-bit platforms (which have a resultant heap-based buffer overflow), and cause a denial of service on other platforms. This occurs in krb5_pac_parse in lib/krb5/krb/pac.c. Heimdal before 7.7.1 has \"a similar bug.\"",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://bugzilla.samba.org/show_bug.cgi?id=15203",
+        "https://github.com/heimdal/heimdal/security/advisories/GHSA-64mq-fvfj-5x3c",
+        "https://github.com/krb5/krb5/commit/ea92d2f0fcceb54a70910fa32e9a0d7a5afc3583",
+        "https://security.gentoo.org/glsa/202309-06"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.06473,
+        "percentile": 0.93647,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-43551",
+      "published": "2022-12-23T15:15:15.777",
+      "lastModified": "2026-10-14T19:16:53.227",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability exists in curl <7.87.0 HSTS check that could be bypassed to trick it to keep using HTTP. Using its HSTS support, curl can be instructed to use HTTPS instead of using an insecure clear-text HTTP step even when HTTP is provided in the URL. However, the HSTS mechanism could be bypassed if the host name in the given URL first uses IDN characters that get replaced to ASCII counterparts as part of the IDN conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP) instead",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-319",
+          "name": "CWE-319"
+        }
+      ],
+      "vendors": [
+        "https://github.com/curl/curl",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://hackerone.com/reports/1755083",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/TVWZW5CNSJ7UYAF2BGSYAWAEXDJYUBHA/",
+        "https://security.gentoo.org/glsa/202310-12",
+        "https://security.netapp.com/advisory/ntap-20230427-0007/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.1654,
+        "percentile": 0.96965,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-47520",
+      "published": "2022-12-18T06:15:09.473",
+      "lastModified": "2026-10-14T19:16:55.570",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in the Linux kernel before 6.0.11. Missing offset validation in drivers/net/wireless/microchip/wilc1000/hif.c in the WILC1000 wireless driver can trigger an out-of-bounds read when parsing a Robust Security Network (RSN) information element from a Netlink packet.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://github.com/torvalds/linux/commit/cd21d99e595ec1d8721e1058dcdd4f1f7de1d793",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00031.html",
+        "https://lore.kernel.org/r/20221123153543.8568-2-philipturnbull%40github.com",
+        "https://security.netapp.com/advisory/ntap-20230113-0007/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00318,
+        "percentile": 0.23033,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-47518",
+      "published": "2022-12-18T06:15:09.300",
+      "lastModified": "2026-10-14T19:16:55.347",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in the Linux kernel before 6.0.11. Missing validation of the number of channels in drivers/net/wireless/microchip/wilc1000/cfg80211.c in the WILC1000 wireless driver can trigger a heap-based buffer overflow when copying the list of operating channels from Wi-Fi management frames.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://github.com/torvalds/linux/commit/0cdfa9e6f0915e3d243e2393bfa8a22e12d553b0",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00031.html",
+        "https://lore.kernel.org/r/20221123153543.8568-5-philipturnbull%40github.com",
+        "https://security.netapp.com/advisory/ntap-20230113-0007/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00332,
+        "percentile": 0.24687,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-20566",
+      "published": "2022-12-16T16:15:19.433",
+      "lastModified": "2026-10-14T16:17:22.733",
+      "vulnStatus": "Modified",
+      "description": "In l2cap_chan_put of l2cap_core, there is a possible use after free due to improper locking. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android kernelAndroid ID: A-165329981References: Upstream kernel",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        },
+        {
+          "id": "CWE-667",
+          "name": "CWE-667"
+        }
+      ],
+      "vendors": [
+        "Android",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://source.android.com/security/bulletin/pixel/2022-12-01",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00204,
+        "percentile": 0.09685,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2022-37912",
       "published": "2022-12-12T13:15:13.440",
       "lastModified": "2026-10-08T17:14:45.907",
@@ -29,8 +247,8 @@
       },
       "epss": {
         "score": 0.01645,
-        "percentile": 0.75844,
-        "date": "2026-10-13"
+        "percentile": 0.75979,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -72,8 +290,8 @@
       },
       "epss": {
         "score": 0.00615,
-        "percentile": 0.48057,
-        "date": "2026-10-13"
+        "percentile": 0.4823,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -111,8 +329,8 @@
       },
       "epss": {
         "score": 0.00846,
-        "percentile": 0.56962,
-        "date": "2026-10-13"
+        "percentile": 0.5715,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -154,8 +372,8 @@
       },
       "epss": {
         "score": 0.00823,
-        "percentile": 0.5621,
-        "date": "2026-10-13"
+        "percentile": 0.56393,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -197,8 +415,8 @@
       },
       "epss": {
         "score": 0.00761,
-        "percentile": 0.54136,
-        "date": "2026-10-13"
+        "percentile": 0.5431,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -236,8 +454,8 @@
       },
       "epss": {
         "score": 0.00776,
-        "percentile": 0.54627,
-        "date": "2026-10-13"
+        "percentile": 0.54807,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -275,8 +493,8 @@
       },
       "epss": {
         "score": 0.01763,
-        "percentile": 0.77457,
-        "date": "2026-10-13"
+        "percentile": 0.77585,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -314,8 +532,8 @@
       },
       "epss": {
         "score": 0.01763,
-        "percentile": 0.77457,
-        "date": "2026-10-13"
+        "percentile": 0.77585,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -353,8 +571,8 @@
       },
       "epss": {
         "score": 0.01763,
-        "percentile": 0.77456,
-        "date": "2026-10-13"
+        "percentile": 0.77586,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -392,8 +610,8 @@
       },
       "epss": {
         "score": 0.01763,
-        "percentile": 0.77457,
-        "date": "2026-10-13"
+        "percentile": 0.77586,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -431,8 +649,8 @@
       },
       "epss": {
         "score": 0.01486,
-        "percentile": 0.73368,
-        "date": "2026-10-13"
+        "percentile": 0.73515,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -470,8 +688,52 @@
       },
       "epss": {
         "score": 0.0179,
-        "percentile": 0.77808,
-        "date": "2026-10-13"
+        "percentile": 0.77934,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-46908",
+      "published": "2022-12-12T06:15:10.793",
+      "lastModified": "2026-10-14T19:16:55.133",
+      "vulnStatus": "Modified",
+      "description": "SQLite through 3.40.0, when relying on --safe for execution of an untrusted CLI script, does not properly implement the azProhibitedFunctions protection mechanism, and instead allows UDF functions such as WRITEFILE.",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-Other",
+          "name": "Other / Not Yet Mapped"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://news.ycombinator.com/item?id=33948588",
+        "https://security.gentoo.org/glsa/202311-03",
+        "https://security.netapp.com/advisory/ntap-20230203-0005/",
+        "https://sqlite.org/forum/forumpost/07beac8056151b2f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00444,
+        "percentile": 0.37018,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -509,8 +771,57 @@
       },
       "epss": {
         "score": 0.01662,
-        "percentile": 0.76093,
-        "date": "2026-10-13"
+        "percentile": 0.76225,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-32221",
+      "published": "2022-12-05T22:15:10.343",
+      "lastModified": "2026-10-14T17:17:39.893",
+      "vulnStatus": "Modified",
+      "description": "When doing HTTP(S) transfers, libcurl might erroneously use the read callback (`CURLOPT_READFUNCTION`) to ask for data to send, even when the `CURLOPT_POSTFIELDS` option has been set, if the same handle previously was used to issue a `PUT` request which used that callback. This flaw may surprise the application and cause it to misbehave and either send off the wrong data or use memory after free or similar in the subsequent `POST` request. The problem exists in the logic for a reused handle when",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-200",
+          "name": "Exposure of Sensitive Information"
+        },
+        {
+          "id": "CWE-668",
+          "name": "Exposure of Resource to Wrong Sphere"
+        }
+      ],
+      "vendors": [
+        "https://github.com/curl/curl",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Jan/19",
+        "http://seclists.org/fulldisclosure/2023/Jan/20",
+        "http://www.openwall.com/lists/oss-security/2023/05/17/4",
+        "https://hackerone.com/reports/1704017"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04676,
+        "percentile": 0.91628,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -521,5 +832,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:32:58.615242+00:00"
+  "updated_at": "2026-10-15T10:23:07.170288+00:00"
 }

@@ -2,10 +2,145 @@
   "month": "2023-07",
   "cves": [
     {
+      "id": "CVE-2023-4004",
+      "published": "2023-07-31T17:15:10.203",
+      "lastModified": "2026-10-14T22:17:16.357",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free flaw was found in the Linux kernel's netfilter in the way a user triggers the nft_pipapo_remove function with the element, without a NFT_SET_EXT_KEY_END. This issue could allow a local user to crash the system or potentially escalate their privileges on the system.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 8.2 Advanced Update Support",
+        "Red Hat Red Hat Enterprise Linux 8.2 Telecommunications Update Service",
+        "Red Hat Red Hat Enterprise Linux 8.2 Update Services for SAP Solutions",
+        "Red Hat Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHSA-2023:4961",
+        "https://access.redhat.com/errata/RHSA-2023:4962",
+        "https://access.redhat.com/errata/RHSA-2023:4967",
+        "https://access.redhat.com/errata/RHSA-2023:5069"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00917,
+        "percentile": 0.59361,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-3611",
+      "published": "2023-07-21T21:15:11.897",
+      "lastModified": "2026-10-14T22:17:15.320",
+      "vulnStatus": "Modified",
+      "description": "An out-of-bounds write vulnerability in the Linux kernel's net/sched: sch_qfq component can be exploited to achieve local privilege escalation. The qfq_change_agg() function in net/sched/sch_qfq.c allows an out-of-bounds write because lmax is updated according to packet sizes without bounds checks. We recommend upgrading past commit 3e337087c3b5805fe0b8a46ba622a962880b5d64.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "linux kernel",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e337087c3b5805fe0b8a46ba622a962880b5d64",
+        "https://kernel.dance/3e337087c3b5805fe0b8a46ba622a962880b5d64",
+        "https://lists.debian.org/debian-lts-announce/2023/10/msg00027.html",
+        "https://lists.debian.org/debian-lts-announce/2024/01/msg00004.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00273,
+        "percentile": 0.18326,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-3610",
+      "published": "2023-07-21T21:15:11.820",
+      "lastModified": "2026-10-14T21:17:17.390",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free vulnerability in the Linux kernel's netfilter: nf_tables component can be exploited to achieve local privilege escalation. Flaw in the error handling of bound chains causes a use-after-free in the abort path of NFT_MSG_NEWRULE. The vulnerability requires CAP_NET_ADMIN to be triggered. We recommend upgrading past commit 4bedf9eee016286c835e3d8fa981ddece5338795.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=4bedf9eee016286c835e3d8fa981ddece5338795",
+        "https://kernel.dance/4bedf9eee016286c835e3d8fa981ddece5338795",
+        "https://lists.debian.org/debian-lts-announce/2023/08/msg00001.html",
+        "https://security.netapp.com/advisory/ntap-20230818-0005/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00254,
+        "percentile": 0.15812,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2023-3609",
       "published": "2023-07-21T21:15:11.743",
-      "lastModified": "2026-09-11T16:16:30.007",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-10-14T21:17:17.157",
+      "vulnStatus": "Modified",
       "description": "A use-after-free vulnerability in the Linux kernel's net/sched: cls_u32 component can be exploited to achieve local privilege escalation. If tcf_change_indev() fails, u32_set_parms() will immediately return an error after incrementing or decrementing the reference counter in tcf_bind_filter(). If an attacker can control the reference counter and set it to zero, they can cause the reference to be freed, leading to a use-after-free vulnerability. We recommend upgrading past commit 04c55383fa568935",
       "cvss": {
         "score": 7.8,
@@ -19,7 +154,11 @@
         }
       ],
       "vendors": [
-        "Linux Kernel"
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
       ],
       "references": [
         "http://packetstormsecurity.com/files/175072/Kernel-Live-Patch-Security-Notice-LSN-0098-1.html",
@@ -32,8 +171,101 @@
       },
       "epss": {
         "score": 0.00454,
-        "percentile": 0.37652,
-        "date": "2026-10-13"
+        "percentile": 0.37831,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-38408",
+      "published": "2023-07-20T03:15:10.170",
+      "lastModified": "2026-10-15T00:16:34.667",
+      "vulnStatus": "Modified",
+      "description": "The PKCS#11 feature in ssh-agent in OpenSSH before 9.3p2 has an insufficiently trustworthy search path, leading to remote code execution if an agent is forwarded to an attacker-controlled system. (Code in /usr/lib is not necessarily safe for loading into ssh-agent.) NOTE: this issue exists because of an incomplete fix for CVE-2016-10009.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-428",
+          "name": "CWE-428"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/173661/OpenSSH-Forwarded-SSH-Agent-Remote-Code-Execution.html",
+        "http://www.openwall.com/lists/oss-security/2023/07/20/1",
+        "http://www.openwall.com/lists/oss-security/2023/07/20/2",
+        "http://www.openwall.com/lists/oss-security/2023/09/22/11"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.797,
+        "percentile": 0.99604,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-35945",
+      "published": "2023-07-13T21:15:08.880",
+      "lastModified": "2026-10-15T00:16:33.813",
+      "vulnStatus": "Modified",
+      "description": "Envoy is a cloud-native high-performance edge/middle/service proxy. Envoy\u2019s HTTP/2 codec may leak a header map and bookkeeping structures upon receiving `RST_STREAM` immediately followed by the `GOAWAY` frames from an upstream server. In nghttp2, cleanup of pending requests due to receipt of the `GOAWAY` frame skips de-allocation of the bookkeeping structure and pending compressed header. The error return [code path] is taken if connection is already marked for not sending more requests due to `",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-400",
+          "name": "Uncontrolled Resource Consumption"
+        },
+        {
+          "id": "CWE-459",
+          "name": "CWE-459"
+        }
+      ],
+      "vendors": [
+        "envoyproxy envoy",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://github.com/envoyproxy/envoy/security/advisories/GHSA-jfxv-29pc-x22r",
+        "https://github.com/nghttp2/nghttp2/blob/e7f59406556c80904b81b593d38508591bb7523a/lib/nghttp2_session.c#L3346",
+        "https://cert-portal.siemens.com/productcert/html/ssa-398330.html",
+        "https://cert-portal.siemens.com/productcert/html/ssa-943925.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01288,
+        "percentile": 0.69634,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -79,8 +311,54 @@
       },
       "epss": {
         "score": 0.15522,
-        "percentile": 0.96746,
-        "date": "2026-10-13"
+        "percentile": 0.96764,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-35001",
+      "published": "2023-07-05T19:15:10.147",
+      "lastModified": "2026-10-15T00:16:33.403",
+      "vulnStatus": "Modified",
+      "description": "Linux Kernel nftables Out-Of-Bounds Read/Write Vulnerability; nft_byteorder poorly handled vm register contents when CAP_NET_ADMIN is in any user or network namespace",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux Kernel",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/173757/Kernel-Live-Patch-Security-Notice-LSN-0096-1.html",
+        "http://packetstormsecurity.com/files/174577/Kernel-Live-Patch-Security-Notice-LSN-0097-1.html",
+        "http://www.openwall.com/lists/oss-security/2023/07/05/3",
+        "https://lists.debian.org/debian-lts-announce/2023/08/msg00001.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01496,
+        "percentile": 0.73668,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -121,8 +399,8 @@
       },
       "epss": {
         "score": 0.03906,
-        "percentile": 0.90062,
-        "date": "2026-10-13"
+        "percentile": 0.90118,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -133,5 +411,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.958966+00:00"
+  "updated_at": "2026-10-15T10:23:07.175703+00:00"
 }

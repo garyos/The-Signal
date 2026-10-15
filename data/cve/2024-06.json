@@ -2,6 +2,684 @@
   "month": "2024-06",
   "cves": [
     {
+      "id": "CVE-2024-5535",
+      "published": "2024-06-27T11:15:24.447",
+      "lastModified": "2026-10-15T01:19:17.867",
+      "vulnStatus": "Deferred",
+      "description": "Issue summary: Calling the OpenSSL API function SSL_select_next_proto with an empty supported client protocols buffer may cause a crash or memory contents to be sent to the peer. Impact summary: A buffer overread can have a range of potential consequences such as unexpected application beahviour or a crash. In particular this issue could result in up to 255 bytes of arbitrary private data from memory being sent to the peer leading to a loss of confidentiality. However, only applications that dir",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "OpenSSL OpenSSL",
+        "openssl openssl",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family"
+      ],
+      "references": [
+        "https://github.com/openssl/openssl/commit/4ada436a1946cbb24db5ab4ca082b69c1bc10f37",
+        "https://github.com/openssl/openssl/commit/99fb785a5f85315b95288921a321a935ea29a51e",
+        "https://github.com/openssl/openssl/commit/cf6f91f6121f4db167405db2f0de410a456f260c",
+        "https://github.com/openssl/openssl/commit/e86ac436f0bd54d4517745483e2315650fae7b2c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05582,
+        "percentile": 0.92763,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-39469",
+      "published": "2024-06-25T15:15:15.340",
+      "lastModified": "2026-10-15T01:18:33.577",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nilfs2: fix nilfs_empty_dir() misjudgment and long loop on I/O errors The error handling in nilfs_empty_dir() when a directory folio/page read fails is incorrect, as in the old ext2 implementation, and if the folio/page cannot be read or nilfs_check_folio() fails, it will falsely determine the directory as empty and corrupt the file system. In addition, since nilfs_empty_dir() does not immediately return on a failed folio/page r",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/11a2edb70356a2202dcb7c9c189c8356ab4752cd",
+        "https://git.kernel.org/stable/c/129dcd3e7d036218db3f59c82d82004b9539ed82",
+        "https://git.kernel.org/stable/c/2ac8a2fe22bdde9eecce2a42cf5cab79333fb428",
+        "https://git.kernel.org/stable/c/405b71f1251e5ae865f53bd27c45114e6c83bee3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00245,
+        "percentile": 0.14595,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-34027",
+      "published": "2024-06-24T14:15:11.887",
+      "lastModified": "2026-10-15T01:17:45.480",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: compress: fix to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock It needs to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock to avoid racing with checkpoint, otherwise, filesystem metadata including blkaddr in dnode, inode fields and .total_valid_block_count may be corrupted after SPO case.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-770",
+          "name": "Allocation of Resources Without Limits"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0a4ed2d97cb6d044196cc3e726b6699222b41019",
+        "https://git.kernel.org/stable/c/329edb7c9e3b6ca27e6ca67ab1cdda1740fb3a2b",
+        "https://git.kernel.org/stable/c/5d47d63883735718825ca2efc4fca6915469774f",
+        "https://git.kernel.org/stable/c/69136304fd144144a4828c7b7b149d0f80321ba4"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00237,
+        "percentile": 0.13635,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38659",
+      "published": "2024-06-21T11:15:12.480",
+      "lastModified": "2026-10-15T01:18:32.510",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: enic: Validate length of nl attributes in enic_set_vf_port enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE is of length PORT_PROFILE_MAX and that the nl attributes IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX. These attributes are validated (in the function do_setlink in rtnetlink.c) using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE as NLA_STRING, IFLA_PORT_I",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1284",
+          "name": "CWE-1284"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/25571a12fbc8a1283bd8380d461267956fd426f7",
+        "https://git.kernel.org/stable/c/2b649d7e0cb42a660f0260ef25fd55fdc9c6c600",
+        "https://git.kernel.org/stable/c/3c0d36972edbe56fcf98899622d9b90ac9965227",
+        "https://git.kernel.org/stable/c/7077c22f84f41974a711604a42fd0e0684232ee5"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00245,
+        "percentile": 0.1456,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38635",
+      "published": "2024-06-21T11:15:12.240",
+      "lastModified": "2026-10-15T01:18:32.300",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: soundwire: cadence: fix invalid PDI offset For some reason, we add an offset to the PDI, presumably to skip the PDI0 and PDI1 which are reserved for BPT. This code is however completely wrong and leads to an out-of-bounds access. We were just lucky so far since we used only a couple of PDIs and remained within the PDI array bounds. A Fixes: tag is not provided since there are no known platforms where the out-of-bounds would be a",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/002364b2d594a9afc0385c09e00994c510b1d089",
+        "https://git.kernel.org/stable/c/2ebcaa0e5db9b6044bb487ae1cf41bc601761567",
+        "https://git.kernel.org/stable/c/4e99103f757cdf636c6ee860994a19a346a11785",
+        "https://git.kernel.org/stable/c/7eeef1e935d23db5265233d92395bd5c648a4021"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00235,
+        "percentile": 0.13324,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38621",
+      "published": "2024-06-21T11:15:11.103",
+      "lastModified": "2026-10-15T01:18:32.100",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: media: stk1160: fix bounds checking in stk1160_copy_video() The subtract in this condition is reversed. The ->length is the length of the buffer. The ->bytesused is how many bytes we have copied thus far. When the condition is reversed that means the result of the subtraction is always negative but since it's unsigned then the result is a very high positive value. That means the overflow check is never true. Additionally, the ->",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/7532bcec0797adfa08791301c3bcae14141db3bd",
+        "https://git.kernel.org/stable/c/a08492832cc4cacc24e0612f483c86ca899b9261",
+        "https://git.kernel.org/stable/c/a16775828aaed1c54ff4e6fe83e8e4d5c6a50cb7",
+        "https://git.kernel.org/stable/c/b504518a397059e1d55c521ba0ea2b545a6c4b52"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00271,
+        "percentile": 0.18001,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38381",
+      "published": "2024-06-21T11:15:10.757",
+      "lastModified": "2026-10-15T01:18:27.710",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfc: nci: Fix uninit-value in nci_rx_work syzbot reported the following uninit-value access issue [1] nci_rx_work() parses received packet from ndev->rx_q. It should be validated header size, payload size and total packet size before processing the packet. If an invalid packet is detected, it should be silently discarded.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-908",
+          "name": "CWE-908"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/017ff397624930fd7ac7f1761f3c9d6a7100f68c",
+        "https://git.kernel.org/stable/c/406cfac9debd4a6d3dc5d9258ee086372a8c08b6",
+        "https://git.kernel.org/stable/c/485ded868ed62ceb2acb3a459d7843fd71472619",
+        "https://git.kernel.org/stable/c/ad4d196d2008c7f413167f0a693feb4f0439d7fe"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00378,
+        "percentile": 0.30128,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38612",
+      "published": "2024-06-19T14:15:21.060",
+      "lastModified": "2026-10-15T01:18:31.360",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ipv6: sr: fix invalid unregister error path The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL is not defined. In that case if seg6_hmac_init() fails, the genl_unregister_family() isn't called. This issue exist since commit 46738b1317e1 (\"ipv6: sr: add option to control lwtunnel support\"), and commit 5559cea2d5aa (\"ipv6: sr: fix possible use-after-free and null-ptr-deref\") replaced unregister_pernet_subsys(",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        },
+        {
+          "id": "CWE-476",
+          "name": "NULL Pointer Dereference"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "linux acrn",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00e6335329f23ac6cf3105931691674e28bc598c",
+        "https://git.kernel.org/stable/c/10610575a3ac2a702bf5c57aa931beaf847949c7",
+        "https://git.kernel.org/stable/c/160e9d2752181fcf18c662e74022d77d3164cd45",
+        "https://git.kernel.org/stable/c/1a63730fb315bb1bab97edd69ff58ad45e04bb01"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00661,
+        "percentile": 0.50459,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38599",
+      "published": "2024-06-19T14:15:19.903",
+      "lastModified": "2026-10-15T01:18:31.113",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: jffs2: prevent xattr node from overflowing the eraseblock Add a check to make sure that the requested xattr node size is no larger than the eraseblock minus the cleanmarker. Unlike the usual inode nodes, the xattr nodes aren't split into parts and spread across multiple eraseblocks, which means that a xattr node must not occupy more than one eraseblock. If the requested xattr value is too large, the xattr node can spill onto the",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2904e1d9b64f72d291095e3cbb31634f08788b11",
+        "https://git.kernel.org/stable/c/526235dffcac74c7823ed504dfac4f88d84ba5df",
+        "https://git.kernel.org/stable/c/8d431391320c5c5398ff966fb3a95e68a7def275",
+        "https://git.kernel.org/stable/c/978a12c91b38bf1a213e567f3c20e2beef215f07"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00245,
+        "percentile": 0.14653,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38587",
+      "published": "2024-06-19T14:15:18.800",
+      "lastModified": "2026-10-15T01:18:30.113",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: speakup: Fix sizeof() vs ARRAY_SIZE() bug The \"buf\" pointer is an array of u16 values. This code should be using ARRAY_SIZE() (which is 256) instead of sizeof() (which is 512), otherwise it can the still got out of bounds.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-129",
+          "name": "CWE-129"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/008ab3c53bc4f0b2f20013c8f6c204a3203d0b8b",
+        "https://git.kernel.org/stable/c/07ef95cc7a579731198c93beed281e3a79a0e586",
+        "https://git.kernel.org/stable/c/3726f75a1ccc16cd335c0ccfad1d92ee08ecba5e",
+        "https://git.kernel.org/stable/c/42f0a3f67158ed6b2908d2b9ffbf7e96d23fd358"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00788,
+        "percentile": 0.55185,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38578",
+      "published": "2024-06-19T14:15:17.870",
+      "lastModified": "2026-10-15T01:18:29.647",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ecryptfs: Fix buffer size for tag 66 packet The 'TAG 66 Packet Format' description is missing the cipher code and checksum fields that are packed into the message packet. As a result, the buffer allocated for the packet is 3 bytes too small and write_tag_66_packet() will write up to 3 bytes past the end of the buffer. Fix this by increasing the size of the allocation so the whole packet will always fit in the buffer. This fixes ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0d0f8ba042af16519f1ef7dd10463a33b21b677c",
+        "https://git.kernel.org/stable/c/12db25a54ce6bb22b0af28010fff53ef9cb3fe93",
+        "https://git.kernel.org/stable/c/1c125b9287e58f364d82174efb167414b92b11f1",
+        "https://git.kernel.org/stable/c/235b85981051cd68fc215fd32a81c6f116bfc4df"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00263,
+        "percentile": 0.16927,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38560",
+      "published": "2024-06-19T14:15:16.187",
+      "lastModified": "2026-10-15T01:18:28.987",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: bfa: Ensure the copied buf is NUL terminated Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from userspace to that buffer. Later, we use sscanf on this buffer but we don't ensure that the string is terminated inside the buffer, this can lead to OOB read when using sscanf. Fix this issue by using memdup_user_nul instead of memdup_user.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00b425ff0891283207d7bad607a2412225274d7a",
+        "https://git.kernel.org/stable/c/13d0cecb4626fae67c00c84d3c7851f6b62f7df3",
+        "https://git.kernel.org/stable/c/1708e3cf2488788cba5489e4f913d227de757baf",
+        "https://git.kernel.org/stable/c/204714e68015d6946279719fd464ecaf57240f35"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00265,
+        "percentile": 0.17132,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38552",
+      "published": "2024-06-19T14:15:15.450",
+      "lastModified": "2026-10-15T01:18:28.260",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: drm/amd/display: Fix potential index out of bounds in color transformation function Fixes index out of bounds issue in the color transformation function. The issue could occur when the index 'i' exceeds the number of transfer function points (TRANSFER_FUNC_POINTS). The fix adds a check to ensure 'i' is within bounds before accessing the transfer function points. If 'i' is out of bounds, an error message is logged and the functio",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-129",
+          "name": "CWE-129"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/04bc4d1090c343025d69149ca669a27c5b9c34a7",
+        "https://git.kernel.org/stable/c/123edbae64f4d21984359b99c6e79fcde31c6123",
+        "https://git.kernel.org/stable/c/4e8c8b37ee84b3b19c448d2b8e4c916d2f5b9c86",
+        "https://git.kernel.org/stable/c/604c506ca43fce52bb882cff9c1fdf2ec3b4029c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00297,
+        "percentile": 0.20834,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36978",
+      "published": "2024-06-19T07:15:46.437",
+      "lastModified": "2026-10-15T01:18:27.013",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: sched: sch_multiq: fix possible OOB write in multiq_tune() q->bands will be assigned to qopt->bands to execute subsequent code logic after kmalloc. So the old q->bands should not be used in kmalloc. Otherwise, an out-of-bounds write will occur.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0f208fad86631e005754606c3ec80c0d44a11882",
+        "https://git.kernel.org/stable/c/52b1aa07cda6a199cd6754d3798c7759023bc70f",
+        "https://git.kernel.org/stable/c/54c2c171c11a798fe887b3ff72922aa9d1411c1e",
+        "https://git.kernel.org/stable/c/598572c64287aee0b75bbba4e2881496878860f3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00281,
+        "percentile": 0.19221,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36974",
+      "published": "2024-06-18T20:15:13.257",
+      "lastModified": "2026-10-15T01:18:26.790",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/sched: taprio: always validate TCA_TAPRIO_ATTR_PRIOMAP If one TCA_TAPRIO_ATTR_PRIOMAP attribute has been provided, taprio_parse_mqprio_opt() must validate it, or userspace can inject arbitrary data to the kernel, the second time taprio_change() is called. First call (with valid attributes) sets dev->num_tc to a non zero value. Second call (with arbitrary mqprio attributes) returns early from taprio_parse_mqprio_opt() and bad",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0bf6cc96612bd396048f57d63f1ad454a846e39c",
+        "https://git.kernel.org/stable/c/6db4af09987cc5d5f0136bd46148b0e0460dae5b",
+        "https://git.kernel.org/stable/c/724050ae4b76e4fae05a923cb54101d792cf4404",
+        "https://git.kernel.org/stable/c/c37a27a35eadb59286c9092c49c241270c802ae2"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00284,
+        "percentile": 0.19451,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-26507",
       "published": "2024-06-10T16:15:12.353",
       "lastModified": "2026-10-09T16:17:19.750",
@@ -35,8 +713,8 @@
       },
       "epss": {
         "score": 0.00203,
-        "percentile": 0.0954,
-        "date": "2026-10-13"
+        "percentile": 0.09576,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -81,8 +759,8 @@
       },
       "epss": {
         "score": 0.00551,
-        "percentile": 0.44571,
-        "date": "2026-10-13"
+        "percentile": 0.44749,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -93,5 +771,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.961396+00:00"
+  "updated_at": "2026-10-15T10:23:07.185950+00:00"
 }

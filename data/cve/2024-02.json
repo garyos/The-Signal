@@ -2,6 +2,96 @@
   "month": "2024-02",
   "cves": [
     {
+      "id": "CVE-2023-52464",
+      "published": "2024-02-23T15:15:08.647",
+      "lastModified": "2026-10-15T01:17:14.287",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: EDAC/thunderx: Fix possible out-of-bounds string access Enabling -Wstringop-overflow globally exposes a warning for a common bug in the usage of strncat(): drivers/edac/thunderx_edac.c: In function 'thunderx_ocx_com_threaded_isr': drivers/edac/thunderx_edac.c:1136:17: error: 'strncat' specified bound 1024 equals destination size [-Werror=stringop-overflow=] 1136 | strncat(msg, other, OCX_MESSAGE_SIZE); | ^~~~~~~~~~~~~~~~~~~~~~~~",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/426fae93c01dffa379225eb2bd4d3cdc42c6eec5",
+        "https://git.kernel.org/stable/c/475c58e1a471e9b873e3e39958c64a2d278275c8",
+        "https://git.kernel.org/stable/c/5da3b6e7196f0b4f3728e4e25eb20233a9ddfaf6",
+        "https://git.kernel.org/stable/c/6aa7865ba7ff7f0ede0035180fb3b9400ceb405a"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00266,
+        "percentile": 0.17192,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-52444",
+      "published": "2024-02-22T17:15:08.430",
+      "lastModified": "2026-10-15T01:17:13.570",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: fix to avoid dirent corruption As Al reported in link[1]: f2fs_rename() ... if (old_dir != new_dir && !whiteout) f2fs_set_link(old_inode, old_dir_entry, old_dir_page, new_dir); else f2fs_put_page(old_dir_page, 0); You want correct inumber in the \"..\" link. And cross-directory rename does move the source to new parent, even if you'd been asked to leave a whiteout in the old place. [1] https://lore.kernel.org/all/20231017055",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/02160112e6d45c2610b049df6eb693d7a2e57b46",
+        "https://git.kernel.org/stable/c/2fb4867f4405aea8c0519d7d188207f232a57862",
+        "https://git.kernel.org/stable/c/53edb549565f55ccd0bdf43be3d66ce4c2d48b28",
+        "https://git.kernel.org/stable/c/5624a3c1b1ebc8991318e1cce2aa719542991024"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00245,
+        "percentile": 0.14592,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-1635",
       "published": "2024-02-19T22:15:48.647",
       "lastModified": "2026-10-07T22:17:01.100",
@@ -36,8 +126,8 @@
       },
       "epss": {
         "score": 0.04572,
-        "percentile": 0.91422,
-        "date": "2026-10-13"
+        "percentile": 0.9147,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -50,7 +140,7 @@
     {
       "id": "CVE-2023-50781",
       "published": "2024-02-05T21:15:10.970",
-      "lastModified": "2026-09-16T20:16:07.447",
+      "lastModified": "2026-10-15T01:17:12.160",
       "vulnStatus": "Analyzed",
       "description": "A flaw was found in m2crypto. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",
       "cvss": {
@@ -81,8 +171,97 @@
       },
       "epss": {
         "score": 0.01124,
-        "percentile": 0.65414,
-        "date": "2026-10-13"
+        "percentile": 0.65597,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-52425",
+      "published": "2024-02-04T20:15:46.063",
+      "lastModified": "2026-10-15T01:17:13.053",
+      "vulnStatus": "Modified",
+      "description": "libexpat through 2.5.0 allows a denial of service (resource consumption) because many full reparsings are required in the case of a large token for which multiple buffer fills are needed.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-400",
+          "name": "Uncontrolled Resource Consumption"
+        }
+      ],
+      "vendors": [
+        "libexpat_project libexpat",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SINEC NMS",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://www.openwall.com/lists/oss-security/2024/03/20/5",
+        "https://github.com/libexpat/libexpat/pull/789",
+        "https://lists.debian.org/debian-lts-announce/2024/04/msg00006.html",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/PNRIHC7DVVRAIWFRGV23Y6UZXFBXSQDB/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01815,
+        "percentile": 0.78247,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-25062",
+      "published": "2024-02-04T16:15:45.120",
+      "lastModified": "2026-10-15T01:17:20.350",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in libxml2 before 2.11.7 and 2.12.x before 2.12.5. When using the XML Reader interface with DTD validation and XInclude expansion enabled, processing crafted XML documents can lead to an xmlValidatePopElement use-after-free.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SINEC NMS"
+      ],
+      "references": [
+        "https://gitlab.gnome.org/GNOME/libxml2/-/issues/604",
+        "https://gitlab.gnome.org/GNOME/libxml2/-/tags",
+        "https://lists.debian.org/debian-lts-announce/2025/02/msg00028.html",
+        "https://security.netapp.com/advisory/ntap-20241018-0009/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01224,
+        "percentile": 0.68203,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -93,5 +272,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.960484+00:00"
+  "updated_at": "2026-10-15T10:23:07.181178+00:00"
 }

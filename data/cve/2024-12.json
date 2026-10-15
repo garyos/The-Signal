@@ -36,8 +36,464 @@
       },
       "epss": {
         "score": 0.00576,
-        "percentile": 0.46008,
-        "date": "2026-10-13"
+        "percentile": 0.46186,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56672",
+      "published": "2024-12-27T15:15:27.107",
+      "lastModified": "2026-10-15T02:17:09.747",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: blk-cgroup: Fix UAF in blkcg_unpin_online() blkcg_unpin_online() walks up the blkcg hierarchy putting the online pin. To walk up, it uses blkcg_parent(blkcg) but it was calling that after blkcg_destroy_blkgs(blkcg) which could free the blkcg, leading to the following UAF: ================================================================== BUG: KASAN: slab-use-after-free in blkcg_unpin_online+0x15a/0x270 Read of size 8 at addr fff",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/29d1e06560f0f6179062ac638b4064deb637d1ad",
+        "https://git.kernel.org/stable/c/5baa28569c924d9a90d036c2aaab79f791fedaf8",
+        "https://git.kernel.org/stable/c/64afc6fe24c9896c0153e5a199bcea241ecb0d5c",
+        "https://git.kernel.org/stable/c/83f5a87ee8caa76a917f59912a74d6811f773c67"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00272,
+        "percentile": 0.18219,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56650",
+      "published": "2024-12-27T15:15:24.783",
+      "lastModified": "2026-10-15T02:17:08.870",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: x_tables: fix LED ID check in led_tg_check() Syzbot has reported the following BUG detected by KASAN: BUG: KASAN: slab-out-of-bounds in strlen+0x58/0x70 Read of size 1 at addr ffff8881022da0c8 by task repro/5879 ... Call Trace: <TASK> dump_stack_lvl+0x241/0x360 ? __pfx_dump_stack_lvl+0x10/0x10 ? __pfx__printk+0x10/0x10 ? _printk+0xd5/0x120 ? __virt_addr_valid+0x183/0x530 ? __virt_addr_valid+0x183/0x530 print_report+0x",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/04317f4eb2aad312ad85c1a17ad81fe75f1f9bc7",
+        "https://git.kernel.org/stable/c/147a42bb02de8735cb08476be6d0917987d022c2",
+        "https://git.kernel.org/stable/c/36a9d94dac28beef6b8abba46ba8874320d3e800",
+        "https://git.kernel.org/stable/c/a9bcc0b70d9baf3ff005874489a0dc9d023b54c3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00263,
+        "percentile": 0.16835,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56631",
+      "published": "2024-12-27T15:15:22.690",
+      "lastModified": "2026-10-15T01:19:17.593",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: scsi: sg: Fix slab-use-after-free read in sg_release() Fix a use-after-free bug in sg_release(), detected by syzbot with KASAN: BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30 kernel/locking/lockdep.c:5838 __mutex_unlock_slowpath+0xe2/0x750 kernel/locking/mutex.c:912 sg_release+0x1f4/0x2e0 drivers/scsi/sg.c:407 In sg_release(), the function kref_put(&sfp->f_ref, sg_remove_sfp) is called before releasing the open_rel_",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/198b89dd5a595ee3f96e5ce5c448b0484cd0e53c",
+        "https://git.kernel.org/stable/c/1f5e2f1ca5875728fcf62bc1a054707444ab4960",
+        "https://git.kernel.org/stable/c/275b8347e21ab8193e93223a8394a806e4ba8918",
+        "https://git.kernel.org/stable/c/285ce1f89f8d414e7eecab5ef5118cd512596318"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00288,
+        "percentile": 0.19911,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56606",
+      "published": "2024-12-27T15:15:20.087",
+      "lastModified": "2026-10-15T01:19:17.313",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: af_packet: avoid erroring out after sock_init_data() in packet_create() After sock_init_data() the allocated sk object is attached to the provided sock object. On error, packet_create() frees the sk object leaving the dangling pointer in the sock object on return. Some other code may try to use this pointer and cause use-after-free.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/132e615bb1d7cdec2d3cfbdec2efa630e923fd21",
+        "https://git.kernel.org/stable/c/157f08db94123e2ba56877dd0ac88908b13a5dd0",
+        "https://git.kernel.org/stable/c/1dc1e1db927056cb323296e2294a855cd003dfe7",
+        "https://git.kernel.org/stable/c/46f2a11cb82b657fd15bab1c47821b635e03838b"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00243,
+        "percentile": 0.14429,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56601",
+      "published": "2024-12-27T15:15:19.527",
+      "lastModified": "2026-10-15T01:19:17.067",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: inet: do not leave a dangling sk pointer in inet_create() sock_init_data() attaches the allocated sk object to the provided sock object. If inet_create() fails later, the sk object is freed, but the sock object retains the dangling pointer, which may create use-after-free later. Clear the sk pointer in the sock object on error.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/25447c6aaa7235f155292b0c58a067347e8ae891",
+        "https://git.kernel.org/stable/c/2bc34d8c8898ae9fddf4612501aabb22d76c2b2c",
+        "https://git.kernel.org/stable/c/3e8258070b0f2aba66b3ef18883de229674fb288",
+        "https://git.kernel.org/stable/c/691d6d816f93b2a1008c14178399061466e674ef"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00243,
+        "percentile": 0.14428,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56600",
+      "published": "2024-12-27T15:15:19.410",
+      "lastModified": "2026-10-15T01:19:16.823",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: inet6: do not leave a dangling sk pointer in inet6_create() sock_init_data() attaches the allocated sk pointer to the provided sock object. If inet6_create() fails later, the sk object is released, but the sock object retains the dangling sk pointer, which may cause use-after-free later. Clear the sock sk pointer on error.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/276a473c956fb55a6f3affa9ff232e10fffa7b43",
+        "https://git.kernel.org/stable/c/35360255ca30776dee34d9fa764cffa24d0a5f65",
+        "https://git.kernel.org/stable/c/706b07b7b37f886423846cb38919132090bc40da",
+        "https://git.kernel.org/stable/c/79e16a0d339532ea832d85798eb036fc4f9e0cea"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00243,
+        "percentile": 0.14428,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56570",
+      "published": "2024-12-27T15:15:15.963",
+      "lastModified": "2026-10-15T01:19:16.660",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ovl: Filter invalid inodes with missing lookup function Add a check to the ovl_dentry_weird() function to prevent the processing of directory inodes that lack the lookup function. This is important because such inodes can cause errors in overlayfs when passed to the lowerstack.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/065bf5dd21639f80e68450de16bda829784dbb8c",
+        "https://git.kernel.org/stable/c/5f86e79c0b2287ffdabe6c1b305a36c4e0f40fe3",
+        "https://git.kernel.org/stable/c/72014e7745cc8250bb8f27bd78694dfd3f1b5773",
+        "https://git.kernel.org/stable/c/749eac5a6687ec99116e0691d0d71225254654e3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00237,
+        "percentile": 0.13671,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53170",
+      "published": "2024-12-27T14:15:24.183",
+      "lastModified": "2026-10-15T01:19:15.403",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: block: fix uaf for flush rq while iterating tags blk_mq_clear_flush_rq_mapping() is not called during scsi probe, by checking blk_queue_init_done(). However, QUEUE_FLAG_INIT_DONE is cleared in del_gendisk by commit aec89dc5d421 (\"block: keep q_usage_counter in atomic mode after del_gendisk\"), hence for disk like scsi, following blk_mq_destroy_queue() will not clear flush rq from tags->rqs[] as well, cause following uaf that is f",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1364a29b71c7837770f1902c49e7a6e234d72c92",
+        "https://git.kernel.org/stable/c/1921fe7d2836f8be1d321cf430d17e0d4e05301b",
+        "https://git.kernel.org/stable/c/3802f73bd80766d70f319658f334754164075bc3",
+        "https://git.kernel.org/stable/c/61092568f2a9acb0e6e186f03f2e0649a4e86d09"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0024,
+        "percentile": 0.14049,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53166",
+      "published": "2024-12-27T14:15:23.703",
+      "lastModified": "2026-10-15T01:19:15.150",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: block, bfq: fix bfqq uaf in bfq_limit_depth() Set new allocated bfqq to bic or remove freed bfqq from bic are both protected by bfqd->lock, however bfq_limit_depth() is deferencing bfqq from bic without the lock, this can lead to UAF if the io_context is shared by multiple tasks. For example, test bfq with io_uring can trigger following UAF in v6.6: ================================================================== BUG: KASAN: s",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/01a853faaeaf3379ccf358ade582b1d28752126e",
+        "https://git.kernel.org/stable/c/906cdbdd3b018ff69cc830173bce277a847d4fdc",
+        "https://git.kernel.org/stable/c/ada4ca5fd5a9d5212f28164d49a4885951c979c9",
+        "https://git.kernel.org/stable/c/dcaa738afde55085ac6056252e319479cf23cde2"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00259,
+        "percentile": 0.16379,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53165",
+      "published": "2024-12-27T14:15:23.583",
+      "lastModified": "2026-10-15T01:19:14.897",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: sh: intc: Fix use-after-free bug in register_intc_controller() In the error handling for this function, d is freed without ever removing it from intc_list which would lead to a use after free. To fix this, let's only add it to the list after everything has succeeded.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens RUGGEDCOM RST2428P"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/3c7c806b3eafd94ae0f77305a174d63b69ec187c",
+        "https://git.kernel.org/stable/c/588bdec1ff8b81517dbae0ae51c9df52c0b952d3",
+        "https://git.kernel.org/stable/c/63e72e551942642c48456a4134975136cdcb9b3c",
+        "https://git.kernel.org/stable/c/6ba6e19912570b2ad68298be0be1dc779014a303"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00259,
+        "percentile": 0.16371,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -75,8 +531,8 @@
       },
       "epss": {
         "score": 0.00267,
-        "percentile": 0.17485,
-        "date": "2026-10-13"
+        "percentile": 0.1756,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -122,8 +578,8 @@
       },
       "epss": {
         "score": 0.00168,
-        "percentile": 0.05683,
-        "date": "2026-10-13"
+        "percentile": 0.05722,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -165,8 +621,8 @@
       },
       "epss": {
         "score": 0.00179,
-        "percentile": 0.069,
-        "date": "2026-10-13"
+        "percentile": 0.0692,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -208,8 +664,8 @@
       },
       "epss": {
         "score": 0.00217,
-        "percentile": 0.11238,
-        "date": "2026-10-13"
+        "percentile": 0.11275,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -220,5 +676,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.962811+00:00"
+  "updated_at": "2026-10-15T10:23:07.192017+00:00"
 }

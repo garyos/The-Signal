@@ -2,6 +2,52 @@
   "month": "2024-08",
   "cves": [
     {
+      "id": "CVE-2024-41996",
+      "published": "2024-08-26T06:15:04.603",
+      "lastModified": "2026-10-15T01:18:41.927",
+      "vulnStatus": "Deferred",
+      "description": "Validating the order of the public keys in the Diffie-Hellman Key Agreement Protocol, when an approved safe prime is used, allows remote attackers (from the client side) to trigger unnecessarily expensive server-side DHE modular-exponentiation calculations. The client may cause asymmetric resource consumption. The basic attack scenario is that the client must claim that it can only communicate with DHE, and the server must be configured to allow DHE and validate the order of the public key.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-295",
+          "name": "Improper Certificate Validation"
+        }
+      ],
+      "vendors": [
+        "diffie-hellman_key_exchange_project diffie-hellman_key_exchange",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCH328",
+        "Siemens SCALANCE XCM324"
+      ],
+      "references": [
+        "https://dheatattack.gitlab.io/details/",
+        "https://dheatattack.gitlab.io/faq/",
+        "https://gist.github.com/c0r0n3r/abccc14d4d96c0442f3a77fa5ca255d1",
+        "https://cert-portal.siemens.com/productcert/html/ssa-089022.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01083,
+        "percentile": 0.64496,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-40766",
       "published": "2024-08-23T07:15:03.643",
       "lastModified": "2026-09-21T21:17:02.403",
@@ -37,8 +83,8 @@
       },
       "epss": {
         "score": 0.18379,
-        "percentile": 0.97176,
-        "date": "2026-10-13"
+        "percentile": 0.97191,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -77,8 +123,8 @@
       },
       "epss": {
         "score": 0.00519,
-        "percentile": 0.42512,
-        "date": "2026-10-13"
+        "percentile": 0.42691,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -119,8 +165,8 @@
       },
       "epss": {
         "score": 0.00768,
-        "percentile": 0.54373,
-        "date": "2026-10-13"
+        "percentile": 0.54552,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -169,8 +215,226 @@
       },
       "epss": {
         "score": 0.02644,
-        "percentile": 0.85227,
-        "date": "2026-10-13"
+        "percentile": 0.8531,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-43882",
+      "published": "2024-08-21T01:15:12.340",
+      "lastModified": "2026-10-15T01:18:48.850",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: exec: Fix ToCToU between perm check and set-uid/gid usage When opening a file for exec via do_filp_open(), permission checking is done against the file's metadata at that moment, and on success, a file pointer is passed back. Much later in the execve() code path, the file metadata (specifically mode, uid, and gid) is used to determine if/how to set the uid and gid. However, those values may have changed since the permissions che",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-367",
+          "name": "Time-of-Check Time-of-Use Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/15469d46ba34559bfe7e3de6659115778c624759",
+        "https://git.kernel.org/stable/c/368f6985d46657b8b466a421dddcacd4051f7ada",
+        "https://git.kernel.org/stable/c/90dfbba89ad4f0d9c9744ecbb1adac4aa2ff4f3e",
+        "https://git.kernel.org/stable/c/9b424c5d4130d56312e2a3be17efb0928fec4d64"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00242,
+        "percentile": 0.14286,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-43858",
+      "published": "2024-08-17T10:15:10.750",
+      "lastModified": "2026-10-15T01:18:48.127",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: jfs: Fix array-index-out-of-bounds in diFree",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-129",
+          "name": "CWE-129"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/538a27c8048f081a5ddd286f886eb986fbbc7f80",
+        "https://git.kernel.org/stable/c/55b732c8b09b41148eaab2fa8e31b0af47671e00",
+        "https://git.kernel.org/stable/c/63f7fdf733add82f126ea00e2e48f6eba15ac4b9",
+        "https://git.kernel.org/stable/c/6aa6892a90a5a7fabffe5692ab9f06a7a46c6e42"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00236,
+        "percentile": 0.13556,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-43830",
+      "published": "2024-08-17T10:15:08.857",
+      "lastModified": "2026-10-15T01:18:47.510",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: leds: trigger: Unregister sysfs attributes before calling deactivate() Triggers which have trigger specific sysfs attributes typically store related data in trigger-data allocated by the activate() callback and freed by the deactivate() callback. Calling device_remove_groups() after calling deactivate() leaves a window where the sysfs attributes show/store functions could be called after deactivation and then operate on the just",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0788a6f3523d3686a9eed5ea1e6fcce6841277b2",
+        "https://git.kernel.org/stable/c/09c1583f0e10c918855d6e7540a79461a353e5d6",
+        "https://git.kernel.org/stable/c/3fb6a9d67cfd812a547ac73ec02e1077c26c640d",
+        "https://git.kernel.org/stable/c/734ba6437e80dfc780e9ee9d95f912392d12b5ea"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00251,
+        "percentile": 0.15277,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-42302",
+      "published": "2024-08-17T09:15:10.487",
+      "lastModified": "2026-10-15T01:18:45.900",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: PCI/DPC: Fix use-after-free on concurrent DPC and hot-removal Keith reports a use-after-free when a DPC event occurs concurrently to hot-removal of the same portion of the hierarchy: The dpc_handler() awaits readiness of the secondary bus below the Downstream Port where the DPC event occurred. To do so, it polls the config space of the first child device on the secondary bus. If that child device is concurrently removed, accesse",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/11a1f4bc47362700fcbde717292158873fb847ed",
+        "https://git.kernel.org/stable/c/2c111413f38ca5cf87557cab89f6d82b0e3433e7",
+        "https://git.kernel.org/stable/c/2cc8973bdc4d6c928ebe38b88090a2cdfe81f42f",
+        "https://git.kernel.org/stable/c/b16f3ea1db47a6766a9f1169244cf1fc287a7c62"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00227,
+        "percentile": 0.12465,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-42292",
+      "published": "2024-08-17T09:15:09.797",
+      "lastModified": "2026-10-15T01:18:45.733",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: kobject_uevent: Fix OOB access within zap_modalias_env() zap_modalias_env() wrongly calculates size of memory block to move, so will cause OOB memory access issue if variable MODALIAS is not the last one within its @env parameter, fixed by correcting size to memmove.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/57fe01d3d04276875c7e3a6dc763517fc05b8762",
+        "https://git.kernel.org/stable/c/648d5490460d38436640da0812bf7f6351c150d2",
+        "https://git.kernel.org/stable/c/68d63ace80b76395e7935687ecdb86421adc2168",
+        "https://git.kernel.org/stable/c/81a15d28f32af01493ae8c5457e0d55314a4167d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00248,
+        "percentile": 0.14917,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -208,8 +472,8 @@
       },
       "epss": {
         "score": 0.0058,
-        "percentile": 0.46215,
-        "date": "2026-10-13"
+        "percentile": 0.46391,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -256,8 +520,8 @@
       },
       "epss": {
         "score": 0.91941,
-        "percentile": 0.99819,
-        "date": "2026-10-13"
+        "percentile": 0.9982,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -302,8 +566,8 @@
       },
       "epss": {
         "score": 0.01027,
-        "percentile": 0.62698,
-        "date": "2026-10-13"
+        "percentile": 0.62882,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -314,5 +578,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.961700+00:00"
+  "updated_at": "2026-10-15T10:23:07.187976+00:00"
 }

@@ -2,6 +2,52 @@
   "month": "2022-07",
   "cves": [
     {
+      "id": "CVE-2022-36123",
+      "published": "2022-07-29T14:15:08.303",
+      "lastModified": "2026-10-14T18:17:01.387",
+      "vulnStatus": "Modified",
+      "description": "The Linux kernel before 5.18.13 lacks a certain clear operation for the block starting symbol (.bss). This allows Xen PV guest OS users to cause a denial of service or gain privileges.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens RUGGEDCOM ROX MX5000",
+        "Siemens RUGGEDCOM ROX MX5000RE",
+        "Siemens RUGGEDCOM ROX RX1400",
+        "Siemens RUGGEDCOM ROX RX1500"
+      ],
+      "references": [
+        "https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.18.13",
+        "https://github.com/sickcodes/security/blob/master/advisories/SICK-2022-128.md",
+        "https://github.com/torvalds/linux/commit/74a0032b8524ee2bd4443128c0bf9775928680b0",
+        "https://github.com/torvalds/linux/commit/96e8fc5818686d4a1591bb6907e7fdb64ef29884"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.009,
+        "percentile": 0.58779,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2022-37009",
       "published": "2022-07-28T11:15:07.230",
       "lastModified": "2026-10-02T04:18:01.470",
@@ -29,8 +75,51 @@
       },
       "epss": {
         "score": 0.00254,
-        "percentile": 0.15684,
-        "date": "2026-10-13"
+        "percentile": 0.15756,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-36946",
+      "published": "2022-07-27T20:15:08.643",
+      "lastModified": "2026-10-14T18:17:03.400",
+      "vulnStatus": "Modified",
+      "description": "nfqnl_mangle in net/netfilter/nfnetlink_queue.c in the Linux kernel through 5.18.14 allows remote attackers to cause a denial of service (panic) because, in the case of an nf_queue verdict with a one-byte nfta_payload attribute, an skb_pull can encounter a negative skb->len.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SINAMICS PERFECT HARMONY GH180"
+      ],
+      "references": [
+        "https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=99a63d36cb3ed5ca3aa6fcb64cffbeaf3b0fb164",
+        "https://lists.debian.org/debian-lts-announce/2022/09/msg00011.html",
+        "https://lists.debian.org/debian-lts-announce/2022/10/msg00000.html",
+        "https://marc.info/?l=netfilter-devel&m=165883202007292&w=2"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0774,
+        "percentile": 0.94546,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -71,8 +160,8 @@
       },
       "epss": {
         "score": 0.00581,
-        "percentile": 0.46256,
-        "date": "2026-10-13"
+        "percentile": 0.46432,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -85,8 +174,8 @@
     {
       "id": "CVE-2022-2327",
       "published": "2022-07-22T10:15:08.257",
-      "lastModified": "2026-10-02T13:56:14.340",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-10-14T13:17:21.110",
+      "vulnStatus": "Modified",
       "description": "io_uring use work_flags to determine which identity need to grab from the calling process to make sure it is consistent with the calling process when executing IORING_OP. Some operations are missing some types, which can lead to incorrect reference counts which can then lead to a double free. We recommend upgrading the kernel past commit df3f3bb5059d20ef094d6b2f0256c4bf4127a859",
       "cvss": {
         "score": 7.8,
@@ -104,20 +193,70 @@
         }
       ],
       "vendors": [
-        "Linux Kernel Linux Kernel"
+        "Linux Kernel Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
       ],
       "references": [
         "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.10.y&id=df3f3bb5059d20ef094d6b2f0256c4bf4127a859",
         "https://kernel.dance/#df3f3bb5059d20ef094d6b2f0256c4bf4127a859",
-        "https://security.netapp.com/advisory/ntap-20230203-0009/"
+        "https://security.netapp.com/advisory/ntap-20230203-0009/",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
       ],
       "kev": {
         "in_kev": false
       },
       "epss": {
         "score": 0.00306,
-        "percentile": 0.2169,
-        "date": "2026-10-13"
+        "percentile": 0.2179,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2021-46828",
+      "published": "2022-07-20T06:15:07.907",
+      "lastModified": "2026-10-14T13:17:12.797",
+      "vulnStatus": "Modified",
+      "description": "In libtirpc before 1.3.3rc1, remote attackers could exhaust the file descriptors of a process that uses libtirpc because idle TCP connections are mishandled. This can, in turn, lead to an svc_run infinite loop without accepting new connections.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-755",
+          "name": "CWE-755"
+        },
+        {
+          "id": "CWE-835",
+          "name": "CWE-835"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://git.linux-nfs.org/?p=steved/libtirpc.git%3Ba=commit%3Bh=86529758570cef4c73fb9b9c4104fdc510f701ed",
+        "https://lists.debian.org/debian-lts-announce/2022/08/msg00004.html",
+        "https://security.gentoo.org/glsa/202210-33",
+        "https://security.netapp.com/advisory/ntap-20221007-0004/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02862,
+        "percentile": 0.86497,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -162,8 +301,8 @@
       },
       "epss": {
         "score": 0.02427,
-        "percentile": 0.83809,
-        "date": "2026-10-13"
+        "percentile": 0.83902,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -204,8 +343,8 @@
       },
       "epss": {
         "score": 0.01276,
-        "percentile": 0.69218,
-        "date": "2026-10-13"
+        "percentile": 0.69383,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -250,8 +389,8 @@
       },
       "epss": {
         "score": 0.01295,
-        "percentile": 0.69603,
-        "date": "2026-10-13"
+        "percentile": 0.6977,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -292,8 +431,58 @@
       },
       "epss": {
         "score": 0.01377,
-        "percentile": 0.71361,
-        "date": "2026-10-13"
+        "percentile": 0.71517,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-32207",
+      "published": "2022-07-07T13:15:08.403",
+      "lastModified": "2026-10-14T17:17:39.447",
+      "vulnStatus": "Modified",
+      "description": "When curl < 7.84.0 saves cookies, alt-svc and hsts data to local files, it makes the operation atomic by finalizing the operation with a rename from a temporary name to the final target file name.In that rename operation, it might accidentally *widen* the permissions for the target file, leaving the updated file accessible to more users than intended.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-840",
+          "name": "CWE-840"
+        },
+        {
+          "id": "CWE-276",
+          "name": "CWE-276"
+        }
+      ],
+      "vendors": [
+        "https://github.com/curl/curl",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SINAMICS PERFECT HARMONY GH180",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2022/Oct/28",
+        "http://seclists.org/fulldisclosure/2022/Oct/41",
+        "https://hackerone.com/reports/1573634",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/BEV6BR4MTI3CEWK2YU2HQZUW5FAS3FEY/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.07738,
+        "percentile": 0.94545,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -338,8 +527,50 @@
       },
       "epss": {
         "score": 0.01489,
-        "percentile": 0.73408,
-        "date": "2026-10-13"
+        "percentile": 0.73555,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-34918",
+      "published": "2022-07-04T21:15:07.730",
+      "lastModified": "2026-10-14T17:17:40.583",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in the Linux kernel through 5.18.9. A type confusion bug in nft_set_elem_init (leading to a buffer overflow) could be used by a local attacker to escalate privileges, a different vulnerability than CVE-2022-32250. (The attacker can obtain root access, but must start with an unprivileged user namespace to obtain CAP_NET_ADMIN access.) This can be fixed in nft_setelem_parse_data in net/netfilter/nf_tables_api.c.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-843",
+          "name": "Type Confusion"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/168191/Kernel-Live-Patch-Security-Notice-LSN-0089-1.html",
+        "http://packetstormsecurity.com/files/168543/Netfilter-nft_set_elem_init-Heap-Overflow-Privilege-Escalation.html",
+        "http://www.openwall.com/lists/oss-security/2022/07/05/1",
+        "http://www.openwall.com/lists/oss-security/2022/08/06/5"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05451,
+        "percentile": 0.92611,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -380,8 +611,8 @@
       },
       "epss": {
         "score": 0.01395,
-        "percentile": 0.71694,
-        "date": "2026-10-13"
+        "percentile": 0.7185,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -422,8 +653,8 @@
       },
       "epss": {
         "score": 0.01375,
-        "percentile": 0.71309,
-        "date": "2026-10-13"
+        "percentile": 0.71465,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -464,8 +695,8 @@
       },
       "epss": {
         "score": 0.0142,
-        "percentile": 0.72141,
-        "date": "2026-10-13"
+        "percentile": 0.72296,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -506,8 +737,54 @@
       },
       "epss": {
         "score": 0.01442,
-        "percentile": 0.72542,
-        "date": "2026-10-13"
+        "percentile": 0.72694,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-2274",
+      "published": "2022-07-01T08:15:07.687",
+      "lastModified": "2026-10-14T13:17:20.920",
+      "vulnStatus": "Modified",
+      "description": "The OpenSSL 3.0.4 release introduced a serious bug in the RSA implementation for X86_64 CPUs supporting the AVX512IFMA instructions. This issue makes the RSA implementation with 2048 bit private keys incorrect on such machines and memory corruption will happen during the computation. As a consequence of the memory corruption an attacker may be able to trigger a remote code execution on the machine performing the computation. SSL/TLS servers or other servers using 2048 bit RSA private keys runnin",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "OpenSSL OpenSSL",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.openssl.org/gitweb/?p=openssl.git%3Ba=commitdiff%3Bh=4d8a88c134df634ba610ff8db1eb8478ac5fd345",
+        "https://github.com/openssl/openssl/issues/18625",
+        "https://security.netapp.com/advisory/ntap-20220715-0010/",
+        "https://www.openssl.org/news/secadv/20220705.txt"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.45675,
+        "percentile": 0.98778,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -518,5 +795,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.956708+00:00"
+  "updated_at": "2026-10-15T10:23:07.165515+00:00"
 }

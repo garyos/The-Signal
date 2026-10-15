@@ -2,6 +2,594 @@
   "month": "2024-05",
   "cves": [
     {
+      "id": "CVE-2024-36940",
+      "published": "2024-05-30T16:15:17.063",
+      "lastModified": "2026-10-15T01:18:26.347",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: pinctrl: core: delete incorrect free in pinctrl_enable() The \"pctldev\" struct is allocated in devm_pinctrl_register_and_init(). It's a devm_ managed pointer that is freed by devm_pinctrl_dev_release(), so freeing it in pinctrl_enable() will lead to a double free. The devm_pinctrl_dev_release() function frees the pindescs and destroys the mutex as well.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-415",
+          "name": "CWE-415"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/288bc4aa75f150d6f1ee82dd43c6da1b438b6068",
+        "https://git.kernel.org/stable/c/41f88ef8ba387a12f4a2b8c400b6c9e8e54b2cca",
+        "https://git.kernel.org/stable/c/5038a66dad0199de60e5671603ea6623eb9e5c79",
+        "https://git.kernel.org/stable/c/558c8039fdf596a584a92c171cbf3298919c448c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00247,
+        "percentile": 0.14894,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36934",
+      "published": "2024-05-30T16:15:16.553",
+      "lastModified": "2026-10-15T01:18:25.900",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: bna: ensure the copied buf is NUL terminated Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from userspace to that buffer. Later, we use sscanf on this buffer but we don't ensure that the string is terminated inside the buffer, this can lead to OOB read when using sscanf. Fix this issue by using memdup_user_nul instead of memdup_user.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/06cb37e2ba6441888f24566a997481d4197b4e32",
+        "https://git.kernel.org/stable/c/0f560240b4cc25d3de527deb257cdf072c0102a9",
+        "https://git.kernel.org/stable/c/1518b2b498a0109eb6b15755169d3b6607356b35",
+        "https://git.kernel.org/stable/c/6f0f19b79c085cc891c418b768f26f7004bd51a4"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00295,
+        "percentile": 0.20668,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36916",
+      "published": "2024-05-30T16:15:14.963",
+      "lastModified": "2026-10-15T01:18:25.030",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: blk-iocost: avoid out of bounds shift UBSAN catches undefined behavior in blk-iocost, where sometimes iocg->delay is shifted right by a number that is too large, resulting in undefined behavior on some architectures. [ 186.556576] ------------[ cut here ]------------ UBSAN: shift-out-of-bounds in block/blk-iocost.c:1366:23 shift exponent 64 is too large for 64-bit type 'u64' (aka 'unsigned long long') CPU: 16 PID: 0 Comm: swappe",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/488dc6808cb8369685f18cee81e88e7052ac153b",
+        "https://git.kernel.org/stable/c/62accf6c1d7b433752cb3591bba8967b7a801ad5",
+        "https://git.kernel.org/stable/c/844fc023e9f14a4fb1de5ae1eaefafd6d69c5fa1",
+        "https://git.kernel.org/stable/c/beaa51b36012fad5a4d3c18b88a617aea7a9b96d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00733,
+        "percentile": 0.53318,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36904",
+      "published": "2024-05-30T16:15:13.947",
+      "lastModified": "2026-10-15T01:18:24.407",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: tcp: Use refcount_inc_not_zero() in tcp_twsk_unique(). Anderson Nascimento reported a use-after-free splat in tcp_twsk_unique() with nice analysis. Since commit ec94c2696f0b (\"tcp/dccp: avoid one atomic operation for timewait hashdance\"), inet_twsk_hashdance() sets TIME-WAIT socket's sk_refcnt after putting it into ehash and releasing the bucket lock. Thus, there is a small race window where other threads could try to reuse the ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/13ed7cdf079686ccd3618335205700c03f6fb446",
+        "https://git.kernel.org/stable/c/1796ca9c6f5bd50554214053af5f47d112818ee3",
+        "https://git.kernel.org/stable/c/1d9cf07810c30ef7948879567d10fd1f01121d34",
+        "https://git.kernel.org/stable/c/27b0284d8be182a81feb65581ab6a724dfd596e8"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00614,
+        "percentile": 0.48176,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36899",
+      "published": "2024-05-30T16:15:13.510",
+      "lastModified": "2026-10-15T01:18:23.673",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: gpiolib: cdev: Fix use after free in lineinfo_changed_notify The use-after-free issue occurs as follows: when the GPIO chip device file is being closed by invoking gpio_chrdev_release(), watched_lines is freed by bitmap_free(), but the unregistration of lineinfo_changed_nb notifier chain failed due to waiting write rwsem. Additionally, one of the GPIO chip's lines is also in the release process and holds the notifier chain's rea",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/02f6b0e1ec7e0e7d059dddc893645816552039da",
+        "https://git.kernel.org/stable/c/2d008d4961b039d2edce8976289773961b7e5fb5",
+        "https://git.kernel.org/stable/c/2dfbb920a89bdc58087672ad5325dc6c588b6860",
+        "https://git.kernel.org/stable/c/95ca7c90eaf5ea8a8460536535101e3e81160e2a"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00178,
+        "percentile": 0.06827,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-36894",
+      "published": "2024-05-30T16:15:12.857",
+      "lastModified": "2026-10-15T01:18:23.303",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: usb: gadget: f_fs: Fix race between aio_cancel() and AIO request complete FFS based applications can utilize the aio_cancel() callback to dequeue pending USB requests submitted to the UDC. There is a scenario where the FFS application issues an AIO cancel call, while the UDC is handling a soft disconnect. For a DWC3 based implementation, the callstack looks like the following: DWC3 Gadget FFS Application dwc3_gadget_soft_disconn",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/24729b307eefcd7c476065cd7351c1a018082c19",
+        "https://git.kernel.org/stable/c/3613e5023f09b3308545e9d1acda86017ebd418a",
+        "https://git.kernel.org/stable/c/73c05ad46bb4fbbdb346004651576d1c8dbcffbb",
+        "https://git.kernel.org/stable/c/9e72ef59cbe61cd1243857a6418ca92104275867"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00196,
+        "percentile": 0.08658,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35976",
+      "published": "2024-05-20T10:15:12.273",
+      "lastModified": "2026-10-15T01:18:15.357",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: xsk: validate user input for XDP_{UMEM|COMPLETION}_FILL_RING syzbot reported an illegal copy in xsk_setsockopt() [1] Make sure to validate setsockopt() @optlen parameter. [1] BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline] BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline] BUG: KASAN: slab-out-of-bounds in xsk_setsockopt+0x909/0xa40 net/xdp/xsk.c",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0b45c25d60e38f5c2cb6823f886773a34323306d",
+        "https://git.kernel.org/stable/c/237f3cf13b20db183d3706d997eedc3c49eacd44",
+        "https://git.kernel.org/stable/c/2a523f14a3f53b46ff0e1fafd215b0bc5f6783aa",
+        "https://git.kernel.org/stable/c/2eb979fbb2479bcd7e049f2f9978b6590dd8a0e6"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00259,
+        "percentile": 0.16398,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35969",
+      "published": "2024-05-20T10:15:11.780",
+      "lastModified": "2026-10-15T01:18:14.747",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ipv6: fix race condition between ipv6_get_ifaddr and ipv6_del_addr Although ipv6_get_ifaddr walks inet6_addr_lst under the RCU lock, it still means hlist_for_each_entry_rcu can return an item that got removed from the list. The memory itself of such item is not freed thanks to RCU but nothing guarantees the actual content of the memory is sane. In particular, the reference count can be zero. This can happen if ipv6_del_addr is c",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-770",
+          "name": "Allocation of Resources Without Limits"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/01b11a0566670612bd464a932e5ac2eae53d8652",
+        "https://git.kernel.org/stable/c/3fb02ec57ead2891a2306af8c51a306bc5945e70",
+        "https://git.kernel.org/stable/c/4b19e9507c275de0cfe61c24db69179dc52cf9fb",
+        "https://git.kernel.org/stable/c/6cdb20c342cd0193d3e956e3d83981d0f438bb83"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00375,
+        "percentile": 0.29787,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35967",
+      "published": "2024-05-20T10:15:11.647",
+      "lastModified": "2026-10-15T01:18:14.543",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: SCO: Fix not validating setsockopt user input syzbot reported sco_sock_setsockopt() is copying data without checking user input length. BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline] BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline] BUG: KASAN: slab-out-of-bounds in sco_sock_setsockopt+0xc0b/0xf90 net/bluetooth/sco.c:893 Read of size",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2c2dc87cdebef3fe3b9d7a711a984c70e376e32e",
+        "https://git.kernel.org/stable/c/419a0ffca7010216f0fc265b08558d7394fa0ba7",
+        "https://git.kernel.org/stable/c/51eda36d33e43201e7a4fd35232e069b2c850b01",
+        "https://git.kernel.org/stable/c/72473db90900da970a16ee50ad23c2c38d107d8c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00239,
+        "percentile": 0.13898,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35966",
+      "published": "2024-05-20T10:15:11.580",
+      "lastModified": "2026-10-15T01:18:14.377",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: RFCOMM: Fix not validating setsockopt user input syzbot reported rfcomm_sock_setsockopt_old() is copying data without checking user input length. BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline] BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline] BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt_old net/bluetooth/rfcomm/sock.c:632",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/00767fbd67af70d7a550caa5b12d9515fa978bab",
+        "https://git.kernel.org/stable/c/4ea65e2095e9bd151d0469328dd7fc2858feb546",
+        "https://git.kernel.org/stable/c/a97de7bff13b1cc825c1b1344eaed8d6c2d3e695",
+        "https://git.kernel.org/stable/c/c3f787a3eafe519c93df9abbb0ca5145861c8d0f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0026,
+        "percentile": 0.16499,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35965",
+      "published": "2024-05-20T10:15:11.520",
+      "lastModified": "2026-10-15T01:18:14.213",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: Bluetooth: L2CAP: Fix not validating setsockopt user input Check user input length before copying data.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-1284",
+          "name": "CWE-1284"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/28234f8ab69c522ba447f3e041bbfbb284c5959a",
+        "https://git.kernel.org/stable/c/4f3951242ace5efc7131932e2e01e6ac6baed846",
+        "https://git.kernel.org/stable/c/8ee0c132a61df9723813c40e742dc5321824daa9",
+        "https://git.kernel.org/stable/c/9d42f373391211c7c8af66a3a316533a32b8a607"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00241,
+        "percentile": 0.14156,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35960",
+      "published": "2024-05-20T10:15:11.190",
+      "lastModified": "2026-10-15T01:17:55.733",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/mlx5: Properly link new fs rules into the tree Previously, add_rule_fg would only add newly created rules from the handle into the tree when they had a refcount of 1. On the other hand, create_flow_handle tries hard to find and reference already existing identical rules instead of creating new ones. These two behaviors can result in a situation where create_flow_handle 1) creates a new rule and references it, then 2) in a su",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-476",
+          "name": "NULL Pointer Dereference"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1263b0b26077b1183c3c45a0a2479573a351d423",
+        "https://git.kernel.org/stable/c/2e8dc5cffc844dacfa79f056dea88002312f253f",
+        "https://git.kernel.org/stable/c/3d90ca9145f6b97b38d0c2b6b30f6ca6af9c1801",
+        "https://git.kernel.org/stable/c/5cf5337ef701830f173b4eec00a4f984adeb57a0"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01413,
+        "percentile": 0.72177,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35955",
+      "published": "2024-05-20T10:15:10.850",
+      "lastModified": "2026-10-15T01:17:55.123",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: kprobes: Fix possible use-after-free issue on kprobe registration When unloading a module, its state is changing MODULE_STATE_LIVE -> MODULE_STATE_GOING -> MODULE_STATE_UNFORMED. Each change will take a time. `is_module_text_address()` and `__module_text_address()` works with MODULE_STATE_LIVE and MODULE_STATE_GOING. If we use `is_module_text_address()` and `__module_text_address()` separately, there is a chance that the first o",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2df2dd27066cdba8041e46a64362325626bdfb2e",
+        "https://git.kernel.org/stable/c/325f3fb551f8cd672dbbfc4cf58b14f9ee3fc9e8",
+        "https://git.kernel.org/stable/c/36b57c7d2f8b7de224980f1a284432846ad71ca0",
+        "https://git.kernel.org/stable/c/5062d1f4f07facbdade0f402d9a04a788f52e26d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01177,
+        "percentile": 0.66984,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-35937",
       "published": "2024-05-19T11:15:49.553",
       "lastModified": "2026-10-08T18:21:56.640",
@@ -32,8 +620,231 @@
       },
       "epss": {
         "score": 0.00344,
-        "percentile": 0.26084,
-        "date": "2026-10-13"
+        "percentile": 0.26251,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35905",
+      "published": "2024-05-19T09:15:11.260",
+      "lastModified": "2026-10-15T01:17:52.303",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: bpf: Protect against int overflow for stack access size This patch re-introduces protection against the size of access to stack memory being negative; the access size can appear negative as a result of overflowing its signed int representation. This should not actually happen, as there are other protections along the way, but we should protect against it anyway. One code path was missing such protections (fixed in the previous p",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-129",
+          "name": "CWE-129"
+        },
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/203a68151e8eeb331d4a64ab78303f3a15faf103",
+        "https://git.kernel.org/stable/c/37dc1718dc0c4392dbfcb9adec22a776e745dd69",
+        "https://git.kernel.org/stable/c/3f0784b2f1eb9147973d8c43ba085c5fdf44ff69",
+        "https://git.kernel.org/stable/c/98cdac206b112bec63852e94802791e316acc2c1"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00225,
+        "percentile": 0.1226,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35899",
+      "published": "2024-05-19T09:15:10.807",
+      "lastModified": "2026-10-15T01:17:51.550",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: flush pending destroy work before exit_net release Similar to 2c9f0293280e (\"netfilter: nf_tables: flush pending destroy work before netlink notifier\") to address a race between exit_net and the destroy workqueue. The trace below shows an element to be released via destroy workqueue while exit_net path (triggered via module removal) has already released the set that is used in such transaction. [ 1360.54778",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/24cea9677025e0de419989ecb692acd4bb34cac2",
+        "https://git.kernel.org/stable/c/333b5085522cf1898d5a0d92616046b414f631a7",
+        "https://git.kernel.org/stable/c/46c4481938e2ca62343b16ea83ab28f4c1733d31",
+        "https://git.kernel.org/stable/c/4e8447a9a3d367b5065a0b7abe101da6e0037b6e"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00201,
+        "percentile": 0.09299,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35898",
+      "published": "2024-05-19T09:15:10.723",
+      "lastModified": "2026-10-15T01:17:51.290",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get() nft_unregister_flowtable_type() within nf_flow_inet_module_exit() can concurrent with __nft_flowtable_type_get() within nf_tables_newflowtable(). And thhere is not any protection when iterate over nf_tables_flowtables list in __nft_flowtable_type_get(). Therefore, there is pertential data-race of nf_tables_flowtables list entry. Use list_for_each_entry_r",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/24225011d81b471acc0e1e315b7d9905459a6304",
+        "https://git.kernel.org/stable/c/2485bcfe05ee3cf9ca8923a94fa2e456924c79c8",
+        "https://git.kernel.org/stable/c/69d1fe14a680042ec913f22196b58e2c8ff1b007",
+        "https://git.kernel.org/stable/c/8b891153b2e4dc0ca9d9dab8f619d49c740813df"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00204,
+        "percentile": 0.09666,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35896",
+      "published": "2024-05-19T09:15:10.557",
+      "lastModified": "2026-10-15T01:17:50.840",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: validate user input for expected length I got multiple syzbot reports showing old bugs exposed by BPF after commit 20f2505fb436 (\"bpf: Try to avoid kzalloc in cgroup/{s,g}etsockopt\") setsockopt() @optlen argument should be taken into account before copying data. BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline] BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/lin",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0c83842df40f86e529db6842231154772c20edcc",
+        "https://git.kernel.org/stable/c/0f038242b77ddfc505bf4163d4904c1abd2e74d6",
+        "https://git.kernel.org/stable/c/18aae2cb87e5faa9c5bd865260ceadac60d5a6c5",
+        "https://git.kernel.org/stable/c/440e948cf0eff32cfe322dcbca3f2525354b159b"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00229,
+        "percentile": 0.12668,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35888",
+      "published": "2024-05-19T09:15:09.910",
+      "lastModified": "2026-10-15T01:17:50.060",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: erspan: make sure erspan_base_hdr is present in skb->head syzbot reported a problem in ip6erspan_rcv() [1] Issue is that ip6erspan_rcv() (and erspan_rcv()) no longer make sure erspan_base_hdr is present in skb linear part (skb->head) before getting @ver field from it. Add the missing pskb_may_pull() calls. v2: Reload iph pointer in erspan_rcv() after pskb_may_pull() because skb->head might have changed. [1] BUG: KMSAN: uninit-va",
+      "cvss": {
+        "score": 7.3,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-908",
+          "name": "CWE-908"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/06a939f72a24a7d8251f84cf4c042df86c6666ac",
+        "https://git.kernel.org/stable/c/0ac328a5a4138a6c03dfc3f46017bd5c19167446",
+        "https://git.kernel.org/stable/c/17af420545a750f763025149fa7b833a4fc8b8f0",
+        "https://git.kernel.org/stable/c/1db7fcb2b290c47c202b79528824f119fa28937d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00606,
+        "percentile": 0.4774,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -74,8 +885,185 @@
       },
       "epss": {
         "score": 0.00341,
-        "percentile": 0.258,
-        "date": "2026-10-13"
+        "percentile": 0.25963,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35886",
+      "published": "2024-05-19T09:15:09.757",
+      "lastModified": "2026-10-15T01:17:49.830",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: ipv6: Fix infinite recursion in fib6_dump_done(). syzkaller reported infinite recursive calls of fib6_dump_done() during netlink socket destruction. [1] From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then the response was generated. The following recvmmsg() resumed the dump for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due to the fault injection. [0] 12:01:34 executing program 3: r0 = ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-674",
+          "name": "CWE-674"
+        },
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/167d4b47a9bdcb01541dfa29e9f3cbb8edd3dfd2",
+        "https://git.kernel.org/stable/c/40a344b2ddc06c1a2caa7208a43911f39c662778",
+        "https://git.kernel.org/stable/c/4a7c465a5dcd657d59d25bf4815e19ac05c13061",
+        "https://git.kernel.org/stable/c/9472d07cd095cbd3294ac54c42f304a38fbe9bfe"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00284,
+        "percentile": 0.19516,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35849",
+      "published": "2024-05-17T15:15:21.777",
+      "lastModified": "2026-10-15T01:17:49.017",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: btrfs: fix information leak in btrfs_ioctl_logical_to_ino() Syzbot reported the following information leak for in btrfs_ioctl_logical_to_ino(): BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline] BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40 instrument_copy_to_user include/linux/instrumented.h:114 [inline] _copy_to_user+0xbc/0x110 lib/usercopy.c:40 copy_to_",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-908",
+          "name": "CWE-908"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf",
+        "https://git.kernel.org/stable/c/30189e54ba80e3209d34cfeea87b848f6ae025e6",
+        "https://git.kernel.org/stable/c/3a63cee1a5e14a3e52c19142c61dd5fcb524f6dc",
+        "https://git.kernel.org/stable/c/689efe22e9b5b7d9d523119a9a5c3c17107a0772"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00256,
+        "percentile": 0.16011,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35845",
+      "published": "2024-05-17T15:15:21.470",
+      "lastModified": "2026-10-15T01:17:48.770",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wifi: iwlwifi: dbg-tlv: ensure NUL termination The iwl_fw_ini_debug_info_tlv is used as a string, so we must ensure the string is terminated correctly before using it.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-134",
+          "name": "CWE-134"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/71d4186d470e9cda7cd1a0921b4afda737c6f641",
+        "https://git.kernel.org/stable/c/783d413f332a3ebec916664b366c28f58147f82c",
+        "https://git.kernel.org/stable/c/96aa40761673da045a7774f874487cdb50c6a2f7",
+        "https://git.kernel.org/stable/c/c855a1a5b7e3de57e6b1b29563113d5e3bfdb89a"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0117,
+        "percentile": 0.6677,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-35789",
+      "published": "2024-05-17T13:15:58.717",
+      "lastModified": "2026-10-15T01:17:46.277",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes When moving a station out of a VLAN and deleting the VLAN afterwards, the fast_rx entry still holds a pointer to the VLAN's netdev, which can cause use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx after the VLAN change.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2884a50f52313a7a911de3afcad065ddbb3d78fc",
+        "https://git.kernel.org/stable/c/4f2bdb3c5e3189297e156b3ff84b140423d64685",
+        "https://git.kernel.org/stable/c/6b948b54c8bd620725e0c906e44b10c0b13087a7",
+        "https://git.kernel.org/stable/c/7eeabcea79b67cc29563e6a9a5c81f9e2c664d5b"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00355,
+        "percentile": 0.27576,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -120,8 +1108,188 @@
       },
       "epss": {
         "score": 0.01279,
-        "percentile": 0.6926,
-        "date": "2026-10-13"
+        "percentile": 0.69427,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-34459",
+      "published": "2024-05-14T15:39:11.917",
+      "lastModified": "2026-10-15T01:17:45.877",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in xmllint (from libxml2) before 2.11.8 and 2.12.x before 2.12.7. Formatting error messages with xmllint --htmlout can result in a buffer over-read in xmlHTMLPrintFileContext in xmllint.c.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-122",
+          "name": "CWE-122"
+        }
+      ],
+      "vendors": [
+        "xmlsoft xmllint",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://gitlab.gnome.org/GNOME/libxml2/-/issues/720",
+        "https://gitlab.gnome.org/GNOME/libxml2/-/releases/v2.11.8",
+        "https://gitlab.gnome.org/GNOME/libxml2/-/releases/v2.12.7",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/5HVUXKYTBWT3G5DEEQX62STJQBY367NL/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.018,
+        "percentile": 0.78066,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27397",
+      "published": "2024-05-14T15:12:28.240",
+      "lastModified": "2026-10-15T01:17:40.477",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: use timestamp to check for set element timeout Add a timestamp field at the beginning of the transaction, store it in the nftables per-netns area. Update set backend .insert, .deactivate and sync gc path to use the timestamp, this avoids that an element expires while control plane transaction is still unfinished. .lookup and .update, which are used from packet path, still use the current time to check if th",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0d40e8cb1d1f56a994cdd2e015af622fdca9ed4d",
+        "https://git.kernel.org/stable/c/383182db8d58c4237772ba0764cded4938a235c3",
+        "https://git.kernel.org/stable/c/7395dfacfff65e9938ac0889dafa1ab01e987d15",
+        "https://git.kernel.org/stable/c/7b17de2a71e56c10335b565cc7ad238e6d984379"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00264,
+        "percentile": 0.17076,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27396",
+      "published": "2024-05-14T15:12:27.983",
+      "lastModified": "2026-10-15T01:17:40.243",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: gtp: Fix Use-After-Free in gtp_dellink Since call_rcu, which is called in the hlist_for_each_entry_rcu traversal of gtp_dellink, is not part of the RCU read critical section, it is possible that the RCU grace period will pass during the traversal and the key will be free. To prevent this, it should be changed to hlist_for_each_entry_safe.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/07b20d0a3dc13fb1adff10b60021a4924498da58",
+        "https://git.kernel.org/stable/c/0caff3e6390f840666b8dc1ecebf985c2ef3f1dd",
+        "https://git.kernel.org/stable/c/25a1c2d4b1fcf938356a9688a96a6456abd44b29",
+        "https://git.kernel.org/stable/c/2aacd4de45477582993f8a8abb9505a06426bfb6"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00244,
+        "percentile": 0.14458,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27395",
+      "published": "2024-05-14T15:12:27.683",
+      "lastModified": "2026-10-15T01:17:39.990",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net: openvswitch: Fix Use-After-Free in ovs_ct_exit Since kfree_rcu, which is called in the hlist_for_each_entry_rcu traversal of ovs_ct_limit_exit, is not part of the RCU read critical section, it is possible that the RCU grace period will pass during the traversal and the key will be free. To prevent this, it should be changed to hlist_for_each_entry_safe.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2db9a8c0a01fa1c762c1e61a13c212c492752994",
+        "https://git.kernel.org/stable/c/35880c3fa6f8fe281a19975d2992644588ca33d3",
+        "https://git.kernel.org/stable/c/589523cf0b384164e445dd5db8d5b1bf97982424",
+        "https://git.kernel.org/stable/c/5ea7b72d4fac2fdbc0425cd8f2ea33abe95235b2"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00244,
+        "percentile": 0.14458,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -168,9 +1336,9 @@
         "known_ransomware": "Unknown"
       },
       "epss": {
-        "score": 0.17479,
-        "percentile": 0.97077,
-        "date": "2026-10-13"
+        "score": 0.20021,
+        "percentile": 0.97406,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -209,8 +1377,8 @@
       },
       "epss": {
         "score": 0.00989,
-        "percentile": 0.61519,
-        "date": "2026-10-13"
+        "percentile": 0.61712,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -249,8 +1417,8 @@
       },
       "epss": {
         "score": 0.0096,
-        "percentile": 0.60538,
-        "date": "2026-10-13"
+        "percentile": 0.60733,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -289,8 +1457,8 @@
       },
       "epss": {
         "score": 0.00185,
-        "percentile": 0.07559,
-        "date": "2026-10-13"
+        "percentile": 0.07587,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -330,8 +1498,673 @@
       },
       "epss": {
         "score": 0.15163,
-        "percentile": 0.96684,
-        "date": "2026-10-13"
+        "percentile": 0.96702,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27065",
+      "published": "2024-05-01T13:15:50.803",
+      "lastModified": "2026-10-15T01:17:38.730",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: do not compare internal table flags on updates Restore skipping transaction if table update does not modify flags.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2531f907d3e40a6173090f10670ae76d117ab27b",
+        "https://git.kernel.org/stable/c/3443e57654f90c9a843ab6a6040c10709fd033aa",
+        "https://git.kernel.org/stable/c/4a0e7f2decbf9bd72461226f1f5f7dcc4b08f139",
+        "https://git.kernel.org/stable/c/4d37f12707ee965d338028732575f0b85f6d9e4f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00263,
+        "percentile": 0.16927,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27053",
+      "published": "2024-05-01T13:15:50.223",
+      "lastModified": "2026-10-15T01:17:38.017",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wifi: wilc1000: fix RCU usage in connect path With lockdep enabled, calls to the connect function from cfg802.11 layer lead to the following warning: ============================= WARNING: suspicious RCU usage 6.7.0-rc1-wt+ #333 Not tainted ----------------------------- drivers/net/wireless/microchip/wilc1000/hif.c:386 suspicious rcu_dereference_check() usage! [...] stack backtrace: CPU: 0 PID: 100 Comm: wpa_supplicant Not taint",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-476",
+          "name": "NULL Pointer Dereference"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/205c50306acf58a335eb19fa84e40140f4fe814f",
+        "https://git.kernel.org/stable/c/4bfd20d5f5c62b5495d6c0016ee6933bd3add7ce",
+        "https://git.kernel.org/stable/c/5800ec78775c0cd646f71eb9bf8402fb794807de",
+        "https://git.kernel.org/stable/c/745003b5917b610352f52fe0d11ef658d6471ec2"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01648,
+        "percentile": 0.76019,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27052",
+      "published": "2024-05-01T13:15:50.170",
+      "lastModified": "2026-10-15T01:17:37.770",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wifi: rtl8xxxu: add cancel_work_sync() for c2hcmd_work The workqueue might still be running, when the driver is stopped. To avoid a use-after-free, call cancel_work_sync() in rtl8xxxu_stop().",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1213acb478a7181cd73eeaf00db430f1e45b1361",
+        "https://git.kernel.org/stable/c/156012667b85ca7305cb363790d3ae8519a6f41e",
+        "https://git.kernel.org/stable/c/3518cea837de4d106efa84ddac18a07b6de1384e",
+        "https://git.kernel.org/stable/c/58fe3bbddfec10c6b216096d8c0e517cd8463e3a"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00303,
+        "percentile": 0.21446,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27024",
+      "published": "2024-05-01T13:15:48.847",
+      "lastModified": "2026-10-15T01:17:36.780",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: net/rds: fix WARNING in rds_conn_connect_if_down If connection isn't established yet, get_mr() will fail, trigger connection after get_mr().",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2b505d05280739ce31d5708da840f42df827cb85",
+        "https://git.kernel.org/stable/c/786854141057751bc08eb26f1b02e97c1631c8f4",
+        "https://git.kernel.org/stable/c/907761307469adecb02461a14120e9a1812a5fb1",
+        "https://git.kernel.org/stable/c/997efea2bf3a4adb96c306b9ad6a91442237bf5b"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00312,
+        "percentile": 0.22392,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-27020",
+      "published": "2024-05-01T06:15:20.840",
+      "lastModified": "2026-10-15T01:17:36.473",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get() nft_unregister_expr() can concurrent with __nft_expr_type_get(), and there is not any protection when iterate over nf_tables_expressions list in __nft_expr_type_get(). Therefore, there is potential data-race of nf_tables_expressions list entry. Use list_for_each_entry_rcu() to iterate over nf_tables_expressions list in __nft_expr_type_get(), and use rcu_read_",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/01f1a678b05ade4b1248019c2dcca773aebbeb7f",
+        "https://git.kernel.org/stable/c/0b6de00206adbbfc6373b3ae38d2a6f197987907",
+        "https://git.kernel.org/stable/c/8d56bad42ac4c43c6c72ddd6a654a2628bf839c5",
+        "https://git.kernel.org/stable/c/934e66e231cff2b18faa2c8aad0b8cec13957e05"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00221,
+        "percentile": 0.11748,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26988",
+      "published": "2024-05-01T06:15:16.420",
+      "lastModified": "2026-10-15T01:17:35.437",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: init/main.c: Fix potential static_command_line memory overflow We allocate memory of size 'xlen + strlen(boot_command_line) + 1' for static_command_line, but the strings copied into static_command_line are extra_command_line and command_line, rather than extra_command_line and boot_command_line. When strlen(command_line) > strlen(boot_command_line), static_command_line will overflow. This patch just recovers strlen(command_line)",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0dc727a4e05400205358a22c3d01ccad2c8e1fe4",
+        "https://git.kernel.org/stable/c/2ef607ea103616aec0289f1b65d103d499fa903a",
+        "https://git.kernel.org/stable/c/46dad3c1e57897ab9228332f03e1c14798d2d3b9",
+        "https://git.kernel.org/stable/c/76c2f4d426a5358fced5d5990744d46f10a4ccea"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00281,
+        "percentile": 0.19173,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26982",
+      "published": "2024-05-01T06:15:15.610",
+      "lastModified": "2026-10-15T01:17:35.220",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: Squashfs: check the inode number is not the invalid value of zero Syskiller has produced an out of bounds access in fill_meta_index(). That out of bounds access is ultimately caused because the inode has an inode number with the invalid value of zero, which was not checked. The reason this causes the out of bounds access is due to following sequence of events: 1. Fill_meta_index() is called to allocate (via empty_meta_index()) a",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - BIOS",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/32c114a58236fe67141634774559f21f1dc96fd7",
+        "https://git.kernel.org/stable/c/4a1b6f89825e267e156ccaeba3d235edcac77f94",
+        "https://git.kernel.org/stable/c/5b99dea79650b50909c50aba24fbae00f203f013",
+        "https://git.kernel.org/stable/c/7def00ebc9f2d6a581ddf46ce4541f84a10680e5"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00282,
+        "percentile": 0.19277,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26974",
+      "published": "2024-05-01T06:15:14.313",
+      "lastModified": "2026-10-15T01:17:34.990",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: crypto: qat - resolve race condition during AER recovery During the PCI AER system's error recovery process, the kernel driver may encounter a race condition with freeing the reset_data structure's memory. If the device restart will take more than 10 seconds the function scheduling that restart will exit due to a timeout, and the reset_data structure will be freed. However, this data structure is used for completion notification",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-367",
+          "name": "Time-of-Check Time-of-Use Race Condition"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0c2cf5142bfb634c0ef0a1a69cdf37950747d0be",
+        "https://git.kernel.org/stable/c/226fc408c5fcd23cc4186f05ea3a09a7a9aef2f7",
+        "https://git.kernel.org/stable/c/4ae5a97781ce7d6ecc9c7055396535815b64ca4f",
+        "https://git.kernel.org/stable/c/7d42e097607c4d246d99225bf2b195b6167a210c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.002,
+        "percentile": 0.09143,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26961",
+      "published": "2024-05-01T06:15:12.437",
+      "lastModified": "2026-10-15T01:17:34.500",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: mac802154: fix llsec key resources release in mac802154_llsec_key_del mac802154_llsec_key_del() can free resources of a key directly without following the RCU rules for waiting before the end of a grace period. This may lead to use-after-free in case llsec_lookup_key() is traversing the list of keys in parallel with a key deletion: refcount_t: addition on 0; use-after-free. WARNING: CPU: 4 PID: 16000 at lib/refcount.c:25 refcoun",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/068ab2759bc0b4daf0b964de61b2731449c86531",
+        "https://git.kernel.org/stable/c/20d3e1c8a1847497269f04d874b2a5818ec29e2d",
+        "https://git.kernel.org/stable/c/49c8951680d7b76fceaee89dcfbab1363fb24fd1",
+        "https://git.kernel.org/stable/c/640297c3e897bd7e1481466a6a5cb9560f1edb88"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00242,
+        "percentile": 0.14292,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26960",
+      "published": "2024-05-01T06:15:12.323",
+      "lastModified": "2026-10-15T01:17:34.180",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: mm: swap: fix race between free_swap_and_cache() and swapoff() There was previously a theoretical window where swapoff() could run and teardown a swap_info_struct while a call to free_swap_and_cache() was running in another thread. This could cause, amongst other bad possibilities, swap_page_trans_huge_swapped() (called by free_swap_and_cache()) to access the freed memory for swap_map. This is a theoretical problem and I haven't",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0f98f6d2fb5fad00f8299b84b85b6bc1b6d7d19a",
+        "https://git.kernel.org/stable/c/1ede7f1d7eed1738d1b9333fd1e152ccb450b86a",
+        "https://git.kernel.org/stable/c/2da5568ee222ce0541bfe446a07998f92ed1643e",
+        "https://git.kernel.org/stable/c/363d17e7f7907c8e27a9e86968af0eaa2301787b"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0018,
+        "percentile": 0.07063,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26958",
+      "published": "2024-05-01T06:15:12.090",
+      "lastModified": "2026-10-15T01:17:33.950",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfs: fix UAF in direct writes In production we have been hitting the following warning consistently ------------[ cut here ]------------ refcount_t: underflow; use-after-free. WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0 Workqueue: nfsiod nfs_direct_write_schedule_work [nfs] RIP: 0010:refcount_warn_saturate+0x9c/0xe0 PKRU: 55555554 Call Trace: <TASK> ? __warn+0x9f/0x130 ? refcount_warn_satu",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/17f46b803d4f23c66cacce81db35fef3adb8f2af",
+        "https://git.kernel.org/stable/c/1daf52b5ffb24870fbeda20b4967526d8f9e12ab",
+        "https://git.kernel.org/stable/c/3abc2d160ed8213948b147295d77d44a22c88fa3",
+        "https://git.kernel.org/stable/c/4595d90b5d2ea5fa4d318d13f59055aa4bf3e7f5"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00246,
+        "percentile": 0.14689,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26957",
+      "published": "2024-05-01T06:15:11.953",
+      "lastModified": "2026-10-15T01:17:33.657",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: s390/zcrypt: fix reference counting on zcrypt card objects Tests with hot-plugging crytpo cards on KVM guests with debug kernel build revealed an use after free for the load field of the struct zcrypt_card. The reason was an incorrect reference handling of the zcrypt card object which could lead to a free of the zcrypt card object while it was still in use. This is an example of the slab message: kernel: 0x00000000885a7512-0x000",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "linux linux_kernel",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/394b6d8bbdf9ddee6d5bcf3e1f3e9f23eecd6484",
+        "https://git.kernel.org/stable/c/50ed48c80fecbe17218afed4f8bed005c802976c",
+        "https://git.kernel.org/stable/c/6470078ab3d8f222115e11c4ec67351f3031b3dd",
+        "https://git.kernel.org/stable/c/7e500849fa558879a1cde43f80c7c048c2437058"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00241,
+        "percentile": 0.1412,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26951",
+      "published": "2024-05-01T06:15:11.223",
+      "lastModified": "2026-10-15T01:17:33.440",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wireguard: netlink: check for dangling peer via is_dead instead of empty list If all peers are removed via wg_peer_remove_all(), rather than setting peer_list to empty, the peer is added to a temporary list with a head on the stack of wg_peer_remove_all(). If a netlink dump is resumed and the cursored peer is one that has been removed via wg_peer_remove_all(), it will iterate from that peer and then attempt to dump freed peers. ",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/13d107794304306164481d31ce33f8fdb25a9c04",
+        "https://git.kernel.org/stable/c/302b2dfc013baca3dea7ceda383930d9297d231d",
+        "https://git.kernel.org/stable/c/55b6c738673871c9b0edae05d0c97995c1ff08c4",
+        "https://git.kernel.org/stable/c/710a177f347282eea162aec8712beb1f42d5ad87"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00234,
+        "percentile": 0.13309,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26950",
+      "published": "2024-05-01T06:15:11.080",
+      "lastModified": "2026-10-15T01:17:33.187",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: wireguard: netlink: access device through ctx instead of peer The previous commit fixed a bug that led to a NULL peer->device being dereferenced. It's actually easier and faster performance-wise to instead get the device from ctx->wg. This semantically makes more sense too, since ctx->wg->peer_allowedips.seq is compared with ctx->allowedips_seq, basing them both in ctx. This also acts as a defence in depth provision against free",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-476",
+          "name": "NULL Pointer Dereference"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/09c3fa70f65175861ca948cb2f0f791e666c90e5",
+        "https://git.kernel.org/stable/c/493aa6bdcffd90a4f82aa614fe4f4db0641b4068",
+        "https://git.kernel.org/stable/c/4be453271a882c8ebc28df3dbf9e4d95e6ac42f5",
+        "https://git.kernel.org/stable/c/71cbd32e3db82ea4a74e3ef9aeeaa6971969c86f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00244,
+        "percentile": 0.14509,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26934",
+      "published": "2024-05-01T06:15:08.090",
+      "lastModified": "2026-10-15T01:17:32.510",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: USB: core: Fix deadlock in usb_deauthorize_interface() Among the attribute file callback routines in drivers/usb/core/sysfs.c, the interface_authorized_store() function is the only one which acquires a device lock on an ancestor device: It calls usb_deauthorize_interface(), which locks the interface's parent USB device. The will lead to deadlock if another process already owns that lock and tries to remove the interface, whether",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-667",
+          "name": "CWE-667"
+        }
+      ],
+      "vendors": [
+        "Linux Linux",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/07acf979da33c721357ff27129edf74c23c036c6",
+        "https://git.kernel.org/stable/c/122a06f1068bf5e39089863f4f60b1f5d4273384",
+        "https://git.kernel.org/stable/c/12d6a5681a0a5cecc2af7860f0a1613fa7c6e947",
+        "https://git.kernel.org/stable/c/1b175bc579f46520b11ecda443bcd2ee4904f66a"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0019,
+        "percentile": 0.08065,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -342,5 +2175,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.961134+00:00"
+  "updated_at": "2026-10-15T10:23:07.183718+00:00"
 }

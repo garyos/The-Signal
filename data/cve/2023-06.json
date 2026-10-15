@@ -2,6 +2,49 @@
   "month": "2023-06",
   "cves": [
     {
+      "id": "CVE-2023-3389",
+      "published": "2023-06-28T20:15:09.773",
+      "lastModified": "2026-10-14T21:17:16.660",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free vulnerability in the Linux Kernel io_uring subsystem can be exploited to achieve local privilege escalation. Racing a io_uring cancel poll request with a linked timeout can cause a UAF in a hrtimer. We recommend upgrading past commit ef7dfac51d8ed961b742218f526bd589f3900a59 (4716c73b188566865bdd79c3a6709696a224ac04 for 5.10 stable and 0e388fce7aec40992eadee654193cad345d62663 for 5.15 stable).",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/174577/Kernel-Live-Patch-Security-Notice-LSN-0097-1.html",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.10.y&id=4716c73b188566865bdd79c3a6709696a224ac04",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.15.y&id=0e388fce7aec40992eadee654193cad345d62663",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef7dfac51d8ed961b742218f526bd589f3900a59"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00669,
+        "percentile": 0.50804,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2023-20178",
       "published": "2023-06-28T15:15:09.880",
       "lastModified": "2026-10-08T22:17:22.420",
@@ -29,8 +72,142 @@
       },
       "epss": {
         "score": 0.05374,
-        "percentile": 0.9249,
-        "date": "2026-10-13"
+        "percentile": 0.92533,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-36660",
+      "published": "2023-06-25T22:15:21.337",
+      "lastModified": "2026-10-15T00:16:34.270",
+      "vulnStatus": "Modified",
+      "description": "The OCB feature in libnettle in Nettle 3.9 before 3.9.1 allows memory corruption.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://bugzilla.suse.com/show_bug.cgi?id=1212112",
+        "https://git.lysator.liu.se/nettle/nettle/-/commit/867a4548b95705291a3afdd66d76e7f17ba2618f",
+        "https://git.lysator.liu.se/nettle/nettle/-/compare/nettle_3.9_release_20230514...nettle_3.9.1_release_20230601",
+        "https://security.gentoo.org/glsa/202401-24"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01023,
+        "percentile": 0.62753,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-35827",
+      "published": "2023-06-18T22:15:09.373",
+      "lastModified": "2026-10-15T00:16:33.617",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in the Linux kernel through 6.3.8. A use-after-free was found in ravb_remove in drivers/net/ethernet/renesas/ravb_main.c.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens RUGGEDCOM RST2428P",
+        "Siemens SCALANCE XC-300/XR-300/XC-400/XR-500WG/XR-500 family",
+        "Siemens SCALANCE XCM-/XRM-/XCH-/XRH-300 family",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://lists.debian.org/debian-lts-announce/2024/01/msg00005.html",
+        "https://lore.kernel.org/lkml/cca0b40b-d6f8-54c7-1e46-83cb62d0a2f1%40huawei.com/T/",
+        "https://security.netapp.com/advisory/ntap-20230803-0003/",
+        "https://www.spinics.net/lists/netdev/msg886947.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.0019,
+        "percentile": 0.081,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-3268",
+      "published": "2023-06-16T19:15:14.707",
+      "lastModified": "2026-10-14T21:17:16.220",
+      "vulnStatus": "Modified",
+      "description": "An out of bounds (OOB) memory access flaw was found in the Linux kernel in relay_file_read_start_pos in kernel/relay.c in the relayfs. This flaw could allow a local attacker to crash the system or leak kernel internal information.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
+      "vendors": [
+        "Linux kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://cdn.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.3.2",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=43ec16f1450f4936025a9bdf1a273affdb9732c1",
+        "https://lists.debian.org/debian-lts-announce/2023/07/msg00030.html",
+        "https://lists.debian.org/debian-lts-announce/2023/10/msg00027.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00477,
+        "percentile": 0.39624,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -76,8 +253,51 @@
       },
       "epss": {
         "score": 0.00722,
-        "percentile": 0.52772,
-        "date": "2026-10-13"
+        "percentile": 0.52938,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-3141",
+      "published": "2023-06-09T20:15:10.327",
+      "lastModified": "2026-10-14T21:17:15.840",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free flaw was found in r592_remove in drivers/memstick/host/r592.c in media access in the Linux Kernel. This flaw allows a local attacker to crash the system at device disconnect, possibly leading to a kernel information leak.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://cdn.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.3.4",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=63264422785021704c39b38f65a78ab9e4a186d7",
+        "https://lists.debian.org/debian-lts-announce/2023/07/msg00030.html",
+        "https://lists.debian.org/debian-lts-announce/2023/10/msg00027.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00437,
+        "percentile": 0.364,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -121,8 +341,8 @@
       },
       "epss": {
         "score": 0.37858,
-        "percentile": 0.9852,
-        "date": "2026-10-13"
+        "percentile": 0.98529,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -133,5 +353,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.958784+00:00"
+  "updated_at": "2026-10-15T10:23:07.175057+00:00"
 }

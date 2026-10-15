@@ -2,6 +2,276 @@
   "month": "2022-10",
   "cves": [
     {
+      "id": "CVE-2022-42915",
+      "published": "2022-10-29T20:15:09.700",
+      "lastModified": "2026-10-14T19:16:52.730",
+      "vulnStatus": "Modified",
+      "description": "curl before 7.86.0 has a double free. If curl is told to use an HTTP proxy for a transfer with a non-HTTP(S) URL, it sets up the connection to the remote server by issuing a CONNECT request to the proxy, and then tunnels the rest of the protocol through. An HTTP proxy might refuse this request (HTTP proxies often only allow outgoing connections to specific port numbers, like 443 for HTTPS) and instead return a non-200 status code to the client. Due to flaws in the error/cleanup handling, this co",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-415",
+          "name": "CWE-415"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Jan/19",
+        "http://seclists.org/fulldisclosure/2023/Jan/20",
+        "https://curl.se/docs/CVE-2022-42915.html",
+        "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/37YEVVC6NAF6H7UHH6YAUY5QEVY6LIH2/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02926,
+        "percentile": 0.86804,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-42916",
+      "published": "2022-10-29T02:15:09.047",
+      "lastModified": "2026-10-14T19:16:52.987",
+      "vulnStatus": "Modified",
+      "description": "In curl before 7.86.0, the HSTS check could be bypassed to trick it into staying with HTTP. Using its HSTS support, curl can be instructed to use HTTPS directly (instead of using an insecure cleartext HTTP step) even when HTTP is provided in the URL. This mechanism could be bypassed if the host name in the given URL uses IDN characters that get replaced with ASCII counterparts as part of the IDN conversion, e.g., using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP) instead of the common ASCI",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-319",
+          "name": "CWE-319"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://seclists.org/fulldisclosure/2023/Jan/19",
+        "http://seclists.org/fulldisclosure/2023/Jan/20",
+        "http://www.openwall.com/lists/oss-security/2022/12/21/1",
+        "https://curl.se/docs/CVE-2022-42916.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01846,
+        "percentile": 0.7863,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-43680",
+      "published": "2022-10-24T14:15:53.323",
+      "lastModified": "2026-10-14T19:16:53.627",
+      "vulnStatus": "Modified",
+      "description": "In libexpat through 2.4.9, there is a use-after free caused by overeager destruction of a shared DTD in XML_ExternalEntityParserCreate in out-of-memory situations.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "http://www.openwall.com/lists/oss-security/2023/12/28/5",
+        "http://www.openwall.com/lists/oss-security/2024/01/03/5",
+        "https://github.com/libexpat/libexpat/issues/649",
+        "https://github.com/libexpat/libexpat/pull/616"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02457,
+        "percentile": 0.84105,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2021-46848",
+      "published": "2022-10-24T14:15:49.973",
+      "lastModified": "2026-10-14T13:17:13.013",
+      "vulnStatus": "Modified",
+      "description": "GNU Libtasn1 before 4.19.0 has an ETYPE_OK off-by-one array size check that affects asn1_encode_simple_der.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-193",
+          "name": "CWE-193"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://bugs.gentoo.org/866237",
+        "https://gitlab.com/gnutls/libtasn1/-/commit/44a700d2051a666235748970c2df047ff207aeb5",
+        "https://gitlab.com/gnutls/libtasn1/-/issues/32",
+        "https://lists.debian.org/debian-lts-announce/2023/01/msg00003.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02203,
+        "percentile": 0.82179,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3649",
+      "published": "2022-10-21T20:15:09.837",
+      "lastModified": "2026-10-14T14:17:27.320",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability was found in Linux Kernel. It has been classified as problematic. Affected is the function nilfs_new_inode of the file fs/nilfs2/inode.c of the component BPF. The manipulation leads to use after free. It is possible to launch the attack remotely. It is recommended to apply a patch to fix this issue. The identifier of this vulnerability is VDB-211992.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=d325dc6eb763c10f591c239550b8c7e5466a5d09",
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00034.html",
+        "https://security.netapp.com/advisory/ntap-20230214-0009/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00866,
+        "percentile": 0.57791,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3635",
+      "published": "2022-10-21T11:15:09.557",
+      "lastModified": "2026-10-14T14:17:27.017",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability, which was classified as critical, has been found in Linux Kernel. Affected by this issue is the function tst_timer of the file drivers/atm/idt77252.c of the component IPsec. The manipulation leads to use after free. It is recommended to apply a patch to fix this issue. VDB-211934 is the identifier assigned to this vulnerability.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/klassert/ipsec-next.git/commit/?id=3f4093e2bf4673f218c0bf17d8362337c400e77b",
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://vuldb.com/?id.211934",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00426,
+        "percentile": 0.35236,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2021-42553",
       "published": "2022-10-21T10:15:12.470",
       "lastModified": "2026-10-08T18:23:29.090",
@@ -30,8 +300,496 @@
       },
       "epss": {
         "score": 0.01069,
-        "percentile": 0.63946,
-        "date": "2026-10-13"
+        "percentile": 0.64127,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3625",
+      "published": "2022-10-21T06:15:09.577",
+      "lastModified": "2026-10-14T14:17:25.447",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability was found in Linux Kernel. It has been classified as critical. This affects the function devlink_param_set/devlink_param_get of the file net/core/devlink.c of the component IPsec. The manipulation leads to use after free. It is recommended to apply a patch to fix this issue. The identifier VDB-211929 was assigned to this vulnerability.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/klassert/ipsec-next.git/commit/?id=6b4db2e528f650c7fb712961aac36455468d5902",
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://vuldb.com/?id.211929",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00341,
+        "percentile": 0.25897,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-37454",
+      "published": "2022-10-21T06:15:09.333",
+      "lastModified": "2026-10-14T18:17:03.997",
+      "vulnStatus": "Modified",
+      "description": "The Keccak XKCP SHA-3 reference implementation before fdc6fef has an integer overflow and resultant buffer overflow that allows attackers to execute arbitrary code or eliminate expected cryptographic properties. This occurs in the sponge function interface.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "Siemens RUGGEDCOM APE1808",
+        "Siemens SIMATIC S7-1500 CPU 1518-4 PN/DP MFP",
+        "Siemens SIMATIC S7-1500 CPU 1518F-4 PN/DP MFP",
+        "Siemens SIPLUS S7-1500 CPU 1518-4 PN/DP MFP"
+      ],
+      "references": [
+        "https://csrc.nist.gov/projects/hash-functions/sha-3-project",
+        "https://eprint.iacr.org/2023/331",
+        "https://github.com/XKCP/XKCP/security/advisories/GHSA-6w4m-2xhg-2658",
+        "https://lists.debian.org/debian-lts-announce/2022/10/msg00041.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05765,
+        "percentile": 0.92965,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3565",
+      "published": "2022-10-17T19:15:10.257",
+      "lastModified": "2026-10-14T14:17:24.597",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability, which was classified as critical, has been found in Linux Kernel. Affected by this issue is the function del_timer of the file drivers/isdn/mISDN/l1oip_core.c of the component Bluetooth. The manipulation leads to use after free. It is recommended to apply a patch to fix this issue. The identifier of this vulnerability is VDB-211088.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-662",
+          "name": "CWE-662"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=2568a7e0832ee30b0a351016d03062ab4e0e0a3f",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00031.html",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00034.html",
+        "https://vuldb.com/?id.211088"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00353,
+        "percentile": 0.27308,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3564",
+      "published": "2022-10-17T19:15:10.187",
+      "lastModified": "2026-10-14T14:17:24.427",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability classified as critical was found in Linux Kernel. Affected by this vulnerability is the function l2cap_reassemble_sdu of the file net/bluetooth/l2cap_core.c of the component Bluetooth. The manipulation leads to use after free. It is recommended to apply a patch to fix this issue. The associated identifier of this vulnerability is VDB-211087.",
+      "cvss": {
+        "score": 7.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=89f9f3cb86b1c63badaf392a83dd661d56cc50b1",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00031.html",
+        "https://lists.debian.org/debian-lts-announce/2022/12/msg00034.html",
+        "https://security.netapp.com/advisory/ntap-20221223-0001/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01434,
+        "percentile": 0.7256,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3545",
+      "published": "2022-10-17T12:15:11.133",
+      "lastModified": "2026-10-14T14:17:24.250",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability has been found in Linux Kernel and classified as critical. Affected by this vulnerability is the function area_cache_get of the file drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c of the component IPsec. The manipulation leads to use after free. It is recommended to apply a patch to fix this issue. The identifier VDB-211045 was assigned to this vulnerability.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/klassert/ipsec-next.git/commit/?id=02e1a114fdb71e59ee6770294166c30d437bf86a",
+        "https://lists.debian.org/debian-lts-announce/2023/03/msg00000.html",
+        "https://lists.debian.org/debian-lts-announce/2023/05/msg00006.html",
+        "https://security.netapp.com/advisory/ntap-20221223-0003/"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00438,
+        "percentile": 0.36465,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-3534",
+      "published": "2022-10-17T09:15:12.750",
+      "lastModified": "2026-10-14T14:17:23.940",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability has been found in Linux Kernel up to 5.10.162/5.15.85/6.0.15/6.1.1. The impacted element is the function btf_dump_name_dups of the file tools/lib/bpf/btf_dump.c of the component libbpf. The manipulation leads to use after free. Upgrading to version 5.10.163, 5.15.86, 6.0.16, 6.1.2 and 6.2 is sufficient to resolve this issue. The identifier of the patch is c61650b869e0b6fb0c0a28ed42d928eea969afc8/fbe08093fb2334549859829ef81d42570812597d/8c64a8e76eb85d422af5ec60ccbf26e3ead8c333/a73",
+      "cvss": {
+        "score": 8.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        },
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Kernel",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=93c660ca40b5d2f7c1b1626e955a8e9fa30e0749",
+        "https://vuldb.com/cve/CVE-2022-3534",
+        "https://vuldb.com/vuln/211032",
+        "https://vuldb.com/vuln/211032/cti"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00941,
+        "percentile": 0.60136,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-42720",
+      "published": "2022-10-14T00:15:09.533",
+      "lastModified": "2026-10-14T19:16:51.560",
+      "vulnStatus": "Modified",
+      "description": "Various refcounting bugs in the multi-BSS handling in the mac80211 stack in the Linux kernel 5.1 through 5.19.x before 5.19.16 could be used by local attackers (able to inject WLAN frames) to trigger use-after-free conditions to potentially execute code.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/169951/Kernel-Live-Patch-Security-Notice-LSN-0090-1.html",
+        "http://www.openwall.com/lists/oss-security/2022/10/13/5",
+        "https://bugzilla.suse.com/show_bug.cgi?id=1204059",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless.git/commit/?id=0b7808818cb9df6680f98996b8e9a439fa7bcc2f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.009,
+        "percentile": 0.58817,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-41674",
+      "published": "2022-10-14T00:15:09.477",
+      "lastModified": "2026-10-14T18:17:06.313",
+      "vulnStatus": "Modified",
+      "description": "An issue was discovered in the Linux kernel before 5.19.16. Attackers able to inject WLAN frames could cause a buffer overflow in the ieee80211_bss_info_update function in net/mac80211/scan.c.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-787",
+          "name": "Out-of-Bounds Write"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/169951/Kernel-Live-Patch-Security-Notice-LSN-0090-1.html",
+        "http://www.openwall.com/lists/oss-security/2022/10/13/2",
+        "https://bugzilla.suse.com/show_bug.cgi?id=1203770",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/net/mac80211/scan.c"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.04144,
+        "percentile": 0.90688,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-42719",
+      "published": "2022-10-13T23:15:11.597",
+      "lastModified": "2026-10-14T19:16:51.327",
+      "vulnStatus": "Modified",
+      "description": "A use-after-free in the mac80211 stack when parsing a multi-BSSID element in the Linux kernel 5.2 through 5.19.x before 5.19.16 could be used by attackers (able to inject WLAN frames) to crash the kernel and potentially execute code.",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "http://packetstormsecurity.com/files/171005/Kernel-Live-Patch-Security-Notice-LNS-0091-1.html",
+        "http://www.openwall.com/lists/oss-security/2022/10/13/2",
+        "http://www.openwall.com/lists/oss-security/2022/10/13/5",
+        "https://bugzilla.suse.com/show_bug.cgi?id=1204051"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01353,
+        "percentile": 0.71025,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-20422",
+      "published": "2022-10-11T20:15:12.693",
+      "lastModified": "2026-10-14T16:17:22.610",
+      "vulnStatus": "Modified",
+      "description": "In emulation_proc_handler of armv8_deprecated.c, there is a possible way to corrupt memory due to a race condition. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android kernelAndroid ID: A-237540956References: Upstream kernel",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-667",
+          "name": "CWE-667"
+        }
+      ],
+      "vendors": [
+        "Android",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://source.android.com/security/bulletin/2022-10-01",
+        "https://cert-portal.siemens.com/productcert/html/ssa-770721.html",
+        "https://cert-portal.siemens.com/productcert/html/ssa-794697.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00163,
+        "percentile": 0.05151,
+        "date": "2026-10-14"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2022-20421",
+      "published": "2022-10-11T20:15:12.533",
+      "lastModified": "2026-10-14T15:16:59.690",
+      "vulnStatus": "Modified",
+      "description": "In binder_inc_ref_for_node of binder.c, there is a possible way to corrupt memory due to a use after free. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android kernelAndroid ID: A-239630375References: Upstream kernel",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Android",
+        "Siemens SIMATIC S7-1500 TM MFP - GNU/Linux subsystem"
+      ],
+      "references": [
+        "https://lists.debian.org/debian-lts-announce/2022/11/msg00001.html",
+        "https://source.android.com/security/bulletin/2022-10-01",
+        "https://www.debian.org/security/2022/dsa-5257",
+        "https://cert-portal.siemens.com/productcert/html/ssa-770721.html"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00727,
+        "percentile": 0.53124,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -70,8 +828,8 @@
       },
       "epss": {
         "score": 0.03409,
-        "percentile": 0.88601,
-        "date": "2026-10-13"
+        "percentile": 0.88667,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -110,8 +868,8 @@
       },
       "epss": {
         "score": 0.03409,
-        "percentile": 0.88601,
-        "date": "2026-10-13"
+        "percentile": 0.88666,
+        "date": "2026-10-14"
       },
       "media": {
         "in_news": false,
@@ -122,5 +880,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-14T10:30:45.957491+00:00"
+  "updated_at": "2026-10-15T10:23:07.168562+00:00"
 }
