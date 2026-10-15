@@ -1,6 +1,89 @@
 {
-  "fetched_at": "2026-10-14T14:15:46.882135+00:00",
+  "fetched_at": "2026-10-15T07:54:20.587968+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10138",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10138",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10138.mp3",
+      "title": "SANS Stormcast Thursday, October 15th, 2026: Orphaned VBA Macros in AutoCAD DWG Files; Ledger Wallet Hardware Implants; Docker Hub Token Bug (CVE-2026-105445); curl HTTP/2 RCE",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 15th, 2026: Orphaned VBA Macros in AutoCAD DWG Files; Ledger Wallet Hardware Implants; Docker Hub Token Bug (CVE-2026-105445); curl HTTP/2 RCE",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers hidden Visual Basic for Applications (VBA) macros left behind in AutoCAD drawings, Ledger hardware crypto wallets found with LTE implants that steal seed phrases, a Docker Hub account conversion flaw that exposed personal access tokens, and a curl update fixing a remote code execution bug in HTTP/2 uploads.",
+          "links": []
+        },
+        {
+          "heading": "Orphaned VBA Projects Inside DWG Files",
+          "links": []
+        },
+        {
+          "heading": "Didier Stevens found AutoCAD DWG files whose VBA projects are no longer referenced but still present inside the file, likely left behind by an AutoLISP delete command, and shows a new way to extract them.",
+          "links": [
+            "https://isc.sans.edu/diary/Orphaned%20VBA%20Projects%20Inside%20DWG%20Files/33420"
+          ]
+        },
+        {
+          "heading": "Ledger Crypto Wallet Supply Chain Attack: Hardware Implants",
+          "links": []
+        },
+        {
+          "heading": "Ledger wallets sold through authorized resellers, first in Asia and recently by MediaMarkt in Europe, were found with LTE modules and SIM cards that exfiltrate the seed phrase. Reports put losses at up to $100 million.",
+          "links": [
+            "https://www.zetter-zeroday.com/who-is-planting-backdoors-in-ledger-crypto-wallets/"
+          ]
+        },
+        {
+          "heading": "Docker Hub Account Migration Bug (CVE-2026-105445)",
+          "links": []
+        },
+        {
+          "heading": "Converting a personal Docker Hub account to an organization moved the old user's personal access tokens to a target user without confirmation, letting an attacker authenticate as that user. Docker fixed the issue and notified affected users.",
+          "links": [
+            "https://www.docker.com/blog/docker-hub-security-advisory-cve-2026-105445/"
+          ]
+        },
+        {
+          "heading": "curl Patches HTTP/2 Upload Remote Code Execution Flaw",
+          "links": []
+        },
+        {
+          "heading": "A new curl release fixes several vulnerabilities, including remote code execution triggered when uploading a file over HTTP/2 to a malicious server. A proof of concept is available.",
+          "links": [
+            "https://thehackernews.com/2026/10/curl-patches-http2-upload-flaw-after.html"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-15T02:00:02+00:00",
+      "duration_seconds": 368,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10138.mp3",
+      "audio_length_bytes": 5159701,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10138",
+      "categories": [
+        "autocad",
+        "dwg",
+        "vba macro",
+        "ledger wallet",
+        "supply chain",
+        "docker hub",
+        "access token",
+        "curl",
+        "http/2",
+        "rce"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10138",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday October 15th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich recording today from\n Amsterdam, Netherlands. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Didier today provided us with an\n update on a problem that he discussed in the past and\n that's Visual Basic for Applications scripts inside of\n AutoCAD files. AutoCAD files just like Office documents can\n carry the scripts with the same devastating consequences\n if you start a malicious Visual Basic for Applications\n script inside your AutoCAD files. Now back when Didier\n discovered this issue he wrote an extension to his scripts to\n extract these OLE documents and with that the Visual Basic\n for Applications scripts from the AutoCAD files. But lately\n Didier has come across some files that no longer had a\n pointer actually pointing to the Visual Basic for\n Applications file or the OLE document containing them\n inside the AutoCAD file. So Didier, well as usual, came up\n with another trick to extract the Visual Basic for\n Applications script from the file. Now the other odd thing\n is how these particular scripts ended up being no\n longer referenced by the AutoCAD file and with that\n also being ineffective. Well Didier suggests that there is\n an AutoLISP command that may have been used to delete\n these files which actually doesn't delete the file but\n well as so often just deletes the pointer pointing to the\n file so they are no longer effective and visible but\n still present inside the AutoCAD file. Cryptocurrency\n wallets made by Ledger apparently have been\n distributed with hardware implants. This apparently\n started happening in early spring this year and Ledger\n had been notified at the time but it hasn't really been made\n public until more recently and we now had wallets sold in\n Asia initially being found with these implants and more\n recently like in the last couple weeks also Ledger\n wallets sold by MediaMarkt, a large European electronics\n retailer. Apparently all these wallets were sold by\n authorized Ledger resellers, however it's not clear where\n these wallets were actually made whether or not they were\n made by authorized manufacturers by Ledger or\n whether they came from some kind of third party. The\n implants include an LTE module with a SIM card that is then\n being used to exfiltrate the seed phrase used by the wallet\n in order to then steal the cryptocurrency and according\n to some reports up to a hundred million dollars in\n cryptocurrencies have been stolen so far. If you're using\n a Ledger wallet please be careful and make sure that it\n doesn't contain an implant. Sadly that may require\n actually opening up and physically destroying the\n wallet. So probably best thing to do right now is just move\n your cryptocurrency off any Ledger wallets that you may\n have. And Docker Hub fixed an interesting security\n vulnerability that came about when a user did convert their\n personal account to an organization. In this\n conversion the user is able to designate a target user that\n is basically then the owner of the repository and in the\n process also the old user's personal access tokens are\n moved to that account. Now the problem with this is that the\n old owner still has access to these personal access tokens\n of course and the new owner is never really asked to confirm.\n So the end result is that someone could essentially add\n personal access tokens to an arbitrary user's account and\n then use them to authenticate as this user. Docker Hub has\n fixed this issue now and this should be a problem. They also\n state that they went back and looked at prior conversions of\n accounts and made sure nothing bad happened there and also\n notified users of the fact that the personal access\n tokens that were added to their account could have been\n used by a prior user of those tokens. So double check in\n case you were affected by this issue but should all be taken\n care of by now. And the curl project did release an update\n fixing a number of vulnerabilities one of them\n allows remote code execution. In order to trigger the\n vulnerability curl has to be used to upload a file over\n HTTP/2 to a malicious server. The malicious server can then\n trigger the remote code execution vulnerability.\n Daniel Stenberg the author of curl has a great detailed blog\n post about the vulnerability how it happened and how it was\n fixed. There is a proof of concept available for this\n vulnerability. So something that you probably want to fix\n if you are using curl to upload files to servers that\n you don't fully trust. Well and that's it for today.\n Thanks for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10136",
       "show": "stormcast",
@@ -3513,63 +3596,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10030",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, July 30th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Well, a little sort of postscript to\n Apple's patches from a couple days ago. There were three\n patches that addressed malicious crafted ZIP archives\n that may bypass Gatekeeper. Now, these affect the BOM,\n LibArchive and other components. That's why they're\n three different CVE assigns to what sounds essentially like\n the same vulnerability. This also sounds very much like the\n vulnerability that was discussed by the Mysk blogs\n from, I think, early this week is when I covered it just a\n couple days before the Apple patches were released. Now,\n Mysk does state that this release does not fix the\n problem that they actually discovered and described. I\n haven't had a chance yet to test this myself. Now, there's\n another bug that Mysk did discuss in their blog that is\n actually fixed. And that's the ability of websites to access\n the clipboard. And that's certainly a rather unpleasant\n issue. I don't want to call it critical. But yes, that\n particular issue is patched. But apparently, the sort of\n archive, and I think Mysk was particularly talking about Tor\n archives, not about ZIP archives. So maybe there are\n different vulnerabilities in other sort of no archive or\n compressed file format packages. And Michael\n Kaczynski with Lava HQ did publish a blog post with an\n interesting old vulnerability in IPMI. IPMI is the out-of\n -band management protocol. It's implemented by many\n baseboard management controllers or BMCs in order\n to allow access to systems that are essentially shut\n down. So you can remote power up and you can reboot systems\n and basically get the basic access to a system in order to\n recover it, for example, from a crash. What's also kind of\n interesting is that this interface is often enabled as\n long as the system is plugged into power and plugged into\n the network, even if it appears to be turned off. Now,\n the problem they found is that the IPMI authentication\n protocol that has been around for 20-something years may\n return the HMAC SHA-1 hash of the admin password. It uses\n the HMAC SHA-1 of the admin's password as a key here for\n this authentication protocol. And yes, SHA-1 is not that\n terrible, difficult to break. And as a result, well, 30% of\n the passwords that they could collect from scanning the\n internet were recoverable. Now, this interface is\n reachable on UDP port 623. And you basically would establish\n a connection to this port as an attacker. And then during\n the initial authentication handshake, you would receive\n the hash of the admin password. First thing, of\n course, UDP port 623 shouldn't be exposed to the world in the\n first place. And definitely any kind of control plane\n communication like this has to be carefully controlled. And\n these IPMI interfaces probably should be connected to some\n kind of administrative network that's also not reachable from\n outside your network. And Broadcom did release updates\n for its VMware virtualization products. And now many of them\n are affected, vCenter, VMware Fusion, and the like. But\n there are two vCenter vulnerabilities that\n particular stick out. One is a directory traversal in syslog.\n Would like to know more details about this. Sounds\n really interesting, but apparently can lead to\n arbitrary code execution by just sending syslog packets to\n your vCenter server. There's also an authentication bypass\n vulnerability that can lead to then arbitrary code execution\n that can be exploited by just connecting via the network to\n the admin interface. So definitely remotely\n exploitable. Again, vCenter admin interfaces probably\n shouldn't be exposed to the internet. And you probably\n also shouldn't accept random syslog messages from across\n the internet. But in the second one, well, it may be\n something that I could see people allowing to happen to\n collect from any kind of remote sites, some syslogs.\n And when I often talk about vulnerabilities in big\n expensive enterprise gateways, sometimes it's also the small\n sort of free home or small business gateways that have\n problems. OpenWrt came up with a new version. Now this fixes\n the current major version as well as the one before that\n only receives security updates at this point. There's one\n vulnerability in particular I want to point a little bit\n attention to and that's a buffer overflow in ODH CDP.\n This is the DHCP server that comes with OpenWrt. The DHCP\n v6 feature does have this stack based buffer overflow\n that may lead to arbitrary code execution. In particular,\n of course, if stack canaries or ASLR is not enabled, which\n you often have sort of in these embedded devices. That's\n something that specifically sort of point out in the\n advisory. CVSS score of this is 9.8. So definitely get your\n devices updated. And also there are some devices that\n you may not realize run this ODH CDP. I think GLINet is\n pretty heavily based on OpenWrt, their firmware. So\n that may be one spot where you should expect an update if\n they haven't already pushed it out. Well, and this is it for\n today. So thanks for listening. Thanks for\n subscribing. Thanks for recommending this podcast. And\n as always, talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10028",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10028",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10028.mp3",
-      "title": "SANS Stormcast Wednesday, July 29th, 2026: AutoIT Payload Injector; Appele Patches; SourTrade Malware; NGINX Exploit",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, July 29th, 2026: AutoIT Payload Injector; Appele Patches; SourTrade Malware; NGINX Exploit",
-      "show_notes": [
-        {
-          "heading": "AutoIT Payload Injector",
-          "links": [
-            "https://isc.sans.edu/diary/AutoIT%20Payload%20Injector%20/33192"
-          ]
-        },
-        {
-          "heading": "Apple Security Update",
-          "links": [
-            "https://support.apple.com/en-us/100100"
-          ]
-        },
-        {
-          "heading": "SourTrade: Browser-Assembled Malware Delivered Through Malvertising",
-          "links": [
-            "https://blog.confiant.com/p/sourtrade-browser-assembled-malware"
-          ]
-        },
-        {
-          "heading": "NGINX Exploit CVE-2026-42530, CVE-2026-42533",
-          "links": [
-            "https://github.com/DepthFirstDisclosures/Nginx-Rift/tree/main"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-29T02:00:02+00:00",
-      "duration_seconds": 419,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10028.mp3",
-      "audio_length_bytes": 5873813,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10028",
-      "categories": [
-        "nginx",
-        "sourtrade",
-        "apple",
-        "autoit"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10028",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, July 29th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in applied\n cybersecurity. Well, and AutoIT is back. I'm not sure\n if it ever left, but Xavier found an AutoIT sample that\n actually sort of has a new trick up its sleeve. Xavier\n noticed a large number of emails, that's of these fake\n bank emails that claim to have some kind of statement,\n account details also attached. That's a RAR file. Now, once\n unpacked, and then it turns out that there is several\n levels of PowerShell obfuscation to go through in\n this particular script. But what you end up with in the\n end is a PowerShell script that is interesting because it\n will actually inject shell code into a binary. The binary\n that's being used here is charmap.exe. If you're not\n familiar with Windows, it's like the little sort of\n keyboard picker that you have as an option to basically\n select some of the less used characters if you ever would\n like to type them. Now, it launches charmap.exe and then\n injects the malicious shell code in it, basically sort of\n using it as a vessel to hide the malicious activity.\n Interesting kind of strategy. And of course, we have seen\n similar sort of shell code injections in different tools\n before, but using scripting language like auto IT for it.\n And to me, at least, the use of charmap.exe is also kind of\n unique here. And probably they're using this tool\n because it's not that often used, but also does not\n necessarily raise a suspicion if it's running on a system.\n And Apple yesterday did its usual update of everything.\n And with this did again patch multiple security\n vulnerabilities, close to 200 if you sort of count across\n the different operating systems. There are updates now\n for iOS, macOS, iPadOS, tvOS, watches, essentially anything\n Apple publishes. So we are now up to iOS and macOS version 26\n .6. And we also got updates for macOS 14 and 15. The\n vulnerabilities themselves are not very remarkable. It's sort\n of the usual mix that they get from Apple. What's sort of\n interesting is that there's actually no zero date this\n time, nothing that is already being exploited. The number is\n a little bit higher than what we have seen sort of in prior\n similar releases. Also, remember, that was a few weeks\n ago, sort of a just security release without any functional\n updates that was sort of released to patch more\n vulnerabilities. There's certainly a little bit of\n impact here of sort of not AI reported vulnerabilities, but\n overall, it's not as drastic as we have seen it from other\n companies like Microsoft or Oracle lately. Maybe Apple is\n a little bit still behind here and sort of picking up on the\n AI stuff or maybe some of the minor vulnerabilities were not\n included here. Can't really tell from the release. As\n usual, the descriptions are very short. And Confiant, a\n company that is dealing with intelligence and information\n around advertising risks, so malware-like, has published a\n blog post with an interesting piece of malware that they're\n calling sour trade. Now, where sour trade is different is how\n it actually creates the malware on the victim's\n system. It starts out with the usual, it's malware-tizing,\n particular crypto traders are being targeted here, not with\n the usual crypto scams, but instead with malware. When the\n malware starts to get downloaded, it first downloads\n a configuration file. This configuration file does\n actually install or deliver a unique seed that's then being\n used to create a pseudorandom stream of bytes that is then\n being used to decrypt the malware as it's being pulled\n from various servers and then assembled in the client. Now,\n with this particular technology, the attacker is\n able to essentially deliver a unique byte stream to every\n victim. And that, of course, makes it more difficult to\n detect this attack on the network. And also, since it's\n assembled then in the browser on the endpoint, that makes it\n a bit more difficult for any endpoint protection products\n to intercept the malware before it's being executed.\n Overall, interesting and fairly complex scheme. I\n wonder if maybe it's a little bit too fragile and how well\n this all works. But yeah, if you're into malware analysis,\n definitely something to look at in case you're running into\n some variation of this particular system in your\n environment. And researchers from Application Security Lab\n Depth First have created a proof of concept exploit for\n an NGINX vulnerability that was patched around the 15th. I\n think I mentioned it back then because it's a remote code\n execution vulnerability. It is a heat-based buffer overflow.\n So there was no some idea that address space layout\n randomization may prevent effective exploitation. Well,\n this proof of concept exploit does work around address space\n layout randomization. So it is a reliable exploit for this\n vulnerability even on most larger servers and the like\n that often do employ this defensive mechanism. So it's\n not just one of those IoT vulnerabilities as was\n originally sort of proposed. Interesting to have a proof of\n concept that soon in particular one that's as\n complete as this one. So definitely make sure that\n you're patching NGINX as quickly as possible if you\n haven't done that yet. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast and thanks for subscribing to it\n and talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
