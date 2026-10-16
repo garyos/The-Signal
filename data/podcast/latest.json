@@ -1,6 +1,93 @@
 {
-  "fetched_at": "2026-10-15T13:50:52.341406+00:00",
+  "fetched_at": "2026-10-16T07:47:23.486972+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10140",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10140",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10140.mp3",
+      "title": "SANS Stormcast Friday, October 16th, 2026: Panchan Crypto Mining Worm; Exploited 0-Days in Cisco Secure Email Gateway (CVE-2026-76519), Palo Alto PAN-OS (CVE-2026-0322) and Ivanti Connect Secure",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 16th, 2026: Panchan Crypto Mining Worm; Exploited 0-Days in Cisco Secure Email Gateway (CVE-2026-76519), Palo Alto PAN-OS (CVE-2026-0322) and Ivanti Connect Secure",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers the Panchan crypto mining worm spreading over SSH, plus three actively exploited zero-day vulnerabilities: a root-level remote code execution flaw in Cisco Secure Email Gateway, an authenticated root RCE in Palo Alto Networks' management interface, and a chained Ivanti Connect Secure exploit documented by Volexity.",
+          "links": []
+        },
+        {
+          "heading": "Panchan's Mining Island [Guest Diary]",
+          "links": []
+        },
+        {
+          "heading": "SANS.edu intern Zachary Norwood analyzes Panchan, a Golang crypto mining worm that spreads via SSH, steals SSH keys, installs a rootkit and uses Discord for command and control, using FakeNet-NG for dynamic analysis.",
+          "links": [
+            "https://isc.sans.edu/diary/Panchan%27s%20Mining%20Island%20%5BGuest%20Diary%5D/33426"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Email Gateway 0-Day (CVE-2026-76519)",
+          "links": []
+        },
+        {
+          "heading": "With the reputation feature enabled, the advanced malware protection feature lets attackers write arbitrary files and execute code as root. The flaw is already exploited and there is no workaround, so patch and review Cisco's indicators of compromise.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-afw-zqYJkjxp"
+          ]
+        },
+        {
+          "heading": "Palo Alto Networks 0-Day (CVE-2026-0322)",
+          "links": []
+        },
+        {
+          "heading": "An already exploited, authenticated remote code execution vulnerability that runs code as root. Exploitation requires an exposed management interface.",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-0322"
+          ]
+        },
+        {
+          "heading": "Ivanti Connect Secure 0-Day (CVE-2026-104935)",
+          "links": []
+        },
+        {
+          "heading": "Volexity found three chained vulnerabilities: an authentication bypass, an arbitrary file write leading to remote code execution, and a privilege escalation. Ivanti patched the first two under one CVE; the privilege escalation appears unpatched.",
+          "links": [
+            "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+            "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US"
+          ]
+        },
+        {
+          "heading": "No Podcast on Monday, Oct. 19th.",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-16T02:00:02+00:00",
+      "duration_seconds": 359,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10140.mp3",
+      "audio_length_bytes": 5030754,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10140",
+      "categories": [
+        "panchan",
+        "crypto miner",
+        "ssh worm",
+        "cisco secure email",
+        "palo alto",
+        "pan-os",
+        "ivanti",
+        "volexity",
+        "0-day"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10140",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday October 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Amsterdam, Netherlands. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Incident Response. In Diaries today we have yet another\n diary from one of our undergraduate interns, Zachary\n Norwood. And Zachary is writing about Panchan's Mining\n Island. Panchan's worm is a crypto miner worm. It's\n spreading via SSH to Unix systems and then, well, it\n gains a foothold by first of all stealing SSH keys in order\n to gain access to possibly other systems, but also\n installing a rootkit in order to gain persistence on the\n system. This worm is a little bit different than like from\n your average Mirai worm and similar worm that of course\n are still very commonly infecting insecure Linux\n systems, in particular via bad SSH passwords. It is written\n in Golang, so that's a little bit unusual. And also does\n implement some peer-to-peer command control channel where\n this particular specimen that Zachary looked at was using\n Discord as one of its command and control channels. Now, one\n way that Zachary used to analyze this worm and figure\n out what the worm was actually doing and what it was after\n was the use of the FakeNet-NG package. FakeNet-NG allows you\n to essentially simulate a network environment for\n malware and then just use simple dynamic analysis, which\n tends to be sort of the quickest way to get an\n overview of what commodity malware like this worm is\n doing on your system. And that's also how Zachary then\n discovered, for example, the Discord connection. And then\n be aware if you are using the Cisco Secure Email Gateway,\n apparently the advanced malware protection feature of\n this gateway, if you have the reputation feature enabled,\n does it allow hackers to write arbitrary files? Yes, malware\n on the system. And then use these files to execute code as\n root. So it looks like a couple of things went wrong\n here in this particular case, but we have now a little bit\n of history with similar vulnerabilities with the\n secure email gateway. First of all, there's probably some\n kind of directory traversal vulnerability, allowing saving\n of files outside of the intended directory. Secondly,\n yes, to make things more interesting, of course, all\n code is executed as root, in particular for devices that\n have a fairly large attack cross-section like this secure\n email gateway. This vulnerability is already being\n exploited. A patch has been made available, and there is\n no real workaround for this vulnerability. So patch\n quickly and also review Cisco's guidance as to\n detecting indicators of compromise in case your system\n was unlucky enough to be part of that early wave of targets.\n Not to be left behind. Palo Alto also released an update\n for an already attacked vulnerability. And this one is\n also a remote code execution vulnerability. But unlike\n Cisco, at least this one requires authentication.\n However, just like Cisco code is also being executed as\n root. Now in order to exploit this vulnerability, you must\n expose your management interface, something that you\n should certainly avoid and probably know by now if you\n have listened to this podcast a couple times. Either way,\n apply the update. Again, this vulnerability is also already\n being attacked. And well, good things usually come in threes.\n So we also got a zero-day vulnerability that was patched\n by Ivanti a couple days ago. Must have missed it. Sometimes\n hard to keep those zero-days apart. Volexity actually has a\n real good write up about what exactly happened here. And I\n will include a link to Volexity as well as to the\n Ivanti advisory. Volexity identified three different\n vulnerabilities here that are chained to full system\n compromise. The first one is an authentication bypass\n vulnerability followed by an arbitrary file write, speak\n remote code execution vulnerability and then finally\n a privilege escalation of vulnerability. Now Ivanti\n decided to patch the first two vulnerabilities only gave them\n one CVE number. So basically combined both vulnerabilities\n into one. The privilege escalation vulnerability as of\n right now appears to be not yet patched. Also sorry for\n that busy Friday with three different products with\n currently exploited vulnerabilities that you need\n to attend to. Hope you're not running all three to give you\n a little bit more time patching and to avoid\n bothering you with more zero-day vulnerabilities. Also because\n of my travel schedule I will not publish a podcast on\n Monday. So thanks for listening and talk to you\n again on Tuesday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10138",
       "show": "stormcast",
@@ -3538,64 +3625,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10032",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday, July 31st, 2026\n edition of the SANS and at Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Master's Degree Program in Information\n Security Engineering. Today we have yet another diary from\n one of our undergraduate interns. These bachelor's\n degree students are working with our honeypots to look for\n new, exciting, interesting events. And well, in this\n case, Adam Kahn has found kind of an interesting event and\n that's a little bit more advanced hardware\n fingerprinting of the honeypot after it was compromised using\n a weak SSH password. Now typically these honeypots, if\n the attacker finds them valuable, are often used for\n crypto coin mining. And that may be the intent of this\n particular attack as well. A couple of interesting things\n here. It's looking very carefully at different\n hardware properties. So, for example, it's looking for an\n Nvidia video card. Maybe we'll soon see some of these attacks\n trying to use honeypots for AI training instead of crypto\n coin mining. It's also looking whether it has more than one\n gigabyte of RAM and whether the user it's connecting as\n can actually escalate privileges to root via sudo.\n So, this is a little bit more detailed fingerprinting than\n we saw in the past. We have seen sometimes crypto coin\n miners being deployed on very inadequate systems that didn't\n really mine any crypto coins. And maybe attackers are\n getting a little bit more discriminating here just to\n also attract less attention by hacking multiple devices and\n building these large botnet fleets that really don't\n provide any value. Now, these honeypot attacks, they often\n take advantage of well-known default passwords that are\n commonly associated with more low-end devices like DVRs and\n the like. And that's why they are a little bit more\n discriminating here, trying to find better hardware. Well,\n maybe they should be going after Cisco equipment. Cisco\n did patch Warner building their firewall management\n center. They call it a static user credential that they\n patched. Others call it a back door. Luckily, it only\n provides access to a low -privileged user account. But\n still, it's your firewall management center. So,\n basically, the software that you are trusting to manage all\n your firewalls. I'm sure the account is low-level enough\n where there's absolutely no possibility that any of the\n about dozen or so Unix and Linux approach escalation\n flaws apply to the particular operating system here. Cisco\n has released a patch for this vulnerability, but the\n vulnerability is also already being exploited in the wild.\n So, as usual, assume compromise. In particular, if\n access to the firewall management center is connected\n to the internet. And a paper going to be presented by\n several Austrian researchers at an upcoming USENIX security\n symposium is going to reveal some interesting\n vulnerabilities in end-to-end encrypted chat systems when it\n comes to group messages. Now, this is for a change, not a\n paper that talks about decrypting the messages or\n anything like that, but instead about how different\n participants in a group chat may intentionally be served\n different content. So, the threat is here that a\n malicious participant in the group chat is, for example,\n putting up some item for vote and is sending sort of\n different proposals to different participants in the\n group chat. And then, of course, everybody agrees to\n the proposal, but they don't realize that they agreed to\n very different things. So, the way this works is that there\n are two ways how group chats work. One is where the message\n is being sent to a server and then the server distributes\n these messages to individuals within the group chat. The\n problem with this, of course, is with end-to-end encryption\n that sort of puts the server here in a machine in the\n middle position. So, instead, some chat systems offer the\n option to send messages to each user individually from\n the sender. And then, of course, the sender has the\n option to send different messages to different\n recipients. As long as the message ID, so the message\n sequence essentially, is the same, this usually goes\n undetected according to the paper. Now, the full paper is\n not public yet. I'll link to the Usenix abstract and also\n to an article by Heise that does discuss this paper in\n more detail. Well, and that's it for today. Just the two\n small items here. There are updates for IBM WebSphere that\n you probably should take a look at. And then yet another\n flaw in NGINX, this time in HTTP 3. So, keep an eye for\n patches for either of these two products. And that's it\n for today. Thanks for listening. Thanks for\n subscribing. Thanks for liking this podcast and doing\n whatever you do in order to get us a couple more\n listeners. And talk to you again on Monday. Bye. Bye.\n Bye. Bye. Bye. Thank you.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10030",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10030",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10030.mp3",
-      "title": "SANS Stormcast Thursday, July 30th, 2026: Apple Patches; IPMI Admin PW Hash Leak; VMWare Patches; OpenWRT Patch",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, July 30th, 2026: Apple Patches; IPMI Admin PW Hash Leak; VMWare Patches; OpenWRT Patch",
-      "show_notes": [
-        {
-          "heading": "Apple Patch Summary / Postscript",
-          "links": [
-            "https://isc.sans.edu/diary/Apple%20Patches%20Everything%20%28July%202026%29/33196"
-          ]
-        },
-        {
-          "heading": "IPMI Admin Password Hash Leak",
-          "links": [
-            "https://lavahq.io/research/bmc-exposure-alert"
-          ]
-        },
-        {
-          "heading": "Patches for VMWare",
-          "links": [
-            "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017"
-          ]
-        },
-        {
-          "heading": "OpenWRT Patch, odhcpd vulnerability CVE-2026-53921",
-          "links": [
-            "https://github.com/openwrt/odhcpd/security/advisories/GHSA-7fwx-hhrg-3496"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-07-30T02:00:03+00:00",
-      "duration_seconds": 417,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10030.mp3",
-      "audio_length_bytes": 5838921,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10030",
-      "categories": [
-        "openwrt",
-        "odhcpd",
-        "vmware",
-        "ipmi",
-        "apple"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10030",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, July 30th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Well, a little sort of postscript to\n Apple's patches from a couple days ago. There were three\n patches that addressed malicious crafted ZIP archives\n that may bypass Gatekeeper. Now, these affect the BOM,\n LibArchive and other components. That's why they're\n three different CVE assigns to what sounds essentially like\n the same vulnerability. This also sounds very much like the\n vulnerability that was discussed by the Mysk blogs\n from, I think, early this week is when I covered it just a\n couple days before the Apple patches were released. Now,\n Mysk does state that this release does not fix the\n problem that they actually discovered and described. I\n haven't had a chance yet to test this myself. Now, there's\n another bug that Mysk did discuss in their blog that is\n actually fixed. And that's the ability of websites to access\n the clipboard. And that's certainly a rather unpleasant\n issue. I don't want to call it critical. But yes, that\n particular issue is patched. But apparently, the sort of\n archive, and I think Mysk was particularly talking about Tor\n archives, not about ZIP archives. So maybe there are\n different vulnerabilities in other sort of no archive or\n compressed file format packages. And Michael\n Kaczynski with Lava HQ did publish a blog post with an\n interesting old vulnerability in IPMI. IPMI is the out-of\n -band management protocol. It's implemented by many\n baseboard management controllers or BMCs in order\n to allow access to systems that are essentially shut\n down. So you can remote power up and you can reboot systems\n and basically get the basic access to a system in order to\n recover it, for example, from a crash. What's also kind of\n interesting is that this interface is often enabled as\n long as the system is plugged into power and plugged into\n the network, even if it appears to be turned off. Now,\n the problem they found is that the IPMI authentication\n protocol that has been around for 20-something years may\n return the HMAC SHA-1 hash of the admin password. It uses\n the HMAC SHA-1 of the admin's password as a key here for\n this authentication protocol. And yes, SHA-1 is not that\n terrible, difficult to break. And as a result, well, 30% of\n the passwords that they could collect from scanning the\n internet were recoverable. Now, this interface is\n reachable on UDP port 623. And you basically would establish\n a connection to this port as an attacker. And then during\n the initial authentication handshake, you would receive\n the hash of the admin password. First thing, of\n course, UDP port 623 shouldn't be exposed to the world in the\n first place. And definitely any kind of control plane\n communication like this has to be carefully controlled. And\n these IPMI interfaces probably should be connected to some\n kind of administrative network that's also not reachable from\n outside your network. And Broadcom did release updates\n for its VMware virtualization products. And now many of them\n are affected, vCenter, VMware Fusion, and the like. But\n there are two vCenter vulnerabilities that\n particular stick out. One is a directory traversal in syslog.\n Would like to know more details about this. Sounds\n really interesting, but apparently can lead to\n arbitrary code execution by just sending syslog packets to\n your vCenter server. There's also an authentication bypass\n vulnerability that can lead to then arbitrary code execution\n that can be exploited by just connecting via the network to\n the admin interface. So definitely remotely\n exploitable. Again, vCenter admin interfaces probably\n shouldn't be exposed to the internet. And you probably\n also shouldn't accept random syslog messages from across\n the internet. But in the second one, well, it may be\n something that I could see people allowing to happen to\n collect from any kind of remote sites, some syslogs.\n And when I often talk about vulnerabilities in big\n expensive enterprise gateways, sometimes it's also the small\n sort of free home or small business gateways that have\n problems. OpenWrt came up with a new version. Now this fixes\n the current major version as well as the one before that\n only receives security updates at this point. There's one\n vulnerability in particular I want to point a little bit\n attention to and that's a buffer overflow in ODH CDP.\n This is the DHCP server that comes with OpenWrt. The DHCP\n v6 feature does have this stack based buffer overflow\n that may lead to arbitrary code execution. In particular,\n of course, if stack canaries or ASLR is not enabled, which\n you often have sort of in these embedded devices. That's\n something that specifically sort of point out in the\n advisory. CVSS score of this is 9.8. So definitely get your\n devices updated. And also there are some devices that\n you may not realize run this ODH CDP. I think GLINet is\n pretty heavily based on OpenWrt, their firmware. So\n that may be one spot where you should expect an update if\n they haven't already pushed it out. Well, and this is it for\n today. So thanks for listening. Thanks for\n subscribing. Thanks for recommending this podcast. And\n as always, talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

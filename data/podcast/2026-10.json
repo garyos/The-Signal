@@ -2,6 +2,93 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10140",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10140",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10140.mp3",
+      "title": "SANS Stormcast Friday, October 16th, 2026: Panchan Crypto Mining Worm; Exploited 0-Days in Cisco Secure Email Gateway (CVE-2026-76519), Palo Alto PAN-OS (CVE-2026-0322) and Ivanti Connect Secure",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 16th, 2026: Panchan Crypto Mining Worm; Exploited 0-Days in Cisco Secure Email Gateway (CVE-2026-76519), Palo Alto PAN-OS (CVE-2026-0322) and Ivanti Connect Secure",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers the Panchan crypto mining worm spreading over SSH, plus three actively exploited zero-day vulnerabilities: a root-level remote code execution flaw in Cisco Secure Email Gateway, an authenticated root RCE in Palo Alto Networks' management interface, and a chained Ivanti Connect Secure exploit documented by Volexity.",
+          "links": []
+        },
+        {
+          "heading": "Panchan's Mining Island [Guest Diary]",
+          "links": []
+        },
+        {
+          "heading": "SANS.edu intern Zachary Norwood analyzes Panchan, a Golang crypto mining worm that spreads via SSH, steals SSH keys, installs a rootkit and uses Discord for command and control, using FakeNet-NG for dynamic analysis.",
+          "links": [
+            "https://isc.sans.edu/diary/Panchan%27s%20Mining%20Island%20%5BGuest%20Diary%5D/33426"
+          ]
+        },
+        {
+          "heading": "Cisco Secure Email Gateway 0-Day (CVE-2026-76519)",
+          "links": []
+        },
+        {
+          "heading": "With the reputation feature enabled, the advanced malware protection feature lets attackers write arbitrary files and execute code as root. The flaw is already exploited and there is no workaround, so patch and review Cisco's indicators of compromise.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-afw-zqYJkjxp"
+          ]
+        },
+        {
+          "heading": "Palo Alto Networks 0-Day (CVE-2026-0322)",
+          "links": []
+        },
+        {
+          "heading": "An already exploited, authenticated remote code execution vulnerability that runs code as root. Exploitation requires an exposed management interface.",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-0322"
+          ]
+        },
+        {
+          "heading": "Ivanti Connect Secure 0-Day (CVE-2026-104935)",
+          "links": []
+        },
+        {
+          "heading": "Volexity found three chained vulnerabilities: an authentication bypass, an arbitrary file write leading to remote code execution, and a privilege escalation. Ivanti patched the first two under one CVE; the privilege escalation appears unpatched.",
+          "links": [
+            "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+            "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US"
+          ]
+        },
+        {
+          "heading": "No Podcast on Monday, Oct. 19th.",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-16T02:00:02+00:00",
+      "duration_seconds": 359,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10140.mp3",
+      "audio_length_bytes": 5030754,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10140",
+      "categories": [
+        "panchan",
+        "crypto miner",
+        "ssh worm",
+        "cisco secure email",
+        "palo alto",
+        "pan-os",
+        "ivanti",
+        "volexity",
+        "0-day"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10140",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday October 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Amsterdam, Netherlands. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Incident Response. In Diaries today we have yet another\n diary from one of our undergraduate interns, Zachary\n Norwood. And Zachary is writing about Panchan's Mining\n Island. Panchan's worm is a crypto miner worm. It's\n spreading via SSH to Unix systems and then, well, it\n gains a foothold by first of all stealing SSH keys in order\n to gain access to possibly other systems, but also\n installing a rootkit in order to gain persistence on the\n system. This worm is a little bit different than like from\n your average Mirai worm and similar worm that of course\n are still very commonly infecting insecure Linux\n systems, in particular via bad SSH passwords. It is written\n in Golang, so that's a little bit unusual. And also does\n implement some peer-to-peer command control channel where\n this particular specimen that Zachary looked at was using\n Discord as one of its command and control channels. Now, one\n way that Zachary used to analyze this worm and figure\n out what the worm was actually doing and what it was after\n was the use of the FakeNet-NG package. FakeNet-NG allows you\n to essentially simulate a network environment for\n malware and then just use simple dynamic analysis, which\n tends to be sort of the quickest way to get an\n overview of what commodity malware like this worm is\n doing on your system. And that's also how Zachary then\n discovered, for example, the Discord connection. And then\n be aware if you are using the Cisco Secure Email Gateway,\n apparently the advanced malware protection feature of\n this gateway, if you have the reputation feature enabled,\n does it allow hackers to write arbitrary files? Yes, malware\n on the system. And then use these files to execute code as\n root. So it looks like a couple of things went wrong\n here in this particular case, but we have now a little bit\n of history with similar vulnerabilities with the\n secure email gateway. First of all, there's probably some\n kind of directory traversal vulnerability, allowing saving\n of files outside of the intended directory. Secondly,\n yes, to make things more interesting, of course, all\n code is executed as root, in particular for devices that\n have a fairly large attack cross-section like this secure\n email gateway. This vulnerability is already being\n exploited. A patch has been made available, and there is\n no real workaround for this vulnerability. So patch\n quickly and also review Cisco's guidance as to\n detecting indicators of compromise in case your system\n was unlucky enough to be part of that early wave of targets.\n Not to be left behind. Palo Alto also released an update\n for an already attacked vulnerability. And this one is\n also a remote code execution vulnerability. But unlike\n Cisco, at least this one requires authentication.\n However, just like Cisco code is also being executed as\n root. Now in order to exploit this vulnerability, you must\n expose your management interface, something that you\n should certainly avoid and probably know by now if you\n have listened to this podcast a couple times. Either way,\n apply the update. Again, this vulnerability is also already\n being attacked. And well, good things usually come in threes.\n So we also got a zero-day vulnerability that was patched\n by Ivanti a couple days ago. Must have missed it. Sometimes\n hard to keep those zero-days apart. Volexity actually has a\n real good write up about what exactly happened here. And I\n will include a link to Volexity as well as to the\n Ivanti advisory. Volexity identified three different\n vulnerabilities here that are chained to full system\n compromise. The first one is an authentication bypass\n vulnerability followed by an arbitrary file write, speak\n remote code execution vulnerability and then finally\n a privilege escalation of vulnerability. Now Ivanti\n decided to patch the first two vulnerabilities only gave them\n one CVE number. So basically combined both vulnerabilities\n into one. The privilege escalation vulnerability as of\n right now appears to be not yet patched. Also sorry for\n that busy Friday with three different products with\n currently exploited vulnerabilities that you need\n to attend to. Hope you're not running all three to give you\n a little bit more time patching and to avoid\n bothering you with more zero-day vulnerabilities. Also because\n of my travel schedule I will not publish a podcast on\n Monday. So thanks for listening and talk to you\n again on Tuesday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10138",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
