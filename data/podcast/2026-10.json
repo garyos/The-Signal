@@ -2,6 +2,89 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10144",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10144",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10144.mp3",
+      "title": "SANS Stormcast Wednesday, October 21st, 2026: eMudhra Intermediate CA Certificates Revoked; Critical PHP Security Release; Oracle CPU E-Business Suite SQLi (CVE-2026-101767); FortiSIEM gRPC RCE PoC",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, October 21st, 2026: eMudhra Intermediate CA Certificates Revoked; Critical PHP Security Release; Oracle CPU E-Business Suite SQLi (CVE-2026-101767); FortiSIEM gRPC RCE PoC",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers eight eMudhra intermediate CA certificates revoked after a key generation error, an accelerated critical PHP security release fixing two core vulnerabilities, Oracle's October 2026 Critical Patch Update with 1,295 fixes including an Oracle E-Business Suite SQL injection, and a proof-of-concept exploit for a FortiSIEM gRPC path traversal leading to remote code execution.",
+          "links": []
+        },
+        {
+          "heading": "eMudhra Intermediate CA Compromise",
+          "links": []
+        },
+        {
+          "heading": "Eight intermediate CA certificates from Indian certificate authority eMudhra were revoked after a scripting error during the HSM key ceremony left their private keys one byte long. Browsers now reject them, but software with its own CA bundle, like curl on macOS, may need updating. The post includes a browser test page.",
+          "links": [
+            "https://emudhra.we-have-a-problem.com/"
+          ]
+        },
+        {
+          "heading": "Upcoming Critical PHP Security Release",
+          "links": []
+        },
+        {
+          "heading": "PHP fixes two critical vulnerabilities in PHP core, rated CVSS 9.2, affecting versions back to PHP 5. The release was moved up to Wednesday, October 21st at 14:00 UTC (10 a.m. Eastern) after details leaked. Expect exploits soon after the patch.",
+          "links": [
+            "https://www.php.net/archive/2026.php#2026-10-20-1"
+          ]
+        },
+        {
+          "heading": "Oracle Critical Patch Update Advisory - October 2026",
+          "links": []
+        },
+        {
+          "heading": "Oracle's quarterly update fixes 1,295 new vulnerabilities. Horizon3 is teasing details of an Oracle E-Business Suite SQL injection, CVE-2026-101767.",
+          "links": [
+            "https://www.oracle.com/security-alerts/cpuoct2026.html",
+            "https://x.com/Horizon3Attack/status/2112651247362658611"
+          ]
+        },
+        {
+          "heading": "FortiSIEM gRPC Path Traversal File Write RCE (CVE-2026-106173)",
+          "links": []
+        },
+        {
+          "heading": "A proof of concept is out for the FortiSIEM flaw patched October 13th. It requires access to port 27918, so block it at the firewall until you patch.",
+          "links": [
+            "https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-21T02:00:02+00:00",
+      "duration_seconds": 379,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10144.mp3",
+      "audio_length_bytes": 5318387,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10144",
+      "categories": [
+        "emudhra",
+        "web pki",
+        "ca revoked",
+        "php",
+        "oracle cpu",
+        "e-business suite",
+        "sqli",
+        "fortisiem",
+        "grpc"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10144",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, October 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Master's Degree Program in Information\n Security Engineering. Well to start out with, it's PKI time\n again and with that we have eight intermediate CA\n certificates that have been revoked. These certificates\n belonged to eMudhra and this is an Indian company. Now luckily\n at least for us web PKI users, most of certificates and\n hundreds of millions of certificates that they issued\n are personal signing certificates. So they're not\n used to verify the identity of websites. Apparently they have\n a couple hundreds or so at most web certificates that\n they issued. The problem here wasn't a breach of the\n certificate authority. It was a simple script error as they\n created these certificates. The private keys that go with\n these certificates were just one byte long. This was\n apparently a problem as they sort of set up the key\n creation ceremony in their hardware security module and\n that led to this problem. A blog post today did reveal\n this issue and yes the certificates have been\n revoked. Browsers no longer recognize them. I tested a\n couple earlier and they have refused the connection. The\n blog post I'll link to in the show notes does have lots of\n tips how to check that you're not trusting the certificates\n anymore and also sort of a little web page that basically\n checks for your browser whether or not it loads pages\n that are verified by the affected certificates. So yeah\n definitely keep your certificate authority files up to date.\n The problem here is that in particular like curl on the\n Mac for example such some software uses its own set of\n authority file basically a list of sort of authorities\n they trust and they're not always updated with these sort\n of system wide updates as they happened here. And usually I\n talk about vulnerabilities that were just patched or that\n were just exploited. Well luckily at least from the\n exploit point of view the next vulnerability is neither and\n that's a critical vulnerability in PHP actually\n two distinct vulnerabilities that will be addressed in a\n patch released on Wednesday tomorrow October 21st. The\n problem here is that originally the patch was\n supposed to come out Thursday but today some information\n about this vulnerability leaked so they accelerated the\n rollout of the patch. All versions of PHP going back to\n version 5 are affected but only version 8 is currently\n still supported and will receive updates. Now what\n makes it a little bit scary is that the CVSS score is 9.2\n others described it as a CVSS score of 10 watchTowr sort of\n just wrote an X post that they're aware of the\n vulnerability and they're going to release details after\n the patch has been released so we should expect an exploit\n also to be ready fairly soon after the patch release. So we\n have to wait for the patch release. No details yet as to\n what exact configuration or such is vulnerable but it's a\n vulnerability in PHP core so it's not in an extension. It\n shouldn't matter what extensions you have or have\n not installed. So if you're using PHP be ready for this\n and this is something you definitely want to roll out as\n fast as possible but again we have to wait for some of the\n details to see if you have to see the details once the patch\n comes out and that should be 10 a.m. Eastern on Wednesday.\n And Oracle today released its critical patch update advisory\n for October fixing 1295 new security vulnerabilities. Now\n there's one vulnerability I want to point out a little bit\n and that's a SQL injection vulnerability in the Oracle\n E-Business Suite. Horizon3 they announced that they will\n publish some details about and they already on X kind of gave\n some hints what this vulnerability is all about. So\n that's definitely something to watch out for if you're\n running Oracle E-Business Suite definitely take a look at this\n and make sure that you're patched or not vulnerable to\n this particular vulnerability. And that's CVE-2026-101767.\n Over the last few months we had a couple different\n vulnerabilities being patched by Fortinet in its FortiSIEM\n product. Well we now have a proof of concept exploit for a\n vulnerability that was patched exactly a week ago on October\n 13th. This exploit attacks the gRPC service. It's a path\n traversal file write that then allows for remote code\n execution. And the one saving grace here is that it does\n require access to a very specific port 27918. So it\n shouldn't be too difficult to block that at a firewall kind\n of to buy you some time here in case you haven't patched\n yet. Well and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "darknetdiaries-181",
       "show": "darknetdiaries",
       "show_name": "Darknet Diaries",

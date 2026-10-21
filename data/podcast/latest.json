@@ -1,6 +1,89 @@
 {
-  "fetched_at": "2026-10-20T14:01:37.633087+00:00",
+  "fetched_at": "2026-10-21T08:11:12.552526+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10144",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10144",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10144.mp3",
+      "title": "SANS Stormcast Wednesday, October 21st, 2026: eMudhra Intermediate CA Certificates Revoked; Critical PHP Security Release; Oracle CPU E-Business Suite SQLi (CVE-2026-101767); FortiSIEM gRPC RCE PoC",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, October 21st, 2026: eMudhra Intermediate CA Certificates Revoked; Critical PHP Security Release; Oracle CPU E-Business Suite SQLi (CVE-2026-101767); FortiSIEM gRPC RCE PoC",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers eight eMudhra intermediate CA certificates revoked after a key generation error, an accelerated critical PHP security release fixing two core vulnerabilities, Oracle's October 2026 Critical Patch Update with 1,295 fixes including an Oracle E-Business Suite SQL injection, and a proof-of-concept exploit for a FortiSIEM gRPC path traversal leading to remote code execution.",
+          "links": []
+        },
+        {
+          "heading": "eMudhra Intermediate CA Compromise",
+          "links": []
+        },
+        {
+          "heading": "Eight intermediate CA certificates from Indian certificate authority eMudhra were revoked after a scripting error during the HSM key ceremony left their private keys one byte long. Browsers now reject them, but software with its own CA bundle, like curl on macOS, may need updating. The post includes a browser test page.",
+          "links": [
+            "https://emudhra.we-have-a-problem.com/"
+          ]
+        },
+        {
+          "heading": "Upcoming Critical PHP Security Release",
+          "links": []
+        },
+        {
+          "heading": "PHP fixes two critical vulnerabilities in PHP core, rated CVSS 9.2, affecting versions back to PHP 5. The release was moved up to Wednesday, October 21st at 14:00 UTC (10 a.m. Eastern) after details leaked. Expect exploits soon after the patch.",
+          "links": [
+            "https://www.php.net/archive/2026.php#2026-10-20-1"
+          ]
+        },
+        {
+          "heading": "Oracle Critical Patch Update Advisory - October 2026",
+          "links": []
+        },
+        {
+          "heading": "Oracle's quarterly update fixes 1,295 new vulnerabilities. Horizon3 is teasing details of an Oracle E-Business Suite SQL injection, CVE-2026-101767.",
+          "links": [
+            "https://www.oracle.com/security-alerts/cpuoct2026.html",
+            "https://x.com/Horizon3Attack/status/2112651247362658611"
+          ]
+        },
+        {
+          "heading": "FortiSIEM gRPC Path Traversal File Write RCE (CVE-2026-106173)",
+          "links": []
+        },
+        {
+          "heading": "A proof of concept is out for the FortiSIEM flaw patched October 13th. It requires access to port 27918, so block it at the firewall until you patch.",
+          "links": [
+            "https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-21T02:00:02+00:00",
+      "duration_seconds": 379,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10144.mp3",
+      "audio_length_bytes": 5318387,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10144",
+      "categories": [
+        "emudhra",
+        "web pki",
+        "ca revoked",
+        "php",
+        "oracle cpu",
+        "e-business suite",
+        "sqli",
+        "fortisiem",
+        "grpc"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10144",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, October 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Master's Degree Program in Information\n Security Engineering. Well to start out with, it's PKI time\n again and with that we have eight intermediate CA\n certificates that have been revoked. These certificates\n belonged to eMudhra and this is an Indian company. Now luckily\n at least for us web PKI users, most of certificates and\n hundreds of millions of certificates that they issued\n are personal signing certificates. So they're not\n used to verify the identity of websites. Apparently they have\n a couple hundreds or so at most web certificates that\n they issued. The problem here wasn't a breach of the\n certificate authority. It was a simple script error as they\n created these certificates. The private keys that go with\n these certificates were just one byte long. This was\n apparently a problem as they sort of set up the key\n creation ceremony in their hardware security module and\n that led to this problem. A blog post today did reveal\n this issue and yes the certificates have been\n revoked. Browsers no longer recognize them. I tested a\n couple earlier and they have refused the connection. The\n blog post I'll link to in the show notes does have lots of\n tips how to check that you're not trusting the certificates\n anymore and also sort of a little web page that basically\n checks for your browser whether or not it loads pages\n that are verified by the affected certificates. So yeah\n definitely keep your certificate authority files up to date.\n The problem here is that in particular like curl on the\n Mac for example such some software uses its own set of\n authority file basically a list of sort of authorities\n they trust and they're not always updated with these sort\n of system wide updates as they happened here. And usually I\n talk about vulnerabilities that were just patched or that\n were just exploited. Well luckily at least from the\n exploit point of view the next vulnerability is neither and\n that's a critical vulnerability in PHP actually\n two distinct vulnerabilities that will be addressed in a\n patch released on Wednesday tomorrow October 21st. The\n problem here is that originally the patch was\n supposed to come out Thursday but today some information\n about this vulnerability leaked so they accelerated the\n rollout of the patch. All versions of PHP going back to\n version 5 are affected but only version 8 is currently\n still supported and will receive updates. Now what\n makes it a little bit scary is that the CVSS score is 9.2\n others described it as a CVSS score of 10 watchTowr sort of\n just wrote an X post that they're aware of the\n vulnerability and they're going to release details after\n the patch has been released so we should expect an exploit\n also to be ready fairly soon after the patch release. So we\n have to wait for the patch release. No details yet as to\n what exact configuration or such is vulnerable but it's a\n vulnerability in PHP core so it's not in an extension. It\n shouldn't matter what extensions you have or have\n not installed. So if you're using PHP be ready for this\n and this is something you definitely want to roll out as\n fast as possible but again we have to wait for some of the\n details to see if you have to see the details once the patch\n comes out and that should be 10 a.m. Eastern on Wednesday.\n And Oracle today released its critical patch update advisory\n for October fixing 1295 new security vulnerabilities. Now\n there's one vulnerability I want to point out a little bit\n and that's a SQL injection vulnerability in the Oracle\n E-Business Suite. Horizon3 they announced that they will\n publish some details about and they already on X kind of gave\n some hints what this vulnerability is all about. So\n that's definitely something to watch out for if you're\n running Oracle E-Business Suite definitely take a look at this\n and make sure that you're patched or not vulnerable to\n this particular vulnerability. And that's CVE-2026-101767.\n Over the last few months we had a couple different\n vulnerabilities being patched by Fortinet in its FortiSIEM\n product. Well we now have a proof of concept exploit for a\n vulnerability that was patched exactly a week ago on October\n 13th. This exploit attacks the gRPC service. It's a path\n traversal file write that then allows for remote code\n execution. And the one saving grace here is that it does\n require access to a very specific port 27918. So it\n shouldn't be too difficult to block that at a firewall kind\n of to buy you some time here in case you haven't patched\n yet. Well and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "darknetdiaries-181",
       "show": "darknetdiaries",
@@ -3605,60 +3688,6 @@
       "transcript_format": "vtt",
       "transcript": null,
       "transcript_checked": false
-    },
-    {
-      "id": "stormcast-10036",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10036",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10036.mp3",
-      "title": "SANS Stormcast Tuesday, August 4th, 2026: More Arch Linux AUR trouble; iCloud Sharing; Pass the Passkey",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, August 4th, 2026: More Arch Linux AUR trouble; iCloud Sharing; Pass the Passkey",
-      "show_notes": [
-        {
-          "heading": "AUR packages adoption disabled",
-          "links": [
-            "https://lists.archlinux.org/archives/list/aur-general@lists.archlinux.org/thread/DRDEU3JUSC72CB265XHXPFA3DFSLXPBP/"
-          ]
-        },
-        {
-          "heading": "Apple's iCloud File Sharing Left Ex-Employees With Access to Secret Documents",
-          "links": [
-            "https://www.macrumors.com/2026/08/03/apple-icloud-sharing-ex-employees/"
-          ]
-        },
-        {
-          "heading": "Pass the Passkey: A Novel Attack Surface in Passwordless Authentication",
-          "links": [
-            "https://unit42.paloaltonetworks.com/passwordless-authentication-security-risks/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-04T02:00:03+00:00",
-      "duration_seconds": 410,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10036.mp3",
-      "audio_length_bytes": 5745688,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10036",
-      "categories": [
-        "passkey",
-        "apple",
-        "icloud",
-        "employee",
-        "aur",
-        "arch",
-        "linux"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10036",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday August 4th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n industrial control systems. Arch Linux announced that they\n yet again had to stop accepting adoption requests\n for their user packages. So Arch Linux is in part popular\n because they have AUR, the Arch User Repository, which\n does host packages created by users. In other distributions,\n you may be able to create DEP and RPM and similar packages,\n but there is no sort of easy way to find them if they\n weren't included in the official distribution.\n Different for Arch, which has AUR to host these packages.\n And then they have a neat feature that allows new\n maintainers to take over abandoned packages, a common\n problem when it comes to open source. The only issue here\n is, well, it's a little maybe a little bit too easy to take\n over an existing package. So what often happens here is\n that a user publishes a package, it gains some\n popularity, then they lose interest in it. And then there\n is an adoption request that's being submitted by a malicious\n party in order to then add malware to the package. Well,\n that's exactly what happened yet again has happened before\n on a larger scale. There are several hundred suspicious\n packages published and who knows how many adoption\n requests are sort of outstanding for various other\n packages. And now in order to sort of catch up on that\n backlog and also maybe refine their procedures somewhat,\n Arch has decided to not accept any new adoption requests\n until further notice. Well, and then there is an\n interesting sort of lesson that we have been emerging out\n of the court battle between Apple and OpenAI over the\n alleged theft of intellectual property by Apple employees\n who joined OpenAI. The problem here is that some of these\n employees apparently retained access to confidential\n material after they left Apple. Now, one of the sort of\n root causes here appears to be that if you're joining Apple\n as an employee, you're being given two terabytes of storage\n as part of an iCloud account. And then of course, with\n iCloud, you have the problem that if you're logged into a\n particular device, you can only be logged into one iCloud\n account. So some employees choose to use these two\n terabytes of storage with their personal account. And\n then of course, this led to sort of the mingling of\n personal and official Apple documents, which then resulted\n in the loss of intellectual property. When you're\n selecting a cloud solution like this, there should always\n be a specific account that you're using for anything work\n related. You don't really want to mingle personal and work\n documents in one account, not just to keep your company's\n data safe, but also to keep your personal data safe from,\n for example, being stolen if your company is getting\n breached. So definitely always good to keep a little bit of\n firewall between those two domains. And Palo Alto did\n publish a blog post outlining some of the attacks against\n passkeys, in particular, attacking the sync mechanism\n that's implemented in password managers. So one of the big\n design decisions when it comes to passkey compared to some of\n the prior FIDO2 standard implementations was to make it\n more usable. And as part of this, they did allow syncing\n these passkeys with password managers. This was a critical\n thing to really make passkeys usable for the average user.\n Before that, a FIDO2 key was linked to a particular\n hardware device like a YubiKey or one of these Google Titan\n devices. And there was no real good way to sort of back them\n up. Actually, the official solution was to just register\n multiple keys with a particular website, which of\n course, isn't really sort of feasible to the average user\n who is just trying to replace usernames and passwords.\n However, the problem with password synchronization, of\n course, is that once the attacker is able to\n synchronize these passkeys, well, they're effectively able\n to steal the secret keys. And it's really sort of what this\n article by Palo Alto is all about, about how this syncing\n can happen, how attackers can sort of, you know, infiltrate\n that process and then obtain copies of these passkeys. I\n don't think it's sort of a fundamental really flaw in\n passkey. It's really just an intentional limitation and a\n risk that was accepted to make passkeys usable. When you're\n implementing passkeys or FIDO2, I should say, for some\n more higher risk applications, then maybe you don't really\n sort of want to go with passkey, but one of these more\n hardware linked authentication methods that are also sort of\n part of the FIDO2 standards. And then you avoid some of the\n weaknesses that are outlined in this article. And N-able\n has released a hotfix for its N-Central product. Now, what\n makes this in particular sort of difficult is that this\n hotfix does fix currently exploited vulnerability that\n was originally addressed in an update last week on Friday.\n N-able released 2026.3, but apparently the fix was not\n complete. So now they're actually releasing 2026.3.1.7,\n which does hopefully release the real fix for this\n vulnerability. Speaker 1 Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing. And talk to you again tomorrow. Bye.",
-      "transcript_checked": true
     }
   ]
 }
