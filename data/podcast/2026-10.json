@@ -2,6 +2,88 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10148",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10148",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10148.mp3",
+      "title": "SANS Stormcast Friday, October 23rd, 2026: PHP2Shell Exploitation Update; Signal Call Hang-Up Flaw (CVE-2026-113380); Cisco Snort 3 Critical Vulnerabilities; Linux KSMBD RCE Reports Leaked",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 23rd, 2026: PHP2Shell Exploitation Update; Signal Call Hang-Up Flaw (CVE-2026-113380); Cisco Snort 3 Critical Vulnerabilities; Linux KSMBD RCE Reports Leaked",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers an update on the PHP2Shell vulnerabilities, a Signal flaw that kept calls alive after hang-up, critical Cisco Snort 3 vulnerabilities, and Linux kernel KSMBD vulnerability reports that were accidentally posted to a public mailing list.",
+          "links": []
+        },
+        {
+          "heading": "PHP Vulnerability Update",
+          "links": []
+        },
+        {
+          "heading": "Patches for the PHP remote code execution (RCE) vulnerabilities are now available from many vendors, with notable exceptions such as QNAP. Cloudflare reports a lot of exploit activity, and Amazon saw exploit attempts before public disclosure, but no simple, reliable exploit has surfaced yet. Beware of fake exploits that may attack the person running them.",
+          "links": [
+            "https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/"
+          ]
+        },
+        {
+          "heading": "Signal: Flooded Call Event Queue Blocks Local Hang-Up (CVE-2026-113380)",
+          "links": []
+        },
+        {
+          "heading": "During a call, the other side could flood a Signal client with events and prevent it from hanging up, leaving the connection active so an attacker could keep listening through the microphone. The flaw has been patched; keep Signal updated automatically.",
+          "links": [
+            "https://github.com/Imahian/Notes/tree/main/docs/CVEs/CVE-2026-113380"
+          ]
+        },
+        {
+          "heading": "Cisco Snort 3 Critical Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Cisco patched critical Snort 3 vulnerabilities with a base CVSS (Common Vulnerability Scoring System) score of 9.0. The four CVEs group multiple AI-discovered vulnerabilities by shared CWE (Common Weakness Enumeration), making the individual flaws less transparent. Snort is also included in several Cisco appliances.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-snort3-ybgmhTQe"
+          ]
+        },
+        {
+          "heading": "Linux Kernel KSMBD Vulnerability Reports Leaked",
+          "links": []
+        },
+        {
+          "heading": "Trend Micro's Zero Day Initiative accidentally posted unpatched Linux kernel vulnerability reports to a public kernel mailing list, including CVSS 9 remote code execution flaws in the kernel's built-in SMB file sharing server (KSMBD). No patches are available yet, and proof-of-concept exploit code was included in some reports.",
+          "links": [
+            "https://lore.kernel.org/lkml/BYAPR01MB383076AC412E19C48CFBEAE980662@BYAPR01MB3830.prod.exchangelabs.com/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-23T10:25:11+00:00",
+      "duration_seconds": 459,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10148.mp3",
+      "audio_length_bytes": 6440723,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10148",
+      "categories": [
+        "php2shell",
+        "php rce",
+        "signal",
+        "cve-2026-113380",
+        "cisco snort 3",
+        "linux kernel",
+        "ksmbd",
+        "smb",
+        "zdi"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10148",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well, let's start with a quick\n summary and update on the PHP vulnerability. Not too much\n new, which is a good thing. There are plenty of patches\n available now from various vendors. There are a couple of\n notable exceptions like QNAP, for example, still hasn't\n published a patch yet for their devices. But again,\n these are the type of devices you probably shouldn't expose\n to the internet in the first place. So you have a little\n bit more time for them to actually apply any patches and\n definitely make sure that they aren't exposed to the\n internet. The same is true for a lot of the other sort of PHP\n driven web admin interface and the like. Make sure that you\n apply any patches as they become available. But also,\n yes, please don't expose them to the internet. As far as\n exploit activity goes, plenty of vibe coded exploits out\n there that may work in some circumstances, but nothing\n sort of that simple, reproducible, reliable at this\n point. So that buys everybody more time to actually apply\n patches. Now, Cloudflare went on the record stating that\n they see an awful lot of exploit activity targeting\n this vulnerability. But again, it's not clear if these are\n actually real working exploits. Amazon also stated\n that they have seen exploit attempts as soon as the 16th.\n So well before this vulnerability sort of was\n publicly under radar at all. Not really sure what to make\n of this. Again, not a lot of detail here. But yes, now the\n vulnerability was discovered quite a while ago. And one of\n the problems you have with these big open source\n projects, of course, is that responsible disclosure means\n that you have to disclose details about a vulnerability\n to dozens, maybe hundreds of different vendors. And yes,\n you know, leaks are going to happen. And that's what sort\n of kicked off the entire issue in the first place. So\n continue to patch, continue to monitor, but at this point, no\n real exploit. When you're looking at exploits, be aware,\n some of them may actually exploit the person running\n them. That's sort of just standard practice at this\n point for some exploit writers. Haven't seen anything like\n this yet, but haven't also been really looking for any\n sort of, you know, parasitic exploits like that. My plan\n right now is to go back to Infocon Green sometime\n tomorrow on Friday. Well, but let's start to look at some of\n the vulnerabilities that we may have missed this week with\n all the focus on PHP. First is an interesting vulnerability\n that got patched in Signal. The problem here was that when\n you were in a call, the other side could flood your Signal\n client with events and in doing so actually prevent it\n from hanging up. So you think you hung up, but the\n connection was still active, which of course then allowed\n an attacker to listen in on the microphone in your Signal\n device. So that's the vulnerability here. It has\n been patched and yes, Signal is certainly one of those\n things, but you probably want to apply updates more or less\n automatically. And well, that in my experience at least\n works pretty well with Signal. And then we got updates for\n Snort 3 from Cisco. Now, this is interesting for a couple of\n reasons. First of all, it's a critical vulnerability with a\n base CVSS score of 9.0. Secondly, well, Snort has to\n look at a lot of hostile traffic. So any vulnerability\n in Snort certainly could become a problem. Now, another\n issue is also that while there are four CVE numbers being\n listed here, Cisco does state that one of these CVEs is\n actually tracking multiple vulnerabilities. And what they\n did here is that they basically grouped\n vulnerabilities together if they have the same weakness.\n So the same CWE, then they just assigned them the same\n CVE number. Maybe that's a trend coming here with all of\n these AI vulnerabilities. And Cisco also states that yes, AI\n was involved in finding these vulnerabilities, but makes it\n of course less transparent what exactly was being patched\n here and what the exact severity or exploitability is\n of these vulnerabilities. They state that they may in the\n future publish a more detailed advisory that breaks out the\n individual vulnerabilities in more detail. So get it\n patched. And the advisory has a list of all the different\n products that include Snort. So it's not just if you're\n running Snort standalone, but it's also included in several\n of Cisco's appliances. And then sadly, we do have another\n vulnerability disclosure fail. This one is in some ways more\n spectacular than the PHP one in the way it failed.\n Hopefully not quite as severe. The problem is that Trend\n Micro, who is of course famous for their Zero Day Initiative\n and is collecting and then responsibly reporting\n vulnerabilities for quite a while, apparently messed up\n and did post some recently discovered Linux kernel\n vulnerabilities to a public Linux kernel mailing list. One\n in particular is CVSS 9 vulnerability in the kernel's\n SMB driver. If you're not that familiar with Linux, but the\n Linux kernel actually includes sort of its own little SMB\n file sharing module. So this is sort of the one issue here\n that may be exposed to the network that does allow for\n arbitrary code execution. There are actually two sort of\n distinct vulnerabilities. vulnerabilities. The first one\n is sort of a more default configuration. The second one\n in a less likely configuration. So if you are\n using Linux, if you're exposing SMB file shares, be\n aware of that and check if you're actually using this\n kernel module to facilitate this file sharing. Oh yeah, no\n patches available yet and proof of concept exploit code\n was included with some of these vulnerability reports.\n Well, I think that's enough for Friday. So hope you have\n made some headway in patching PHP. I'm sure there's lots of\n other stuff to patch coming next week. So talk to you\n again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10146",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

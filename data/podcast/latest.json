@@ -1,6 +1,88 @@
 {
-  "fetched_at": "2026-10-23T08:09:54.148357+00:00",
+  "fetched_at": "2026-10-23T13:59:58.424595+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10148",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10148",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10148.mp3",
+      "title": "SANS Stormcast Friday, October 23rd, 2026: PHP2Shell Exploitation Update; Signal Call Hang-Up Flaw (CVE-2026-113380); Cisco Snort 3 Critical Vulnerabilities; Linux KSMBD RCE Reports Leaked",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 23rd, 2026: PHP2Shell Exploitation Update; Signal Call Hang-Up Flaw (CVE-2026-113380); Cisco Snort 3 Critical Vulnerabilities; Linux KSMBD RCE Reports Leaked",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers an update on the PHP2Shell vulnerabilities, a Signal flaw that kept calls alive after hang-up, critical Cisco Snort 3 vulnerabilities, and Linux kernel KSMBD vulnerability reports that were accidentally posted to a public mailing list.",
+          "links": []
+        },
+        {
+          "heading": "PHP Vulnerability Update",
+          "links": []
+        },
+        {
+          "heading": "Patches for the PHP remote code execution (RCE) vulnerabilities are now available from many vendors, with notable exceptions such as QNAP. Cloudflare reports a lot of exploit activity, and Amazon saw exploit attempts before public disclosure, but no simple, reliable exploit has surfaced yet. Beware of fake exploits that may attack the person running them.",
+          "links": [
+            "https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/"
+          ]
+        },
+        {
+          "heading": "Signal: Flooded Call Event Queue Blocks Local Hang-Up (CVE-2026-113380)",
+          "links": []
+        },
+        {
+          "heading": "During a call, the other side could flood a Signal client with events and prevent it from hanging up, leaving the connection active so an attacker could keep listening through the microphone. The flaw has been patched; keep Signal updated automatically.",
+          "links": [
+            "https://github.com/Imahian/Notes/tree/main/docs/CVEs/CVE-2026-113380"
+          ]
+        },
+        {
+          "heading": "Cisco Snort 3 Critical Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Cisco patched critical Snort 3 vulnerabilities with a base CVSS (Common Vulnerability Scoring System) score of 9.0. The four CVEs group multiple AI-discovered vulnerabilities by shared CWE (Common Weakness Enumeration), making the individual flaws less transparent. Snort is also included in several Cisco appliances.",
+          "links": [
+            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-snort3-ybgmhTQe"
+          ]
+        },
+        {
+          "heading": "Linux Kernel KSMBD Vulnerability Reports Leaked",
+          "links": []
+        },
+        {
+          "heading": "Trend Micro's Zero Day Initiative accidentally posted unpatched Linux kernel vulnerability reports to a public kernel mailing list, including CVSS 9 remote code execution flaws in the kernel's built-in SMB file sharing server (KSMBD). No patches are available yet, and proof-of-concept exploit code was included in some reports.",
+          "links": [
+            "https://lore.kernel.org/lkml/BYAPR01MB383076AC412E19C48CFBEAE980662@BYAPR01MB3830.prod.exchangelabs.com/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-23T10:25:11+00:00",
+      "duration_seconds": 459,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10148.mp3",
+      "audio_length_bytes": 6440723,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10148",
+      "categories": [
+        "php2shell",
+        "php rce",
+        "signal",
+        "cve-2026-113380",
+        "cisco snort 3",
+        "linux kernel",
+        "ksmbd",
+        "smb",
+        "zdi"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10148",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well, let's start with a quick\n summary and update on the PHP vulnerability. Not too much\n new, which is a good thing. There are plenty of patches\n available now from various vendors. There are a couple of\n notable exceptions like QNAP, for example, still hasn't\n published a patch yet for their devices. But again,\n these are the type of devices you probably shouldn't expose\n to the internet in the first place. So you have a little\n bit more time for them to actually apply any patches and\n definitely make sure that they aren't exposed to the\n internet. The same is true for a lot of the other sort of PHP\n driven web admin interface and the like. Make sure that you\n apply any patches as they become available. But also,\n yes, please don't expose them to the internet. As far as\n exploit activity goes, plenty of vibe coded exploits out\n there that may work in some circumstances, but nothing\n sort of that simple, reproducible, reliable at this\n point. So that buys everybody more time to actually apply\n patches. Now, Cloudflare went on the record stating that\n they see an awful lot of exploit activity targeting\n this vulnerability. But again, it's not clear if these are\n actually real working exploits. Amazon also stated\n that they have seen exploit attempts as soon as the 16th.\n So well before this vulnerability sort of was\n publicly under radar at all. Not really sure what to make\n of this. Again, not a lot of detail here. But yes, now the\n vulnerability was discovered quite a while ago. And one of\n the problems you have with these big open source\n projects, of course, is that responsible disclosure means\n that you have to disclose details about a vulnerability\n to dozens, maybe hundreds of different vendors. And yes,\n you know, leaks are going to happen. And that's what sort\n of kicked off the entire issue in the first place. So\n continue to patch, continue to monitor, but at this point, no\n real exploit. When you're looking at exploits, be aware,\n some of them may actually exploit the person running\n them. That's sort of just standard practice at this\n point for some exploit writers. Haven't seen anything like\n this yet, but haven't also been really looking for any\n sort of, you know, parasitic exploits like that. My plan\n right now is to go back to Infocon Green sometime\n tomorrow on Friday. Well, but let's start to look at some of\n the vulnerabilities that we may have missed this week with\n all the focus on PHP. First is an interesting vulnerability\n that got patched in Signal. The problem here was that when\n you were in a call, the other side could flood your Signal\n client with events and in doing so actually prevent it\n from hanging up. So you think you hung up, but the\n connection was still active, which of course then allowed\n an attacker to listen in on the microphone in your Signal\n device. So that's the vulnerability here. It has\n been patched and yes, Signal is certainly one of those\n things, but you probably want to apply updates more or less\n automatically. And well, that in my experience at least\n works pretty well with Signal. And then we got updates for\n Snort 3 from Cisco. Now, this is interesting for a couple of\n reasons. First of all, it's a critical vulnerability with a\n base CVSS score of 9.0. Secondly, well, Snort has to\n look at a lot of hostile traffic. So any vulnerability\n in Snort certainly could become a problem. Now, another\n issue is also that while there are four CVE numbers being\n listed here, Cisco does state that one of these CVEs is\n actually tracking multiple vulnerabilities. And what they\n did here is that they basically grouped\n vulnerabilities together if they have the same weakness.\n So the same CWE, then they just assigned them the same\n CVE number. Maybe that's a trend coming here with all of\n these AI vulnerabilities. And Cisco also states that yes, AI\n was involved in finding these vulnerabilities, but makes it\n of course less transparent what exactly was being patched\n here and what the exact severity or exploitability is\n of these vulnerabilities. They state that they may in the\n future publish a more detailed advisory that breaks out the\n individual vulnerabilities in more detail. So get it\n patched. And the advisory has a list of all the different\n products that include Snort. So it's not just if you're\n running Snort standalone, but it's also included in several\n of Cisco's appliances. And then sadly, we do have another\n vulnerability disclosure fail. This one is in some ways more\n spectacular than the PHP one in the way it failed.\n Hopefully not quite as severe. The problem is that Trend\n Micro, who is of course famous for their Zero Day Initiative\n and is collecting and then responsibly reporting\n vulnerabilities for quite a while, apparently messed up\n and did post some recently discovered Linux kernel\n vulnerabilities to a public Linux kernel mailing list. One\n in particular is CVSS 9 vulnerability in the kernel's\n SMB driver. If you're not that familiar with Linux, but the\n Linux kernel actually includes sort of its own little SMB\n file sharing module. So this is sort of the one issue here\n that may be exposed to the network that does allow for\n arbitrary code execution. There are actually two sort of\n distinct vulnerabilities. vulnerabilities. The first one\n is sort of a more default configuration. The second one\n in a less likely configuration. So if you are\n using Linux, if you're exposing SMB file shares, be\n aware of that and check if you're actually using this\n kernel module to facilitate this file sharing. Oh yeah, no\n patches available yet and proof of concept exploit code\n was included with some of these vulnerability reports.\n Well, I think that's enough for Friday. So hope you have\n made some headway in patching PHP. I'm sure there's lots of\n other stuff to patch coming next week. So talk to you\n again on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10146",
       "show": "stormcast",
@@ -3650,68 +3732,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10040",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, August 6, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, Renato today did a great write-up on\n some of the most recent supply chain vulnerabilities or\n supply chain compromises, and that's the keyv and cacheable\n NPM libraries that were recently compromised by yet\n another worm. These two libraries are extremely\n popular. They are, as Renato puts it, sort of at the bottom\n of the dependency chain for an awful lot of projects because\n they provide basic caching capabilities, and of course a\n lot of software uses that. Now the problem here, and that's\n something that I've seen in some of the recent\n compromises, that after the GitHub keys and such are being\n exfiltrated, the malware will actually keep checking whether\n or not those keys are still valid. And once they become\n invalid, it will then run additional actions. Now in\n this case, it's not that clear what will happen because the\n malware will basically just reach out to the attacker's\n URL and will execute whatever it's being instructed to do,\n maybe exfiltrate the new keys. But in the past, this also has\n often led to the destruction of any files on the system. So\n you definitely want to be a little bit careful here before\n you are revoking any stolen API keys. As Renato points\n out, if you disconnect the system from the network, then\n the code will not run because it actually waits for the 400\n status code to come back from the service. So with nothing\n coming back, with it not being able to connect, it will\n actually not run the additional malicious payload.\n To help you even more, Renato wrote a little tool that will\n help you identify what exactly is going on in your system.\n There are also some tricks the attacker is playing, like for\n example, they're using the usual sort of install hook for\n NPM in order to execute the malware. Well, if you're not\n running the install hook, it also imports these\n configuration files into your repository, which will then\n execute code when you're importing this particular\n library then into your development environment. I\n think yesterday I talked about a similar attack against\n Apple. So what Renato script does, first of all, it does a\n more complete review what exactly happened on your\n system based on this particular malware. And then\n it also basically helps you with the mitigation. Now you\n may say, hey, should I install yet another NPM script here or\n JavaScript script here in order to solve the problem?\n Well, Renato actually thought about that. And this\n particular script does not load any additional\n dependencies. It only uses like built-in libraries that\n come with a node.js, like your URL library and things like\n that. It also does not call out. The only time it will\n establish an outbound network connection is if you're using\n the update option to see if there's an update available\n for the script. And the same researchers who recently\n published about an Apple vulnerability in Apple's\n Gatekeeper service that allowed you to replace\n applications without triggering a Gatekeeper have\n now found an interesting issue in Apple's iCloud Private\n Relay. Talal Haj Bakry and Tommy Mysk did figure out that,\n well, you can actually trick the browser into initiating\n web requests that are then being sent by the operating\n system itself or by other components of the operating\n system. And that's sort of what's the problem here. So\n with Apple iCloud Private Relay, all requests from the\n browser are being sent to Apple's proxy servers and are\n anonymized that way. And that part works rather well. But\n what doesn't work is if you are now accessing a website\n that is actually offering passkey, which is a good\n thing. And I often recommend it, the use of passkey. But\n the problem is this triggers now a request by the operating\n system's authentication services. And that is being\n initiated by the operating system directly. It's not\n going through whatever proxy server is configured for the\n browser. And as a result, may leak your IP address to a\n potential attacker whose website you just visited. So\n this is an interesting kind of vulnerability. It apparently\n also affects other browsers, like, for example, the Tor\n browser on iOS. Because they have the same problem.\n Essentially, all browsers using WebKit, which Chrome and\n Firefox are using, they rely on this operating system-wide\n proxy setting in order to redirect traffic. The real\n solution here is not to rely on a browser-only technology.\n And that's really what Tor browser is. It just instructs\n the browser to use Tor, while other software on your\n operating system may still use a direct connection to the\n Internet. So it's much better to have an operating system\n -wide VPN instead of relying on just the browser, figuring\n out how to send traffic, while the rest of the operating\n system, of course, may still leak your data. So it's not as\n much a vulnerability in Apple's implementation as more\n a problem in only using the VPN for browser traffic and\n not using it for anything else. Well, if you are a user\n of the Coldcard crypto coin wallet, then sadly, well, the\n entire problem with the weak random number generator may\n not be over for you. I talked about this, I think, last\n week, that some Coldcard users saw their crypto coin\n funds trained because of a weak crypto random number\n generator. The new problems are, first of all, that there\n is an updated firmware available for your Coldcard.\n However, some users have reported that the update break\n to their device, essentially rendering their crypto coins\n unaccessible. So definitely make a backup of your wallet\n before you're actually applying this update.\n Secondly, Proofpoint is reporting that there is a\n phishing attack underway. That supposedly links to an audit\n guide that's supposed to help you figuring out whether or\n not you have a problem with your Coldcard wallet. Well,\n that, of course, leads to a malicious site. So definitely\n be careful here. They even came up with a reasonable good\n domain name for this coldcardteamsnews.com or\n coldcardteamnews.com. So definitely watch out for that.\n And I'll probably run a report tomorrow, see how many new\n domain names with coldcard in the name we can find. Well,\n and this is it for today. So thanks for listening. Thanks\n for liking. Thanks for subscribing to this podcast.\n And talk to you again tomorrow. Bye. Bye. Bye. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10038",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10038",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10038.mp3",
-      "title": "SANS Stormcast Wednesday, August 5th, 2026: Diagnostic Tool Hunt; Device Code Phishing; XCSSET; NuGet API Keys",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, August 5th, 2026: Diagnostic Tool Hunt; Device Code Phishing; XCSSET; NuGet API Keys",
-      "show_notes": [
-        {
-          "heading": "Botnet Hunting for Vulnerabilities in Diagnostic Tools",
-          "links": [
-            "https://isc.sans.edu/diary/Botnet%20Hunting%20for%20Vulnerabilities%20in%20Diagnostic%20Tools/33214"
-          ]
-        },
-        {
-          "heading": "Inside Greatness: Telegram-Distributed M365 AiTM PhaaS",
-          "links": [
-            "https://zerobec.com/blog/greatness-phaas-aitm-and-device-code-phishing"
-          ]
-        },
-        {
-          "heading": "A Deep Dive Into the Latest XCSSET Version",
-          "links": [
-            "https://unit42.paloaltonetworks.com/xcsset-v40-malware-analysis/"
-          ]
-        },
-        {
-          "heading": "Strengthening NuGet Supply Chain Security: Reducing API Key Lifetime",
-          "links": [
-            "https://devblogs.microsoft.com/dotnet/strengthening-nuget-supply-chain-security-reducing-api-key-lifetime/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-05T02:00:02+00:00",
-      "duration_seconds": 390,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10038.mp3",
-      "audio_length_bytes": 5462533,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10038",
-      "categories": [
-        "nuget",
-        "xcsset",
-        "telegram",
-        "m365",
-        "device code",
-        "mitm",
-        "phishing",
-        "botnet",
-        "diagnostic"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10038",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, August 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. This weekend, our honeypots detected a scan that\n looked for related URLs that I haven't sort of seen being\n scanned like this before. Maybe I missed it. But all of\n the URLs are CGI scripts that are sort of diagnostic related\n like ping.cgi or diagnostic .cgi. A lot of the times these\n scripts execute operating system commands and are\n therefore vulnerable to OS command injection. I've seen\n also some old scans for these URIs that were related to a\n CrowdStrike Shellshock scanner. So also, of course, a\n possibility that these scripts may be vulnerable to\n Shellshock. Not sure how much that still is a problem. But\n then again, have been surprised before how long it\n takes to patch some of these vulnerabilities. As far as\n mitigation for OS command injection goes, I'll write a\n little bit about this in the diary. But it really comes\n down to separating your control plane from your data\n plane, not mixing commands and data. And there is sort of a\n nice C API, at least on Linux, that allows you with execv,\n that's short for exec vector, to sort of nicely separate the\n actual command and the parameters from each other.\n And that really should be sort of the preferred solution to\n avoid these type of vulnerabilities. Windows has\n similar things going. So I have actually an older video\n where I talk a bit in more detail about the Windows side\n as well. And ZeroBEC has documented some recent changes\n to greatness. If you're not familiar with greatness, it's\n phishing as a service kit. You essentially buy a subscription\n for it for a couple hundred dollars a month, and then you\n can use it to launch machine in the middle of the attacks\n in order to steal credentials. One of the latest additions to\n this kit is device code phishing. That's something\n that has been really a problem lately, in particular for the\n more sophisticated attacks. And it being added to\n something like greatness, of course, means that it's now\n more approachable for not so sophisticated attackers. So\n anybody with a couple hundred dollars to spare can\n essentially now launch these device code phishing attacks.\n For device code phishing, once the victim visits the phishing\n website, the attacker is initiating a connection to an\n authentication service that does support OAuth device\n codes. They're typically getting some kind of QRcode\n back that they display to the victim. The victim scans it\n with their device and then approves the connection. Of\n course, the attacker has to come up with some kind of\n pretext that tricks the victim into believing that this is a\n good thing, that they're scanning the code and then\n approving the connection. So it's pretty interesting\n because it really bypasses all the multi-factor\n authentication and a lot of other phishing-resistant\n authentication mechanisms because the victim is never\n really authenticating to a site provided by the attacker,\n but the victim's credentials are only going to the\n authentic site that actually then approves this device\n code. And Palo Alto has some updates regarding XSC set.\n This is a matter that attacks Apple developers, in\n particular those using Xcode. Like pretty much any IDE, if\n you are opening a project, you risk executing code. There are\n often some hooks, some install scripts alike that can be\n executed. Just by opening a project. And this is what XSC\n set here is taking advantage of in order to then hijack the\n developer's machine. Lots of new little things about this\n malware that make it yet more dangerous, more polymorphic\n code to make detection more difficult. Also more of the\n code's logic is only running in memory, is not written to\n disk, which also hinders detection of many of the\n endpoint protection tools that focus on disk activity. So if\n you're using Xcode, if you are developing regularly using\n Xcode, then take a quick look at this blog post and make\n sure that you're not trusting any projects that you may be\n downloading from untrusted sources like GitHub or other\n repositories. And of course, there is this ongoing race\n trying to secure the open source supply chain. We have\n had some changes made to GitHub and to NPM in recent\n days. The latest changes here coming from Microsoft.\n Microsoft is now reducing the API key lifetime for NuGet,\n which is the repository being used for .NET packages.\n They're reducing the lifetime to 30 days and that'll start\n in two weeks. Any API keys before that will then also\n expire. So definitely make sure that your API keys are up\n to date. And yes, let's see how it works. If theft of API\n keys is certainly a big issue in the supply chain attacks,\n I'm not sure how much it'll help to reduce it to 30 days.\n Often these API keys are actually used immediately\n after the compromise. So still up to you to secure those API\n keys for those 30 days. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing to this podcast. And as always, talk to you\n again tomorrow. Bye.\n Bye. Bye. Bye. Thank you.",
       "transcript_checked": true
     }
   ]
