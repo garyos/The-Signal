@@ -1,6 +1,88 @@
 {
-  "fetched_at": "2026-10-25T13:29:46.513456+00:00",
+  "fetched_at": "2026-10-26T08:22:04.410454+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10150",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10150",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10150.mp3",
+      "title": "SANS Stormcast Monday, October 26th, 2026: PHP2Shell Exploit Reliability; Node.js Brotli Decoder RCE (CVE-2026-111497); Tailscale \"Tailworm\" Vulnerabilities; HPE ArubaOS 8/10 Patches 72 Flaws",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, October 26th, 2026: PHP2Shell Exploit Reliability; Node.js Brotli Decoder RCE (CVE-2026-111497); Tailscale \"Tailworm\" Vulnerabilities; HPE ArubaOS 8/10 Patches 72 Flaws",
+      "show_notes": [
+        {
+          "heading": "In this episode: why a reliable PHP2Shell exploit is still hard to build, a Node.js Brotli decoder remote code execution flaw, publicly disclosed Tailscale mesh VPN vulnerabilities, and an HPE update fixing 72 vulnerabilities in ArubaOS 8 and 10.",
+          "links": []
+        },
+        {
+          "heading": "Reliable PHP2Shell Exploitability",
+          "links": []
+        },
+        {
+          "heading": "Bojan Zdrnja found that building a reliable, universal exploit for the PHP2Shell vulnerabilities is difficult: address space layout randomization (ASLR) requires a second leak to find the base address, a larger PHP memory limit makes exploitation harder, and the offsets depend on the exact PHP version and Linux distribution. Targeted exploitation has been reported, so finish patching and keep session.upload_progress.enabled set to 0 even after applying the update.",
+          "links": [
+            "https://isc.sans.edu/diary/%28Reliable%29%3F%20php2shell%20exploitability/33452"
+          ]
+        },
+        {
+          "heading": "Node.js Brotli Decoder Out-of-Bounds Write (CVE-2026-111497)",
+          "links": []
+        },
+        {
+          "heading": "The Node.js October 2026 security releases fix several vulnerabilities, including an out-of-bounds write in the bundled Brotli compression library's decoder that permits remote code execution when an application decompresses attacker-supplied data. OpenAI Codex Security is credited with the discovery; watch for Brotli decoder fixes in other products that use the library.",
+          "links": [
+            "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+          ]
+        },
+        {
+          "heading": "Tailscale \"Tailworm\" Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Researchers made a set of vulnerabilities in the Tailscale mesh VPN public without coordinated disclosure. Exploitation requires access to the tailnet, but critical issues bypass Tailscale's trust model, for example by letting an attacker join their own systems to your tailnet; watch for Tailscale updates.",
+          "links": [
+            "https://tailworm.com/"
+          ]
+        },
+        {
+          "heading": "HPE Aruba Networking Update for ArubaOS 8 and 10 (AOS-8/AOS-10)",
+          "links": []
+        },
+        {
+          "heading": "Hewlett Packard Enterprise (HPE) bulletin HPESBNW05162 fixes 72 vulnerabilities in the ArubaOS 8 and 10 wireless operating systems, eight of which allow unauthenticated remote code execution. Apply the update; expect more large updates like this as vendors use AI tools to find vulnerabilities.",
+          "links": [
+            "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-26T03:30:11+00:00",
+      "duration_seconds": 465,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10150.mp3",
+      "audio_length_bytes": 6516958,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10150",
+      "categories": [
+        "php2shell",
+        "php rce",
+        "node.js",
+        "brotli",
+        "cve-2026-111497",
+        "tailscale",
+        "tailworm",
+        "hpe aruba",
+        "arubaos"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10150",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday October 26, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Denver, Colorado.\n And this episode is brought to you by the SANS.edu Graduate\n Certificate Program in Cyber Security Engineering. Well, we\n are not quite done with PHP2Shell yet, the PHP\n vulnerabilities that kept us busy last week. Now on Friday,\n Bojan did post a diary summarizing his own\n experiences trying to develop a reliable exploit for this\n vulnerability. We don't at this point have a reliable\n exploit available yet reliable, meaning that it\n works just using this one vulnerability and also that it\n works across different configurations of PHP. Bojan\n outlined some of the issues here. First of all, if you\n have address space layout randomization enabled in your\n operating system, which pretty much all modern Unix versions\n or Linux versions do have enabled. Well, in that case,\n you need a second vulnerability in order to get\n a hold of the base address. The other problem is the\n memory limit setting in PHP. The larger this memory limit\n is set, the more difficult it becomes to reliable exploit\n this vulnerability. Not impossible, but more\n difficult. And then there are a couple other offsets that\n you need to know that highly depend on the specific version\n of PHP that you have. Even like the same version, but\n compiled for different Linux distributions may have some\n small changes here. So that's why we haven't really seen a\n reliable sort of public exploit yet. Individual\n exploits that work more targeted, that target for\n example specific organization that works. And there have\n been a couple different reports from different\n organizations stating that they have seen some of these\n exploits in the wild being used that they have seen some\n of these specific high-value systems. So again, the summary\n here is we still have a little bit more time to protect\n systems if you haven't gotten around to it yet. The other\n issue that came up when this vulnerability was first\n announced is the session upload progress\n which is laid\n out the session uploadetric would have been intact. And\n then that we all feel like\n if it didn't work well over and they're on social use them\n in a patch and they recommend to leave this setting in place\n even if you have applied the latest update because it does\n prevent or make more difficult exploitation of some of these\n vulnerabilities that are still in the queue so as always keep\n good notes about what you did to patch PHP you may have to\n do it again in a month or maybe sooner well if you're\n listening to this and saying hey all that hoopla about PHP\n I don't really use PHP well before you get too relaxed\n last week there was also code execution vulnerability in\n Node.js and now Node.js last week published a couple\n different vulnerabilities or patches for a couple different\n vulnerabilities but there's one that particular sort of\n stuck out and that's a Brotli decoder out of bounds write\n vulnerability and that one permits a remote code\n execution Brotli is a compression library and that's\n actually sort of the larger issue here it's a\n vulnerability in this library that's being addressed here\n and apparently this is affecting a large number of\n different products that are using this Brotli library the\n Brotli decoder was specifically developed for\n compressing things like JavaScript and HTML it has\n sort of a fixed dictionary of strings that show up like in\n HTML that can be effectively compressed with this algorithm\n so fonts for example apparently use sometimes\n sometimes this particular compression scheme definitely\n watch out for other Brotli decoder vulnerabilities that\n are being patched in other products but Node.js is\n certainly one of the things that you want to pay attention\n to and yes this was also a vulnerability found via AI in\n this particular case OpenAI Codex is being given credit\n for discovering this vulnerability and continuing\n the trend of AI discovered vulnerabilities we also have a\n set of vulnerabilities that affect Tailscale, the\n mesh VPN that has become quite a popular tool for\n remote access now these vulnerabilities do require\n access to the tailnet in order to exploit the\n vulnerabilities but there are some critical issues here that\n really sort of bypass the trust model of a Tailscale by\n for example allowing attacker then to have their own systems\n join your tailnet so definitely be aware of these\n vulnerabilities sadly they were not released or reported\n responsibly they were just made public however not with a\n ton of detail at this point and watch out for respective\n updates from a Tailscale and not wanting to be left behind\n we do have a massive update from HP Enterprise for their\n Aruba product line affecting ArubaOS 8 and 10 I believe\n it's 72 vulnerabilities total that are being addressed in\n this update 8 of which do allow unauthenticated remote\n code execution so definitely apply this patch and watch out\n for more similar advisories from HP and others that's the\n new normal as people sometimes say that we have now these\n companies using AI tools which is a good thing finding these\n vulnerabilities and are now releasing these relatively\n large updates as a result well and that's it for today thanks\n for listening thanks for liking thanks for recommending\n this podcast and talk to you again tomorrow bye",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10148",
       "show": "stormcast",
@@ -3675,64 +3757,6 @@
       "transcript_format": "vtt",
       "transcript": null,
       "transcript_checked": false
-    },
-    {
-      "id": "stormcast-10040",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10040",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10040.mp3",
-      "title": "SANS Stormcast Thursday, August 6th, 2026: keyv/cachable Worm IR; Apple Private Relay Leak; COLDCARD Phish",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, August 6th, 2026: keyv/cachable Worm IR; Apple Private Relay Leak; COLDCARD Phish",
-      "show_notes": [
-        {
-          "heading": "Don't Revoke That Token Yet: Inside the keyv/cacheable npm Worm",
-          "links": [
-            "https://isc.sans.edu/diary/Don%27t%20Revoke%20That%20Token%20Yet%3A%20Inside%20the%20keyv%20cacheable%20npm%20Worm/33218"
-          ]
-        },
-        {
-          "heading": "IP and DNS Leaks in WebKit Affecting Proxy Browsers and Apple iCloud Private Relay",
-          "links": [
-            "https://mysk.blog/2026/08/04/webkit-proxy-icloud-private-relay-ip-leak/?ref=404media.co"
-          ]
-        },
-        {
-          "heading": "COLDCARD Issues",
-          "links": [
-            "https://x.com/threatinsight/status/2084328552481112429"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-06T02:00:02+00:00",
-      "duration_seconds": 503,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10040.mp3",
-      "audio_length_bytes": 7044439,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10040",
-      "categories": [
-        "coldcard",
-        "phishing",
-        "private relay",
-        "icloud",
-        "proxy",
-        "tor",
-        "browser",
-        "keyv",
-        "cacheable",
-        "npm",
-        "worm"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10040",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, August 6, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Well, Renato today did a great write-up on\n some of the most recent supply chain vulnerabilities or\n supply chain compromises, and that's the keyv and cacheable\n NPM libraries that were recently compromised by yet\n another worm. These two libraries are extremely\n popular. They are, as Renato puts it, sort of at the bottom\n of the dependency chain for an awful lot of projects because\n they provide basic caching capabilities, and of course a\n lot of software uses that. Now the problem here, and that's\n something that I've seen in some of the recent\n compromises, that after the GitHub keys and such are being\n exfiltrated, the malware will actually keep checking whether\n or not those keys are still valid. And once they become\n invalid, it will then run additional actions. Now in\n this case, it's not that clear what will happen because the\n malware will basically just reach out to the attacker's\n URL and will execute whatever it's being instructed to do,\n maybe exfiltrate the new keys. But in the past, this also has\n often led to the destruction of any files on the system. So\n you definitely want to be a little bit careful here before\n you are revoking any stolen API keys. As Renato points\n out, if you disconnect the system from the network, then\n the code will not run because it actually waits for the 400\n status code to come back from the service. So with nothing\n coming back, with it not being able to connect, it will\n actually not run the additional malicious payload.\n To help you even more, Renato wrote a little tool that will\n help you identify what exactly is going on in your system.\n There are also some tricks the attacker is playing, like for\n example, they're using the usual sort of install hook for\n NPM in order to execute the malware. Well, if you're not\n running the install hook, it also imports these\n configuration files into your repository, which will then\n execute code when you're importing this particular\n library then into your development environment. I\n think yesterday I talked about a similar attack against\n Apple. So what Renato script does, first of all, it does a\n more complete review what exactly happened on your\n system based on this particular malware. And then\n it also basically helps you with the mitigation. Now you\n may say, hey, should I install yet another NPM script here or\n JavaScript script here in order to solve the problem?\n Well, Renato actually thought about that. And this\n particular script does not load any additional\n dependencies. It only uses like built-in libraries that\n come with a node.js, like your URL library and things like\n that. It also does not call out. The only time it will\n establish an outbound network connection is if you're using\n the update option to see if there's an update available\n for the script. And the same researchers who recently\n published about an Apple vulnerability in Apple's\n Gatekeeper service that allowed you to replace\n applications without triggering a Gatekeeper have\n now found an interesting issue in Apple's iCloud Private\n Relay. Talal Haj Bakry and Tommy Mysk did figure out that,\n well, you can actually trick the browser into initiating\n web requests that are then being sent by the operating\n system itself or by other components of the operating\n system. And that's sort of what's the problem here. So\n with Apple iCloud Private Relay, all requests from the\n browser are being sent to Apple's proxy servers and are\n anonymized that way. And that part works rather well. But\n what doesn't work is if you are now accessing a website\n that is actually offering passkey, which is a good\n thing. And I often recommend it, the use of passkey. But\n the problem is this triggers now a request by the operating\n system's authentication services. And that is being\n initiated by the operating system directly. It's not\n going through whatever proxy server is configured for the\n browser. And as a result, may leak your IP address to a\n potential attacker whose website you just visited. So\n this is an interesting kind of vulnerability. It apparently\n also affects other browsers, like, for example, the Tor\n browser on iOS. Because they have the same problem.\n Essentially, all browsers using WebKit, which Chrome and\n Firefox are using, they rely on this operating system-wide\n proxy setting in order to redirect traffic. The real\n solution here is not to rely on a browser-only technology.\n And that's really what Tor browser is. It just instructs\n the browser to use Tor, while other software on your\n operating system may still use a direct connection to the\n Internet. So it's much better to have an operating system\n -wide VPN instead of relying on just the browser, figuring\n out how to send traffic, while the rest of the operating\n system, of course, may still leak your data. So it's not as\n much a vulnerability in Apple's implementation as more\n a problem in only using the VPN for browser traffic and\n not using it for anything else. Well, if you are a user\n of the Coldcard crypto coin wallet, then sadly, well, the\n entire problem with the weak random number generator may\n not be over for you. I talked about this, I think, last\n week, that some Coldcard users saw their crypto coin\n funds trained because of a weak crypto random number\n generator. The new problems are, first of all, that there\n is an updated firmware available for your Coldcard.\n However, some users have reported that the update break\n to their device, essentially rendering their crypto coins\n unaccessible. So definitely make a backup of your wallet\n before you're actually applying this update.\n Secondly, Proofpoint is reporting that there is a\n phishing attack underway. That supposedly links to an audit\n guide that's supposed to help you figuring out whether or\n not you have a problem with your Coldcard wallet. Well,\n that, of course, leads to a malicious site. So definitely\n be careful here. They even came up with a reasonable good\n domain name for this coldcardteamsnews.com or\n coldcardteamnews.com. So definitely watch out for that.\n And I'll probably run a report tomorrow, see how many new\n domain names with coldcard in the name we can find. Well,\n and this is it for today. So thanks for listening. Thanks\n for liking. Thanks for subscribing to this podcast.\n And talk to you again tomorrow. Bye. Bye. Bye. Bye.",
-      "transcript_checked": true
     }
   ]
 }

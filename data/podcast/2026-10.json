@@ -2,6 +2,88 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10150",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10150",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10150.mp3",
+      "title": "SANS Stormcast Monday, October 26th, 2026: PHP2Shell Exploit Reliability; Node.js Brotli Decoder RCE (CVE-2026-111497); Tailscale \"Tailworm\" Vulnerabilities; HPE ArubaOS 8/10 Patches 72 Flaws",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, October 26th, 2026: PHP2Shell Exploit Reliability; Node.js Brotli Decoder RCE (CVE-2026-111497); Tailscale \"Tailworm\" Vulnerabilities; HPE ArubaOS 8/10 Patches 72 Flaws",
+      "show_notes": [
+        {
+          "heading": "In this episode: why a reliable PHP2Shell exploit is still hard to build, a Node.js Brotli decoder remote code execution flaw, publicly disclosed Tailscale mesh VPN vulnerabilities, and an HPE update fixing 72 vulnerabilities in ArubaOS 8 and 10.",
+          "links": []
+        },
+        {
+          "heading": "Reliable PHP2Shell Exploitability",
+          "links": []
+        },
+        {
+          "heading": "Bojan Zdrnja found that building a reliable, universal exploit for the PHP2Shell vulnerabilities is difficult: address space layout randomization (ASLR) requires a second leak to find the base address, a larger PHP memory limit makes exploitation harder, and the offsets depend on the exact PHP version and Linux distribution. Targeted exploitation has been reported, so finish patching and keep session.upload_progress.enabled set to 0 even after applying the update.",
+          "links": [
+            "https://isc.sans.edu/diary/%28Reliable%29%3F%20php2shell%20exploitability/33452"
+          ]
+        },
+        {
+          "heading": "Node.js Brotli Decoder Out-of-Bounds Write (CVE-2026-111497)",
+          "links": []
+        },
+        {
+          "heading": "The Node.js October 2026 security releases fix several vulnerabilities, including an out-of-bounds write in the bundled Brotli compression library's decoder that permits remote code execution when an application decompresses attacker-supplied data. OpenAI Codex Security is credited with the discovery; watch for Brotli decoder fixes in other products that use the library.",
+          "links": [
+            "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+          ]
+        },
+        {
+          "heading": "Tailscale \"Tailworm\" Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Researchers made a set of vulnerabilities in the Tailscale mesh VPN public without coordinated disclosure. Exploitation requires access to the tailnet, but critical issues bypass Tailscale's trust model, for example by letting an attacker join their own systems to your tailnet; watch for Tailscale updates.",
+          "links": [
+            "https://tailworm.com/"
+          ]
+        },
+        {
+          "heading": "HPE Aruba Networking Update for ArubaOS 8 and 10 (AOS-8/AOS-10)",
+          "links": []
+        },
+        {
+          "heading": "Hewlett Packard Enterprise (HPE) bulletin HPESBNW05162 fixes 72 vulnerabilities in the ArubaOS 8 and 10 wireless operating systems, eight of which allow unauthenticated remote code execution. Apply the update; expect more large updates like this as vendors use AI tools to find vulnerabilities.",
+          "links": [
+            "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-26T03:30:11+00:00",
+      "duration_seconds": 465,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10150.mp3",
+      "audio_length_bytes": 6516958,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10150",
+      "categories": [
+        "php2shell",
+        "php rce",
+        "node.js",
+        "brotli",
+        "cve-2026-111497",
+        "tailscale",
+        "tailworm",
+        "hpe aruba",
+        "arubaos"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10150",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday October 26, 2026 edition\n of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Denver, Colorado.\n And this episode is brought to you by the SANS.edu Graduate\n Certificate Program in Cyber Security Engineering. Well, we\n are not quite done with PHP2Shell yet, the PHP\n vulnerabilities that kept us busy last week. Now on Friday,\n Bojan did post a diary summarizing his own\n experiences trying to develop a reliable exploit for this\n vulnerability. We don't at this point have a reliable\n exploit available yet reliable, meaning that it\n works just using this one vulnerability and also that it\n works across different configurations of PHP. Bojan\n outlined some of the issues here. First of all, if you\n have address space layout randomization enabled in your\n operating system, which pretty much all modern Unix versions\n or Linux versions do have enabled. Well, in that case,\n you need a second vulnerability in order to get\n a hold of the base address. The other problem is the\n memory limit setting in PHP. The larger this memory limit\n is set, the more difficult it becomes to reliable exploit\n this vulnerability. Not impossible, but more\n difficult. And then there are a couple other offsets that\n you need to know that highly depend on the specific version\n of PHP that you have. Even like the same version, but\n compiled for different Linux distributions may have some\n small changes here. So that's why we haven't really seen a\n reliable sort of public exploit yet. Individual\n exploits that work more targeted, that target for\n example specific organization that works. And there have\n been a couple different reports from different\n organizations stating that they have seen some of these\n exploits in the wild being used that they have seen some\n of these specific high-value systems. So again, the summary\n here is we still have a little bit more time to protect\n systems if you haven't gotten around to it yet. The other\n issue that came up when this vulnerability was first\n announced is the session upload progress\n which is laid\n out the session uploadetric would have been intact. And\n then that we all feel like\n if it didn't work well over and they're on social use them\n in a patch and they recommend to leave this setting in place\n even if you have applied the latest update because it does\n prevent or make more difficult exploitation of some of these\n vulnerabilities that are still in the queue so as always keep\n good notes about what you did to patch PHP you may have to\n do it again in a month or maybe sooner well if you're\n listening to this and saying hey all that hoopla about PHP\n I don't really use PHP well before you get too relaxed\n last week there was also code execution vulnerability in\n Node.js and now Node.js last week published a couple\n different vulnerabilities or patches for a couple different\n vulnerabilities but there's one that particular sort of\n stuck out and that's a Brotli decoder out of bounds write\n vulnerability and that one permits a remote code\n execution Brotli is a compression library and that's\n actually sort of the larger issue here it's a\n vulnerability in this library that's being addressed here\n and apparently this is affecting a large number of\n different products that are using this Brotli library the\n Brotli decoder was specifically developed for\n compressing things like JavaScript and HTML it has\n sort of a fixed dictionary of strings that show up like in\n HTML that can be effectively compressed with this algorithm\n so fonts for example apparently use sometimes\n sometimes this particular compression scheme definitely\n watch out for other Brotli decoder vulnerabilities that\n are being patched in other products but Node.js is\n certainly one of the things that you want to pay attention\n to and yes this was also a vulnerability found via AI in\n this particular case OpenAI Codex is being given credit\n for discovering this vulnerability and continuing\n the trend of AI discovered vulnerabilities we also have a\n set of vulnerabilities that affect Tailscale, the\n mesh VPN that has become quite a popular tool for\n remote access now these vulnerabilities do require\n access to the tailnet in order to exploit the\n vulnerabilities but there are some critical issues here that\n really sort of bypass the trust model of a Tailscale by\n for example allowing attacker then to have their own systems\n join your tailnet so definitely be aware of these\n vulnerabilities sadly they were not released or reported\n responsibly they were just made public however not with a\n ton of detail at this point and watch out for respective\n updates from a Tailscale and not wanting to be left behind\n we do have a massive update from HP Enterprise for their\n Aruba product line affecting ArubaOS 8 and 10 I believe\n it's 72 vulnerabilities total that are being addressed in\n this update 8 of which do allow unauthenticated remote\n code execution so definitely apply this patch and watch out\n for more similar advisories from HP and others that's the\n new normal as people sometimes say that we have now these\n companies using AI tools which is a good thing finding these\n vulnerabilities and are now releasing these relatively\n large updates as a result well and that's it for today thanks\n for listening thanks for liking thanks for recommending\n this podcast and talk to you again tomorrow bye",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10148",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
