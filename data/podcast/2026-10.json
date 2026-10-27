@@ -2,6 +2,79 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10152",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10152",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10152.mp3",
+      "title": "SANS Stormcast Tuesday, October 27th, 2026: Apple Patches 304 Vulnerabilities Incl. Exploited CoreGraphics Flaw; Threat Hunting in DShield SIEM with ELK; .NET and PHP Brotli Fixes (CVE-2026-111497)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, October 27th, 2026: Apple Patches 304 Vulnerabilities Incl. Exploited CoreGraphics Flaw; Threat Hunting in DShield SIEM with ELK; .NET and PHP Brotli Fixes (CVE-2026-111497)",
+      "show_notes": [
+        {
+          "heading": "In this episode: Apple's October updates fix 304 vulnerabilities, including an already exploited CoreGraphics flaw now patched for iOS 18; a guest diary shows how to hunt for threat actors in a DShield SIEM honeypot using HTTP language preference headers in Elasticsearch; and Microsoft and PHP ship out-of-band updates for the Brotli decompression vulnerability CVE-2026-111497.",
+          "links": []
+        },
+        {
+          "heading": "Apple Patches for October 2026: 304 Vulnerabilities Fixed",
+          "links": []
+        },
+        {
+          "heading": "Apple released updates for all of its operating systems, fixing 304 vulnerabilities. An already exploited CoreGraphics vulnerability (CVE-2026-86950), patched in current iOS versions about a month ago, is now also fixed for iOS 18. Other notable fixes cover a malicious app accessing the camera without user permission (CVE-2026-86990) and a local attacker gaining access to Keychain items (CVE-2026-28864).",
+          "links": [
+            "https://isc.sans.edu/diary/Apple+Patches+for+October+2026/33458/"
+          ]
+        },
+        {
+          "heading": "Looking for a Language: Threat Hunting in a DShield SIEM Honeypot with ELK",
+          "links": []
+        },
+        {
+          "heading": "In a guest diary, SANS.edu undergraduate intern Jeffray Spence shows how to use Elasticsearch and Kibana in the DShield SIEM (security information and event management) honeypot to hunt for threats. Filtering on HTTP language preference headers, such as Accept-Language and Accept-Charset values requesting Chinese, isolates related requests and helps identify automated scanning campaigns and the threat actors behind them.",
+          "links": [
+            "https://isc.sans.edu/diary/Looking%20for%20a%20Language%20%5BGuest%20Diary%5D/33442"
+          ]
+        },
+        {
+          "heading": "More Brotli Updates: .NET Out-of-Band Patch and PHP Windows Builds (CVE-2026-111497)",
+          "links": []
+        },
+        {
+          "heading": "Microsoft released out-of-band security updates for .NET 8, 9 and 10 and .NET 11 Release Candidate 3 to fix CVE-2026-111497, a buffer overflow in Brotli decompression. PHP rebuilt its Windows binaries with the updated Brotli library without changing the PHP version number, so compare hashes to confirm you run the fixed build. Expect more vendors to release Brotli fixes over the next few weeks.",
+          "links": [
+            "https://devblogs.microsoft.com/dotnet/dotnet-october-2026-oob-security-updates/",
+            "https://www.php.net/archive/2026.php#2026-10-26-1"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-27T02:55:12+00:00",
+      "duration_seconds": 401,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10152.mp3",
+      "audio_length_bytes": 5629623,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10152",
+      "categories": [
+        "apple",
+        "coregraphics",
+        "dshield siem",
+        "elasticsearch",
+        "threat hunting",
+        "brotli",
+        "cve-2026-111497",
+        ".net",
+        "php"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10152",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday October 27th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recorded today from Denver,\n Colorado. And this episode comes to you from the SANS.edu\n Grad Certificate Program in Penetration Testing and\n Ethical Hacking. Well to start out with today we got patches\n from Apple. Apple released updates to all of its\n operating systems and with that patched 304 different\n vulnerabilities. Now one of the things of course we always\n look for these days is how many more vulnerabilities we\n get now than before due to AI being used in order to\n discover these vulnerabilities. While we do\n see an increase in the number of vulnerabilities being\n patched by Apple it's not really as many more as we have\n seen from other vendors. There's a slightly higher\n frequency in patches with Apple and overall the number\n of patches per release well maybe sort of doubled but it\n sort of went up and down a lot for Apple in general so may\n have to wait a little bit longer to see a cleaner trend\n here to really check what's going on. But of course with\n other vendors we have sort of more seen an order of\n magnitude change so Apple definitely doesn't really see\n that huge of an increase in number of vulnerabilities\n reported. There are sort of three interesting or\n noteworthy issues here. Now first of all there is one\n vulnerability that's already being exploited in Core\n Graphics. This is not a new vulnerability. About a month\n ago Apple did patch it in current versions of iOS and\n what this release does is it basically now also patches it\n for iOS 18. So we got older versions of iOS covered here.\n There are two vulnerabilities that I thought were a little\n bit different and interesting. One is an access to the camera\n without user permissions. It doesn't really give you a lot\n of details whether or not for example the camera icon or so\n is visible as recording or not but that's certainly always\n sort of a concern with particular laptops and mobile\n devices with a built-in camera. Then secondly we do\n have a local attacker may gain access to users Keychain\n items. Interesting issue here you know if you think about\n that we trust Keychain with passwords so certainly would\n like to know a little bit more about what exactly is being\n given access to here but yeah as usual patch nothing else\n really you can do with this and there is no sort of you\n know individual patches for individual vulnerabilities\n just update the operating system of course with these\n updates in particular for the current operating system also\n come some new features these are not just security updates\n for older operating systems it's typically just a security\n update. And we got a second diary today this diary comes\n from one of our undergraduate interns Jeffray\n Spence and Jeffray is writing well basically about how to do\n sort of threat hunting in our DShield SIEM honeypot. The\n SIEM uses Elasticsearch and the typical sort of Elastic\n front end with that of course you have access to Elastic's\n query language and are able to dissect and search the data\n that's stored in Elastic and Jeffray does a real good job\n sort of showing you some approaches how to essentially\n find interesting events looking for example for the\n Accept-Language headers in HTTP requests to identify and\n isolate certain requests that have certain language\n preferences which of course then can lead to threat actors\n that happen to use this particular language preference\n in requests they're sending and with that Jeffray is going\n further into the data trying to identify related events and\n essentially identify different threat actors interesting and\n very detailed diary in particular if you're new to\n tools like Elasticsearch and ELK well this is a nice way to\n sort of get introduced to the capability of this system well\n whenever we are dealing with a big event like last week's PHP\n issues there's always the second question well what did\n we miss and I think one issue that sort of wasn't really\n covered well because of everybody focused on PHP was\n the Brotli vulnerability that I mentioned yesterday on\n Sunday Microsoft actually released an out of band patch\n for .NET covering .NET eight nine and ten also the 11\n release candidate three fixing this Brotli decompression\n algorithm vulnerability PHP actually was also affected and\n PHP itself does not implement this algorithm but does use\n the library at least apparently in the Windows\n version it was vulnerable and what PHP did is that they\n repackaged the PHP binary for Windows using the updated\n Brotli library they didn't change the version of this\n library so you have to compare hashes to make sure that you\n are using the up-to-date and Brotli safe I guess we call\n it version of this library so keep looking for updates of\n various vendors there's a very commonly used compression\n algorithm compression library so we'll probably see more and\n more of this come out over the next few weeks well and that's\n it for today thanks for listening thanks for liking\n thanks for recommending this podcast and talk to you again\n tomorrow bye",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10150",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
