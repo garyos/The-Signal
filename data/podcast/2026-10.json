@@ -2,6 +2,100 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10154",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10154",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10154.mp3",
+      "title": "SANS Stormcast Wednesday, October 28th, 2026: eMudhra CA Revocation for Windows, macOS, Linux; PHP RCE Exploited on Palo Alto PAN-OS; Microsoft Authenticator Android Token Leak; GoAhead TLS Bugs",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, October 28th, 2026: eMudhra CA Revocation for Windows, macOS, Linux; PHP RCE Exploited on Palo Alto PAN-OS; Microsoft Authenticator Android Token Leak; GoAhead TLS Bugs",
+      "show_notes": [
+        {
+          "heading": "In this episode: updates on revoking the compromised eMudhra certificate authority certificates on Windows, macOS, Linux and Python, confirmed exploitation of the PHP vulnerabilities against Palo Alto Networks devices, a token leak in Microsoft Authenticator for Android, and TLS certificate validation flaws in the GoAhead embedded web server.",
+          "links": []
+        },
+        {
+          "heading": "eMudhra Certificate Revocation Updates for Windows, macOS, Linux and Python",
+          "links": []
+        },
+        {
+          "heading": "Microsoft released out-of-band updates for Windows 10 and 11 to distrust the compromised eMudhra intermediate certificate authority (CA) certificates, and Apple now blocks them in Safari, Mail and apps that use Apple's networking frameworks. Command-line tools that rely on /etc/ssl/cert.pem, Homebrew, Python's certifi package and Linux CA bundles may still trust them until updated. Because the private keys are known, anyone could issue certificates that appear valid.",
+          "links": [
+            "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/10/kb5134133-windows-11-24h2-25h2-26h2-update",
+            "https://support.microsoft.com/en-us/servicing/os/windows-10/2026/10/kb5134125-windows-10-21h2-22h2-update",
+            "https://support.apple.com/en-us/149555"
+          ]
+        },
+        {
+          "heading": "PHP RCE Vulnerabilities Exploited on Palo Alto Networks PAN-OS (CVE-2026-109618, CVE-2026-109619)",
+          "links": []
+        },
+        {
+          "heading": "Palo Alto Networks has confirmed active exploitation of the critical PHP remote code execution (RCE) flaws against PAN-OS management interfaces exposed to the internet. Some Palo Alto appliances apparently don't always support address space layout randomization (ASLR), which makes exploitation easier, so apply the hotfixes and the advisory's mitigations quickly.",
+          "links": [
+            "https://security.paloaltonetworks.com/CVE-2026-109618"
+          ]
+        },
+        {
+          "heading": "Microsoft Authenticator for Android Token Theft Flaw (CVE-2026-80097)",
+          "links": []
+        },
+        {
+          "heading": "Ofek Levin of Enclave.ai found that any other app on the same Android device could obtain authentication tokens from Microsoft Authenticator, breaking a core assumption of using a phone as a second factor. Microsoft has fixed the flaw; versions before 6.2606.4246 are affected.",
+          "links": [
+            "https://enclave.ai/blog/authmask-we-made-microsoft-authenticator-hand-over-tokens"
+          ]
+        },
+        {
+          "heading": "GoAhead Embedded Web Server TLS Flaws (CVE-2026-115881, CVE-2026-115884)",
+          "links": []
+        },
+        {
+          "heading": "Researchers from FoxIO found TLS certificate validation flaws in GoAhead, an embedded web server common in IoT devices, including one where certificate revocation lists (CRLs) are loaded but ignored. GoAhead 6.1.1 fixes the bugs, but most users will have to wait for their device vendor to ship an update.",
+          "links": [
+            "https://foxio.io/blog/choose-your-backend-three-tls-bugs-in-goahead"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "SANS Difference Maker Awards",
+          "links": []
+        },
+        {
+          "heading": "Dr. Johannes Ullrich is up for the SANS Difference Maker Lifetime Award this year. Please vote:",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        }
+      ],
+      "published": "2026-10-28T02:30:11+00:00",
+      "duration_seconds": 368,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10154.mp3",
+      "audio_length_bytes": 5169027,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10154",
+      "categories": [
+        "emudhra",
+        "php",
+        "cve-2026-109618",
+        "palo alto",
+        "pan-os",
+        "microsoft authenticator",
+        "android",
+        "goahead",
+        "tls"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10154",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday October 28, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Denver,\n Colorado. Today's episode is brought to you by the SANS.edu\n Undergraduate Certificate Program in Applied Cyber\n Security. Well, first story today is an update on the\n eMudhra situation. This is the certificate with the\n famous private key of four. Actually, a couple different\n signing certificates that had very weak private keys. There\n is some progress in getting these keys or certificates\n revoked throughout some of the different ecosystems.\n Microsoft yesterday released an out-of-band patch for\n Windows 10 and 11. So definitely apply those. Also,\n some continuing progress here from macOS. macOS has already\n released an update for its operating system. In macOS,\n things are a little bit more complicated. Now, the patch\n that macOS released does actually fix any issues with\n Safari and most web browsers on macOS. Also, with their\n mail client and such. Basically, anything that uses\n sort of the normal macOS networking stack. However, a\n lot of command line utilities may still be vulnerable because\n the certificate is still listed in /etc/ssl/cert.pem.\n The Apple notice does give you some hints as to how to update\n this. If you're running Homebrew, then there's also\n possibly a separate certificate stack. And the\n last applies, I think, to all operating systems. If you're\n using Python scripts, usually you have the certifi library\n that you're loading. Well, you have to update that for each\n project individually in order to make sure that you have an\n up-to-date certificate authority file that only lists\n still trusted certificate authorities with the eMudhra\n certificate revoked. Now, you may wonder, well, why should I\n care? Because apparently, eMudhra only issued something\n like a hundred certificates. Well, the problem is with the\n private key now being known, anybody can issue a\n certificate that appears to be signed using the, well, still\n somewhat trusted certificate authority. And as a result,\n their certificate would be as valid as any other certificate\n signed by a trusted certificate authority. So\n definitely make sure that you get this updated throughout\n your systems. Linux is a little bit sort of like macOS\n in that it tends to have multiple different certificate\n authority files. Typically, there's sort of one big\n central one that's most of the time used, but also watch out\n for the sort of individual certificate authority files.\n And then, well, regarding the PHP vulnerabilities, we now\n have confirmed compromises of Palo Alto devices. Palo Alto\n has set the exploit maturity to attack, confirming that\n successful attacks have been detected as of today. Palo\n Alto devices have sort of been mentioned as one of the low\n hanging fruit here, because in particular, if you're running\n one of their appliances, they apparently don't always\n support address space layout randomization. So as a result,\n exploitation becomes a lot simpler for these devices. So\n definitely do apply the patch quickly. As we all know, these\n kind of border security devices are always at the top\n of the list of ransomware gangs to exploit. And this is\n just another way how they can potentially access them. Also,\n the Palo Alto advisory, well, read it and look for any other\n advice and mitigating configurations and such that\n you may want to apply. Well, in case you're using\n Microsoft's Authenticator application on Android, make\n sure you're running this version. There's an\n interesting write up by Enclave.ai how the application\n did allow any other application running on the\n same Android device to obtain authentication tokens, which\n of course sort of breaks one of the security assumptions\n when you're dealing with a second factor like a mobile\n device, where it's assumed that only the user can\n actually, while interacting with the device, get a token\n from the authenticator. This has been fixed and again, more\n details in the blog post by Ofek Levin from Enclave.ai. A\n couple of researchers from FoxIO have discovered a number of\n vulnerabilities in the GoAhead web server. If you're not\n familiar with GoAhead, it's one of those embedded web\n servers often found in IoT devices. The vulnerabilities\n center around TLS and how certificates and such are\n being validated, where, for example, one of the\n vulnerabilities is that certificate revocation lists\n are loaded but ignored, and a couple other sort of similar\n issues. This is probably one of those things you can't do\n much about but wait for a vendor to actually update your\n device. Well, and that's it for today. Thanks for\n listening. Thanks for liking this podcast. I'm also up for\n the SANS Difference Maker Lifetime Award this year. I'll\n add a link to the voting page in the show notes. Would, of\n course, appreciate your vote. Thanks and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10152",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
