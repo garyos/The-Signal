@@ -1,6 +1,100 @@
 {
-  "fetched_at": "2026-10-28T15:40:21.133720+00:00",
+  "fetched_at": "2026-10-29T09:12:15.972385+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10156",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10156",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10156.mp3",
+      "title": "SANS Stormcast Thursday, October 29th, 2026: ClickFix Campaign Targets macOS and Windows; EDK II UEFI PXE Pre-Boot RCE (CVE-2026-97631); Qwen AI Model Data Exfiltration; LiteLLM Master Key Leak",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 29th, 2026: ClickFix Campaign Targets macOS and Windows; EDK II UEFI PXE Pre-Boot RCE (CVE-2026-97631); Qwen AI Model Data Exfiltration; LiteLLM Master Key Leak",
+      "show_notes": [
+        {
+          "heading": "Today: a new ClickFix campaign using fake Cloudflare verification pages, a pre-boot remote code execution flaw in the EDK II UEFI PXE network boot driver, Cohere research on the Qwen AI model trying to send data to Alibaba Cloud, and a CVSS 10 LiteLLM file read flaw that leaks the proxy master key.",
+          "links": []
+        },
+        {
+          "heading": "Yet Another ClickFix Campaign Uses Fake Cloudflare Verification Pages",
+          "links": []
+        },
+        {
+          "heading": "Brad Duncan captured a previously unseen ClickFix campaign that uses fake Cloudflare verification pages and targets both macOS and Windows. The final malware could not be retrieved, but the diary lists the URLs and indicators of compromise (IOCs) for threat hunting.",
+          "links": [
+            "https://isc.sans.edu/diary/Yet%20Another%20ClickFix%20Campaign/33466"
+          ]
+        },
+        {
+          "heading": "EDK II UEFI PXE Driver Pre-Boot Remote Code Execution (CVE-2026-97631)",
+          "links": []
+        },
+        {
+          "heading": "An unauthenticated attacker at any network distance can send oversized ICMP error messages to a system while it network boots via PXE (Preboot Execution Environment), corrupting memory in the UEFI firmware and executing code before Secure Boot checks the operating system. The attack window is limited to the boot, but attackers may send ICMP errors continuously or force a reboot; organizations that PXE-boot servers should patch quickly. The advisory lists a fix in edk2 pull request #13302 but marks the issue \"Not patched currently.\"",
+          "links": [
+            "https://github.com/tianocore/edk2/security/advisories/GHSA-99cj-7hg9-mp4m"
+          ]
+        },
+        {
+          "heading": "Qwen Open-Weight AI Model Caught Attempting Data Exfiltration to Alibaba Cloud",
+          "links": []
+        },
+        {
+          "heading": "Researchers at Cohere found that a locally run Alibaba Qwen model (Qwen3.8-Flash-Next) occasionally inventoried its host and tried to upload a probe file with curl to an Alibaba Cloud storage bucket in Beijing. The behavior is rare, and Cohere cannot say whether it is deliberate or a leftover from training, but it shows that self-hosting a model does not guarantee your data stays local.",
+          "links": [
+            "https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model"
+          ]
+        },
+        {
+          "heading": "LiteLLM Unauthenticated File Read Leaks Master Key on Enterprise Proxy",
+          "links": []
+        },
+        {
+          "heading": "A CVSS 10 vulnerability in the LiteLLM AI proxy lets unauthenticated attackers read local files, exposing the LITELLM_MASTER_KEY and the API keys for the AI providers it connects to. Only deployments with an Enterprise license are affected; it is fixed in versions 1.103.10, 1.104.8, 1.105.6 and 1.106.5.",
+          "links": [
+            "https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "SANS Difference Maker Awards",
+          "links": []
+        },
+        {
+          "heading": "Dr. Johannes Ullrich is up for the SANS Difference Maker Lifetime Award this year. Please vote:",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        }
+      ],
+      "published": "2026-10-29T03:10:12+00:00",
+      "duration_seconds": 493,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10156.mp3",
+      "audio_length_bytes": 6916861,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10156",
+      "categories": [
+        "clickfix",
+        "macos",
+        "windows",
+        "uefi",
+        "edk ii",
+        "pxe",
+        "cve-2026-97631",
+        "secure boot",
+        "qwen",
+        "alibaba",
+        "litellm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10156",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 29, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Denver,\n Colorado. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Purple Team Operations. In\n Diaries Today, Brad was able to capture yet another ClickFix\n campaign. This particular ClickFix campaign does again\n use fake Cloudflare verification pages. Now it\n does also target macOS and Windows. While Brad wasn't\n able to retrieve the particular malware being\n distributed by this tool, Brad was able to capture a number\n of different URLs associated with this campaign. So\n definitely something that you can use for threat hunting.\n And yes, you'll find a list of indicators of compromise in\n Brad's diary from today. And the next story, well, I think\n it's one of those odd stories that's very severe\n vulnerability, but then some of the reporting I think has\n it made more severe than it actually is. So I want to talk\n about this just to sort of tell you a little bit how bad\n it really is and who really has to worry about it. And\n that's a pre-boot remote code execution vulnerability in EDK II\n PXE driver. So PXE booting is when you're booting an\n operating system across the network, always a little bit\n of risky thing. Not too many people do it, but it's often\n used in large server farms and such. So certainly an\n important feature and yes, quite widely used. The problem\n here is that affected systems and there are literally\n millions of them out there. If during the boot of the\n operating system, the system does receive an ICMP error\n message, this ICMP error message may trigger remote\n code execution. And that's certainly a very severe\n problem because this also bypasses many other\n protections like for example, secure boot. So all the\n attacker has to do is send ICMP error messages that can\n happen remotely, does not have to be network adjacent to the\n victim machine, but the vulnerability is only\n exploitable while the system boots. And of course, well,\n systems don't boot all the time. In particular servers\n we're talking about here, they're only booting very\n rarely. And that makes the exploit opportunity window\n here very brief. On the other hand, the attacker may be able\n to trigger a reboot using another denial of service\n vulnerability. And then of course, this becomes very\n exploitable for a system that is affected. So what should\n you do? Well, if you never heard about PXE, if you're\n never booting across the network, don't worry. If on\n the other hand, that's sort of how you run your network,\n that's how you run your data center, then be very worried\n and do update quickly. Like even if the attacker can't\n predict a system booting at a certain point in time, they\n could just send ICMP error messages sort of continuously\n to your network. And they don't have to be doing this\n very fast. And at one point, they'll get lucky and hit your\n system in the right moment and be able to trigger the code\n execution. Now, there are also dependencies, of course, the\n attacker has to know a little bit more about your system in\n order to make this exploit reliable. But then again, it's\n definitely a brute forceable. Now, if you're experimenting\n with AI, one of the big concerns, of course, is always\n data exfiltration. If you're sending confidential data to a\n remote AI model, there's a good chance that your data\n will end up in training data or may leak. Otherwise, and\n there have been many examples how bugs or bad intentions on\n the side of the entity operating the AI model have\n led to the leak of confidential data being sent\n to these AI models. One way around this, of course, is to\n run a local AI model. In that case, the data doesn't leave\n your network and you have more control over how your data is\n being used. At least that's the idea of running an open AI\n model. But remember, running an AI model really also means\n executing code on your system that is part of the AI model.\n And researchers from Cohere, an AI security company have\n found that that Qwen, the Chinese AI model, that's\n probably one of the sort of most frequently used local\n models, has had a tendency to occasionally leak data to\n various storage locations in Alibaba's network, the creator\n of Qwen. They're talking a little bit about what triggers\n that particular behavior and how that data exfiltration may\n happen by, for example, including these upload\n locations in URLs that are then being passed to tools\n like curl. But what they're a little bit open about, and I\n think that's good, so is whether or not that's actually\n intentionally or whether that's really just sort of\n careless training of the model. Because after all,\n well, it was trained by Alibaba, so they probably\n ended up with a lot of Alibaba URLs during the training. And\n it may just be sort of a leftover of this training that\n did actually lead to this behavior. They're also talking\n about how they were able to sort of trigger this behavior\n more reliable. There have been sort of over the last month\n multiple reports of this, but no real sort of reliable way\n to actually reproduce this behavior. And sticking with AI\n for the last story, we do have a new vulnerability in LiteLLM\n with a CVSS score of 10. This vulnerability really sort\n of gets to the core of what LiteLLM is trying to do.\n LiteLLM is a proxy, and organizations use it in order\n to control access to various AI models from within\n their organization. So the LiteLLM instance typically\n holds access keys for various AI models, and then makes\n these available via the proxy functionality to different\n users, but does not actually reveal those keys to these\n users. And that's sort of a critical piece here. The\n vulnerability here is an arbitrary file read\n vulnerability. And what that of course leads to is that an\n attacker will be able to read these files that store these\n credentials and with that can read the master key for for\n LiteLLM or any of the keys being used to connect to these\n AI models. So definitely keep LiteLLM updated. And yes, in\n particular, if some of the users that you're proxying\n through LiteLLM may not be necessarily trusted by you.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending this podcast and\n talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10154",
       "show": "stormcast",
@@ -3777,67 +3871,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10046",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday August 11th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well, in diaries today, nothing too\n exciting. Some scans against our web honeypots for Solana\n endpoint. Now Solana is a development platform that's\n very popular for developers of cryptocurrency applications.\n If you're trying, for example, to get cryptocurrency payments\n working and the like, then that's sort of a popular\n choice. And now it does implement RPC, a remote\n procedure call API that uses standard JSON payloads. And\n that apparently looks like what the attacker is after\n here. So they're requesting a couple of different requests.\n One just looking for the health basically off at the\n endpoint. There one looking for the version and then one\n for current Ethereum chain being loaded. So that's really\n more reconnaissance. Haven't managed to get them sort of to\n launch any attacks yet, but keep refining the honeypot to\n provide better responses. So maybe in a week or so, we'll\n have sort of a better idea what the exploit chain looks\n like here. If you have any experience with this, I would\n appreciate some input into what the attacker is actually\n after in these particular cases. And of course, one of\n the issues that we're all worried about, well, tomorrow\n is also Microsoft's Patch Tuesday coming again, is just\n the large number of vulnerabilities being\n identified using AI. Now, one of the hopes here is that AI\n could also help patch those vulnerabilities or develop\n patches for these vulnerabilities. Well, the\n 1Password off by one lab, not to be confused with Steven\n Sims, excellent live stream on YouTube, the off by one\n stream. I think he usually does that on Fridays. Anyway,\n they did look at the large number of vulnerabilities and\n associated patches. I think something like 6,000 or so of\n them. So the patches here were generated using AI. And what\n they found is that in half of the cases that they looked at,\n that the patch developed by AI did not really sort of address\n the vulnerability that was found here. And essentially,\n you know, had to be fixed up. So with that, the human\n intervention is still very critical in developing these\n patches. And of course, no, it's not just whether or not\n the patch actually fixes the vulnerability, but also what\n else a patch like this may break. And the FBI, together\n with a number of US cyber organizations, as well as the\n Korean National Police Agency, has published a report about\n the Gunra ransomware. This ransomware has been around for\n at least a year. And this report now outlines some of\n the techniques being used by this particular threat actor.\n Nothing sort of earth shattering in you here.\n Imagine that the initial access vector appears to be SL\n VPNs, even though they're not just looking for sort of\n vulnerabilities, but also for badly configured accounts\n where they can guess or find the password for. Once they're\n in, they're using, well, SMB and things like Windows screen\n sharing and such like RDP to then do their lateral\n movement. Like I said, nothing really earth shattering, but\n maybe a good chance to yet again, go over your\n architecture, run some tests, make sure that you have these\n attack vectors locked down because yes, that's exactly\n how probably most ransomware, not just Gunra, enters your\n network and then spreads internally. Well, and then we\n have an interesting patch for the Neo4j GraphQL\n implementation. GraphQL is one of those APIs that allows you\n to subscribe to events. So it's not just a sort of a\n simple request response pattern as we like have for\n rest, for example, and that is often implemented over\n WebSocket. Now with WebSocket, we can just basically set up a\n connection and then the server can send us data whenever\n there is an update available. So it fits very well that\n subscription paradigm. But you of course also need to\n authenticate. Now the way this is solved here is with JWT.\n JWT, a nice solution for this. You have a digitally signed\n statement basically telling the service what you have\n access to. The problem with the Neo4j implementation was\n that, well, they never check the signature. So you can\n essentially include any JWT listing, any claims that you\n may or may not have, and they're just being accepted,\n which allows you then to subscribe to events destined\n for a different user. So information leakage, that's\n the minimum property you have to be concerned about here.\n Not clear if an attacker could sort of not add subscriptions\n with this. I don't think so, but that's maybe possible. So\n definitely something that you do want to patch because,\n well, it will at least leak other users' data. Well, and\n this is it for today. So thanks for listening and\n thanks for liking, thanks for subscribing. Get ready for\n tomorrow's patch Tuesday and that's it. Talk to you again\n tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10044",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10044",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10044.mp3",
-      "title": "SANS Stormcast Monday, August 10th, 2026: Linux Shell Forensics; Criticial MacOS Patch; More N-Central Hotfixes; Exploited Metabase Vuln;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, August 10th, 2026: Linux Shell Forensics; Criticial MacOS Patch; More N-Central Hotfixes; Exploited Metabase Vuln;",
-      "show_notes": [
-        {
-          "heading": "Linux Shell Forensic: Let s Dive Into Atuin!",
-          "links": [
-            "https://isc.sans.edu/diary/Linux+Shell+Forensic+Lets+Dive+Into+Atuin/33226"
-          ]
-        },
-        {
-          "heading": "Apple Patches macOS Screen Sharing Vulnerability",
-          "links": [
-            "https://support.apple.com/en-us/148170"
-          ]
-        },
-        {
-          "heading": "More N-Able N-Central Issues",
-          "links": [
-            "https://www.n-able.com/blog/n-central-security-update-august-6-2026"
-          ]
-        },
-        {
-          "heading": "Metabase Unauthenticated SQL injection",
-          "links": [
-            "https://github.com/metabase/metabase/security/advisories/GHSA-vwf4-m7j8-wcjf"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-10T02:00:02+00:00",
-      "duration_seconds": 483,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10044.mp3",
-      "audio_length_bytes": 6764824,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10044",
-      "categories": [
-        "metabase",
-        "n-able",
-        "n-central",
-        "apple",
-        "macos",
-        "screen sharing",
-        "linux",
-        "atuin"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10044",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday August 10th, 2026\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in cyber\n defense operations. In diaries we got Xavier talking about\n Linux, forensics, and here about actually new to me tool\n Atween. I think that's how I would pronounce it. The goal\n of the tool is to create a better bash history. So\n typically we do have some form of history file often called\n .bash_history, but the exact format, how\n stuff is being logged and what the file is called depends on\n various configuration options. And of course,\n the file is\n not always correct. It doesn't really show you how long a\n command ran, for example. And also, well, the size is\n usually rather limited in default configurations. And it\n also limits what information is being logged in particular\n when a user sort of changes users with sudo and the like.\n So Atween is attempting to fix some of these issues. The\n basic idea is that the flat bash history file is replaced\n with a SQLite database. SQLite database, of course, being not\n really that much more expensive, kind of not to run\n to operate than a flat text file, but giving you a more\n searchable structure to the data. And with that, a few\n more data items are being logged, like for example,\n start and end time or duration of the particular command when\n it was run. Also, which user ran it, the current working\n directory. And it's also configurable in the sense that\n for example, you may exempt certain commands from being\n logged, like for example, commands that are being used\n to change passwords. And that's rather flexible, you\n could for example, not log anything that contains the\n word password. If you're familiar with MySQL, it does\n something similar with its history, which honestly,\n something gets a bit annoying when I'm searching like for SH\n passwords and such in our database. But yes, neat tool\n that you can install on your Linux systems. Of course, you\n have to install this ahead of the compromise to get the most\n out of it. An attacker could be able, likely, to modify,\n just like the bash history. In particular, if they have a\n system or some kind of root access to the system. Now,\n there's another option have sometimes been proposed to use\n for bash history. You can also send all commands to syslog.\n This can be a reasonable idea in particular, if you want to\n log the data off the host and keep them out of the reach of\n the attacker. But be aware that syslog usually is not\n encrypted. So anything would be sent in the clear unless\n you use some of the newer syslog versions that actually\n can be run over TLS. And a small note also is diary. You\n may see there are 29 comments to it. Someone made it past\n our captcha for the login. I'll take a closer look at\n that later and see what exactly happened there. But\n yes, that's why our comments first need to go through\n manual approval. And they didn't pass that step. And it\n looks like I missed an important Apple update for\n Friday's podcast. On Thursday, Apple published new versions\n of macOS. That affects the latest version of macOS 26 as\n well as the two prior editions of macOS. This version does\n fix a single vulnerability in screen sharing. But this\n vulnerability sounds rather interesting, meaning critical\n in that it does allow an attacker to access screen\n sharing without authentication. Now, as far as\n I know, screen sharing is not enabled by default in macOS.\n So that mitigates it somewhat, but it is frequently enabled\n for remote access to macOS machines. So wouldn't be that\n unusual. This particular patch or this particular\n vulnerability, I should say, was discovered by Alfredo\n Pesoli and Binario Atlas. There is also on Twitter\n someone who reverse engineered the patch and was able to\n create an exploit for it. They promised a write-up for today,\n for Sunday. Haven't seen it yet as I'm recording this\n podcast, but I would suggest that this vulnerability is not\n terribly difficult to exploit at this point. And the\n targeted exploits are probably already being used. So\n definitely make sure that if you have screen sharing\n enabled, you must apply this patch today. Well, I think it\n was just last week that I talked about issues about\n enable where they patched a problem, but didn't patch it\n correctly. Then they released a hotfix. Well, they now\n released a second hotfix on Thursday. This second hotfix\n should now solve the problems for now, but it's kind of\n telling when they're stating here in introduction to their\n hotfix advisory that this is not a duplicate of our\n previous communication. Hotfix 2 is required, even if you\n applied the earlier hotfix. So that's a quote from their\n advisory. Definitely, if you're running enable in\n particular and central, that's the product that's affected\n here by these latest issues. Please make sure you do apply\n these hotfixes. You do apply hotfix too, because the\n vulnerability is already actively being exploited. The\n advisory also lists a couple indicators of compromise that\n may be helpful in case you are affected by any of the exploit\n activity. And talking about already exploited\n vulnerability, if you're running a database, please\n apply the latest updates. There is a SQL injection\n vulnerability that allows attackers essentially\n arbitrary access to your database. Apparently, the API\n slash session slash reset underscore password endpoint\n is affected here. So if this endpoint was exposed in your\n system, and given that exploitation was ongoing,\n please take a look at the GitHub issue regarding this\n particular vulnerability. I'll link to it in the show notes,\n because it has some instant response tips here, how to\n make sure that no like invalid sessions or such are still\n connected to your database. Well, that's it for today.\n Just as a reminder, I have classes coming up in September\n in Vegas. That's the Web Application Security class. And\n then in October in Amsterdam, again, the Intrusion Detection\n class. If you're interested, as usual, in the show notes,\n you'll find a link to upcoming classes that I'll be teaching.\n Thanks. And that's it for today. And talk to you again\n tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

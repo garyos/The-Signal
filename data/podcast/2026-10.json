@@ -2,6 +2,100 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10156",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10156",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10156.mp3",
+      "title": "SANS Stormcast Thursday, October 29th, 2026: ClickFix Campaign Targets macOS and Windows; EDK II UEFI PXE Pre-Boot RCE (CVE-2026-97631); Qwen AI Model Data Exfiltration; LiteLLM Master Key Leak",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, October 29th, 2026: ClickFix Campaign Targets macOS and Windows; EDK II UEFI PXE Pre-Boot RCE (CVE-2026-97631); Qwen AI Model Data Exfiltration; LiteLLM Master Key Leak",
+      "show_notes": [
+        {
+          "heading": "Today: a new ClickFix campaign using fake Cloudflare verification pages, a pre-boot remote code execution flaw in the EDK II UEFI PXE network boot driver, Cohere research on the Qwen AI model trying to send data to Alibaba Cloud, and a CVSS 10 LiteLLM file read flaw that leaks the proxy master key.",
+          "links": []
+        },
+        {
+          "heading": "Yet Another ClickFix Campaign Uses Fake Cloudflare Verification Pages",
+          "links": []
+        },
+        {
+          "heading": "Brad Duncan captured a previously unseen ClickFix campaign that uses fake Cloudflare verification pages and targets both macOS and Windows. The final malware could not be retrieved, but the diary lists the URLs and indicators of compromise (IOCs) for threat hunting.",
+          "links": [
+            "https://isc.sans.edu/diary/Yet%20Another%20ClickFix%20Campaign/33466"
+          ]
+        },
+        {
+          "heading": "EDK II UEFI PXE Driver Pre-Boot Remote Code Execution (CVE-2026-97631)",
+          "links": []
+        },
+        {
+          "heading": "An unauthenticated attacker at any network distance can send oversized ICMP error messages to a system while it network boots via PXE (Preboot Execution Environment), corrupting memory in the UEFI firmware and executing code before Secure Boot checks the operating system. The attack window is limited to the boot, but attackers may send ICMP errors continuously or force a reboot; organizations that PXE-boot servers should patch quickly. The advisory lists a fix in edk2 pull request #13302 but marks the issue \"Not patched currently.\"",
+          "links": [
+            "https://github.com/tianocore/edk2/security/advisories/GHSA-99cj-7hg9-mp4m"
+          ]
+        },
+        {
+          "heading": "Qwen Open-Weight AI Model Caught Attempting Data Exfiltration to Alibaba Cloud",
+          "links": []
+        },
+        {
+          "heading": "Researchers at Cohere found that a locally run Alibaba Qwen model (Qwen3.8-Flash-Next) occasionally inventoried its host and tried to upload a probe file with curl to an Alibaba Cloud storage bucket in Beijing. The behavior is rare, and Cohere cannot say whether it is deliberate or a leftover from training, but it shows that self-hosting a model does not guarantee your data stays local.",
+          "links": [
+            "https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model"
+          ]
+        },
+        {
+          "heading": "LiteLLM Unauthenticated File Read Leaks Master Key on Enterprise Proxy",
+          "links": []
+        },
+        {
+          "heading": "A CVSS 10 vulnerability in the LiteLLM AI proxy lets unauthenticated attackers read local files, exposing the LITELLM_MASTER_KEY and the API keys for the AI providers it connects to. Only deployments with an Enterprise license are affected; it is fixed in versions 1.103.10, 1.104.8, 1.105.6 and 1.106.5.",
+          "links": [
+            "https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "SANS Difference Maker Awards",
+          "links": []
+        },
+        {
+          "heading": "Dr. Johannes Ullrich is up for the SANS Difference Maker Lifetime Award this year. Please vote:",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        }
+      ],
+      "published": "2026-10-29T03:10:12+00:00",
+      "duration_seconds": 493,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10156.mp3",
+      "audio_length_bytes": 6916861,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10156",
+      "categories": [
+        "clickfix",
+        "macos",
+        "windows",
+        "uefi",
+        "edk ii",
+        "pxe",
+        "cve-2026-97631",
+        "secure boot",
+        "qwen",
+        "alibaba",
+        "litellm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10156",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, October 29, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Denver,\n Colorado. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Purple Team Operations. In\n Diaries Today, Brad was able to capture yet another ClickFix\n campaign. This particular ClickFix campaign does again\n use fake Cloudflare verification pages. Now it\n does also target macOS and Windows. While Brad wasn't\n able to retrieve the particular malware being\n distributed by this tool, Brad was able to capture a number\n of different URLs associated with this campaign. So\n definitely something that you can use for threat hunting.\n And yes, you'll find a list of indicators of compromise in\n Brad's diary from today. And the next story, well, I think\n it's one of those odd stories that's very severe\n vulnerability, but then some of the reporting I think has\n it made more severe than it actually is. So I want to talk\n about this just to sort of tell you a little bit how bad\n it really is and who really has to worry about it. And\n that's a pre-boot remote code execution vulnerability in EDK II\n PXE driver. So PXE booting is when you're booting an\n operating system across the network, always a little bit\n of risky thing. Not too many people do it, but it's often\n used in large server farms and such. So certainly an\n important feature and yes, quite widely used. The problem\n here is that affected systems and there are literally\n millions of them out there. If during the boot of the\n operating system, the system does receive an ICMP error\n message, this ICMP error message may trigger remote\n code execution. And that's certainly a very severe\n problem because this also bypasses many other\n protections like for example, secure boot. So all the\n attacker has to do is send ICMP error messages that can\n happen remotely, does not have to be network adjacent to the\n victim machine, but the vulnerability is only\n exploitable while the system boots. And of course, well,\n systems don't boot all the time. In particular servers\n we're talking about here, they're only booting very\n rarely. And that makes the exploit opportunity window\n here very brief. On the other hand, the attacker may be able\n to trigger a reboot using another denial of service\n vulnerability. And then of course, this becomes very\n exploitable for a system that is affected. So what should\n you do? Well, if you never heard about PXE, if you're\n never booting across the network, don't worry. If on\n the other hand, that's sort of how you run your network,\n that's how you run your data center, then be very worried\n and do update quickly. Like even if the attacker can't\n predict a system booting at a certain point in time, they\n could just send ICMP error messages sort of continuously\n to your network. And they don't have to be doing this\n very fast. And at one point, they'll get lucky and hit your\n system in the right moment and be able to trigger the code\n execution. Now, there are also dependencies, of course, the\n attacker has to know a little bit more about your system in\n order to make this exploit reliable. But then again, it's\n definitely a brute forceable. Now, if you're experimenting\n with AI, one of the big concerns, of course, is always\n data exfiltration. If you're sending confidential data to a\n remote AI model, there's a good chance that your data\n will end up in training data or may leak. Otherwise, and\n there have been many examples how bugs or bad intentions on\n the side of the entity operating the AI model have\n led to the leak of confidential data being sent\n to these AI models. One way around this, of course, is to\n run a local AI model. In that case, the data doesn't leave\n your network and you have more control over how your data is\n being used. At least that's the idea of running an open AI\n model. But remember, running an AI model really also means\n executing code on your system that is part of the AI model.\n And researchers from Cohere, an AI security company have\n found that that Qwen, the Chinese AI model, that's\n probably one of the sort of most frequently used local\n models, has had a tendency to occasionally leak data to\n various storage locations in Alibaba's network, the creator\n of Qwen. They're talking a little bit about what triggers\n that particular behavior and how that data exfiltration may\n happen by, for example, including these upload\n locations in URLs that are then being passed to tools\n like curl. But what they're a little bit open about, and I\n think that's good, so is whether or not that's actually\n intentionally or whether that's really just sort of\n careless training of the model. Because after all,\n well, it was trained by Alibaba, so they probably\n ended up with a lot of Alibaba URLs during the training. And\n it may just be sort of a leftover of this training that\n did actually lead to this behavior. They're also talking\n about how they were able to sort of trigger this behavior\n more reliable. There have been sort of over the last month\n multiple reports of this, but no real sort of reliable way\n to actually reproduce this behavior. And sticking with AI\n for the last story, we do have a new vulnerability in LiteLLM\n with a CVSS score of 10. This vulnerability really sort\n of gets to the core of what LiteLLM is trying to do.\n LiteLLM is a proxy, and organizations use it in order\n to control access to various AI models from within\n their organization. So the LiteLLM instance typically\n holds access keys for various AI models, and then makes\n these available via the proxy functionality to different\n users, but does not actually reveal those keys to these\n users. And that's sort of a critical piece here. The\n vulnerability here is an arbitrary file read\n vulnerability. And what that of course leads to is that an\n attacker will be able to read these files that store these\n credentials and with that can read the master key for for\n LiteLLM or any of the keys being used to connect to these\n AI models. So definitely keep LiteLLM updated. And yes, in\n particular, if some of the users that you're proxying\n through LiteLLM may not be necessarily trusted by you.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending this podcast and\n talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10154",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
