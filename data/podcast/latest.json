@@ -1,6 +1,77 @@
 {
-  "fetched_at": "2026-10-29T15:46:34.014650+00:00",
+  "fetched_at": "2026-10-30T09:24:40.304752+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10158",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10158",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10158.mp3",
+      "title": "SANS Stormcast Friday, October 30th, 2026: Local Ghidra Server for Malware Analysis Labs; Claude Finds Linux Kernel Multipath TCP RCE (CVE-2026-98432); Hugging Face Cryptomining Malware Campaign",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 30th, 2026: Local Ghidra Server for Malware Analysis Labs; Claude Finds Linux Kernel Multipath TCP RCE (CVE-2026-98432); Hugging Face Cryptomining Malware Campaign",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers deploying a local Ghidra Server so malware analysis work survives virtual machine snapshot reverts, a Claude-discovered zero-click Linux kernel remote code execution flaw in Multipath TCP, and a returning Hugging Face malware campaign that abuses trust_remote_code to mine cryptocurrency on GPU hosts.",
+          "links": []
+        },
+        {
+          "heading": "Deploying a Local Ghidra Server for Your Malware Analysis Lab",
+          "links": []
+        },
+        {
+          "heading": "Xavier Mertens shows how to set up Ghidra Server, which ships free with Ghidra, so reverse engineering projects are stored and versioned outside the analysis virtual machine and survive a revert to a clean snapshot. A small Linux VM with about 4 GB of RAM is enough; keep it inside the malware lab network, since it holds every imported sample, and never expose it to the internet.",
+          "links": [
+            "https://isc.sans.edu/diary/Deploying%20a%20Local%20Ghidra%20Server%20for%20Your%20Malware%20Analysis%20Lab/33470"
+          ]
+        },
+        {
+          "heading": "Claude Discovers Zero-Click Linux Kernel Multipath TCP Remote Code Execution (CVE-2026-98432)",
+          "links": []
+        },
+        {
+          "heading": "Anthropic's Frontier Red Team used Claude to find and exploit a race-condition use-after-free in the Linux kernel networking stack that lets an unauthenticated remote attacker run commands as root on servers with a Multipath TCP (MPTCP) listener, defeating kernel address space layout randomization (KASLR) along the way. Exploitation is slow: the proof of concept needed about 48 minutes to leak a kernel pointer plus five minutes to reach code execution. The fix is upstream and backported to stable kernels, but not every distribution has shipped it yet, including Ubuntu at recording time.",
+          "links": [
+            "https://www.anthropic.com/research/discovering-vulnerabilities-with-claude"
+          ]
+        },
+        {
+          "heading": "Hugging Face Malware Campaign Returns to Hijack GPUs for Crypto Mining",
+          "links": []
+        },
+        {
+          "heading": "Pluto Security tracked 31 malicious Hugging Face repositories across seven accounts posing as small Qwen2 models; loading one with trust_remote_code=True runs the repository's Python code, which installs a disguised fileless cryptocurrency miner, a watchdog and, in some builds, reverse shells. The campaign targets GPU hosts running self-hosted inference such as Xinference and GPUStack, returned within days of a takedown, and passed 32,000 downloads including linked models.",
+          "links": [
+            "https://pluto.security/blog/hugging-face-malware-campaign-load-mine/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-30T03:30:17+00:00",
+      "duration_seconds": 463,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10158.mp3",
+      "audio_length_bytes": 6493982,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10158",
+      "categories": [
+        "ghidra",
+        "linux kernel",
+        "cve-2026-98432",
+        "multipath tcp",
+        "claude",
+        "hugging face",
+        "cryptomining",
+        "qwen"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10158",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 30th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Denver,\n Colorado. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Penetration Testing and\n Ethical Hacking. Xavier's diary from today is\n introducing you how to install a Ghidra server. If you are\n familiar with Ghidra, if you're doing some malware analysis,\n the way it's often used is as a standalone tool on the\n system that you are analyzing your malware on. Now, one\n problem, as Xavier points out, often you're using virtual\n machines for this, that, well, depending on what you're doing\n with your malware, you may have to reset to a prior\n snapshot. And if you are running Ghidra on the same\n system, then a lot of the work that you have done tends to\n get lost. And that's where the Ghidra server comes in. So\n you're setting up your Ghidra server. You're still running\n the Ghidra tool on the virtual machine with the malware that\n you're analyzing. But by connecting it to the Ghidra\n server, you can upload samples that you may run into during\n your analysis. And it essentially keeps sort of a\n versioning log of your work, which allows you then to go\n back and see what exactly you did, regardless of whether or not\n you have reset the virtual machine that you're using for\n the actual malware analysis. Other nice part here is that\n the hardware footprint of the server is rather minimal. You\n need enough disk space for all the malware samples, 4 GB of\n RAM is what Xavier is recommending. So nothing\n extraordinary, something that should fairly neatly and\n easily run in its own virtual machine that of course you\n don't have to reset in case something goes wrong during\n the malware analysis. So interesting tool comes as part\n of Ghidra, nothing you have to download separately and it's\n of course free as the tool itself. And Anthropic earlier\n this week did release a blog post discovering and\n exploiting vulnerabilities in critical real-world software\n with Claude, highlighting a couple different\n vulnerabilities that were found with Claude and also where\n Claude did suggest ways to exploit them. Now all of them\n are kind of interesting, but one particular vulnerability\n that probably sort of got the most coverage lately was\n remote code execution in Linux. What makes this\n particular vulnerability interesting is that it doesn't\n really require any additional software to run within the\n Linux system. It's part of the operating system's TCP/IP stack\n that is vulnerable here with that it also doesn't require\n any authentication or user interaction. All an attacker\n has to do is send specific packets to the Linux systems\n and it looks like these packets will be in the SYN\n packets and that can then trigger a use after free\n vulnerability that can also be used to defeat address space\n layout randomization. However, while this sounds like a real\n bad and it is a real bad vulnerability, we are kind of\n in a similar situation as we are with the PXE bug that I\n talked about yesterday that it does require some dependencies\n that may not necessarily be all that easy to fulfill on a\n particular system. In particular, in this case, it\n does require multipath TCP. Multipath TCP is a TCP\n extension that has been around for a little while now and has\n certainly been used. I've seen it being used in iOS, for\n example, and it does allow a handover of a TCP connection\n between different IP addresses or splitting a TCP connection\n between different IP addresses often used like for very high\n speed servers in order to adequately fill the available\n bandwidth with essentially just a single TCP connection,\n which isn't all that easy if you just have one IP address\n participating. Either way, this feature has to be enabled\n in order for this use after free vulnerability to be\n triggered. It also may take quite a number of packets to\n successfully exploit the vulnerability. They're talking\n about something like 40 minutes or so of essentially\n sending packets to the vulnerable system in order to\n achieve successful exploitation. A patch has been\n released to the Linux kernel. However, not all Linux\n distributions have pushed that patch out yet. In particular,\n Ubuntu apparently has not yet patched its kernel. Ubuntu\n recently actually went to a faster paced kernel release,\n but yes, this one sort of hasn't hit the latest kernel\n version yet for Ubuntu. So watch out for it, apply the\n patch, but like I said, it's not sort of a world ending\n kind of vulnerability, just something that you should keep\n an eye on and patch and then of course reboot your system.\n And then we have more trouble for Hugging Face. Hugging Face\n was again found out by the Pluto Security blog that it\n delivered malicious models. Now, this one used a slightly\n different approach. Like some of the earlier exploits like\n this, it used the trust remote code flag. The idea is that\n sometimes you need to load a model that is not fully\n supported by Transformers and does need its own Python code\n in order to be successfully loaded. This code can be\n loaded and executed using this flag. There are supposed to be\n warnings if the flag is not set, but apparently that\n doesn't always happen, depending on what software you\n really use to load the model. And in this particular case,\n it's then being used in order to run a crypto miner. Now\n this targets in particular users that run local models.\n One of the fake models here was sort of trying to emulate\n Qwen. I mentioned this earlier this week with some other\n context, but in this case, basically, yes, what you got\n wasn't Qwen. It was just malware. And of course, the\n idea here is that people who run local models do have\n reasonable graphic cards and are as a result also able to\n effectively run crypto coin miners. Well, and that's it\n for today. Thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. And I hope to talk to\n you again on Monday. Slight chance I won't make it. I'll\n be traveling back on Sunday. So thanks and talk to you\n hopefully on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10156",
       "show": "stormcast",
@@ -3810,67 +3881,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10048",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Wednesday, August 12, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. This episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Industrial Control Systems Security. Well, Microsoft\n patched Tuesday and imagine that it was another massive\n patch Tuesday. Now, not quite as bad as last patch Tuesday.\n In July, we had something over 600 different vulnerabilities\n being addressed. This time, it's only 400 approximately.\n I've seen a couple different numbers. Depends on how you\n count exactly which vulnerabilities you include.\n 62 of these vulnerabilities are critical. One is already\n being exploited in a while and two were publicly disclosed,\n but haven't yet seen in the wild according to Microsoft.\n Now, I thought a little bit about how to summarize this. I\n will actually not start with the disclosed and already\n exploited vulnerabilities because in some ways, I don't\n think that's really the story here. There are really two\n vulnerabilities that I think should be at the top of your\n list and that's the critical vulnerabilities in the DNS\n server. There are four critical vulnerabilities. DNS\n servers tend to be more exposed. So that's why I would\n give them sort of the highest priority and these are remote\n code execution vulnerabilities. Followed by\n the critical vulnerability in the DHCP server. DHCP server\n typically only exposed on the local network. So that's why I\n give that a little bit a lower priority. And we have sort of\n the rest of the critical vulnerabilities are pretty\n concentrated in some common and well-known problem, a\n piece of software, Office, SharePoint, and RDP. So apply\n these patches just like you always do. There's nothing\n really that different. There are more vulnerabilities, but\n overall the patch process shouldn't really be that\n affected by it. And we also have an interesting critical\n vulnerability in quick, the new transport layer protocol.\n And that one, I have probably the hardest time right now\n sort of really guessing, you know, how severe this one is,\n how likely it is going to be exploited, but definitely\n would put it here on the list of things to patch. Now, as\n far as the already exploited vulnerability goes, this is a\n Windows container isolation issue. I don't really see it\n as sort of, you know, top of the list as far as criticality\n goes. The already known ones, the one that really kind of\n stuck out here was the vulnerability that's known as\n Legacy Hive. I talked about it, I think, last week when it\n sort of was disclosed. It essentially allows privilege\n escalation. It's one of these nightmare eclipse\n vulnerabilities. So definitely, you know, address\n this one, but it's just a privilege escalation\n vulnerability, which probably, you know, we have tons more to\n worry about. So that's why I give that really not sort of\n the big emphasis that we usually give these already\n disclosed, already exploited vulnerabilities. So in short,\n yes, a lot of vulnerabilities, patch them, that's really the\n only thing you can do, the only thing that you should do.\n And there's nothing here, other than maybe the DNS\n vulnerability, where I sort of would really sort of emphasize\n speed on patching, go through your process, and hopefully,\n you know, we're able to shrink that down enough, so you'll be\n done with these updates by the time the next patch Tuesday\n comes around. And I'm pretty sure by then, you know,\n Microsoft will just say, hey, they're done patching them.\n And at least as interesting as Microsoft vulnerabilities are\n three vulnerabilities that were patched in Zoom. These\n are three memory allocation vulnerabilities that allow for\n full remote code execution. In order to exploit this\n vulnerability, the attacker and the victim have to join\n the same Zoom call. So the attacker would essentially\n then send the exploit traffic to the victim and achieve\n remote code execution. So patches are available, but\n also an exploit, at least the draft, proof of concept,\n whatever you want to call it, of an exploit. A security, the\n company that found this vulnerability has a very\n detailed blog post with details how to exploit this\n vulnerability. So while I don't think they really\n release of a full working exploit, there's enough\n information here to develop an exploit if someone is halfway\n skilled in doing so. And again, all platforms are\n affected. The exploit they're discussing here in their blog\n is actually for macOS, but Windows, Android, iOS, they\n say whatever platform runs Zoom is potentially\n vulnerable. And Mozilla announced yesterday that they\n revoked the signing key used to create GPG signatures for\n Firefox and Thunderbird. Apparently, the secret key was\n accidentally committed to a private GitHub repository.\n While private GitHub repositories are supposed to\n be private, well, they're not really secure enough to leave\n a cryptographic key like this in the repository. So they did\n the right thing and revoked the key. The problem now\n becomes, well, when do you actually need the key? So who\n does this affect? It's really mostly Linux users, I would\n expect. It does affect RPM packages. So if you're using a\n distribution that uses RPM, then you are affected. If you\n are downloading Linux tarballs, basically source\n packages, then you are affected because then you may\n manually validate the signatures of these tarballs\n that you're downloading. So that's really sort of the only\n groups that are affected by this particular problem. If\n you are affected, well, there is, of course, an updated key\n available. The old key would have expired in about seven\n months, I think they said. That thing was like March next\n year or so is when they were supposed to release a new key\n anyway. But that's still far enough out where you probably\n don't want to go without patches for that time in\n particular in software like Firefox and Thunderbird. Well,\n a group of individuals apparently returning from DEF\n CON yesterday did cut some of the ethics talks a little bit\n short and sort of got caught up in the excitement. But\n either way, they couldn't help themselves and launched a\n DEAuth attack on a Delta flight against the in-flight\n wireless. I usually don't really talk a lot about just\n opinions and such, but some of the comments I've seen online\n provoked me kind of to say a little bit more about this\n particular incident. In information security, there\n are a lot of laws, a lot of regulations and compliance and\n such, but there's sort of one rule of his quality, don't be\n an a-hole rule. And these individuals certainly violated\n it. So regardless of what you think about skills that are\n really not required to launch an attack like this, they\n really just made their life and the life of others harder.\n They didn't learn anything from this attack and nobody\n exposed to the attack really learned anything. What we may\n have learned is that actually in-flight WiFi is monitored a\n little bit better than we thought and Delta did respond\n to the attack fairly quickly. They disabled the in-flight\n WiFi, which of course, given the short response time and\n such, is probably the right and only thing they could do.\n And the flight was then created by law enforcement as\n it arrived in Atlanta. So if you got any neat toys while\n you were at DEFCON or if you're ordering them now\n because you saw them being advertised in a particular\n talk or so at DEFCON, remember it's always nice to\n play, but don't hurt anybody else. I think this particular\n these days a little bit difficult for some people\n because we see all these AI models that really are\n behaving grossly irresponsible. And look at it\n this way, you know, you may not be a better hacker than\n OpenAI or Anthropic or I think Kimi was it today, but\n you can be better human and try to see it that way. And\n don't cause more pain for innocent bystanders. Well, and\n this is it for today. So thanks for listening. Thanks\n for liking. Thanks for recommending this podcast and\n talk to you again tomorrow. Bye.\n Bye. Okay. Thank you.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10046",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10046",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10046.mp3",
-      "title": "SANS Stormcast Tuesday, August 11th, 2026: Solana Attacks; AI Generated Patches; Gunra Ransomware; Neo4J/GraphQL Patch",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, August 11th, 2026: Solana Attacks; AI Generated Patches; Gunra Ransomware; Neo4J/GraphQL Patch",
-      "show_notes": [
-        {
-          "heading": "Scans for Solana (Surfpool?) Endpoints",
-          "links": [
-            "https://isc.sans.edu/diary/Scans%20for%20Solana%20%28Surfpool%3F%29%20Endpoints/33230"
-          ]
-        },
-        {
-          "heading": "Why AI-generated vulnerability patches still require expert human review",
-          "links": [
-            "https://1password.com/blog/why-ai-generated-patches-still-require-human-review?_sp=15ec2845-9e6c-4d15-8ac5-fe9bc1fe4c08.1786396502013"
-          ]
-        },
-        {
-          "heading": "Gunra Ransomware",
-          "links": [
-            "https://www.cisa.gov/sites/default/files/2026-08/aa26-222a-stopransomware-gunra-ransomware_508c.pdf"
-          ]
-        },
-        {
-          "heading": "Neo4J/GraphQL Vulnerability CVE-2026-5423",
-          "links": [
-            "https://github.com/neo4j/graphql/security/advisories/GHSA-fcpg-3fw5-vc65"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-11T02:00:03+00:00",
-      "duration_seconds": 381,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10046.mp3",
-      "audio_length_bytes": 5341152,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10046",
-      "categories": [
-        "neo4j",
-        "graphql",
-        "gunra",
-        "ransomware",
-        "vulnerabilities",
-        "ai",
-        "patches",
-        "sonana"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10046",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday August 11th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well, in diaries today, nothing too\n exciting. Some scans against our web honeypots for Solana\n endpoint. Now Solana is a development platform that's\n very popular for developers of cryptocurrency applications.\n If you're trying, for example, to get cryptocurrency payments\n working and the like, then that's sort of a popular\n choice. And now it does implement RPC, a remote\n procedure call API that uses standard JSON payloads. And\n that apparently looks like what the attacker is after\n here. So they're requesting a couple of different requests.\n One just looking for the health basically off at the\n endpoint. There one looking for the version and then one\n for current Ethereum chain being loaded. So that's really\n more reconnaissance. Haven't managed to get them sort of to\n launch any attacks yet, but keep refining the honeypot to\n provide better responses. So maybe in a week or so, we'll\n have sort of a better idea what the exploit chain looks\n like here. If you have any experience with this, I would\n appreciate some input into what the attacker is actually\n after in these particular cases. And of course, one of\n the issues that we're all worried about, well, tomorrow\n is also Microsoft's Patch Tuesday coming again, is just\n the large number of vulnerabilities being\n identified using AI. Now, one of the hopes here is that AI\n could also help patch those vulnerabilities or develop\n patches for these vulnerabilities. Well, the\n 1Password off by one lab, not to be confused with Steven\n Sims, excellent live stream on YouTube, the off by one\n stream. I think he usually does that on Fridays. Anyway,\n they did look at the large number of vulnerabilities and\n associated patches. I think something like 6,000 or so of\n them. So the patches here were generated using AI. And what\n they found is that in half of the cases that they looked at,\n that the patch developed by AI did not really sort of address\n the vulnerability that was found here. And essentially,\n you know, had to be fixed up. So with that, the human\n intervention is still very critical in developing these\n patches. And of course, no, it's not just whether or not\n the patch actually fixes the vulnerability, but also what\n else a patch like this may break. And the FBI, together\n with a number of US cyber organizations, as well as the\n Korean National Police Agency, has published a report about\n the Gunra ransomware. This ransomware has been around for\n at least a year. And this report now outlines some of\n the techniques being used by this particular threat actor.\n Nothing sort of earth shattering in you here.\n Imagine that the initial access vector appears to be SL\n VPNs, even though they're not just looking for sort of\n vulnerabilities, but also for badly configured accounts\n where they can guess or find the password for. Once they're\n in, they're using, well, SMB and things like Windows screen\n sharing and such like RDP to then do their lateral\n movement. Like I said, nothing really earth shattering, but\n maybe a good chance to yet again, go over your\n architecture, run some tests, make sure that you have these\n attack vectors locked down because yes, that's exactly\n how probably most ransomware, not just Gunra, enters your\n network and then spreads internally. Well, and then we\n have an interesting patch for the Neo4j GraphQL\n implementation. GraphQL is one of those APIs that allows you\n to subscribe to events. So it's not just a sort of a\n simple request response pattern as we like have for\n rest, for example, and that is often implemented over\n WebSocket. Now with WebSocket, we can just basically set up a\n connection and then the server can send us data whenever\n there is an update available. So it fits very well that\n subscription paradigm. But you of course also need to\n authenticate. Now the way this is solved here is with JWT.\n JWT, a nice solution for this. You have a digitally signed\n statement basically telling the service what you have\n access to. The problem with the Neo4j implementation was\n that, well, they never check the signature. So you can\n essentially include any JWT listing, any claims that you\n may or may not have, and they're just being accepted,\n which allows you then to subscribe to events destined\n for a different user. So information leakage, that's\n the minimum property you have to be concerned about here.\n Not clear if an attacker could sort of not add subscriptions\n with this. I don't think so, but that's maybe possible. So\n definitely something that you do want to patch because,\n well, it will at least leak other users' data. Well, and\n this is it for today. So thanks for listening and\n thanks for liking, thanks for subscribing. Get ready for\n tomorrow's patch Tuesday and that's it. Talk to you again\n tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

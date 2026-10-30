@@ -2,6 +2,77 @@
   "month": "2026-10",
   "episodes": [
     {
+      "id": "stormcast-10158",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10158",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10158.mp3",
+      "title": "SANS Stormcast Friday, October 30th, 2026: Local Ghidra Server for Malware Analysis Labs; Claude Finds Linux Kernel Multipath TCP RCE (CVE-2026-98432); Hugging Face Cryptomining Malware Campaign",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, October 30th, 2026: Local Ghidra Server for Malware Analysis Labs; Claude Finds Linux Kernel Multipath TCP RCE (CVE-2026-98432); Hugging Face Cryptomining Malware Campaign",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers deploying a local Ghidra Server so malware analysis work survives virtual machine snapshot reverts, a Claude-discovered zero-click Linux kernel remote code execution flaw in Multipath TCP, and a returning Hugging Face malware campaign that abuses trust_remote_code to mine cryptocurrency on GPU hosts.",
+          "links": []
+        },
+        {
+          "heading": "Deploying a Local Ghidra Server for Your Malware Analysis Lab",
+          "links": []
+        },
+        {
+          "heading": "Xavier Mertens shows how to set up Ghidra Server, which ships free with Ghidra, so reverse engineering projects are stored and versioned outside the analysis virtual machine and survive a revert to a clean snapshot. A small Linux VM with about 4 GB of RAM is enough; keep it inside the malware lab network, since it holds every imported sample, and never expose it to the internet.",
+          "links": [
+            "https://isc.sans.edu/diary/Deploying%20a%20Local%20Ghidra%20Server%20for%20Your%20Malware%20Analysis%20Lab/33470"
+          ]
+        },
+        {
+          "heading": "Claude Discovers Zero-Click Linux Kernel Multipath TCP Remote Code Execution (CVE-2026-98432)",
+          "links": []
+        },
+        {
+          "heading": "Anthropic's Frontier Red Team used Claude to find and exploit a race-condition use-after-free in the Linux kernel networking stack that lets an unauthenticated remote attacker run commands as root on servers with a Multipath TCP (MPTCP) listener, defeating kernel address space layout randomization (KASLR) along the way. Exploitation is slow: the proof of concept needed about 48 minutes to leak a kernel pointer plus five minutes to reach code execution. The fix is upstream and backported to stable kernels, but not every distribution has shipped it yet, including Ubuntu at recording time.",
+          "links": [
+            "https://www.anthropic.com/research/discovering-vulnerabilities-with-claude"
+          ]
+        },
+        {
+          "heading": "Hugging Face Malware Campaign Returns to Hijack GPUs for Crypto Mining",
+          "links": []
+        },
+        {
+          "heading": "Pluto Security tracked 31 malicious Hugging Face repositories across seven accounts posing as small Qwen2 models; loading one with trust_remote_code=True runs the repository's Python code, which installs a disguised fileless cryptocurrency miner, a watchdog and, in some builds, reverse shells. The campaign targets GPU hosts running self-hosted inference such as Xinference and GPUStack, returned within days of a takedown, and passed 32,000 downloads including linked models.",
+          "links": [
+            "https://pluto.security/blog/hugging-face-malware-campaign-load-mine/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-10-30T03:30:17+00:00",
+      "duration_seconds": 463,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10158.mp3",
+      "audio_length_bytes": 6493982,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10158",
+      "categories": [
+        "ghidra",
+        "linux kernel",
+        "cve-2026-98432",
+        "multipath tcp",
+        "claude",
+        "hugging face",
+        "cryptomining",
+        "qwen"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10158",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, October 30th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from Denver,\n Colorado. And this episode is brought to you by the SANS.edu\n Graduate Certificate Program in Penetration Testing and\n Ethical Hacking. Xavier's diary from today is\n introducing you how to install a Ghidra server. If you are\n familiar with Ghidra, if you're doing some malware analysis,\n the way it's often used is as a standalone tool on the\n system that you are analyzing your malware on. Now, one\n problem, as Xavier points out, often you're using virtual\n machines for this, that, well, depending on what you're doing\n with your malware, you may have to reset to a prior\n snapshot. And if you are running Ghidra on the same\n system, then a lot of the work that you have done tends to\n get lost. And that's where the Ghidra server comes in. So\n you're setting up your Ghidra server. You're still running\n the Ghidra tool on the virtual machine with the malware that\n you're analyzing. But by connecting it to the Ghidra\n server, you can upload samples that you may run into during\n your analysis. And it essentially keeps sort of a\n versioning log of your work, which allows you then to go\n back and see what exactly you did, regardless of whether or not\n you have reset the virtual machine that you're using for\n the actual malware analysis. Other nice part here is that\n the hardware footprint of the server is rather minimal. You\n need enough disk space for all the malware samples, 4 GB of\n RAM is what Xavier is recommending. So nothing\n extraordinary, something that should fairly neatly and\n easily run in its own virtual machine that of course you\n don't have to reset in case something goes wrong during\n the malware analysis. So interesting tool comes as part\n of Ghidra, nothing you have to download separately and it's\n of course free as the tool itself. And Anthropic earlier\n this week did release a blog post discovering and\n exploiting vulnerabilities in critical real-world software\n with Claude, highlighting a couple different\n vulnerabilities that were found with Claude and also where\n Claude did suggest ways to exploit them. Now all of them\n are kind of interesting, but one particular vulnerability\n that probably sort of got the most coverage lately was\n remote code execution in Linux. What makes this\n particular vulnerability interesting is that it doesn't\n really require any additional software to run within the\n Linux system. It's part of the operating system's TCP/IP stack\n that is vulnerable here with that it also doesn't require\n any authentication or user interaction. All an attacker\n has to do is send specific packets to the Linux systems\n and it looks like these packets will be in the SYN\n packets and that can then trigger a use after free\n vulnerability that can also be used to defeat address space\n layout randomization. However, while this sounds like a real\n bad and it is a real bad vulnerability, we are kind of\n in a similar situation as we are with the PXE bug that I\n talked about yesterday that it does require some dependencies\n that may not necessarily be all that easy to fulfill on a\n particular system. In particular, in this case, it\n does require multipath TCP. Multipath TCP is a TCP\n extension that has been around for a little while now and has\n certainly been used. I've seen it being used in iOS, for\n example, and it does allow a handover of a TCP connection\n between different IP addresses or splitting a TCP connection\n between different IP addresses often used like for very high\n speed servers in order to adequately fill the available\n bandwidth with essentially just a single TCP connection,\n which isn't all that easy if you just have one IP address\n participating. Either way, this feature has to be enabled\n in order for this use after free vulnerability to be\n triggered. It also may take quite a number of packets to\n successfully exploit the vulnerability. They're talking\n about something like 40 minutes or so of essentially\n sending packets to the vulnerable system in order to\n achieve successful exploitation. A patch has been\n released to the Linux kernel. However, not all Linux\n distributions have pushed that patch out yet. In particular,\n Ubuntu apparently has not yet patched its kernel. Ubuntu\n recently actually went to a faster paced kernel release,\n but yes, this one sort of hasn't hit the latest kernel\n version yet for Ubuntu. So watch out for it, apply the\n patch, but like I said, it's not sort of a world ending\n kind of vulnerability, just something that you should keep\n an eye on and patch and then of course reboot your system.\n And then we have more trouble for Hugging Face. Hugging Face\n was again found out by the Pluto Security blog that it\n delivered malicious models. Now, this one used a slightly\n different approach. Like some of the earlier exploits like\n this, it used the trust remote code flag. The idea is that\n sometimes you need to load a model that is not fully\n supported by Transformers and does need its own Python code\n in order to be successfully loaded. This code can be\n loaded and executed using this flag. There are supposed to be\n warnings if the flag is not set, but apparently that\n doesn't always happen, depending on what software you\n really use to load the model. And in this particular case,\n it's then being used in order to run a crypto miner. Now\n this targets in particular users that run local models.\n One of the fake models here was sort of trying to emulate\n Qwen. I mentioned this earlier this week with some other\n context, but in this case, basically, yes, what you got\n wasn't Qwen. It was just malware. And of course, the\n idea here is that people who run local models do have\n reasonable graphic cards and are as a result also able to\n effectively run crypto coin miners. Well, and that's it\n for today. Thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. And I hope to talk to\n you again on Monday. Slight chance I won't make it. I'll\n be traveling back on Sunday. So thanks and talk to you\n hopefully on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10156",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
