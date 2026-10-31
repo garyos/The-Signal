@@ -36,8 +36,8 @@
       },
       "epss": {
         "score": 0.00576,
-        "percentile": 0.47451,
-        "date": "2026-10-29"
+        "percentile": 0.47512,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -79,8 +79,8 @@
       },
       "epss": {
         "score": 0.00272,
-        "percentile": 0.19556,
-        "date": "2026-10-29"
+        "percentile": 0.19592,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -125,8 +125,8 @@
       },
       "epss": {
         "score": 0.00179,
-        "percentile": 0.07436,
-        "date": "2026-10-29"
+        "percentile": 0.0746,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -171,8 +171,8 @@
       },
       "epss": {
         "score": 0.0027,
-        "percentile": 0.19182,
-        "date": "2026-10-29"
+        "percentile": 0.19218,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -217,8 +217,8 @@
       },
       "epss": {
         "score": 0.00288,
-        "percentile": 0.21356,
-        "date": "2026-10-29"
+        "percentile": 0.21396,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -263,8 +263,8 @@
       },
       "epss": {
         "score": 0.00248,
-        "percentile": 0.16113,
-        "date": "2026-10-29"
+        "percentile": 0.16148,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -309,8 +309,8 @@
       },
       "epss": {
         "score": 0.00248,
-        "percentile": 0.16113,
-        "date": "2026-10-29"
+        "percentile": 0.16148,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -355,8 +355,8 @@
       },
       "epss": {
         "score": 0.00248,
-        "percentile": 0.16113,
-        "date": "2026-10-29"
+        "percentile": 0.16148,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -401,8 +401,176 @@
       },
       "epss": {
         "score": 0.00244,
-        "percentile": 0.15575,
-        "date": "2026-10-29"
+        "percentile": 0.15611,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-56538",
+      "published": "2024-12-27T14:15:33.400",
+      "lastModified": "2026-10-30T13:17:46.463",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: drm: zynqmp_kms: Unplug DRM device before removal Prevent userspace accesses to the DRM device from causing use-after-frees by unplugging the device before we remove it. This causes any further userspace accesses to result in an error without further calls into this driver's internals.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0c8ca1da81e5a9787284eb84c0c6ae927f063c15",
+        "https://git.kernel.org/stable/c/2e07c88914fc5289c21820b1aa94f058feb38197",
+        "https://git.kernel.org/stable/c/4fb97432e28a7e136b2d76135d50e988ada8e1af",
+        "https://git.kernel.org/stable/c/692f52aedccbf79b212a1e14e3735192b4c24a7d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00269,
+        "percentile": 0.19108,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53216",
+      "published": "2024-12-27T14:15:29.587",
+      "lastModified": "2026-10-30T13:17:45.757",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: nfsd: release svc_expkey/svc_export with rcu_work The last reference for `cache_head` can be reduced to zero in `c_show` and `e_show`(using `rcu_read_lock` and `rcu_read_unlock`). Consequently, `svc_export_put` and `expkey_put` will be invoked, leading to two issues: 1. The `svc_export_put` will directly free ex_uuid. However, `e_show`/`c_show` will access `ex_uuid` after `cache_put`, which can trigger a use-after-free issue, sh",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/2e4854599200f4d021df8ae17e69221d7c149f3e",
+        "https://git.kernel.org/stable/c/a98fa661769edacd3bf319c4a150f00bea61945b",
+        "https://git.kernel.org/stable/c/ad4363a24a5746b257c0beb5d8cc68f9b62c173f",
+        "https://git.kernel.org/stable/c/bd8524148dd8c123334b066faa90590ba2ef8e6f"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00222,
+        "percentile": 0.12868,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53179",
+      "published": "2024-12-27T14:15:25.307",
+      "lastModified": "2026-10-30T13:17:44.720",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: client: fix use-after-free of signing key Customers have reported use-after-free in @ses->auth_key.response with SMB2.1 + sign mounts which occurs due to following race: task A task B cifs_mount() dfs_mount_share() get_session() cifs_mount_get_session() cifs_send_recv() cifs_get_smb_ses() compound_send_recv() cifs_setup_session() smb2_setup_request() kfree_sensitive() smb2_calc_signature() crypto_shash_setkey() *UAF* Fix th",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0944c2596c2a3442735b5bb6714a17a16188a68f",
+        "https://git.kernel.org/stable/c/0e2b654a3848bf9da3b0d54c1ccf3f1b8c635591",
+        "https://git.kernel.org/stable/c/343d7fe6df9e247671440a932b6a73af4fa86d95",
+        "https://git.kernel.org/stable/c/39619c65ab4bbb3e78c818f537687653e112764d"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00604,
+        "percentile": 0.48863,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53177",
+      "published": "2024-12-27T14:15:25.067",
+      "lastModified": "2026-10-30T13:17:44.180",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: smb: prevent use-after-free due to open_cached_dir error paths If open_cached_dir() encounters an error parsing the lease from the server, the error handling may race with receiving a lease break, resulting in open_cached_dir() freeing the cfid while the queued work is pending. Update open_cached_dir() to drop refs rather than directly freeing the cfid. Have cached_dir_lease_break(), cfids_laundromat_worker(), and invalidate_all",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/47655a12c6b1bca8fa230085eab2e85a076932b7",
+        "https://git.kernel.org/stable/c/791f833053578b9fd24252ebb7162a61bc3f805b",
+        "https://git.kernel.org/stable/c/97e2afcac0bebfef6a5360f4267ce4c44507b845",
+        "https://git.kernel.org/stable/c/a9685b409a03b73d2980bbfa53eb47555802d0a9"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00554,
+        "percentile": 0.46214,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -446,8 +614,50 @@
       },
       "epss": {
         "score": 0.0024,
-        "percentile": 0.15162,
-        "date": "2026-10-29"
+        "percentile": 0.15199,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-53168",
+      "published": "2024-12-27T14:15:23.940",
+      "lastModified": "2026-10-30T13:17:43.907",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: sunrpc: fix one UAF issue caused by sunrpc kernel tcp socket BUG: KASAN: slab-use-after-free in tcp_write_timer_handler+0x156/0x3e0 Read of size 1 at addr ffff888111f322cd by task swapper/0/0 CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-rc4-dirty #7 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 Call Trace: <IRQ> dump_stack_lvl+0x68/0xa0 print_address_description.constprop.0+0x2c/0x3d0 print_repo",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0ca87e5063757132a044d35baba40a7d4bb25394",
+        "https://git.kernel.org/stable/c/3f23f96528e8fcf8619895c4c916c52653892ec1",
+        "https://git.kernel.org/stable/c/61c0a5eac96836de5e3a5897eccdc63162a94936",
+        "https://git.kernel.org/stable/c/694ccb05b79ee5f5a9f14c2f80d2635d3bb8bdc3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00251,
+        "percentile": 0.16481,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -492,8 +702,8 @@
       },
       "epss": {
         "score": 0.00257,
-        "percentile": 0.1736,
-        "date": "2026-10-29"
+        "percentile": 0.17392,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -538,8 +748,8 @@
       },
       "epss": {
         "score": 0.00259,
-        "percentile": 0.17601,
-        "date": "2026-10-29"
+        "percentile": 0.17632,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -552,7 +762,7 @@
     {
       "id": "CVE-2024-53147",
       "published": "2024-12-24T12:15:22.777",
-      "lastModified": "2026-10-21T13:17:50.820",
+      "lastModified": "2026-10-30T13:17:43.683",
       "vulnStatus": "Modified",
       "description": "In the Linux kernel, the following vulnerability has been resolved: exfat: fix out-of-bounds access of directory entries In the case of the directory size is greater than or equal to the cluster size, if start_clu becomes an EOF cluster(an invalid cluster) due to file system corruption, then the directory entry where ei->hint_femp.eidx hint is outside the directory, resulting in an out-of-bounds access, which may cause further file system corruption. This commit adds a check for start_clu, if it",
       "cvss": {
@@ -573,15 +783,15 @@
         "https://git.kernel.org/stable/c/184fa506e392eb78364d9283c961217ff2c0617b",
         "https://git.kernel.org/stable/c/3ddd1cb2b458ff6a193bc845f408dfff217db29e",
         "https://git.kernel.org/stable/c/82dc96f0f4eec8afdde8467d21d1b6b989dbb20a",
-        "https://git.kernel.org/stable/c/a0120d6463368378539ef928cf067d02372efb8c"
+        "https://git.kernel.org/stable/c/98e3572505a9ec550b5296c67c4517120356c8d6"
       ],
       "kev": {
         "in_kev": false
       },
       "epss": {
         "score": 0.00252,
-        "percentile": 0.16691,
-        "date": "2026-10-29"
+        "percentile": 0.16721,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -619,8 +829,8 @@
       },
       "epss": {
         "score": 0.00267,
-        "percentile": 0.18885,
-        "date": "2026-10-29"
+        "percentile": 0.18918,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -666,8 +876,8 @@
       },
       "epss": {
         "score": 0.00168,
-        "percentile": 0.06151,
-        "date": "2026-10-29"
+        "percentile": 0.06173,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -680,7 +890,7 @@
     {
       "id": "CVE-2024-12397",
       "published": "2024-12-12T09:15:05.570",
-      "lastModified": "2026-10-20T05:16:52.853",
+      "lastModified": "2026-10-30T19:17:29.283",
       "vulnStatus": "Deferred",
       "description": "A flaw was found in Quarkus-HTTP, which incorrectly parses cookies with certain value-delimiting characters in incoming requests. This issue could allow an attacker to construct a cookie value to exfiltrate HttpOnly cookie values or spoof arbitrary additional cookie values, leading to unauthorized data access or modification. The main threat from this flaw impacts data confidentiality and integrity.",
       "cvss": {
@@ -697,23 +907,23 @@
       "vendors": [
         "Red Hat Cryostat 4 on RHEL 9",
         "Red Hat HawtIO HawtIO 4.2.0",
-        "Red Hat Red Hat build of Quarkus 3.15.3",
-        "Red Hat Cryostat 3",
-        "Red Hat Red Hat build of Apache Camel 4 for Quarkus 3"
+        "Red Hat Red Hat Build of Keycloak",
+        "Red Hat Red Hat build of Keycloak 26.2",
+        "Red Hat Red Hat build of Quarkus 3.15.3"
       ],
       "references": [
+        "https://access.redhat.com/errata/RHBA-2025:7525",
+        "https://access.redhat.com/errata/RHBA-2025:7639",
         "https://access.redhat.com/errata/RHSA-2025:0900",
-        "https://access.redhat.com/errata/RHSA-2025:3018",
-        "https://access.redhat.com/errata/RHSA-2025:8761",
-        "https://access.redhat.com/security/cve/CVE-2024-12397"
+        "https://access.redhat.com/errata/RHSA-2025:3018"
       ],
       "kev": {
         "in_kev": false
       },
       "epss": {
         "score": 0.00843,
-        "percentile": 0.57861,
-        "date": "2026-10-29"
+        "percentile": 0.57919,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -755,8 +965,8 @@
       },
       "epss": {
         "score": 0.00179,
-        "percentile": 0.07418,
-        "date": "2026-10-29"
+        "percentile": 0.07444,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -798,8 +1008,8 @@
       },
       "epss": {
         "score": 0.00217,
-        "percentile": 0.12167,
-        "date": "2026-10-29"
+        "percentile": 0.12199,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -840,8 +1050,8 @@
       },
       "epss": {
         "score": 0.00396,
-        "percentile": 0.33762,
-        "date": "2026-10-29"
+        "percentile": 0.33812,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -852,5 +1062,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-30T11:33:23.584484+00:00"
+  "updated_at": "2026-10-31T11:08:05.574338+00:00"
 }

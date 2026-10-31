@@ -36,8 +36,8 @@
       },
       "epss": {
         "score": 0.05582,
-        "percentile": 0.92866,
-        "date": "2026-10-29"
+        "percentile": 0.92875,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -81,8 +81,8 @@
       },
       "epss": {
         "score": 0.00251,
-        "percentile": 0.16629,
-        "date": "2026-10-29"
+        "percentile": 0.1666,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -124,9 +124,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00237,
-        "percentile": 0.14732,
-        "date": "2026-10-29"
+        "score": 0.00235,
+        "percentile": 0.1449,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -171,8 +171,8 @@
       },
       "epss": {
         "score": 0.00245,
-        "percentile": 0.15691,
-        "date": "2026-10-29"
+        "percentile": 0.15728,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -214,8 +214,50 @@
       },
       "epss": {
         "score": 0.00235,
-        "percentile": 0.14418,
-        "date": "2026-10-29"
+        "percentile": 0.14444,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38630",
+      "published": "2024-06-21T11:15:11.810",
+      "lastModified": "2026-10-30T13:17:29.567",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: watchdog: cpu5wdt.c: Fix use-after-free bug caused by cpu5wdt_trigger When the cpu5wdt module is removing, the origin code uses del_timer() to de-activate the timer. If the timer handler is running, del_timer() could not stop it and will return directly. If the port region is released by release_region() and then the timer handler cpu5wdt_trigger() calls outb() to write into the region that is released, the use-after-free bug wi",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/573601521277119f2e2ba5f28ae6e87fc594f4d4",
+        "https://git.kernel.org/stable/c/948ed659c0151a605bd126da1e95f350ec5a7956",
+        "https://git.kernel.org/stable/c/9abe50e8492d1accd7d8dc17991179472d3d4573",
+        "https://git.kernel.org/stable/c/9b1c063ffc075abf56f63e55d70b9778ff534314"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00251,
+        "percentile": 0.16522,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -258,9 +300,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00278,
-        "percentile": 0.20271,
-        "date": "2026-10-29"
+        "score": 0.00276,
+        "percentile": 0.20068,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -304,9 +346,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00378,
-        "percentile": 0.31771,
-        "date": "2026-10-29"
+        "score": 0.00375,
+        "percentile": 0.31504,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -355,8 +397,8 @@
       },
       "epss": {
         "score": 0.00661,
-        "percentile": 0.51516,
-        "date": "2026-10-29"
+        "percentile": 0.51578,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -398,8 +440,8 @@
       },
       "epss": {
         "score": 0.00245,
-        "percentile": 0.15797,
-        "date": "2026-10-29"
+        "percentile": 0.15833,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -444,8 +486,8 @@
       },
       "epss": {
         "score": 0.00788,
-        "percentile": 0.5609,
-        "date": "2026-10-29"
+        "percentile": 0.56146,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -490,8 +532,50 @@
       },
       "epss": {
         "score": 0.00263,
-        "percentile": 0.18188,
-        "date": "2026-10-29"
+        "percentile": 0.18216,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-38570",
+      "published": "2024-06-19T14:15:17.153",
+      "lastModified": "2026-10-30T13:17:28.710",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: gfs2: Fix potential glock use-after-free on unmount When a DLM lockspace is released and there ares still locks in that lockspace, DLM will unlock those locks automatically. Commit fb6791d100d1b started exploiting this behavior to speed up filesystem unmount: gfs2 would simply free glocks it didn't want to unlock and then release the lockspace. This didn't take the bast callbacks for asynchronous lock contention notifications in",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0636b34b44589b142700ac137b5f69802cfe2e37",
+        "https://git.kernel.org/stable/c/501cd8fabf621d10bd4893e37f6ce6c20523c8ca",
+        "https://git.kernel.org/stable/c/94b32a85d1a76ae4f1b42a88677fa20b20187729",
+        "https://git.kernel.org/stable/c/d98779e687726d8f8860f1c54b5687eec5f63a73"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00676,
+        "percentile": 0.52224,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -533,8 +617,8 @@
       },
       "epss": {
         "score": 0.00265,
-        "percentile": 0.18423,
-        "date": "2026-10-29"
+        "percentile": 0.18453,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -576,8 +660,8 @@
       },
       "epss": {
         "score": 0.00297,
-        "percentile": 0.22371,
-        "date": "2026-10-29"
+        "percentile": 0.22411,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -622,8 +706,8 @@
       },
       "epss": {
         "score": 0.00281,
-        "percentile": 0.20652,
-        "date": "2026-10-29"
+        "percentile": 0.20694,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -667,9 +751,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00284,
-        "percentile": 0.20894,
-        "date": "2026-10-29"
+        "score": 0.00281,
+        "percentile": 0.20694,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -714,8 +798,8 @@
       },
       "epss": {
         "score": 0.00786,
-        "percentile": 0.56014,
-        "date": "2026-10-29"
+        "percentile": 0.5607,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -759,8 +843,8 @@
       },
       "epss": {
         "score": 0.00203,
-        "percentile": 0.10267,
-        "date": "2026-10-29"
+        "percentile": 0.10301,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -805,8 +889,8 @@
       },
       "epss": {
         "score": 0.00551,
-        "percentile": 0.46013,
-        "date": "2026-10-29"
+        "percentile": 0.46072,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -817,5 +901,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-30T11:33:23.578482+00:00"
+  "updated_at": "2026-10-31T11:08:05.567315+00:00"
 }

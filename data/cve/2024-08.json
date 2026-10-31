@@ -2,6 +2,90 @@
   "month": "2024-08",
   "cves": [
     {
+      "id": "CVE-2024-44942",
+      "published": "2024-08-26T12:15:06.157",
+      "lastModified": "2026-10-30T13:17:34.517",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: fix to do sanity check on F2FS_INLINE_DATA flag in inode during GC syzbot reports a f2fs bug as below: ------------[ cut here ]------------ kernel BUG at fs/f2fs/inline.c:258! CPU: 1 PID: 34 Comm: kworker/u8:2 Not tainted 6.9.0-rc6-syzkaller-00012-g9e4bc4bcae01 #0 RIP: 0010:f2fs_write_inline_data+0x781/0x790 fs/f2fs/inline.c:258 Call Trace: f2fs_write_single_data_page+0xb65/0x1d60 fs/f2fs/data.c:2834 f2fs_write_cache_pages",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/26c07775fb5dc74351d1c3a2bc3cdf609b03e49f",
+        "https://git.kernel.org/stable/c/54a8da38b70553b61e2265ee0f26d034349dde25",
+        "https://git.kernel.org/stable/c/ae00e6536a2dd54b64b39e9a39548870cf835745",
+        "https://git.kernel.org/stable/c/fc01008c92f40015aeeced94750855a7111b6929"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00225,
+        "percentile": 0.13235,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-44941",
+      "published": "2024-08-26T12:15:06.107",
+      "lastModified": "2026-10-30T13:17:34.327",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: fix to cover read extent cache access with lock syzbot reports a f2fs bug as below: BUG: KASAN: slab-use-after-free in sanity_check_extent_cache+0x370/0x410 fs/f2fs/extent_cache.c:46 Read of size 4 at addr ffff8880739ab220 by task syz-executor200/5097 CPU: 0 PID: 5097 Comm: syz-executor200 Not tainted 6.9.0-rc6-syzkaller #0 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024 Call Trace",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/263df78166d3a9609b97d28c34029bd01874cbb8",
+        "https://git.kernel.org/stable/c/323ef20b5558b9d9fd10c1224327af6f11a8177d",
+        "https://git.kernel.org/stable/c/9bd5d5e3244242e7be26e86025b74eff3cf20d8c",
+        "https://git.kernel.org/stable/c/d7409b05a64f212735f0d33f5f1602051a886eab"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00211,
+        "percentile": 0.11387,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-43888",
       "published": "2024-08-26T11:15:03.930",
       "lastModified": "2026-10-21T13:17:47.207",
@@ -30,8 +114,8 @@
       },
       "epss": {
         "score": 0.00253,
-        "percentile": 0.1678,
-        "date": "2026-10-29"
+        "percentile": 0.16809,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -76,8 +160,8 @@
       },
       "epss": {
         "score": 0.01083,
-        "percentile": 0.65107,
-        "date": "2026-10-29"
+        "percentile": 0.65154,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -123,8 +207,8 @@
       },
       "epss": {
         "score": 0.18379,
-        "percentile": 0.97221,
-        "date": "2026-10-29"
+        "percentile": 0.97226,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -163,8 +247,8 @@
       },
       "epss": {
         "score": 0.00523,
-        "percentile": 0.44326,
-        "date": "2026-10-29"
+        "percentile": 0.44387,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -205,8 +289,8 @@
       },
       "epss": {
         "score": 0.00768,
-        "percentile": 0.55461,
-        "date": "2026-10-29"
+        "percentile": 0.55519,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -255,8 +339,8 @@
       },
       "epss": {
         "score": 0.02644,
-        "percentile": 0.85558,
-        "date": "2026-10-29"
+        "percentile": 0.85579,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -301,8 +385,8 @@
       },
       "epss": {
         "score": 0.00242,
-        "percentile": 0.15386,
-        "date": "2026-10-29"
+        "percentile": 0.15422,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -344,8 +428,8 @@
       },
       "epss": {
         "score": 0.00236,
-        "percentile": 0.14648,
-        "date": "2026-10-29"
+        "percentile": 0.14675,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -387,8 +471,8 @@
       },
       "epss": {
         "score": 0.00251,
-        "percentile": 0.16487,
-        "date": "2026-10-29"
+        "percentile": 0.16517,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -430,8 +514,8 @@
       },
       "epss": {
         "score": 0.00227,
-        "percentile": 0.13452,
-        "date": "2026-10-29"
+        "percentile": 0.13478,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -473,8 +557,48 @@
       },
       "epss": {
         "score": 0.00248,
-        "percentile": 0.16098,
-        "date": "2026-10-29"
+        "percentile": 0.16133,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-42360",
+      "published": "2024-08-14T20:15:12.533",
+      "lastModified": "2026-10-29T14:17:40.420",
+      "vulnStatus": "Analyzed",
+      "description": "SequenceServer lets you rapidly set up a BLAST+ server with an intuitive user interface for personal or group use. Several HTTP endpoints did not properly sanitize user input and/or query parameters. This could be exploited to inject and run unwanted shell commands. This vulnerability has been fixed in 3.1.2.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
+      "vendors": [
+        "wurmlab sequenceserver"
+      ],
+      "references": [
+        "https://github.com/wurmlab/sequenceserver/commit/457e52709f7f9ed2fceed59b3db564cb50785dba",
+        "https://github.com/wurmlab/sequenceserver/security/advisories/GHSA-qv32-5wm2-p32h"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00584,
+        "percentile": 0.47881,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -512,8 +636,55 @@
       },
       "epss": {
         "score": 0.00585,
-        "percentile": 0.47887,
-        "date": "2026-10-29"
+        "percentile": 0.47948,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-7557",
+      "published": "2024-08-12T13:38:43.727",
+      "lastModified": "2026-10-30T17:17:09.797",
+      "vulnStatus": "Modified",
+      "description": "A vulnerability was found in OpenShift AI that allows for authentication bypass and privilege escalation across models within the same namespace. When deploying AI models, the UI provides the option to protect models with authentication. However, credentials from one model can be used to access other models and APIs within the same namespace. The exposed ServiceAccount tokens, visible in the UI, can be utilized with oc --token={token} to exploit the elevated view privileges associated with the S",
+      "cvss": {
+        "score": 8.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-305",
+          "name": "CWE-305"
+        },
+        {
+          "id": "NVD-CWE-Other",
+          "name": "Other / Not Yet Mapped"
+        }
+      ],
+      "vendors": [
+        "Red Hat RHOAI-2.14-RHEL-8",
+        "Red Hat Red Hat OpenShift Data Science (RHODS)"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHBA-2024:8240",
+        "https://access.redhat.com/security/cve/CVE-2024-7557",
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2303094",
+        "https://github.com/opendatahub-io/odh-dashboard/pull/3198"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00932,
+        "percentile": 0.60645,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -561,7 +732,7 @@
       "epss": {
         "score": 0.91941,
         "percentile": 0.99818,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -606,8 +777,8 @@
       },
       "epss": {
         "score": 0.01027,
-        "percentile": 0.63561,
-        "date": "2026-10-29"
+        "percentile": 0.63607,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -650,9 +821,9 @@
         "in_kev": false
       },
       "epss": {
-        "score": 0.00534,
-        "percentile": 0.45013,
-        "date": "2026-10-29"
+        "score": 0.00545,
+        "percentile": 0.4574,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -663,5 +834,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-30T11:33:23.580354+00:00"
+  "updated_at": "2026-10-31T11:08:05.569528+00:00"
 }

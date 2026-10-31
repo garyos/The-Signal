@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-30T11:34:29.287416+00:00",
+  "generated_at": "2026-10-31T11:08:09.054760+00:00",
   "cves": [
     {
       "id": "CVE-2026-109618",
       "published": "2026-10-21T14:17:09.357",
-      "lastModified": "2026-10-29T06:17:17.827",
-      "vulnStatus": "Modified",
+      "lastModified": "2026-10-30T19:18:07.373",
+      "vulnStatus": "Undergoing Analysis",
       "description": "PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the request. Some contexts may not properly account for this scenario and leave request memory in an uninitialized state before performing an allocation. The subsequent request cleanup procedure may read or branch on this memory. Multiple OOM strategies can consistently trigger this condition and lead to remote code execution (RCE).",
       "cvss": {
         "score": 9.8,
@@ -32,7 +32,10 @@
       ],
       "vendors": [
         "PHP Group PHP",
-        "Siemens RUGGEDCOM APE1808"
+        "Siemens AX4",
+        "Siemens CADRA",
+        "Siemens Capital",
+        "Siemens Designcenter"
       ],
       "references": [
         "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w",
@@ -49,7 +52,7 @@
       "epss": {
         "score": 0.99999,
         "percentile": 0.99998,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -69,7 +72,7 @@
     {
       "id": "CVE-2026-111497",
       "published": "2026-10-22T14:17:37.190",
-      "lastModified": "2026-10-28T17:47:31.370",
+      "lastModified": "2026-10-30T20:30:11.670",
       "vulnStatus": "Analyzed",
       "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream. Users need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
       "cvss": {
@@ -88,7 +91,11 @@
         }
       ],
       "vendors": [
-        "Google Brotli"
+        "Google Brotli",
+        "Siemens Heliox Dual Port 60kW",
+        "Siemens Heliox Flex Pro",
+        "Siemens SICHARGE FLEX",
+        "Siemens SICHARGE UC"
       ],
       "references": [
         "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
@@ -104,8 +111,8 @@
       },
       "epss": {
         "score": 0.82641,
-        "percentile": 0.99665,
-        "date": "2026-10-29"
+        "percentile": 0.99666,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -156,7 +163,7 @@
       "epss": {
         "score": 0.81763,
         "percentile": 0.99644,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -172,7 +179,7 @@
     {
       "id": "CVE-2026-110447",
       "published": "2026-10-14T03:17:20.683",
-      "lastModified": "2026-10-26T16:48:12.087",
+      "lastModified": "2026-10-30T16:32:46.647",
       "vulnStatus": "Analyzed",
       "description": "Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote code execution, as exploited in the wild in September and October 2026, a different vulnerability than CVE-2025-66208. This is an OS command injection in proxy.php when the CODE server isn't running (e.g., the product was recently restarted). The vulnerability is not present in standalone Collabora Online servers; only this deployment with CODE Server is affected.",
       "cvss": {
@@ -202,8 +209,8 @@
       },
       "epss": {
         "score": 0.73307,
-        "percentile": 0.99459,
-        "date": "2026-10-29"
+        "percentile": 0.9946,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -214,6 +221,54 @@
         ],
         "first_seen": "2026-10-15",
         "last_seen": "2026-10-24"
+      }
+    },
+    {
+      "id": "CVE-2026-97229",
+      "published": "2026-10-13T02:17:00.840",
+      "lastModified": "2026-10-31T00:16:52.007",
+      "vulnStatus": "Modified",
+      "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
+      "cvss": {
+        "score": 10.0,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-190",
+          "name": "Integer Overflow / Wraparound"
+        }
+      ],
+      "vendors": [
+        "GitLab GitLab"
+      ],
+      "references": [
+        "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+        "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
+        "https://hackerone.com/reports/4055749",
+        "https://hackerone.com/reports/4058589"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-10-29",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.26569,
+        "percentile": 0.98015,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": true,
+        "mention_count": 3,
+        "sources": [
+          "SecurityWeek",
+          "The Hacker News"
+        ],
+        "first_seen": "2026-10-29",
+        "last_seen": "2026-10-30"
       }
     },
     {
@@ -250,8 +305,8 @@
       },
       "epss": {
         "score": 0.1895,
-        "percentile": 0.97293,
-        "date": "2026-10-29"
+        "percentile": 0.97297,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -296,8 +351,8 @@
       },
       "epss": {
         "score": 0.04573,
-        "percentile": 0.91597,
-        "date": "2026-10-29"
+        "percentile": 0.91609,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -343,8 +398,8 @@
       },
       "epss": {
         "score": 0.02152,
-        "percentile": 0.82101,
-        "date": "2026-10-29"
+        "percentile": 0.82127,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -386,8 +441,8 @@
       },
       "epss": {
         "score": 0.01025,
-        "percentile": 0.63494,
-        "date": "2026-10-29"
+        "percentile": 0.63541,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -400,8 +455,8 @@
     {
       "id": "CVE-2026-109619",
       "published": "2026-10-21T14:17:09.823",
-      "lastModified": "2026-10-28T04:17:54.320",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-10-30T19:18:07.753",
+      "vulnStatus": "Undergoing Analysis",
       "description": "PHP has various global state that temporarily points into request memory. In some scenarios, global state may not be correctly reset, or may be repopulated after being reset. The global state may then refer to request memory even after it has been freed. Subsequent requests may read or branch on this stale state before it is fully initialized. Multiple strategies can trigger this condition and produce remote code execution (RCE).",
       "cvss": {
         "score": 8.1,
@@ -428,7 +483,10 @@
       ],
       "vendors": [
         "PHP Group PHP",
-        "Siemens RUGGEDCOM APE1808"
+        "Siemens AX4",
+        "Siemens CADRA",
+        "Siemens Capital",
+        "Siemens Designcenter"
       ],
       "references": [
         "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp",
@@ -445,7 +503,7 @@
       "epss": {
         "score": 0.99999,
         "percentile": 0.99999,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -465,7 +523,7 @@
     {
       "id": "CVE-2026-21589",
       "published": "2026-10-05T22:16:58.423",
-      "lastModified": "2026-10-26T10:10:00.140",
+      "lastModified": "2026-10-29T13:17:09.847",
       "vulnStatus": "Analyzed",
       "description": "This is a vulnerability in Bitbucket Data Center, Confluence Data Center, Jira Service Management Data Center, Jira Software Data Center, Bamboo Data Center. Crowd Data Center, Crucible and Fisheye. This Arbitrary File Access vulnerability allows an unauthenticated attacker to access specific files within the web application root directory in affected versions. Exploitation requires prior knowledge of the target file's exact name and path; this vulnerability does not allow attackers to enumerate",
       "cvss": {
@@ -501,7 +559,7 @@
       "epss": {
         "score": 0.99477,
         "percentile": 0.99943,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -549,7 +607,7 @@
       "epss": {
         "score": 0.86766,
         "percentile": 0.99742,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -598,7 +656,7 @@
       "epss": {
         "score": 0.7947,
         "percentile": 0.99602,
-        "date": "2026-10-29"
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -645,8 +703,8 @@
       },
       "epss": {
         "score": 0.11388,
-        "percentile": 0.95983,
-        "date": "2026-10-29"
+        "percentile": 0.95988,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -663,7 +721,7 @@
     {
       "id": "CVE-2026-96951",
       "published": "2026-10-13T19:22:07.760",
-      "lastModified": "2026-10-16T17:18:00.760",
+      "lastModified": "2026-10-29T16:20:22.137",
       "vulnStatus": "Analyzed",
       "description": "Improper neutralization of special elements used in a command ('command injection') in Windows Shell allows an unauthorized attacker to bypass a security feature over a network.",
       "cvss": {
@@ -678,11 +736,11 @@
         }
       ],
       "vendors": [
+        "Microsoft Microsoft Edge (Chromium-based)",
         "Microsoft Outlook.com",
         "Microsoft Windows 10 Version 1607",
         "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2"
+        "Microsoft Windows 10 Version 21H2"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96951",
@@ -696,8 +754,8 @@
       },
       "epss": {
         "score": 0.09813,
-        "percentile": 0.95536,
-        "date": "2026-10-29"
+        "percentile": 0.95543,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -746,8 +804,8 @@
       },
       "epss": {
         "score": 0.02528,
-        "percentile": 0.84855,
-        "date": "2026-10-29"
+        "percentile": 0.84877,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -791,8 +849,8 @@
       },
       "epss": {
         "score": 0.0174,
-        "percentile": 0.77668,
-        "date": "2026-10-29"
+        "percentile": 0.77702,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -803,6 +861,96 @@
         ],
         "first_seen": "2026-10-14",
         "last_seen": "2026-10-15"
+      }
+    },
+    {
+      "id": "CVE-2026-76418",
+      "published": "2026-10-28T20:18:47.063",
+      "lastModified": "2026-10-30T10:36:01.130",
+      "vulnStatus": "Analyzed",
+      "description": "A vulnerability in the Remote Access SSL VPN service of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition. This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group. An attacker could exploit this vulnerability by sending a crafted request wh",
+      "cvss": {
+        "score": 8.6,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-690",
+          "name": "CWE-690"
+        }
+      ],
+      "vendors": [
+        "Cisco Cisco Secure Firewall Adaptive Security Appliance (ASA) Software",
+        "Cisco Cisco Secure Firewall Threat Defense (FTD) Software"
+      ],
+      "references": [
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-76418"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-10-29",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.0091,
+        "percentile": 0.59949,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": true,
+        "mention_count": 1,
+        "sources": [
+          "The Hacker News"
+        ],
+        "first_seen": "2026-10-29",
+        "last_seen": "2026-10-29"
+      }
+    },
+    {
+      "id": "CVE-2026-111357",
+      "published": "2026-10-15T21:17:13.190",
+      "lastModified": "2026-10-31T04:18:16.040",
+      "vulnStatus": "Analyzed",
+      "description": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
+      "cvss": {
+        "score": 7.0,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-829",
+          "name": "CWE-829"
+        }
+      ],
+      "vendors": [
+        "Ivanti Connect Secure"
+      ],
+      "references": [
+        "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935",
+        "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111357"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-10-30",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.00316,
+        "percentile": 0.24569,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
       }
     },
     {
@@ -838,8 +986,8 @@
       },
       "epss": {
         "score": 0.00967,
-        "percentile": 0.61662,
-        "date": "2026-10-29"
+        "percentile": 0.6171,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -882,8 +1030,8 @@
       },
       "epss": {
         "score": 0.28308,
-        "percentile": 0.98114,
-        "date": "2026-10-29"
+        "percentile": 0.98116,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -891,50 +1039,6 @@
         "sources": [],
         "first_seen": null,
         "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-97229",
-      "published": "2026-10-13T02:17:00.840",
-      "lastModified": "2026-10-14T13:55:26.987",
-      "vulnStatus": "Analyzed",
-      "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-190",
-          "name": "Integer Overflow / Wraparound"
-        }
-      ],
-      "vendors": [
-        "GitLab GitLab"
-      ],
-      "references": [
-        "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
-        "https://gitlab.com/gitlab-org/gitlab/-/work_items/630686",
-        "https://hackerone.com/reports/4055749",
-        "https://hackerone.com/reports/4058589"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.18427,
-        "percentile": 0.97229,
-        "date": "2026-10-29"
-      },
-      "media": {
-        "in_news": true,
-        "mention_count": 1,
-        "sources": [
-          "The Hacker News"
-        ],
-        "first_seen": "2026-10-29",
-        "last_seen": "2026-10-29"
       }
     },
     {
@@ -965,8 +1069,8 @@
       },
       "epss": {
         "score": 0.17488,
-        "percentile": 0.97125,
-        "date": "2026-10-29"
+        "percentile": 0.97129,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1004,8 +1108,8 @@
       },
       "epss": {
         "score": 0.15286,
-        "percentile": 0.96761,
-        "date": "2026-10-29"
+        "percentile": 0.96766,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1043,8 +1147,8 @@
       },
       "epss": {
         "score": 0.04795,
-        "percentile": 0.91918,
-        "date": "2026-10-29"
+        "percentile": 0.91929,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1082,8 +1186,8 @@
       },
       "epss": {
         "score": 0.04422,
-        "percentile": 0.91335,
-        "date": "2026-10-29"
+        "percentile": 0.91347,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1128,8 +1232,8 @@
       },
       "epss": {
         "score": 0.04068,
-        "percentile": 0.90645,
-        "date": "2026-10-29"
+        "percentile": 0.90659,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1169,8 +1273,8 @@
       },
       "epss": {
         "score": 0.03593,
-        "percentile": 0.8941,
-        "date": "2026-10-29"
+        "percentile": 0.89426,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1209,8 +1313,8 @@
       },
       "epss": {
         "score": 0.03472,
-        "percentile": 0.89053,
-        "date": "2026-10-29"
+        "percentile": 0.89067,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1251,8 +1355,8 @@
       },
       "epss": {
         "score": 0.03446,
-        "percentile": 0.88971,
-        "date": "2026-10-29"
+        "percentile": 0.88987,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1293,8 +1397,8 @@
       },
       "epss": {
         "score": 0.03406,
-        "percentile": 0.88835,
-        "date": "2026-10-29"
+        "percentile": 0.88851,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1333,8 +1437,8 @@
       },
       "epss": {
         "score": 0.03287,
-        "percentile": 0.88445,
-        "date": "2026-10-29"
+        "percentile": 0.88461,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": true,
@@ -1378,8 +1482,8 @@
       },
       "epss": {
         "score": 0.03249,
-        "percentile": 0.88295,
-        "date": "2026-10-29"
+        "percentile": 0.88312,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1424,8 +1528,8 @@
       },
       "epss": {
         "score": 0.03066,
-        "percentile": 0.87597,
-        "date": "2026-10-29"
+        "percentile": 0.87614,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1467,8 +1571,8 @@
       },
       "epss": {
         "score": 0.03034,
-        "percentile": 0.87467,
-        "date": "2026-10-29"
+        "percentile": 0.87484,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1508,8 +1612,8 @@
       },
       "epss": {
         "score": 0.02994,
-        "percentile": 0.87306,
-        "date": "2026-10-29"
+        "percentile": 0.87323,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1554,8 +1658,8 @@
       },
       "epss": {
         "score": 0.02934,
-        "percentile": 0.87059,
-        "date": "2026-10-29"
+        "percentile": 0.87077,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1596,8 +1700,8 @@
       },
       "epss": {
         "score": 0.02873,
-        "percentile": 0.86786,
-        "date": "2026-10-29"
+        "percentile": 0.86805,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1610,7 +1714,7 @@
     {
       "id": "CVE-2026-116505",
       "published": "2026-10-26T21:18:12.730",
-      "lastModified": "2026-10-27T14:52:13.410",
+      "lastModified": "2026-10-31T02:17:32.260",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was found in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This impacts the function getDeviceInfo of the file /var/lib/misc/udhcpd.leases of the component device-information Handler. The manipulation of the argument MAC address results in command injection. The attack can be launched remotely. The exploit has been made public and could be used.",
       "cvss": {
@@ -1642,8 +1746,8 @@
       },
       "epss": {
         "score": 0.02741,
-        "percentile": 0.8613,
-        "date": "2026-10-29"
+        "percentile": 0.86149,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1684,8 +1788,8 @@
       },
       "epss": {
         "score": 0.02727,
-        "percentile": 0.86033,
-        "date": "2026-10-29"
+        "percentile": 0.86053,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1726,8 +1830,8 @@
       },
       "epss": {
         "score": 0.02727,
-        "percentile": 0.86033,
-        "date": "2026-10-29"
+        "percentile": 0.86052,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1768,8 +1872,8 @@
       },
       "epss": {
         "score": 0.02727,
-        "percentile": 0.86032,
-        "date": "2026-10-29"
+        "percentile": 0.86053,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1810,8 +1914,8 @@
       },
       "epss": {
         "score": 0.02727,
-        "percentile": 0.86033,
-        "date": "2026-10-29"
+        "percentile": 0.86053,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1852,8 +1956,8 @@
       },
       "epss": {
         "score": 0.02691,
-        "percentile": 0.85847,
-        "date": "2026-10-29"
+        "percentile": 0.85866,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1893,8 +1997,8 @@
       },
       "epss": {
         "score": 0.02639,
-        "percentile": 0.85532,
-        "date": "2026-10-29"
+        "percentile": 0.85552,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1935,8 +2039,8 @@
       },
       "epss": {
         "score": 0.02524,
-        "percentile": 0.84826,
-        "date": "2026-10-29"
+        "percentile": 0.84848,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -1977,8 +2081,8 @@
       },
       "epss": {
         "score": 0.02521,
-        "percentile": 0.84811,
-        "date": "2026-10-29"
+        "percentile": 0.84834,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2019,8 +2123,8 @@
       },
       "epss": {
         "score": 0.02521,
-        "percentile": 0.84811,
-        "date": "2026-10-29"
+        "percentile": 0.84834,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2064,8 +2168,8 @@
       },
       "epss": {
         "score": 0.02494,
-        "percentile": 0.84623,
-        "date": "2026-10-29"
+        "percentile": 0.84647,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2106,8 +2210,8 @@
       },
       "epss": {
         "score": 0.02349,
-        "percentile": 0.83645,
-        "date": "2026-10-29"
+        "percentile": 0.83669,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2148,8 +2252,8 @@
       },
       "epss": {
         "score": 0.02348,
-        "percentile": 0.83638,
-        "date": "2026-10-29"
+        "percentile": 0.83662,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2196,8 +2300,47 @@
       },
       "epss": {
         "score": 0.02318,
-        "percentile": 0.83402,
-        "date": "2026-10-29"
+        "percentile": 0.83427,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-93680",
+      "published": "2026-10-29T16:20:06.040",
+      "lastModified": "2026-10-30T18:18:20.320",
+      "vulnStatus": "Analyzed",
+      "description": "IBM Langflow OSS 1.0.0 through 1.12.8 could allow a remote attacker to bypass security restrictions due to improper authentication.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "IBM Langflow OSS"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7294467"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02265,
+        "percentile": 0.82991,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2242,8 +2385,8 @@
       },
       "epss": {
         "score": 0.0221,
-        "percentile": 0.82551,
-        "date": "2026-10-29"
+        "percentile": 0.82574,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2288,8 +2431,8 @@
       },
       "epss": {
         "score": 0.02202,
-        "percentile": 0.82495,
-        "date": "2026-10-29"
+        "percentile": 0.82518,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2334,8 +2477,8 @@
       },
       "epss": {
         "score": 0.02202,
-        "percentile": 0.82494,
-        "date": "2026-10-29"
+        "percentile": 0.82517,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2373,8 +2516,8 @@
       },
       "epss": {
         "score": 0.0219,
-        "percentile": 0.8239,
-        "date": "2026-10-29"
+        "percentile": 0.82416,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2419,8 +2562,8 @@
       },
       "epss": {
         "score": 0.02157,
-        "percentile": 0.82144,
-        "date": "2026-10-29"
+        "percentile": 0.82169,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2465,8 +2608,8 @@
       },
       "epss": {
         "score": 0.02128,
-        "percentile": 0.81894,
-        "date": "2026-10-29"
+        "percentile": 0.81919,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2504,8 +2647,8 @@
       },
       "epss": {
         "score": 0.02101,
-        "percentile": 0.81666,
-        "date": "2026-10-29"
+        "percentile": 0.8169,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2550,8 +2693,8 @@
       },
       "epss": {
         "score": 0.02077,
-        "percentile": 0.81438,
-        "date": "2026-10-29"
+        "percentile": 0.81466,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2596,8 +2739,8 @@
       },
       "epss": {
         "score": 0.02063,
-        "percentile": 0.81308,
-        "date": "2026-10-29"
+        "percentile": 0.81337,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2638,8 +2781,8 @@
       },
       "epss": {
         "score": 0.02058,
-        "percentile": 0.81252,
-        "date": "2026-10-29"
+        "percentile": 0.81281,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2680,8 +2823,8 @@
       },
       "epss": {
         "score": 0.02046,
-        "percentile": 0.81145,
-        "date": "2026-10-29"
+        "percentile": 0.81175,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2720,8 +2863,8 @@
       },
       "epss": {
         "score": 0.02046,
-        "percentile": 0.81145,
-        "date": "2026-10-29"
+        "percentile": 0.81174,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2766,8 +2909,8 @@
       },
       "epss": {
         "score": 0.02034,
-        "percentile": 0.81024,
-        "date": "2026-10-29"
+        "percentile": 0.81053,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2808,8 +2951,8 @@
       },
       "epss": {
         "score": 0.02031,
-        "percentile": 0.80997,
-        "date": "2026-10-29"
+        "percentile": 0.81026,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2854,8 +2997,8 @@
       },
       "epss": {
         "score": 0.02028,
-        "percentile": 0.8097,
-        "date": "2026-10-29"
+        "percentile": 0.80998,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2900,8 +3043,8 @@
       },
       "epss": {
         "score": 0.02028,
-        "percentile": 0.80969,
-        "date": "2026-10-29"
+        "percentile": 0.80998,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2946,8 +3089,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80586,
-        "date": "2026-10-29"
+        "percentile": 0.80614,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -2992,8 +3135,8 @@
       },
       "epss": {
         "score": 0.0188,
-        "percentile": 0.79392,
-        "date": "2026-10-29"
+        "percentile": 0.79424,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3038,8 +3181,8 @@
       },
       "epss": {
         "score": 0.0188,
-        "percentile": 0.79396,
-        "date": "2026-10-29"
+        "percentile": 0.79428,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3084,8 +3227,8 @@
       },
       "epss": {
         "score": 0.01863,
-        "percentile": 0.7921,
-        "date": "2026-10-29"
+        "percentile": 0.79243,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3126,8 +3269,8 @@
       },
       "epss": {
         "score": 0.01846,
-        "percentile": 0.79001,
-        "date": "2026-10-29"
+        "percentile": 0.79034,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3172,8 +3315,8 @@
       },
       "epss": {
         "score": 0.01703,
-        "percentile": 0.77196,
-        "date": "2026-10-29"
+        "percentile": 0.77231,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3211,8 +3354,8 @@
       },
       "epss": {
         "score": 0.01699,
-        "percentile": 0.77142,
-        "date": "2026-10-29"
+        "percentile": 0.77176,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3250,8 +3393,8 @@
       },
       "epss": {
         "score": 0.01677,
-        "percentile": 0.76828,
-        "date": "2026-10-29"
+        "percentile": 0.76862,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3293,8 +3436,8 @@
       },
       "epss": {
         "score": 0.01658,
-        "percentile": 0.76566,
-        "date": "2026-10-29"
+        "percentile": 0.76601,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3339,8 +3482,8 @@
       },
       "epss": {
         "score": 0.01652,
-        "percentile": 0.76478,
-        "date": "2026-10-29"
+        "percentile": 0.76513,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3379,8 +3522,8 @@
       },
       "epss": {
         "score": 0.01631,
-        "percentile": 0.76165,
-        "date": "2026-10-29"
+        "percentile": 0.762,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3419,8 +3562,8 @@
       },
       "epss": {
         "score": 0.0161,
-        "percentile": 0.75867,
-        "date": "2026-10-29"
+        "percentile": 0.75903,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3458,8 +3601,8 @@
       },
       "epss": {
         "score": 0.01602,
-        "percentile": 0.75754,
-        "date": "2026-10-29"
+        "percentile": 0.75789,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3496,8 +3639,8 @@
       },
       "epss": {
         "score": 0.01594,
-        "percentile": 0.75646,
-        "date": "2026-10-29"
+        "percentile": 0.75681,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3537,8 +3680,8 @@
       },
       "epss": {
         "score": 0.01569,
-        "percentile": 0.75283,
-        "date": "2026-10-29"
+        "percentile": 0.75319,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3551,7 +3694,7 @@
     {
       "id": "CVE-2026-79861",
       "published": "2026-10-22T19:17:58.407",
-      "lastModified": "2026-10-26T14:18:54.933",
+      "lastModified": "2026-10-30T19:19:12.643",
       "vulnStatus": "Awaiting Analysis",
       "description": "There is a command injection vulnerability in AOS-10 that could lead to unauthenticated remote code execution by sending specially crafted PAPI packets. Successful exploitation of this vulnerability results in the ability to execute arbitrary code as a privileged user on the underlying operating system.",
       "cvss": {
@@ -3559,7 +3702,12 @@
         "version": "3.1",
         "severity": "CRITICAL"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
       "vendors": [
         "Hewlett Packard Enterprise (HPE) ArubaOS (AOS)"
       ],
@@ -3571,8 +3719,8 @@
       },
       "epss": {
         "score": 0.01556,
-        "percentile": 0.75113,
-        "date": "2026-10-29"
+        "percentile": 0.75149,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3617,8 +3765,8 @@
       },
       "epss": {
         "score": 0.01547,
-        "percentile": 0.74943,
-        "date": "2026-10-29"
+        "percentile": 0.7498,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3655,8 +3803,51 @@
       },
       "epss": {
         "score": 0.01526,
-        "percentile": 0.74621,
-        "date": "2026-10-29"
+        "percentile": 0.74658,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-90868",
+      "published": "2026-10-29T16:20:04.963",
+      "lastModified": "2026-10-30T18:18:17.463",
+      "vulnStatus": "Awaiting Analysis",
+      "description": "An OS command injection vulnerability in Progress Software WS_FTP Server versions prior to 2024.0.7 and 2025.0.4 on Windows could allow arbitrary command execution under certain configurations.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        },
+        {
+          "id": "CWE-88",
+          "name": "Argument Injection"
+        }
+      ],
+      "vendors": [
+        "Progress Software WS_FTP Server"
+      ],
+      "references": [
+        "https://progress.lightning.force.com/lightning/r/Knowledge__kav/ka7Pb000001vl86IAA/view"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01493,
+        "percentile": 0.74123,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3697,8 +3888,8 @@
       },
       "epss": {
         "score": 0.01469,
-        "percentile": 0.73675,
-        "date": "2026-10-29"
+        "percentile": 0.73713,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3737,8 +3928,8 @@
       },
       "epss": {
         "score": 0.01467,
-        "percentile": 0.73633,
-        "date": "2026-10-29"
+        "percentile": 0.73671,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3779,8 +3970,8 @@
       },
       "epss": {
         "score": 0.01451,
-        "percentile": 0.7331,
-        "date": "2026-10-29"
+        "percentile": 0.73348,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3820,8 +4011,8 @@
       },
       "epss": {
         "score": 0.01449,
-        "percentile": 0.73274,
-        "date": "2026-10-29"
+        "percentile": 0.73312,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3859,8 +4050,8 @@
       },
       "epss": {
         "score": 0.01448,
-        "percentile": 0.73259,
-        "date": "2026-10-29"
+        "percentile": 0.73297,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3898,8 +4089,8 @@
       },
       "epss": {
         "score": 0.01415,
-        "percentile": 0.72685,
-        "date": "2026-10-29"
+        "percentile": 0.72725,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3938,8 +4129,8 @@
       },
       "epss": {
         "score": 0.01408,
-        "percentile": 0.72557,
-        "date": "2026-10-29"
+        "percentile": 0.72597,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3976,8 +4167,8 @@
       },
       "epss": {
         "score": 0.01404,
-        "percentile": 0.72494,
-        "date": "2026-10-29"
+        "percentile": 0.72535,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -3990,8 +4181,8 @@
     {
       "id": "CVE-2026-90531",
       "published": "2026-10-13T20:19:10.030",
-      "lastModified": "2026-10-14T15:50:50.180",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-10-29T19:02:42.427",
+      "vulnStatus": "Analyzed",
       "description": "Adobe Experience Manager is affected by an Improper Restriction of XML External Entity Reference ('XXE') vulnerability that could result in privilege escalation. A low-privileged attacker could exploit this vulnerability to gain elevated access to internal resources. Exploitation of this issue does not require user interaction. Scope is changed.",
       "cvss": {
         "score": 9.6,
@@ -4017,8 +4208,8 @@
       },
       "epss": {
         "score": 0.014,
-        "percentile": 0.72431,
-        "date": "2026-10-29"
+        "percentile": 0.72471,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -4057,8 +4248,8 @@
       },
       "epss": {
         "score": 0.01394,
-        "percentile": 0.7231,
-        "date": "2026-10-29"
+        "percentile": 0.72351,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -4096,8 +4287,8 @@
       },
       "epss": {
         "score": 0.01386,
-        "percentile": 0.72172,
-        "date": "2026-10-29"
+        "percentile": 0.72214,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -4135,8 +4326,8 @@
       },
       "epss": {
         "score": 0.01386,
-        "percentile": 0.72172,
-        "date": "2026-10-29"
+        "percentile": 0.72214,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -4149,7 +4340,7 @@
     {
       "id": "CVE-2026-115995",
       "published": "2026-10-24T23:16:58.323",
-      "lastModified": "2026-10-26T13:41:11.497",
+      "lastModified": "2026-10-29T16:17:59.523",
       "vulnStatus": "Deferred",
       "description": "A security vulnerability has been detected in Unitree Robotics Unitree Go2 up to 1.1.11.4. The impacted element is the function set_volume of the file gpt_thread.py of the component chat_go. Such manipulation of the argument Value leads to os command injection. The attack can be launched remotely. Upgrading to version 1.1.11.5 is sufficient to resolve this issue. You should upgrade the affected component. The vendor confirmed early: \"Submission 990502 corresponds to our internal ticket #474 (Go2",
       "cvss": {
@@ -4181,167 +4372,8 @@
       },
       "epss": {
         "score": 0.01377,
-        "percentile": 0.71995,
-        "date": "2026-10-29"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-79846",
-      "published": "2026-10-22T19:17:56.490",
-      "lastModified": "2026-10-26T14:18:54.933",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Command injection vulnerabilities exist in the affected interface of AOS-8 that could allow an unauthenticated remote attacker to run arbitrary commands on the underlying host if certain preconditions outside of the attacker's control are met. Successful exploitation could allow an attacker to execute arbitrary commands on the underlying operating system.",
-      "cvss": {
-        "score": 10.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [],
-      "vendors": [
-        "Hewlett Packard Enterprise (HPE) ArubaOS (AOS)"
-      ],
-      "references": [
-        "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.0137,
-        "percentile": 0.71837,
-        "date": "2026-10-29"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-110372",
-      "published": "2026-10-18T11:16:36.580",
-      "lastModified": "2026-10-19T19:17:20.390",
-      "vulnStatus": "Deferred",
-      "description": "Incorrect Privilege Assignment vulnerability in Brainstorm Force OttoKit suretriggers allows Privilege Escalation.This issue affects OttoKit: from n/a through 1.1.40.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-266",
-          "name": "CWE-266"
-        }
-      ],
-      "vendors": [
-        "Brainstorm Force OttoKit"
-      ],
-      "references": [
-        "https://patchstack.com/database/wordpress/plugin/suretriggers/vulnerability/wordpress-ottokit-plugin-1-1-40-privilege-escalation-vulnerability?_s_id=cve"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01365,
-        "percentile": 0.71736,
-        "date": "2026-10-29"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-70291",
-      "published": "2026-10-13T19:19:48.817",
-      "lastModified": "2026-10-15T21:17:46.443",
-      "vulnStatus": "Analyzed",
-      "description": "Heap-based buffer overflow in Microsoft Office Outlook allows an unauthorized attacker to execute code over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "Microsoft Microsoft 365 Apps for Enterprise",
-        "Microsoft Microsoft Office 365 for Mac",
-        "Microsoft Microsoft Office LTSC 2021",
-        "Microsoft Microsoft Office LTSC 2024",
-        "Microsoft Microsoft Office LTSC for Mac 2021"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70291"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01329,
-        "percentile": 0.70959,
-        "date": "2026-10-29"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-105723",
-      "published": "2026-10-13T19:18:00.303",
-      "lastModified": "2026-10-26T17:22:37.913",
-      "vulnStatus": "Analyzed",
-      "description": "Untrusted pointer dereference in Windows Distributed File System (DFS) allows an unauthorized attacker to elevate privileges over a network.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-822",
-          "name": "CWE-822"
-        }
-      ],
-      "vendors": [
-        "Microsoft Windows 10 Version 1607",
-        "Microsoft Windows 10 Version 1809",
-        "Microsoft Windows 10 Version 21H2",
-        "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2"
-      ],
-      "references": [
-        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-105723"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01321,
-        "percentile": 0.70806,
-        "date": "2026-10-29"
+        "percentile": 0.72036,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,

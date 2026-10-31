@@ -35,8 +35,92 @@
       },
       "epss": {
         "score": 0.00266,
-        "percentile": 0.18499,
-        "date": "2026-10-29"
+        "percentile": 0.1853,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-26589",
+      "published": "2024-02-22T17:15:09.050",
+      "lastModified": "2026-10-30T13:17:20.200",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: bpf: Reject variable offset alu on PTR_TO_FLOW_KEYS For PTR_TO_FLOW_KEYS, check_flow_keys_access() only uses fixed off for validation. However, variable offset ptr alu is not prohibited for this ptr kind. So the variable offset is not checked. The following prog is accepted: func#0 @0 0: R1=ctx() R10=fp0 0: (bf) r6 = r1 ; R1=ctx() R6_w=ctx() 1: (79) r7 = *(u64 *)(r6 +144) ; R6_w=ctx() R7_w=flow_keys() 2: (b7) r8 = 1024 ; R8_w=10",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-119",
+          "name": "Memory Buffer Boundary Violation"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/1b500d5d6cecf98dd6ca88bc9e7ae1783c83e6d3",
+        "https://git.kernel.org/stable/c/22c7fa171a02d310e3a3f6ed46a698ca8a0060ed",
+        "https://git.kernel.org/stable/c/29ffa63f21bcdcef3e36b03cccf9d0cd031f6ab0",
+        "https://git.kernel.org/stable/c/4108b86e324da42f7ed425bd71632fd844300dc8"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00239,
+        "percentile": 0.15,
+        "date": "2026-10-30"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2023-52452",
+      "published": "2024-02-22T17:15:08.830",
+      "lastModified": "2026-10-30T13:17:14.790",
+      "vulnStatus": "Modified",
+      "description": "In the Linux kernel, the following vulnerability has been resolved: bpf: Fix accesses to uninit stack slots Privileged programs are supposed to be able to read uninitialized stack memory (ever since 6715df8d5) but, before this patch, these accesses were permitted inconsistently. In particular, accesses were permitted above state->allocated_stack, but not below it. In other words, if the stack was already \"large enough\", the access was permitted, but otherwise the access was rejected instead of b",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-665",
+          "name": "CWE-665"
+        }
+      ],
+      "vendors": [
+        "Linux Linux"
+      ],
+      "references": [
+        "https://git.kernel.org/stable/c/0954982db8283016bf38e9db2da5adf47a102e19",
+        "https://git.kernel.org/stable/c/6b4a64bafd107e521c01eec3453ce94a3fb38529",
+        "https://git.kernel.org/stable/c/bf32eaf5093dc1c24ccc26b14c3422f6dfcc5236",
+        "https://git.kernel.org/stable/c/fbcf372c8eda2290470268e0afb5ab5d5f5d5fde"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00239,
+        "percentile": 0.15,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -80,8 +164,8 @@
       },
       "epss": {
         "score": 0.00245,
-        "percentile": 0.1573,
-        "date": "2026-10-29"
+        "percentile": 0.15767,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -123,8 +207,8 @@
       },
       "epss": {
         "score": 0.00724,
-        "percentile": 0.53966,
-        "date": "2026-10-29"
+        "percentile": 0.54028,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -165,8 +249,8 @@
       },
       "epss": {
         "score": 0.028,
-        "percentile": 0.86434,
-        "date": "2026-10-29"
+        "percentile": 0.86449,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -211,8 +295,8 @@
       },
       "epss": {
         "score": 0.04572,
-        "percentile": 0.91596,
-        "date": "2026-10-29"
+        "percentile": 0.91607,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -255,8 +339,8 @@
       },
       "epss": {
         "score": 0.00884,
-        "percentile": 0.59129,
-        "date": "2026-10-29"
+        "percentile": 0.59178,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -301,8 +385,8 @@
       },
       "epss": {
         "score": 0.84589,
-        "percentile": 0.99702,
-        "date": "2026-10-29"
+        "percentile": 0.99703,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -346,8 +430,8 @@
       },
       "epss": {
         "score": 0.01124,
-        "percentile": 0.6619,
-        "date": "2026-10-29"
+        "percentile": 0.66236,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -392,8 +476,8 @@
       },
       "epss": {
         "score": 0.02149,
-        "percentile": 0.82075,
-        "date": "2026-10-29"
+        "percentile": 0.821,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -435,8 +519,8 @@
       },
       "epss": {
         "score": 0.01314,
-        "percentile": 0.70628,
-        "date": "2026-10-29"
+        "percentile": 0.70672,
+        "date": "2026-10-30"
       },
       "media": {
         "in_news": false,
@@ -447,5 +531,5 @@
       }
     }
   ],
-  "updated_at": "2026-10-30T11:33:23.573646+00:00"
+  "updated_at": "2026-10-31T11:08:05.561645+00:00"
 }
