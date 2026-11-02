@@ -1,0 +1,97 @@
+{
+  "month": "2026-11",
+  "episodes": [
+    {
+      "id": "stormcast-10160",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10160",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10160.mp3",
+      "title": "SANS Stormcast Monday, November 2nd, 2026: OneNote Bulk Extraction; Trojanized Claude Code Extension in Cursor Marketplace; Ivanti Connect Secure Zero-Days (CVE-2026-111357); Android SMS of Death",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, November 2nd, 2026: OneNote Bulk Extraction; Trojanized Claude Code Extension in Cursor Marketplace; Ivanti Connect Secure Zero-Days (CVE-2026-111357); Android SMS of Death",
+      "show_notes": [
+        {
+          "heading": "Didier Stevens adds bulk JSON extraction to his OneNote analysis tool, a trojanized Anthropic Claude Code extension in the Cursor VS Code Extension Marketplace installs an SSH backdoor, Ivanti patches two more exploited Connect Secure zero-days, an Android \"SMS of Death\" proof of concept is public, and a Linux kernel Multipath TCP (MPTCP) mitigation update.",
+          "links": []
+        },
+        {
+          "heading": "OneNote File Extraction",
+          "links": []
+        },
+        {
+          "heading": "Didier Stevens added a --jsonoutput option to his onedump.py tool, so embedded attachments from many OneNote (.one) files can be extracted in one run instead of one file at a time. Combined with myjson-filter.py, all embedded files are written to disk named by their SHA-256 hash.",
+          "links": [
+            "https://isc.sans.edu/diary/OneNote%20File%20Extraction/33478"
+          ]
+        },
+        {
+          "heading": "Trojanized Claude Code Extension in Cursor's Marketplace",
+          "links": []
+        },
+        {
+          "heading": "Malicious versions 2.1.312 and 2.1.313 of the Anthropic.claude-code extension for Windows and macOS were available in the Cursor VS Code Extension Marketplace on October 29; they were not built by Anthropic. The extension adds an attacker SSH key, installs persistence, and tries to open a reverse SSH tunnel (that step fails on most hosts without admin rights). Cursor shut down the marketplace during cleanup and published indicators of compromise and detection and remediation scripts.",
+          "links": [
+            "https://cursor.com/blog/claude-code-extension-security-notice"
+          ]
+        },
+        {
+          "heading": "Ivanti Connect Secure Update and Exploit Details",
+          "links": []
+        },
+        {
+          "heading": "Ivanti updated its October 13 Connect Secure advisory (CVE-2026-104935, authentication bypass) with fixes for two more vulnerabilities exploited in the same chain: CVE-2026-111357, missing authentication for a critical function allowing escalation to root (CVSS 8.8), and CVE-2026-118527, file uploads to predictable locations. Volexity describes how the three zero-days were chained for unauthenticated root code execution; update to 25.1.1.3 or 22.8R2.6 even if you patched on October 13.",
+          "links": [
+            "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US",
+            "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/"
+          ]
+        },
+        {
+          "heading": "SMS of Death",
+          "links": []
+        },
+        {
+          "heading": "A working proof of concept is now public for the \"SMS of Death\": a single malformed Wireless Application Protocol (WAP) Push SMS crashes com.android.phone, dropping active calls with no user interaction. Google fixed this denial of service in the October 2026 Android security update for Android 14 through 17.",
+          "links": [
+            "https://smsofdeath.com"
+          ]
+        },
+        {
+          "heading": "Linux Multipath TCP Vulnerability Update",
+          "links": []
+        },
+        {
+          "heading": "A follow-up on Friday's Linux kernel remote code execution flaw (CVE-2026-98432): the demonstrated exploit needs Multipath TCP enabled and a listening socket. Many distributions have shipped kernel updates; until you can patch, setting the sysctl net.mptcp.enabled=0 disables MPTCP.",
+          "links": [
+            "https://aws.amazon.com/security/security-bulletins/2026-160-aws/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-02T02:00:02+00:00",
+      "duration_seconds": 345,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10160.mp3",
+      "audio_length_bytes": 4846261,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10160",
+      "categories": [
+        "onenote",
+        "onedump",
+        "claude code",
+        "cursor",
+        "ivanti connect secure",
+        "cve-2026-111357",
+        "android",
+        "mptcp"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10160",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 2nd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Leadership. OneNote is one of those tools\n that you probably can't escape if you have to work in an\n enterprise environment. And Didier had all along a neat tool\n that allowed you to extract attachments from OneNote file.\n The problem with the tool was it was one file at a time,\n which of course gets tedious after a while. So now Didier has\n added a new feature to his OneNote extraction tool. And\n this feature will save all of the attachments into a JSON\n formatted file. It can even be applied to multiple files at\n the same time and makes your data extraction with that\n quite a bit more efficient. So if you have to do that, well,\n definitely take a look at this updated tool by Didier. On\n Friday, well, one event kind of looked very scary\n initially, and that was a malicious Anthropic Claude Code\n extension being uploaded to the Cursor Visual Studio Code\n extension marketplace. Cursor, of course, being quite popular\n among developers. And this is the obvious extension\n to use if you want to integrate with Claude. The\n initial concern was that maybe Anthropic was compromised.\n Apparently, that's not what happened here. The Visual\n Studio extension marketplace for Cursor was actually shut\n down as a response to help with the cleanup. Yes, the\n extension was downloaded while it was available. For any\n developers who did run this extension, it will set up an\n SSH tunnel in order to allow the attacker to further\n compromise the system. So you definitely want to make sure\n that you're not running this malicious extension. And there\n is in the cursor.com blog quite a bit of help in\n identifying whether or not you're running the malicious\n version or whether you were affected by the SSH tunnel\n that this malicious extension set up. And on Friday, Ivanti\n did release an interesting update to Connect Secure.\n Interesting because they actually didn't release a new\n advisory for this, but updated an existing advisory that they\n released on October 13. On October 13, they released this\n advisory patching one vulnerability. This was an\n authentication bypass vulnerability. Now, turns out\n there were two more vulnerabilities and these\n additional vulnerabilities. The second one is also a\n missing authentication for a critical function in Ivanti\n Connect Secure. Pretty much the same CVSS score as the\n first vulnerability. And then also a use of predictable file\n names in Ivanti Connect Secure, which actually sort of\n completes the exploit chain here. Now, we also got a blog\n post from Volexity detailing how these three\n vulnerabilities together were used in the wild for\n exploitation. And that's why they, I guess, held back a\n little bit on releasing the vulnerabilities, but they were\n already exploited in the wild. And yes, now you finally have\n to patch for hopefully all the vulnerabilities. And Android\n users be aware there is now a working proof of concept for\n the SMS of death. That's a vulnerability that was patched\n around mid-October. And due to this vulnerability, a single\n malformed WAP push SMS message can crash com.android.phone\n on Android, which will drop active calls without any\n interaction from the victim. So make sure that you update\n Android. But again, it's just a denial of service\n vulnerability. And then just a quick update regarding the\n multi-path TCP vulnerability that was patched last week and\n that I mentioned on Friday. Turns out that Linux,\n typically in modern versions, has multi-path TCP enabled in\n the kernel. So to be vulnerable, as long as the\n setting is enabled, you just have to have any TCP socket\n listening. Doesn't really matter what's listening in\n order to be exploitable. Kernel updates have been\n released by many distributions already. If yours hasn't\n released one yet, then disabling multi-path TCP in\n the kernel will prevent exploitation. And yes, it's\n essentially just a sysctl setting. So double check for\n your distribution how to best implement that if you don't\n want to wait for a patch. Well, and this is it for\n today. So thanks again for listening. Thanks for liking.\n Thanks for recommending this podcast. And talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    }
+  ]
+}
