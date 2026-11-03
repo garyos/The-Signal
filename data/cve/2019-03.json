@@ -285,7 +285,7 @@
     {
       "id": "CVE-2019-9937",
       "published": "2019-03-22T08:29:00.670",
-      "lastModified": "2026-10-14T07:16:59.130",
+      "lastModified": "2026-11-02T18:18:28.257",
       "vulnStatus": "Modified",
       "description": "In SQLite 3.27.2, interleaving reads and writes in a single transaction with an fts5 virtual table will lead to a NULL Pointer Dereference in fts5ChunkIterate in sqlite3.c. This is related to ext/fts5/fts5_hash.c and ext/fts5/fts5_index.c.",
       "cvss": {
@@ -329,7 +329,7 @@
     {
       "id": "CVE-2019-9936",
       "published": "2019-03-22T08:29:00.607",
-      "lastModified": "2026-10-14T07:16:58.910",
+      "lastModified": "2026-11-02T18:18:27.980",
       "vulnStatus": "Modified",
       "description": "In SQLite 3.27.2, running fts5 prefix queries inside a transaction could trigger a heap-based buffer over-read in fts5HashEntrySort in sqlite3.c, which may lead to an information leak. This is related to ext/fts5/fts5_hash.c.",
       "cvss": {
@@ -498,6 +498,51 @@
       "epss": {
         "score": 0.09294,
         "percentile": 0.95369,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2019-5413",
+      "published": "2019-03-21T16:01:05.390",
+      "lastModified": "2026-11-02T18:18:27.407",
+      "vulnStatus": "Modified",
+      "description": "An attacker can use the format parameter to inject arbitrary commands in the npm package morgan < 1.9.1.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.0",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        },
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        }
+      ],
+      "vendors": [
+        "morgan"
+      ],
+      "references": [
+        "https://hackerone.com/reports/390881",
+        "https://lists.apache.org/thread.html/r8ba4c628fba7181af58817d452119481adce4ba92e889c643e4c7dd3%40%3Ccommits.netbeans.apache.org%3E",
+        "https://lists.apache.org/thread.html/rb5ac16fad337d1f3bb7079549f97d8166d0ef3082629417c39f12d63%40%3Cnotifications.netbeans.apache.org%3E"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.03399,
+        "percentile": 0.88843,
         "date": "2026-11-02"
       },
       "media": {
@@ -889,7 +934,53 @@
         "first_seen": null,
         "last_seen": null
       }
+    },
+    {
+      "id": "CVE-2019-1543",
+      "published": "2019-03-06T21:29:00.247",
+      "lastModified": "2026-11-02T18:18:26.603",
+      "vulnStatus": "Modified",
+      "description": "ChaCha20-Poly1305 is an AEAD cipher, and requires a unique nonce input for every encryption operation. RFC 7539 specifies that the nonce value (IV) should be 96 bits (12 bytes). OpenSSL allows a variable nonce length and front pads the nonce with 0 bytes if it is less than 12 bytes. However it also incorrectly allows a nonce to be set of up to 16 bytes. In this case only the last 12 bytes are significant and any additional leading bytes are ignored. It is a requirement of using this cipher that ",
+      "cvss": {
+        "score": 7.4,
+        "version": "3.0",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-327",
+          "name": "CWE-327"
+        },
+        {
+          "id": "CWE-330",
+          "name": "Use of Insufficiently Random Values"
+        }
+      ],
+      "vendors": [
+        "OpenSSL OpenSSL"
+      ],
+      "references": [
+        "http://lists.opensuse.org/opensuse-security-announce/2019-07/msg00056.html",
+        "https://access.redhat.com/errata/RHSA-2019:3700",
+        "https://git.openssl.org/gitweb/?p=openssl.git%3Ba=commitdiff%3Bh=ee22257b1418438ebaf54df98af4e24f494d1809",
+        "https://git.openssl.org/gitweb/?p=openssl.git%3Ba=commitdiff%3Bh=f426625b6ae9a7831010750490a5f0ad689c5ba3"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.05701,
+        "percentile": 0.93012,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
     }
   ],
-  "updated_at": "2026-11-02T13:46:10.116495+00:00"
+  "updated_at": "2026-11-03T12:58:24.139432+00:00"
 }

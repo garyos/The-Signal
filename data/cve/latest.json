@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-02T13:46:15.387842+00:00",
+  "generated_at": "2026-11-03T12:58:26.821607+00:00",
   "cves": [
     {
       "id": "CVE-2026-109618",
       "published": "2026-10-21T14:17:09.357",
-      "lastModified": "2026-10-30T19:18:07.373",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-11-02T14:52:09.430",
+      "vulnStatus": "Analyzed",
       "description": "PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the request. Some contexts may not properly account for this scenario and leave request memory in an uninitialized state before performing an allocation. The subsequent request cleanup procedure may read or branch on this memory. Multiple OOM strategies can consistently trigger this condition and lead to remote code execution (RCE).",
       "cvss": {
         "score": 9.8,
@@ -226,8 +226,8 @@
     {
       "id": "CVE-2026-97229",
       "published": "2026-10-13T02:17:00.840",
-      "lastModified": "2026-10-31T00:16:52.007",
-      "vulnStatus": "Modified",
+      "lastModified": "2026-11-02T13:30:16.800",
+      "vulnStatus": "Analyzed",
       "description": "GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before 19.3.5, and 19.4 before 19.4.2 that, under certain conditions, could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration, due to insufficient regular expression validation.",
       "cvss": {
         "score": 10.0,
@@ -455,8 +455,8 @@
     {
       "id": "CVE-2026-109619",
       "published": "2026-10-21T14:17:09.823",
-      "lastModified": "2026-10-30T19:18:07.753",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-11-02T14:52:13.527",
+      "vulnStatus": "Analyzed",
       "description": "PHP has various global state that temporarily points into request memory. In some scenarios, global state may not be correctly reset, or may be repopulated after being reset. The global state may then refer to request memory even after it has been freed. Subsequent requests may read or branch on this stale state before it is fully initialized. Multiple strategies can trigger this condition and produce remote code execution (RCE).",
       "cvss": {
         "score": 8.1,
@@ -947,12 +947,13 @@
       },
       "media": {
         "in_news": true,
-        "mention_count": 1,
+        "mention_count": 2,
         "sources": [
+          "SecurityWeek",
           "The Hacker News"
         ],
         "first_seen": "2026-10-31",
-        "last_seen": "2026-10-31"
+        "last_seen": "2026-11-02"
       }
     },
     {
@@ -1714,6 +1715,52 @@
       }
     },
     {
+      "id": "CVE-2026-120229",
+      "published": "2026-11-01T14:18:53.123",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability has been found in WAVLINK WN553X1-B 260403_2.0.0. This issue affects the function sub_416B50 of the file /bin/ioos. The manipulation of the argument file_id leads to os command injection. The attack is possible to be carried out remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/IOT-CVE/blob/main/vulns/WAVLINK_WN553X1-B_check_pwd_command_injection.md",
+        "https://vuldb.com/cve/CVE-2026-120229",
+        "https://vuldb.com/submit/919153",
+        "https://vuldb.com/vuln/429588"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02823,
+        "percentile": 0.86585,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2026-116505",
       "published": "2026-10-26T21:18:12.730",
       "lastModified": "2026-10-31T02:17:32.260",
@@ -2184,7 +2231,7 @@
     {
       "id": "CVE-2026-116485",
       "published": "2026-10-26T14:16:37.040",
-      "lastModified": "2026-10-26T18:41:21.450",
+      "lastModified": "2026-11-02T18:18:43.053",
       "vulnStatus": "Deferred",
       "description": "danmu_api before 1.21.7 contains an authentication bypass vulnerability that allows unauthenticated attackers to modify server environment configuration when the default TOKEN is used and ADMIN_TOKEN is unset. Attackers can send POST requests to /api/env/set, /api/env/add, or /api/env/del to set ADMIN_TOKEN, lock out operators, redirect OTHER_SERVER or PROXY_URL for SSRF, and trigger redeployment.",
       "cvss": {
@@ -2303,6 +2350,98 @@
       "epss": {
         "score": 0.02318,
         "percentile": 0.83441,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120230",
+      "published": "2026-11-01T15:17:22.830",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was found in WAVLINK WN701AE 260105. Impacted is the function del_vlan_group of the component ioos Web Backend. The manipulation of the argument vlan_name results in os command injection. The attack may be performed from remote. The exploit has been made public and could be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN701AE"
+      ],
+      "references": [
+        "https://github.com/pipiyyb/cve/blob/main/WAVLINK_WN701AE_del_vlan_group.md",
+        "https://vuldb.com/cve/CVE-2026-120230",
+        "https://vuldb.com/submit/919242",
+        "https://vuldb.com/vuln/429589"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02211,
+        "percentile": 0.82604,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120227",
+      "published": "2026-11-01T13:18:00.643",
+      "lastModified": "2026-11-02T18:18:47.677",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was detected in WAVLINK WN701AE M01AE_V260105. This affects the function del_staticrule of the file static_route_setting.sh of the component ioos Web Backend. Performing a manipulation of the argument rule_name results in os command injection. Remote exploitation of the attack is possible. The exploit is now public and may be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN701AE"
+      ],
+      "references": [
+        "https://github.com/pipiyyb/cve/blob/main/WAVLINK%20WN701AE.md",
+        "https://vuldb.com/cve/CVE-2026-120227",
+        "https://vuldb.com/submit/918620",
+        "https://vuldb.com/vuln/429586"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02211,
+        "percentile": 0.82604,
         "date": "2026-11-02"
       },
       "media": {
@@ -2709,8 +2848,8 @@
     {
       "id": "CVE-2026-120198",
       "published": "2026-11-01T05:18:57.620",
-      "lastModified": "2026-11-01T05:18:57.620",
-      "vulnStatus": "Received",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
       "description": "A vulnerability has been found in WAVLINK WL-WN530BE1-A V251117. Affected is the function con_check_read_finish of the file /protocol.csp. Such manipulation of the argument group_name/IP-FROM leads to command injection. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure.",
       "cvss": {
         "score": 10.0,
@@ -2755,8 +2894,8 @@
     {
       "id": "CVE-2026-120195",
       "published": "2026-11-01T04:18:46.687",
-      "lastModified": "2026-11-01T04:18:46.687",
-      "vulnStatus": "Received",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
       "description": "A security vulnerability has been detected in WAVLINK WL-WN579A3-A 2026-03-10-94f93d4. The impacted element is the function set_wzdgwMesh of the file /cgi-bin/adm.cgi of the component Initial Setup Wizard. The manipulation of the argument wlan_ssid leads to os command injection. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure.",
       "cvss": {
         "score": 10.0,
@@ -3197,7 +3336,7 @@
     {
       "id": "CVE-2026-116506",
       "published": "2026-10-26T21:18:13.047",
-      "lastModified": "2026-10-27T14:52:13.410",
+      "lastModified": "2026-11-02T19:17:55.480",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was determined in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected is the function apmib_set of the file firewall.so. This manipulation causes command injection. The attack may be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
       "cvss": {
@@ -3460,10 +3599,194 @@
       }
     },
     {
+      "id": "CVE-2026-120240",
+      "published": "2026-11-01T19:16:57.950",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was determined in WAVLINK WN553X1-B V260403_2.0.0. This issue affects the function sub_41A748 of the file /bin/ioos of the component WireGuard CLI Group Handler. Executing a manipulation of the argument group_id/group_name can lead to os command injection. The attack may be performed from remote. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_wireguard_cli_group_command_injection.md",
+        "https://vuldb.com/cve/CVE-2026-120240",
+        "https://vuldb.com/submit/919251",
+        "https://vuldb.com/vuln/429599"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01687,
+        "percentile": 0.77027,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120239",
+      "published": "2026-11-01T18:17:13.920",
+      "lastModified": "2026-11-02T18:18:48.240",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was found in WAVLINK WN553X1-B V260403_2.0.0. This vulnerability affects the function sub_419DA8 of the file /bin/ioos of the component WireGuard CLI Handler. Performing a manipulation of the argument file_id results in os command injection. The attack is possible to be carried out remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_wireguard_cli_command_injection.md",
+        "https://vuldb.com/cve/CVE-2026-120239",
+        "https://vuldb.com/submit/919250",
+        "https://vuldb.com/vuln/429598"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01687,
+        "percentile": 0.77028,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120238",
+      "published": "2026-11-01T18:17:13.720",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability has been found in WAVLINK WN553X1-B 260403_2.0.0. This affects the function sub_4162A8 of the file /bin/ioos of the component ovpn_file Handler. Such manipulation of the argument file_id leads to os command injection. The attack can be executed remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_ovpn_file_command_injection.md",
+        "https://vuldb.com/cve/CVE-2026-120238",
+        "https://vuldb.com/submit/919248",
+        "https://vuldb.com/vuln/429597"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01687,
+        "percentile": 0.77027,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120231",
+      "published": "2026-11-01T15:17:23.053",
+      "lastModified": "2026-11-02T18:18:47.847",
+      "vulnStatus": "Deferred",
+      "description": "A vulnerability was determined in WAVLINK WN553X1-B V260403_2.0.0. The affected element is the function sub_416568 of the file /bin/ioos of the component OpenVPN CLI Handler. This manipulation of the argument file_id causes os command injection. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_openvpn_cli_command_injection.md",
+        "https://vuldb.com/cve/CVE-2026-120231",
+        "https://vuldb.com/submit/919247",
+        "https://vuldb.com/vuln/429590"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01687,
+        "percentile": 0.77026,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2026-120197",
       "published": "2026-11-01T04:18:47.147",
-      "lastModified": "2026-11-01T04:18:47.147",
-      "vulnStatus": "Received",
+      "lastModified": "2026-11-02T18:18:46.373",
+      "vulnStatus": "Deferred",
       "description": "A flaw has been found in WAVLINK WL-WN530HG4B M_V260724. This impacts the function port_forward of the file /cgi-bin/wapi.cgi. This manipulation of the argument Name causes os command injection. It is possible to initiate the attack remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure.",
       "cvss": {
         "score": 9.9,
@@ -3508,8 +3831,8 @@
     {
       "id": "CVE-2026-120196",
       "published": "2026-11-01T04:18:46.943",
-      "lastModified": "2026-11-01T04:18:46.943",
-      "vulnStatus": "Received",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
       "description": "A vulnerability was detected in WAVLINK WN579X3-D V250402. This affects the function port_forward of the file /cgi-bin/wapi.cgi. The manipulation of the argument Name results in os command injection. The attack may be performed from remote. The exploit is now public and may be used. The vendor was contacted early about this disclosure.",
       "cvss": {
         "score": 9.9,
@@ -3662,6 +3985,52 @@
       "epss": {
         "score": 0.01658,
         "percentile": 0.76627,
+        "date": "2026-11-02"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-120228",
+      "published": "2026-11-01T14:18:52.883",
+      "lastModified": "2026-11-02T16:19:19.997",
+      "vulnStatus": "Deferred",
+      "description": "A flaw has been found in WAVLINK WN553X1-B V260403_2.0.0. This vulnerability affects the function sub_416D88 of the file /bin/ioos of the component ioos Service. Executing a manipulation of the argument group_id/group_name can lead to os command injection. The attack can be executed remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure.",
+      "cvss": {
+        "score": 9.9,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        }
+      ],
+      "vendors": [
+        "WAVLINK WN553X1-B"
+      ],
+      "references": [
+        "https://github.com/senxitoyshuyi-ui/IOT-CVE/blob/main/vulns/WAVLINK%20WN553X1-B%20Router.md",
+        "https://vuldb.com/cve/CVE-2026-120228",
+        "https://vuldb.com/submit/919151",
+        "https://vuldb.com/vuln/429587"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.01652,
+        "percentile": 0.76539,
         "date": "2026-11-02"
       },
       "media": {
@@ -4072,328 +4441,6 @@
       "epss": {
         "score": 0.01493,
         "percentile": 0.74153,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-79864",
-      "published": "2026-10-22T19:17:58.743",
-      "lastModified": "2026-10-30T19:19:13.030",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Command injection vulnerabilities exist in the affected interface of AOS-10 that could allow an unauthenticated adjacent attacker to perform command injection. Successful exploitation could allow an attacker to execute arbitrary commands as a privileged user on the underlying operating system.",
-      "cvss": {
-        "score": 9.6,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-77",
-          "name": "Command Injection"
-        }
-      ],
-      "vendors": [
-        "Hewlett Packard Enterprise (HPE) ArubaOS (AOS)"
-      ],
-      "references": [
-        "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01469,
-        "percentile": 0.73741,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-107699",
-      "published": "2026-10-08T19:17:01.853",
-      "lastModified": "2026-10-14T02:16:57.447",
-      "vulnStatus": "Deferred",
-      "description": "ppt2png through 0.0.6 contains an OS command injection vulnerability that allows attackers to execute operating system commands by supplying unsanitized input or output path arguments. Attackers can append shell metacharacters such as ';' to file names passed to child_process.exec() in ppt2png.js, running commands with Node.js process privileges.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "tzwm ppt2png"
-      ],
-      "references": [
-        "https://gist.github.com/R3tro16/2daadc08b282c48d41203d1125d7632a",
-        "https://github.com/tzwm/ppt2png",
-        "https://github.com/tzwm/ppt2png/blob/8c68eba7af943de27422b12c6e224d28587af7ae/ppt2png.js#L5-L35",
-        "https://www.vulncheck.com/advisories/ppt2png-through-0.0.6-os-command-injection-via-input-and-output-paths"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01469,
-        "percentile": 0.73743,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-107459",
-      "published": "2026-10-08T06:16:42.000",
-      "lastModified": "2026-10-08T21:04:18.423",
-      "vulnStatus": "Deferred",
-      "description": "The SecuShare Pro developed by Openfind has an OS Command Injection vulnerability. Unauthenticated remote attackers can inject arbitrary OS commands and execute them on the server.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Openfind SecuShare Pro"
-      ],
-      "references": [
-        "https://www.twcert.org.tw/en/cp-139-11255-bce41-2.html",
-        "https://www.twcert.org.tw/tw/cp-132-11254-9c206-1.html"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01467,
-        "percentile": 0.73702,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-92262",
-      "published": "2026-10-16T17:17:52.710",
-      "lastModified": "2026-10-21T03:17:20.003",
-      "vulnStatus": "Analyzed",
-      "description": "MariaDB server is a community developed fork of MySQL server. From 10.6.1 until 10.6.28, 10.11.19, 11.4.13, 11.8.9, 12.3.3, and 13.0.2, the #mysql50# bypass prefix is affected because it allows the #mysql50# prefix to bypass normal table-name filesystem encoding. An attacker can trigger the issue with a table name using the #mysql50# prefix, then use a #mysql50# table name to access files under their legacy unencoded name and cause crashes, data corruption, data exfiltration, or remote code exec",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-706",
-          "name": "CWE-706"
-        }
-      ],
-      "vendors": [
-        "MariaDB server"
-      ],
-      "references": [
-        "https://github.com/MariaDB/server/commit/574ba66b2d6c5d71db83d416677876e9b592858e",
-        "https://github.com/MariaDB/server/commit/f277eefa424850a8cba5c2371406047f6395e8bb",
-        "https://github.com/MariaDB/server/releases/tag/mariadb-10.11.19",
-        "https://github.com/MariaDB/server/releases/tag/mariadb-10.6.28"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01451,
-        "percentile": 0.73377,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-104019",
-      "published": "2026-10-02T20:17:00.607",
-      "lastModified": "2026-10-06T18:16:43.043",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "OS command injection in the Studio Space startup validation script in Amazon SageMaker Distribution 2.x before 2.14.12, 3.x before 3.9.12, 4.0.x before 4.0.11, 4.1.x before 4.1.11, 4.2.x before 4.2.8, 4.3.x before 4.3.5, and 4.4.x before 4.4.3, as used by Amazon SageMaker Unified Studio, might allow an authenticated remote user with project contributor permissions to execute arbitrary commands in another project member's Studio Space and obtain that member's temporary execution role credentials ",
-      "cvss": {
-        "score": 9.0,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "AWS sagemaker-distribution"
-      ],
-      "references": [
-        "https://aws.amazon.com/security/security-bulletins/2026-125-aws/",
-        "https://github.com/aws/sagemaker-distribution/releases",
-        "https://github.com/aws/sagemaker-distribution/security/advisories/GHSA-w64x-664p-7w66"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01449,
-        "percentile": 0.7334,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-10138",
-      "published": "2026-10-20T21:17:16.597",
-      "lastModified": "2026-10-23T23:17:42.077",
-      "vulnStatus": "Deferred",
-      "description": "A OS command injection vulnerability exists in the boa formUpload() functionality of X2000R (version(s): TOTOLINK-X2000R-Gh-V1.0.0-B20250421.1327). A specially crafted HTTP request can lead to arbitrary code execution. An attacker can make an authenticated HTTP request to trigger this vulnerability.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "totolink Totolink"
-      ],
-      "references": [
-        "https://talosintelligence.com/vulnerability_reports/TALOS-2026-2438"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01448,
-        "percentile": 0.73325,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-79857",
-      "published": "2026-10-22T19:17:57.963",
-      "lastModified": "2026-10-26T14:18:54.933",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "There is a command injection vulnerability in the PAPI protocol (Aruba's access point management protocol) of AOS-8 that could lead to unauthenticated remote code execution by sending specially crafted packets to the affected UDP port. Successful exploitation of this vulnerability results in the ability to execute arbitrary code as a privileged user on the underlying operating system.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-77",
-          "name": "Command Injection"
-        }
-      ],
-      "vendors": [
-        "Hewlett Packard Enterprise (HPE) ArubaOS (AOS)"
-      ],
-      "references": [
-        "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01415,
-        "percentile": 0.72754,
-        "date": "2026-11-02"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-103848",
-      "published": "2026-10-13T20:17:11.267",
-      "lastModified": "2026-10-14T15:50:50.180",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Adobe Experience Manager is affected by an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        }
-      ],
-      "vendors": [
-        "Adobe Adobe Experience Manager 6.5 LTS",
-        "Adobe Adobe Experience Manager 6.5"
-      ],
-      "references": [
-        "https://helpx.adobe.com/security/products/experience-manager/apsb26-152.html"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01408,
-        "percentile": 0.72627,
         "date": "2026-11-02"
       },
       "media": {
