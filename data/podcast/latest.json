@@ -1,6 +1,101 @@
 {
-  "fetched_at": "2026-11-03T16:46:26.250427+00:00",
+  "fetched_at": "2026-11-04T10:16:51.793261+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10164",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10164",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10164.mp3",
+      "title": "SANS Stormcast Wednesday, November 4th, 2026: Refrigerator Defrost Attacks; Siemens SIMATIC Node-RED Exploited (CVE-2026-58115); cPGuard Update Channel Compromise; iPhone Lockdown Mode AirDrop Exploit",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, November 4th, 2026: Refrigerator Defrost Attacks; Siemens SIMATIC Node-RED Exploited (CVE-2026-58115); cPGuard Update Channel Compromise; iPhone Lockdown Mode AirDrop Exploit",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers attacks that switch supermarket and military commissary freezers into defrost mode, active exploitation of the Node-RED flaw in Siemens SIMATIC IoT2050 devices, the compromised cPGuard anti-malware update channel, and Calif's iPhone exploit that works despite Lockdown Mode.",
+          "links": []
+        },
+        {
+          "heading": "Refrigerator Exploits: Hacked Freezers Switched to Defrost Mode",
+          "links": []
+        },
+        {
+          "heading": "Attackers have hit refrigeration controllers at hundreds of supermarkets in France and several other European countries, and U.S. investigators are treating August freezer failures at U.S. military commissaries as a suspected cyberattack. The attackers switch freezers into defrost mode, heating them to about 50 C (122 F) and spoiling the food. How the systems were breached is still unclear, though weak default passwords on internet-exposed controllers have been reported.",
+          "links": []
+        },
+        {
+          "heading": "To help build a honeypot that emulates these devices, please contact me at jullrich-at-sans.edu if you can provide access to one of these refrigeration controllers.",
+          "links": [
+            "https://blog.claroty.com/blog/france-supermarket-hacks-expose-risks-of-internet-facing-refrigeration-systems",
+            "https://www.bbc.com/news/articles/cq1kd1nee80eo"
+          ]
+        },
+        {
+          "heading": "Exploitation Targeting Node-RED on Siemens SIMATIC IoT2050 (CVE-2026-58115)",
+          "links": []
+        },
+        {
+          "heading": "VulnCheck caught attackers exploiting CVE-2026-58115, a missing authentication flaw (CVSS 10.0) in the Node-RED admin interface of Siemens SIMATIC IoT2050 Advanced industrial devices, to deploy flows that use wget or curl to download a Linux bot. Siemens patched the flaw in August with version 4.3.4.1. Update, or uninstall or harden Node-RED, and keep industrial control systems (ICS) off the internet.",
+          "links": [
+            "https://www.vulncheck.com/blog/exploitation-targeting-node-red",
+            "https://cert-portal.siemens.com/productcert/html/ssa-834709.html"
+          ]
+        },
+        {
+          "heading": "cPGuard Security Advisory: Update Channel Compromise",
+          "links": []
+        },
+        {
+          "heading": "OPSSHIELD says an attacker used stolen credentials to access the update servers for cPGuard, its anti-malware product for cPanel and shared hosting servers. On November 2, cPGuard versions 5.88.12 through 5.88.19 delivered a malicious script that collected /etc/shadow, MySQL configuration, root shell history, and SSH files. Update to 5.88.25 or later, check the install log for affected versions, rotate credentials, and review the indicators of compromise in the advisory.",
+          "links": [
+            "https://opsshield.com/notice/cpguard-update-channel-compromise.html"
+          ]
+        },
+        {
+          "heading": "iPhone 18 Pro Exploited via AirDrop with Lockdown Mode Enabled",
+          "links": []
+        },
+        {
+          "heading": "Security firm Calif released a video showing an iPhone 18 Pro with Lockdown Mode enabled being fully compromised after the user accepted a malicious PDF sent via AirDrop. Calif has not published technical details, so users who rely on Lockdown Mode should not accept unexpected AirDrop files.",
+          "links": [
+            "https://x.com/calif_io/status/2117720348322144733",
+            "https://www.macrumors.com/2026/11/03/iphone-jailbreak-lockdown-mode/"
+          ]
+        },
+        {
+          "heading": "Vote in the SANS Difference Makers Awards",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-04T02:10:02+00:00",
+      "duration_seconds": 351,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10164.mp3",
+      "audio_length_bytes": 4966289,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10164",
+      "categories": [
+        "refrigerator",
+        "siemens",
+        "simatic",
+        "node-red",
+        "cve-2026-58115",
+        "cpguard",
+        "iphone",
+        "lockdown mode",
+        "airdrop"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10164",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 4th, 2026\n edition of the SANS and Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. So I want to start today with a\n little bit of different story, something that I haven't\n covered so far and that's the breach of hundreds, maybe\n thousands of refrigerators across Europe. This has been\n sort of ongoing over the last couple of weeks. Last week\n there was also some news that the U.S. military bases\n outside Europe were also affected by some of these\n hacks. The way these hacks work is that they typically\n connect to exposed control panels and then switch these\n refrigerators or freezers into defrost mode which ups the\n temperature in the 120-130 Fahrenheit or 50 Celsius range\n and of course leads to the spoilage of a lot of food.\n Well this is all bad of course and yes something that should\n be avoided. There wasn't much of an actionable part of this\n story. It wasn't quite clear how these systems got hacked.\n Lots of talk about weak default passwords in this case\n which is a typical IoT thing of course. Some people talked\n about fairly old exploits being used against these\n particular refrigerators and freezers. Well I have a little\n bit of another spin on this and that's why I want to tune\n our honeypots to actually look for what's actually going on\n there but in order to do so I need access to one of these\n refrigerators or thermostats in order to clone them. So if\n you know someone that has access to them please let me\n know and well maybe can get in touch and then get some data\n that helps us emulate these devices. And sticking here\n with an industrial control system and honeypot story\n there is evidence as presented by VulnCheck that the recently\n patched vulnerability in SIMATIC equipment that's\n running Node-RED which is essentially their admin API is\n being exploited now. So again this was patched in August but\n now is actively being exploited. The exploit here is\n I would say almost not so terribly spectacular in that\n they just run some standard Linux scripts and wget to\n download additional malware to the system to gain persistent\n remote access to these controllers. So definitely\n something to look out for and yes make sure your industrial\n control systems are patched and properly locked down. And\n in case you're running cPGuard, cPGuard is an\n endpoint protection anti-malware product that's often\n used sort of in shared hosting environments like if you're\n using cPanel I think it integrates quite well with\n that. Well OPSSHIELD, the company behind cPGuard, did\n announce that their update channel was compromised. So\n essentially the hacker was able to gain access to the\n server they stored their updates on, was able to add a\n malicious script and yes that script does off the usual\n credential exfiltration and the like. So definitely if\n you're running this product make sure that you didn't get\n caught by the bad update and OPSSHIELD has published a blog\n post with additional details indicators of compromise and\n some other assistance in how to detect and remove the\n malware. Well, security company Calif who is recently\n making a name for itself in the iOS exploit space has\n published a video that shows the successful exploitation of\n an iPhone 18. So essentially the just released version and\n reasonably recent even though not the latest iOS version\n running on the phone. This exploitation was successful\n even though Lockdown Mode was enabled in order to trigger\n the unspecified a virus.\n So if you consider yourself at risk enough in order to enable\n Lockdown Mode you probably shouldn't accept random\n AirDrop messages that pop up on your system and well better be\n sure who actually did send you that particular file. The\n compromise appeared to be pretty complete as in rooted\n they were able to essentially have some little animation\n running within the full screen of the iPhone on top of other\n applications. Well and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing. And I\n add a link to the Difference Maker Award vote to the show\n notes. So would appreciate your vote even though the\n competition is pretty stiff for this particular category.\n So don't mind if you find someone else more worthy here.\n So thanks and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "darknetdiaries-182",
       "show": "darknetdiaries",
@@ -3846,68 +3941,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10056",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, August 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Leadership. Well, today we are a little\n bit heavy on Apple content here. First, we got Apple\n patches today for iOS and macOS. Now, I don't see a big\n surge here in a number of vulnerabilities like they've\n seen from Microsoft. So the AI search may not quite be\n happening for Apple as it does for Microsoft, but there's\n certainly some changes in how these patches are being\n released. First of all, we only got patches for iOS and\n macOS. We do have patches for the older version of iOS,\n that's iOS 18, in addition to the current version of iOS 26.\n Where it gets also interesting is that out of the 108\n vulnerabilities being addressed in this particular\n update, 87, so the vast majority, is affecting only\n the old version of iOS 18. So this may be a little bit sort\n of a catch-up kind of release. There are only six\n vulnerabilities that affect all three operating systems.\n They're all WebKit vulnerabilities. So really no\n surprise here in this case. Remember a couple of weeks\n ago, we also had the screen sharing vulnerability being\n addressed for macOS. So that, of course, didn't affect iOS.\n So we don't really have a corresponding patch for iOS\n this time around. Overall, nothing that's already being\n exploited. Nothing sort of outrageous, dangerous that I\n sort of could spot by scrolling through these\n vulnerabilities. Definitely get these updates applied. We\n often do see some exploits coming out relatively soon\n after these Apple updates. There's also a Vision OS\n update, but Apple has not yet released any details regarding\n security content of that update, which is a little bit\n odd because often, if they pre -release a particular\n operating system, they may not give us the details because,\n well, the vulnerabilities affect other operating system\n too. But in this case, we'll see what comes out when the\n Vision OS vulnerabilities are made public. And then, well, I\n already mentioned the screen sharing vulnerability. I did\n publish a quick diary with some details how to make\n screen sharing more secure or how to disable it if you want\n to disable it because apparently, yes, it's being\n exploited. And it's almost a bit surprising that people\n have something like screen sharing exposed. But I think a\n part of what can happen here is that if you have it exposed\n or have it enabled on your internal, like home network,\n and then you're moving that system out into the world and\n you don't disable it, that's, I think, where it often\n happens. Also, there are some sort of interesting quirks\n here. If you remember, one of the vulnerabilities that was\n being exploited or was being published a couple of weeks\n ago relied on the fact that Apple screen sharing is really\n VNC. And VNC has sort of this system-wide password you can\n use to gain access to the screen. And Apple still\n supports that mode. First of all, I think that's sort of\n one reason why people may have a weak password. And then this\n particular exploit relied on the fact that once you connect\n to the system, you may see a password prompt, but you're\n connected, the process that you're connected to actually,\n you know, runs with a super user with root capabilities\n because, well, it has to then switch to whatever user you're\n logging in as. So I would definitely keep that disabled\n and restrict who can actually use VNC and or screen sharing.\n And Apple does provide these controls, but don't enable the\n VNC viewers may control screen with password option. And\n that's also a little bit, I think, oddly named because it\n sounds like, hey, if you disable it, then it can access\n without password.\n But also another little bit odd naming or odd feature here\n is the Apple Mac OS firewall. I see that often cause\n confusion because when you enable the firewall, well,\n there is sort of by default an exemption for all system\n processes like screen sharing. So in addition to enabling the\n firewall, you have to disable the open ports for the system\n processes and also for like downloaded digitally signed\n processes. So only then are you actually closed down. Even\n if you enable the stealth mode, if you don't disable the\n system binaries and the signed processes, well, you still\n have those ports open. And those are really the ports\n that matter because that's where stuff is listening at.\n So in some ways just enabling the firewall probably doesn't\n really make a real difference. And well, then we got yet\n another attack against access control of memory. This one\n affects Windows or at least the attack was specifically\n designed for Windows. They call it download more RAM and\n a paper published by University of Birmingham\n researchers as well as a researcher from Durham\n University. It was just presented at the USENIX\n conference. The problem here is that on any RAM stick you\n have a little EPROM and this EPROM or EPROM contains well\n basically the basic configuration of your memory.\n Now turns out on quite a few different vendors RAM sticks\n this EPROM is actually writable so it's not locked\n down. Now in the past there has been a vulnerability that\n basically abused this EPROM but this required someone to\n actually remove the RAM stick and then connect an EPROM\n burner to the particular chip on the stick and then\n basically change the settings and then reinstall the RAM\n stick. That's of course a fairly complex attack with\n physical access like that. What they now found is that\n because this EPROM is not actually right protected on a\n lot of systems well it can be overwritten with software\n running on the system. The second hurdle they had to\n overcome was that this requires access to the I2C bus\n which on Windows does require elevated privileges. Again if\n you already have elevated privileges this is not really\n a valid attack. Well they found that this can be\n implemented with just by exploiting a vulnerable driver\n but then you kind of already have to approach escalation\n that way. The other option they found is they found a\n particular overclocking tool for Windows that comes with\n all the drivers and such properly signed so you can run\n it as a normal user and it also does allow access to this\n EPROM and can then be used to basically make it claim that\n you have more memory. So they're basically doubling the\n size of memory that the particular RAM stick\n advertises. What happens now is if you're trying to access\n memory that doesn't exist it's actually just being rolled\n back to memory that does exist. So there's this\n rollover happening and with that the operating system the\n system does think you are accessing well unrestricted\n memory but you're actually accessing completely different\n memory that may have some restricted data in it.\n Interesting attack and kind of amazing that the system\n actually boots and doesn't just crash. Windows has now\n addressed this vulnerability in last month so actually this\n month's update so that's why they're publishing this paper\n now. So it shouldn't be a problem anymore as long as you\n are up to date. Well and this is it for today. So thanks for\n listening. Thanks for liking and thanks for subscribing and\n talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10054",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10054",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10054.mp3",
-      "title": "SANS Stormcast Monday, August 17th, 2026: MacOS Screen Sharing; GeoServer Patch; SAP Exploited;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, August 17th, 2026: MacOS Screen Sharing; GeoServer Patch; SAP Exploited;",
-      "show_notes": [
-        {
-          "heading": "macOS Screen Sharing Vulnerability Exploited",
-          "links": [
-            "https://advisories.ncsc.nl/2026/ncsc-2026-0280.html"
-          ]
-        },
-        {
-          "heading": "GeoServer Patch",
-          "links": [
-            "https://geoserver.org/announcements/vulnerability/2026/08/14/geoserver-3-0-1-released.html"
-          ]
-        },
-        {
-          "heading": "Recent SAP Commerce Cloud Vuln Exploited",
-          "links": [
-            "https://x.com/DefusedCyber/status/2088240809355153647"
-          ]
-        },
-        {
-          "heading": "ChainDrop npm Worm",
-          "links": [
-            "https://medium.com/governed-at-the-source/the-chaindrop-npm-worm-august-2026-how-444-packages-were-compromised-without-a-single-npm-b0c9e5a4c387"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-17T02:00:02+00:00",
-      "duration_seconds": 318,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10054.mp3",
-      "audio_length_bytes": 4460302,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10054",
-      "categories": [
-        "chaindrop",
-        "npm",
-        "worm",
-        "sap",
-        "commerce",
-        "cloud",
-        "geoserver",
-        "macos",
-        "screensharing"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10054",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday August 17th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu undergraduate certificate program in Applied\n Cybersecurity. Well, let's start today with two\n vulnerabilities that I've already talked about, but\n there are a couple updates to them. So first of all, the\n Apple vulnerability in screen sharing. This one was patched\n a little bit less than two weeks ago. And yes, it's\n actively being exploited now, according to the Dutch\n Information Security Agency. We have seen detailed\n descriptions, proof of concept exploits, so no real surprise\n that this is now being exploited. Definitely make\n sure that you patch this vulnerability. It's also\n probably a good idea to review how you're using screen\n sharing. It should never really be exposed to a\n network. I can see where people use it sort of in their\n home networks and such, but then don't turn it off as they\n connect to external public networks as they're traveling.\n So that's certainly a risk here that you need to be aware\n of. The second vulnerability is the vulnerability in\n GeoServer. So this was an unauthenticated SQL injection\n vulnerability. It does not affect the default\n configuration, but yes, it's also already being exploited.\n Not sure how common the configuration that enables\n this issue is actually. The GeoServer patch here has been\n released now, but there is at least at this point, I\n believe, no CVE number for it. They're still waiting for one\n to be issued. And Cyber Intel Company Defused states in an\n ex-post that they have seen active exploitation against an\n SAP vulnerability, a remote code execution in SAP Commerce\n Cloud. This was patches part of Patch Tuesday. SAP also\n tends to release patches on Patch Tuesday. So a couple of\n days after the patch was released, this was already\n exploited. Definitely at this point do assume compromise,\n even though Diffused hasn't made public sort of any\n details about what they're seeing. So not quite clear\n what the payload, for example, is like and what an attacker\n is trying to accomplish with these scans. And yes, supply\n chain attacks keep evolving. The latest example is a worm\n referred to as Chaintrop by Microsoft. Others have picked\n up this particular name for this worm. There's a good\n write-up now by Abby Kearns with ActiveState about this\n particular incident. At the time of Abby writing this\n particular article, 444 packages were compromised. And\n as pointed out in the blog post, it did use a different\n activation method than what we typically have seen in these\n worms. Typically, they used the NPM configuration file in\n order to run any post-install scripts that then ran the\n malicious code. Well, a lot of security tools are now\n scanning these configuration files and are warning the user\n or blocking these install scripts. Instead, what this\n particular worm does is that it comes with a settings file\n for IDEs. In this particular case, Visual Studio Code, as\n well as for a cursor, I believe. And in these\n configuration files, you can execute code as this\n particular file or the files in this library are being\n opened by the IDE. So I talked about this particular vector\n before. This is certainly something you do want to take\n a look at. Remember, if your IDE asks you whether or not\n you trust a particular directory as you're opening as\n a project or such, well, definitely be aware that the\n reason for this pop-up is that code in configuration files\n may be executed as soon as you open these files. And\n apparently, this was quite successful here. And as all\n the other worms, it does steal NPM and GitHub credentials.\n Well, and that's it for today. Thanks for liking. Thanks for\n subscribing and recommending this podcast. And remember, I\n will be teaching our Defending Web Application class in\n September in Vegas. And then in October in Amsterdam, I'll\n be teaching our Intrusion Detection class. So that's it\n for today. Thanks and talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

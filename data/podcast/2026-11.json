@@ -2,6 +2,101 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10164",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10164",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10164.mp3",
+      "title": "SANS Stormcast Wednesday, November 4th, 2026: Refrigerator Defrost Attacks; Siemens SIMATIC Node-RED Exploited (CVE-2026-58115); cPGuard Update Channel Compromise; iPhone Lockdown Mode AirDrop Exploit",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, November 4th, 2026: Refrigerator Defrost Attacks; Siemens SIMATIC Node-RED Exploited (CVE-2026-58115); cPGuard Update Channel Compromise; iPhone Lockdown Mode AirDrop Exploit",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers attacks that switch supermarket and military commissary freezers into defrost mode, active exploitation of the Node-RED flaw in Siemens SIMATIC IoT2050 devices, the compromised cPGuard anti-malware update channel, and Calif's iPhone exploit that works despite Lockdown Mode.",
+          "links": []
+        },
+        {
+          "heading": "Refrigerator Exploits: Hacked Freezers Switched to Defrost Mode",
+          "links": []
+        },
+        {
+          "heading": "Attackers have hit refrigeration controllers at hundreds of supermarkets in France and several other European countries, and U.S. investigators are treating August freezer failures at U.S. military commissaries as a suspected cyberattack. The attackers switch freezers into defrost mode, heating them to about 50 C (122 F) and spoiling the food. How the systems were breached is still unclear, though weak default passwords on internet-exposed controllers have been reported.",
+          "links": []
+        },
+        {
+          "heading": "To help build a honeypot that emulates these devices, please contact me at jullrich-at-sans.edu if you can provide access to one of these refrigeration controllers.",
+          "links": [
+            "https://blog.claroty.com/blog/france-supermarket-hacks-expose-risks-of-internet-facing-refrigeration-systems",
+            "https://www.bbc.com/news/articles/cq1kd1nee80eo"
+          ]
+        },
+        {
+          "heading": "Exploitation Targeting Node-RED on Siemens SIMATIC IoT2050 (CVE-2026-58115)",
+          "links": []
+        },
+        {
+          "heading": "VulnCheck caught attackers exploiting CVE-2026-58115, a missing authentication flaw (CVSS 10.0) in the Node-RED admin interface of Siemens SIMATIC IoT2050 Advanced industrial devices, to deploy flows that use wget or curl to download a Linux bot. Siemens patched the flaw in August with version 4.3.4.1. Update, or uninstall or harden Node-RED, and keep industrial control systems (ICS) off the internet.",
+          "links": [
+            "https://www.vulncheck.com/blog/exploitation-targeting-node-red",
+            "https://cert-portal.siemens.com/productcert/html/ssa-834709.html"
+          ]
+        },
+        {
+          "heading": "cPGuard Security Advisory: Update Channel Compromise",
+          "links": []
+        },
+        {
+          "heading": "OPSSHIELD says an attacker used stolen credentials to access the update servers for cPGuard, its anti-malware product for cPanel and shared hosting servers. On November 2, cPGuard versions 5.88.12 through 5.88.19 delivered a malicious script that collected /etc/shadow, MySQL configuration, root shell history, and SSH files. Update to 5.88.25 or later, check the install log for affected versions, rotate credentials, and review the indicators of compromise in the advisory.",
+          "links": [
+            "https://opsshield.com/notice/cpguard-update-channel-compromise.html"
+          ]
+        },
+        {
+          "heading": "iPhone 18 Pro Exploited via AirDrop with Lockdown Mode Enabled",
+          "links": []
+        },
+        {
+          "heading": "Security firm Calif released a video showing an iPhone 18 Pro with Lockdown Mode enabled being fully compromised after the user accepted a malicious PDF sent via AirDrop. Calif has not published technical details, so users who rely on Lockdown Mode should not accept unexpected AirDrop files.",
+          "links": [
+            "https://x.com/calif_io/status/2117720348322144733",
+            "https://www.macrumors.com/2026/11/03/iphone-jailbreak-lockdown-mode/"
+          ]
+        },
+        {
+          "heading": "Vote in the SANS Difference Makers Awards",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-04T02:10:02+00:00",
+      "duration_seconds": 351,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10164.mp3",
+      "audio_length_bytes": 4966289,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10164",
+      "categories": [
+        "refrigerator",
+        "siemens",
+        "simatic",
+        "node-red",
+        "cve-2026-58115",
+        "cpguard",
+        "iphone",
+        "lockdown mode",
+        "airdrop"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10164",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 4th, 2026\n edition of the SANS and Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. So I want to start today with a\n little bit of different story, something that I haven't\n covered so far and that's the breach of hundreds, maybe\n thousands of refrigerators across Europe. This has been\n sort of ongoing over the last couple of weeks. Last week\n there was also some news that the U.S. military bases\n outside Europe were also affected by some of these\n hacks. The way these hacks work is that they typically\n connect to exposed control panels and then switch these\n refrigerators or freezers into defrost mode which ups the\n temperature in the 120-130 Fahrenheit or 50 Celsius range\n and of course leads to the spoilage of a lot of food.\n Well this is all bad of course and yes something that should\n be avoided. There wasn't much of an actionable part of this\n story. It wasn't quite clear how these systems got hacked.\n Lots of talk about weak default passwords in this case\n which is a typical IoT thing of course. Some people talked\n about fairly old exploits being used against these\n particular refrigerators and freezers. Well I have a little\n bit of another spin on this and that's why I want to tune\n our honeypots to actually look for what's actually going on\n there but in order to do so I need access to one of these\n refrigerators or thermostats in order to clone them. So if\n you know someone that has access to them please let me\n know and well maybe can get in touch and then get some data\n that helps us emulate these devices. And sticking here\n with an industrial control system and honeypot story\n there is evidence as presented by VulnCheck that the recently\n patched vulnerability in SIMATIC equipment that's\n running Node-RED which is essentially their admin API is\n being exploited now. So again this was patched in August but\n now is actively being exploited. The exploit here is\n I would say almost not so terribly spectacular in that\n they just run some standard Linux scripts and wget to\n download additional malware to the system to gain persistent\n remote access to these controllers. So definitely\n something to look out for and yes make sure your industrial\n control systems are patched and properly locked down. And\n in case you're running cPGuard, cPGuard is an\n endpoint protection anti-malware product that's often\n used sort of in shared hosting environments like if you're\n using cPanel I think it integrates quite well with\n that. Well OPSSHIELD, the company behind cPGuard, did\n announce that their update channel was compromised. So\n essentially the hacker was able to gain access to the\n server they stored their updates on, was able to add a\n malicious script and yes that script does off the usual\n credential exfiltration and the like. So definitely if\n you're running this product make sure that you didn't get\n caught by the bad update and OPSSHIELD has published a blog\n post with additional details indicators of compromise and\n some other assistance in how to detect and remove the\n malware. Well, security company Calif who is recently\n making a name for itself in the iOS exploit space has\n published a video that shows the successful exploitation of\n an iPhone 18. So essentially the just released version and\n reasonably recent even though not the latest iOS version\n running on the phone. This exploitation was successful\n even though Lockdown Mode was enabled in order to trigger\n the unspecified a virus.\n So if you consider yourself at risk enough in order to enable\n Lockdown Mode you probably shouldn't accept random\n AirDrop messages that pop up on your system and well better be\n sure who actually did send you that particular file. The\n compromise appeared to be pretty complete as in rooted\n they were able to essentially have some little animation\n running within the full screen of the iPhone on top of other\n applications. Well and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing. And I\n add a link to the Difference Maker Award vote to the show\n notes. So would appreciate your vote even though the\n competition is pretty stiff for this particular category.\n So don't mind if you find someone else more worthy here.\n So thanks and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "darknetdiaries-182",
       "show": "darknetdiaries",
       "show_name": "Darknet Diaries",
