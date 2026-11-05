@@ -2,6 +2,96 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10166",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10166",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10166.mp3",
+      "title": "SANS Stormcast Thursday, November 5th, 2026: Email Test Scripts; runZero oobscan BMC/IPMI; apt Signature Bypass (CVE-2026-109518); SonicWall GMS EOL Unpatched Flaws",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, November 5th, 2026: Email Test Scripts; runZero oobscan BMC/IPMI; apt Signature Bypass (CVE-2026-109518); SonicWall GMS EOL Unpatched Flaws",
+      "show_notes": [
+        {
+          "heading": "Today's Stormcast covers honeypot scans for leftover email test scripts, HD Moore's runZero oobscan for out-of-band management interfaces, a critical apt signature-bypass flaw (CVE-2026-109518), and unpatched SonicWall GMS end-of-life vulnerabilities.",
+          "links": []
+        },
+        {
+          "heading": "The Classics Return: Vulnerable E-Mail Scripts",
+          "links": []
+        },
+        {
+          "heading": "Internet Storm Center honeypots are seeing probes for development email test scripts such as sendmail.php and test-mail.php. Like the classic FormMail script, these can leak environment variables and let attackers send spam through GET or POST parameters, so keep them out of production.",
+          "links": [
+            "https://isc.sans.edu/diary/The%20Classics%20Return%3A%20Vulnerable%20E-Mail%20Scripts/33488"
+          ]
+        },
+        {
+          "heading": "oobscan: Scan for Out-of-Band Management Interfaces",
+          "links": []
+        },
+        {
+          "heading": "HD Moore's runZero oobscan hunts exposed BMC, IPMI, SNMP, and IP KVM style out-of-band management interfaces and flags known vulnerabilities on those devices rather than only listing open ports.",
+          "links": [
+            "https://github.com/runZeroInc/oobscan#research-and-disclosures"
+          ]
+        },
+        {
+          "heading": "apt Signature Bypass (CVE-2026-109518)",
+          "links": []
+        },
+        {
+          "heading": "A critical flaw in Debian's apt package manager can skip signature verification when a package web server returns crafted error responses, letting an on-path attacker inject malicious packages over HTTP. Prefer HTTPS where your distribution allows it; Ubuntu still often uses HTTP by default. Debian and Ubuntu have published updates for CVE-2026-109518.",
+          "links": [
+            "https://lists.debian.org/deity/2026/11/msg00005.html",
+            "https://ubuntu.com/blog/apt-vulnerability-fixes-available",
+            "https://security-tracker.debian.org/tracker/CVE-2026-109518"
+          ]
+        },
+        {
+          "heading": "SonicWall GMS End of Life: Unpatched File Read and SQL Injection",
+          "links": []
+        },
+        {
+          "heading": "SonicWall Global Management System (GMS) 9.5.2 and earlier are end of life, and SonicWall will not fix an unauthenticated file read (CVE-2026-109593) or an authenticated SQL injection (CVE-2026-109594). Migration to Network Security Manager (NSM) is the vendor path forward.",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0019",
+            "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
+            "https://www.cert.cyber.gouv.fr/avis/CERTFR-2026-AVI-1456/"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-05T11:25:11+00:00",
+      "duration_seconds": 347,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10166.mp3",
+      "audio_length_bytes": 4863425,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10166",
+      "categories": [
+        "formmail",
+        "oobscan",
+        "runzero",
+        "apt",
+        "cve-2026-109518",
+        "sonicwall gms",
+        "cve-2026-109593"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10166",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, November 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well today's diary I titled it\n with the classics return. One of the first sort of web\n vulnerabilities that I've sort of experienced, worked with\n was an old email script vulnerability for FormMail that\n had a number of issues. So one was where it sort of would\n leak environment variables but could also be used to send\n spam to anybody in some versions. Now what I noticed\n in our web honeypot logs today was a number of different\n requests for script like sendmail.php, test-mail.php.\n Now what this I think looks for is, and I found a couple\n of these scripts, is these are scripts that you may deploy in\n development to just check your email configuration. These\n scripts will also send email to random email addresses that\n you specify as part of a GET or POST parameter. Two issues\n with this. First of all, yes, just like the good old FormMail\n script, these scripts will leak environment variables and\n server configuration. So that's one problem. But it can\n also be abused by a spammer to send email to arbitrary email\n addresses. Make sure you're not deploying them in\n production. Apparently enough people are doing so for\n attackers to make it worthwhile to actually scan\n for these scripts. So I think the real problem here is how\n do you manage moving code live and how do you sort of manage\n your entire sort of production environment and your build\n pipeline. That's sort of where these checks probably should\n be implemented that something like this never makes it to a\n production site. And then we've got an interesting new\n tool, OOB scan, out-of-band scan from H.D. Moore with\n runZero. This tool scans your network for exposed baseboard\n management controllers, IPMI, SNMP, and various other things\n that could be used to control systems, often used sort of as\n part of like these out-of-band management tools. Well, that's\n the name of the tool to manage servers. I just ran it before\n the podcast against my home network and definitely my AI\n agent has some work to do later to clean up some of the\n things that found, like found a printer that had SNMP\n enabled. I didn't know about, never use it. So that's one of\n the things that's going to be disabled. Yes, it's sort of a\n better port scanner, but it's really focused on these out-of\n -band management interfaces, like also IP KVMs and such. It\n finds that are found by other tools, but this one will give\n you all the details. It will flag any specific\n vulnerabilities it found on these systems. So it's more\n than a port scanner. It's really more of a very focused\n and very full feature in that sense, a vulnerability scanner\n for these type of devices. Well, then we have a critical\n vulnerability in apt, the script that you typically use\n to manage packages on Debian systems. This vulnerability is\n triggered by sending error messages from the web server,\n serving apt packages. And if you do it right, well then apt\n will not verify the signature on this package. So this\n allows the attacker to inject malicious packages for the\n system to download and install. This is particularly\n an issue because apt still doesn't always use HTTPS. So\n in order to trigger this vulnerability, an attacker\n does not have to have actually control of the endpoint. It's\n sufficient to then inject data on path. So another thing that\n you may want to look at if you're still using HTTP for\n apt, maybe switch to HTTPS. That may be an option\n depending on your distribution. Ubuntu, I think\n by default still does HTTP, not HTTPS. Then I got some bad\n news for you. If you're using SonicWall's GMS appliance,\n their global management system, well this product has\n been out of support and end of life for a while now. And\n there is a new vulnerability, one that does allow\n unauthenticated file read and then also an authenticated SQL\n injection vulnerability. Well, neither will be fixed. So your\n only option is really to check with SonicWall what else to\n give the money for that will replace GMS if you still need\n something with this feature set. It's a virtual appliance,\n so you can't really upgrade it by throwing it into the trash.\n I guess you can still just delete it or throw it into the\n desktop trash can. Well, and this is it for today. So\n thanks again for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10164",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

@@ -1,6 +1,96 @@
 {
-  "fetched_at": "2026-11-05T10:11:01.077105+00:00",
+  "fetched_at": "2026-11-05T17:01:58.749078+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10166",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10166",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10166.mp3",
+      "title": "SANS Stormcast Thursday, November 5th, 2026: Email Test Scripts; runZero oobscan BMC/IPMI; apt Signature Bypass (CVE-2026-109518); SonicWall GMS EOL Unpatched Flaws",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, November 5th, 2026: Email Test Scripts; runZero oobscan BMC/IPMI; apt Signature Bypass (CVE-2026-109518); SonicWall GMS EOL Unpatched Flaws",
+      "show_notes": [
+        {
+          "heading": "Today's Stormcast covers honeypot scans for leftover email test scripts, HD Moore's runZero oobscan for out-of-band management interfaces, a critical apt signature-bypass flaw (CVE-2026-109518), and unpatched SonicWall GMS end-of-life vulnerabilities.",
+          "links": []
+        },
+        {
+          "heading": "The Classics Return: Vulnerable E-Mail Scripts",
+          "links": []
+        },
+        {
+          "heading": "Internet Storm Center honeypots are seeing probes for development email test scripts such as sendmail.php and test-mail.php. Like the classic FormMail script, these can leak environment variables and let attackers send spam through GET or POST parameters, so keep them out of production.",
+          "links": [
+            "https://isc.sans.edu/diary/The%20Classics%20Return%3A%20Vulnerable%20E-Mail%20Scripts/33488"
+          ]
+        },
+        {
+          "heading": "oobscan: Scan for Out-of-Band Management Interfaces",
+          "links": []
+        },
+        {
+          "heading": "HD Moore's runZero oobscan hunts exposed BMC, IPMI, SNMP, and IP KVM style out-of-band management interfaces and flags known vulnerabilities on those devices rather than only listing open ports.",
+          "links": [
+            "https://github.com/runZeroInc/oobscan#research-and-disclosures"
+          ]
+        },
+        {
+          "heading": "apt Signature Bypass (CVE-2026-109518)",
+          "links": []
+        },
+        {
+          "heading": "A critical flaw in Debian's apt package manager can skip signature verification when a package web server returns crafted error responses, letting an on-path attacker inject malicious packages over HTTP. Prefer HTTPS where your distribution allows it; Ubuntu still often uses HTTP by default. Debian and Ubuntu have published updates for CVE-2026-109518.",
+          "links": [
+            "https://lists.debian.org/deity/2026/11/msg00005.html",
+            "https://ubuntu.com/blog/apt-vulnerability-fixes-available",
+            "https://security-tracker.debian.org/tracker/CVE-2026-109518"
+          ]
+        },
+        {
+          "heading": "SonicWall GMS End of Life: Unpatched File Read and SQL Injection",
+          "links": []
+        },
+        {
+          "heading": "SonicWall Global Management System (GMS) 9.5.2 and earlier are end of life, and SonicWall will not fix an unauthenticated file read (CVE-2026-109593) or an authenticated SQL injection (CVE-2026-109594). Migration to Network Security Manager (NSM) is the vendor path forward.",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0019",
+            "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
+            "https://www.cert.cyber.gouv.fr/avis/CERTFR-2026-AVI-1456/"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-05T11:25:11+00:00",
+      "duration_seconds": 347,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10166.mp3",
+      "audio_length_bytes": 4863425,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10166",
+      "categories": [
+        "formmail",
+        "oobscan",
+        "runzero",
+        "apt",
+        "cve-2026-109518",
+        "sonicwall gms",
+        "cve-2026-109593"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10166",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, November 5th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well today's diary I titled it\n with the classics return. One of the first sort of web\n vulnerabilities that I've sort of experienced, worked with\n was an old email script vulnerability for FormMail that\n had a number of issues. So one was where it sort of would\n leak environment variables but could also be used to send\n spam to anybody in some versions. Now what I noticed\n in our web honeypot logs today was a number of different\n requests for script like sendmail.php, test-mail.php.\n Now what this I think looks for is, and I found a couple\n of these scripts, is these are scripts that you may deploy in\n development to just check your email configuration. These\n scripts will also send email to random email addresses that\n you specify as part of a GET or POST parameter. Two issues\n with this. First of all, yes, just like the good old FormMail\n script, these scripts will leak environment variables and\n server configuration. So that's one problem. But it can\n also be abused by a spammer to send email to arbitrary email\n addresses. Make sure you're not deploying them in\n production. Apparently enough people are doing so for\n attackers to make it worthwhile to actually scan\n for these scripts. So I think the real problem here is how\n do you manage moving code live and how do you sort of manage\n your entire sort of production environment and your build\n pipeline. That's sort of where these checks probably should\n be implemented that something like this never makes it to a\n production site. And then we've got an interesting new\n tool, OOB scan, out-of-band scan from H.D. Moore with\n runZero. This tool scans your network for exposed baseboard\n management controllers, IPMI, SNMP, and various other things\n that could be used to control systems, often used sort of as\n part of like these out-of-band management tools. Well, that's\n the name of the tool to manage servers. I just ran it before\n the podcast against my home network and definitely my AI\n agent has some work to do later to clean up some of the\n things that found, like found a printer that had SNMP\n enabled. I didn't know about, never use it. So that's one of\n the things that's going to be disabled. Yes, it's sort of a\n better port scanner, but it's really focused on these out-of\n -band management interfaces, like also IP KVMs and such. It\n finds that are found by other tools, but this one will give\n you all the details. It will flag any specific\n vulnerabilities it found on these systems. So it's more\n than a port scanner. It's really more of a very focused\n and very full feature in that sense, a vulnerability scanner\n for these type of devices. Well, then we have a critical\n vulnerability in apt, the script that you typically use\n to manage packages on Debian systems. This vulnerability is\n triggered by sending error messages from the web server,\n serving apt packages. And if you do it right, well then apt\n will not verify the signature on this package. So this\n allows the attacker to inject malicious packages for the\n system to download and install. This is particularly\n an issue because apt still doesn't always use HTTPS. So\n in order to trigger this vulnerability, an attacker\n does not have to have actually control of the endpoint. It's\n sufficient to then inject data on path. So another thing that\n you may want to look at if you're still using HTTP for\n apt, maybe switch to HTTPS. That may be an option\n depending on your distribution. Ubuntu, I think\n by default still does HTTP, not HTTPS. Then I got some bad\n news for you. If you're using SonicWall's GMS appliance,\n their global management system, well this product has\n been out of support and end of life for a while now. And\n there is a new vulnerability, one that does allow\n unauthenticated file read and then also an authenticated SQL\n injection vulnerability. Well, neither will be fixed. So your\n only option is really to check with SonicWall what else to\n give the money for that will replace GMS if you still need\n something with this feature set. It's a virtual appliance,\n so you can't really upgrade it by throwing it into the trash.\n I guess you can still just delete it or throw it into the\n desktop trash can. Well, and this is it for today. So\n thanks again for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10164",
       "show": "stormcast",
@@ -3886,61 +3976,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10058",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Wednesday, August 19th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Varonis did publish some interesting\n insight into a co-pilot vulnerability that Microsoft\n patched with its last patch Tuesday. This vulnerability\n allows for the exfiltration of confidential data and I think\n it nicely shows how some of these AI systems are really\n hard to secure when it comes to access control. So there\n are a couple of issues here with this vulnerability. First\n of all, with Microsoft Copilot, you can create a URL\n that will automatically pre -fill the prompt. This was\n basically how the vulnerability was exploited.\n The user was tricked into clicking on a link which then\n basically opened co-pilot and pre-filled the prompt. To make\n things worse, there was also an auto run parameter which\n would execute the prompt, well, before any additional\n user interaction. And the intent here was really, you\n know, not that bad. They tried to make it easier to integrate\n co-pilot with other systems. Now, the problem is that co\n -pilot has access to data on your system. So Varonis\n experimented with prompts like, well, you know, what's\n my username? What's my password? And like, what's\n certain environment variables? And after some trial and\n error, they got success and were able to actually then\n incorporate some sensitive data in the prompt. Of course,\n the last part to the puzzle is how do you actually get the\n data out? And this is actually, again, very common\n with AI systems like this, that the AI system has the\n ability to retrieve data from web pages, like a common task\n would be summarize the data that's at this particular URL.\n So what Varonis did here is that they used the environment\n variable, for example, that co -pilot retrieved, built a URL,\n including that environment variable, and then asked co\n -pilot to summarize the content from that URL, which\n means co-pilot reached out the URL, that URL is then hosted\n on the attacker's website, the attacker sees the content of\n the environment variable as part of the URL, and you have\n data exfiltration. So I think the two big patterns here is\n once the data is accessible by the AI, then there is no more\n real good access control. Like Microsoft tried it, they tried\n to sort of build some constraints around what\n prompts you can ask, but there's always a workaround,\n always a way to ask the question that the safeguards\n don't work. The second big problem with many of these\n sort of chatbots and such is essentially server-side\n request forgery, where you can trick the bot into going out\n to arbitrary URLs. And if you can manipulate the URL to\n contain then sensitive content, or maybe you just\n have it reach out to an internal URL, sort of a more\n classic server-side request forgery, well, you have a\n vulnerability. Microsoft patched this vulnerability by\n not allowing some of these links as it did before, so\n essentially breaking some of the integration here, but\n that's at least the only way how we can make sure that\n these sort of no one-click attacks don't work against\n these AI assistants. And this is that the FBI and the\n Department of Health and Human Services did publish an\n updated report on the Medusa ransomware. They first\n published this report in April, but now updated it with\n new indicators of compromise and some additional\n information that they updated. One interesting thing is that\n initially it was sort of more believed to be sort of a\n healthcare-focused ransomware, and that's also why the\n Department of Health and Human Services is involved here, but\n apparently it is more opportunistic and basically\n takes other victims' money as well. The other thing is that\n they added some additional indicators of compromise. One\n that I found interesting is the site OS.site. This is\n often used by pen testers, too, so it's on particular\n sort of bug bounty hunters and such. It runs a public\n instance of Interact.sh, which is often used to basically\n detect exploitability. You get a ping back if the particular\n site or the URL that you attempted to access on that\n site was actually hit. So it's sort of a common site used in\n proof of concepts. Definitely something that you want to\n keep an eye on. I see this in a lot of malware and such also\n being used in a lot of sort of bots that we see sort of going\n around trying to find vulnerable sites. So\n definitely a domain to keep your list of suspect domains\n to watch out for. Well, I just mentioned the first story, how\n difficult it is to implement access control in AI models.\n Well, Google may have an interesting answer here. They\n call it HAIR, H-E-I-R. It's for homomorphic encryption in\n a mediary representation. Homomorphic encryption is not\n really used that much these days, but really here in AI,\n there's a nice use case for it. The idea behind\n homomorphic encryption is that you're able to actually\n operate on the data without decrypting it. So you can\n basically build models and everything without having to\n decrypt the data. It would be interesting to see what the\n computational overhead and such is of this particular\n algorithm, but they open sourced it. So it's free for\n anybody to use. And it appears Geekom, a company that's\n famous for its micro PCs, did distribute malware on one of\n its support websites. The malware came in the form of a\n network driver. Now, there is a little bit dispute here\n between the website videocarts .com. I'll link to that\n because they have, I think, a good sort of summary of what\n may have happened here. But Geekom, on the other hand,\n disputed some of the details here. It's not clear whether\n or not the network driver was actually malicious. I haven't\n seen sort of a malware analysis, but it does trigger\n several antivirus tools. So it's highly likely that this\n network driver is malicious. Now, Geekom's response in part\n did not actually dispute the maliciousness of the driver.\n They just said that this particular driver was no\n longer really active, was no longer current. And the\n website or the page it was hosted on wasn't really\n supposed to be live anymore. So it was just the legacy page\n they forgot to remove. It would still be a problem if\n back in the day they distributed a vulnerable\n driver. Apparently, this particular driver, the hash,\n was around according to virus total records since 2024. It\n did not ship with current systems. So if you have a\n Geekom system and you hadn't changed the drivers it came\n with, you shouldn't have a problem with it. Also, of\n course, only affects the Windows versions. So if you're\n running Windows on these systems, I know a lot of\n people sort of buy them as a little sort of Linux boxes as\n well. So double check that you don't run it. And if you are\n seeing the alert from antivirus and apparently\n Microsoft does flag this particular driver as\n malicious, then head to the link and check on Geekom\n sites. They have a little bit tips on how to then remove\n this particular driver. Well, and that's it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10056",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10056",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10056.mp3",
-      "title": "SANS Stormcast Tuesday, August 18th, 2026: Apple Patches; Screen Sharing Security; Download More RAM",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, August 18th, 2026: Apple Patches; Screen Sharing Security; Download More RAM",
-      "show_notes": [
-        {
-          "heading": "Apple Patches or iOS and macOS",
-          "links": [
-            "https://isc.sans.edu/diary/Apple%20Patches%20iOS%20and%20macOS/33254"
-          ]
-        },
-        {
-          "heading": "Screen Sharing Security",
-          "links": [
-            "https://isc.sans.edu/diary/Apple%20Screen%20Sharing%20Security/33252"
-          ]
-        },
-        {
-          "heading": "Download More RAM: Dismantling Windows Operating System Defenses with Mischievous Memory",
-          "links": [
-            "https://www.usenix.org/system/files/usenixsecurity26-collins.pdf"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-18T02:00:03+00:00",
-      "duration_seconds": 548,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10056.mp3",
-      "audio_length_bytes": 7671517,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10056",
-      "categories": [
-        "macos",
-        "ios",
-        "apple",
-        "screen sharing",
-        "screensharing",
-        "vnc",
-        "ram",
-        "windows"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10056",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Tuesday, August 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Leadership. Well, today we are a little\n bit heavy on Apple content here. First, we got Apple\n patches today for iOS and macOS. Now, I don't see a big\n surge here in a number of vulnerabilities like they've\n seen from Microsoft. So the AI search may not quite be\n happening for Apple as it does for Microsoft, but there's\n certainly some changes in how these patches are being\n released. First of all, we only got patches for iOS and\n macOS. We do have patches for the older version of iOS,\n that's iOS 18, in addition to the current version of iOS 26.\n Where it gets also interesting is that out of the 108\n vulnerabilities being addressed in this particular\n update, 87, so the vast majority, is affecting only\n the old version of iOS 18. So this may be a little bit sort\n of a catch-up kind of release. There are only six\n vulnerabilities that affect all three operating systems.\n They're all WebKit vulnerabilities. So really no\n surprise here in this case. Remember a couple of weeks\n ago, we also had the screen sharing vulnerability being\n addressed for macOS. So that, of course, didn't affect iOS.\n So we don't really have a corresponding patch for iOS\n this time around. Overall, nothing that's already being\n exploited. Nothing sort of outrageous, dangerous that I\n sort of could spot by scrolling through these\n vulnerabilities. Definitely get these updates applied. We\n often do see some exploits coming out relatively soon\n after these Apple updates. There's also a Vision OS\n update, but Apple has not yet released any details regarding\n security content of that update, which is a little bit\n odd because often, if they pre -release a particular\n operating system, they may not give us the details because,\n well, the vulnerabilities affect other operating system\n too. But in this case, we'll see what comes out when the\n Vision OS vulnerabilities are made public. And then, well, I\n already mentioned the screen sharing vulnerability. I did\n publish a quick diary with some details how to make\n screen sharing more secure or how to disable it if you want\n to disable it because apparently, yes, it's being\n exploited. And it's almost a bit surprising that people\n have something like screen sharing exposed. But I think a\n part of what can happen here is that if you have it exposed\n or have it enabled on your internal, like home network,\n and then you're moving that system out into the world and\n you don't disable it, that's, I think, where it often\n happens. Also, there are some sort of interesting quirks\n here. If you remember, one of the vulnerabilities that was\n being exploited or was being published a couple of weeks\n ago relied on the fact that Apple screen sharing is really\n VNC. And VNC has sort of this system-wide password you can\n use to gain access to the screen. And Apple still\n supports that mode. First of all, I think that's sort of\n one reason why people may have a weak password. And then this\n particular exploit relied on the fact that once you connect\n to the system, you may see a password prompt, but you're\n connected, the process that you're connected to actually,\n you know, runs with a super user with root capabilities\n because, well, it has to then switch to whatever user you're\n logging in as. So I would definitely keep that disabled\n and restrict who can actually use VNC and or screen sharing.\n And Apple does provide these controls, but don't enable the\n VNC viewers may control screen with password option. And\n that's also a little bit, I think, oddly named because it\n sounds like, hey, if you disable it, then it can access\n without password.\n But also another little bit odd naming or odd feature here\n is the Apple Mac OS firewall. I see that often cause\n confusion because when you enable the firewall, well,\n there is sort of by default an exemption for all system\n processes like screen sharing. So in addition to enabling the\n firewall, you have to disable the open ports for the system\n processes and also for like downloaded digitally signed\n processes. So only then are you actually closed down. Even\n if you enable the stealth mode, if you don't disable the\n system binaries and the signed processes, well, you still\n have those ports open. And those are really the ports\n that matter because that's where stuff is listening at.\n So in some ways just enabling the firewall probably doesn't\n really make a real difference. And well, then we got yet\n another attack against access control of memory. This one\n affects Windows or at least the attack was specifically\n designed for Windows. They call it download more RAM and\n a paper published by University of Birmingham\n researchers as well as a researcher from Durham\n University. It was just presented at the USENIX\n conference. The problem here is that on any RAM stick you\n have a little EPROM and this EPROM or EPROM contains well\n basically the basic configuration of your memory.\n Now turns out on quite a few different vendors RAM sticks\n this EPROM is actually writable so it's not locked\n down. Now in the past there has been a vulnerability that\n basically abused this EPROM but this required someone to\n actually remove the RAM stick and then connect an EPROM\n burner to the particular chip on the stick and then\n basically change the settings and then reinstall the RAM\n stick. That's of course a fairly complex attack with\n physical access like that. What they now found is that\n because this EPROM is not actually right protected on a\n lot of systems well it can be overwritten with software\n running on the system. The second hurdle they had to\n overcome was that this requires access to the I2C bus\n which on Windows does require elevated privileges. Again if\n you already have elevated privileges this is not really\n a valid attack. Well they found that this can be\n implemented with just by exploiting a vulnerable driver\n but then you kind of already have to approach escalation\n that way. The other option they found is they found a\n particular overclocking tool for Windows that comes with\n all the drivers and such properly signed so you can run\n it as a normal user and it also does allow access to this\n EPROM and can then be used to basically make it claim that\n you have more memory. So they're basically doubling the\n size of memory that the particular RAM stick\n advertises. What happens now is if you're trying to access\n memory that doesn't exist it's actually just being rolled\n back to memory that does exist. So there's this\n rollover happening and with that the operating system the\n system does think you are accessing well unrestricted\n memory but you're actually accessing completely different\n memory that may have some restricted data in it.\n Interesting attack and kind of amazing that the system\n actually boots and doesn't just crash. Windows has now\n addressed this vulnerability in last month so actually this\n month's update so that's why they're publishing this paper\n now. So it shouldn't be a problem anymore as long as you\n are up to date. Well and this is it for today. So thanks for\n listening. Thanks for liking and thanks for subscribing and\n talk to you again tomorrow. Bye.",
       "transcript_checked": true
     }
   ]
