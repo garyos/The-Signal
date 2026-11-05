@@ -2,6 +2,52 @@
   "month": "2024-10",
   "cves": [
     {
+      "id": "CVE-2024-9632",
+      "published": "2024-10-30T08:15:04.830",
+      "lastModified": "2026-11-04T22:17:23.750",
+      "vulnStatus": "Deferred",
+      "description": "A flaw was found in the X.org server. Due to improperly tracked allocation size in _XkbSetCompatMap, a local attacker may be able to trigger a buffer overflow condition via a specially crafted payload, leading to denial of service or local privilege escalation in distributions where the X.org server is run with root privileges.",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-122",
+          "name": "CWE-122"
+        }
+      ],
+      "vendors": [
+        "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 6 Extended Lifecycle Support  - EXTENSION",
+        "Red Hat Red Hat Enterprise Linux 7 Extended Lifecycle Support",
+        "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 8.2 Advanced Update Support"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHSA-2024:10090",
+        "https://access.redhat.com/errata/RHSA-2024:8798",
+        "https://access.redhat.com/errata/RHSA-2024:9540",
+        "https://access.redhat.com/errata/RHSA-2024:9579"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00903,
+        "percentile": 0.59875,
+        "date": "2026-11-04"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
       "id": "CVE-2024-50492",
       "published": "2024-10-28T12:15:16.973",
       "lastModified": "2026-09-21T14:14:35.717",
@@ -30,8 +76,8 @@
       },
       "epss": {
         "score": 0.01389,
-        "percentile": 0.72345,
-        "date": "2026-11-03"
+        "percentile": 0.72389,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -71,8 +117,48 @@
       },
       "epss": {
         "score": 0.98607,
-        "percentile": 0.99923,
-        "date": "2026-11-03"
+        "percentile": 0.99922,
+        "date": "2026-11-04"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-10295",
+      "published": "2024-10-24T18:15:05.597",
+      "lastModified": "2026-11-04T21:17:31.487",
+      "vulnStatus": "Analyzed",
+      "description": "A flaw was found in Gateway. Sending a non-base64 'basic' auth with special characters can cause APICast to incorrectly authenticate a request. A malformed basic authentication header containing special characters bypasses authentication and allows unauthorized access to the backend. This issue can occur due to a failure in the base64 decoding process, which causes APICast to skip the rest of the authentication checks and proceed with routing the request upstream.",
+      "cvss": {
+        "score": 7.5,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "Red Hat Red Hat 3scale API Management Platform 2"
+      ],
+      "references": [
+        "https://access.redhat.com/security/cve/CVE-2024-10295",
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2321258"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00393,
+        "percentile": 0.33596,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -113,8 +199,8 @@
       },
       "epss": {
         "score": 0.00594,
-        "percentile": 0.48441,
-        "date": "2026-11-03"
+        "percentile": 0.48511,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -159,8 +245,54 @@
       },
       "epss": {
         "score": 0.00648,
-        "percentile": 0.51103,
-        "date": "2026-11-03"
+        "percentile": 0.51176,
+        "date": "2026-11-04"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2024-9050",
+      "published": "2024-10-22T13:15:02.410",
+      "lastModified": "2026-11-04T22:17:23.463",
+      "vulnStatus": "Deferred",
+      "description": "A flaw was found in the libreswan client plugin for NetworkManager (NetkworkManager-libreswan), where it fails to properly sanitize the VPN configuration from the local unprivileged user. In this configuration, composed by a key-value format, the plugin fails to escape special characters, leading the application to interpret values as keys. One of the most critical parameters that could be abused by a malicious user is the `leftupdown`key. This key takes an executable command as a value and is u",
+      "cvss": {
+        "score": 7.8,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-94",
+          "name": "Code Injection"
+        }
+      ],
+      "vendors": [
+        "Red Hat Red Hat Enterprise Linux 7.7 Advanced Update Support",
+        "Red Hat Red Hat Enterprise Linux 7 Extended Lifecycle Support",
+        "Red Hat Red Hat Enterprise Linux 8",
+        "Red Hat Red Hat Enterprise Linux 8.2 Advanced Update Support",
+        "Red Hat Red Hat Enterprise Linux 8.4 Advanced Mission Critical Update Support"
+      ],
+      "references": [
+        "https://access.redhat.com/errata/RHSA-2024:8312",
+        "https://access.redhat.com/errata/RHSA-2024:8338",
+        "https://access.redhat.com/errata/RHSA-2024:8352",
+        "https://access.redhat.com/errata/RHSA-2024:8353"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00457,
+        "percentile": 0.39738,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -198,8 +330,8 @@
       },
       "epss": {
         "score": 0.65732,
-        "percentile": 0.99267,
-        "date": "2026-11-03"
+        "percentile": 0.99268,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -243,8 +375,8 @@
       },
       "epss": {
         "score": 0.00234,
-        "percentile": 0.14385,
-        "date": "2026-11-03"
+        "percentile": 0.14424,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -283,8 +415,8 @@
       },
       "epss": {
         "score": 0.00498,
-        "percentile": 0.42758,
-        "date": "2026-11-03"
+        "percentile": 0.42833,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -329,8 +461,8 @@
       },
       "epss": {
         "score": 0.00272,
-        "percentile": 0.19666,
-        "date": "2026-11-03"
+        "percentile": 0.19715,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -375,8 +507,8 @@
       },
       "epss": {
         "score": 0.00785,
-        "percentile": 0.56119,
-        "date": "2026-11-03"
+        "percentile": 0.56187,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -417,8 +549,8 @@
       },
       "epss": {
         "score": 0.00369,
-        "percentile": 0.30809,
-        "date": "2026-11-03"
+        "percentile": 0.30919,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -463,8 +595,8 @@
       },
       "epss": {
         "score": 0.01064,
-        "percentile": 0.6472,
-        "date": "2026-11-03"
+        "percentile": 0.64779,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -509,8 +641,8 @@
       },
       "epss": {
         "score": 0.00381,
-        "percentile": 0.32159,
-        "date": "2026-11-03"
+        "percentile": 0.32273,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -552,8 +684,8 @@
       },
       "epss": {
         "score": 0.00376,
-        "percentile": 0.31622,
-        "date": "2026-11-03"
+        "percentile": 0.31735,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -595,8 +727,8 @@
       },
       "epss": {
         "score": 0.00255,
-        "percentile": 0.17135,
-        "date": "2026-11-03"
+        "percentile": 0.17185,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -638,8 +770,8 @@
       },
       "epss": {
         "score": 0.0028,
-        "percentile": 0.2051,
-        "date": "2026-11-03"
+        "percentile": 0.20563,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -681,8 +813,8 @@
       },
       "epss": {
         "score": 0.00327,
-        "percentile": 0.25877,
-        "date": "2026-11-03"
+        "percentile": 0.25954,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -727,8 +859,8 @@
       },
       "epss": {
         "score": 0.00257,
-        "percentile": 0.17392,
-        "date": "2026-11-03"
+        "percentile": 0.17441,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -773,8 +905,8 @@
       },
       "epss": {
         "score": 0.00279,
-        "percentile": 0.20452,
-        "date": "2026-11-03"
+        "percentile": 0.20503,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -818,8 +950,8 @@
       },
       "epss": {
         "score": 0.27668,
-        "percentile": 0.98086,
-        "date": "2026-11-03"
+        "percentile": 0.9809,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -864,8 +996,8 @@
       },
       "epss": {
         "score": 0.00227,
-        "percentile": 0.13481,
-        "date": "2026-11-03"
+        "percentile": 0.13524,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -907,8 +1039,8 @@
       },
       "epss": {
         "score": 0.00287,
-        "percentile": 0.21337,
-        "date": "2026-11-03"
+        "percentile": 0.2139,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -950,8 +1082,8 @@
       },
       "epss": {
         "score": 0.00246,
-        "percentile": 0.15966,
-        "date": "2026-11-03"
+        "percentile": 0.16004,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -996,8 +1128,8 @@
       },
       "epss": {
         "score": 0.00247,
-        "percentile": 0.16094,
-        "date": "2026-11-03"
+        "percentile": 0.16132,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1039,8 +1171,8 @@
       },
       "epss": {
         "score": 0.00281,
-        "percentile": 0.20737,
-        "date": "2026-11-03"
+        "percentile": 0.20789,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1085,8 +1217,8 @@
       },
       "epss": {
         "score": 0.00727,
-        "percentile": 0.54216,
-        "date": "2026-11-03"
+        "percentile": 0.54284,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1131,8 +1263,8 @@
       },
       "epss": {
         "score": 0.01358,
-        "percentile": 0.71703,
-        "date": "2026-11-03"
+        "percentile": 0.71749,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1177,7 +1309,7 @@
       "epss": {
         "score": 0.97553,
         "percentile": 0.99902,
-        "date": "2026-11-03"
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1220,8 +1352,8 @@
       },
       "epss": {
         "score": 0.03323,
-        "percentile": 0.88613,
-        "date": "2026-11-03"
+        "percentile": 0.88633,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1263,8 +1395,8 @@
       },
       "epss": {
         "score": 0.44268,
-        "percentile": 0.9876,
-        "date": "2026-11-03"
+        "percentile": 0.98762,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1307,8 +1439,8 @@
       },
       "epss": {
         "score": 0.04458,
-        "percentile": 0.91444,
-        "date": "2026-11-03"
+        "percentile": 0.91459,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1353,8 +1485,8 @@
       },
       "epss": {
         "score": 0.01028,
-        "percentile": 0.63688,
-        "date": "2026-11-03"
+        "percentile": 0.63745,
+        "date": "2026-11-04"
       },
       "media": {
         "in_news": false,
@@ -1365,5 +1497,5 @@
       }
     }
   ],
-  "updated_at": "2026-11-04T13:13:29.176773+00:00"
+  "updated_at": "2026-11-05T13:29:28.226320+00:00"
 }
