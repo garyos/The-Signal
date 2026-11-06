@@ -1,6 +1,100 @@
 {
-  "fetched_at": "2026-11-05T17:01:58.749078+00:00",
+  "fetched_at": "2026-11-06T10:14:20.302262+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10168",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10168",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10168.mp3",
+      "title": "SANS Stormcast Friday, November 6th, 2026: RootEvidence Cisco IOS Opt-Out Scans; OpenSSH musl sshhole (CVE-2026-123158); Refrigeration OT Hardening; Zyxel GS1900 OOB Write (CVE-2026-107441)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, November 6th, 2026: RootEvidence Cisco IOS Opt-Out Scans; OpenSSH musl sshhole (CVE-2026-123158); Refrigeration OT Hardening; Zyxel GS1900 OOB Write (CVE-2026-107441)",
+      "show_notes": [
+        {
+          "heading": "Today: RootEvidence Cisco IOS vulnerability scans with HTTP opt-out headers; a critical OpenSSH password bypass on musl (sshole / CVE-2026-123158); a U.S. government factsheet on hardening industrial refrigeration OT; and an actively exploited Zyxel GS1900 out-of-bounds write (CVE-2026-107441).",
+          "links": []
+        },
+        {
+          "heading": "RootEvidence Cisco IOS Scans / Opt-Out Headers",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots saw Cisco IOS vulnerability scans from exposure-management firm RootEvidence. Unlike typical Internet-wide scanners, their HTTP requests include Opt-Out-Email and Opt-Out-Url headers so administrators can request exclusion.",
+          "links": [
+            "https://isc.sans.edu/diary/Vulnerability%20Scans%20for%20Older%20Cisco%20IOS%20Vulnerability%20%20%20Opt-Out%20Headers/33492",
+            "https://www.rootevidence.com/scanners/"
+          ]
+        },
+        {
+          "heading": "OpenSSH musl Password Bypass (sshole / CVE-2026-123158)",
+          "links": []
+        },
+        {
+          "heading": "A critical password-authentication bypass affects OpenSSH on musl libc systems (Alpine Linux, OpenWrt, and similar) when sshd allows password logins without libpam. Passwords longer than 256 characters can authenticate accounts that have no password set (shadow field \"*\"). Details and walkthrough at sshhole.com; fixed in OpenSSH 10.6p2.",
+          "links": [
+            "https://sshhole.com/",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+            "https://www.openssh.org/txt/release-10.6p2",
+            "https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/"
+          ]
+        },
+        {
+          "heading": "Guidance to Secure Refrigeration / Cold-Chain Systems",
+          "links": []
+        },
+        {
+          "heading": "U.S. government agencies published a joint factsheet urging owners of industrial refrigeration and cold-chain monitoring systems to harden them after grocery-store and military-base fridge attacks that spoiled large amounts of food. Advice is largely standard OT hygiene (reduce Internet exposure, isolate OT, credential security, patching) and applies beyond refrigeration.",
+          "links": [
+            "https://www.cisa.gov/sites/default/files/2026-11/joint-factsheet-usg-partners-urge-hardening-industrial-refrigeration-cold-chain-monitoring-systems-508c.pdf"
+          ]
+        },
+        {
+          "heading": "Zyxel GS1900 Out-of-Bounds Write Exploited (CVE-2026-107441)",
+          "links": []
+        },
+        {
+          "heading": "Zyxel released firmware updates for GS1900 series switches fixing an out-of-bounds write that is being exploited in the wild. Binarly found a Python exploit in a malware repository; attacks steal configuration data including hashed passwords. The advisory says the attacker needs network access. Patch to 2.90 Patch 3 builds.",
+          "links": [
+            "https://www.zyxel.com/global/en/support/security-advisories/zyxel-security-advisory-for-out-of-bounds-write-vulnerability-in-gs1900-series-switches-11-03-2026",
+            "https://www.binarly.io/advisories/brly-2026-057",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-107441"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-06T02:00:02+00:00",
+      "duration_seconds": 473,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10168.mp3",
+      "audio_length_bytes": 6634841,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10168",
+      "categories": [
+        "sshhole",
+        "musl",
+        "openssh",
+        "cve-2026-123158",
+        "zyxel",
+        "gs1900",
+        "cve-2026-107441",
+        "cisco ios",
+        "refrigeration"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10168",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, November 6, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. In Diaries today, nothing too exciting. We did\n have in our honeypot some interesting, I thought\n initially, Cisco IOS vulnerability scans that come\n from a company RootEvidence that does one of these sort of\n exposure management, vulnerability management style\n net wide scans. What they are doing differently than other\n companies is that in their HTTP requests, they are\n including two opt-out headers, opt-out email and opt-out URL,\n which basically gives you a website where you can opt out\n of these scans or an email address where you can do the\n same. Interesting approach and I've not seen this being done\n by any other similar companies. We have literally\n dozens of companies doing essentially sort of the same\n thing. And I've always been a little bit curious about the\n immense sort of traffic we've seen our honeypots from these\n companies. And so coming up with some standards like this\n would certainly make some sense. But, well, if you want\n excitement, we do have an interesting critical\n vulnerability in certain types of SSH installs. Now the\n problem here isn't exactly in SSH. It's in musl. musl, if\n you haven't heard of it, is a variety of standard C\n libraries. So it's a replacement for libc or glibc.\n And it's often used in smaller footprint systems, like most\n importantly in the Alpine Linux that's often used in\n containers. But also OpenWrt and such uses musl. So\n anything that basically has a small memory footprint, not a\n lot of CPU cores and such, often uses this library. And\n sadly, well, they changed how crypt, the function that\n verifies passwords works, which in conjunction with SSH,\n then leads to any password that's longer than 256\n characters being considered valid. Now the sshhole\n website has a good sort of walkthrough what exactly\n happened here and all the little details, a little bit\n too much to cover it here in the podcast. But what it comes\n down to, if your system uses musl instead of glibc, and\n again, Alpine Linux is probably the number one item\n here that you should look at. And if your version, your SSH\n daemon is first of all enabled, which of course is\n often not on containers, and if it does allow password\n -based logins, and if it does not use libpam, which is often\n actually disabled or not even compiled in a lot of images,\n then you may be vulnerable. So a couple conditions here to\n actually enable this vulnerability, but certainly\n something to look for. And if you're vulnerable, very easy\n test, just try root. It has to be a user that doesn't have a\n password defined actually. So that's another sort of\n dependency here. In that case, just try a long password,\n anything longer than 256 bytes should automatically log you\n in no matter what you type. So the content is irrelevant,\n just the length matters at that point. Interesting\n vulnerability and one of those, you know, where APIs\n change and this case, I think, change in very weird and kind\n of a little bit obviously wrong ways. And then of\n course, other software relying on these APIs like SSH, well,\n they then come to the wrong conclusion that the password\n may be correct. It's actually not correct. And a number of\n United States government agencies came together to\n publish a brief advisory for owners of refrigeration\n systems, well, to explain how to harden them. That of course\n comes after we had all of these attacks against grocery\n stores and in some cases also against the stores on military\n bases that led to the spoilage of a huge amount of food in\n refrigeration systems. The advice that they are providing\n is, in my opinion, pretty straightforward. For example,\n they state you should eliminate net exposure, you\n should isolate operational technologies, credential\n security, all of these good things, applying patches,\n where I think an advisory like this is most useful if you\n need buy-in from management or such to actually implement\n these things. Then a document like this may give you the\n backup that you need in order to justify spending time on\n actually implementing some of these solutions and maybe even\n in some cases to degrade some of these services like, for\n example, remote manageability of some of these systems. So\n take a look at this if you are dealing with any systems like\n this. What they're recommending here pretty much\n applies to any kind of OT, so operational technology that's\n connected to a network. It's not just refrigeration\n systems, even though they, of course, triggered this\n document.\n And if you're using any Zyxel GS1900 series switches, well,\n be aware there is an update for the firmware out fixing a\n vulnerability that's currently being exploited. The advisory\n doesn't state so, but it does credit Binarly with the\n vulnerability. And what Binarly basically discovered\n was that they came across a malware repository that\n included a Python script exploiting this specific\n vulnerability. It appears to be a variety of vulnerability\n that Zyxel published in the past, but, well, didn't\n apparently publish completely. So definitely get this up to\n date. The advisory does, however, state that the attacker\n needs network access in order to launch the exploit. So they\n already have to be essentially in your network. The exploits\n that Binarly has seen are typically then stealing\n configuration data, including hashed passwords from affected\n switches. Well, and that's it for today. Thanks again for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And just as a reminder, in the show notes,\n you'll find a link to the Difference Maker Award, where\n I am nominated this year for one of the awards. So would\n appreciate your vote. But lots of other good people here that\n are nominated for various categories and also a link to\n future classes. The next one being mid-December in DC, our\n Defending Web Applications class. Thanks.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10166",
       "show": "stormcast",
@@ -3917,65 +4011,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10060",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, August 20th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in cyber\n defense operations. Today I wrote about a scan that we are\n seeing lately and actually a few thousand events related to\n this scan that probes cloud metadata services via server\n -side request forgery. Cloud metadata services, they are\n implemented in all big cloud providers. You also are being\n used to basically have a simple REST-based interface\n that provides metadata about the system, like for example,\n MAC addresses and the like, but it can also provide\n credentials and that's what attackers are usually after.\n And based on the URL, yes, this attacker here as well.\n The question with this particular attack is what\n vulnerability they are targeting. The attack looks\n like a textbook server-side request forgery, just URL\n equals and then the URL they're trying to access. It's\n possible that there's popular software that is vulnerable to\n this sort of the most straightforward server-side\n request forgery, but it might be maybe more sort of a little\n bit of phishing expedition trying to find vulnerable\n systems that may just use some demo software or where a\n developer maybe just experiment a little bit with\n sort of URL fetching of particular data and they're\n just hunting for that. But if anybody has any insight as to\n the specific vulnerability they may be looking for,\n please let me know. And Oracle released its Credible Security\n Patch update for August. This update fixes 943 different\n vulnerabilities across 75 different products. Now, a\n while ago, Oracle sort of changed its patch release\n cycle. In addition to the quarterly Credible Patch\n update, we now have the Critical Security Patch update\n once a month. The last Credible Patch update had\n something like 1400 different vulnerabilities being\n addressed. The last security patch update was only sort of\n around 300. So we certainly see an increase here. However,\n it's across 75 different products. The one product that\n I sort of noted is the Fusion Middleware. That's something\n that we have seen being exploited in the past. So\n certainly one of those products to pay attention to.\n And it had one vulnerability with a CVSS score of 10 and\n then several looked like a couple dozen or so with 9.9\n and 9.8 CVSS scores. So that's certainly something that you\n probably want to prioritize if you are running it in your\n environment. Well, we haven't heard from Citrix in a while,\n but yes, we do have a new advisory here that's\n noteworthy. This advisory fixes two vulnerabilities in\n Netscaler ADC as well as Netscaler Gateway. The first\n vulnerability is a memory overflow vulnerability. Well,\n as I say, it leads to unpredictable behavior or\n denial of service. I'm not sure if unpredictable behavior\n also includes some kind of remote code execution, but\n they rate it with a CVSS score of 8.8. The second\n vulnerability looks more interesting. It's a path\n traversal vulnerability that can lead to authentication\n bypass and is scored with 9.3. Now for this vulnerability to\n be actually exploitable, you must configure your gateway as\n a gateway. So something like the SL VPN or a proxy has to\n be enabled. Definitely get this addressed. Like I said,\n we have had a lot of interest from ransomware actors and\n such in vulnerabilities against the Citrix gateways in\n the past. So definitely make sure you get this patched. And\n GuidePoint Security published a blog post with an\n interesting new way how ransomware actors are\n operating. Apparently what's happening here is that after a\n company is affected by ransomware, a recovery company\n is reaching out to them, in particular a recovery company\n called Ransom Busters, assisting in actually\n negotiating the ransomware payment or recovery from the\n ransomware. Since this contact issue happens before anything\n about the particular attack has become public, they assume\n that it's the ransomware actor himself reaching out here. And\n I think it should be somewhat obvious also to the victim\n here that this contact is coming from someone affiliated\n with the ransomware actor. In my opinion, this may be a\n little bit a trick on the side of ransomware actors to\n essentially allow companies, allow victims to pay the money\n without actually paying a ransom. Because in this case,\n they're just paying a consulting fee and they're\n getting their keys back because Ransom Busters\n apparently knows how to recover the encryption keys.\n And they're then able to decrypt their data. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking this podcast. Thanks for recommending it. Thanks\n for any feedback you may have and talk to you again\n tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10058",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10058",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10058.mp3",
-      "title": "SANS Stormcast Wednesday, August 19th, 2026: Copilot as Whitstleblower; GEEKOM Bad Driver; Medusa Update; Encrypted AI",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, August 19th, 2026: Copilot as Whitstleblower; GEEKOM Bad Driver; Medusa Update; Encrypted AI",
-      "show_notes": [
-        {
-          "heading": "CoSnitch: When Your AI Assistant Becomes Its Own Whistleblower",
-          "links": [
-            "https://www.varonis.com/blog/cosnitch"
-          ]
-        },
-        {
-          "heading": "GEEKOM confirms malware was hosted on its website",
-          "links": [
-            "https://videocardz.com/newz/geekom-apologizes-for-hosting-malware-in-driver-package-for-its-mini-pcs"
-          ]
-        },
-        {
-          "heading": "Medusa Ransomware Update",
-          "links": [
-            "https://www.cisa.gov/sites/default/files/2026-08/aa25-071a-stopransomware-medusa-ransomware-508c.pdf"
-          ]
-        },
-        {
-          "heading": "How Google is Making Private AI Practical with Homomorphic Encryption",
-          "links": [
-            "https://blog.google/security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-19T02:00:03+00:00",
-      "duration_seconds": 534,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10058.mp3",
-      "audio_length_bytes": 7475666,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10058",
-      "categories": [
-        "ai",
-        "homomorphic",
-        "encryption",
-        "medusa",
-        "ransomware",
-        "geekom"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10058",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, August 19th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cyber\n Defense Operations. Varonis did publish some interesting\n insight into a co-pilot vulnerability that Microsoft\n patched with its last patch Tuesday. This vulnerability\n allows for the exfiltration of confidential data and I think\n it nicely shows how some of these AI systems are really\n hard to secure when it comes to access control. So there\n are a couple of issues here with this vulnerability. First\n of all, with Microsoft Copilot, you can create a URL\n that will automatically pre -fill the prompt. This was\n basically how the vulnerability was exploited.\n The user was tricked into clicking on a link which then\n basically opened co-pilot and pre-filled the prompt. To make\n things worse, there was also an auto run parameter which\n would execute the prompt, well, before any additional\n user interaction. And the intent here was really, you\n know, not that bad. They tried to make it easier to integrate\n co-pilot with other systems. Now, the problem is that co\n -pilot has access to data on your system. So Varonis\n experimented with prompts like, well, you know, what's\n my username? What's my password? And like, what's\n certain environment variables? And after some trial and\n error, they got success and were able to actually then\n incorporate some sensitive data in the prompt. Of course,\n the last part to the puzzle is how do you actually get the\n data out? And this is actually, again, very common\n with AI systems like this, that the AI system has the\n ability to retrieve data from web pages, like a common task\n would be summarize the data that's at this particular URL.\n So what Varonis did here is that they used the environment\n variable, for example, that co -pilot retrieved, built a URL,\n including that environment variable, and then asked co\n -pilot to summarize the content from that URL, which\n means co-pilot reached out the URL, that URL is then hosted\n on the attacker's website, the attacker sees the content of\n the environment variable as part of the URL, and you have\n data exfiltration. So I think the two big patterns here is\n once the data is accessible by the AI, then there is no more\n real good access control. Like Microsoft tried it, they tried\n to sort of build some constraints around what\n prompts you can ask, but there's always a workaround,\n always a way to ask the question that the safeguards\n don't work. The second big problem with many of these\n sort of chatbots and such is essentially server-side\n request forgery, where you can trick the bot into going out\n to arbitrary URLs. And if you can manipulate the URL to\n contain then sensitive content, or maybe you just\n have it reach out to an internal URL, sort of a more\n classic server-side request forgery, well, you have a\n vulnerability. Microsoft patched this vulnerability by\n not allowing some of these links as it did before, so\n essentially breaking some of the integration here, but\n that's at least the only way how we can make sure that\n these sort of no one-click attacks don't work against\n these AI assistants. And this is that the FBI and the\n Department of Health and Human Services did publish an\n updated report on the Medusa ransomware. They first\n published this report in April, but now updated it with\n new indicators of compromise and some additional\n information that they updated. One interesting thing is that\n initially it was sort of more believed to be sort of a\n healthcare-focused ransomware, and that's also why the\n Department of Health and Human Services is involved here, but\n apparently it is more opportunistic and basically\n takes other victims' money as well. The other thing is that\n they added some additional indicators of compromise. One\n that I found interesting is the site OS.site. This is\n often used by pen testers, too, so it's on particular\n sort of bug bounty hunters and such. It runs a public\n instance of Interact.sh, which is often used to basically\n detect exploitability. You get a ping back if the particular\n site or the URL that you attempted to access on that\n site was actually hit. So it's sort of a common site used in\n proof of concepts. Definitely something that you want to\n keep an eye on. I see this in a lot of malware and such also\n being used in a lot of sort of bots that we see sort of going\n around trying to find vulnerable sites. So\n definitely a domain to keep your list of suspect domains\n to watch out for. Well, I just mentioned the first story, how\n difficult it is to implement access control in AI models.\n Well, Google may have an interesting answer here. They\n call it HAIR, H-E-I-R. It's for homomorphic encryption in\n a mediary representation. Homomorphic encryption is not\n really used that much these days, but really here in AI,\n there's a nice use case for it. The idea behind\n homomorphic encryption is that you're able to actually\n operate on the data without decrypting it. So you can\n basically build models and everything without having to\n decrypt the data. It would be interesting to see what the\n computational overhead and such is of this particular\n algorithm, but they open sourced it. So it's free for\n anybody to use. And it appears Geekom, a company that's\n famous for its micro PCs, did distribute malware on one of\n its support websites. The malware came in the form of a\n network driver. Now, there is a little bit dispute here\n between the website videocarts .com. I'll link to that\n because they have, I think, a good sort of summary of what\n may have happened here. But Geekom, on the other hand,\n disputed some of the details here. It's not clear whether\n or not the network driver was actually malicious. I haven't\n seen sort of a malware analysis, but it does trigger\n several antivirus tools. So it's highly likely that this\n network driver is malicious. Now, Geekom's response in part\n did not actually dispute the maliciousness of the driver.\n They just said that this particular driver was no\n longer really active, was no longer current. And the\n website or the page it was hosted on wasn't really\n supposed to be live anymore. So it was just the legacy page\n they forgot to remove. It would still be a problem if\n back in the day they distributed a vulnerable\n driver. Apparently, this particular driver, the hash,\n was around according to virus total records since 2024. It\n did not ship with current systems. So if you have a\n Geekom system and you hadn't changed the drivers it came\n with, you shouldn't have a problem with it. Also, of\n course, only affects the Windows versions. So if you're\n running Windows on these systems, I know a lot of\n people sort of buy them as a little sort of Linux boxes as\n well. So double check that you don't run it. And if you are\n seeing the alert from antivirus and apparently\n Microsoft does flag this particular driver as\n malicious, then head to the link and check on Geekom\n sites. They have a little bit tips on how to then remove\n this particular driver. Well, and that's it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
       "transcript_checked": true
     }
   ]

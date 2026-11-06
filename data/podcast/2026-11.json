@@ -2,6 +2,100 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10168",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10168",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10168.mp3",
+      "title": "SANS Stormcast Friday, November 6th, 2026: RootEvidence Cisco IOS Opt-Out Scans; OpenSSH musl sshhole (CVE-2026-123158); Refrigeration OT Hardening; Zyxel GS1900 OOB Write (CVE-2026-107441)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, November 6th, 2026: RootEvidence Cisco IOS Opt-Out Scans; OpenSSH musl sshhole (CVE-2026-123158); Refrigeration OT Hardening; Zyxel GS1900 OOB Write (CVE-2026-107441)",
+      "show_notes": [
+        {
+          "heading": "Today: RootEvidence Cisco IOS vulnerability scans with HTTP opt-out headers; a critical OpenSSH password bypass on musl (sshole / CVE-2026-123158); a U.S. government factsheet on hardening industrial refrigeration OT; and an actively exploited Zyxel GS1900 out-of-bounds write (CVE-2026-107441).",
+          "links": []
+        },
+        {
+          "heading": "RootEvidence Cisco IOS Scans / Opt-Out Headers",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots saw Cisco IOS vulnerability scans from exposure-management firm RootEvidence. Unlike typical Internet-wide scanners, their HTTP requests include Opt-Out-Email and Opt-Out-Url headers so administrators can request exclusion.",
+          "links": [
+            "https://isc.sans.edu/diary/Vulnerability%20Scans%20for%20Older%20Cisco%20IOS%20Vulnerability%20%20%20Opt-Out%20Headers/33492",
+            "https://www.rootevidence.com/scanners/"
+          ]
+        },
+        {
+          "heading": "OpenSSH musl Password Bypass (sshole / CVE-2026-123158)",
+          "links": []
+        },
+        {
+          "heading": "A critical password-authentication bypass affects OpenSSH on musl libc systems (Alpine Linux, OpenWrt, and similar) when sshd allows password logins without libpam. Passwords longer than 256 characters can authenticate accounts that have no password set (shadow field \"*\"). Details and walkthrough at sshhole.com; fixed in OpenSSH 10.6p2.",
+          "links": [
+            "https://sshhole.com/",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-123158",
+            "https://www.openssh.org/txt/release-10.6p2",
+            "https://alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass/"
+          ]
+        },
+        {
+          "heading": "Guidance to Secure Refrigeration / Cold-Chain Systems",
+          "links": []
+        },
+        {
+          "heading": "U.S. government agencies published a joint factsheet urging owners of industrial refrigeration and cold-chain monitoring systems to harden them after grocery-store and military-base fridge attacks that spoiled large amounts of food. Advice is largely standard OT hygiene (reduce Internet exposure, isolate OT, credential security, patching) and applies beyond refrigeration.",
+          "links": [
+            "https://www.cisa.gov/sites/default/files/2026-11/joint-factsheet-usg-partners-urge-hardening-industrial-refrigeration-cold-chain-monitoring-systems-508c.pdf"
+          ]
+        },
+        {
+          "heading": "Zyxel GS1900 Out-of-Bounds Write Exploited (CVE-2026-107441)",
+          "links": []
+        },
+        {
+          "heading": "Zyxel released firmware updates for GS1900 series switches fixing an out-of-bounds write that is being exploited in the wild. Binarly found a Python exploit in a malware repository; attacks steal configuration data including hashed passwords. The advisory says the attacker needs network access. Patch to 2.90 Patch 3 builds.",
+          "links": [
+            "https://www.zyxel.com/global/en/support/security-advisories/zyxel-security-advisory-for-out-of-bounds-write-vulnerability-in-gs1900-series-switches-11-03-2026",
+            "https://www.binarly.io/advisories/brly-2026-057",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-107441"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-06T02:00:02+00:00",
+      "duration_seconds": 473,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10168.mp3",
+      "audio_length_bytes": 6634841,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10168",
+      "categories": [
+        "sshhole",
+        "musl",
+        "openssh",
+        "cve-2026-123158",
+        "zyxel",
+        "gs1900",
+        "cve-2026-107441",
+        "cisco ios",
+        "refrigeration"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10168",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, November 6, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. In Diaries today, nothing too exciting. We did\n have in our honeypot some interesting, I thought\n initially, Cisco IOS vulnerability scans that come\n from a company RootEvidence that does one of these sort of\n exposure management, vulnerability management style\n net wide scans. What they are doing differently than other\n companies is that in their HTTP requests, they are\n including two opt-out headers, opt-out email and opt-out URL,\n which basically gives you a website where you can opt out\n of these scans or an email address where you can do the\n same. Interesting approach and I've not seen this being done\n by any other similar companies. We have literally\n dozens of companies doing essentially sort of the same\n thing. And I've always been a little bit curious about the\n immense sort of traffic we've seen our honeypots from these\n companies. And so coming up with some standards like this\n would certainly make some sense. But, well, if you want\n excitement, we do have an interesting critical\n vulnerability in certain types of SSH installs. Now the\n problem here isn't exactly in SSH. It's in musl. musl, if\n you haven't heard of it, is a variety of standard C\n libraries. So it's a replacement for libc or glibc.\n And it's often used in smaller footprint systems, like most\n importantly in the Alpine Linux that's often used in\n containers. But also OpenWrt and such uses musl. So\n anything that basically has a small memory footprint, not a\n lot of CPU cores and such, often uses this library. And\n sadly, well, they changed how crypt, the function that\n verifies passwords works, which in conjunction with SSH,\n then leads to any password that's longer than 256\n characters being considered valid. Now the sshhole\n website has a good sort of walkthrough what exactly\n happened here and all the little details, a little bit\n too much to cover it here in the podcast. But what it comes\n down to, if your system uses musl instead of glibc, and\n again, Alpine Linux is probably the number one item\n here that you should look at. And if your version, your SSH\n daemon is first of all enabled, which of course is\n often not on containers, and if it does allow password\n -based logins, and if it does not use libpam, which is often\n actually disabled or not even compiled in a lot of images,\n then you may be vulnerable. So a couple conditions here to\n actually enable this vulnerability, but certainly\n something to look for. And if you're vulnerable, very easy\n test, just try root. It has to be a user that doesn't have a\n password defined actually. So that's another sort of\n dependency here. In that case, just try a long password,\n anything longer than 256 bytes should automatically log you\n in no matter what you type. So the content is irrelevant,\n just the length matters at that point. Interesting\n vulnerability and one of those, you know, where APIs\n change and this case, I think, change in very weird and kind\n of a little bit obviously wrong ways. And then of\n course, other software relying on these APIs like SSH, well,\n they then come to the wrong conclusion that the password\n may be correct. It's actually not correct. And a number of\n United States government agencies came together to\n publish a brief advisory for owners of refrigeration\n systems, well, to explain how to harden them. That of course\n comes after we had all of these attacks against grocery\n stores and in some cases also against the stores on military\n bases that led to the spoilage of a huge amount of food in\n refrigeration systems. The advice that they are providing\n is, in my opinion, pretty straightforward. For example,\n they state you should eliminate net exposure, you\n should isolate operational technologies, credential\n security, all of these good things, applying patches,\n where I think an advisory like this is most useful if you\n need buy-in from management or such to actually implement\n these things. Then a document like this may give you the\n backup that you need in order to justify spending time on\n actually implementing some of these solutions and maybe even\n in some cases to degrade some of these services like, for\n example, remote manageability of some of these systems. So\n take a look at this if you are dealing with any systems like\n this. What they're recommending here pretty much\n applies to any kind of OT, so operational technology that's\n connected to a network. It's not just refrigeration\n systems, even though they, of course, triggered this\n document.\n And if you're using any Zyxel GS1900 series switches, well,\n be aware there is an update for the firmware out fixing a\n vulnerability that's currently being exploited. The advisory\n doesn't state so, but it does credit Binarly with the\n vulnerability. And what Binarly basically discovered\n was that they came across a malware repository that\n included a Python script exploiting this specific\n vulnerability. It appears to be a variety of vulnerability\n that Zyxel published in the past, but, well, didn't\n apparently publish completely. So definitely get this up to\n date. The advisory does, however, state that the attacker\n needs network access in order to launch the exploit. So they\n already have to be essentially in your network. The exploits\n that Binarly has seen are typically then stealing\n configuration data, including hashed passwords from affected\n switches. Well, and that's it for today. Thanks again for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And just as a reminder, in the show notes,\n you'll find a link to the Difference Maker Award, where\n I am nominated this year for one of the awards. So would\n appreciate your vote. But lots of other good people here that\n are nominated for various categories and also a link to\n future classes. The next one being mid-December in DC, our\n Defending Web Applications class. Thanks.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10166",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
