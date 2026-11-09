@@ -1,6 +1,95 @@
 {
-  "fetched_at": "2026-11-08T15:42:36.532995+00:00",
+  "fetched_at": "2026-11-09T10:45:41.694343+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10170",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10170",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10170.mp3",
+      "title": "SANS Stormcast Monday, November 9th, 2026: sshole Scans (CVE-2026-123158); SonicWall SonicOS MFA Bypass (CVE-2026-19868); Entra Device Registration (CVE-2026-109469); Claude Code Secrets Leak",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, November 9th, 2026: sshole Scans (CVE-2026-123158); SonicWall SonicOS MFA Bypass (CVE-2026-19868); Entra Device Registration (CVE-2026-109469); Claude Code Secrets Leak",
+      "show_notes": [
+        {
+          "heading": "ISC honeypots seeing sshole (CVE-2026-123158) exploitation attempts; SonicWall patches seven SonicOS flaws including an already-exploited SSL VPN MFA bypass; Microsoft cloud-fixed an Entra Device Registration elevation-of-privilege bug; Apiiro found Claude Code saving secrets into .claude/settings.local.json on GitHub.",
+          "links": []
+        },
+        {
+          "heading": "Scans for sshole Vulnerability (CVE-2026-123158)",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots are seeing long letter-A passwords that look like sshole exploitation, with clear attempts starting November 5th after earlier long passwords that were mostly buggy brute-force scripts dumping shell commands into the password field. Honeypots only keep the first 255 characters of each password, which limits what can be measured.",
+          "links": [
+            "https://isc.sans.edu/diary/Scans+for+Sshole+Vulnerability+CVE2026123158/33498"
+          ]
+        },
+        {
+          "heading": "SonicWall SonicOS Multiple Vulnerabilities (SNWLID-2026-0014)",
+          "links": []
+        },
+        {
+          "heading": "On Friday SonicWall released patches for seven SonicOS vulnerabilities; one already-exploited flaw lets attackers bypass multi-factor authentication for SSL VPN logins when an alternate authentication method without MFA is also defined. Patch promptly press and CISA associate the exploited issue with CVE-2026-19868.",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014",
+            "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-new-ssl-vpn-mfa-bypass-flaw-exploited-in-attacks/"
+          ]
+        },
+        {
+          "heading": "Entra Device Registration Elevation of Privilege (CVE-2026-109469)",
+          "links": []
+        },
+        {
+          "heading": "Microsoft patched an authorization bypass in Entra Device Registration over the weekend that could let an unauthorized attacker elevate privileges. No customer action is required: it is a Microsoft-hosted cloud service, and Microsoft says there was no exploitation at the time of the fix and rates future exploitation less likely.",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109469"
+          ]
+        },
+        {
+          "heading": "Claude Code Leaking Secrets on GitHub",
+          "links": []
+        },
+        {
+          "heading": "Apiiro reports that Anthropic's Claude Code can store credentials in .claude/settings.local.json when you tell it not to ask again about an API or command, and that on the order of a thousand-plus of those credential files have shown up on GitHub. ISC web honeypots also saw new requests for the .claude directory this weekend; rotate exposed secrets and watch for Anthropic updates.",
+          "links": [
+            "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+            "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-09T02:05:10+00:00",
+      "duration_seconds": 421,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10170.mp3",
+      "audio_length_bytes": 5905658,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10170",
+      "categories": [
+        "sshole",
+        "cve-2026-123158",
+        "sonicwall",
+        "sonicos",
+        "cve-2026-19868",
+        "entra",
+        "cve-2026-109469",
+        "claude code"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10170",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 9, 2026\n edition of the SANS Inline Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington, D.C. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cloud\n Security. Today I spent a little bit time looking at our\n honeypot data to see if we are detecting any evidence of the\n sshole vulnerability being exploited. And yes, indeed, it\n is being exploited. Now, this investigation had a couple of\n hiccups. First of all, in order to exploit sshole, you\n must use a password that's larger than 256 characters.\n Well, we only record passwords up to 256 characters because,\n well, that's usually for brute forcing and so all that\n matters. On the other hand, there are sometimes passwords\n that are longer than 256 characters that are being\n recorded by our honeypots that are not related to sshole.\n What usually happens here is that simple scripts that are\n doing brute forcing are actually not checking if the\n login succeeded or not. So what they're doing then is\n they end up entering whatever bash command they would like\n to execute in the password field of the login. Sometimes\n also the username, that's where we also see them often\n showing up. But here, of course, the password field was\n what matters. And if you're looking at the data that I\n published as part of the diary, we saw a number of long\n passwords like this on November 1st. So what I'm\n calling here is the actual sort of exploitation of\n passwords that I would associate with sshole started\n on November 5th in our honeypots. Now, what I'm\n calling here an sshole password is one that basically\n is just letters, no recognizable bash commands or\n anything like this, and fills the entire 255 bytes that we\n are recording. The only ones that I've seen so far being\n used is either all uppercase letter A or all lowercase\n letter A. Of course, the actual content of the password\n shouldn't really matter when it comes to exploiting this\n vulnerability. I hope to follow this up maybe later\n this week with a look at what commands are being executed by\n these attacks after they're logged in. These attacks\n should actually work as far as our honeypot is concerned.\n They should sort of randomly allow some of these login\n attempts to log in. And on Friday, SonicWall released\n patches for seven vulnerabilities in SonicOS.\n This is significant because one of these vulnerabilities\n is already being exploited. The already exploited\n vulnerability does allow attackers to bypass multi\n -factor authentication for SSL VPN logins. Apparently, the\n problem here is if you have multiple authentication\n methods defined, and one of these authentication methods\n does not require multi-factor authentication, then an\n attacker essentially can use that to bypass the multi\n -factor authentication requirements that you may have\n set up for SSL VPN access. So this should be patched now.\n And again, it's already being exploited, which should tell\n you to please expedite release rolling out this particular\n update. In particular, of course, with SSL VPNs, we\n often had issues where people didn't use multi-factor\n authentication because, well, we all know passwords don't\n work. And Microsoft this weekend patched an\n authorization bypass vulnerability in Entra. This\n vulnerability would allow a user to essentially gain\n elevated privileges. The attacker in this case doesn't\n even have to be authorized. Now nothing you have to do.\n Microsoft already took care of it for you since this is an\n Entra vulnerability. So it really only affected\n Microsoft's cloud services and they released the advisory as\n they state to be more transparent about these\n vulnerabilities. They also say there was no exploitation\n happening at the time when they patched this\n vulnerability. Now they say exploitation is less likely,\n so more complex vulnerability. And hopefully now after the\n patch supplied, exploitation should be impossible. And a\n agentic coding security company, Apiiro, found that\n Anthropic's Claude Code under certain circumstances will add\n secrets to a hidden file in GitHub. The way this works is\n if you're requesting Claude Code to connect to an API or\n such, it may need credentials. And there is an option when\n you provide credentials to Claude Code where it basically\n asks, well, do you want me to ask you again about these\n credentials, about accessing this API? If you say no, then\n of course it has to remember those credentials somewhere.\n And the way it does so is by saving them to a .claude folder\n and inside there a file settings.local.json. We've\n actually seen in our web honeypots this weekend an\n increase in actually for the first time requests for this\n .claude directory. So attackers are definitely looking for it\n and Apiiro as part of their blog states that they found\n sort of around 1500 or so of these credential files on\n GitHub. There's still work in progress into how to exactly\n fix this. Essentially what they're proposing is to check\n automatically for secrets before anything is being sent\n to GitHub. But of course that may still keep those\n credentials in any other Git repositories. So not quite\n clear how this will be fixed. Definitely be aware of this\n and check with Anthropic and as a Claude Code user with any\n updates that you may be receiving that will fix this\n problem for you. Well, and that's it for today. Thanks\n for listening. Thanks for liking. Thanks for\n recommending and subscribing to this podcast. And talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10168",
       "show": "stormcast",
@@ -3947,70 +4036,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10062",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday, August 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n industrial control system security. Well, today we did\n not just get one, but two great diaries from Rob about\n how to use PowerShell to automate various tasks with\n Microsoft Graph. Microsoft Graph is Microsoft's new\n standard API to interact with its services, in particular,\n of course, with Entra, which is responsible for Microsoft's\n authentication and access control. And well, nothing\n more important to access control than tracking stale\n accounts. So the first script that Rob presents here is\n collecting all users with stale accounts that basically\n haven't logged in in a while, but also lists any licenses\n assigned to different users. The second script that Rob\n shows here in the second diary today does look at the risk\n detection within Entra. Entra can mark certain activity as\n risky, and this PowerShell script does collect all users\n that triggered one of these alerts, plus details regarding\n the reason why the activity was considered risky. Some of\n them is just, for example, using an unusual browser for\n the particular user based on the user agent, but then also\n geographic origin or internet origin. So basically based on\n ASN, which of course often also then maps to specific\n geographies. Interesting PowerShell scripts, and I\n always love myself some automation. Personally, not a\n big PowerShell person, but given that you're dealing here\n with Microsoft's ecosystem, of course, there's a lot of\n support for PowerShell in particular when it comes to\n various libraries to interact with the Microsoft to retrieve\n all this data. And Keycloak released a new version 26.7.2\n fixing a number of security vulnerabilities. One of them\n is particularly interesting and thanks to listener Daniel\n for alerting me of this. I would have probably missed it\n otherwise. This is a password reset issue that was addressed\n here. An unabot unauthenticated user is able\n to reset any user's password. And the underlying problem\n here is that the well, basically password reset with\n Keycloak works like with many other systems where it sends\n you an email with a verification token. You have\n to click on that link to then reset your password. The\n problem is that the token isn't actually validated\n properly by Keycloak. And as a result, an attacker can\n essentially just spoof that token and reset the password\n without ever seeing the email. Keycloak is an identity access\n management system. It's heavily used by Red Hat. Red\n Hat also supports the development of a Keycloak. So\n definitely sort of the underpinning identity access\n management system for a lot of other products and web\n applications. Definitely if you're using Keycloak, get\n this updated. Keycloak is an identity access management\n system. And the blog post by Ronnie Utevsky demonstrates an\n interesting way to bypass safeguards in large language\n models. Ronnie calls this cryptographic context\n injection and really what it comes down to is that when\n you're sending a request to a chatbot, an LLM, it usually\n goes first through a filter to look if this is some kind of\n malicious or not allowed request. And then it's being\n passed to the actual engine that will act on this request.\n Well, the trick here is that the request is encrypted and\n then the LLM is being told how to decrypt it. But the\n decryption happens after it goes through the initial\n stage, the actual guardrail stage. And of course, during\n the guardrail check, the content is encrypted and it\n has no idea what it's actually doing here. This is a very\n classic bad pattern that we see a lot where you do\n basically your input validation before you do any\n kind of input manipulation. You always have to do your\n input validation after any kind of normalization and\n other kind of transformation of the input is performed. And\n well, this sort of basic step is reversed here. We've got\n another vulnerability in an N-able product, but this time\n nothing for you to patch. N-Able already took care of it\n for you. This affects the Passportal password manager.\n Now N-able, they make a lot of products for managed service\n providers. And of course, managed service providers need\n to have access to credentials in order to manage their\n clients' networks. The problem here is that the Passportal\n doesn't really interact well with the browser extension\n that is being used to retrieve passwords from Passportal. The\n interaction between the two components happens via\n standard across window messaging, standard JavaScript\n APIs. This works cross origin, but the Passportal didn't\n properly check the origin where the request came from.\n And the result was that basically any website was able\n to interface with Passportal and retrieve passwords. Given\n that managed service providers are really sort of a big focus\n of current attacks, because once you broke a managed\n service provider, you essentially also broke into\n all of their clients. This is certainly a very critical\n vulnerability. Luckily, N-Able was able to patch this within\n hours of the vulnerability being reported. Well, and\n that's it for today. Remember, the show notes also include a\n link to classes I'm teaching. And the Defending Web\n Application Security class actually covers two of the\n stories that we had today. KeyClock is a tool that we\n actually use in the class. And we also talk about Passport\n Reset, of course. And regarding the N-Able Password\n Manager issue, well, we actually have an exercise\n where we talk about the cross -window messaging and the\n JavaScript APIs and exactly sort of these origin issues\n that may happen there. That's it for today. Thanks and talk\n to you again on Monday. Bye.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10060",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10060",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10060.mp3",
-      "title": "SANS Stormcast Thursday, August 20th, 2026: Cloud Metadata Scans; Oracle and Netscaler Patches; Fake Ransomware Rescuers",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, August 20th, 2026: Cloud Metadata Scans; Oracle and Netscaler Patches; Fake Ransomware Rescuers",
-      "show_notes": [
-        {
-          "heading": "Simple Scans for Cloud Metadata Service",
-          "links": [
-            "https://isc.sans.edu/diary/Simple%20Scans%20for%20Cloud%20Metadata%20Service/33260"
-          ]
-        },
-        {
-          "heading": "Oracle Critical Security Patch Update Advisory - August 2026",
-          "links": [
-            "https://www.oracle.com/security-alerts/cspuaug2026.html"
-          ]
-        },
-        {
-          "heading": "NetScaler ADC and NetScaler Gateway Security Bulletin for CVE-2026-19489 and CVE-2026-19490",
-          "links": [
-            "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX696939"
-          ]
-        },
-        {
-          "heading": "Beware of Ransomware Rescuers",
-          "links": [
-            "https://www.guidepointsecurity.com/blog/beware-ransom-busters/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-20T02:00:03+00:00",
-      "duration_seconds": 375,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10060.mp3",
-      "audio_length_bytes": 5259808,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10060",
-      "categories": [
-        "ransomware",
-        "rescuers",
-        "busters",
-        "ransom",
-        "netscaler",
-        "citrix",
-        "adc",
-        "oracle",
-        "patches",
-        "metadata",
-        "imds"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10060",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, August 20th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in cyber\n defense operations. Today I wrote about a scan that we are\n seeing lately and actually a few thousand events related to\n this scan that probes cloud metadata services via server\n -side request forgery. Cloud metadata services, they are\n implemented in all big cloud providers. You also are being\n used to basically have a simple REST-based interface\n that provides metadata about the system, like for example,\n MAC addresses and the like, but it can also provide\n credentials and that's what attackers are usually after.\n And based on the URL, yes, this attacker here as well.\n The question with this particular attack is what\n vulnerability they are targeting. The attack looks\n like a textbook server-side request forgery, just URL\n equals and then the URL they're trying to access. It's\n possible that there's popular software that is vulnerable to\n this sort of the most straightforward server-side\n request forgery, but it might be maybe more sort of a little\n bit of phishing expedition trying to find vulnerable\n systems that may just use some demo software or where a\n developer maybe just experiment a little bit with\n sort of URL fetching of particular data and they're\n just hunting for that. But if anybody has any insight as to\n the specific vulnerability they may be looking for,\n please let me know. And Oracle released its Credible Security\n Patch update for August. This update fixes 943 different\n vulnerabilities across 75 different products. Now, a\n while ago, Oracle sort of changed its patch release\n cycle. In addition to the quarterly Credible Patch\n update, we now have the Critical Security Patch update\n once a month. The last Credible Patch update had\n something like 1400 different vulnerabilities being\n addressed. The last security patch update was only sort of\n around 300. So we certainly see an increase here. However,\n it's across 75 different products. The one product that\n I sort of noted is the Fusion Middleware. That's something\n that we have seen being exploited in the past. So\n certainly one of those products to pay attention to.\n And it had one vulnerability with a CVSS score of 10 and\n then several looked like a couple dozen or so with 9.9\n and 9.8 CVSS scores. So that's certainly something that you\n probably want to prioritize if you are running it in your\n environment. Well, we haven't heard from Citrix in a while,\n but yes, we do have a new advisory here that's\n noteworthy. This advisory fixes two vulnerabilities in\n Netscaler ADC as well as Netscaler Gateway. The first\n vulnerability is a memory overflow vulnerability. Well,\n as I say, it leads to unpredictable behavior or\n denial of service. I'm not sure if unpredictable behavior\n also includes some kind of remote code execution, but\n they rate it with a CVSS score of 8.8. The second\n vulnerability looks more interesting. It's a path\n traversal vulnerability that can lead to authentication\n bypass and is scored with 9.3. Now for this vulnerability to\n be actually exploitable, you must configure your gateway as\n a gateway. So something like the SL VPN or a proxy has to\n be enabled. Definitely get this addressed. Like I said,\n we have had a lot of interest from ransomware actors and\n such in vulnerabilities against the Citrix gateways in\n the past. So definitely make sure you get this patched. And\n GuidePoint Security published a blog post with an\n interesting new way how ransomware actors are\n operating. Apparently what's happening here is that after a\n company is affected by ransomware, a recovery company\n is reaching out to them, in particular a recovery company\n called Ransom Busters, assisting in actually\n negotiating the ransomware payment or recovery from the\n ransomware. Since this contact issue happens before anything\n about the particular attack has become public, they assume\n that it's the ransomware actor himself reaching out here. And\n I think it should be somewhat obvious also to the victim\n here that this contact is coming from someone affiliated\n with the ransomware actor. In my opinion, this may be a\n little bit a trick on the side of ransomware actors to\n essentially allow companies, allow victims to pay the money\n without actually paying a ransom. Because in this case,\n they're just paying a consulting fee and they're\n getting their keys back because Ransom Busters\n apparently knows how to recover the encryption keys.\n And they're then able to decrypt their data. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking this podcast. Thanks for recommending it. Thanks\n for any feedback you may have and talk to you again\n tomorrow. Bye.",
       "transcript_checked": true
     }
   ]

@@ -2,6 +2,95 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10170",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10170",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10170.mp3",
+      "title": "SANS Stormcast Monday, November 9th, 2026: sshole Scans (CVE-2026-123158); SonicWall SonicOS MFA Bypass (CVE-2026-19868); Entra Device Registration (CVE-2026-109469); Claude Code Secrets Leak",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, November 9th, 2026: sshole Scans (CVE-2026-123158); SonicWall SonicOS MFA Bypass (CVE-2026-19868); Entra Device Registration (CVE-2026-109469); Claude Code Secrets Leak",
+      "show_notes": [
+        {
+          "heading": "ISC honeypots seeing sshole (CVE-2026-123158) exploitation attempts; SonicWall patches seven SonicOS flaws including an already-exploited SSL VPN MFA bypass; Microsoft cloud-fixed an Entra Device Registration elevation-of-privilege bug; Apiiro found Claude Code saving secrets into .claude/settings.local.json on GitHub.",
+          "links": []
+        },
+        {
+          "heading": "Scans for sshole Vulnerability (CVE-2026-123158)",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots are seeing long letter-A passwords that look like sshole exploitation, with clear attempts starting November 5th after earlier long passwords that were mostly buggy brute-force scripts dumping shell commands into the password field. Honeypots only keep the first 255 characters of each password, which limits what can be measured.",
+          "links": [
+            "https://isc.sans.edu/diary/Scans+for+Sshole+Vulnerability+CVE2026123158/33498"
+          ]
+        },
+        {
+          "heading": "SonicWall SonicOS Multiple Vulnerabilities (SNWLID-2026-0014)",
+          "links": []
+        },
+        {
+          "heading": "On Friday SonicWall released patches for seven SonicOS vulnerabilities; one already-exploited flaw lets attackers bypass multi-factor authentication for SSL VPN logins when an alternate authentication method without MFA is also defined. Patch promptly press and CISA associate the exploited issue with CVE-2026-19868.",
+          "links": [
+            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014",
+            "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-new-ssl-vpn-mfa-bypass-flaw-exploited-in-attacks/"
+          ]
+        },
+        {
+          "heading": "Entra Device Registration Elevation of Privilege (CVE-2026-109469)",
+          "links": []
+        },
+        {
+          "heading": "Microsoft patched an authorization bypass in Entra Device Registration over the weekend that could let an unauthorized attacker elevate privileges. No customer action is required: it is a Microsoft-hosted cloud service, and Microsoft says there was no exploitation at the time of the fix and rates future exploitation less likely.",
+          "links": [
+            "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109469"
+          ]
+        },
+        {
+          "heading": "Claude Code Leaking Secrets on GitHub",
+          "links": []
+        },
+        {
+          "heading": "Apiiro reports that Anthropic's Claude Code can store credentials in .claude/settings.local.json when you tell it not to ask again about an API or command, and that on the order of a thousand-plus of those credential files have shown up on GitHub. ISC web honeypots also saw new requests for the .claude directory this weekend; rotate exposed secrets and watch for Anthropic updates.",
+          "links": [
+            "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+            "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-09T02:05:10+00:00",
+      "duration_seconds": 421,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10170.mp3",
+      "audio_length_bytes": 5905658,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10170",
+      "categories": [
+        "sshole",
+        "cve-2026-123158",
+        "sonicwall",
+        "sonicos",
+        "cve-2026-19868",
+        "entra",
+        "cve-2026-109469",
+        "claude code"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10170",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 9, 2026\n edition of the SANS Inline Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington, D.C. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Cloud\n Security. Today I spent a little bit time looking at our\n honeypot data to see if we are detecting any evidence of the\n sshole vulnerability being exploited. And yes, indeed, it\n is being exploited. Now, this investigation had a couple of\n hiccups. First of all, in order to exploit sshole, you\n must use a password that's larger than 256 characters.\n Well, we only record passwords up to 256 characters because,\n well, that's usually for brute forcing and so all that\n matters. On the other hand, there are sometimes passwords\n that are longer than 256 characters that are being\n recorded by our honeypots that are not related to sshole.\n What usually happens here is that simple scripts that are\n doing brute forcing are actually not checking if the\n login succeeded or not. So what they're doing then is\n they end up entering whatever bash command they would like\n to execute in the password field of the login. Sometimes\n also the username, that's where we also see them often\n showing up. But here, of course, the password field was\n what matters. And if you're looking at the data that I\n published as part of the diary, we saw a number of long\n passwords like this on November 1st. So what I'm\n calling here is the actual sort of exploitation of\n passwords that I would associate with sshole started\n on November 5th in our honeypots. Now, what I'm\n calling here an sshole password is one that basically\n is just letters, no recognizable bash commands or\n anything like this, and fills the entire 255 bytes that we\n are recording. The only ones that I've seen so far being\n used is either all uppercase letter A or all lowercase\n letter A. Of course, the actual content of the password\n shouldn't really matter when it comes to exploiting this\n vulnerability. I hope to follow this up maybe later\n this week with a look at what commands are being executed by\n these attacks after they're logged in. These attacks\n should actually work as far as our honeypot is concerned.\n They should sort of randomly allow some of these login\n attempts to log in. And on Friday, SonicWall released\n patches for seven vulnerabilities in SonicOS.\n This is significant because one of these vulnerabilities\n is already being exploited. The already exploited\n vulnerability does allow attackers to bypass multi\n -factor authentication for SSL VPN logins. Apparently, the\n problem here is if you have multiple authentication\n methods defined, and one of these authentication methods\n does not require multi-factor authentication, then an\n attacker essentially can use that to bypass the multi\n -factor authentication requirements that you may have\n set up for SSL VPN access. So this should be patched now.\n And again, it's already being exploited, which should tell\n you to please expedite release rolling out this particular\n update. In particular, of course, with SSL VPNs, we\n often had issues where people didn't use multi-factor\n authentication because, well, we all know passwords don't\n work. And Microsoft this weekend patched an\n authorization bypass vulnerability in Entra. This\n vulnerability would allow a user to essentially gain\n elevated privileges. The attacker in this case doesn't\n even have to be authorized. Now nothing you have to do.\n Microsoft already took care of it for you since this is an\n Entra vulnerability. So it really only affected\n Microsoft's cloud services and they released the advisory as\n they state to be more transparent about these\n vulnerabilities. They also say there was no exploitation\n happening at the time when they patched this\n vulnerability. Now they say exploitation is less likely,\n so more complex vulnerability. And hopefully now after the\n patch supplied, exploitation should be impossible. And a\n agentic coding security company, Apiiro, found that\n Anthropic's Claude Code under certain circumstances will add\n secrets to a hidden file in GitHub. The way this works is\n if you're requesting Claude Code to connect to an API or\n such, it may need credentials. And there is an option when\n you provide credentials to Claude Code where it basically\n asks, well, do you want me to ask you again about these\n credentials, about accessing this API? If you say no, then\n of course it has to remember those credentials somewhere.\n And the way it does so is by saving them to a .claude folder\n and inside there a file settings.local.json. We've\n actually seen in our web honeypots this weekend an\n increase in actually for the first time requests for this\n .claude directory. So attackers are definitely looking for it\n and Apiiro as part of their blog states that they found\n sort of around 1500 or so of these credential files on\n GitHub. There's still work in progress into how to exactly\n fix this. Essentially what they're proposing is to check\n automatically for secrets before anything is being sent\n to GitHub. But of course that may still keep those\n credentials in any other Git repositories. So not quite\n clear how this will be fixed. Definitely be aware of this\n and check with Anthropic and as a Claude Code user with any\n updates that you may be receiving that will fix this\n problem for you. Well, and that's it for today. Thanks\n for listening. Thanks for liking. Thanks for\n recommending and subscribing to this podcast. And talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10168",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
