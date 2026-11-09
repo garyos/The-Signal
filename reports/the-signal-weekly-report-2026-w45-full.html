@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE SIGNAL — Weekly Report 2026-W45</title>
+<style>
+  :root {
+    --ink: #0a0e14; --ink-raised: #10151d; --ink-input: #0d1219; --line: #1e2733;
+    --text: #d7dde5; --text-dim: #7d8998;
+    --amber: #ffb020; --red: #ff5c5c; --blue: #5ac8ff; --green: #4fd58a;
+    --purple: #c792ea; --teal: #2dd4bf; --orange: #ff9f4a; --indigo: #7c8cff;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* No @page margin declared here — render_pdf.js passes the real margin
+     (20mm/16mm top/bottom) to Playwright's page.pdf(), and that's the ONLY
+     margin declaration that should exist. A conflicting CSS `@page {
+     margin }` here previously caused body content to render underneath the
+     (blank, color-filled) header instead of below it — CSS @page and
+     Playwright's JS margin option are two different systems, and only one
+     of them gets to decide where the page starts.
+     Left/right are still 0 in that JS option and simulated via .doc's own
+     padding below, same as before — there's no header/footer-equivalent
+     mechanism for a page's LEFT/RIGHT margins, only top/bottom, so a real
+     left/right margin would just be unpainted white with nothing able to
+     fill it. Top/bottom get the real, colored margin the header/footer
+     trick provides; left/right keep the padding-based simulation that only
+     ever worked for those two edges to begin with. */
+  html, body { margin: 0; padding: 0; background: var(--ink); color: var(--text); font-family: var(--font-sans); font-size: 11.5px; }
+  .doc { padding: 0 16mm; }
+
+  /* 261mm = A4's 297mm minus the 20mm/16mm top/bottom margins render_pdf.js
+     reserves — the cover's real per-page content height once those margins
+     are accounted for, so its vertical centering lines up with the printed
+     page rather than assuming the full untrimmed A4 height. */
+  .cover {
+    min-height: 261mm; display: flex; flex-direction: column; justify-content: center;
+    page-break-after: always;
+  }
+  .cover-kicker { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; }
+  .cover-title { font-size: 64px; font-weight: 700; margin: 10px 0 14px; letter-spacing: 0.01em; color: var(--indigo); }
+  .cover-subtitle { font-family: var(--font-mono); font-size: 14px; color: var(--text-dim); margin-bottom: 36px; }
+  .cover-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 34px; }
+  .cover-kpis .kpi { background: var(--ink-raised); padding: 18px 8px; text-align: center; }
+  .kpi-value { font-size: 22px; font-weight: 700; }
+  .kpi-label { font-family: var(--font-mono); font-size: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 5px; }
+  .cover-footer { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); border-top: 1px solid var(--line); padding-top: 14px; }
+  .cover-disclaimer { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); margin-top: 18px; opacity: 0.75; line-height: 1.5; }
+  .cover-nav { font-family: var(--font-mono); font-size: 10px; margin-top: 14px; }
+  .cover-nav a { color: var(--text-dim); text-decoration: none; }
+  .cover-nav a:hover { color: var(--indigo); }
+
+  .toc-section { page-break-after: always; }
+  .toc-title { border-bottom: 2px solid var(--indigo); padding-bottom: 10px; margin-bottom: 4px; font-size: 18px; }
+  .toc-list { list-style: none; padding: 0; margin: 10px 0 0; }
+  .toc-list li { display: flex; gap: 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .toc-num { font-family: var(--font-mono); color: var(--indigo); font-weight: 700; font-size: 12px; width: 22px; flex: 0 0 auto; }
+
+  .section { margin-top: 10mm; }
+  /* The closing changelog table is short but sits right at the tail of a long
+     multi-page flow — verified by hand that page-break-inside:avoid (row-level
+     and container-level both) isn't reliably honored for it there regardless,
+     a Chromium print-fragmentation quirk that resisted several CSS-only
+     fixes. Forcing this one section to start on its own fresh page sidesteps
+     the problem entirely and is a normal, common choice for a closing
+     "revision history" section in a real report anyway. */
+  #sec-7 { page-break-before: always; break-before: always; }
+  /* The heading plus at least its first paragraph/table move together —
+     letting a heading land alone at the bottom of a page (with everything
+     it introduces pushed to the next) is exactly the "few lines, then a
+     page break, then most of the content" look this is here to prevent. */
+  .section-head { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--indigo); padding-bottom: 9px; margin-bottom: 14px; page-break-after: avoid; break-after: avoid; }
+  .section-num { font-family: var(--font-mono); font-size: 13px; color: var(--indigo); font-weight: 700; }
+  .section-title { font-size: 18px; font-weight: 700; margin: 0; }
+  .subhead { font-size: 12.5px; font-weight: 700; margin: 20px 0 8px; color: var(--text); page-break-after: avoid; break-after: avoid; }
+  .analysis { font-size: 12px; line-height: 1.75; margin: 0 0 6px; }
+
+  .exec-box { background: var(--ink-raised); border: 1px solid var(--line); border-left: 3px solid var(--indigo); padding: 16px 18px; page-break-inside: avoid; }
+  .exec-box p { margin: 0 0 12px; font-size: 12px; line-height: 1.75; }
+  .exec-box p:last-child { margin-bottom: 0; }
+
+  /* A short subhead + its small (<=8-row) supporting table, kept together as
+     one page-break-inside:avoid unit — safe here specifically because these
+     blocks are short; the same rule on a block taller than a page is what
+     broke pagination entirely earlier in this feature's development (see
+     the CVE/ransomware FULL tables below, which are intentionally NOT
+     wrapped this way and rely on <thead> repeating + per-row avoidance
+     instead, since they can legitimately run several pages long). */
+  .mini-block { page-break-inside: avoid; break-inside: avoid; margin-bottom: 4px; }
+
+  /* Deliberately plain block flow, NOT flex/grid — verified by hand that
+     Chromium's print engine does not reliably honor page-break-inside:avoid
+     on flex/grid children when siblings need different break outcomes (one
+     fits in the remaining space, one doesn't): the one that doesn't fit got
+     split mid-table instead of moving to the next page as instructed. Plain
+     block children respect break-inside:avoid correctly, confirmed
+     throughout this report (entry-cards, highlight-cards) — worth the
+     traded-off two-column density for pagination that's actually reliable. */
+  .table-grid-2 { margin-bottom: 4px; }
+  .table-grid-2 table.data-table { font-size: 9.5px; }
+
+  /* overflow-x:auto turns this div into a scroll container, and per the CSS
+     fragmentation spec a scroll container is "monolithic" — Chromium refuses
+     to paginate its contents across printed pages at all. For short tables
+     that's invisible, but the CVE/ransomware FULL tables run several pages
+     long, so under print media Chromium was rendering that whole box as one
+     giant unbreakable unit: no <thead> repeat on continuation pages, and the
+     content ignoring each page's normal top-margin reservation entirely
+     (confirmed by rasterizing the real PDF and comparing a table-continuation
+     page against a fresh-section page). Playwright's page.pdf() uses print
+     media by default (no emulateMedia call in render_pdf.js), so this
+     override only affects the PDF; the browsable -full.html keeps the
+     horizontal scroll fix for narrow viewports (see data_table()/.table-scroll
+     comment above) when actually viewed on screen. */
+  .table-scroll { overflow-x: auto; margin: 6px 0 4px; }
+  @media print { .table-scroll { overflow-x: visible; } }
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin: 0; }
+  table.data-table thead { display: table-header-group; }
+  table.data-table th {
+    text-align: left; font-family: var(--font-mono); font-size: 8.5px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-dim); border-bottom: 2px solid var(--indigo);
+    padding: 7px 8px; background: rgba(124,140,255,0.07);
+  }
+  table.data-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.data-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  table.data-table tr { page-break-inside: avoid; }
+  table.data-table a { color: var(--blue); text-decoration: none; }
+  table.data-table a:hover { text-decoration: underline; }
+  .nowrap { white-space: nowrap; }
+
+  .badge { font-size: 8.5px; font-weight: 700; padding: 2px 6px; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; }
+  .badge.critical { background: rgba(255,92,92,0.2); color: var(--red); }
+  .badge.high { background: rgba(255,176,32,0.2); color: var(--amber); }
+  .badge.medium { background: rgba(90,200,255,0.2); color: var(--blue); }
+  .badge.low, .badge.info, .badge.unrated { background: rgba(125,137,152,0.2); color: var(--text-dim); }
+  .badge.kev { background: rgba(255,92,92,0.26); color: var(--red); border: 1px solid var(--red); }
+  .badge.epss { background: rgba(255,159,74,0.2); color: var(--orange); border: 1px solid var(--orange); }
+  .badge.news { background: rgba(45,212,191,0.18); color: var(--teal); border: 1px solid var(--teal); }
+
+  /* Plain block flow — see the .table-grid-2 comment above for why. */
+  .highlight-grid { margin: 8px 0 18px; }
+  .highlight-card { border: 1px solid var(--line); border-left: 3px solid var(--red); background: var(--ink-raised); padding: 10px 12px; margin-bottom: 8px; page-break-inside: avoid; break-inside: avoid; }
+  .highlight-card:last-child { margin-bottom: 0; }
+  .hc-meta { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); }
+  .hc-id { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+  .hc-id a { color: var(--text); text-decoration: none; }
+  .highlight-card p { margin: 0; font-size: 10.5px; color: var(--text-dim); line-height: 1.5; }
+
+  ul.source-list { padding-left: 18px; margin: 10px 0; }
+  ul.source-list li { margin-bottom: 9px; font-size: 11px; line-height: 1.6; color: var(--text-dim); }
+  ul.source-list b { color: var(--text); }
+
+  .more-note, .empty-note { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); margin: 4px 0 0; }
+</style>
+</head>
+<body>
+  <div class="doc">
+    
+    <div class="cover">
+      <div class="cover-kicker">Weekly Threat Intelligence Report</div>
+      <h1 class="cover-title">THE SIGNAL</h1>
+      <div class="cover-subtitle">Week 2026-W45 &middot; 2 Nov 2026 &ndash; 8 Nov 2026 (UTC)</div>
+      <div class="cover-kpis"><div class="kpi"><div class="kpi-value">231</div><div class="kpi-label">Feed Articles</div></div><div class="kpi"><div class="kpi-value">1,257</div><div class="kpi-label">CVEs Published</div></div><div class="kpi"><div class="kpi-value">246</div><div class="kpi-label">Critical CVEs</div></div><div class="kpi"><div class="kpi-value">2</div><div class="kpi-label">KEV CVEs</div></div><div class="kpi"><div class="kpi-value">12</div><div class="kpi-label">Research Write-ups</div></div><div class="kpi"><div class="kpi-value">244</div><div class="kpi-label">Ransomware Victims</div></div><div class="kpi"><div class="kpi-value">1</div><div class="kpi-label">Breaches Disclosed</div></div><div class="kpi"><div class="kpi-value">850,537</div><div class="kpi-label">Records Exposed</div></div></div>
+      <div class="cover-footer">
+        <div>Generated 9 November 2026, 03:03 UTC</div>
+        <div>Template v1.2</div>
+      </div>
+      <div class="cover-disclaimer">Compiled automatically from THE SIGNAL's live threat-intelligence datasets — see Section 06, Methodology &amp; Sources.</div>
+      <div class="cover-nav"><a href="../reports.html">‹ Reports Archive</a> &nbsp;&nbsp; <a href="../index.html">‹ Home</a></div>
+    </div>
+    
+    <div class="section toc-section"><h2 class="section-title toc-title">Contents</h2><ol class="toc-list"><li><span class="toc-num">01</span><span class="toc-label">Executive Summary</span></li><li><span class="toc-num">02</span><span class="toc-label">Threat Feed Overview</span></li><li><span class="toc-num">03</span><span class="toc-label">Vulnerability Intelligence (CVE)</span></li><li><span class="toc-num">04</span><span class="toc-label">Research &amp; Analysis Coverage</span></li><li><span class="toc-num">05</span><span class="toc-label">Ransomware &amp; Data Breach Activity</span></li><li><span class="toc-num">06</span><span class="toc-label">Methodology &amp; Sources</span></li><li><span class="toc-num">07</span><span class="toc-label">Report Versioning</span></li></ol></div>
+    
+    <section class="section" id="sec-1">
+      <div class="section-head"><span class="section-num">01</span><h2 class="section-title">Executive Summary</h2></div>
+      <div class="exec-box"><p>This report covers the period 2 Nov 2026 to 8 Nov 2026 (UTC). THE SIGNAL's automated collection captured 231 threat-feed articles across 10 monitored sources, 1,257 new CVE records from NVD, 12 deep-dive research write-ups, 244 ransomware victim postings, and 1 newly disclosed breach.</p><p>1,257 new CVE records were published this week, including 246 rated Critical and 1,010 rated High severity (100% of the week's total). 2 are listed in CISA's Known Exploited Vulnerabilities (KEV) catalog, confirming active exploitation in the wild — these warrant immediate patching priority regardless of CVSS score. 7 have already been covered in security media this week — public attention that tends to draw attacker interest too, independent of the technical severity/exploitability scoring above. IBM API Connect was the most represented vendor among this week's Critical/KEV/high-EPSS disclosures (47 records). The most common weakness category was Use After Free, appearing in 22 records.</p><p>244 new ransomware victim postings were logged across 39 active groups, led by N0n (49 postings). 1 newly disclosed breach were added to the tracker this week, together exposing approximately 850,537 records.</p></div>
+    </section>
+    
+    
+    <section class="section" id="sec-2">
+      <div class="section-head"><span class="section-num">02</span><h2 class="section-title">Threat Feed Overview</h2></div>
+      
+      <p class="analysis">231 articles were captured across 10 sources this week, of which 84 were flagged Critical or High severity by keyword-based triage (36% of the week's total). BleepingComputer was the most active source, contributing 53 articles.</p>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Severity breakdown</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Severity</th><th>Count</th><th>% of total</th></tr></thead><tbody><tr><td>Critical</td><td>34</td><td>15%</td></tr><tr><td>High</td><td>50</td><td>22%</td></tr><tr><td>Medium</td><td>15</td><td>6%</td></tr><tr><td>Info</td><td>132</td><td>57%</td></tr></tbody></table></div></div>
+        <div class="mini-block"><h3 class="subhead">Volume by source</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Source</th><th>Count</th><th>% of total</th></tr></thead><tbody><tr><td>BleepingComputer</td><td>53</td><td>23%</td></tr><tr><td>The Hacker News</td><td>53</td><td>23%</td></tr><tr><td>SecurityWeek</td><td>48</td><td>21%</td></tr><tr><td>The Record</td><td>33</td><td>14%</td></tr><tr><td>Dark Reading</td><td>22</td><td>10%</td></tr><tr><td>SANS ISC</td><td>9</td><td>4%</td></tr><tr><td>Microsoft Security Blog</td><td>8</td><td>3%</td></tr><tr><td>Unit 42</td><td>2</td><td>1%</td></tr></tbody></table></div><div class="more-note">+ 2 more source(s) (3 article(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">Notable coverage (Critical / High severity)</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Severity</th><th>Source</th><th>Published</th><th>Headline</th></tr></thead><tbody><tr><td><span class="badge high">HIGH</span></td><td>SANS ISC</td><td><span class="nowrap">Sun, 08 Nov 2026</span></td><td><a href="https://isc.sans.edu/diary/rss/33498" target="_blank" rel="noopener noreferrer">Scans for Sshole Vulnerability (CVE-2026-123158), (Sun, Nov 8th)</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>BleepingComputer</td><td><span class="nowrap">Sat, 07 Nov 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/ctm360-exposes-fake-gift-card-scams-exploiting-trusted-brands/" target="_blank" rel="noopener noreferrer">CTM360 Exposes Fake Gift Card Scams Exploiting Trusted Brands</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Sat, 07 Nov 2026</span></td><td><a href="https://www.securityweek.com/sonicwall-patches-exploited-sonicos-bug-that-weakens-vpn-logins/" target="_blank" rel="noopener noreferrer">SonicWall Patches Exploited SonicOS Vulnerability That Weakens VPN Logins</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-new-ssl-vpn-mfa-bypass-flaw-exploited-in-attacks/" target="_blank" rel="noopener noreferrer">SonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/openais-new-gpt-6-cyber-ai-finds-81-firefox-flaws-948-linux-bugs/" target="_blank" rel="noopener noreferrer">OpenAI&#x27;s new GPT-6 Cyber AI finds 81 Firefox flaws, 948 Linux bugs</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/qnap-says-hackers-breaching-nas-devices-in-plex2shell-attacks/" target="_blank" rel="noopener noreferrer">QNAP says hackers breaching NAS devices in Plex2Shell attacks</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html" target="_blank" rel="noopener noreferrer">Installing the Fix for an Exploited WordPress Flaw Can Expose Some Sites One Last Time</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html" target="_blank" rel="noopener noreferrer">Hackers Target OpenSSH SSHole Flaw Within Hours of Disclosure, Gain Root on Honeypot</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html" target="_blank" rel="noopener noreferrer">OpenAI Launches GPT-6 Cyber After AI Helps Find 81 Firefox Flaws, 948 Linux Exploits</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days/" target="_blank" rel="noopener noreferrer">In Other News: Trezor Implant, LLMJacking Bills Hit $1M, SAP Flaws Weaponized Within Days</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.securityweek.com/openai-says-new-gpt-6-cyber-model-hunts-flaws-without-crossing-the-line/" target="_blank" rel="noopener noreferrer">OpenAI Says New GPT-6 Cyber Model Hunts Flaws Without Crossing the Line</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>BleepingComputer</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches/" target="_blank" rel="noopener noreferrer">D-Link warns of multiple zero-days in DGS-3130 Series switches</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html" target="_blank" rel="noopener noreferrer">Microsoft Paint RCE Fix Now Available, but Windows Update Won&#x27;t Deliver It</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/malicious-browser-extensions-could-use.html" target="_blank" rel="noopener noreferrer">Malicious Browser Extensions Could Use Claude Dispatch to Run Code on Users&#x27; Computers</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>Dark Reading</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://www.darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk" target="_blank" rel="noopener noreferrer">UK Warns Its Critical Infrastructure Faces Grave Risk</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html" target="_blank" rel="noopener noreferrer">Chainalysis Breach Exposes All Users&#x27; Credentials, Forces Shutdown of Key Services</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html" target="_blank" rel="noopener noreferrer">Experts Demonstrate Barracuda Email Security Gateway Chain Enabling Root Access Without Login</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Record</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://therecord.media/queens-library-ransomware-causes-disruptions" target="_blank" rel="noopener noreferrer">Queens Public Library says ransomware attack disrupted Wi-Fi, on-site computers</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Record</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://therecord.media/social-media-giants-sue-california-over-social-media-law" target="_blank" rel="noopener noreferrer">Social media giants sue California to overturn law shielding kids 15 and under from compulsive use</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Record</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://therecord.media/cyberattacks-refrigeration-cisa-fbi" target="_blank" rel="noopener noreferrer">Harden cooling systems now, feds warn critical infrastructure operators amid attacks</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://www.securityweek.com/ai-agents-got-root-on-linux-via-948-kernel-flaws-in-openai-research/" target="_blank" rel="noopener noreferrer">AI Agents Got Root on Linux via 948 Kernel Flaws in OpenAI Research</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>Dark Reading</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://www.darkreading.com/cybersecurity-operations/securitydatapipeline-com-launches-as-a-new-educational-resource-for-the-ai-era" target="_blank" rel="noopener noreferrer">SecurityDataPipeline.com Launches as a New Educational Resource for the AI Era</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/openssh-issues-emergency-fix-for-flaw.html" target="_blank" rel="noopener noreferrer">OpenSSH Issues Emergency Fix for Flaw Letting Long Passwords Bypass SSH Auth on Alpine Linux</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/researchers-bypass-chatgpt-lockdown.html" target="_blank" rel="noopener noreferrer">Researchers Bypass ChatGPT Lockdown Mode to Exfiltrate Chats Without User Interaction</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SANS ISC</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://isc.sans.edu/diary/rss/33492" target="_blank" rel="noopener noreferrer">Vulnerability Scans for Older Cisco IOS Vulnerability / Opt-Out Headers, (Thu, Nov 5th)</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html" target="_blank" rel="noopener noreferrer">ThreatsDay: Apache OFBiz RCE, DreamHost Breach, DeFi Site Hijacks + 17 More Stories</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>SecurityWeek</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/" target="_blank" rel="noopener noreferrer">Cisco, WatchGuard Release Patches; SonicWall Won’t Fix GMS Flaws</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/is-your-exposure-management-platform.html" target="_blank" rel="noopener noreferrer">Is Your Exposure Management Platform Leaving You Exposed? Five Tests to Find Out</a></td></tr><tr><td><span class="badge high">HIGH</span></td><td>The Hacker News</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://thehackernews.com/2026/11/openai-ai-pipeline-generates-948-linux.html" target="_blank" rel="noopener noreferrer">OpenAI AI Pipeline Generates 948 Linux Root Escalation Exploits in 30-Hour Run</a></td></tr><tr><td><span class="badge critical">CRITICAL</span></td><td>SecurityWeek</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td><td><a href="https://www.securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day/" target="_blank" rel="noopener noreferrer">Zyxel Switch Hacks Blamed on Patched Flaw Actually Exploited a Zero-Day</a></td></tr></tbody></table></div>
+      <p class="more-note">+ 54 more Critical/High item(s) not shown — see index.html for the full archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-3">
+      <div class="section-head"><span class="section-num">03</span><h2 class="section-title">Vulnerability Intelligence (CVE)</h2></div>
+      
+      <p class="analysis">1,257 new CVE records were published this week, including 246 rated Critical and 1,010 rated High severity (100% of the week's total). 2 are listed in CISA's Known Exploited Vulnerabilities (KEV) catalog, confirming active exploitation in the wild — these warrant immediate patching priority regardless of CVSS score. 7 have already been covered in security media this week — public attention that tends to draw attacker interest too, independent of the technical severity/exploitability scoring above. IBM API Connect was the most represented vendor among this week's Critical/KEV/high-EPSS disclosures (47 records). The most common weakness category was Use After Free, appearing in 22 records.</p>
+      <h3 class="subhead">Highlighted disclosures</h3>
+      <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge high">HIGH</span>
+        <span>CVSS 7.5</span>
+        <span class="badge kev">KEV</span>
+        <span class="badge epss">EPSS 1%</span>
+        <span class="badge news">IN THE NEWS</span>
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19868" target="_blank" rel="noopener noreferrer">CVE-2026-19868</a></div>
+      <p>An authentication enforcement vulnerability in SonicOS SSLVPN service may allow a user with valid credentials for an alternate authentication method to bypass SAML authentication controls. Successful exploitation may als…</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge medium">MEDIUM</span>
+        <span>CVSS 4.3</span>
+        <span class="badge kev">KEV</span>
+        <span class="badge epss">EPSS 1%</span>
+        <span class="badge news">IN THE NEWS</span>
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-118527" target="_blank" rel="noopener noreferrer">CVE-2026-118527</a></div>
+      <p>Use of predictable filenames in Ivanti Connect Secure before versions 25.1.1.3 and 22.8R2.6 allows a remote authenticated attacker to upload files with attacker-controlled content to a known location on disk.</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 10.0</span>
+        
+        <span class="badge epss">EPSS 3%</span>
+        
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120276" target="_blank" rel="noopener noreferrer">CVE-2026-120276</a></div>
+      <p>A weakness has been identified in WAVLINK WN536AX6-A V260507_2.0.0. This vulnerability affects the function sub_416760 of the file /bin/ioos of the component Web Management Interface. This manipulation of the argument gr…</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 9.1</span>
+        
+        <span class="badge epss">EPSS 3%</span>
+        
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121931" target="_blank" rel="noopener noreferrer">CVE-2026-121931</a></div>
+      <p>A security vulnerability has been detected in Linksys WRT54GL 4.30.18. The impacted element is the function system of the file apply.cgi of the component Traceroute Diagnostic Function. Such manipulation of the argument …</p>
+    </div>
+    
+    <div class="highlight-card">
+      <div class="hc-meta">
+        <span class="badge critical">CRITICAL</span>
+        <span>CVSS 9.1</span>
+        
+        <span class="badge epss">EPSS 3%</span>
+        
+      </div>
+      <div class="hc-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121930" target="_blank" rel="noopener noreferrer">CVE-2026-121930</a></div>
+      <p>A weakness has been identified in Linksys WRT54GL 4.30.18. The affected element is the function system of the file apply.cgi of the component Ping Diagnostic. This manipulation of the argument ping_ip causes os command i…</p>
+    </div>
+    </div>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Top affected vendors</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Vendor</th><th>Count</th></tr></thead><tbody><tr><td>IBM API Connect</td><td>47</td></tr><tr><td>Google Chrome</td><td>32</td></tr><tr><td>TOTOLINK CA300-PoE</td><td>9</td></tr><tr><td>kyverno kyverno</td><td>7</td></tr><tr><td>WAVLINK WN536AX6-A</td><td>6</td></tr><tr><td>TOTOLINK A950RG</td><td>4</td></tr><tr><td>Apache Software Foundation Apache Syncope</td><td>4</td></tr><tr><td>Google Android</td><td>4</td></tr></tbody></table></div><div class="more-note">+ 123 more vendor(s) (153 occurrence(s) not shown)</div></div>
+        <div class="mini-block"><h3 class="subhead">Top CWE categories</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>CWE</th><th>Count</th></tr></thead><tbody><tr><td>Use After Free</td><td>22</td></tr><tr><td>Memory Buffer Boundary Violation</td><td>18</td></tr><tr><td>OS Command Injection</td><td>17</td></tr><tr><td>Command Injection</td><td>14</td></tr><tr><td>Path Traversal</td><td>14</td></tr><tr><td>Code Injection</td><td>13</td></tr><tr><td>Server-Side Request Forgery (SSRF)</td><td>13</td></tr><tr><td>Improper Authentication</td><td>12</td></tr></tbody></table></div><div class="more-note">+ 67 more CWE categor(ies) (186 occurrence(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">Critical, known-exploited &amp; high-EPSS CVEs — full list</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>CVE ID</th><th>Severity</th><th>CVSS</th><th>KEV</th><th>EPSS</th><th>News</th><th>Published</th><th>Vendor(s)</th><th>CWE(s)</th></tr></thead><tbody><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19868" target="_blank" rel="noopener noreferrer">CVE-2026-19868</a></td><td><span class="badge high">HIGH</span></td><td>7.5</td><td><span class="badge kev">KEV</span></td><td>1%</td><td><span class="badge news">NEWS</span></td><td><span class="nowrap">2026-11-06</span></td><td>SonicWall SonicOS</td><td>CWE-308</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-118527" target="_blank" rel="noopener noreferrer">CVE-2026-118527</a></td><td><span class="badge medium">MEDIUM</span></td><td>4.3</td><td><span class="badge kev">KEV</span></td><td>1%</td><td><span class="badge news">NEWS</span></td><td><span class="nowrap">2026-11-03</span></td><td>Ivanti Connect Secure</td><td>CWE-340</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120276" target="_blank" rel="noopener noreferrer">CVE-2026-120276</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>3%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN536AX6-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121931" target="_blank" rel="noopener noreferrer">CVE-2026-121931</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>3%</td><td>—</td><td><span class="nowrap">2026-11-04</span></td><td>Linksys WRT54GL</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121930" target="_blank" rel="noopener noreferrer">CVE-2026-121930</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>3%</td><td>—</td><td><span class="nowrap">2026-11-04</span></td><td>Linksys WRT54GL</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-122051" target="_blank" rel="noopener noreferrer">CVE-2026-122051</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>3%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>Edimax BR-6208AC</td><td>CWE-74, Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120277" target="_blank" rel="noopener noreferrer">CVE-2026-120277</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN536AX6-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121932" target="_blank" rel="noopener noreferrer">CVE-2026-121932</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-04</span></td><td>Linksys E5350</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121607" target="_blank" rel="noopener noreferrer">CVE-2026-121607</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-04</span></td><td>Qihoo 360 D603-2, Qihoo 360 D600-2</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120345" target="_blank" rel="noopener noreferrer">CVE-2026-120345</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN551X3-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120344" target="_blank" rel="noopener noreferrer">CVE-2026-120344</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN551X3-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120280" target="_blank" rel="noopener noreferrer">CVE-2026-120280</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN536AX6-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120279" target="_blank" rel="noopener noreferrer">CVE-2026-120279</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN536AX6-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17402" target="_blank" rel="noopener noreferrer">CVE-2026-17402</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120442" target="_blank" rel="noopener noreferrer">CVE-2026-120442</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>xianhc ape-volo-admin</td><td>CWE-1394</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120282" target="_blank" rel="noopener noreferrer">CVE-2026-120282</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>WAVLINK WN536AX6-A</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-122193" target="_blank" rel="noopener noreferrer">CVE-2026-122193</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-06</span></td><td>AWS trusted-remote-execution</td><td>OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-28336" target="_blank" rel="noopener noreferrer">CVE-2026-28336</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>2%</td><td>—</td><td><span class="nowrap">2026-11-03</span></td><td>SolarWinds Dameware</td><td>Improper Input Validation</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-86596" target="_blank" rel="noopener noreferrer">CVE-2026-86596</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>clavaque s2Member – Excellent for All Kinds of Memberships, Content Restriction Paywalls &amp; Member Access Subscriptions</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-59105" target="_blank" rel="noopener noreferrer">CVE-2026-59105</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-06</span></td><td>Jumis Pro SIA Jumis</td><td>CWE-547, CWE-1391</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-114630" target="_blank" rel="noopener noreferrer">CVE-2026-114630</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-06</span></td><td>elextensions ELEX WordPress HelpDesk &amp; Customer Ticketing System</td><td>Path Traversal</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-116779" target="_blank" rel="noopener noreferrer">CVE-2026-116779</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>signalwire freeswitch</td><td>Command Injection, OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-54143" target="_blank" rel="noopener noreferrer">CVE-2026-54143</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>tinyhumansai openhuman</td><td>OS Command Injection, CWE-285</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-13594" target="_blank" rel="noopener noreferrer">CVE-2026-13594</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-03</span></td><td>Zohocorp Log360, Zohocorp EventLog Analyzer</td><td>Improper Access Control</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-83542" target="_blank" rel="noopener noreferrer">CVE-2026-83542</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>Apache Software Foundation Apache OFBiz</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-120446" target="_blank" rel="noopener noreferrer">CVE-2026-120446</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.4</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-02</span></td><td>madong-code madong-admin-saas</td><td>Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-116785" target="_blank" rel="noopener noreferrer">CVE-2026-116785</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>signalwire freeswitch</td><td>CWE-122, CWE-681</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-44266" target="_blank" rel="noopener noreferrer">CVE-2026-44266</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-03</span></td><td>enspirit elo</td><td>Code Injection, CWE-116</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121933" target="_blank" rel="noopener noreferrer">CVE-2026-121933</a></td><td><span class="badge critical">CRITICAL</span></td><td>10.0</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-04</span></td><td>Linksys E5350</td><td>Improper Authentication, Missing Authentication for Critical Function</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-19803" target="_blank" rel="noopener noreferrer">CVE-2026-19803</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>printcart Printcart Store – Web to Print Product Designer for WooCommerce</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17408" target="_blank" rel="noopener noreferrer">CVE-2026-17408</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>OS Command Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17340" target="_blank" rel="noopener noreferrer">CVE-2026-17340</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>Path Traversal</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17147" target="_blank" rel="noopener noreferrer">CVE-2026-17147</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>Path Traversal</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-93754" target="_blank" rel="noopener noreferrer">CVE-2026-93754</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>payever payever Checkout – Composable Payment Gateway</td><td>Unrestricted Dangerous File Upload</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-121260" target="_blank" rel="noopener noreferrer">CVE-2026-121260</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-03</span></td><td>Ziroom ZHOME A0101</td><td>CWE-74, Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17359" target="_blank" rel="noopener noreferrer">CVE-2026-17359</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17342" target="_blank" rel="noopener noreferrer">CVE-2026-17342</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>Code Injection</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123198" target="_blank" rel="noopener noreferrer">CVE-2026-123198</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.8</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-05</span></td><td>LMFDB LMFDB</td><td>CWE-1336</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-123959" target="_blank" rel="noopener noreferrer">CVE-2026-123959</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.1</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>TOTOLINK CA300-PoE</td><td>Memory Buffer Boundary Violation, Buffer Overflow</td></tr><tr><td><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-17239" target="_blank" rel="noopener noreferrer">CVE-2026-17239</a></td><td><span class="badge critical">CRITICAL</span></td><td>9.9</td><td>—</td><td>1%</td><td>—</td><td><span class="nowrap">2026-11-07</span></td><td>IBM API Connect</td><td>Path Traversal</td></tr></tbody></table></div>
+      <p class="more-note">+ 208 more Critical/KEV/high-EPSS CVE(s) not shown in this table — see cve.html for the full archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-4">
+      <div class="section-head"><span class="section-num">04</span><h2 class="section-title">Research &amp; Analysis Coverage</h2></div>
+      
+      <p class="analysis">12 deep-dive write-ups were published across 4 specialist publications this week. Check Point Research Publications was the most common coverage category this week (3 articles).</p>
+      <div class="table-grid-2">
+        <div class="mini-block"><h3 class="subhead">Volume by publication</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Publication</th><th>Count</th></tr></thead><tbody><tr><td>Securelist</td><td>4</td></tr><tr><td>Check Point Research</td><td>4</td></tr><tr><td>SentinelOne Labs</td><td>2</td></tr><tr><td>Elastic Security Labs</td><td>2</td></tr></tbody></table></div></div>
+        <div class="mini-block"><h3 class="subhead">Top categories</h3><div class="table-scroll"><table class="data-table"><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody><tr><td>Check Point Research Publications</td><td>3</td></tr><tr><td>SOC, TI and IR posts</td><td>2</td></tr><tr><td>Machine learning</td><td>2</td></tr><tr><td>Passwords</td><td>1</td></tr><tr><td>VMWare</td><td>1</td></tr><tr><td>Ransomware</td><td>1</td></tr><tr><td>Virtualization</td><td>1</td></tr><tr><td>Encryption</td><td>1</td></tr></tbody></table></div><div class="more-note">+ 31 more categor(ies) (31 occurrence(s) not shown)</div></div>
+      </div>
+      <h3 class="subhead">All write-ups this week</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Publication</th><th>Title</th><th>Categories</th><th>Published</th></tr></thead><tbody><tr><td>Securelist</td><td><a href="https://securelist.com/virtualization-security-esxi-and-proxmox-ransomware-cases/121819/" target="_blank" rel="noopener noreferrer">Virtualization security: attack layers and misconfiguration impact</a></td><td>SOC, TI and IR posts, Passwords, VMWare</td><td><span class="nowrap">Fri, 06 Nov 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/" target="_blank" rel="noopener noreferrer">Hacking on Autopilot: Inside ARTEX Cybercrime Campaigns</a></td><td>Check Point Research Publications</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/chatgpt-lockdown-mode-bypass-phishing-malware-delivery-and-silent-data-exfiltration/" target="_blank" rel="noopener noreferrer">ChatGPT Lockdown Mode Bypass: Phishing, Malware Delivery, and Silent Data Exfiltration</a></td><td>Check Point Research Publications</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td></tr><tr><td>Securelist</td><td><a href="https://securelist.com/storm-2603-fileless-toolshell-attack/121467/" target="_blank" rel="noopener noreferrer">The SOC Files 5: Ghost in the pipeline, or a fileless SharePoint breach by Storm-2603</a></td><td>SOC, TI and IR posts, Incidents, Cybersecurity</td><td><span class="nowrap">Thu, 05 Nov 2026</span></td></tr><tr><td>SentinelOne Labs</td><td><a href="https://www.sentinelone.com/labs/verifiedida-making-llm-driven-reverse-engineering-inspectable-continuable-and-reusable/" target="_blank" rel="noopener noreferrer">VerifiedIDA | Making LLM-Driven Reverse Engineering Inspectable, Continuable and Reusable</a></td><td>AI Research, llm, reverse engineering</td><td><span class="nowrap">Wed, 04 Nov 2026</span></td></tr><tr><td>Elastic Security Labs</td><td><a href="https://www.elastic.co/security-labs/blog/ai-agent-session-monitoring-embedding-models" target="_blank" rel="noopener noreferrer">Modernising threat hunting: Using Semantic Search to Find Risky AI Agent Behavior</a></td><td>AI &amp; Automation, Threat Hunting, SOC</td><td><span class="nowrap">Wed, 04 Nov 2026</span></td></tr><tr><td>Elastic Security Labs</td><td><a href="https://www.elastic.co/security-labs/reports/threats-etc-report-november-2026-trouble-with-trust" target="_blank" rel="noopener noreferrer">When trust becomes the payload: Inside the threats, etc quarterly report</a></td><td>—</td><td><span class="nowrap">Wed, 04 Nov 2026</span></td></tr><tr><td>SentinelOne Labs</td><td><a href="https://www.sentinelone.com/labs/defrost-and-disrupt-an-assessment-of-europe-s-refrigeration-attacks/" target="_blank" rel="noopener noreferrer">Defrost and Disrupt | An Assessment of Europe’s Refrigeration Attacks</a></td><td>Security &amp; Intelligence, disruption</td><td><span class="nowrap">Tue, 03 Nov 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/free-the-model-sell-the-gateway-prompt-adware-hidden-in-jailbreak-bundles/" target="_blank" rel="noopener noreferrer">Free the Model, Sell the Gateway: Prompt Adware hidden in Jailbreak Bundles</a></td><td>Check Point Research Publications</td><td><span class="nowrap">Tue, 03 Nov 2026</span></td></tr><tr><td>Securelist</td><td><a href="https://securelist.com/tr/machine-learning-event-processor-in-kics-for-networks/121794/" target="_blank" rel="noopener noreferrer">MLEP in KICS for Networks 5.0: how machine learning helps track network behavior of OT devices</a></td><td>Industrial control systems, Security technology, Machine learning</td><td><span class="nowrap">Tue, 03 Nov 2026</span></td></tr><tr><td>Check Point Research</td><td><a href="https://research.checkpoint.com/2026/2nd-november-threat-intelligence-report/" target="_blank" rel="noopener noreferrer">2nd November – Threat Intelligence Report</a></td><td>Global Cyber Attack Reports</td><td><span class="nowrap">Mon, 02 Nov 2026</span></td></tr><tr><td>Securelist</td><td><a href="https://securelist.com/tr/cyberstrikeai-attacks/121715/" target="_blank" rel="noopener noreferrer">CyberStrikeAI in the wild: the use of AI in real-world attacks on organizations</a></td><td>Targeted attacks, Cyber espionage, PowerShell</td><td><span class="nowrap">Mon, 02 Nov 2026</span></td></tr></tbody></table></div>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-5">
+      <div class="section-head"><span class="section-num">05</span><h2 class="section-title">Ransomware &amp; Data Breach Activity</h2></div>
+      
+      <p class="analysis">244 new ransomware victim postings were logged across 39 active groups, led by N0n (49 postings). 1 newly disclosed breach were added to the tracker this week, together exposing approximately 850,537 records.</p>
+      <div class="mini-block">
+        <h3 class="subhead">Most active ransomware groups</h3>
+        <div class="table-scroll"><table class="data-table"><thead><tr><th>Group</th><th>Victim postings</th></tr></thead><tbody><tr><td>N0n</td><td>49</td></tr><tr><td>thegentlemen</td><td>25</td></tr><tr><td>medusalocker</td><td>18</td></tr><tr><td>qilin</td><td>16</td></tr><tr><td>akira</td><td>16</td></tr><tr><td>BrainCipher</td><td>12</td></tr><tr><td>incransom</td><td>11</td></tr><tr><td>safepay</td><td>10</td></tr></tbody></table></div>
+        <div class="more-note">+ 31 more group(s) (87 victim posting(s) not shown)</div>
+      </div>
+      <h3 class="subhead">Victim postings</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Group</th><th>Victim</th><th>Sector</th><th>Country</th><th>Date</th></tr></thead><tbody><tr><td>BYOD</td><td>Twitter</td><td>Technology</td><td>US</td><td><span class="nowrap">2026-11-08</span></td></tr><tr><td>incransom</td><td>www.bogard.com.mx</td><td>Other</td><td>MX</td><td><span class="nowrap">2026-11-08</span></td></tr><tr><td>incransom</td><td>bpcm.com</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-11-08</span></td></tr><tr><td>Whitearmor</td><td>Clínica La Sagrada Familia (Colombia)</td><td>Healthcare</td><td>CO</td><td><span class="nowrap">2026-11-08</span></td></tr><tr><td>incransom</td><td>q-technicians.be</td><td>Professional Services</td><td>BE</td><td><span class="nowrap">2026-11-08</span></td></tr><tr><td>N0n</td><td>Company #147</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #146</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #145</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #144</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #143</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #142</td><td>Not Found</td><td>KR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #141</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #140</td><td>Not Found</td><td>CA</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #139</td><td>Not Found</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Company #138</td><td>Not Found</td><td>CA</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>safepay</td><td>by.zivor.co.il</td><td>Not Found</td><td>IL</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>rhysida</td><td>Tribunal de Justica do Estado de Minas Gerais</td><td>Government &amp; Defense</td><td>BR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>payload</td><td>Autohaus Arnold</td><td>Retail &amp; E-Commerce</td><td>DE</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>payload</td><td>Brauco</td><td>Not Found</td><td>—</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>payload</td><td>Schroers Ingenieure</td><td>Professional Services</td><td>DE</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>payload</td><td>Otto Stops</td><td>Transportation</td><td>—</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Christie Digital Systems</td><td>Technology</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Daeah E&amp;C</td><td>Manufacturing</td><td>KR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>DAEWON Chemical</td><td>Manufacturing</td><td>KR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Wooshin Systems</td><td>Technology</td><td>KR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Proterial America, Ltd.</td><td>Manufacturing</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Hyundai E&amp;C</td><td>Manufacturing</td><td>KR</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>metaencryptor</td><td>Pekin Insurance</td><td>Financial Services</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Staples, Inc. / SBD Inc.</td><td>Retail &amp; E-Commerce</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Lampenwelt GmbH</td><td>Retail &amp; E-Commerce</td><td>DE</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Infutor Data Solutions</td><td>Technology</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>N0n</td><td>Higginbotham</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>rhysida</td><td>Treuhand &amp; Immobilien Abt AG</td><td>Financial Services</td><td>CH</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>Whitearmor</td><td>maersk</td><td>Transportation</td><td>DK</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>anubis</td><td>Kahler Automation</td><td>Manufacturing</td><td>DE</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>SilentRansomGroup</td><td>Benesch Law</td><td>Professional Services</td><td>US</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>BYOD</td><td>???</td><td>Not Found</td><td>—</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>qilin</td><td>XK net SA de CV</td><td>Not Found</td><td>MX</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>qilin</td><td>BOSH Engineering Private Limited</td><td>Manufacturing</td><td>SG</td><td><span class="nowrap">2026-11-07</span></td></tr><tr><td>qilin</td><td>J. J. Louro Pereira</td><td>Other</td><td>PT</td><td><span class="nowrap">2026-11-07</span></td></tr></tbody></table></div>
+      <p class="more-note">+ 204 more posting(s) not shown — see leaktracker.html for the full archive.</p>
+      <h3 class="subhead">Disclosed breaches</h3>
+      <div class="table-scroll"><table class="data-table"><thead><tr><th>Organization</th><th>Domain</th><th>Records</th><th>Disclosed</th></tr></thead><tbody><tr><td><a href="https://haveibeenpwned.com/PwnedWebsites#Harvard" target="_blank" rel="noopener noreferrer">Harvard</a></td><td>harvard.edu</td><td>850,537</td><td><span class="nowrap">2026-11-03</span></td></tr></tbody></table></div>
+      
+    
+    </section>
+    
+    
+    <section class="section" id="sec-6">
+      <div class="section-head"><span class="section-num">06</span><h2 class="section-title">Methodology &amp; Sources</h2></div>
+      
+      <p>This report is generated automatically by THE SIGNAL's data pipeline from the sources below,
+      with no independent analyst review of individual findings:</p>
+      <ul class="source-list">
+        <li><b>Threat Feed</b> — RSS from The Hacker News, Krebs on Security, BleepingComputer, Dark Reading,
+        SecurityWeek, The Record, SANS ISC, Microsoft Security Blog, Unit 42, and NCSC UK. Severity is a
+        keyword-based heuristic, not a scored assessment.</li>
+        <li><b>CVE Detail</b> — NVD CVE API 2.0, cross-referenced against CISA's Known Exploited Vulnerabilities
+        (KEV) catalog. Only Critical/High severity records, plus any KEV-listed CVE regardless of score, are
+        retained.</li>
+        <li><b>Research Detail</b> — The DFIR Report, Securelist, Elastic Security Labs, SentinelOne Labs, and
+        Check Point Research.</li>
+        <li><b>Ransomware</b> — leak-site postings tracked via ransomware.live.</li>
+        <li><b>Breaches</b> — Have I Been Pwned.</li>
+      </ul>
+      <p>Detail tables in this report are capped for length where a dataset's weekly volume is large; each
+      section links to the corresponding live page on THE SIGNAL for the complete, current archive.</p>
+    
+    </section>
+    
+    
+    <section class="section" id="sec-7">
+      <div class="section-head"><span class="section-num">07</span><h2 class="section-title">Report Versioning</h2></div>
+      
+      <p>This report format is under active development and is expected to change between editions — new
+      sections, refined statistics, and better attribution as the underlying data pipeline improves. This
+      edition was generated using <b>template v1.2</b>.</p>
+      <div class="mini-block">
+        <table class="data-table"><thead><tr><th>Version</th><th>Date</th><th>Notes</th></tr></thead><tbody><tr><td>v1.2</td><td><span class="nowrap">2026-09-08</span></td><td>Every page of the PDF now has a real, colored top/bottom margin — including where a table or paragraph continues right after a page break, not just the first page — via a blank (no title, no page numbers) header/footer used solely to paint that space; report files renamed to a descriptive the-signal-weekly-report-&lt;week&gt; pattern instead of the bare ISO week code. Fixed a real stats bug: breakdown tables (sources, CWEs, vendors, categories, ransomware groups) now disclose &quot;+N more&quot; when capped at their top-8 display instead of silently truncating, after one shipped with a total that didn&#x27;t reconcile. Ransomware victim postings are no longer linked (their source is a Tor .onion address, unsuitable for this report). The full report layout is now also published as its own HTML page, not just as a PDF-conversion input.</td></tr><tr><td>v1.1</td><td><span class="nowrap">2026-09-08</span></td><td>PDF is now a purpose-built print document (cover page, table of contents, numbered sections, real data tables with repeating headers, narrative analysis paragraphs) rendered from its own layout, not a screenshot of the web-view report — full-bleed dark theme to every page edge. Web-view dashboard panels no longer truncate long category/vendor names.</td></tr><tr><td>v1.0</td><td><span class="nowrap">2026-09-08</span></td><td>Initial report format: executive summary, dashboard view, and detail sections for CVEs, research articles, notable feed items, and ransomware/breach activity.</td></tr></tbody></table>
+      </div>
+    
+    </section>
+    
+  </div>
+</body>
+</html>
