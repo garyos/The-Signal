@@ -2,6 +2,94 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10172",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10172",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10172.mp3",
+      "title": "SANS Stormcast Tuesday, November 10th, 2026: SAP NetWeaver Webshells (CVE-2025-31324); N-able N-central Offline; Chrome XML 0-Day (CVE-2026-125350); Outlook DMARC Required",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, November 10th, 2026: SAP NetWeaver Webshells (CVE-2025-31324); N-able N-central Offline; Chrome XML 0-Day (CVE-2026-125350); Outlook DMARC Required",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers attackers hunting SAP NetWeaver webshells from CVE-2025-31324, N-able taking N-central offline after dozens of unpatched flaws, a Chrome XML use-after-free zero-day, and Outlook rejecting mail without DMARC.",
+          "links": []
+        },
+        {
+          "heading": "Attackers Searching for SAP NetWeaver Webshells",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots are seeing probes for ant.jsp and related paths tied to SAP NetWeaver CVE-2025-31324, a CVSS 10 unauthenticated file-upload flaw attackers still use to plant webshells even after recent patches. Watch /irj/servlet_jsp/irj/root/ and other upload endpoints for leftover shells.",
+          "links": [
+            "https://isc.sans.edu/diary/Attackers%20Searching%20for%20SAP%20Netweaver%20Webshells/33502"
+          ]
+        },
+        {
+          "heading": "N-able N-central Critical Security Incident",
+          "links": []
+        },
+        {
+          "heading": "N-able took Hosted N-central offline after public disclosure of roughly 30+ critical vulnerabilities with no patches yet, and advises on-premises customers to take servers offline if not isolated; no exploitation observed so far, with remediation said to be on track.",
+          "links": [
+            "https://uptime.n-able.com/",
+            "https://labs.beazley.security/advisories/BSL-A1242"
+          ]
+        },
+        {
+          "heading": "Google Chrome Zero-Day Patch (CVE-2026-125350)",
+          "links": []
+        },
+        {
+          "heading": "Chrome stable updates fix nine vulnerabilities, including CVE-2026-125350, a use-after-free in the XML parser that Google says is already exploited in the wild. Update promptly; the advisory does not confirm a sandbox escape.",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html"
+          ]
+        },
+        {
+          "heading": "Strict Outlook DMARC Policies",
+          "links": []
+        },
+        {
+          "heading": "Outlook is rejecting mail with 550 errors when the sending domain lacks a DMARC record, even if SPF and DKIM pass. Publish at least a DMARC record (for example p=none) alongside SPF and DKIM.",
+          "links": [
+            "https://learn.microsoft.com/en-us/answers/questions/6063865/550-5-7-1-message-rejected-message-lacks-spf-dkim"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-10T02:00:02+00:00",
+      "duration_seconds": 333,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10172.mp3",
+      "audio_length_bytes": 4667198,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10172",
+      "categories": [
+        "sap netweaver",
+        "cve-2025-31324",
+        "n-able",
+        "n-central",
+        "chrome",
+        "cve-2026-125350",
+        "dmarc",
+        "outlook"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10172",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, November 10, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington, D.C. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well in Diaries today we do\n have web shells. This time the web shell that sort of caught\n my attention was one that looks like it was placed via\n an SAP Netweaver vulnerability. Not a new\n vulnerability, has a 2025 CVE but still something that\n apparently still gets exploited even if you did\n patch it recently. Well take a look at the web shells being\n planted here. Fairly standard stuff it looks like like ant\n .JSP is the file name. Now it's not the only\n vulnerability they're going after. They're also going\n after a number of other vulnerabilities, PHP\n vulnerabilities and the like. But this SAP Netweaver was the\n one that sort of really stuck out somewhat here. So as\n always keep looking for web shells. That's one of the top\n ways how attackers take advantage of vulnerabilities\n in web applications. In particular in this case this\n Netweaver vulnerability is basically just a simple upload\n vulnerability. So an attacker may upload any file to the\n system. And with that of course an obvious way to\n exploit the vulnerability is uploading a web shell. So\n N-able today announced that it took down its n-central hosted\n environments. This came after someone did publish I believe\n 30 different vulnerabilities that affect the current\n version of N-able. And there are no patches at this point\n available for this. So of course the problem comes up if\n you're self hosting N-able or n-central really. You probably\n want to take it down as well and follow here N-able's lead\n what it did with its cloud environment. On the other hand\n they also suggest if you sufficiently secured it\n meaning you isolated it. You should be fine. They haven't\n yet detected any exploitation of these vulnerabilities. But\n of course the vulnerability details have been made\n available publicly. So it's probably just a matter of a\n little bit of time to see these vulnerabilities\n exploited. They also don't sort of have a timeline at\n least at the time at which I'm reading this. When their\n hosted environment will be enabled again. But they do\n state that the remediation is on track. And they hope to\n soon have in their hosted environment these\n vulnerabilities mitigated. And then be able to again enable\n public access to the n-central hosted environment. That of\n course doesn't mean that they immediately will have patches\n for these vulnerabilities. So your on-premise version of n\n -central may need to stay down a little bit longer. Google\n updated the stable channel for Google Chrome fixing nine\n different vulnerabilities. One of which is already being\n exploited. So we got a zero day here. This vulnerability\n is a use after free vulnerability in the XML\n parser. And yes with that can probably be exploited to\n execute arbitrary code. They don't really say anything\n about a possible sandbox escape or such. So there may\n be a little bit more work to be done to actually sort of\n get to a full compromise from this particular vulnerability.\n Well and if all of a sudden you're seeing rejected emails\n from Outlook 365 with a 550 message rejected error. This\n points to you probably missing a DMARC policy. In the past\n Microsoft only required that you have a valid SPF and DKIM\n record. Well now you also must have a DMARC record in order\n to have your email accepted by Outlook 365. So definitely\n take a look at that and check if you're all set with this.\n This has become more and more sort of the standard where you\n must have SPF, DKIM and DMARC. Where DMARC of course tells\n the recipient what to do if your SPF or DKIM policy is not\n aligned with a particular email that you send. Well this\n is it for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. And special thanks if\n you can find the five minutes to vote for me in the\n Difference Maker Award. There's a link to the voting\n page in the show notes. So thanks and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10170",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

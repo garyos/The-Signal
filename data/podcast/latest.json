@@ -1,6 +1,94 @@
 {
-  "fetched_at": "2026-11-09T19:24:52.125288+00:00",
+  "fetched_at": "2026-11-10T10:40:22.720297+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10172",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10172",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10172.mp3",
+      "title": "SANS Stormcast Tuesday, November 10th, 2026: SAP NetWeaver Webshells (CVE-2025-31324); N-able N-central Offline; Chrome XML 0-Day (CVE-2026-125350); Outlook DMARC Required",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, November 10th, 2026: SAP NetWeaver Webshells (CVE-2025-31324); N-able N-central Offline; Chrome XML 0-Day (CVE-2026-125350); Outlook DMARC Required",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers attackers hunting SAP NetWeaver webshells from CVE-2025-31324, N-able taking N-central offline after dozens of unpatched flaws, a Chrome XML use-after-free zero-day, and Outlook rejecting mail without DMARC.",
+          "links": []
+        },
+        {
+          "heading": "Attackers Searching for SAP NetWeaver Webshells",
+          "links": []
+        },
+        {
+          "heading": "ISC honeypots are seeing probes for ant.jsp and related paths tied to SAP NetWeaver CVE-2025-31324, a CVSS 10 unauthenticated file-upload flaw attackers still use to plant webshells even after recent patches. Watch /irj/servlet_jsp/irj/root/ and other upload endpoints for leftover shells.",
+          "links": [
+            "https://isc.sans.edu/diary/Attackers%20Searching%20for%20SAP%20Netweaver%20Webshells/33502"
+          ]
+        },
+        {
+          "heading": "N-able N-central Critical Security Incident",
+          "links": []
+        },
+        {
+          "heading": "N-able took Hosted N-central offline after public disclosure of roughly 30+ critical vulnerabilities with no patches yet, and advises on-premises customers to take servers offline if not isolated; no exploitation observed so far, with remediation said to be on track.",
+          "links": [
+            "https://uptime.n-able.com/",
+            "https://labs.beazley.security/advisories/BSL-A1242"
+          ]
+        },
+        {
+          "heading": "Google Chrome Zero-Day Patch (CVE-2026-125350)",
+          "links": []
+        },
+        {
+          "heading": "Chrome stable updates fix nine vulnerabilities, including CVE-2026-125350, a use-after-free in the XML parser that Google says is already exploited in the wild. Update promptly; the advisory does not confirm a sandbox escape.",
+          "links": [
+            "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html"
+          ]
+        },
+        {
+          "heading": "Strict Outlook DMARC Policies",
+          "links": []
+        },
+        {
+          "heading": "Outlook is rejecting mail with 550 errors when the sending domain lacks a DMARC record, even if SPF and DKIM pass. Publish at least a DMARC record (for example p=none) alongside SPF and DKIM.",
+          "links": [
+            "https://learn.microsoft.com/en-us/answers/questions/6063865/550-5-7-1-message-rejected-message-lacks-spf-dkim"
+          ]
+        },
+        {
+          "heading": "SANS Difference Makers Vote",
+          "links": [
+            "https://www.sans.org/go/difference-makers-awards-2026"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-10T02:00:02+00:00",
+      "duration_seconds": 333,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10172.mp3",
+      "audio_length_bytes": 4667198,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10172",
+      "categories": [
+        "sap netweaver",
+        "cve-2025-31324",
+        "n-able",
+        "n-central",
+        "chrome",
+        "cve-2026-125350",
+        "dmarc",
+        "outlook"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10172",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, November 10, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Washington, D.C. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well in Diaries today we do\n have web shells. This time the web shell that sort of caught\n my attention was one that looks like it was placed via\n an SAP Netweaver vulnerability. Not a new\n vulnerability, has a 2025 CVE but still something that\n apparently still gets exploited even if you did\n patch it recently. Well take a look at the web shells being\n planted here. Fairly standard stuff it looks like like ant\n .JSP is the file name. Now it's not the only\n vulnerability they're going after. They're also going\n after a number of other vulnerabilities, PHP\n vulnerabilities and the like. But this SAP Netweaver was the\n one that sort of really stuck out somewhat here. So as\n always keep looking for web shells. That's one of the top\n ways how attackers take advantage of vulnerabilities\n in web applications. In particular in this case this\n Netweaver vulnerability is basically just a simple upload\n vulnerability. So an attacker may upload any file to the\n system. And with that of course an obvious way to\n exploit the vulnerability is uploading a web shell. So\n N-able today announced that it took down its n-central hosted\n environments. This came after someone did publish I believe\n 30 different vulnerabilities that affect the current\n version of N-able. And there are no patches at this point\n available for this. So of course the problem comes up if\n you're self hosting N-able or n-central really. You probably\n want to take it down as well and follow here N-able's lead\n what it did with its cloud environment. On the other hand\n they also suggest if you sufficiently secured it\n meaning you isolated it. You should be fine. They haven't\n yet detected any exploitation of these vulnerabilities. But\n of course the vulnerability details have been made\n available publicly. So it's probably just a matter of a\n little bit of time to see these vulnerabilities\n exploited. They also don't sort of have a timeline at\n least at the time at which I'm reading this. When their\n hosted environment will be enabled again. But they do\n state that the remediation is on track. And they hope to\n soon have in their hosted environment these\n vulnerabilities mitigated. And then be able to again enable\n public access to the n-central hosted environment. That of\n course doesn't mean that they immediately will have patches\n for these vulnerabilities. So your on-premise version of n\n -central may need to stay down a little bit longer. Google\n updated the stable channel for Google Chrome fixing nine\n different vulnerabilities. One of which is already being\n exploited. So we got a zero day here. This vulnerability\n is a use after free vulnerability in the XML\n parser. And yes with that can probably be exploited to\n execute arbitrary code. They don't really say anything\n about a possible sandbox escape or such. So there may\n be a little bit more work to be done to actually sort of\n get to a full compromise from this particular vulnerability.\n Well and if all of a sudden you're seeing rejected emails\n from Outlook 365 with a 550 message rejected error. This\n points to you probably missing a DMARC policy. In the past\n Microsoft only required that you have a valid SPF and DKIM\n record. Well now you also must have a DMARC record in order\n to have your email accepted by Outlook 365. So definitely\n take a look at that and check if you're all set with this.\n This has become more and more sort of the standard where you\n must have SPF, DKIM and DMARC. Where DMARC of course tells\n the recipient what to do if your SPF or DKIM policy is not\n aligned with a particular email that you send. Well this\n is it for today. So thanks for listening. Thanks for liking.\n Thanks for recommending this podcast. And special thanks if\n you can find the five minutes to vote for me in the\n Difference Maker Award. There's a link to the voting\n page in the show notes. So thanks and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10170",
       "show": "stormcast",
@@ -3970,72 +4058,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10064",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday August 24th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's degree program in Applied\n Cybersecurity. Well, on Friday, we got two more\n diaries from Rob showing how to interface PowerShell with\n EnteraID and how to better collect and summarize some of\n the events that you are getting out of EnteraID's\n logging. First one is about multi factor authentication.\n So the goal here is after you set up and configured multi\n factor authentication and rolled it out, well, to make\n sure that you really rolled it out completely and to look in\n any gaps, any accounts and such that are not yet using\n multi factor authentication. So really useful to identify\n these kind of lagging accounts and hopefully get them up to\n compliance fairly quickly. The second issue here is looking\n at the Entera logins. And this is like failed as well as\n valid logins, and then basically enrich that data\n with additional details. Like for example, IP addresses, the\n country the login came from, again, looking for some\n suspicious logins. On Thursday, Rob wrote a similar\n script where it was about the risk factor of particular\n logins. So this is sort of more universal and then you\n define kind of your own risks and your own cautions, which\n can work quite well if your organization, for example, is\n more geographically focused. If users usually log in from\n company systems via VPNs and such, then this will become\n quite useful. When talking about Microsoft's Entera ID\n product, on Thursday, Microsoft did publish a\n bulletin indicating that they did patch remote code\n execution vulnerability in Entera ID. This was a\n deserialization vulnerability. Now, what originally sort of\n caused some confusion was that Microsoft had marked this\n vulnerability as already being exploited. Later, they\n reversed this and they're announcing it has not yet been\n exploited. It's a deserialization vulnerability.\n So exploitation wouldn't necessarily be sort of out of\n the question for a vulnerability like this if an\n external entity discovered this vulnerability. But yes,\n right now, it doesn't look like it already was exploited.\n Now, there's nothing you need to do that affected\n Microsoft's own systems. They are and they have done this\n repeatedly in last year or so, been more transparent about\n vulnerabilities like this in their cloud software where\n they are publishing CVE numbers and bulletins just\n like for any sort of customer run software vulnerability.\n And this is just another case of this critical\n vulnerability. Microsoft patched it. So hopefully they\n caught this before it was actually exploited\n successfully. And then we do have an update for GitLab.\n This fixes two vulnerabilities. The first one\n is an interesting one. It's a code injection issue via\n GraphQL directive. This allows an unauthenticated attacker to\n delete or modify repositories. The modification part here is,\n of course, particularly tricky that could, I guess, lead them\n to sort of a full supply chain attack. The second one is a\n cross-site request forgery. Well, I talked a little bit\n about these type of attacks last week. And certainly don't\n underestimate them, but this one is less severe. Now, for\n the code injection issue, there is also proof of concept\n exploit code available. Definitely make sure if you're\n running GitLab on-prem that you're patching this. Well,\n and if you're at all involved in online gaming, you may have\n heard about the leak of Grand Theft Auto VI, the latest\n release of this game. And apparently there is currently\n an archive going around 113 gigabytes in size, which is a\n reasonable size for a game like this. But this archive\n does come with additional goodies in the form of\n malware. It's a very typical technique. And again, if you\n are involved in online gaming, you probably have seen this\n before, where either sort of jailbreaks or cheat codes or\n any kind of sort of gaming related software is often\n distributed with a malware attached to it. So be careful\n what you download and maybe wait for the official release\n of the game. Well, and that's it for today. So thanks for\n listening. Thanks for liking. Thanks for subscribing. And\n talk to you again tomorrow. Bye.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10062",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10062",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10062.mp3",
-      "title": "SANS Stormcast Friday, August 21st, 2026: Microsoft Graph and Powershell; Keycloak Vuln; Cryptographic Context Injection; N-Able Password Leak",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, August 21st, 2026: Microsoft Graph and Powershell; Keycloak Vuln; Cryptographic Context Injection; N-Able Password Leak",
-      "show_notes": [
-        {
-          "heading": "Using Microsoft Graph and Powershell to Mine for Information - Stale Accounts and Licenses",
-          "links": [
-            "https://isc.sans.edu/diary/Using%20Microsoft%20Graph%20and%20Powershell%20to%20Mine%20for%20Information%20-%20Stale%20Accounts%20and%20Licenses/33264"
-          ]
-        },
-        {
-          "heading": "Using Microsoft Graph and Powershell - Risk Detection Commands",
-          "links": [
-            "https://isc.sans.edu/diary/Using%20Microsoft%20Graph%20and%20Powershell%20-%20Risk%20Detection%20Commands/33266"
-          ]
-        },
-        {
-          "heading": "Keycloak Vulnerability",
-          "links": [
-            "https://github.com/keycloak/keycloak/issues/51833"
-          ]
-        },
-        {
-          "heading": "CRYPTOGRAPHIC CONTEXT INJECTION ATTACK",
-          "links": [
-            "https://adversa.ai/blog/cryptographic-context-injection-grok-data-theft/"
-          ]
-        },
-        {
-          "heading": "N-able password manager",
-          "links": [
-            "https://amibeingpwned.com/blog/solar-winds-part-2-avoided?_sp=75fd154a-e34f-41d0-8624-7c285776c13d.1787263544340"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-21T02:00:03+00:00",
-      "duration_seconds": 441,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10062.mp3",
-      "audio_length_bytes": 6246063,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10062",
-      "categories": [
-        "context injection",
-        "keycloak",
-        "microsoft",
-        "graph",
-        "n-able",
-        "password",
-        "manager"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10062",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Friday, August 21st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n industrial control system security. Well, today we did\n not just get one, but two great diaries from Rob about\n how to use PowerShell to automate various tasks with\n Microsoft Graph. Microsoft Graph is Microsoft's new\n standard API to interact with its services, in particular,\n of course, with Entra, which is responsible for Microsoft's\n authentication and access control. And well, nothing\n more important to access control than tracking stale\n accounts. So the first script that Rob presents here is\n collecting all users with stale accounts that basically\n haven't logged in in a while, but also lists any licenses\n assigned to different users. The second script that Rob\n shows here in the second diary today does look at the risk\n detection within Entra. Entra can mark certain activity as\n risky, and this PowerShell script does collect all users\n that triggered one of these alerts, plus details regarding\n the reason why the activity was considered risky. Some of\n them is just, for example, using an unusual browser for\n the particular user based on the user agent, but then also\n geographic origin or internet origin. So basically based on\n ASN, which of course often also then maps to specific\n geographies. Interesting PowerShell scripts, and I\n always love myself some automation. Personally, not a\n big PowerShell person, but given that you're dealing here\n with Microsoft's ecosystem, of course, there's a lot of\n support for PowerShell in particular when it comes to\n various libraries to interact with the Microsoft to retrieve\n all this data. And Keycloak released a new version 26.7.2\n fixing a number of security vulnerabilities. One of them\n is particularly interesting and thanks to listener Daniel\n for alerting me of this. I would have probably missed it\n otherwise. This is a password reset issue that was addressed\n here. An unabot unauthenticated user is able\n to reset any user's password. And the underlying problem\n here is that the well, basically password reset with\n Keycloak works like with many other systems where it sends\n you an email with a verification token. You have\n to click on that link to then reset your password. The\n problem is that the token isn't actually validated\n properly by Keycloak. And as a result, an attacker can\n essentially just spoof that token and reset the password\n without ever seeing the email. Keycloak is an identity access\n management system. It's heavily used by Red Hat. Red\n Hat also supports the development of a Keycloak. So\n definitely sort of the underpinning identity access\n management system for a lot of other products and web\n applications. Definitely if you're using Keycloak, get\n this updated. Keycloak is an identity access management\n system. And the blog post by Ronnie Utevsky demonstrates an\n interesting way to bypass safeguards in large language\n models. Ronnie calls this cryptographic context\n injection and really what it comes down to is that when\n you're sending a request to a chatbot, an LLM, it usually\n goes first through a filter to look if this is some kind of\n malicious or not allowed request. And then it's being\n passed to the actual engine that will act on this request.\n Well, the trick here is that the request is encrypted and\n then the LLM is being told how to decrypt it. But the\n decryption happens after it goes through the initial\n stage, the actual guardrail stage. And of course, during\n the guardrail check, the content is encrypted and it\n has no idea what it's actually doing here. This is a very\n classic bad pattern that we see a lot where you do\n basically your input validation before you do any\n kind of input manipulation. You always have to do your\n input validation after any kind of normalization and\n other kind of transformation of the input is performed. And\n well, this sort of basic step is reversed here. We've got\n another vulnerability in an N-able product, but this time\n nothing for you to patch. N-Able already took care of it\n for you. This affects the Passportal password manager.\n Now N-able, they make a lot of products for managed service\n providers. And of course, managed service providers need\n to have access to credentials in order to manage their\n clients' networks. The problem here is that the Passportal\n doesn't really interact well with the browser extension\n that is being used to retrieve passwords from Passportal. The\n interaction between the two components happens via\n standard across window messaging, standard JavaScript\n APIs. This works cross origin, but the Passportal didn't\n properly check the origin where the request came from.\n And the result was that basically any website was able\n to interface with Passportal and retrieve passwords. Given\n that managed service providers are really sort of a big focus\n of current attacks, because once you broke a managed\n service provider, you essentially also broke into\n all of their clients. This is certainly a very critical\n vulnerability. Luckily, N-Able was able to patch this within\n hours of the vulnerability being reported. Well, and\n that's it for today. Remember, the show notes also include a\n link to classes I'm teaching. And the Defending Web\n Application Security class actually covers two of the\n stories that we had today. KeyClock is a tool that we\n actually use in the class. And we also talk about Passport\n Reset, of course. And regarding the N-Able Password\n Manager issue, well, we actually have an exercise\n where we talk about the cross -window messaging and the\n JavaScript APIs and exactly sort of these origin issues\n that may happen there. That's it for today. Thanks and talk\n to you again on Monday. Bye.\n Bye.",
       "transcript_checked": true
     }
   ]
