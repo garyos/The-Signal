@@ -1,11 +1,209 @@
 {
-  "generated_at": "2026-11-09T14:14:45.550851+00:00",
+  "generated_at": "2026-11-10T13:42:56.174535+00:00",
   "cves": [
+    {
+      "id": "CVE-2026-116779",
+      "published": "2026-11-05T20:17:44.790",
+      "lastModified": "2026-11-10T05:17:57.830",
+      "vulnStatus": "Analyzed",
+      "description": "FreeSWITCH is a Software Defined Telecom Stack enabling the digital transformation from proprietary telecom switches to a software implementation that runs on any commodity hardware. Prior to 1.11.3, sofia_presence_handle_sip_i_message() split the To user of an inbound SIP MESSAGE on a plus sign and treated the left side as a chat protocol selector. Selecting the api chat proto reached switch_api_execute(), allowing a peer whose MESSAGE was accepted to run FreeSWITCH API commands, including oper",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-77",
+          "name": "Command Injection"
+        },
+        {
+          "id": "CWE-78",
+          "name": "OS Command Injection"
+        },
+        {
+          "id": "CWE-749",
+          "name": "CWE-749"
+        }
+      ],
+      "vendors": [
+        "signalwire freeswitch"
+      ],
+      "references": [
+        "https://github.com/signalwire/freeswitch/commit/7015f6a73ab3d67fed5fbfc277ecfb88a74c2a86",
+        "https://github.com/signalwire/freeswitch/pull/3135",
+        "https://github.com/signalwire/freeswitch/releases/tag/v1.11.3",
+        "https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-11-09",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.02177,
+        "percentile": 0.82481,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-123218",
+      "published": "2026-11-07T04:17:28.900",
+      "lastModified": "2026-11-10T05:17:59.200",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "IBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-863",
+          "name": "Incorrect Authorization"
+        }
+      ],
+      "vendors": [
+        "IBM Aspera Faspex"
+      ],
+      "references": [
+        "https://www.ibm.com/support/pages/node/7295921",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-123218"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-11-09",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.00705,
+        "percentile": 0.53668,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-102895",
+      "published": "2026-11-04T22:17:44.613",
+      "lastModified": "2026-11-10T05:17:40.970",
+      "vulnStatus": "Analyzed",
+      "description": "GPUStack is an open-source GPU cluster manager for AI model serving and GPU instance provisioning. Prior to 2.2.0, get_current_user in gpustack/api/auth.py treated a loopback request source as the built-in administrator when force_auth_localhost was false, which was the default. A remote request could appear to originate from 127.0.0.1 because client_ip_getter accepted a same-host reverse proxy peer or a client-supplied X-GPUStack-Real-IP loopback value. The bypass allowed unauthenticated admini",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        },
+        {
+          "id": "CWE-290",
+          "name": "CWE-290"
+        },
+        {
+          "id": "CWE-346",
+          "name": "CWE-346"
+        }
+      ],
+      "vendors": [
+        "gpustack gpustack"
+      ],
+      "references": [
+        "https://github.com/gpustack/gpustack/commit/53f42a6a553542974396d16a4ff6b12bcbedb48d",
+        "https://github.com/gpustack/gpustack/pull/5346",
+        "https://github.com/gpustack/gpustack/releases/tag/v2.2.0",
+        "https://github.com/gpustack/gpustack/security/advisories/GHSA-gj9m-f8ph-pmhr"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-11-09",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.00555,
+        "percentile": 0.46664,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-123158",
+      "published": "2026-11-05T16:17:47.110",
+      "lastModified": "2026-11-10T05:17:58.923",
+      "vulnStatus": "Undergoing Analysis",
+      "description": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configurations of accounts, any password between 256 and 1024 characters succeeds. An example of a platform using musl libc without PAM is Alpine Linux.",
+      "cvss": {
+        "score": 8.1,
+        "version": "3.1",
+        "severity": "HIGH"
+      },
+      "cwes": [
+        {
+          "id": "CWE-394",
+          "name": "CWE-394"
+        }
+      ],
+      "vendors": [
+        "OpenBSD OpenSSH"
+      ],
+      "references": [
+        "https://github.com/leonjza/sshhole-lab",
+        "https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482",
+        "https://github.com/predkambrij/sshhole-repro",
+        "https://hachyderm.io/@damienmiller/117563026759098135"
+      ],
+      "kev": {
+        "in_kev": true,
+        "date_added": "2026-11-09",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
+      },
+      "epss": {
+        "score": 0.16501,
+        "percentile": 0.97016,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": true,
+        "mention_count": 3,
+        "sources": [
+          "BleepingComputer",
+          "SANS ISC",
+          "The Hacker News"
+        ],
+        "first_seen": "2026-11-06",
+        "last_seen": "2026-11-09"
+      }
+    },
     {
       "id": "CVE-2026-19868",
       "published": "2026-11-06T19:17:48.437",
-      "lastModified": "2026-11-07T05:19:01.300",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-11-09T19:42:13.887",
+      "vulnStatus": "Analyzed",
       "description": "An authentication enforcement vulnerability in SonicOS SSLVPN service may allow a user with valid credentials for an alternate authentication method to bypass SAML authentication controls. Successful exploitation may also bypass SAML-enforced multi-factor authentication (MFA).",
       "cvss": {
         "score": 7.5,
@@ -32,9 +230,9 @@
         "known_ransomware": "Unknown"
       },
       "epss": {
-        "score": 0.00621,
-        "percentile": 0.50063,
-        "date": "2026-11-09"
+        "score": 0.00532,
+        "percentile": 0.45297,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": true,
@@ -79,8 +277,8 @@
       },
       "epss": {
         "score": 0.00822,
-        "percentile": 0.57579,
-        "date": "2026-11-09"
+        "percentile": 0.57628,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": true,
@@ -127,8 +325,8 @@
       },
       "epss": {
         "score": 0.03211,
-        "percentile": 0.88266,
-        "date": "2026-11-09"
+        "percentile": 0.88281,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -173,8 +371,8 @@
       },
       "epss": {
         "score": 0.02823,
-        "percentile": 0.86684,
-        "date": "2026-11-09"
+        "percentile": 0.86699,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -220,8 +418,8 @@
       },
       "epss": {
         "score": 0.02794,
-        "percentile": 0.8653,
-        "date": "2026-11-09"
+        "percentile": 0.86548,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -234,7 +432,7 @@
     {
       "id": "CVE-2026-121931",
       "published": "2026-11-04T19:17:33.157",
-      "lastModified": "2026-11-04T19:17:33.370",
+      "lastModified": "2026-11-09T17:17:18.600",
       "vulnStatus": "Deferred",
       "description": "A security vulnerability has been detected in Linksys WRT54GL 4.30.18. The impacted element is the function system of the file apply.cgi of the component Traceroute Diagnostic Function. Such manipulation of the argument traceroute_ip leads to os command injection. The attack can be launched remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way. This vulnerability only affects products that are no lon",
       "cvss": {
@@ -266,8 +464,8 @@
       },
       "epss": {
         "score": 0.02722,
-        "percentile": 0.86147,
-        "date": "2026-11-09"
+        "percentile": 0.86164,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -280,7 +478,7 @@
     {
       "id": "CVE-2026-121930",
       "published": "2026-11-04T19:17:32.883",
-      "lastModified": "2026-11-04T19:17:33.087",
+      "lastModified": "2026-11-09T17:17:18.443",
       "vulnStatus": "Deferred",
       "description": "A weakness has been identified in Linksys WRT54GL 4.30.18. The affected element is the function system of the file apply.cgi of the component Ping Diagnostic. This manipulation of the argument ping_ip causes os command injection. The attack can be initiated remotely. The exploit has been made available to the public and could be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way. This vulnerability only affects products that are no longer suppor",
       "cvss": {
@@ -312,8 +510,8 @@
       },
       "epss": {
         "score": 0.02722,
-        "percentile": 0.86147,
-        "date": "2026-11-09"
+        "percentile": 0.86165,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -358,8 +556,8 @@
       },
       "epss": {
         "score": 0.02575,
-        "percentile": 0.85299,
-        "date": "2026-11-09"
+        "percentile": 0.85319,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -404,8 +602,8 @@
       },
       "epss": {
         "score": 0.02451,
-        "percentile": 0.84499,
-        "date": "2026-11-09"
+        "percentile": 0.84519,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -418,7 +616,7 @@
     {
       "id": "CVE-2026-121932",
       "published": "2026-11-04T19:17:33.440",
-      "lastModified": "2026-11-04T19:17:33.623",
+      "lastModified": "2026-11-09T17:17:18.757",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was detected in Linksys E5350 1.0.00.037. This affects the function system of the file /wizard/apply.cgi. Performing a manipulation of the argument ping_ip/traceroute_ip results in os command injection. The attack may be initiated remotely. The exploit is now public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
       "cvss": {
@@ -450,8 +648,50 @@
       },
       "epss": {
         "score": 0.02381,
-        "percentile": 0.84013,
-        "date": "2026-11-09"
+        "percentile": 0.84034,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-118066",
+      "published": "2026-11-07T12:17:43.717",
+      "lastModified": "2026-11-08T19:17:34.637",
+      "vulnStatus": "Deferred",
+      "description": "The Appointment Booking Plugin \u2013 LatePoint | Calendar & Scheduling for WordPress plugin for WordPress is vulnerable to Authentication Bypass via Account Takeover in all versions up to, and including, 5.7.6. This is due to the `OsModel::build_conditions_query()` function in `lib/models/model.php` comparing WHERE-clause values against the literal strings `'IS NULL'` and `'IS NOT NULL'` and concatenating a match directly into SQL without binding it as a parameter, a flaw that neither `sanitize_text",
+      "cvss": {
+        "score": 9.1,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-287",
+          "name": "Improper Authentication"
+        }
+      ],
+      "vendors": [
+        "latepoint Appointment Booking Plugin \u2013 LatePoint | Calendar & Scheduling for WordPress"
+      ],
+      "references": [
+        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/latepoint.php#L1073",
+        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/controllers/customer_cabinet_controller.php#L494",
+        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/controllers/steps_controller.php#L178",
+        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/helpers/customer_helper.php#L235"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.02255,
+        "percentile": 0.83084,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -496,8 +736,8 @@
       },
       "epss": {
         "score": 0.02211,
-        "percentile": 0.8273,
-        "date": "2026-11-09"
+        "percentile": 0.82749,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -542,8 +782,8 @@
       },
       "epss": {
         "score": 0.02211,
-        "percentile": 0.8273,
-        "date": "2026-11-09"
+        "percentile": 0.82749,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -589,8 +829,8 @@
       },
       "epss": {
         "score": 0.02208,
-        "percentile": 0.82713,
-        "date": "2026-11-09"
+        "percentile": 0.82732,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -635,8 +875,8 @@
       },
       "epss": {
         "score": 0.0207,
-        "percentile": 0.81568,
-        "date": "2026-11-09"
+        "percentile": 0.81591,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -681,8 +921,8 @@
       },
       "epss": {
         "score": 0.0207,
-        "percentile": 0.81568,
-        "date": "2026-11-09"
+        "percentile": 0.81591,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -723,8 +963,8 @@
       },
       "epss": {
         "score": 0.02067,
-        "percentile": 0.81535,
-        "date": "2026-11-09"
+        "percentile": 0.81558,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -737,7 +977,7 @@
     {
       "id": "CVE-2026-121607",
       "published": "2026-11-04T02:17:19.753",
-      "lastModified": "2026-11-04T02:17:19.933",
+      "lastModified": "2026-11-09T17:17:15.270",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was found in Qihoo 360 D603-2, D600-2, D606-6 and D706 up to 6.4.9. This affects the function testspeed_command of the file /fs2/bin/iscm. Performing a manipulation of the argument host results in os command injection. The attack may be initiated remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure but did not respond in any way.",
       "cvss": {
@@ -772,8 +1012,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80779,
-        "date": "2026-11-09"
+        "percentile": 0.80804,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -818,8 +1058,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80778,
-        "date": "2026-11-09"
+        "percentile": 0.80804,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -864,8 +1104,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80779,
-        "date": "2026-11-09"
+        "percentile": 0.80803,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -910,8 +1150,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80778,
-        "date": "2026-11-09"
+        "percentile": 0.80803,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -956,8 +1196,8 @@
       },
       "epss": {
         "score": 0.01989,
-        "percentile": 0.80779,
-        "date": "2026-11-09"
+        "percentile": 0.80803,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -970,8 +1210,8 @@
     {
       "id": "CVE-2026-17402",
       "published": "2026-11-07T05:18:56.460",
-      "lastModified": "2026-11-07T05:18:56.630",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T05:18:03.967",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary commands due to OS command injection. User-supplied input is not properly neutralized before it is passed to the operating system, which could allow commands to run on the underlying host.",
       "cvss": {
         "score": 9.9,
@@ -996,8 +1236,8 @@
       },
       "epss": {
         "score": 0.01908,
-        "percentile": 0.79915,
-        "date": "2026-11-09"
+        "percentile": 0.79937,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1038,8 +1278,8 @@
       },
       "epss": {
         "score": 0.01707,
-        "percentile": 0.77477,
-        "date": "2026-11-09"
+        "percentile": 0.77507,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1084,8 +1324,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77188,
-        "date": "2026-11-09"
+        "percentile": 0.77216,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1130,8 +1370,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77189,
-        "date": "2026-11-09"
+        "percentile": 0.77216,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1176,8 +1416,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77187,
-        "date": "2026-11-09"
+        "percentile": 0.77215,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1222,8 +1462,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77188,
-        "date": "2026-11-09"
+        "percentile": 0.77217,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1268,8 +1508,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77188,
-        "date": "2026-11-09"
+        "percentile": 0.77216,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1314,8 +1554,8 @@
       },
       "epss": {
         "score": 0.01687,
-        "percentile": 0.77188,
-        "date": "2026-11-09"
+        "percentile": 0.77216,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1360,8 +1600,8 @@
       },
       "epss": {
         "score": 0.01652,
-        "percentile": 0.76709,
-        "date": "2026-11-09"
+        "percentile": 0.76743,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1406,8 +1646,8 @@
       },
       "epss": {
         "score": 0.01652,
-        "percentile": 0.76709,
-        "date": "2026-11-09"
+        "percentile": 0.76743,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1446,8 +1686,8 @@
       },
       "epss": {
         "score": 0.01626,
-        "percentile": 0.76331,
-        "date": "2026-11-09"
+        "percentile": 0.76366,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1486,8 +1726,8 @@
       },
       "epss": {
         "score": 0.01626,
-        "percentile": 0.76325,
-        "date": "2026-11-09"
+        "percentile": 0.7636,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1528,8 +1768,8 @@
       },
       "epss": {
         "score": 0.01487,
-        "percentile": 0.74231,
-        "date": "2026-11-09"
+        "percentile": 0.74262,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1572,8 +1812,8 @@
       },
       "epss": {
         "score": 0.01438,
-        "percentile": 0.73344,
-        "date": "2026-11-09"
+        "percentile": 0.73376,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1618,8 +1858,8 @@
       },
       "epss": {
         "score": 0.01346,
-        "percentile": 0.71632,
-        "date": "2026-11-09"
+        "percentile": 0.71664,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1660,58 +1900,8 @@
       },
       "epss": {
         "score": 0.01323,
-        "percentile": 0.7111,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-116779",
-      "published": "2026-11-05T20:17:44.790",
-      "lastModified": "2026-11-07T05:18:04.210",
-      "vulnStatus": "Undergoing Analysis",
-      "description": "FreeSWITCH is a Software Defined Telecom Stack enabling the digital transformation from proprietary telecom switches to a software implementation that runs on any commodity hardware. Prior to 1.11.3, sofia_presence_handle_sip_i_message() split the To user of an inbound SIP MESSAGE on a plus sign and treated the left side as a chat protocol selector. Selecting the api chat proto reached switch_api_execute(), allowing a peer whose MESSAGE was accepted to run FreeSWITCH API commands, including oper",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-77",
-          "name": "Command Injection"
-        },
-        {
-          "id": "CWE-78",
-          "name": "OS Command Injection"
-        },
-        {
-          "id": "CWE-749",
-          "name": "CWE-749"
-        }
-      ],
-      "vendors": [
-        "signalwire freeswitch"
-      ],
-      "references": [
-        "https://github.com/signalwire/freeswitch/commit/7015f6a73ab3d67fed5fbfc277ecfb88a74c2a86",
-        "https://github.com/signalwire/freeswitch/pull/3135",
-        "https://github.com/signalwire/freeswitch/releases/tag/v1.11.3",
-        "https://github.com/signalwire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.01299,
-        "percentile": 0.70632,
-        "date": "2026-11-09"
+        "percentile": 0.71143,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1724,7 +1914,7 @@
     {
       "id": "CVE-2026-54143",
       "published": "2026-11-05T17:18:19.487",
-      "lastModified": "2026-11-06T21:41:14.180",
+      "lastModified": "2026-11-09T23:17:23.337",
       "vulnStatus": "Deferred",
       "description": "OpenHuman is an open-source agent harness available as a desktop application and Rust library. Before version 0.57.13, an attacker who can send messages to a configured external channel can cause the agent to create persistent shell cron jobs without human approval. The scheduler later executes these jobs with the privileges of the OpenHuman runtime user. Command validation also permits leading environment assignments that can redirect allowed commands to executable helpers. The demonstrated exp",
       "cvss": {
@@ -1756,8 +1946,8 @@
       },
       "epss": {
         "score": 0.01181,
-        "percentile": 0.67947,
-        "date": "2026-11-09"
+        "percentile": 0.67983,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1796,8 +1986,8 @@
       },
       "epss": {
         "score": 0.01142,
-        "percentile": 0.66903,
-        "date": "2026-11-09"
+        "percentile": 0.66941,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1835,8 +2025,8 @@
       },
       "epss": {
         "score": 0.01069,
-        "percentile": 0.6506,
-        "date": "2026-11-09"
+        "percentile": 0.65103,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1877,8 +2067,8 @@
       },
       "epss": {
         "score": 0.01045,
-        "percentile": 0.64403,
-        "date": "2026-11-09"
+        "percentile": 0.64444,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1891,7 +2081,7 @@
     {
       "id": "CVE-2026-116785",
       "published": "2026-11-05T20:17:45.730",
-      "lastModified": "2026-11-05T22:38:13.080",
+      "lastModified": "2026-11-09T18:17:21.850",
       "vulnStatus": "Undergoing Analysis",
       "description": "FreeSWITCH is a Software Defined Telecom Stack enabling the digital transformation from proprietary telecom switches to a software implementation that runs on any commodity hardware. Prior to 1.11.2, ws_read_frame() decoded a WebSocket frame's 64-bit extended payload length with a 32-bit byte swap and narrowed the result into a signed length. A value whose surviving low word became negative bypassed the signed size check and was reinterpreted as an enormous unsigned count, causing client bytes t",
       "cvss": {
@@ -1926,8 +2116,8 @@
       },
       "epss": {
         "score": 0.01031,
-        "percentile": 0.63981,
-        "date": "2026-11-09"
+        "percentile": 0.64024,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -1940,7 +2130,7 @@
     {
       "id": "CVE-2026-123966",
       "published": "2026-11-07T14:17:01.800",
-      "lastModified": "2026-11-07T14:17:01.973",
+      "lastModified": "2026-11-09T23:17:17.163",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was determined in Tenda AC19 16.03.10.07. Affected by this issue is the function saveParentControlInfo of the file /goform/saveParentControlInfo. This manipulation of the argument deviceId causes heap-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been publicly disclosed and may be utilized.",
       "cvss": {
@@ -1972,8 +2162,8 @@
       },
       "epss": {
         "score": 0.01021,
-        "percentile": 0.63672,
-        "date": "2026-11-09"
+        "percentile": 0.63713,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2021,8 +2211,8 @@
       },
       "epss": {
         "score": 0.00995,
-        "percentile": 0.62905,
-        "date": "2026-11-09"
+        "percentile": 0.62949,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2035,7 +2225,7 @@
     {
       "id": "CVE-2026-121933",
       "published": "2026-11-04T20:19:11.607",
-      "lastModified": "2026-11-04T20:19:11.813",
+      "lastModified": "2026-11-09T17:17:18.913",
       "vulnStatus": "Deferred",
       "description": "A flaw has been found in Linksys E5350 1.0.00.037. This impacts the function save_settings of the file /wizard/apply.cgi of the component Setup Wizard. Executing a manipulation of the argument wizard_router_pwd can lead to missing authentication. The attack may be launched remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
       "cvss": {
@@ -2067,8 +2257,8 @@
       },
       "epss": {
         "score": 0.00977,
-        "percentile": 0.62391,
-        "date": "2026-11-09"
+        "percentile": 0.62432,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2109,8 +2299,8 @@
       },
       "epss": {
         "score": 0.00962,
-        "percentile": 0.61853,
-        "date": "2026-11-09"
+        "percentile": 0.61894,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2149,8 +2339,8 @@
       },
       "epss": {
         "score": 0.00926,
-        "percentile": 0.60725,
-        "date": "2026-11-09"
+        "percentile": 0.60773,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2163,7 +2353,7 @@
     {
       "id": "CVE-2026-17340",
       "published": "2026-11-07T05:18:45.510",
-      "lastModified": "2026-11-09T05:18:31.037",
+      "lastModified": "2026-11-09T15:17:20.137",
       "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote attacker to execute arbitrary code due to a path traversal vulnerability.",
       "cvss": {
@@ -2188,8 +2378,8 @@
       },
       "epss": {
         "score": 0.00922,
-        "percentile": 0.60586,
-        "date": "2026-11-09"
+        "percentile": 0.60634,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2228,8 +2418,8 @@
       },
       "epss": {
         "score": 0.00899,
-        "percentile": 0.59891,
-        "date": "2026-11-09"
+        "percentile": 0.59938,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2242,8 +2432,8 @@
     {
       "id": "CVE-2026-15266",
       "published": "2026-11-08T18:17:02.450",
-      "lastModified": "2026-11-08T18:17:02.560",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T05:18:01.390",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM Concert 1.0 through 3.0.1.1 contains components that allow potentially unsafe command execution, which could be exploited to run arbitrary system commands on the host.",
       "cvss": {
         "score": 9.8,
@@ -2267,8 +2457,8 @@
       },
       "epss": {
         "score": 0.00876,
-        "percentile": 0.59243,
-        "date": "2026-11-09"
+        "percentile": 0.59289,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2309,8 +2499,8 @@
       },
       "epss": {
         "score": 0.00872,
-        "percentile": 0.59151,
-        "date": "2026-11-09"
+        "percentile": 0.59197,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2323,7 +2513,7 @@
     {
       "id": "CVE-2026-6715",
       "published": "2026-11-08T19:17:39.980",
-      "lastModified": "2026-11-08T19:17:40.093",
+      "lastModified": "2026-11-10T05:18:06.910",
       "vulnStatus": "Awaiting Analysis",
       "description": "IBM Concert 1.0 through 3.0.1.1 allows an attacker can supply crafted input that is incorporated into an operating system command without adequate validation or sanitization. Successful exploitation allows remote attackers to execute arbitrary commands on the underlying operating system with the privileges of the affected service.",
       "cvss": {
@@ -2348,8 +2538,8 @@
       },
       "epss": {
         "score": 0.0086,
-        "percentile": 0.58766,
-        "date": "2026-11-09"
+        "percentile": 0.58815,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2394,50 +2584,8 @@
       },
       "epss": {
         "score": 0.00856,
-        "percentile": 0.58665,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-118066",
-      "published": "2026-11-07T12:17:43.717",
-      "lastModified": "2026-11-08T19:17:34.637",
-      "vulnStatus": "Deferred",
-      "description": "The Appointment Booking Plugin \u2013 LatePoint | Calendar & Scheduling for WordPress plugin for WordPress is vulnerable to Authentication Bypass via Account Takeover in all versions up to, and including, 5.7.6. This is due to the `OsModel::build_conditions_query()` function in `lib/models/model.php` comparing WHERE-clause values against the literal strings `'IS NULL'` and `'IS NOT NULL'` and concatenating a match directly into SQL without binding it as a parameter, a flaw that neither `sanitize_text",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-287",
-          "name": "Improper Authentication"
-        }
-      ],
-      "vendors": [
-        "latepoint Appointment Booking Plugin \u2013 LatePoint | Calendar & Scheduling for WordPress"
-      ],
-      "references": [
-        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/latepoint.php#L1073",
-        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/controllers/customer_cabinet_controller.php#L494",
-        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/controllers/steps_controller.php#L178",
-        "https://plugins.trac.wordpress.org/browser/latepoint/tags/5.7.5/lib/helpers/customer_helper.php#L235"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00851,
-        "percentile": 0.5847,
-        "date": "2026-11-09"
+        "percentile": 0.58713,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2476,8 +2624,8 @@
       },
       "epss": {
         "score": 0.0085,
-        "percentile": 0.58437,
-        "date": "2026-11-09"
+        "percentile": 0.58482,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2516,8 +2664,8 @@
       },
       "epss": {
         "score": 0.0085,
-        "percentile": 0.58436,
-        "date": "2026-11-09"
+        "percentile": 0.58483,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2558,8 +2706,8 @@
       },
       "epss": {
         "score": 0.00845,
-        "percentile": 0.58295,
-        "date": "2026-11-09"
+        "percentile": 0.58342,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2604,8 +2752,8 @@
       },
       "epss": {
         "score": 0.00841,
-        "percentile": 0.58147,
-        "date": "2026-11-09"
+        "percentile": 0.58193,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2618,8 +2766,8 @@
     {
       "id": "CVE-2026-17239",
       "published": "2026-11-07T05:18:32.657",
-      "lastModified": "2026-11-09T05:18:30.507",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-09T15:17:19.867",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary code due to a path traversal vulnerability.",
       "cvss": {
         "score": 9.9,
@@ -2643,8 +2791,50 @@
       },
       "epss": {
         "score": 0.00835,
-        "percentile": 0.57952,
-        "date": "2026-11-09"
+        "percentile": 0.58002,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-125383",
+      "published": "2026-11-10T00:17:11.510",
+      "lastModified": "2026-11-10T00:17:11.510",
+      "vulnStatus": "Received",
+      "description": "INDOTALENT WHMS (Asp.Net-Core-Inventory-Order-Management-System) before 10.20261109 contains an authentication bypass vulnerability caused by a hard-coded JWT signing key, issuer and audience in appsettings.json. Unauthenticated remote attackers can forge tokens for any user ID and role that the Tokens/DI.cs validator trusts, gaining administrator access to the entire API.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-321",
+          "name": "CWE-321"
+        }
+      ],
+      "vendors": [
+        "go2ismail Asp.Net-Core-Inventory-Order-Management-System"
+      ],
+      "references": [
+        "https://github.com/go2ismail/Asp.Net-Core-Inventory-Order-Management-System",
+        "https://github.com/go2ismail/Asp.Net-Core-Inventory-Order-Management-System/blob/v9.20250118/Presentation/ASPNET/appsettings.json#L38-L44",
+        "https://github.com/go2ismail/Asp.Net-Core-Inventory-Order-Management-System/commit/65609b5b88cb4f156e8164f33b8db8c63f5c125b",
+        "https://github.com/go2ismail/Asp.Net-Core-Inventory-Order-Management-System/commit/ded7d8a9457c780dfd4f5ea74d7e72111fafaea6"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00834,
+        "percentile": 0.57966,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2696,8 +2886,8 @@
       },
       "epss": {
         "score": 0.00833,
-        "percentile": 0.57903,
-        "date": "2026-11-09"
+        "percentile": 0.57953,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2710,7 +2900,7 @@
     {
       "id": "CVE-2026-122013",
       "published": "2026-11-04T21:18:07.540",
-      "lastModified": "2026-11-04T21:18:07.710",
+      "lastModified": "2026-11-09T17:17:19.220",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was detected in Comfast CF-WR632AX 2.6.0.1. Affected by this vulnerability is an unknown functionality of the file /usr/bin/webmgnt of the component Multipart Parser. Performing a manipulation of the argument filename results in path traversal. It is possible to initiate the attack remotely. The exploit is now public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
       "cvss": {
@@ -2738,8 +2928,8 @@
       },
       "epss": {
         "score": 0.00822,
-        "percentile": 0.57573,
-        "date": "2026-11-09"
+        "percentile": 0.57622,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2752,7 +2942,7 @@
     {
       "id": "CVE-2026-97693",
       "published": "2026-11-04T22:18:07.687",
-      "lastModified": "2026-11-04T22:18:07.687",
+      "lastModified": "2026-11-09T17:17:35.623",
       "vulnStatus": "Received",
       "description": "Yuxi is a large-model-based intelligent knowledge base and knowledge graph agent development platform. From 0.6.0.beta1 until 0.7.1, there is insufficient isolation between execution-capable Docker sandboxes and trusted application services. A low-privileged authenticated user who can execute commands in their own sandbox can reach other tenants' sandbox APIs, access their files and secrets, execute commands in active sandboxes, and enumerate, create, or delete sandboxes through the unauthentica",
       "cvss": {
@@ -2786,8 +2976,8 @@
       },
       "epss": {
         "score": 0.00804,
-        "percentile": 0.57007,
-        "date": "2026-11-09"
+        "percentile": 0.57056,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2800,8 +2990,8 @@
     {
       "id": "CVE-2026-17117",
       "published": "2026-11-07T05:18:25.647",
-      "lastModified": "2026-11-09T05:18:29.480",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-09T15:17:19.737",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary code due to improperly controlled modification of object attributes. A user could set a field that should only be controlled by the system, which could lead to code execution.",
       "cvss": {
         "score": 9.9,
@@ -2826,8 +3016,8 @@
       },
       "epss": {
         "score": 0.00803,
-        "percentile": 0.5698,
-        "date": "2026-11-09"
+        "percentile": 0.57029,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2840,7 +3030,7 @@
     {
       "id": "CVE-2026-123961",
       "published": "2026-11-07T11:17:01.290",
-      "lastModified": "2026-11-07T11:17:01.483",
+      "lastModified": "2026-11-09T14:17:13.723",
       "vulnStatus": "Deferred",
       "description": "A security vulnerability has been detected in TOTOLINK CA300-PoE 6.2c.884. This impacts the function setWiFiBasicConfig of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument KeyStr leads to buffer overflow. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.",
       "cvss": {
@@ -2872,8 +3062,8 @@
       },
       "epss": {
         "score": 0.00796,
-        "percentile": 0.56721,
-        "date": "2026-11-09"
+        "percentile": 0.56772,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2886,7 +3076,7 @@
     {
       "id": "CVE-2026-123960",
       "published": "2026-11-07T10:17:12.357",
-      "lastModified": "2026-11-07T10:17:12.530",
+      "lastModified": "2026-11-09T23:17:16.990",
       "vulnStatus": "Deferred",
       "description": "A weakness has been identified in TOTOLINK CA300-PoE 6.2c.884. This affects the function setWanConfig of the file /cgi-bin/cstecgi.cgi. Executing a manipulation of the argument pppoeUser/priDns/secDns can lead to buffer overflow. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.",
       "cvss": {
@@ -2918,8 +3108,8 @@
       },
       "epss": {
         "score": 0.00796,
-        "percentile": 0.56721,
-        "date": "2026-11-09"
+        "percentile": 0.56771,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -2961,8 +3151,8 @@
       },
       "epss": {
         "score": 0.00796,
-        "percentile": 0.56723,
-        "date": "2026-11-09"
+        "percentile": 0.56773,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3001,8 +3191,8 @@
       },
       "epss": {
         "score": 0.00786,
-        "percentile": 0.56406,
-        "date": "2026-11-09"
+        "percentile": 0.56458,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3041,8 +3231,8 @@
       },
       "epss": {
         "score": 0.00786,
-        "percentile": 0.56406,
-        "date": "2026-11-09"
+        "percentile": 0.56458,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3055,8 +3245,8 @@
     {
       "id": "CVE-2026-17313",
       "published": "2026-11-07T05:18:40.163",
-      "lastModified": "2026-11-07T05:18:40.313",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-09T14:17:18.777",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote attacker to obtain sensitive information and take control of gateway configuration due to authentication bypass via an alternate path.",
       "cvss": {
         "score": 9.8,
@@ -3080,8 +3270,8 @@
       },
       "epss": {
         "score": 0.0078,
-        "percentile": 0.56192,
-        "date": "2026-11-09"
+        "percentile": 0.56243,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3122,8 +3312,8 @@
       },
       "epss": {
         "score": 0.00779,
-        "percentile": 0.56175,
-        "date": "2026-11-09"
+        "percentile": 0.56226,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3172,8 +3362,8 @@
       },
       "epss": {
         "score": 0.00771,
-        "percentile": 0.55931,
-        "date": "2026-11-09"
+        "percentile": 0.55982,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3212,8 +3402,8 @@
       },
       "epss": {
         "score": 0.00766,
-        "percentile": 0.55741,
-        "date": "2026-11-09"
+        "percentile": 0.55791,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3226,7 +3416,7 @@
     {
       "id": "CVE-2026-54141",
       "published": "2026-11-05T17:18:19.103",
-      "lastModified": "2026-11-06T21:41:14.180",
+      "lastModified": "2026-11-09T23:17:23.217",
       "vulnStatus": "Deferred",
       "description": "OpenHuman is an open-source agent harness available as a desktop application and Rust library. Before 0.57.13, a remote direct message received through a configured Yuanbao channel is converted into a generic channel AgentTurnRequest that uses the default tool policy without establishing an interactive approval context. Under the default Supervised autonomy policy with Node enabled, node_exec is classified as a write operation that should prompt for approval, but ApprovalGate treats missing APPR",
       "cvss": {
@@ -3258,8 +3448,8 @@
       },
       "epss": {
         "score": 0.00762,
-        "percentile": 0.55615,
-        "date": "2026-11-09"
+        "percentile": 0.55665,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3272,7 +3462,7 @@
     {
       "id": "CVE-2026-121615",
       "published": "2026-11-04T03:17:14.810",
-      "lastModified": "2026-11-04T03:17:14.997",
+      "lastModified": "2026-11-09T17:17:16.050",
       "vulnStatus": "Deferred",
       "description": "A vulnerability was determined in Linksys E5600 1.1.0.26. Affected is an unknown function of the file /cgi-bin/mesh_login.cgi of the component Login Handler. Executing a manipulation can lead to improper authentication. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way. This vulnerability only affects products that are no longer supported by the maintainer.",
       "cvss": {
@@ -3300,8 +3490,8 @@
       },
       "epss": {
         "score": 0.00754,
-        "percentile": 0.55379,
-        "date": "2026-11-09"
+        "percentile": 0.55428,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3314,7 +3504,7 @@
     {
       "id": "CVE-2026-122006",
       "published": "2026-11-04T15:17:42.940",
-      "lastModified": "2026-11-05T17:18:01.240",
+      "lastModified": "2026-11-09T22:18:33.223",
       "vulnStatus": "Received",
       "description": "The activestorage gem before 8.1.4.1 for Ruby on Rails, when ImageMagick attachment processing occurs, can allow server read and write operations (e.g., reading secret_key_base) because the ImageMagick analyzer runs when a file is attached, and there is not an ImageMagick security policy to block unintended functionality.",
       "cvss": {
@@ -3342,8 +3532,8 @@
       },
       "epss": {
         "score": 0.00741,
-        "percentile": 0.54923,
-        "date": "2026-11-09"
+        "percentile": 0.54974,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3384,8 +3574,8 @@
       },
       "epss": {
         "score": 0.00736,
-        "percentile": 0.54738,
-        "date": "2026-11-09"
+        "percentile": 0.5479,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3430,8 +3620,8 @@
       },
       "epss": {
         "score": 0.00727,
-        "percentile": 0.54443,
-        "date": "2026-11-09"
+        "percentile": 0.54492,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3472,8 +3662,8 @@
       },
       "epss": {
         "score": 0.00723,
-        "percentile": 0.54284,
-        "date": "2026-11-09"
+        "percentile": 0.54334,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3511,8 +3701,8 @@
       },
       "epss": {
         "score": 0.00722,
-        "percentile": 0.54279,
-        "date": "2026-11-09"
+        "percentile": 0.54329,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3557,8 +3747,8 @@
       },
       "epss": {
         "score": 0.00721,
-        "percentile": 0.54228,
-        "date": "2026-11-09"
+        "percentile": 0.54278,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3601,8 +3791,50 @@
       },
       "epss": {
         "score": 0.0069,
-        "percentile": 0.53086,
-        "date": "2026-11-09"
+        "percentile": 0.53137,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-125370",
+      "published": "2026-11-10T00:17:09.237",
+      "lastModified": "2026-11-10T00:17:09.370",
+      "vulnStatus": "Deferred",
+      "description": "Kubero 3.0.0 through 3.1.1 contains an authentication bypass vulnerability that allows unauthenticated remote attackers to forge administrative JWTs by using a hardcoded fallback signing secret when JWT_SECRET is unset. Attackers can sign tokens with arbitrary role, userGroups and permissions claims, which JwtStrategy.validate() trusts without a database lookup, to take control of pipelines, applications, users and API tokens.",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-321",
+          "name": "CWE-321"
+        }
+      ],
+      "vendors": [
+        "kubero-dev kubero"
+      ],
+      "references": [
+        "https://github.com/kubero-dev/kubero",
+        "https://github.com/kubero-dev/kubero/blob/bcb52376b19347b8c36bc445ddf3e4bff4a5c168/server/src/auth/strategies/jwt.strategy.ts#L13-L32",
+        "https://github.com/kubero-dev/kubero/issues/786",
+        "https://www.vulncheck.com/advisories/kubero-3.0.0-through-3.1.1-authentication-bypass-via-hardcoded-jwt-secret"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00683,
+        "percentile": 0.52832,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3644,8 +3876,8 @@
       },
       "epss": {
         "score": 0.00675,
-        "percentile": 0.52449,
-        "date": "2026-11-09"
+        "percentile": 0.52501,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3683,8 +3915,8 @@
       },
       "epss": {
         "score": 0.00672,
-        "percentile": 0.52356,
-        "date": "2026-11-09"
+        "percentile": 0.52407,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3722,8 +3954,8 @@
       },
       "epss": {
         "score": 0.00668,
-        "percentile": 0.52195,
-        "date": "2026-11-09"
+        "percentile": 0.52245,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3762,8 +3994,8 @@
       },
       "epss": {
         "score": 0.00666,
-        "percentile": 0.5212,
-        "date": "2026-11-09"
+        "percentile": 0.52169,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3776,8 +4008,8 @@
     {
       "id": "CVE-2026-17354",
       "published": "2026-11-07T05:18:47.057",
-      "lastModified": "2026-11-07T05:18:47.207",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-09T15:17:20.287",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to perform arbitrary file writes due to path traversal.",
       "cvss": {
         "score": 9.9,
@@ -3801,8 +4033,8 @@
       },
       "epss": {
         "score": 0.00664,
-        "percentile": 0.52037,
-        "date": "2026-11-09"
+        "percentile": 0.52088,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3815,8 +4047,8 @@
     {
       "id": "CVE-2026-17158",
       "published": "2026-11-07T05:18:28.853",
-      "lastModified": "2026-11-07T05:18:29.003",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T05:18:01.610",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to gain elevated privileges due to improper authentication.",
       "cvss": {
         "score": 9.9,
@@ -3841,8 +4073,8 @@
       },
       "epss": {
         "score": 0.00662,
-        "percentile": 0.51947,
-        "date": "2026-11-09"
+        "percentile": 0.51996,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3855,7 +4087,7 @@
     {
       "id": "CVE-2026-54384",
       "published": "2026-11-04T23:17:48.523",
-      "lastModified": "2026-11-05T15:15:04.833",
+      "lastModified": "2026-11-09T17:17:31.323",
       "vulnStatus": "Deferred",
       "description": "VitaFit cloud API before 2026-10-30 contained an authentication bypass vulnerability that allows remote attackers to obtain a full session for a victim's account by submitting a linked Google or Facebook account identifier to the POST /front/login/sns/ endpoint without providing proof of ownership from the identity provider. Attackers can forge a login using an identifier exposed through account enumeration to read and modify the victim's profile and delete the account's authentication record, p",
       "cvss": {
@@ -3882,8 +4114,8 @@
       },
       "epss": {
         "score": 0.00661,
-        "percentile": 0.51915,
-        "date": "2026-11-09"
+        "percentile": 0.51965,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3922,8 +4154,8 @@
       },
       "epss": {
         "score": 0.00659,
-        "percentile": 0.51829,
-        "date": "2026-11-09"
+        "percentile": 0.5188,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -3936,7 +4168,7 @@
     {
       "id": "CVE-2026-123614",
       "published": "2026-11-08T02:16:56.983",
-      "lastModified": "2026-11-08T02:16:56.983",
+      "lastModified": "2026-11-09T14:17:13.197",
       "vulnStatus": "Received",
       "description": "imgproxy from 4.0.0 before 4.0.16 contains an integer overflow in the ICO loader that allows remote attackers to trigger a heap buffer overflow via a crafted data_size value. Attackers can submit a crafted ICO image whose data_size wraps the allocation in vips/icoload.c, corrupting heap memory to crash the process or achieve code execution.",
       "cvss": {
@@ -3962,8 +4194,8 @@
       },
       "epss": {
         "score": 0.00657,
-        "percentile": 0.51752,
-        "date": "2026-11-09"
+        "percentile": 0.51803,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -4002,8 +4234,8 @@
       },
       "epss": {
         "score": 0.00655,
-        "percentile": 0.51654,
-        "date": "2026-11-09"
+        "percentile": 0.51705,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -4016,8 +4248,8 @@
     {
       "id": "CVE-2026-17392",
       "published": "2026-11-07T05:18:54.113",
-      "lastModified": "2026-11-07T05:18:54.270",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T05:18:02.240",
+      "vulnStatus": "Undergoing Analysis",
       "description": "IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to gain unauthorized administrative access to other tenants due to LDAP injection. User-supplied input is not properly neutralized in directory queries, which could change the query and grant access beyond the user's own tenant.",
       "cvss": {
         "score": 9.9,
@@ -4042,8 +4274,47 @@
       },
       "epss": {
         "score": 0.00655,
-        "percentile": 0.51654,
-        "date": "2026-11-09"
+        "percentile": 0.51705,
+        "date": "2026-11-10"
+      },
+      "media": {
+        "in_news": false,
+        "mention_count": 0,
+        "sources": [],
+        "first_seen": null,
+        "last_seen": null
+      }
+    },
+    {
+      "id": "CVE-2026-123270",
+      "published": "2026-11-09T18:17:25.207",
+      "lastModified": "2026-11-09T18:17:25.207",
+      "vulnStatus": "Received",
+      "description": "Redpanda Connect versions 4.39 to 4.110 contain a missing authentication vulnerability that enables unauthenticated remote code execution (RCE). In streams mode, the management HTTP API is exposed on `0.0.0.0:4195`, but authentication is disabled by default and there is no authentication gate protecting the stream CRUD routes. An unauthenticated attacker with network access to TCP/4195 can `POST` a malicious pipeline definition to `/streams/{id}` that includes code-executing processors such as `",
+      "cvss": {
+        "score": 9.8,
+        "version": "3.1",
+        "severity": "CRITICAL"
+      },
+      "cwes": [
+        {
+          "id": "CWE-306",
+          "name": "Missing Authentication for Critical Function"
+        }
+      ],
+      "vendors": [
+        "Redpanda Data Connect"
+      ],
+      "references": [
+        "https://github.com/pagvac/redpanda-connect-unauth-rce"
+      ],
+      "kev": {
+        "in_kev": false
+      },
+      "epss": {
+        "score": 0.00644,
+        "percentile": 0.51241,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
@@ -4082,256 +4353,8 @@
       },
       "epss": {
         "score": 0.0064,
-        "percentile": 0.50959,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-124057",
-      "published": "2026-11-07T18:17:21.607",
-      "lastModified": "2026-11-07T18:17:21.780",
-      "vulnStatus": "Deferred",
-      "description": "A security flaw has been discovered in TOTOLINK CA300-PoE 6.2c.884. This impacts the function setWiFiMultipleConfig of the file /cgi-bin/cstecgi.cgi. Performing a manipulation of the argument Key1Str1 results in buffer overflow. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks.",
-      "cvss": {
-        "score": 9.1,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-119",
-          "name": "Memory Buffer Boundary Violation"
-        },
-        {
-          "id": "CWE-120",
-          "name": "Buffer Overflow"
-        }
-      ],
-      "vendors": [
-        "TOTOLINK CA300-PoE"
-      ],
-      "references": [
-        "https://lavender-bicycle-a5a.notion.site/TOTOLINK-CA300-PoE-setWiFiMultipleConfig-3f953a41781f800fab65eaa6a2887fa1?source=copy_link",
-        "https://vuldb.com/cve/CVE-2026-124057",
-        "https://vuldb.com/submit/1033754",
-        "https://vuldb.com/vuln/432112"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00635,
-        "percentile": 0.50749,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-119923",
-      "published": "2026-11-06T19:17:39.360",
-      "lastModified": "2026-11-07T22:16:34.593",
-      "vulnStatus": "Received",
-      "description": "A heap-based buffer overflow in the TDS prelogin parser in the Babelfish for PostgreSQL extension versions 1.0-1.5, 2.1-2.15, 3.1-3.12, 4.0-4.8, 5.1-5.4 and in Amazon Aurora PostgreSQL with Babelfish might allow remote attackers to execute arbitrary OS commands as the database process user via a specially crafted malformed TDS prelogin packet to the TDS port. This record consolidates a related NULL-pointer-dereference finding in the same prelogin parser. To remediate this issue, we recommend use",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-122",
-          "name": "CWE-122"
-        }
-      ],
-      "vendors": [
-        "AWS babelfish-for-postgresql",
-        "Amazon Amazon Aurora PostgreSQL with Babelfish"
-      ],
-      "references": [
-        "https://aws.amazon.com/security/security-bulletins/2026-166-aws/",
-        "https://github.com/babelfish-for-postgresql/babelfish-for-postgresql/releases/tag/BABEL_4_10_0__PG_16_14",
-        "https://github.com/babelfish-for-postgresql/babelfish-for-postgresql/releases/tag/BABEL_5_6_0__PG_17_10",
-        "https://github.com/babelfish-for-postgresql/babelfish-for-postgresql/releases/tag/BABEL_6_1_0__PG_18_4"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00621,
-        "percentile": 0.50076,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-92190",
-      "published": "2026-11-04T00:17:29.390",
-      "lastModified": "2026-11-06T19:17:59.867",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "Quest Foglight for Databases baseRmiServiceExporter Deserialization of Untrusted Data Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest Foglight for Databases. Authentication is not required to exploit this vulnerability. The specific flaw exists within the configuration of the baseRmiServiceExporter bean. The issue results from the lack of proper validation of user-supplied data prior to deserializing it.",
-      "cvss": {
-        "score": 9.8,
-        "version": "3.0",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-502",
-          "name": "Deserialization of Untrusted Data"
-        }
-      ],
-      "vendors": [
-        "Quest Foglight for Databases"
-      ],
-      "references": [
-        "https://www.zerodayinitiative.com/advisories/ZDI-26-851/"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00621,
-        "percentile": 0.50072,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-17336",
-      "published": "2026-11-07T05:18:44.673",
-      "lastModified": "2026-11-07T05:18:44.837",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary SQL commands due to improper neutralization of special elements used in an SQL command.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "IBM API Connect"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7295635"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00618,
-        "percentile": 0.49896,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-17132",
-      "published": "2026-11-07T05:18:26.430",
-      "lastModified": "2026-11-07T05:18:26.583",
-      "vulnStatus": "Awaiting Analysis",
-      "description": "IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary SQL commands due to improper neutralization of special elements used in an SQL command.",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-89",
-          "name": "SQL Injection"
-        }
-      ],
-      "vendors": [
-        "IBM API Connect"
-      ],
-      "references": [
-        "https://www.ibm.com/support/pages/node/7295635"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00618,
-        "percentile": 0.49896,
-        "date": "2026-11-09"
-      },
-      "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
-      }
-    },
-    {
-      "id": "CVE-2026-120322",
-      "published": "2026-11-02T02:18:47.550",
-      "lastModified": "2026-11-02T18:18:49.890",
-      "vulnStatus": "Deferred",
-      "description": "A vulnerability was identified in Termix-SSH Termix up to 2.9.2. This issue affects some unknown processing of the file /plugin-api/file-manager/transferToHost. The manipulation of the argument destPath leads to path traversal. The attack may be initiated remotely. The exploit is publicly available and might be used. The shortcut was removed in the standalone File Manager plugin v1.0.0 (transfer engine now always writes over SFTP) and in core v26.10.0. The vendor was contacted early about this d",
-      "cvss": {
-        "score": 9.9,
-        "version": "3.1",
-        "severity": "CRITICAL"
-      },
-      "cwes": [
-        {
-          "id": "CWE-22",
-          "name": "Path Traversal"
-        }
-      ],
-      "vendors": [
-        "Termix-SSH Termix"
-      ],
-      "references": [
-        "https://github.com/0xGenesi/CVE/blob/main/Termix_FileManager_transferToHost_Arbitrary_File_Write.md",
-        "https://vuldb.com/cve/CVE-2026-120322",
-        "https://vuldb.com/submit/1015028",
-        "https://vuldb.com/vuln/429654"
-      ],
-      "kev": {
-        "in_kev": false
-      },
-      "epss": {
-        "score": 0.00618,
-        "percentile": 0.49925,
-        "date": "2026-11-09"
+        "percentile": 0.5101,
+        "date": "2026-11-10"
       },
       "media": {
         "in_news": false,
