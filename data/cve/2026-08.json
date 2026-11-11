@@ -48217,7 +48217,7 @@
     {
       "id": "CVE-2026-79655",
       "published": "2026-08-25T14:16:58.010",
-      "lastModified": "2026-11-05T00:17:29.110",
+      "lastModified": "2026-11-11T09:17:15.767",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in sos clean, a utility within the sos package. This vulnerability allows a local attacker to perform arbitrary file creation or overwrite. By crafting a malicious tar archive, an attacker can exploit a path traversal issue during tar extraction, where symlink and hardlink targets are not properly validated. This enables the attacker to write files to arbitrary locations on the system with the privileges of the sos clean process, which often runs as root.",
       "cvss": {
@@ -48233,16 +48233,16 @@
       ],
       "vendors": [
         "Red Hat Red Hat Enterprise Linux 10",
+        "Red Hat Red Hat Enterprise Linux 9",
         "Red Hat Red Hat Enterprise Linux 6",
         "Red Hat Red Hat Enterprise Linux 7",
-        "Red Hat Red Hat Enterprise Linux 8",
-        "Red Hat Red Hat Enterprise Linux 9"
+        "Red Hat Red Hat Enterprise Linux 8"
       ],
       "references": [
+        "https://access.redhat.com/errata/RHSA-2026:97867",
+        "https://access.redhat.com/errata/RHSA-2026:98076",
         "https://access.redhat.com/security/cve/CVE-2026-79655",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2523363",
-        "https://github.com/sosreport/sos/issues/4460",
-        "https://github.com/sosreport/sos/pull/4461"
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2523363"
       ],
       "kev": {
         "in_kev": false
@@ -54678,7 +54678,7 @@
     {
       "id": "CVE-2026-19685",
       "published": "2026-08-24T17:17:21.907",
-      "lastModified": "2026-11-04T23:17:25.170",
+      "lastModified": "2026-11-11T12:19:51.160",
       "vulnStatus": "Awaiting Analysis",
       "description": "NetworkManager did not apply the private_user restriction to the 802-1x.ca-path and phase2-ca-path directory-valued connection properties. This incomplete fix for CVE-2025-9615 allows an unprivileged local user to point a private WPA-Enterprise (802.1X) connection profile's CA path at an attacker-controlled directory, bypassing server certificate validation and enabling credential theft via a rogue access point.",
       "cvss": {
@@ -54700,10 +54700,10 @@
         "Red Hat Red Hat Enterprise Linux 9"
       ],
       "references": [
+        "https://access.redhat.com/errata/RHSA-2026:98586",
         "https://access.redhat.com/security/cve/CVE-2026-19685",
         "https://bugzilla.redhat.com/show_bug.cgi?id=2515042",
-        "https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/commit/a8e87381a3e70060abd721d9a347f42b2ba68e6e",
-        "https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/commit/e85cc46d0b36cdba50fe8411cc93d55a49ebfccf"
+        "https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/commit/a8e87381a3e70060abd721d9a347f42b2ba68e6e"
       ],
       "kev": {
         "in_kev": false
@@ -88941,8 +88941,8 @@
     {
       "id": "CVE-2026-20320",
       "published": "2026-08-19T17:18:40.433",
-      "lastModified": "2026-08-20T13:01:19.947",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-11T05:19:43.487",
+      "vulnStatus": "Analyzed",
       "description": "A vulnerability in the Open Client Interface (OCI) XML Parser of Cisco BroadWorks could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system. This vulnerability exists because XML entries are improperly parsed due to external entity resolution being allowed by default. An attacker could exploit this vulnerability by sending a crafted XML message to the Open Client Interface &ndash; Provisioning (OCI-P) service. A successful exploit could all",
       "cvss": {
         "score": 7.5,
@@ -88959,10 +88959,15 @@
         "Cisco Cisco BroadWorks"
       ],
       "references": [
-        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt"
+        "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-bworks-xxe-uwUd7CEt",
+        "https://malbearlabs.com/posts/operation-snowball-inside-an-autonomous-ai-intrusion-campaign",
+        "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-20320"
       ],
       "kev": {
-        "in_kev": false
+        "in_kev": true,
+        "date_added": "2026-11-10",
+        "required_action": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+        "known_ransomware": "Unknown"
       },
       "epss": {
         "score": 0.00385,
@@ -88970,11 +88975,14 @@
         "date": "2026-11-10"
       },
       "media": {
-        "in_news": false,
-        "mention_count": 0,
-        "sources": [],
-        "first_seen": null,
-        "last_seen": null
+        "in_news": true,
+        "mention_count": 2,
+        "sources": [
+          "SecurityWeek",
+          "The Hacker News"
+        ],
+        "first_seen": "2026-11-11",
+        "last_seen": "2026-11-11"
       }
     },
     {
@@ -92218,7 +92226,7 @@
     {
       "id": "CVE-2026-43961",
       "published": "2026-08-19T14:17:31.793",
-      "lastModified": "2026-11-06T06:16:43.053",
+      "lastModified": "2026-11-11T06:17:20.930",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in Vim's netrw plugin. A crafted filename containing quote characters and expression fragments can break out of the quoted context during mark/unmark operations, allowing arbitrary Vimscript execution. This can be leveraged to run shell commands with the privileges of the user running Vim.",
       "cvss": {
@@ -92234,16 +92242,16 @@
       ],
       "vendors": [
         "vim vim",
+        "Red Hat Red Hat Enterprise Linux 8",
         "Red Hat Red Hat Hardened Images",
         "Red Hat Red Hat Enterprise Linux 10",
-        "Red Hat Red Hat Enterprise Linux 6",
-        "Red Hat Red Hat Enterprise Linux 7"
+        "Red Hat Red Hat Enterprise Linux 6"
       ],
       "references": [
         "https://access.redhat.com/errata/RHSA-2026:57614",
+        "https://access.redhat.com/errata/RHSA-2026:98119",
         "https://access.redhat.com/security/cve/CVE-2026-43961",
-        "https://bugzilla.redhat.com/show_bug.cgi?id=2460434",
-        "https://github.com/vim/vim/security/advisories/GHSA-66hr-7p6x-x5j3"
+        "https://bugzilla.redhat.com/show_bug.cgi?id=2460434"
       ],
       "kev": {
         "in_kev": false
@@ -150073,7 +150081,7 @@
     {
       "id": "CVE-2026-72493",
       "published": "2026-08-15T06:22:23.643",
-      "lastModified": "2026-10-21T13:19:38.960",
+      "lastModified": "2026-11-10T18:17:47.940",
       "vulnStatus": "Received",
       "description": "In the Linux kernel, the following vulnerability has been resolved: net: serialize netif_running() check in enqueue_to_backlog() Syzbot reported a KASAN slab-use-after-free in fib_rules_lookup(). The root cause is a race condition where packets can escape the backlog flushing during device unregistration (e.g., during netns exit). Commit e9e4dd3267d0 (\"net: do not process device backlog during unregistration\") introduced a lockless netif_running() check in enqueue_to_backlog() to prevent queuing",
       "cvss": {
@@ -193735,7 +193743,7 @@
     {
       "id": "CVE-2026-68807",
       "published": "2026-08-11T17:19:04.780",
-      "lastModified": "2026-10-28T20:18:42.563",
+      "lastModified": "2026-11-10T22:19:24.700",
       "vulnStatus": "Analyzed",
       "description": "Heap-based buffer overflow in Microsoft Office Excel allows an unauthorized attacker to execute code locally.",
       "cvss": {
@@ -193750,7 +193758,11 @@
         }
       ],
       "vendors": [
-        "Microsoft Microsoft Office 365 for Mac"
+        "Microsoft Microsoft 365 Apps for Enterprise",
+        "Microsoft Microsoft Excel 2016",
+        "Microsoft Microsoft Office 2019",
+        "Microsoft Microsoft Office 365 for Mac",
+        "Microsoft Microsoft Office LTSC 2021"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68807"
@@ -193993,7 +194005,7 @@
     {
       "id": "CVE-2026-68800",
       "published": "2026-08-11T17:19:03.657",
-      "lastModified": "2026-10-21T21:18:33.657",
+      "lastModified": "2026-11-10T22:19:24.050",
       "vulnStatus": "Analyzed",
       "description": "Heap-based buffer overflow in Microsoft Office Excel allows an unauthorized attacker to execute code locally.",
       "cvss": {
@@ -194008,7 +194020,11 @@
         }
       ],
       "vendors": [
-        "Microsoft Microsoft Office 365 for Mac"
+        "Microsoft Microsoft 365 Apps for Enterprise",
+        "Microsoft Microsoft Excel 2016",
+        "Microsoft Microsoft Office 2019",
+        "Microsoft Microsoft Office 365 for Mac",
+        "Microsoft Microsoft Office LTSC 2021"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68800"
@@ -194032,7 +194048,7 @@
     {
       "id": "CVE-2026-68798",
       "published": "2026-08-11T17:19:03.400",
-      "lastModified": "2026-10-21T21:18:33.447",
+      "lastModified": "2026-11-10T22:19:23.800",
       "vulnStatus": "Analyzed",
       "description": "Heap-based buffer overflow in Microsoft Office Excel allows an unauthorized attacker to execute code locally.",
       "cvss": {
@@ -194047,7 +194063,11 @@
         }
       ],
       "vendors": [
-        "Microsoft Microsoft Office 365 for Mac"
+        "Microsoft Microsoft 365 Apps for Enterprise",
+        "Microsoft Microsoft Office 365 for Mac",
+        "Microsoft Microsoft Office LTSC 2021",
+        "Microsoft Microsoft Office LTSC 2024",
+        "Microsoft Microsoft Office LTSC for Mac 2021"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68798"
@@ -194369,7 +194389,7 @@
     {
       "id": "CVE-2026-66805",
       "published": "2026-08-11T17:19:01.850",
-      "lastModified": "2026-10-21T21:18:32.110",
+      "lastModified": "2026-11-10T22:19:16.420",
       "vulnStatus": "Analyzed",
       "description": "Deserialization of untrusted data in Microsoft Office SharePoint allows an authorized attacker to execute code over a network.",
       "cvss": {
@@ -194384,6 +194404,8 @@
         }
       ],
       "vendors": [
+        "Microsoft Microsoft SharePoint Enterprise Server 2016",
+        "Microsoft Microsoft SharePoint Server 2019",
         "Microsoft Microsoft SharePoint Server Subscription Edition"
       ],
       "references": [
@@ -197842,7 +197864,7 @@
     {
       "id": "CVE-2026-62897",
       "published": "2026-08-11T17:18:43.850",
-      "lastModified": "2026-10-28T20:18:36.187",
+      "lastModified": "2026-11-10T22:19:01.290",
       "vulnStatus": "Analyzed",
       "description": "Integer overflow or wraparound in .NET Framework allows an unauthorized attacker to execute code locally.",
       "cvss": {
@@ -197860,7 +197882,7 @@
         "Microsoft .NET 10.0 runtime",
         "Microsoft .NET 8.0 runtime",
         "Microsoft .NET 9.0 runtime",
-        "Microsoft Microsoft .NET Framework 3.5",
+        "Microsoft Microsoft .NET Framework 3.5 AND 4.6.2/4.7/4.7.1/4.7.2",
         "Microsoft Microsoft .NET Framework 3.5 AND 4.7.2"
       ],
       "references": [
@@ -198143,7 +198165,7 @@
     {
       "id": "CVE-2026-62886",
       "published": "2026-08-11T17:18:39.717",
-      "lastModified": "2026-10-28T21:17:07.107",
+      "lastModified": "2026-11-10T22:19:00.220",
       "vulnStatus": "Analyzed",
       "description": "Integer overflow or wraparound in .NET allows an unauthorized attacker to elevate privileges locally.",
       "cvss": {
@@ -198162,11 +198184,11 @@
         }
       ],
       "vendors": [
+        "Microsoft .NET 10.0 runtime",
+        "Microsoft .NET 8.0 runtime",
+        "Microsoft .NET 9.0 runtime",
         "Microsoft Microsoft .NET Framework 3.5",
-        "Microsoft Microsoft .NET Framework 3.5 AND 4.6.2/4.7/4.7.1/4.7.2",
-        "Microsoft Microsoft .NET Framework 3.5 AND 4.7.2",
-        "Microsoft Microsoft .NET Framework 3.5 AND 4.8",
-        "Microsoft Microsoft .NET Framework 3.5 AND 4.8.1"
+        "Microsoft Microsoft .NET Framework 3.5 AND 4.6.2/4.7/4.7.1/4.7.2"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62886"
@@ -198319,7 +198341,7 @@
     {
       "id": "CVE-2026-62877",
       "published": "2026-08-11T17:18:38.390",
-      "lastModified": "2026-10-28T20:18:35.350",
+      "lastModified": "2026-11-10T22:18:59.353",
       "vulnStatus": "Analyzed",
       "description": "Stack-based buffer overflow in Windows Win32K allows an authorized attacker to elevate privileges locally.",
       "cvss": {
@@ -198337,7 +198359,8 @@
         "Microsoft Microsoft Office 365 for Mac",
         "Microsoft Microsoft Office for Android",
         "Microsoft Microsoft Office LTSC for Mac 2021",
-        "Microsoft Microsoft Office LTSC for Mac 2024"
+        "Microsoft Microsoft Office LTSC for Mac 2024",
+        "Microsoft Windows 10 Version 1607"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62877"
@@ -200473,7 +200496,7 @@
     {
       "id": "CVE-2026-62752",
       "published": "2026-08-11T17:18:27.713",
-      "lastModified": "2026-10-28T21:17:03.613",
+      "lastModified": "2026-11-10T22:18:52.183",
       "vulnStatus": "Analyzed",
       "description": "Heap-based buffer overflow in Windows Kerberos allows an authorized attacker to elevate privileges locally.",
       "cvss": {
@@ -200489,10 +200512,10 @@
       ],
       "vendors": [
         "Microsoft Windows 10 Version 1607",
+        "Microsoft Windows 10 Version 1809",
         "Microsoft Windows 10 Version 21H2",
         "Microsoft Windows 10 Version 22H2",
-        "Microsoft Windows 11 version 23H2",
-        "Microsoft Windows 11 Version 23H2"
+        "Microsoft Windows 11 version 23H2"
       ],
       "references": [
         "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62752"
@@ -241681,8 +241704,8 @@
     {
       "id": "CVE-2026-68746",
       "published": "2026-08-05T20:17:14.393",
-      "lastModified": "2026-10-24T16:10:00.153",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T18:17:47.667",
+      "vulnStatus": "Modified",
       "description": "Not Failing Securely ('Failing Open') vulnerability in livebook-dev livebook allows an unauthenticated network client to obtain full access to a Livebook server that enforces identity through Livebook Teams. A Livebook Agent or App Server connected to Livebook Teams caches the identifier of the deployment group it belongs to, and resolves that identifier against a locally cached list of deployment groups on every request in order to decide whether Teams identity enforcement is active. Livebook.H",
       "cvss": {
         "score": 8.8,
@@ -241701,8 +241724,8 @@
       "references": [
         "https://cna.erlef.org/cves/CVE-2026-68746.html",
         "https://github.com/livebook-dev/livebook/commit/2d3a2c710c880abd24a2bc888d3cf5239d98cf72",
-        "https://github.com/livebook-dev/livebook/commit/d374e90647edbb00286bfee9182c0161d29a8e07",
-        "https://github.com/livebook-dev/livebook/commit/d6d0dfa746b172540442852f74de4a9deacc433b"
+        "https://github.com/livebook-dev/livebook/commit/6592a0faf973943a3c8de5e9871a4c9493d78671",
+        "https://github.com/livebook-dev/livebook/commit/82e0b8009a59298dbad8638e01dbc9b0d7798353"
       ],
       "kev": {
         "in_kev": false
@@ -241723,8 +241746,8 @@
     {
       "id": "CVE-2026-66881",
       "published": "2026-08-05T20:17:12.600",
-      "lastModified": "2026-10-24T16:10:00.153",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T18:17:47.177",
+      "vulnStatus": "Modified",
       "description": "Relative Path Traversal vulnerability in livebook-dev livebook allows an attacker-authored notebook to write a file with attacker-controlled content to an arbitrary path. A .livemd notebook can declare file_entries metadata, each entry carrying a name. Every path that creates a file entry through the user interface validates that name with Livebook.Notebook.validate_file_entry_name/2, which requires a flat filename of alphanumerics, dashes, underscores and dots, ending in an extension. The impor",
       "cvss": {
         "score": 8.1,
@@ -241765,8 +241788,8 @@
     {
       "id": "CVE-2026-66298",
       "published": "2026-08-05T20:17:12.203",
-      "lastModified": "2026-10-24T16:10:00.153",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T18:17:46.937",
+      "vulnStatus": "Modified",
       "description": "Origin Validation Error vulnerability in livebook-dev livebook allows untrusted notebook output JavaScript to trigger session-wide keyboard shortcuts, including forced evaluation of all cells and runtime restart. Livebook's JS-view feature renders notebook-defined JavaScript inside a sandboxed, cross-origin iframe specifically because that JavaScript is untrusted. The trusted iframe shell in iframe/priv/static/iframe/v5.html forwards every keydown event fired in its own window to the parent page",
       "cvss": {
         "score": 8.8,
@@ -241786,7 +241809,7 @@
         "https://cna.erlef.org/cves/CVE-2026-66298.html",
         "https://github.com/livebook-dev/livebook/commit/296318ffdfa6e5ed7b18ad8d5a5b2af90f3cd728",
         "https://github.com/livebook-dev/livebook/commit/5980e5c6b71036806b3bf54101eb1d6c0f50f19c",
-        "https://github.com/livebook-dev/livebook/commit/a552ce8f99ad348ea37061394dc950a0cebdb33e"
+        "https://github.com/livebook-dev/livebook/commit/844242ba80a928d0d675416d312a58003cb7771b"
       ],
       "kev": {
         "in_kev": false
@@ -241807,8 +241830,8 @@
     {
       "id": "CVE-2026-66297",
       "published": "2026-08-05T20:17:11.743",
-      "lastModified": "2026-10-24T16:10:00.153",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T18:17:46.687",
+      "vulnStatus": "Modified",
       "description": "Improper Neutralization of Special Elements used in an OS Command (OS Command Injection) vulnerability in livebook-dev livebook allows command injection into generated deployment setup commands. LivebookWeb.Hub.Teams.DeploymentGroupAgentComponent.docker_instructions/2 and LivebookWeb.Hub.Teams.DeploymentGroupAgentComponent.fly_instructions/4 in lib/livebook_web/live/hub/teams/deployment_group_agent_component.ex interpolate deployment group environment variable values into the generated Docker an",
       "cvss": {
         "score": 8.0,
@@ -241827,8 +241850,8 @@
       "references": [
         "https://cna.erlef.org/cves/CVE-2026-66297.html",
         "https://github.com/livebook-dev/livebook/commit/0c2487326bbb37cb1eb43bb2f76eb93ad9f8fd6b",
-        "https://github.com/livebook-dev/livebook/commit/b2a8416d149043132fe5a14ed611e0fefc9dc9cd",
-        "https://github.com/livebook-dev/livebook/commit/f8fe9c62cb8bfc1dd0ccda4ea4a57c5e91563c85"
+        "https://github.com/livebook-dev/livebook/commit/7cf4af5c10ec645f55a10f30e5661c54f6a6b319",
+        "https://github.com/livebook-dev/livebook/commit/b2a8416d149043132fe5a14ed611e0fefc9dc9cd"
       ],
       "kev": {
         "in_kev": false
@@ -266810,5 +266833,5 @@
       }
     }
   ],
-  "updated_at": "2026-11-10T13:42:54.900145+00:00"
+  "updated_at": "2026-11-11T12:54:35.271426+00:00"
 }

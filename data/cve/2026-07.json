@@ -24759,7 +24759,7 @@
     {
       "id": "CVE-2026-16313",
       "published": "2026-07-28T17:16:37.807",
-      "lastModified": "2026-11-09T17:17:28.650",
+      "lastModified": "2026-11-11T06:17:19.960",
       "vulnStatus": "Awaiting Analysis",
       "description": "A flaw was found in sg3_utils. The sg_inq command, when invoked with the --export option, outputs device identification data without sanitizing control characters in SCSI name string fields. A newline character embedded in a device-supplied name string can inject arbitrary properties into the udev device database. This could allow an attacker who can present a crafted SCSI device to execute arbitrary commands as root when the device is disconnected.",
       "cvss": {
@@ -37065,7 +37065,7 @@
     {
       "id": "CVE-2026-57990",
       "published": "2026-07-26T18:18:25.153",
-      "lastModified": "2026-10-24T13:10:00.147",
+      "lastModified": "2026-11-10T23:18:18.093",
       "vulnStatus": "Analyzed",
       "description": "Files or directories accessible to external parties in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.",
       "cvss": {
@@ -37759,8 +37759,8 @@
     {
       "id": "CVE-2026-64510",
       "published": "2026-07-25T10:17:37.137",
-      "lastModified": "2026-11-03T18:15:39.353",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T14:55:59.027",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: ACPI: NFIT: core: Fix acpi_nfit_init() error cleanup If acpi_nfit_init() fails after adding the acpi_desc object to the acpi_descs list, that object is never removed from that list because the acpi_nfit_shutdown() devm action is not added for the NFIT device in that case. Next, the acpi_nfit_init() failure causes acpi_nfit_probe() to fail, the acpi_desc object is freed, and a dangling pointer is left behind in the acpi_descs. An",
       "cvss": {
         "score": 7.0,
@@ -37768,6 +37768,10 @@
         "severity": "HIGH"
       },
       "cwes": [
+        {
+          "id": "CWE-401",
+          "name": "Memory Leak"
+        },
         {
           "id": "CWE-416",
           "name": "Use After Free"
@@ -114377,15 +114381,20 @@
     {
       "id": "CVE-2026-63818",
       "published": "2026-07-19T12:16:54.873",
-      "lastModified": "2026-08-17T05:17:19.143",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T21:15:43.773",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: validate orphan inode entry count f2fs_recover_orphan_inodes() trusts the orphan block entry_count when replaying orphan inodes from the checkpoint pack. A corrupted entry_count larger than F2FS_ORPHANS_PER_BLOCK makes the recovery loop read past the ino[] array and interpret footer or following data as inode numbers. On a crafted image, mounting an unpatched kernel can drive orphan recovery into f2fs_bug_on() and panic th",
       "cvss": {
         "score": 8.4,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114414,15 +114423,20 @@
     {
       "id": "CVE-2026-63817",
       "published": "2026-07-19T12:16:54.757",
-      "lastModified": "2026-08-17T05:17:19.003",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T21:14:22.257",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: validate compress cache inode only when enabled F2FS_COMPRESS_INO() uses NM_I(sbi)->max_nid as the synthetic inode number for the compressed page cache inode. That inode only exists when the compress_cache mount option is enabled. When compress_cache is disabled, max_nid is outside the valid inode range. A corrupted directory entry that points to ino == max_nid should therefore be rejected by f2fs_check_nid_range(). Howeve",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "NVD-CWE-noinfo",
+          "name": "Insufficient Information"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114451,15 +114465,20 @@
     {
       "id": "CVE-2026-63816",
       "published": "2026-07-19T12:16:54.643",
-      "lastModified": "2026-08-17T05:17:18.870",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T20:43:44.910",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode - ioctl(F2FS_IOC_GARBAGE_COLLECT_RANGE) - shrink - f2fs_gc - gc_data_segment - ra_data_block(cow_inode) - mapping = F2FS_I(inode)->atomic_inode->i_mapping : f2fs_is_cow_file(cow_inode) is true - f2fs_evict_inode(atomic_inode) - clear_inode_flag(fi->cow_inode, FI_COW_FILE) - F2FS_I(fi->cow_inode)->atomic_inode = NULL ... - truncate_inode_pages_final(atomic_inode) - f2fs_",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-416",
+          "name": "Use After Free"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114488,15 +114507,20 @@
     {
       "id": "CVE-2026-63815",
       "published": "2026-07-19T12:16:54.527",
-      "lastModified": "2026-08-17T05:17:18.723",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T20:43:34.090",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: bound i_inline_xattr_size for non-inline-xattr inodes When the flexible_inline_xattr feature is enabled, do_read_inode() loads the on-disk i_inline_xattr_size unconditionally: if (f2fs_sb_has_flexible_inline_xattr(sbi)) fi->i_inline_xattr_size = le16_to_cpu(ri->i_inline_xattr_size); but sanity_check_inode() only range-checks it when the inode also has the FI_INLINE_XATTR flag set. An inode that carries an inline dentry or ",
       "cvss": {
         "score": 8.4,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114525,15 +114549,20 @@
     {
       "id": "CVE-2026-63814",
       "published": "2026-07-19T12:16:54.390",
-      "lastModified": "2026-08-17T05:17:18.567",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T20:43:12.097",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: validate ACL entry sizes in f2fs_acl_from_disk() f2fs_acl_count() only validates the aggregate ACL xattr length. A malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk() then reads entry->e_id before verifying that a full entry fits. Require a short entry before reading e_tag and e_perm, and require a full entry before reading e_id for AC",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-125",
+          "name": "Out-of-Bounds Read"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114562,15 +114591,20 @@
     {
       "id": "CVE-2026-63813",
       "published": "2026-07-19T12:16:54.253",
-      "lastModified": "2026-08-17T05:17:18.420",
-      "vulnStatus": "Awaiting Analysis",
+      "lastModified": "2026-11-10T20:42:56.127",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: Revert \"f2fs: remove non-uptodate folio from the page cache in move_data_block\" This reverts commit 9609dd704725a40cd63d915f2ab6c44248a44598. The kernel panics are keeping to be reported especially when the f2fs partition get almost full. By investigation, we find that the reason is one f2fs page got freed to buddy without being deleted from LRU and the root cause is the race happened in [2] which is enrolled by this commit. The",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-362",
+          "name": "Race Condition"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -114598,15 +114632,20 @@
     {
       "id": "CVE-2026-63812",
       "published": "2026-07-19T12:16:54.137",
-      "lastModified": "2026-10-30T13:19:17.433",
-      "vulnStatus": "Undergoing Analysis",
+      "lastModified": "2026-11-10T20:14:49.437",
+      "vulnStatus": "Analyzed",
       "description": "In the Linux kernel, the following vulnerability has been resolved: f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node() When __destroy_extent_node() sets the inode flag FI_NO_EXTENT, it does not reset the length of the largest extent to 0 and update the inode folio. Since modifications to the extent tree are disallowed afterward, the cached largest extent may become stale. This can trigger the following error in xfstests generic/388: F2FS-fs (dm-0): sanity_check_extent_cache: in",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
         "severity": "HIGH"
       },
-      "cwes": [],
+      "cwes": [
+        {
+          "id": "CWE-665",
+          "name": "CWE-665"
+        }
+      ],
       "vendors": [
         "Linux Linux"
       ],
@@ -138833,7 +138872,7 @@
     {
       "id": "CVE-2026-47304",
       "published": "2026-07-14T19:17:08.830",
-      "lastModified": "2026-10-28T20:17:28.507",
+      "lastModified": "2026-11-10T23:17:24.943",
       "vulnStatus": "Analyzed",
       "description": "Improper verification of cryptographic signature in .NET allows an unauthorized attacker to bypass a security feature over a network.",
       "cvss": {
@@ -146106,9 +146145,9 @@
     {
       "id": "CVE-2026-50498",
       "published": "2026-07-14T18:17:56.640",
-      "lastModified": "2026-07-21T18:25:25.890",
-      "vulnStatus": "Analyzed",
-      "description": "Windows Universal Disk Format File System Driver (UDFS) Elevation of Privilege Vulnerability",
+      "lastModified": "2026-11-10T23:17:51.890",
+      "vulnStatus": "Modified",
+      "description": "Out-of-bounds read in Windows Universal Disk Format File System Driver (UDFS) allows an unauthorized attacker to elevate privileges locally.",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
@@ -148379,8 +148418,8 @@
     {
       "id": "CVE-2026-50423",
       "published": "2026-07-14T18:17:45.737",
-      "lastModified": "2026-07-22T16:17:54.450",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T23:17:44.333",
+      "vulnStatus": "Modified",
       "description": "Improper access control in Windows Kernel allows an authorized attacker to elevate privileges locally.",
       "cvss": {
         "score": 7.8,
@@ -148389,8 +148428,8 @@
       },
       "cwes": [
         {
-          "id": "CWE-284",
-          "name": "Improper Access Control"
+          "id": "CWE-276",
+          "name": "CWE-276"
         }
       ],
       "vendors": [
@@ -151956,11 +151995,11 @@
     {
       "id": "CVE-2026-50301",
       "published": "2026-07-14T18:17:27.880",
-      "lastModified": "2026-07-16T19:43:45.920",
-      "vulnStatus": "Analyzed",
+      "lastModified": "2026-11-10T23:17:31.720",
+      "vulnStatus": "Modified",
       "description": "Heap-based buffer overflow in Microsoft Office allows an unauthorized attacker to execute code locally.",
       "cvss": {
-        "score": 7.8,
+        "score": 8.4,
         "version": "3.1",
         "severity": "HIGH"
       },
@@ -157031,9 +157070,9 @@
     {
       "id": "CVE-2026-49790",
       "published": "2026-07-14T17:16:54.543",
-      "lastModified": "2026-10-14T22:10:00.210",
-      "vulnStatus": "Analyzed",
-      "description": "Windows Universal Disk Format File System Driver (UDFS) Elevation of Privilege Vulnerability",
+      "lastModified": "2026-11-10T23:17:28.680",
+      "vulnStatus": "Modified",
+      "description": "Integer underflow (wrap or wraparound) in Windows Universal Disk Format File System Driver (UDFS) allows an authorized attacker to elevate privileges locally.",
       "cvss": {
         "score": 7.8,
         "version": "3.1",
@@ -187854,7 +187893,7 @@
     {
       "id": "CVE-2026-15035",
       "published": "2026-07-08T14:16:56.643",
-      "lastModified": "2026-10-25T20:10:00.147",
+      "lastModified": "2026-11-10T17:50:21.980",
       "vulnStatus": "Analyzed",
       "description": "A vulnerability was found in bentoml OpenLLM 0.6.30. This affects the function async_run_command of the file src/openllm/common.py of the component Model Repository Directory Name Handler. Performing a manipulation of the argument cmd results in command injection. Attacking locally is a requirement. The exploit has been made public and could be used. The project was informed of the problem early through an issue report but has not responded yet.",
       "cvss": {
@@ -219601,5 +219640,5 @@
       }
     }
   ],
-  "updated_at": "2026-11-10T13:42:54.718217+00:00"
+  "updated_at": "2026-11-11T12:54:35.093053+00:00"
 }
