@@ -2,6 +2,98 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10176",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10176",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10176.mp3",
+      "title": "SANS Stormcast Thursday, November 12th, 2026: Apache mod_http2 RCE (CVE-2026-119618); Fortinet FortiMail Criticals; Ivanti EPM SQLi (CVE-2026-121653); Windows SignDrop CLFS; N-able N-central HF2",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, November 12th, 2026: Apache mod_http2 RCE (CVE-2026-119618); Fortinet FortiMail Criticals; Ivanti EPM SQLi (CVE-2026-121653); Windows SignDrop CLFS; N-able N-central HF2",
+      "show_notes": [
+        {
+          "heading": "This episode covers leftover Patch Tuesday issues: a critical remote code execution flaw in Apache HTTP Server's mod_http2 module (CVE-2026-119618), Fortinet's 89 advisories with 17 critical vulnerabilities especially in FortiMail, Ivanti's November 2026 update including an Endpoint Manager SQL injection and a Cloud Services Application certificate issue, an unpatched Windows Common Log File System privilege escalation called SignDrop, and N-able's N-central 2026.4 Hotfix 2.",
+          "links": []
+        },
+        {
+          "heading": "Apache HTTP Server mod_http2 Remote Code Execution (CVE-2026-119618)",
+          "links": []
+        },
+        {
+          "heading": "Apache released HTTP Server 2.4.71, fixing a critical heap overflow in the mod_http2 assign_headers function that can lead to remote code execution. No public working exploit is available yet; disabling HTTP/2 can mitigate the issue, but proxies that translate to HTTP/2 still need to watch for HTTP request smuggling.",
+          "links": [
+            "https://httpd.apache.org/security/vulnerabilities_24.html"
+          ]
+        },
+        {
+          "heading": "Fortinet November Advisories",
+          "links": []
+        },
+        {
+          "heading": "Fortinet published 89 advisories addressing more than 100 vulnerabilities across its product portfolio, including 17 rated critical. FortiMail received the most critical fixes, and several of the critical issues may allow unauthenticated arbitrary code execution. Fortinet used AI as part of the vulnerability discovery work behind this release.",
+          "links": [
+            "https://www.fortiguard.com/psirt"
+          ]
+        },
+        {
+          "heading": "Ivanti November 2026 Security Update",
+          "links": []
+        },
+        {
+          "heading": "Ivanti's November 2026 security update includes a SQL injection in Endpoint Manager (EPM) that may be leveraged for remote code execution, tracked as CVE-2026-121653, and a vulnerability in Ivanti Cloud Services Application (CSA) that allowed unauthenticated alteration of trusted EPM Core certificates (CVE-2026-121683).",
+          "links": [
+            "https://www.ivanti.com/blog/november-2026-security-update"
+          ]
+        },
+        {
+          "heading": "Windows SignDrop CLFS Privilege Escalation",
+          "links": []
+        },
+        {
+          "heading": "Researcher Nightmare Eclipse (MSNightmare) released SignDrop, a local privilege escalation in the Windows Common Log File System (CLFS) that abuses the HMAC-based log-file authentication Microsoft added about a year ago, along with symlink and timing tricks. A regular user can escalate to SYSTEM on Windows 11 26H2 and Windows Server 2025. A proof-of-concept is on GitHub; Microsoft has not confirmed the issue, there is no CVE, and disabling CLFS log authentication is not a recommended workaround because it would restore older CLFS attacks.",
+          "links": [
+            "https://github.com/MSNightmare/SignDrop"
+          ]
+        },
+        {
+          "heading": "N-able N-central 2026.4 Hotfix 2",
+          "links": []
+        },
+        {
+          "heading": "N-able has released N-central 2026.4 Hotfix 2, and the release notes identify three CVE numbers addressed in the update, after N-able earlier shut down its hosted infrastructure in response to the reported vulnerabilities. The initial public reports described around 30 vulnerabilities, and attackers are already probing leaked paths. Shadowserver's count of exposed N-central servers dropped from about 1,338 to around 148. On-premises operators should apply the hotfix before bringing a server back online and still avoid exposing it if possible.",
+          "links": [
+            "https://status.n-able.com/2026/11/10/n-central-2026-4-hf2-release-notes/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-12T02:00:02+00:00",
+      "duration_seconds": 369,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10176.mp3",
+      "audio_length_bytes": 5184180,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10176",
+      "categories": [
+        "apache",
+        "cve-2026-119618",
+        "fortinet",
+        "fortimail",
+        "ivanti",
+        "cve-2026-121653",
+        "signdrop",
+        "n-able",
+        "n-central"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10176",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, November 12, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich. We're recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. And as so often after a Patch\n Tuesday, we have a bit of a cleanup episode here today\n covering issues that we may have missed. Apache, for\n example, today released an update fixing a critical\n vulnerability in mod_http2. The vulnerability allows for\n remote code execution. The problem here is that during\n stream processing, the assign_headers function is used to\n assign request headers to specific streams. That's where\n a heap overflow happens. And well, that of course, then\n could potentially be used to trigger remote code execution.\n No working exploit has been made public yet. Disabling\n HTTP/2 can be used to mitigate the issue. Of course, you may\n run into other issues. If you, for example, have proxies\n translating to HTTP/2, you have always to be careful with HTTP\n request smuggling in this case. And Fortinet published\n 89 different advisories addressing more than 100\n different vulnerabilities across its product portfolio.\n 17 of these vulnerabilities are considered critical, FortiMail\n being sort of the product with the most critical\n vulnerabilities being addressed in this update. Now,\n several of the critical issues may lead to arbitrary code\n execution without authentication. Too many\n vulnerabilities really to talk in detail on about each\n particular vulnerability. But well, if you have Fortinet\n products in your environment, there's probably a patch that\n you must apply. And now for these product. And as\n listeners probably expect when they hear about that many\n vulnerabilities all of a sudden popping up. Yes, AI\n took a part in discovering these vulnerabilities. And\n Ivanti also released its November 2026 security update.\n Now in this update, there is one patch for another SQL\n injection vulnerability, in Endpoint Manager. This SQL\n injection vulnerability may be leveraged to accomplish remote\n code execution. And then we also have a vulnerability in\n Ivanti CSA that allowed altering trusted EPM Core\n certificates without authentication. And then we\n got another, well, Saturday, Wednesday after patch Tuesday,\n thanks to Nightmare Eclipse. Nightmare Eclipse released\n what they're calling SignDrop. SignDrop is a privilege\n escalation vulnerability in the Windows Common Log File\n System. What makes this kind of interesting is that about a\n year ago, Microsoft added HMAC based authentication to CLFS\n log files to make it harder to abuse them in response to some\n of the vulnerabilities in this overall system. While SignDrop\n abuses exactly that new feature with some symlink and\n timing tricks, a regular user can escalate to system on\n Windows 11, 26H2 and Windows Server 2025. A proof of\n concept exploit has been posted to GitHub. So far,\n Microsoft has not confirmed the issue. There is no CVE\n number. I have not seen any reports of it being exploited.\n And as tempting as it may be, disabling CLFS log\n authentication is probably not a good workaround. Again, that\n was specifically established to prevent other security\n issues. It would bring back some of these older CLFS\n attacks that before that feature was introduced. And a\n quick follow up to the N-able N-central story from earlier\n this week. N-able has now released the 2026.4 hotfix 2 for\n N-central. And with that release notes explaining what\n they're fixing here. They're identifying three different\n CVE numbers that are addressed in this update. Now, if you\n remember N-able shut down actually its own sort of cloud\n -based infrastructure in response to these\n vulnerabilities being reported to N-able. And yes, now we get\n the patch for it. The initial news release, I think, talked\n about like 30 vulnerabilities. So not sure if these are just\n the sort of the critical ones they're patching here. They're\n actually being exploited right now. Or if they sort of\n consolidated some of these vulnerabilities. There are\n some reports that attackers are already probing for\n vulnerable paths that were leaked. Of course, there have\n been a lot of issues with N-able N-central in the\n past. This could be also some older stuff. The good news,\n many of you appear to have listened. Shadowserver's count\n of exposed N-central servers dropped from about 1,338 to\n around 148. So almost like a factor of nine or 10 here. If\n you run N-central on premise, apply the hotfix before you\n bring the server back online. And probably still avoid\n exposing it if you can help it. Well, and that's it for\n today. Thanks for listening. Thanks for liking. Thanks for\n subscribing. And talk to you again tomorrow. Bye. You",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10174",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
