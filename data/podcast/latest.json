@@ -1,6 +1,88 @@
 {
-  "fetched_at": "2026-11-12T17:16:58.678220+00:00",
+  "fetched_at": "2026-11-13T10:25:02.693930+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10178",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10178",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10178.mp3",
+      "title": "SANS Stormcast Friday, November 13th, 2026: GPUStack Auth Bypass Scans (CVE-2026-102895); ConnectWise ScreenConnect Advisory; N-able N-central Exploits; Microsoft 365 Outage",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, November 13th, 2026: GPUStack Auth Bypass Scans (CVE-2026-102895); ConnectWise ScreenConnect Advisory; N-able N-central Exploits; Microsoft 365 Outage",
+      "show_notes": [
+        {
+          "heading": "This episode covers scans for a GPUStack authentication bypass, a ConnectWise ScreenConnect security advisory, public exploits for N-able N-central, and a Microsoft 365 outage.",
+          "links": []
+        },
+        {
+          "heading": "GPUStack Authentication Bypass Scans (CVE-2026-102895)",
+          "links": []
+        },
+        {
+          "heading": "Johannes writes up scans against GPUStack, open-source software that manages clusters of GPUs for AI workloads. An attacker can spoof the X-GPUStack-Real-IP header with the loopback address to bypass authentication. A fixed version was released in July, the CVE was assigned about a week ago, and exploitation is trivial on an exposed system.",
+          "links": [
+            "https://isc.sans.edu/diary/Exploit%20Attempts%20for%20GPUStack%20Authentication%20Bypass%20%28CVE-2026-102895%29/33514",
+            "https://github.com/gpustack/gpustack/security/advisories/GHSA-gj9m-f8ph-pmhr"
+          ]
+        },
+        {
+          "heading": "ConnectWise ScreenConnect Security Advisory",
+          "links": []
+        },
+        {
+          "heading": "ConnectWise released another ScreenConnect advisory about an ongoing investigation into the compromise of some customer and partner sites. The company is looking at 400 compromised environments and has disabled a set of third-party plugins; users should update the ScreenConnect client to version 26.6.5, which also fixes a vulnerability still being used to spread malware after those compromises.",
+          "links": [
+            "https://www.connectwise.com/company/trust/advisories"
+          ]
+        },
+        {
+          "heading": "N-able N-central Public Exploits",
+          "links": []
+        },
+        {
+          "heading": "Public exploits are now available for at least three of the N-able N-central vulnerabilities that were disclosed last week without first notifying the vendor. The code is in a GitHub repository that Johannes has not yet verified, so treat it with caution; if you are running an exposed unpatched N-able system, upgrade immediately and assume compromise.",
+          "links": [
+            "https://github.com/MSPNightmare/CVEs/tree/main/0-Days/N-Central%20N-Able"
+          ]
+        },
+        {
+          "heading": "Microsoft 365 Downtime",
+          "links": []
+        },
+        {
+          "heading": "Microsoft had a significant availability event in which large parts of Microsoft 365, including Exchange and Outlook, were unreachable, and the disruption also affected sites that rely on Microsoft 365 single sign-on, including Entra. Microsoft said it was bringing systems back online, but service was still unavailable for many Microsoft 365 Business and Enterprise users at the time of recording.",
+          "links": [
+            "https://status.cloud.microsoft/m365/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-13T02:00:03+00:00",
+      "duration_seconds": 403,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10178.mp3",
+      "audio_length_bytes": 5654607,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10178",
+      "categories": [
+        "gpustack",
+        "cve-2026-102895",
+        "connectwise",
+        "screenconnect",
+        "n-able",
+        "n-central",
+        "microsoft 365",
+        "entra"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10178",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, November 13, 2026\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recording today from\n Jacksonville, Florida. This episode is brought to you by\n the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well and in diaries today I wrote up some\n attacks that we're seeing against GPUStack. GPUStack\n is a system that allows you to essentially make available\n clusters of GPU for AI workloads. As often these\n proxies that are in front of some of these systems have\n their issues and that's again sort of what hits us here. Now\n in this particular case we do have a special header that's\n being added by the proxy X-GPUStack-Real-IP. Many other\n proxies have similar headers and they always come with the\n big caveat, well it's possible for an attacker to spoof those\n headers. In this particular case if an attacker spoofs\n that the real IP is the loopback IP address, well in\n that case the attacker is being given access to the\n system and allowed to bypass authentication. So very\n straightforward to exploit vulnerability. Makes you\n wonder why it took them so long to really scan for it on\n a larger scale. No idea how many of these systems are\n actually exposed. Now a little bit tricky to sort of date\n this vulnerability. Apparently the fixed version of GPUStack\n was released back in July. The actual CVE number appears to\n have been assigned about a week ago. So I guess anywhere\n sort of in that time frame. There was also a GitHub page\n that had details about this vulnerability that's also sort\n of a couple months old. Again exploitation is trivial. No\n real sort of exploit really required. Just that specific\n header and of course an exposed system. And\n ConnectWise released another ScreenConnect security\n advisory. Now this one is less about a specific vulnerability\n in ScreenConnect, but more about an ongoing security\n investigation that ConnectWise is running given the\n compromise of some of their customer and partner sites. So\n they're looking currently at 400 compromised environments.\n They think they have it narrowed down to a number of\n third party plugins that may be responsible for some of\n these issues. And they disabled them now. Not really\n clear what the user is supposed to do here other than\n making sure that you do have the latest ScreenConnect\n client. That's version 26.6.5. That particular version does\n also fix a vulnerability in ScreenConnect itself that is\n still being employed by these compromises in order to then\n further spread malware and compromise additional systems\n in your network. Remember ScreenConnect is often used\n by support functions to actually reach out to remote\n systems. And that's essentially sort of what they\n are abusing here. Definitely make sure that you're up to\n date and also take a look at this latest advisory from\n ConnectWise as it has additional details as to what\n to look for in your particular environment as well as the\n list of the third party extensions. And that have now\n been disabled. And while I already talked twice in the\n last week about N-able and about the patches that were\n released now and that are available to patch\n vulnerabilities that sort of had been made public without\n first notifying N-able. We now have exploits publicly\n available for at least three of these vulnerabilities.\n There is a GitHub repository that has the code for these. I\n haven't verified them yet. So as always treat them with\n caution. Never really know what they are doing and\n haven't really looked at them close enough to tell you that\n they're safe to the person running them. But if you're\n running N-able definitely you must upgrade at this point.\n It's kind of at the point where you probably want to\n assume compromise if you have an exposed unpatched N-able\n system connected. And Microsoft today had a\n significant availability event where good parts of Microsoft\n 365 were not reachable. This did affect Exchange, Outlook,\n lots and lots of different parts of Microsoft 365 that\n were not available. As I'm recording this, they say that\n they're bringing systems back online, but it's still\n unavailable for a lot of users. This also spilled over\n to many other sites. For example, if you relied on\n logging in via Microsoft 365's single sign-on system, Entra\n and such. This apparently was also affected by this outage.\n Even the Microsoft status page I heard was at times\n unavailable. Maybe just because of the high load being\n directed at that particular site, even though that's\n actually a cloud hosted site. So not sure if this is part of\n the outage or part of the high load. So if you're running\n Microsoft 365 Business or Enterprise, that's why your\n email wasn't working today. And hopefully by the time\n you're listening to this podcast, things will look\n better. Well, and that's it for today. Thanks for\n listening. Thanks for liking. Thanks for recommending. And\n thanks for subscribing to this podcast and talk to you again\n on Monday. Bye. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10176",
       "show": "stormcast",
@@ -4044,61 +4126,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10070",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Thursday, August 27th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well, Rob is still at it,\n creating useful PowerShell scripts to inspect Entera ID\n configurations. The latest one looks at who has administrator\n rights. Now, this is a little bit more complicated than just\n looking for like administrators because, well,\n there are a bunch of different roles with some level of\n administrator privileges. There's not just the global\n administrator. There's, for example, also something like\n with global read permissions where, well, a user that\n basically can read everything, which in itself may not always\n be as defined as administrator, but certainly\n it's a role to keep an eye on. And what Rob's PowerShell\n script here does is basically collect all of the different\n roles and then either display how many users you have for\n each one of these roles or who the actual user is associated\n with this role. So quick little audit script that's\n certainly quite useful to find like leftover administrators\n that are no longer needed or maybe something malicious that\n was added by NetHacker. Ubiquiti today released\n Security Advisory Bulletin number 67. This bulletin does\n outline 22 different vulnerabilities that affect\n several products sold under the UniFi brand. Now, when\n you're patching these devices, keep in mind that, for\n example, if you have one of their dream machines or such,\n you may have to patch the operating system itself and\n then also applications that you installed on the device,\n like, for example, the Protect or the Network or the Talk\n product that is being sold under the UniFi brand. The\n vulnerabilities themselves, some of them have rather high\n CVSS scores, like 10 and there are a few 9.9s and 9.1\n vulnerabilities there. Some of the CVSS scores look kind of\n high, like there is a approach escalation vulnerability with\n a score of 9.9. However, the description is extremely\n sparse, so really hard to second guess here the rating\n for the CVSS scores. Also, a number of these\n vulnerabilities were apparently found by AI tools,\n which these days, of course, is no big surprise. As far as\n mitigations go, the bulletin doesn't really outline any,\n but pretty much all of the vulnerabilities from me\n scanning them do require access to the control plane,\n basically access to the respective UniFi application.\n So, just like with all similar applications, try to limit who\n can access your network configuration, your camera\n configuration systems and the like. And that will\n significantly reduce the exposure and with that the\n risk of exploitation. The actual patches were released\n over the last few days, so if you have auto update enabled,\n you're probably already set. And then we do have a new log4j\n vulnerability. Now, as this vulnerability became\n known, of course, there was a lot of talk about yet another\n log4j disaster. This one doesn't appear to be that\n severe, that bad, I should say. It's certainly a remote\n code execution vulnerability. It's a deserialization flaw in\n the filtered object input stream feature. The problem\n with this function is it's actually meant to do the right\n thing. You have deserialization because you do\n allow arbitrary objects to be deserialized. Well, the\n filtered part in filtered object input stream is\n supposed to exactly prevent this. But as so often, well,\n they're allowing one particular object in here that\n then actually can in turn itself create arbitrary\n object. So that gives you that famous gadget and with that\n remote code execution. One of the big constraints here is to\n for this to be exploitable is that you must have software\n that directly accepts these log4j serialized objects.\n That's typically not the case. So this is not like the old\n log4j vulnerability where I could send a request to a\n web server. And as that request is being logged, it\n would trigger the vulnerability. As a result,\n this is probably not exploitable in most software\n that uses log4j.\n So, I'll also\n link to Jeff's blog post in addition to the proof of\n concept exploit. So, yes, an exploit is known, is public.\n No patches available at this point and not even a CVE\n number yet. Apparently, the bug report that this was\n originally reported with wasn't made like hidden as\n usual security reports, but was left public for a couple\n of days. And that's sort of how this entire issue became\n public. And we got some interesting malware analysis\n from Dominic with Palo Alto. So, this malware is described\n as sleepwalker. And what makes it kind of unique and sort of\n also caught my attention is that it has a little bit\n unusual, at least these days, command control system.\n Usually these days you have the malware reach out to some\n kind of web server or such in order to retrieve\n instructions. Well, back in the old days, I've seen quite\n often sort of some passive listening for packets. There\n were some famous DDoS agents and such that did it. Well,\n this is exactly what this particular malware does. Also\n interesting that it sideloads itself into the antivirus\n product, ESET. And well, then it starts listening on the\n network for packets that match very specific characteristics.\n It actually doesn't appear to matter what protocol, what\n port, but then the payload has to match specific checksum\n conditions. If that's the case, they're then decrypted\n and interpreted as bytecode, which then instructs the\n malware to do various additional operations. So,\n interesting malware here and actually also a real nice and\n interesting write-up of some rather unusual malware that\n probably often is being missed because it doesn't have sort\n of that today classic kind of beaconing and such a behavior\n that you would typically see in malware. Well, and this is\n it for today. So, thanks for listening. Thanks for liking.\n Thanks for subscribing. And talk to you again tomorrow.\n Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10068",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10068",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10068.mp3",
-      "title": "SANS Stormcast Wednesday, August 26th, 2026: Obfuscating SSRF; Paint and Photos AI Watermarks; FTP Banner C2;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Wednesday, August 26th, 2026: Obfuscating SSRF; Paint and Photos AI Watermarks; FTP Banner C2;",
-      "show_notes": [
-        {
-          "heading": "Obfuscating IP Addresses as Hostnames",
-          "links": [
-            "https://isc.sans.edu/diary/Obfuscating%20IP%20Addresses%20as%20Hostnames/33280"
-          ]
-        },
-        {
-          "heading": "Microsoft Paint and Photos Embed Server-Issued GUIDs as Invisible Watermarks in Locally-Generated Images",
-          "links": [
-            "https://xusheng.dev/posts/reversing/mspaint_invisible_watermark/main/"
-          ]
-        },
-        {
-          "heading": "FTP Banners The New Dead Drop Resolver Delivering Novel RATs",
-          "links": [
-            "https://socradar.io/blog/ftp-banners-new-dead-drop-resolver-rats/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-26T02:40:13+00:00",
-      "duration_seconds": 359,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10068.mp3",
-      "audio_length_bytes": 5036504,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10068",
-      "categories": [
-        "ftp",
-        "microsoft",
-        "paint",
-        "watermark",
-        "ai",
-        "guid",
-        "ip",
-        "hostname"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10068",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Wednesday, August 26, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in Applied\n Cybersecurity. Last week I wrote about how we saw some\n simple attacks against our honeypots that apparently\n tried to exploit server-side request forgery\n vulnerabilities with the intent to retrieve data from\n the metadata service that we often see in systems hosted\n within cloud providers. This metadata service listens on\n the IP address 169.254.169.254.\n And of course, that's the IP address we saw here as\n part of the URL. Some simplistic filtering regimens,\n particularly in web application firewalls and\n such, may be looking just for this IP address. And in\n response to my post last week, Sean did a report that they\n saw some attacks that, well, used a little workaround here\n from the attacker's side. The attacker used a hostname\n instead of the IP address and then just configured the\n hostname to resolve to the particular IP address. Now,\n there are actually two domains that Sean observed that\n specifically are designed for that, nip.io and sslip.io. The\n remainder of the hostname is just the IP address you would\n like it to resolve to. You can either use them as labels like\n with dots or you can also use dash, which of course then\n wouldn't match a lot of filters. In addition, Sean\n also saw the domain oneu.ms being used. That one is a\n particular tricky domain. Again, the remainder of the\n hostname can be used to configure what IP address is\n being returned, but you can actually configure it sort of\n for these rebinding attacks where after a certain number\n of hits, the IP address then changes. Now, oneu.ms has this\n specific custom DNS server deployed. However, this custom\n DNS server is also available on GitHub and you're able to\n install it and use whatever domain you would like to use\n in order to get this particular attack working. So,\n interesting options here for the attacker. And of course,\n what this means for you as a defender, that you better make\n sure you are properly filtering URLs that you're\n taking and that you're connecting to because, well,\n if not, then you're susceptible to server-side\n request forgery. And this metadata service IP address is\n really just one of the sort of more popular attack targets\n for server-side request forgery. Recently, there was a\n lot of talk about AI models that started watermarking text\n and images they create. One often quoted solution here, if\n you don't want this to happen, is that you just use a local\n model. Well, looks like some local models at least are\n doing the same thing. There's an interesting blog post by Xu\n Zhang Li who looked into Microsoft Paint. Good old\n Paint, which, well, was always sort of a little bit of a joke\n of an image-editing program, but now also includes AI. What\n happens here is that the AI model actually runs locally,\n but in order to apply safety checks, the prompt is first\n being sent to a Microsoft server for vetting and\n filtering and then sent back to actually create the model.\n And that's where a server -created GeoID is being sent\n back that is then being included in the model as an\n invisible watermark. There's also a visible watermark\n that's just a little co-pilot icon in the corner of the\n image. That, of course, could easily be cut out by someone\n who would like to avoid it being visible or maybe just\n not being edited out with some other image-editing software.\n But the second invisible watermark is sort of embedded\n in the image itself. More details about how this\n watermark exactly works and how to decode it can be found\n in the blog post that I'll link to in the show notes. And\n then when you think you saw it all, well, SockRadar has a\n nice new command-control channel that they have\n observed some Windows malware using, and that's just using\n FTP server banners as a command and control channel.\n I'm not actually sure if you even need an FTP server to do\n this or just a NetCAD listener in order to send the commands\n back because FTP is a fairly simple protocol in that way.\n But either way, the bot is just connecting to port 21 on\n the command control server. The commands to be executed\n are being sent back to the bot and then being executed by the\n bot. Definitely watch for outbound FTP traffic. There\n shouldn't really be much, if any, FTP traffic these days.\n Some old update processes or something like this that you\n probably can easily enumerate, and the remainder, well,\n should really just not be using FTP anymore. Well, and\n that's it for today. Thanks for listening. Thanks for\n liking. Thanks for subscribing. Thanks for\n recommending this podcast and talk to you again tomorrow.\n Bye.",
       "transcript_checked": true
     }
   ]
