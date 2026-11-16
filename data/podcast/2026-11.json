@@ -2,6 +2,89 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10180",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10180",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10180.mp3",
+      "title": "SANS Stormcast Monday, November 16th, 2026: Macfinger ClickFix DownTheDRAIN; Microsoft 365 Outage Phishing; Check Point PHP2Shell Exploits (CVE-2026-109618); Cursor Claude Code Extension",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, November 16th, 2026: Macfinger ClickFix DownTheDRAIN; Microsoft 365 Outage Phishing; Check Point PHP2Shell Exploits (CVE-2026-109618); Cursor Claude Code Extension",
+      "show_notes": [
+        {
+          "heading": "This episode covers a Macfinger ClickFix campaign that delivers the DownTheDRAIN macOS infostealer, phishing that leverages last week's Microsoft 365 outage, in-the-wild Check Point Gateway PHP2Shell attacks, and Cursor's post-mortem on a compromised Anthropic Claude Code extension.",
+          "links": []
+        },
+        {
+          "heading": "Macfinger ClickFix Campaign Delivers DownTheDRAIN Infostealer",
+          "links": []
+        },
+        {
+          "heading": "Brad Duncan followed up on his September diaries about the Macfinger ClickFix campaign, which tricks macOS users into pasting a command into Terminal and then loads additional malware. Huntress also wrote about the payload, which Brad nicknames DownTheDRAIN, a cryptocurrency wallet drainer; the sample he tested was blocked by Apple.",
+          "links": [
+            "https://isc.sans.edu/diary/Macfinger%20ClickFix%20campaign%20sends%20DownTheDRAIN%20infostealer%20for%20macOS/33518",
+            "https://www.huntress.com/blog/mac-crypto-draining-malware"
+          ]
+        },
+        {
+          "heading": "Microsoft 365 Outage Phishing and a Failed Pool Alarm",
+          "links": []
+        },
+        {
+          "heading": "Microsoft Threat Intelligence says attackers are sending phishing emails that leverage last week's Microsoft 365 outage, claiming backed-up or queued mail may be deleted if the recipient does not respond. In Germany, a chlorine-level alarm email for a swimming pool never arrived during the outage, and several people were injured at a Phantasialand hotel pool; Johannes notes that life-safety systems should not depend on a single email service.",
+          "links": [
+            "https://x.com/MsftSecIntel/status/2121491564161581148",
+            "https://www.golem.de/news/outlook-chlorunfall-im-phantasialand-wegen-microsoft-panne-2611-215231.html"
+          ]
+        },
+        {
+          "heading": "Check Point Gateway PHP2Shell Attacks",
+          "links": []
+        },
+        {
+          "heading": "Check Point Research documented attacks against Check Point Security Gateways that began in late October, about a week after patches were released, exploiting the PHP2Shell remote code execution vulnerability (CVE-2026-109618 and CVE-2026-109619). The attackers also used a privilege escalation vulnerability in the DynamicCLI interface (CVE-2026-123039) and dropped a web shell, then a proxy, a wiper, and other components; Johannes says checking devices and web applications for web shells is a good generic test for compromise.",
+          "links": [
+            "https://research.checkpoint.com/2026/php2shell-exploitation-on-check-point-gateway/"
+          ]
+        },
+        {
+          "heading": "Cursor Post-Mortem on the Claude Code Extension Compromise",
+          "links": []
+        },
+        {
+          "heading": "Cursor published a post-mortem on the compromise of the official Anthropic Claude Code extension in the Cursor marketplace. The intrusion started with a credential exposed at Fireworks.ai that led to customer communications containing additional credentials; monitoring identified the unauthorized activity and keys were rotated, but one missed credential was then used to compromise the extension.",
+          "links": [
+            "https://cursor.com/blog/security-incident-update"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-16T02:00:02+00:00",
+      "duration_seconds": 352,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10180.mp3",
+      "audio_length_bytes": 4935453,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10180",
+      "categories": [
+        "macfinger",
+        "clickfix",
+        "downthedrain",
+        "microsoft 365",
+        "check point",
+        "php2shell",
+        "cve-2026-109618",
+        "cursor"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10180",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Well, Brad on Friday had a\n follow-up to a diary that Brad wrote in September. This diary\n talked about Macfinger, a ClickFix attack that then\n loads additional malware. Now, since then, Brad has learned\n about Huntress also writing about this particular malware\n and the malware actually being loaded by this attack. They're\n calling it DownTheDRAIN and yeah, it's a wallet drainer,\n meaning that it's going after crypto coin wallets and then\n draining your balance from these wallets. Brad has a\n quick walkthrough how the ClickFix part works, meaning\n the code that the user pastes into the terminal in order to\n download the malware. Of course, the user doesn't\n really know what's happening there. Now, on a good note,\n Brad noted that the particular attempt that he was playing\n with was blocked by Apple. And Apple, of course, in recent\n releases has sort of included some of the countermeasures\n against, in particular, sort of the ClickFix attacks where\n users are copy-pasting commands into the terminal.\n And then a little bit of follow-up to last week's\n Microsoft outage. Microsoft is now saying that they're seeing\n some phishing attacks attempting to leverage this\n outage. Essentially, these phishing emails will tell you\n that, well, due to the outage, there is like backed up or\n delayed email. And if you're not responding to this email,\n then those stored or queued emails may get deleted. So,\n very much a plausible issue and something that with all\n the news around the Microsoft outage, people may fall for.\n There was also an interesting sort of side story. Gebhard\n told me about this in Germany, where in a swimming pool,\n apparently, several people were injured by too high\n chlorine levels in the water. There was supposed to be an\n alarm message to go off to the maintainer of the swimming\n pool. But apparently, this message never made it because\n of the Microsoft outage. If you have any sort of life and\n safety systems like this, I wouldn't even blame Microsoft\n here in this case. But you should never have sort of a\n single point of failure in systems like this, like an\n email delivery service that, if failed, will cause harm to\n individuals. Luckily, nobody appears to be hurt seriously\n in this particular incident. Check Point has a write-up\n documenting some attacks that they have observed against\n Check Point Gateway that took advantage of the PHP2Shell\n vulnerability. These attacks apparently started showing up\n in late October, about a week after the patches were\n released. They also use a privilege escalation vulnerability\n in the DynamicCLI interface. The end result is, well,\n fairly classic. It's a web shell that's being dropped\n here. And then a proxy and a wiper and a couple other\n components are being implemented via this web\n shell. So, as I have mentioned before, you really need to\n look on your devices, on your web applications for these web\n shells. That's often the number one thing that's typically\n being deployed via these vulnerabilities, given that\n there are probably other vulnerabilities out there, not\n just PHP vulnerabilities. That appears to be sort of a fairly\n good generic test to make sure that you're not already\n compromised. It looks like today is becoming sort of a\n little bit of an update episode. We also have an\n update from Anthropic regarding the recent\n compromise of the official Anthropic Cursor plugin. It\n turns out, like so often, it started with a stolen\n credential. In this particular case, the credential was\n stolen from Fireworks.ai, a business intelligence\n platform. And then these credentials were basically\n used to, well, try to gain access to whatever they have\n access to. One of the things that the attacker did gain\n access to was communication with customers. And some of\n them included additional credentials. Now, what's also\n interesting here is that the Anthropic's monitoring did\n identify the unauthorized activity. They deactivated\n various keys and did try to rotate credentials. But\n apparently they missed one and that then led to the\n compromise of the extension. So really hard in an incident\n like this to identify all the credentials that were stolen\n and that have to be rotated. The more you can centralize\n this, probably the easier this gets. But still, that's also\n not always possible and definitely not always easy.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending and subscribing.\n And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10178",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

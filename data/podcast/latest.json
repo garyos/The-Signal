@@ -1,6 +1,89 @@
 {
-  "fetched_at": "2026-11-15T16:00:23.242918+00:00",
+  "fetched_at": "2026-11-16T10:29:25.428133+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10180",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10180",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10180.mp3",
+      "title": "SANS Stormcast Monday, November 16th, 2026: Macfinger ClickFix DownTheDRAIN; Microsoft 365 Outage Phishing; Check Point PHP2Shell Exploits (CVE-2026-109618); Cursor Claude Code Extension",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, November 16th, 2026: Macfinger ClickFix DownTheDRAIN; Microsoft 365 Outage Phishing; Check Point PHP2Shell Exploits (CVE-2026-109618); Cursor Claude Code Extension",
+      "show_notes": [
+        {
+          "heading": "This episode covers a Macfinger ClickFix campaign that delivers the DownTheDRAIN macOS infostealer, phishing that leverages last week's Microsoft 365 outage, in-the-wild Check Point Gateway PHP2Shell attacks, and Cursor's post-mortem on a compromised Anthropic Claude Code extension.",
+          "links": []
+        },
+        {
+          "heading": "Macfinger ClickFix Campaign Delivers DownTheDRAIN Infostealer",
+          "links": []
+        },
+        {
+          "heading": "Brad Duncan followed up on his September diaries about the Macfinger ClickFix campaign, which tricks macOS users into pasting a command into Terminal and then loads additional malware. Huntress also wrote about the payload, which Brad nicknames DownTheDRAIN, a cryptocurrency wallet drainer; the sample he tested was blocked by Apple.",
+          "links": [
+            "https://isc.sans.edu/diary/Macfinger%20ClickFix%20campaign%20sends%20DownTheDRAIN%20infostealer%20for%20macOS/33518",
+            "https://www.huntress.com/blog/mac-crypto-draining-malware"
+          ]
+        },
+        {
+          "heading": "Microsoft 365 Outage Phishing and a Failed Pool Alarm",
+          "links": []
+        },
+        {
+          "heading": "Microsoft Threat Intelligence says attackers are sending phishing emails that leverage last week's Microsoft 365 outage, claiming backed-up or queued mail may be deleted if the recipient does not respond. In Germany, a chlorine-level alarm email for a swimming pool never arrived during the outage, and several people were injured at a Phantasialand hotel pool; Johannes notes that life-safety systems should not depend on a single email service.",
+          "links": [
+            "https://x.com/MsftSecIntel/status/2121491564161581148",
+            "https://www.golem.de/news/outlook-chlorunfall-im-phantasialand-wegen-microsoft-panne-2611-215231.html"
+          ]
+        },
+        {
+          "heading": "Check Point Gateway PHP2Shell Attacks",
+          "links": []
+        },
+        {
+          "heading": "Check Point Research documented attacks against Check Point Security Gateways that began in late October, about a week after patches were released, exploiting the PHP2Shell remote code execution vulnerability (CVE-2026-109618 and CVE-2026-109619). The attackers also used a privilege escalation vulnerability in the DynamicCLI interface (CVE-2026-123039) and dropped a web shell, then a proxy, a wiper, and other components; Johannes says checking devices and web applications for web shells is a good generic test for compromise.",
+          "links": [
+            "https://research.checkpoint.com/2026/php2shell-exploitation-on-check-point-gateway/"
+          ]
+        },
+        {
+          "heading": "Cursor Post-Mortem on the Claude Code Extension Compromise",
+          "links": []
+        },
+        {
+          "heading": "Cursor published a post-mortem on the compromise of the official Anthropic Claude Code extension in the Cursor marketplace. The intrusion started with a credential exposed at Fireworks.ai that led to customer communications containing additional credentials; monitoring identified the unauthorized activity and keys were rotated, but one missed credential was then used to compromise the extension.",
+          "links": [
+            "https://cursor.com/blog/security-incident-update"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-16T02:00:02+00:00",
+      "duration_seconds": 352,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10180.mp3",
+      "audio_length_bytes": 4935453,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10180",
+      "categories": [
+        "macfinger",
+        "clickfix",
+        "downthedrain",
+        "microsoft 365",
+        "check point",
+        "php2shell",
+        "cve-2026-109618",
+        "cursor"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10180",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 16th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Well, Brad on Friday had a\n follow-up to a diary that Brad wrote in September. This diary\n talked about Macfinger, a ClickFix attack that then\n loads additional malware. Now, since then, Brad has learned\n about Huntress also writing about this particular malware\n and the malware actually being loaded by this attack. They're\n calling it DownTheDRAIN and yeah, it's a wallet drainer,\n meaning that it's going after crypto coin wallets and then\n draining your balance from these wallets. Brad has a\n quick walkthrough how the ClickFix part works, meaning\n the code that the user pastes into the terminal in order to\n download the malware. Of course, the user doesn't\n really know what's happening there. Now, on a good note,\n Brad noted that the particular attempt that he was playing\n with was blocked by Apple. And Apple, of course, in recent\n releases has sort of included some of the countermeasures\n against, in particular, sort of the ClickFix attacks where\n users are copy-pasting commands into the terminal.\n And then a little bit of follow-up to last week's\n Microsoft outage. Microsoft is now saying that they're seeing\n some phishing attacks attempting to leverage this\n outage. Essentially, these phishing emails will tell you\n that, well, due to the outage, there is like backed up or\n delayed email. And if you're not responding to this email,\n then those stored or queued emails may get deleted. So,\n very much a plausible issue and something that with all\n the news around the Microsoft outage, people may fall for.\n There was also an interesting sort of side story. Gebhard\n told me about this in Germany, where in a swimming pool,\n apparently, several people were injured by too high\n chlorine levels in the water. There was supposed to be an\n alarm message to go off to the maintainer of the swimming\n pool. But apparently, this message never made it because\n of the Microsoft outage. If you have any sort of life and\n safety systems like this, I wouldn't even blame Microsoft\n here in this case. But you should never have sort of a\n single point of failure in systems like this, like an\n email delivery service that, if failed, will cause harm to\n individuals. Luckily, nobody appears to be hurt seriously\n in this particular incident. Check Point has a write-up\n documenting some attacks that they have observed against\n Check Point Gateway that took advantage of the PHP2Shell\n vulnerability. These attacks apparently started showing up\n in late October, about a week after the patches were\n released. They also use a privilege escalation vulnerability\n in the DynamicCLI interface. The end result is, well,\n fairly classic. It's a web shell that's being dropped\n here. And then a proxy and a wiper and a couple other\n components are being implemented via this web\n shell. So, as I have mentioned before, you really need to\n look on your devices, on your web applications for these web\n shells. That's often the number one thing that's typically\n being deployed via these vulnerabilities, given that\n there are probably other vulnerabilities out there, not\n just PHP vulnerabilities. That appears to be sort of a fairly\n good generic test to make sure that you're not already\n compromised. It looks like today is becoming sort of a\n little bit of an update episode. We also have an\n update from Anthropic regarding the recent\n compromise of the official Anthropic Cursor plugin. It\n turns out, like so often, it started with a stolen\n credential. In this particular case, the credential was\n stolen from Fireworks.ai, a business intelligence\n platform. And then these credentials were basically\n used to, well, try to gain access to whatever they have\n access to. One of the things that the attacker did gain\n access to was communication with customers. And some of\n them included additional credentials. Now, what's also\n interesting here is that the Anthropic's monitoring did\n identify the unauthorized activity. They deactivated\n various keys and did try to rotate credentials. But\n apparently they missed one and that then led to the\n compromise of the extension. So really hard in an incident\n like this to identify all the credentials that were stolen\n and that have to be rotated. The more you can centralize\n this, probably the easier this gets. But still, that's also\n not always possible and definitely not always easy.\n Well, and that's it for today. Thanks for listening. Thanks\n for liking. Thanks for recommending and subscribing.\n And talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10178",
       "show": "stormcast",
@@ -4065,67 +4148,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10072",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday, August 28, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n incident response. Well, in diaries today we have Jan\n talking about, well, the latest in phishing. In this\n particular case, the attacker was experimenting with\n polymorphic phishing pages. What this refers to is that\n each time you load the page, there is a different code\n being loaded. That, of course, makes identifying it as a\n phishing page more difficult. The code itself is heavily\n obfuscated JavaScript. Now, one thing that Jan sort of ran\n into when looking at the page was, well, of course, getting\n a different code means that now you're downloading the\n page multiple times to see how the code changes. But\n apparently not all versions of the page actually worked. What\n happened was that due to an error that Jan is explaining\n in the obfuscated JavaScript, the page actually doesn't load\n for some of the cases a couple percent of the time. It\n wouldn't display anything and basically would just stall.\n From a defensive point of view, this phishing page isn't\n really all that special. It does load the page with the\n user's email address as an argument. So it does try to\n adapt the page a little bit by adding, for example, the\n company's logo based on the domain name. Well, and Jacob\n Baines with Wollcheck published a blog post with\n details regarding two different backdoors that he\n found in Chinese-made routers. Now, these routers are made by\n ZBT. They're sold under various brand names here in\n the U.S. Apparently, Deep Orange and such is one of\n those brand names. But they're not really marketed in the U\n .S. They're really more targeting the Chinese domestic\n market with these routers. So the ones that show up in\n American websites and such are really, you know, more\n accidental resales and such that you may see there.\n They're also sold via Alibaba. And it's, of course, possible\n to buy these routers there directly if you are living\n outside of China as well. The problem here are two different\n implants that can be used to remote control the router\n without any authentication. One is passive. It listens for\n inbound UDP packets and then can send back details about\n the router, but can also do things like execute commands.\n The second one is more active. It connects outbound to the\n ZPT cloud infrastructure. So this is definitely something\n that was left by the manufacturer. This is not sort\n of some random malware that's not associated with the\n manufacturer. There are two domains that can be used. The\n one ac-link.com is still active. The second one was no\n longer in use. And Jacob managed to actually configure\n that domain, basically acquire it and configure it, and then\n see what connections are coming inbound. The number of\n devices here was fairly small, and I think surprisingly\n small. An active scan for the UDP backdoor listed about 200\n or so devices that responded, and the incoming traffic to\n the domain was about another sort of 300 devices. But the\n domain here is really just more the backup domain. So the\n primary domain is probably used by most devices that are\n configured with this particular backdoor. Now,\n given that these routers are targeting the domestic Chinese\n market, it's more likely that this is some kind of\n surveillance technology or so mandated or encouraged by the\n Chinese government, if this is at all government-linked. Some\n of the functionality could be a little bit explained as,\n well, badly done support features and such. But given\n that there is no authentication and such, well,\n it's badly done, even if it's done for surveillance\n purposes. And Elon Hertz, a security researcher, did a\n survey of LLMS.txt files that are posted around the\n Internet. This is a standard file that tells AI agents how\n to interact with your websites. For example,\n documentation regarding APIs or such that you may offer for\n them to consume. The problem is that, well, AI agents are\n trusting the instructions being posted in this file. And\n as an option, you may include, for example, instructions as\n to what software you need to install in order to access the\n particular API. What I found is that several large websites\n actually do have accidental malicious code included in\n these instructions. And, of course, an attacker could make\n these instructions do, well, whatever the attacker wants to\n do. Because agents implicitly trust whatever instructions\n they're finding in this file. This is a really interesting\n kind of exploit. Reminds me a little bit of ClickFix, but\n for bots, where you basically tell the bot, hey, if you want\n to get past this particular barrier, then just copy-paste\n this code and execute it. And PaperCut published a critical\n security advisory stating that they are aware of a currently\n exploited vulnerability and there is no patch available\n for it yet. The only recommendation they have to\n offer so far essentially to block access to your PaperCut\n instance, at least from the public internet or restricted\n to trusted IP addresses. Not ideal, of course. There is not\n a lot of detail about how severe this vulnerability is.\n They did publish some indicators of compromise and\n looks like there's an EXE that may be running. So I would\n assume that it's possible that this does include, indeed,\n remote code execution. At least that's sort of the\n hypothesis I would use in order to rank this particular\n vulnerability right now. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing to this podcast. And as always, talk to you on\n Monday. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10070",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10070",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10070.mp3",
-      "title": "SANS Stormcast Thursday, August 27th, 2026: Entra ID Admins; Unifi Patches; log4j Vuln; Sleepwalker Malware",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, August 27th, 2026: Entra ID Admins; Unifi Patches; log4j Vuln; Sleepwalker Malware",
-      "show_notes": [
-        {
-          "heading": "Who Has Admin Rights in your Entra ID Directory?",
-          "links": [
-            "https://isc.sans.edu/diary/Who%20Has%20Admin%20Rights%20in%20your%20Entra%20ID%20Directory%3F/33284"
-          ]
-        },
-        {
-          "heading": "Ubiquity Unifi Patches",
-          "links": [
-            "https://community.ui.com/releases/Security-Advisory-Bulletin-067/fc4a3488-7c43-4628-8bab-f715e96dbfc9"
-          ]
-        },
-        {
-          "heading": "Log4J FilteredObjectInputStream Vulnerability",
-          "links": [
-            "https://github.com/joanbono/log4j2-4255-exploit",
-            "https://jeffmcjunkin.com/posts/log4j2-fois-marshalledobject/"
-          ]
-        },
-        {
-          "heading": "Sleepwalker Malware",
-          "links": [
-            "https://r136a1.dev/2026/08/24/sleepwalker-a-passive-backdoor-with-its-own-command-language/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-27T02:00:02+00:00",
-      "duration_seconds": 461,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10070.mp3",
-      "audio_length_bytes": 6451888,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10070",
-      "categories": [
-        "log4j",
-        "unifi",
-        "ubiquity",
-        "patches",
-        "admin",
-        "entra",
-        "id"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10070",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, August 27th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Cybersecurity Engineering. Well, Rob is still at it,\n creating useful PowerShell scripts to inspect Entera ID\n configurations. The latest one looks at who has administrator\n rights. Now, this is a little bit more complicated than just\n looking for like administrators because, well,\n there are a bunch of different roles with some level of\n administrator privileges. There's not just the global\n administrator. There's, for example, also something like\n with global read permissions where, well, a user that\n basically can read everything, which in itself may not always\n be as defined as administrator, but certainly\n it's a role to keep an eye on. And what Rob's PowerShell\n script here does is basically collect all of the different\n roles and then either display how many users you have for\n each one of these roles or who the actual user is associated\n with this role. So quick little audit script that's\n certainly quite useful to find like leftover administrators\n that are no longer needed or maybe something malicious that\n was added by NetHacker. Ubiquiti today released\n Security Advisory Bulletin number 67. This bulletin does\n outline 22 different vulnerabilities that affect\n several products sold under the UniFi brand. Now, when\n you're patching these devices, keep in mind that, for\n example, if you have one of their dream machines or such,\n you may have to patch the operating system itself and\n then also applications that you installed on the device,\n like, for example, the Protect or the Network or the Talk\n product that is being sold under the UniFi brand. The\n vulnerabilities themselves, some of them have rather high\n CVSS scores, like 10 and there are a few 9.9s and 9.1\n vulnerabilities there. Some of the CVSS scores look kind of\n high, like there is a approach escalation vulnerability with\n a score of 9.9. However, the description is extremely\n sparse, so really hard to second guess here the rating\n for the CVSS scores. Also, a number of these\n vulnerabilities were apparently found by AI tools,\n which these days, of course, is no big surprise. As far as\n mitigations go, the bulletin doesn't really outline any,\n but pretty much all of the vulnerabilities from me\n scanning them do require access to the control plane,\n basically access to the respective UniFi application.\n So, just like with all similar applications, try to limit who\n can access your network configuration, your camera\n configuration systems and the like. And that will\n significantly reduce the exposure and with that the\n risk of exploitation. The actual patches were released\n over the last few days, so if you have auto update enabled,\n you're probably already set. And then we do have a new log4j\n vulnerability. Now, as this vulnerability became\n known, of course, there was a lot of talk about yet another\n log4j disaster. This one doesn't appear to be that\n severe, that bad, I should say. It's certainly a remote\n code execution vulnerability. It's a deserialization flaw in\n the filtered object input stream feature. The problem\n with this function is it's actually meant to do the right\n thing. You have deserialization because you do\n allow arbitrary objects to be deserialized. Well, the\n filtered part in filtered object input stream is\n supposed to exactly prevent this. But as so often, well,\n they're allowing one particular object in here that\n then actually can in turn itself create arbitrary\n object. So that gives you that famous gadget and with that\n remote code execution. One of the big constraints here is to\n for this to be exploitable is that you must have software\n that directly accepts these log4j serialized objects.\n That's typically not the case. So this is not like the old\n log4j vulnerability where I could send a request to a\n web server. And as that request is being logged, it\n would trigger the vulnerability. As a result,\n this is probably not exploitable in most software\n that uses log4j.\n So, I'll also\n link to Jeff's blog post in addition to the proof of\n concept exploit. So, yes, an exploit is known, is public.\n No patches available at this point and not even a CVE\n number yet. Apparently, the bug report that this was\n originally reported with wasn't made like hidden as\n usual security reports, but was left public for a couple\n of days. And that's sort of how this entire issue became\n public. And we got some interesting malware analysis\n from Dominic with Palo Alto. So, this malware is described\n as sleepwalker. And what makes it kind of unique and sort of\n also caught my attention is that it has a little bit\n unusual, at least these days, command control system.\n Usually these days you have the malware reach out to some\n kind of web server or such in order to retrieve\n instructions. Well, back in the old days, I've seen quite\n often sort of some passive listening for packets. There\n were some famous DDoS agents and such that did it. Well,\n this is exactly what this particular malware does. Also\n interesting that it sideloads itself into the antivirus\n product, ESET. And well, then it starts listening on the\n network for packets that match very specific characteristics.\n It actually doesn't appear to matter what protocol, what\n port, but then the payload has to match specific checksum\n conditions. If that's the case, they're then decrypted\n and interpreted as bytecode, which then instructs the\n malware to do various additional operations. So,\n interesting malware here and actually also a real nice and\n interesting write-up of some rather unusual malware that\n probably often is being missed because it doesn't have sort\n of that today classic kind of beaconing and such a behavior\n that you would typically see in malware. Well, and this is\n it for today. So, thanks for listening. Thanks for liking.\n Thanks for subscribing. And talk to you again tomorrow.\n Bye.",
       "transcript_checked": true
     }
   ]
