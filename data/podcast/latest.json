@@ -1,6 +1,88 @@
 {
-  "fetched_at": "2026-11-16T19:09:33.897782+00:00",
+  "fetched_at": "2026-11-17T11:24:15.809170+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10182",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10182",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10182.mp3",
+      "title": "SANS Stormcast Tuesday, November 17th, 2026: LiteLLM/Starlette RCE Scans (CVE-2026-42271, CVE-2026-48710); Danfoss AK-SM800A RCEs; cyrus-sasl SRP Bypass (CVE-2026-129483); NoisyTCP (CVE-2026-99288)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Tuesday, November 17th, 2026: LiteLLM/Starlette RCE Scans (CVE-2026-42271, CVE-2026-48710); Danfoss AK-SM800A RCEs; cyrus-sasl SRP Bypass (CVE-2026-129483); NoisyTCP (CVE-2026-99288)",
+      "show_notes": [
+        {
+          "heading": "Internet Storm Center honeypots are seeing LiteLLM and Starlette exploit scans, Midnight Blue found unpatched remote code execution flaws in Danfoss AK-SM800A refrigeration controllers, a Cyrus SASL Secure Remote Password bypass can allow logins without a password, and NoisyTCP is a Linux kernel TCP denial-of-service bug.",
+          "links": []
+        },
+        {
+          "heading": "Scans for LiteLLM/Starlette (CVE-2026-42271, CVE-2026-48710)",
+          "links": []
+        },
+        {
+          "heading": "Internet Storm Center honeypots are seeing scans that chain a LiteLLM remote code execution bug in a test URL, CVE-2026-42271, with CVE-2026-48710, a Starlette Host header validation flaw that bypasses access control. Patches are available, and Horizon3.ai has a write-up of the chain.",
+          "links": [
+            "https://isc.sans.edu/diary/Scans%20for%20LiteLLM%20Starlette%20%28CVE-2026-42271%2C%20CVE-2026-48710%29/33522",
+            "https://horizon3.ai/attack-research/vulnerabilities/cve-2026-42271-chained-with-cve-2026-48710/"
+          ]
+        },
+        {
+          "heading": "Danfoss AK-SM800A Remote Code Execution Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Midnight Blue found six pre-authentication remote code execution flaws, including a Host header buffer overflow, in Danfoss AK-SM800A refrigeration controllers after about an hour of manual firmware review. The devices lack standard protections such as stack canaries and address space layout randomization (ASLR), no patches are available yet, and the controllers should be kept isolated from the internet.",
+          "links": [
+            "https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a"
+          ]
+        },
+        {
+          "heading": "cyrus-sasl SRP Server Authentication Bypass (CVE-2026-129483)",
+          "links": []
+        },
+        {
+          "heading": "A Secure Remote Password (SRP) bug in the Cyrus SASL library, often used to authenticate Internet Message Access Protocol (IMAP) and other mail services, lets an attacker log in as an existing user with no password. SRP is usually not enabled, and mail servers that offer it typically advertise the algorithm in their banner, so a quick scan can show whether it is in use.",
+          "links": [
+            "https://github.com/cyrusimap/cyrus-sasl/issues/896"
+          ]
+        },
+        {
+          "heading": "NoisyTCP: Linux Kernel TCP Pre-auth Remote Corruption (CVE-2026-99288)",
+          "links": []
+        },
+        {
+          "heading": "NoisyTCP is a Linux kernel Transmission Control Protocol (TCP) denial-of-service vulnerability that can be triggered against any listening TCP socket, with no indication that code execution is possible. A patch is in the kernel.org tree, exploitability varies from about 14 hours on a quiet bare-metal server to much faster on a virtual machine, and disabling SYN cookies is a possible emergency workaround but is not recommended as a proactive fix.",
+          "links": [
+            "https://seclists.org/oss-sec/2026/q4/715"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-17T02:05:15+00:00",
+      "duration_seconds": 495,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10182.mp3",
+      "audio_length_bytes": 6947165,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10182",
+      "categories": [
+        "litellm",
+        "starlette",
+        "cve-2026-42271",
+        "cve-2026-48710",
+        "danfoss",
+        "cyrus-sasl",
+        "noisytcp",
+        "cve-2026-99288"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10182",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, November 17th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well, in Diaries today we have scans\n for LiteLLM. Actually, the attack that these scans\n attempt to pull off relies on two vulnerabilities. One is in\n LiteLLM and then the second vulnerability is in Starlette.\n That's a framework that's being used for web\n applications, a Python framework that LiteLLM does\n rely on. So what happens here, and I think the real\n vulnerability here is the Starlette one, the LiteLLM. Yes,\n it's a remote code execution. It's in this test URL, but it\n does assume authentication, access control. And of course,\n having remote code execution behind a proper access control\n may be something that you really want to offer in\n particular here, as the URL implies, sort of some kind of\n test feature that you have in your system. But the problem\n is that the access control part is broken in Starlette. And\n the problem is, yet again, well, trusting headers. So the\n way the access control works is that you can restrict\n certain URLs. Of course, that's normal. But the URL is\n composed of the host name that's pulled from the host\n header, and then the URL that you have in the first line of\n your HTTP request. The problem is that Starlette never really\n verifies the host name, that it actually is a valid host\n name. So what happens is that the attacker is able to add\n characters like question marks, or in our case, square\n brackets to the host name. And that then leads to a URL that\n will pass the validation, even though, well, that's not\n really the URL that you're supposed to access. So that's\n really the real sort of root cause here is that the host\n header, the host name of the host header is never properly\n validated. Anyway, there are patches available. The\n vulnerability is not new, sort of was described in July. And\n also then soon after that, some exploits were seen for\n it. Horizon3.ai has a good sort of brief post about\n describing this vulnerability. And recently, of course, there\n was a lot of news about thermostat or controllers for\n refrigeration systems getting compromised, in particular, as\n far as grocery stores were concerned. But apparently also\n some in hospitals like that were controlling a temperature\n of blood supply were hacked as well in this particular\n attack. Now, there's always kind of the assumption and\n some examples of some obvious vulnerabilities in these kind\n of controllers. But now Midnight Blue has published a\n brief blog post looking at actual firmware images from\n Danfoss. Danfoss is the manufacturer of one of the\n controllers that was affected by these attacks. And, well,\n they say within an hour, without the help of AI, just\n basically by doing some manual sort of browsing through the\n code, they found a number of vulnerabilities. They focus\n more on sort of buffer overflows. And they found, for\n example, in the host header, a buffer overflow that then\n leads to remote code execution. And it's actually\n relatively straightforward to exploit because these systems\n don't do stack canaries. They don't do address space layout\n randomization. So pretty much the standard compiler\n protections that you have in a lot of modern systems are not\n enabled in any of these thermostat controllers. And\n exploitation should be relatively straightforward. So\n definitely keep those systems isolated. I don't think there\n are any patches available yet for the vulnerabilities\n discovered by Midnight Blue. Not really sure if they even\n bothered to disclose them to the vendor. But definitely\n isolation is probably your best bet in particular since\n they just sort of scratched the tip of the iceberg here.\n There's probably a lot more vulnerabilities that they\n haven't looked at yet. And we've got an interesting\n authentication bypass vulnerability in Cyrus SASL.\n Now, this library is often used to authenticate email\n services like particular IMAP. I've seen it often being used\n and used it myself. The vulnerability, luckily, is\n only in the SRP algorithms. So that stands for Secure Remote\n Password. Sounds like something that you may want\n enabled. But luckily, it's usually not enabled because\n server client support is a little bit limited for this\n particular algorithm. The problem here is that an\n attacker essentially can log in with no password at all.\n They just have to set their side of the secret for a\n particular value that will then essentially shortcut the\n authentication algorithm. This is particularly described\n actually in the RFC describing SRP as something that you have\n to be aware of. But I guess wasn't properly implemented\n here. From a discovery point of view, the mail server, if\n that's how you use it, that's how it's usually being used.\n It typically lists these algorithms as part of the\n banner. And it should be pretty easy to identify any\n vulnerable systems, which of course helps defenders as well\n as attackers. You may want to do a quick scan of your\n network, making sure that it doesn't happen to be enabled\n in any of your mail servers. And then we got yet another\n TCP vulnerability in the Linux kernel. This one was named\n NoisyTCP by the discoverer and has been reported to the\n Linux kernel and a patch should be available in the\n kernel from kernel.org. Not sure whether or not it made it\n into various distributions yet. Good thing about this\n vulnerability first. Well, this is a denial of service\n vulnerability. So no indication that code execution\n is possible. But like any of these sort of kernel TCP\n vulnerabilities, all it needs is a listening TCP socket.\n Doesn't really matter what software is listening on that\n socket. Exploitability, according to the author, is a\n little bit mixed on a bare metal server. That does not\n have a lot of traffic. Apparently, it took about 14\n hours to trigger exploitation. On the other hand, on a virtual\n system, it took only a few minutes. So lots of\n dependencies here. Also, how many receive queues and such\n you have on the system. This is related to SYN\n cookies. So as a quick fix, you could just disable SYN\n cookies. I probably wouldn't recommend that sort of\n proactively. But if you do see an attack against one of your\n systems using these vulnerabilities, that's\n probably the sort of appropriate quick fix in order\n to block exploitation. Well, and that's it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending and subscribing to this podcast. And talk to\n you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10180",
       "show": "stormcast",
@@ -4087,67 +4169,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10074",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Monday, August 31, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from New York\n City, New York. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Purple\n Team Operations. On Friday, Xavier took a look at\n malicious PE file. These portable ex-tribal files that\n are commonly used by Windows have the nice advantage of\n containing quite a bit of metadata in the header. This\n metadata can then be used in order to figure out, for\n example, what compiler is being used. Now in the past,\n Xavier has looked, for example, at statistics of 64\n bits versus 32 bit malware. Turns out, still, the vast\n majority is 32 bits. But that's a kind of logic, given\n that there is really no big advantage for malware to\n actually run in 64 bits. As far as the compilers being\n used and the languages being used, the vast majority does\n use C, C++ and the standard Microsoft compilers in order\n to compile the code. Go, Rust, some of these other languages,\n are still sort of fractions of a percent of the malware that\n Xavier looked at. So really not significant at this point.\n Of course, significant maybe in other ways. We have seen\n some sort of more advanced malware, for example, using Go\n that in particular does attempt to evade some of the\n other detection mechanisms that aren't really all that\n familiar and tuned to malware written in Go. This was a\n rather large stash of malware that Xavier looked at.\n Overall, there were something like 23 million files. 600,000\n approximately turned out to be valid PE files. These files\n were retrieved from the Abuse .ch Matter Bazaar. And on\n Friday, I talked about ongoing exploitation against PaperCut\n and that there is no real patch available for it. Well,\n the folks at PaperCut were busy at work over the weekend.\n They did publish two emergency updates and do recommend that\n you apply them. So emergency patch release 2 that was\n published on the 28th is the one that you should have\n applied by now. But probably the original advice of just\n disabling access to PaperCut if you can do so or\n constraining what IP addresses can access PaperCut that is\n still valid. Still something that you should follow. There\n are a total of two vulnerabilities that are being\n addressed here in this patch. The first one is an unsafe\n dynamic class loading vulnerability. That's sort of\n a reflective one where the data is being loaded from the\n database. In order to get that data into the database, the\n attacker then exploits a second vulnerability and\n that's an improper access control vulnerability in the\n web management interface. So those two vulnerabilities work\n together here to in the end lead to arbitrary code\n execution on PaperCut and that's what's being currently\n exploited. And late last week WatchGuard released patches\n for 27 vulnerabilities. There is one kind of vulnerability\n that I'm a little bit concerned about and this is a\n buffer overflow in the Ike-D implementation. So Ike, that's\n your key exchange for IPsec and pretty much has to be\n exposed if you're using IPsec and often you're using like a\n VPN because you can't easily restrict IP addresses. So\n definitely something to be aware of. It affects Fireware\n OS. Patches are available. I'm not aware of any exploits out\n there but something that you do definitely want to patch.\n And finally we got patches from D-Link for their DIR\n -X1860 routers. So these patches affect two\n vulnerabilities that are being addressed here. The first\n vulnerability is pretty interesting. It's an\n unauthenticated administrator password modification. Now it\n does require that the attacker has access to the JSON RPC\n interface which shouldn't be of course exposed. The second\n one is a wireless configuration information\n disclosure. So that could affect any passwords and such\n that you need for Wi-Fi access. Definitely I would\n consider the first one to be the critical one here. And\n like I said, just make sure that you please don't expose\n this stuff to the world. Well and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast. As always you can find links to\n classes I'll be teaching in the near future in the show\n notes. So thanks and talk to you again tomorrow. Bye. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10072",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10072",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10072.mp3",
-      "title": "SANS Stormcast Friday, August 28th, 2026: Broken Polymorphic Phishing; Router Implants; llms.txt exploits; Papercut 0-Day",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, August 28th, 2026: Broken Polymorphic Phishing; Router Implants; llms.txt exploits; Papercut 0-Day",
-      "show_notes": [
-        {
-          "heading": "A polymorphic phishing page (that occasionally breaks itself)",
-          "links": [
-            "https://isc.sans.edu/diary/A%20polymorphic%20phishing%20page%20%28that%20occasionally%20breaks%20itself%29/33290"
-          ]
-        },
-        {
-          "heading": "Chinese Implants in the Supply Chain",
-          "links": [
-            "https://www.vulncheck.com/blog/zbt-darklantern-speakingstone?_sp=1068fa46-3d91-427e-8120-aa6d8bda2912.1787865822277"
-          ]
-        },
-        {
-          "heading": "Data Became Code: We Ran Code Inside Fortune 500s Using Files They Published for AI Agents",
-          "links": [
-            "https://medium.com/@alonhertz1/data-became-code-we-ran-code-inside-fortune-500s-using-files-they-published-for-ai-agents-0cd67ffbbffc"
-          ]
-        },
-        {
-          "heading": "Papercut Security Advisory",
-          "links": [
-            "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-28T02:00:02+00:00",
-      "duration_seconds": 439,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10072.mp3",
-      "audio_length_bytes": 6147594,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10072",
-      "categories": [
-        "papercut",
-        "llms.txt",
-        "llm",
-        "agents",
-        "china",
-        "implants",
-        "polymorphic",
-        "phishing"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10072",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Friday, August 28, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu graduate certificate program in\n incident response. Well, in diaries today we have Jan\n talking about, well, the latest in phishing. In this\n particular case, the attacker was experimenting with\n polymorphic phishing pages. What this refers to is that\n each time you load the page, there is a different code\n being loaded. That, of course, makes identifying it as a\n phishing page more difficult. The code itself is heavily\n obfuscated JavaScript. Now, one thing that Jan sort of ran\n into when looking at the page was, well, of course, getting\n a different code means that now you're downloading the\n page multiple times to see how the code changes. But\n apparently not all versions of the page actually worked. What\n happened was that due to an error that Jan is explaining\n in the obfuscated JavaScript, the page actually doesn't load\n for some of the cases a couple percent of the time. It\n wouldn't display anything and basically would just stall.\n From a defensive point of view, this phishing page isn't\n really all that special. It does load the page with the\n user's email address as an argument. So it does try to\n adapt the page a little bit by adding, for example, the\n company's logo based on the domain name. Well, and Jacob\n Baines with Wollcheck published a blog post with\n details regarding two different backdoors that he\n found in Chinese-made routers. Now, these routers are made by\n ZBT. They're sold under various brand names here in\n the U.S. Apparently, Deep Orange and such is one of\n those brand names. But they're not really marketed in the U\n .S. They're really more targeting the Chinese domestic\n market with these routers. So the ones that show up in\n American websites and such are really, you know, more\n accidental resales and such that you may see there.\n They're also sold via Alibaba. And it's, of course, possible\n to buy these routers there directly if you are living\n outside of China as well. The problem here are two different\n implants that can be used to remote control the router\n without any authentication. One is passive. It listens for\n inbound UDP packets and then can send back details about\n the router, but can also do things like execute commands.\n The second one is more active. It connects outbound to the\n ZPT cloud infrastructure. So this is definitely something\n that was left by the manufacturer. This is not sort\n of some random malware that's not associated with the\n manufacturer. There are two domains that can be used. The\n one ac-link.com is still active. The second one was no\n longer in use. And Jacob managed to actually configure\n that domain, basically acquire it and configure it, and then\n see what connections are coming inbound. The number of\n devices here was fairly small, and I think surprisingly\n small. An active scan for the UDP backdoor listed about 200\n or so devices that responded, and the incoming traffic to\n the domain was about another sort of 300 devices. But the\n domain here is really just more the backup domain. So the\n primary domain is probably used by most devices that are\n configured with this particular backdoor. Now,\n given that these routers are targeting the domestic Chinese\n market, it's more likely that this is some kind of\n surveillance technology or so mandated or encouraged by the\n Chinese government, if this is at all government-linked. Some\n of the functionality could be a little bit explained as,\n well, badly done support features and such. But given\n that there is no authentication and such, well,\n it's badly done, even if it's done for surveillance\n purposes. And Elon Hertz, a security researcher, did a\n survey of LLMS.txt files that are posted around the\n Internet. This is a standard file that tells AI agents how\n to interact with your websites. For example,\n documentation regarding APIs or such that you may offer for\n them to consume. The problem is that, well, AI agents are\n trusting the instructions being posted in this file. And\n as an option, you may include, for example, instructions as\n to what software you need to install in order to access the\n particular API. What I found is that several large websites\n actually do have accidental malicious code included in\n these instructions. And, of course, an attacker could make\n these instructions do, well, whatever the attacker wants to\n do. Because agents implicitly trust whatever instructions\n they're finding in this file. This is a really interesting\n kind of exploit. Reminds me a little bit of ClickFix, but\n for bots, where you basically tell the bot, hey, if you want\n to get past this particular barrier, then just copy-paste\n this code and execute it. And PaperCut published a critical\n security advisory stating that they are aware of a currently\n exploited vulnerability and there is no patch available\n for it yet. The only recommendation they have to\n offer so far essentially to block access to your PaperCut\n instance, at least from the public internet or restricted\n to trusted IP addresses. Not ideal, of course. There is not\n a lot of detail about how severe this vulnerability is.\n They did publish some indicators of compromise and\n looks like there's an EXE that may be running. So I would\n assume that it's possible that this does include, indeed,\n remote code execution. At least that's sort of the\n hypothesis I would use in order to rank this particular\n vulnerability right now. Well, and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n subscribing to this podcast. And as always, talk to you on\n Monday. Bye.",
       "transcript_checked": true
     }
   ]
