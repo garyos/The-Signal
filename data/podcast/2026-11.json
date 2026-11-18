@@ -2,6 +2,77 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10184",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10184",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10184.mp3",
+      "title": "Phishing Collects MX Records; Java4Shell OpenJDK RCE (CVE-2026-114938); Optimizely Magecart Compromise (Nov 18 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Phishing Collects MX Records; Java4Shell OpenJDK RCE (CVE-2026-114938); Optimizely Magecart Compromise (Nov 18 2026)",
+      "show_notes": [
+        {
+          "heading": "Jan Kopriva describes a phishing kit that collects MX records, Calif discloses Java4Shell remote code execution in OpenJDK's Base64 decoder, and an Optimizely compromise spread Magecart-style malware to major websites.",
+          "links": []
+        },
+        {
+          "heading": "A Phishing Page Interested in MX Records",
+          "links": []
+        },
+        {
+          "heading": "Jan Kopriva of the SANS Internet Storm Center describes a phishing page that customizes itself based on the victim's email domain, then uses JavaScript to perform a DNS-over-HTTPS (DoH) lookup of the domain's Mail Exchange (MX) records via Google DNS. The MX records are stored with the stolen username and password rather than used to customize the page.",
+          "links": [
+            "https://isc.sans.edu/diary/A+phishing+page+interested+in+MX+records/33526/"
+          ]
+        },
+        {
+          "heading": "Java4Shell: Write Once, RCE Everywhere",
+          "links": []
+        },
+        {
+          "heading": "Calif, the firm behind PHP2Shell, disclosed Java4Shell (CVE-2026-114938), a memory-corruption bug in OpenJDK's Base64 decoder on x86-64 CPUs that support the AVX-512 VBMI extension; ARM processors are not affected. The flaw can allow unauthenticated remote code execution in applications such as Keycloak, and can also leak memory in a manner similar to Heartbleed; Oracle released a patch in its November Critical Security Patch Update.",
+          "links": [
+            "https://calif.io/java4shell/",
+            "https://www.oracle.com/security-alerts/cspunov2026.html"
+          ]
+        },
+        {
+          "heading": "Optimizely Compromise",
+          "links": []
+        },
+        {
+          "heading": "Attackers compromised Optimizely, a JavaScript experimentation platform used by many large websites, and swapped the distributed script for a Magecart-style payload that stole payment card and cryptocurrency wallet information. Report URI found the malware on sites belonging to 178 organizations, including HSBC and the BBC; Johannes suggests blocking optimizely.com and the .icu top-level domain.",
+          "links": [
+            "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-18T02:00:03+00:00",
+      "duration_seconds": 457,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10184.mp3",
+      "audio_length_bytes": 6402955,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10184",
+      "categories": [
+        "java4shell",
+        "openjdk",
+        "cve-2026-114938",
+        "optimizely",
+        "magecart",
+        "phishing",
+        "mx records"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10184",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Undergraduate Certificate Program in Applied\n Cybersecurity. Well, in Diaries today we have Jan talk\n about yet another phishing attack. This one does have\n some interesting stuff with MX records. So the phishing page\n that the user is visiting is first of all customized based\n on the user's email domain. And then JavaScript is being\n used to actually do a DNS lookup over HTTPS just by\n hitting the Google DNS endpoint. And that information\n is then included in the data being sent back to the\n phisher. So it's not used to customize the page. That's\n just done based on the domain name itself. It's just being\n basically stored with the username and password that the\n victim types in. My guess is that the attacker is trying to\n get the MX record as seen by the user. Sometimes\n organizations set up their email differently for users\n inside the network versus what you would see externally.\n Maybe they're trying to compare this a little bit and\n either to validate the information or just maybe to\n find some different spot where they could possibly log in. As\n the public mail server that's being advertised to everybody\n else may not actually accept the user's login information.\n That's my guess here at least. If anybody has any other\n insight, let me know. Now we have yet another super\n critical, this will end the world as we know it,\n vulnerability. And this time again discovered by Calif,\n the company that was also behind some of the work\n regarding PHP2Shell. They're calling it Java4Shell,\n not 2Shell in this particular case. The\n vulnerability affects base64 decoding. And a lot of web\n applications, for example, for cookie values and the like use\n base64. So web applications certainly are exposed here. In\n order to be vulnerable, your CPU also has to support the\n AVX-512 VBMI extension. And that was originally released\n by Intel 12 years ago. So you can assume that most of your\n x86 CPUs, AMD supports it as well, are vulnerable to this\n particular buffer overflow. Anything ARM or such is not\n vulnerable. Also emulators and such tend to be not vulnerable\n according to some of the write -ups I've seen. But this was\n just released sort of about an hour before I record this.\n Oracle has released also a patch for this. Today as part\n of their monthly critical patch update. So a patch is\n available. Yes, apply it. And unless you don't do base64 and\n you don't use any x86 CPUs, which is unlikely for the most\n part. They list a couple of applications like Keycloak,\n for example, that are vulnerable without\n authentication. The vulnerability itself, of\n course, does not require authentication. It's just a\n basic Java vulnerability. The question really only becomes\n at what point are you actually able to reach an endpoint that\n accepts a base64 encoded data that can be used to trigger\n this vulnerability. Calif also states that it's unlikely\n that there will be sort of a universal exploit. Similar to\n what we have seen sort of with PHP2Shell and such with\n these memory corruption vulnerabilities. It tends to\n be tricky to work out all the offsets. Now, there is also a\n memory leakage part to this vulnerability. Similar to the\n Heartbleed attack where random memory may be leaked.\n So even the non-remote code execution path could be an\n issue for you here in case you have any data on your servers\n that you want to keep a secret. And yesterday,\n Optimizely, a company that produces JavaScript that's\n used by many big websites in order to monitor how users are\n using their website, essentially optimize how the\n website works. Well, Optimizely was compromised and\n essentially what happened was sort of your standard Magecart\n attack. That's sort of how this attack is often\n described, where the attacker then swapped out the\n JavaScript being distributed by Optimizely for a version\n that was compromised. The compromised version did\n essentially include sort of JavaScript info stealers,\n meaning on the page the code showed up. They would look for\n payment card information, crypto wallet information, and\n the like on mobile devices. Apparently, it also created\n pop-ups, advertising malware, which, of course, may be more\n plausible for the user to install if it shows up on like\n hsbc.com or bbc.com. Those are some of the sites that were\n affected. Looks like around 167, I think they mentioned\n websites were affected by this. What can you do about it\n as a user? Maybe just block Optimizely.com, set up a DNS\n block list for this. I don't think it does anything for the\n user of the website. It's really more sort of for\n marketing and such on the back end of the website where this\n is being used. Also, many of the domains, the malicious\n domains, they use the .ICU top -level domain, haven't really\n seen much good from that domain. So that may be another\n thing that you maybe just want to block. And basically with\n that, you probably cut down quite a bit on malware noise\n and other log entries. So with these two stories, one other\n sort of critical Java vulnerability and then this\n Optimizely script infecting more than 100 big name brand\n website. The question that often comes up these days is,\n and a lot of this, of course, appears to be AI-fueled, like,\n for example, the Java story. What should I do to prevent\n this, to protect myself? Just a quick word of advice. At the\n end of the day, 5 o'clock, go home, walk your dog. If you\n don't have a dog, get a dog. But this is the new normal.\n This is not an emergency. Don't treat it as an emergency\n that there is a super critical Java vulnerability, for\n example, that, yes, you need to patch across your\n environment. As you come in the morning, set up a plan.\n Set up what you have to do first. Get that done. At 5 o\n 'clock, go home. If you are a leader that sort of manages\n people that respond to these incidents, make sure your\n people have the right tools, the right resources. And, yes,\n don't keep them overnight. It's not going to make a\n difference. It's only to burn out your people, because a\n week from now, there will be probably another super critical\n vulnerability, and you want to still be around at that point.\n So, anyway, that's it for today. Thanks for listening,\n and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10182",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

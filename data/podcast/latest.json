@@ -1,6 +1,77 @@
 {
-  "fetched_at": "2026-11-17T18:02:22.392787+00:00",
+  "fetched_at": "2026-11-18T10:57:42.190602+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10184",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10184",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10184.mp3",
+      "title": "Phishing Collects MX Records; Java4Shell OpenJDK RCE (CVE-2026-114938); Optimizely Magecart Compromise (Nov 18 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Phishing Collects MX Records; Java4Shell OpenJDK RCE (CVE-2026-114938); Optimizely Magecart Compromise (Nov 18 2026)",
+      "show_notes": [
+        {
+          "heading": "Jan Kopriva describes a phishing kit that collects MX records, Calif discloses Java4Shell remote code execution in OpenJDK's Base64 decoder, and an Optimizely compromise spread Magecart-style malware to major websites.",
+          "links": []
+        },
+        {
+          "heading": "A Phishing Page Interested in MX Records",
+          "links": []
+        },
+        {
+          "heading": "Jan Kopriva of the SANS Internet Storm Center describes a phishing page that customizes itself based on the victim's email domain, then uses JavaScript to perform a DNS-over-HTTPS (DoH) lookup of the domain's Mail Exchange (MX) records via Google DNS. The MX records are stored with the stolen username and password rather than used to customize the page.",
+          "links": [
+            "https://isc.sans.edu/diary/A+phishing+page+interested+in+MX+records/33526/"
+          ]
+        },
+        {
+          "heading": "Java4Shell: Write Once, RCE Everywhere",
+          "links": []
+        },
+        {
+          "heading": "Calif, the firm behind PHP2Shell, disclosed Java4Shell (CVE-2026-114938), a memory-corruption bug in OpenJDK's Base64 decoder on x86-64 CPUs that support the AVX-512 VBMI extension; ARM processors are not affected. The flaw can allow unauthenticated remote code execution in applications such as Keycloak, and can also leak memory in a manner similar to Heartbleed; Oracle released a patch in its November Critical Security Patch Update.",
+          "links": [
+            "https://calif.io/java4shell/",
+            "https://www.oracle.com/security-alerts/cspunov2026.html"
+          ]
+        },
+        {
+          "heading": "Optimizely Compromise",
+          "links": []
+        },
+        {
+          "heading": "Attackers compromised Optimizely, a JavaScript experimentation platform used by many large websites, and swapped the distributed script for a Magecart-style payload that stole payment card and cryptocurrency wallet information. Report URI found the malware on sites belonging to 178 organizations, including HSBC and the BBC; Johannes suggests blocking optimizely.com and the .icu top-level domain.",
+          "links": [
+            "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-18T02:00:03+00:00",
+      "duration_seconds": 457,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10184.mp3",
+      "audio_length_bytes": 6402955,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10184",
+      "categories": [
+        "java4shell",
+        "openjdk",
+        "cve-2026-114938",
+        "optimizely",
+        "magecart",
+        "phishing",
+        "mx records"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10184",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 18th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My name is\n Johannes Ullrich, recording today from Jacksonville,\n Florida. And this episode is brought to you by the SANS.edu\n Undergraduate Certificate Program in Applied\n Cybersecurity. Well, in Diaries today we have Jan talk\n about yet another phishing attack. This one does have\n some interesting stuff with MX records. So the phishing page\n that the user is visiting is first of all customized based\n on the user's email domain. And then JavaScript is being\n used to actually do a DNS lookup over HTTPS just by\n hitting the Google DNS endpoint. And that information\n is then included in the data being sent back to the\n phisher. So it's not used to customize the page. That's\n just done based on the domain name itself. It's just being\n basically stored with the username and password that the\n victim types in. My guess is that the attacker is trying to\n get the MX record as seen by the user. Sometimes\n organizations set up their email differently for users\n inside the network versus what you would see externally.\n Maybe they're trying to compare this a little bit and\n either to validate the information or just maybe to\n find some different spot where they could possibly log in. As\n the public mail server that's being advertised to everybody\n else may not actually accept the user's login information.\n That's my guess here at least. If anybody has any other\n insight, let me know. Now we have yet another super\n critical, this will end the world as we know it,\n vulnerability. And this time again discovered by Calif,\n the company that was also behind some of the work\n regarding PHP2Shell. They're calling it Java4Shell,\n not 2Shell in this particular case. The\n vulnerability affects base64 decoding. And a lot of web\n applications, for example, for cookie values and the like use\n base64. So web applications certainly are exposed here. In\n order to be vulnerable, your CPU also has to support the\n AVX-512 VBMI extension. And that was originally released\n by Intel 12 years ago. So you can assume that most of your\n x86 CPUs, AMD supports it as well, are vulnerable to this\n particular buffer overflow. Anything ARM or such is not\n vulnerable. Also emulators and such tend to be not vulnerable\n according to some of the write -ups I've seen. But this was\n just released sort of about an hour before I record this.\n Oracle has released also a patch for this. Today as part\n of their monthly critical patch update. So a patch is\n available. Yes, apply it. And unless you don't do base64 and\n you don't use any x86 CPUs, which is unlikely for the most\n part. They list a couple of applications like Keycloak,\n for example, that are vulnerable without\n authentication. The vulnerability itself, of\n course, does not require authentication. It's just a\n basic Java vulnerability. The question really only becomes\n at what point are you actually able to reach an endpoint that\n accepts a base64 encoded data that can be used to trigger\n this vulnerability. Calif also states that it's unlikely\n that there will be sort of a universal exploit. Similar to\n what we have seen sort of with PHP2Shell and such with\n these memory corruption vulnerabilities. It tends to\n be tricky to work out all the offsets. Now, there is also a\n memory leakage part to this vulnerability. Similar to the\n Heartbleed attack where random memory may be leaked.\n So even the non-remote code execution path could be an\n issue for you here in case you have any data on your servers\n that you want to keep a secret. And yesterday,\n Optimizely, a company that produces JavaScript that's\n used by many big websites in order to monitor how users are\n using their website, essentially optimize how the\n website works. Well, Optimizely was compromised and\n essentially what happened was sort of your standard Magecart\n attack. That's sort of how this attack is often\n described, where the attacker then swapped out the\n JavaScript being distributed by Optimizely for a version\n that was compromised. The compromised version did\n essentially include sort of JavaScript info stealers,\n meaning on the page the code showed up. They would look for\n payment card information, crypto wallet information, and\n the like on mobile devices. Apparently, it also created\n pop-ups, advertising malware, which, of course, may be more\n plausible for the user to install if it shows up on like\n hsbc.com or bbc.com. Those are some of the sites that were\n affected. Looks like around 167, I think they mentioned\n websites were affected by this. What can you do about it\n as a user? Maybe just block Optimizely.com, set up a DNS\n block list for this. I don't think it does anything for the\n user of the website. It's really more sort of for\n marketing and such on the back end of the website where this\n is being used. Also, many of the domains, the malicious\n domains, they use the .ICU top -level domain, haven't really\n seen much good from that domain. So that may be another\n thing that you maybe just want to block. And basically with\n that, you probably cut down quite a bit on malware noise\n and other log entries. So with these two stories, one other\n sort of critical Java vulnerability and then this\n Optimizely script infecting more than 100 big name brand\n website. The question that often comes up these days is,\n and a lot of this, of course, appears to be AI-fueled, like,\n for example, the Java story. What should I do to prevent\n this, to protect myself? Just a quick word of advice. At the\n end of the day, 5 o'clock, go home, walk your dog. If you\n don't have a dog, get a dog. But this is the new normal.\n This is not an emergency. Don't treat it as an emergency\n that there is a super critical Java vulnerability, for\n example, that, yes, you need to patch across your\n environment. As you come in the morning, set up a plan.\n Set up what you have to do first. Get that done. At 5 o\n 'clock, go home. If you are a leader that sort of manages\n people that respond to these incidents, make sure your\n people have the right tools, the right resources. And, yes,\n don't keep them overnight. It's not going to make a\n difference. It's only to burn out your people, because a\n week from now, there will be probably another super critical\n vulnerability, and you want to still be around at that point.\n So, anyway, that's it for today. Thanks for listening,\n and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10182",
       "show": "stormcast",
@@ -4110,65 +4181,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10076",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, September 1st, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from New York\n City, New York. And this episode is brought to you by\n the SANS.edu graduate certificate program in Purple\n Team Operations. Well, and Renato today wrote about some\n of the risks that you may be encountering if you are\n connecting your AI agent to models that well you may not\n be owning or that you may not have authorized access to. So\n one big thing that we are seeing in our honeypots for\n quite a while now is that attackers are looking to steal\n credentials being used to connect to certain AI models\n and AI vendors but also just the scans that are looking for\n exposed AI models often like they're using conventions that\n you often see for example in OLLAMA. Now one thing that\n Renato did, Renato set up a dedicated honeypot that\n pretends to be an OLLAMA instance. It does advertise\n some benign locally hosted models so nothing really all\n that terribly exciting necessarily but what Renato\n then saw after the model or after the endpoint got\n discovered was that well now other people were connecting\n to that endpoint and they were looking for or attempting to\n connect to models that Renato's endpoint wasn't\n actually well dealing with so wasn't actually offering. So\n what apparently happened here was that the attacker found\n the endpoint and then advertised it to their clients\n telling them hey this is actually well you know some\n the latest Opus or whatever model and now they try to use\n it as such. So this in itself of course bears some risk\n you're actually using here a model that's way less capable\n than what you're expecting and secondly of course well that\n model may respond with whatever so now you could\n actually trick the user here the client connecting to the\n endpoint to execute arbitrary commands. So this is one of\n those you know supply chain issues as Renato puts out\n there so definitely you know anything that your that your\n AI agent connects to make sure that you know what it's\n connecting to that you trust the vendor offering that\n particular model. It's just like the good old game that we\n had you know with hacked games and such that often contain\n malware. The same you have to assume if you're connecting to\n a hacked model which essentially is what you're\n doing here. And then just a quick update to the paper cut\n exploitation. So again paper cut has been exploited by some\n threat actors starting at least last week. There is no\n real patch for it. There is a preliminary patch available\n from paper cut that you should apply. But the news now is\n that yes there is a public exploit in the form of a\n Metasploit module. With this you really have to either\n disconnect paper cut from the public internet or apply the\n emergency patch from a paper cut in order to limit the\n likelihood of getting actually exploited here. No new update\n yet regarding a final patch for this issue. Paper cut just\n updated their advisory that they're still working on a\n final patch. And microsoft published a good write-up of a\n new malware that they're calling terminal fix. Now the\n similarity in naming to click fix is not accidental. It\n starts out as what's commonly referred to as a click fix\n attack meaning that the victim is being asked to copy paste\n terminal command from capture into a shell and then execute\n it. They are emulating the cloudflare capture in this\n particular case. But what happens then is more complex\n than what you often see with click fix. With click fix\n usually the next thing is you download the infostealer and\n it's being installed and run. Here there are a couple more\n steps happening. So first it downloads a zip file that then\n does dll side loading in order to execute its malicious code\n which then downloads a png image and here actual real\n sort of steganography is being used with adjusted pixel\n values. So not just some piece of a powershell being added to\n the end of an image. There is a number of persistent\n mechanisms there using and in the end that's also different\n than what you typically see from click fix. It will\n establish a back door for the attacker to send additional\n commands and also set up a Socks proxy. So that way the\n attacker will have access to your network. So this is\n really more of the beginning of the attack and now the\n attacker has access to your network and now they can do\n whatever ransomware probably I think would be like the next\n step here or for some of the attackers that are after your\n information they now have a entry point in your network\n but you can just monitor and see what you're doing and then\n exfiltrate secret and sensitive documents at will.\n Well, and that's it for today. Thanks for listening. Thanks\n for subscribing. Thanks for liking and recommending this\n podcast and Remember in the show notes. I usually have a\n link to classes. I'll be teaching in the near future.\n So thanks and talk to you again tomorrow. Bye",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10074",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10074",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10074.mp3",
-      "title": "SANS Stormcast Monday, August 31st, 2026: Malware Statistics; PaperCut Update; Watchguard and DLink Patches;",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Monday, August 31st, 2026: Malware Statistics; PaperCut Update; Watchguard and DLink Patches;",
-      "show_notes": [
-        {
-          "heading": "Some Malicious PE Stats",
-          "links": [
-            "https://isc.sans.edu/diary/Some%20Malicious%20PE%20Stats/33292"
-          ]
-        },
-        {
-          "heading": "PaperCut Releases Two Preliminary Patches for Exploited Vulnerability",
-          "links": [
-            "https://www.papercut.com/kb/Main/security-bulletin-27-aug-2026-urgent-security-advisory/"
-          ]
-        },
-        {
-          "heading": "DLink Vulnerabliities",
-          "links": [
-            "https://supportannouncement.us.dlink.com/security/publication.aspx?name=SAP10513"
-          ]
-        },
-        {
-          "heading": "Watchguard Patches",
-          "links": [
-            "https://psirt.watchguard.com"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-08-31T02:00:03+00:00",
-      "duration_seconds": 343,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10074.mp3",
-      "audio_length_bytes": 4804533,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10074",
-      "categories": [
-        "watchguard",
-        "dlink",
-        "papercut",
-        "pe",
-        "stats",
-        "vulnerabilities"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10074",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Monday, August 31, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from New York\n City, New York. And this episode is brought to you by\n the SANS.edu Graduate Certificate Program in Purple\n Team Operations. On Friday, Xavier took a look at\n malicious PE file. These portable ex-tribal files that\n are commonly used by Windows have the nice advantage of\n containing quite a bit of metadata in the header. This\n metadata can then be used in order to figure out, for\n example, what compiler is being used. Now in the past,\n Xavier has looked, for example, at statistics of 64\n bits versus 32 bit malware. Turns out, still, the vast\n majority is 32 bits. But that's a kind of logic, given\n that there is really no big advantage for malware to\n actually run in 64 bits. As far as the compilers being\n used and the languages being used, the vast majority does\n use C, C++ and the standard Microsoft compilers in order\n to compile the code. Go, Rust, some of these other languages,\n are still sort of fractions of a percent of the malware that\n Xavier looked at. So really not significant at this point.\n Of course, significant maybe in other ways. We have seen\n some sort of more advanced malware, for example, using Go\n that in particular does attempt to evade some of the\n other detection mechanisms that aren't really all that\n familiar and tuned to malware written in Go. This was a\n rather large stash of malware that Xavier looked at.\n Overall, there were something like 23 million files. 600,000\n approximately turned out to be valid PE files. These files\n were retrieved from the Abuse .ch Matter Bazaar. And on\n Friday, I talked about ongoing exploitation against PaperCut\n and that there is no real patch available for it. Well,\n the folks at PaperCut were busy at work over the weekend.\n They did publish two emergency updates and do recommend that\n you apply them. So emergency patch release 2 that was\n published on the 28th is the one that you should have\n applied by now. But probably the original advice of just\n disabling access to PaperCut if you can do so or\n constraining what IP addresses can access PaperCut that is\n still valid. Still something that you should follow. There\n are a total of two vulnerabilities that are being\n addressed here in this patch. The first one is an unsafe\n dynamic class loading vulnerability. That's sort of\n a reflective one where the data is being loaded from the\n database. In order to get that data into the database, the\n attacker then exploits a second vulnerability and\n that's an improper access control vulnerability in the\n web management interface. So those two vulnerabilities work\n together here to in the end lead to arbitrary code\n execution on PaperCut and that's what's being currently\n exploited. And late last week WatchGuard released patches\n for 27 vulnerabilities. There is one kind of vulnerability\n that I'm a little bit concerned about and this is a\n buffer overflow in the Ike-D implementation. So Ike, that's\n your key exchange for IPsec and pretty much has to be\n exposed if you're using IPsec and often you're using like a\n VPN because you can't easily restrict IP addresses. So\n definitely something to be aware of. It affects Fireware\n OS. Patches are available. I'm not aware of any exploits out\n there but something that you do definitely want to patch.\n And finally we got patches from D-Link for their DIR\n -X1860 routers. So these patches affect two\n vulnerabilities that are being addressed here. The first\n vulnerability is pretty interesting. It's an\n unauthenticated administrator password modification. Now it\n does require that the attacker has access to the JSON RPC\n interface which shouldn't be of course exposed. The second\n one is a wireless configuration information\n disclosure. So that could affect any passwords and such\n that you need for Wi-Fi access. Definitely I would\n consider the first one to be the critical one here. And\n like I said, just make sure that you please don't expose\n this stuff to the world. Well and this is it for today. So\n thanks for listening. Thanks for liking. Thanks for\n recommending this podcast. As always you can find links to\n classes I'll be teaching in the near future in the show\n notes. So thanks and talk to you again tomorrow. Bye. Bye.",
       "transcript_checked": true
     }
   ]
