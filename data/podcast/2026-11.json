@@ -2,6 +2,78 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10186",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10186",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10186.mp3",
+      "title": "NGINX2ROOT HTTP/2 RCEs (CVE-2026-123007, CVE-2026-123633); Microsoft Agent Framework PyPI Compromise; Holiday Hack Challenge (Nov 19 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. NGINX2ROOT HTTP/2 RCEs (CVE-2026-123007, CVE-2026-123633); Microsoft Agent Framework PyPI Compromise; Holiday Hack Challenge (Nov 19 2026)",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers F5's NGINX2ROOT HTTP/2 remote code execution patches, a malicious release of Microsoft's Agent Framework on the Python Package Index (PyPI), and the launch of the SANS Holiday Hack Challenge.",
+          "links": []
+        },
+        {
+          "heading": "NGINX2ROOT HTTP/2 Remote Code Execution (CVE-2026-123007, CVE-2026-123633)",
+          "links": []
+        },
+        {
+          "heading": "F5 patched five NGINX vulnerabilities, including critical HTTP/2 memory-corruption bugs that can allow unauthenticated remote code execution. The most widely exposed issue, CVE-2026-123007, does not require a special NGINX configuration beyond HTTP/2 being enabled, though exploitation needs a large volume of traffic and is not always reliable, even when Address Space Layout Randomization (ASLR) can be bypassed. Researchers showed these bugs can be chained with a kernel privilege-escalation vulnerability to obtain root access. Rapid7 released a proof-of-concept that works against NGINX running in containers; until you can patch, consider turning off HTTP/2 (Hypertext Transfer Protocol version 2).",
+          "links": [
+            "https://my.f5.com/manage/s/article/K000163926",
+            "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities",
+            "https://github.com/sfewer-r7/CVE-2026-123007"
+          ]
+        },
+        {
+          "heading": "Microsoft Agent Framework Compromised on PyPI",
+          "links": []
+        },
+        {
+          "heading": "Wiz reported that malicious versions 1.26.1 and 1.26.2 of Microsoft's Agent Framework were published to the Python Package Index (PyPI) on November 17 after a compromised publishing credential was used from a Microsoft IP address. Both malicious versions have been removed; 1.26.0 is the latest safe release. The package normally sees about 41,000 downloads a week, and the malicious builds were only available for part of that day.",
+          "links": [
+            "https://www.wiz.io/blog/malicious-version-of-microsofts-agent-framework-published-to-pypi"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "SANS Holiday Hack Challenge",
+          "links": []
+        },
+        {
+          "heading": "The SANS Holiday Hack Challenge is live again, with links in the show notes and across the SANS website. It may be a welcome distraction between patching and incident work.",
+          "links": [
+            "https://www.sans.org/cyber-ranges/holiday-hack-challenge"
+          ]
+        }
+      ],
+      "published": "2026-11-19T02:00:02+00:00",
+      "duration_seconds": 349,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10186.mp3",
+      "audio_length_bytes": 4901271,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10186",
+      "categories": [
+        "nginx2root",
+        "cve-2026-123007",
+        "cve-2026-123633",
+        "http/2",
+        "agent framework",
+        "pypi",
+        "holiday hack challenge"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10186",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Thursday, November 19th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Bachelor's Degree Program in Applied\n Cybersecurity. Well, not much to talk about today regarding\n diaries. I expanded a little bit on the remarks I made at\n the end of yesterday's podcast and explained why we aren't\n going to yellow again, even though vulnerabilities like\n Java4Shell or NGINX2Shell, which we'll talk about\n next, are certainly sort of the same caliber as the PHP2Shell\n vulnerability a month ago. But it's really just\n about the new normal and higher Infocon is supposed to\n indicate if something that's not normal that requires\n additional attention is happening. And well, that's as\n far as the current state of the Internet and security\n goes, not the case right now. Well, so let's talk about\n NGINX. It's actually NGINX2ROOT, not to shell, as I\n mentioned earlier. The reason they call it NGINX2ROOT is\n that Wiz in their write-up actually demonstrated how you\n can take this all the way even with address space layout\n randomization by then also in the end leveraging kernel\n privilege escalation vulnerability all the way to\n obtain root access on the system via NGINX. It does not\n require any specific configuration for NGINX, but\n it does require quite a bit of traffic, about 256 gigabytes\n is sort of what's being reported from some of the\n proof-of-concept exploits that have been released. And yes,\n Rapid7 has released a proof-of-concept. As many of these\n memory management vulnerabilities, exploitation\n is a little bit iffy, so it's not sort of a super reliable\n exploit even though address space layout randomization\n can be bypassed using these vulnerabilities. Total of five\n vulnerabilities being patched here. Not all of them affect\n the default configuration. Some affect things like\n proxies and the like set up with NGINX. Now there are two\n organizations credited with discovering the vulnerability,\n Wiz and Xint. The real discovery here is modern AI\n models and that's what we have these days that we often have\n these multiple organizations finding these vulnerabilities\n at the same time, which of course means there may be\n other organizations that didn't report it to a vendor\n that may also have found these vulnerabilities and have\n working exploits. The working Rapid7 proof-of-concept\n exploit only works against NGINX running in containers.\n So again, a little bit more constrained environment here\n where some of these exploits tend to work better, tend to\n be more reliable than sort of your average NGINX install if\n there is one like that. Well, a quick answer: patch. And I don't\n like to recommend it, but maybe turn off HTTP/2. I'll leave\n that up to you. That's something that researchers\n really have sort of focused in on lately. We also had some\n Apache vulnerabilities with HTTP/2 and it is a complex\n protocol. So in particular from a memory management's\n point of view, there are probably a couple of\n undiscovered vulnerabilities out there. And then Wiz is\n also reporting that Microsoft's Agent Framework\n was compromised on PyPI. This apparently happened yesterday\n and the root cause, according to Wiz, was a compromised\n deployment key that was leaked. Now, interestingly,\n initially the publication of the malicious version actually\n failed because it came from the wrong IP address. But\n after using a Microsoft IP address, they were able to\n publish the malicious version of this Agent Framework. Not\n really clear how much of an effort it took to get the\n right IP address, given that Microsoft, with their cloud\n properties and such, if they just limited to a Microsoft IP\n address and they include things like cloud systems that\n are essentially publicly available, that IP filter may\n not do that much good in this specific case. Now, if you're\n using the Microsoft Agent Framework, the latest safe\n version is 1.26.0, 1.26.1 and 1.26.2 are malicious versions.\n Both are no longer available, but they were downloaded about\n a few thousand times. Actually, it says here 41,000\n downloads a week. So, it was up for part of the day\n yesterday. So, I would think a couple thousand downloads\n maybe of the malicious version. Well, and then some\n good news. The SANS Holiday Hack Challenge is live again.\n Link in the show notes. And there's also links all over\n the SANS website. So, it shouldn't be that difficult to\n find. But maybe a nice distraction sort of in\n between, you know, patching stuff and dealing with\n incidents. That's it for today. Thanks for listening.\n Thanks for liking. Thanks for recommending. And of course,\n special thanks for subscribing and talk to you again\n tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10184",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
