@@ -2,6 +2,98 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10188",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10188",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10188.mp3",
+      "title": "Honeypot Analysis as Code; PHP Patches and Session RCE (CVE-2026-126714); Dragos AI Canary Tokens; vCenter Exploit (CVE-2026-123890) (Nov 20th 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Honeypot Analysis as Code; PHP Patches and Session RCE (CVE-2026-126714); Dragos AI Canary Tokens; vCenter Exploit (CVE-2026-123890) (Nov 20th 2026)",
+      "show_notes": [
+        {
+          "heading": "This episode covers a SANS.edu intern's Git-and-pull-request workflow for AI-assisted honeypot analysis, today's PHP security updates including a session-handling remote code execution (RCE) bug, Dragos research that planted canary tokens in AI prompts, and an already exploited VMware vCenter vulnerability.",
+          "links": []
+        },
+        {
+          "heading": "Treat Your Honeypot Analysis Like Code: Git, Pull Requests and a Human Gate for AI [Guest Diary]",
+          "links": []
+        },
+        {
+          "heading": "SANS.edu undergraduate intern Kevin Truong explains how he treats honeypot analysis like code, using Git and pull requests so an AI assistant can propose query and report changes while a human analyst reviews and approves them. He says the same workflow can apply to other kinds of log analysis, not just honeypots.",
+          "links": [
+            "https://isc.sans.edu/diary/33534"
+          ]
+        },
+        {
+          "heading": "PHP Vulnerabilities and Patches",
+          "links": []
+        },
+        {
+          "heading": "PHP released security updates in versions 8.5.13, 8.4.28, 8.3.37, and 8.2.36 that fix memory-corruption issues leading to remote code execution (RCE), including a session-handling flaw, CVE-2026-126714, that depthfirst documents as phpAfterShell. A separate moderate issue, CVE-2026-128064, can cause fopen() and similar stream functions to fetch an HTTPS or FTPS URL over plaintext when the scheme uses an uppercase S.",
+          "links": [
+            "https://www.php.net/archive/2026.php",
+            "https://github.com/php/php-src/security",
+            "https://depthfirst.com/research/phpaftershell"
+          ]
+        },
+        {
+          "heading": "Supply Chain Canaries",
+          "links": []
+        },
+        {
+          "heading": "HD Moore, now with Dragos, describes planting canary tokens, also called honey tokens, in prompts sent to AI services in order to see whether those secrets later leak. Dragos sent approximately two million such requests and found that at least three AI providers exposed the tokens after apparent internal compromises, that inference-marketplace proxies inspected and used some of the tokens, and that some organizations did not honor their privacy policies.",
+          "links": [
+            "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens"
+          ]
+        },
+        {
+          "heading": "VMware vCenter Exploit",
+          "links": []
+        },
+        {
+          "heading": "Mandiant and Google Threat Intelligence report that CVE-2026-123890, an unauthenticated authentication bypass in VMware vCenter Server, is already being exploited. The bug is in the vSphere stack's Directory Service and can yield an administrator session; Broadcom released patches in advisory VMSA-2026-0009 and lists no workaround.",
+          "links": [
+            "https://cloud.google.com/blog/topics/threat-intelligence/armory-castle-exploits-vsphere",
+            "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/39495"
+          ]
+        },
+        {
+          "heading": "No Podcast Thursday and Friday",
+          "links": []
+        },
+        {
+          "heading": "Next week is the Thanksgiving holiday, so Stormcast will only be published Monday through Wednesday.",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-20T02:00:02+00:00",
+      "duration_seconds": 379,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10188.mp3",
+      "audio_length_bytes": 5318391,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10188",
+      "categories": [
+        "php",
+        "cve-2026-126714",
+        "vcenter",
+        "cve-2026-123890",
+        "dragos",
+        "canary tokens",
+        "honeypot",
+        "git"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10188",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Friday, November 20th, 2026\n edition of the SANS Internet Storm Center's\n Stormcast. My name is Johannes Ullrich, recorded today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu, Graduate Certificate Program in\n Cybersecurity Leadership. In diaries today, we have one of\n our undergraduate interns writing about how to, well,\n treat your analysis of Honeypot data like code. What\n I like about this diary by Kevin Truong is how he\n integrates human and AI analysis. Now, the trick that\n Kevin uses to actually keep himself organized here is that\n he uses Git in order to manage all of the queries and such.\n And essentially, whenever AI, for example, makes a change to\n a set of queries to analyze a particular incident, well,\n that's being treated as a pull request. And that way, of\n course, you have nice accountability as to who did\n what, what was contributed by the AI, what was contributed\n by the analyst. And of course, then the analyst can approve\n these pull requests and review them. So interesting approach\n here that I think can also be applied to other types of log\n analysis, not just to Honeypots. Well, as expected,\n we did get updates for PHP today. I mentioned the pre\n -announcement yesterday. Now we know what's in this\n particular set of patches. A couple of memory issues again.\n And with that, remote code execution vulnerabilities,\n there's also a remote code execution vulnerability, in the\n session handling code that I sort of think is maybe the\n most exploitable here, but still not easily exploited.\n There's a good blog post with details regarding this issue\n that I'll link to in the show notes. There's one non\n -critical vulnerability that I thought that was kind of odd\n and interesting. And that's if you are using the PHP file\n open command to connect to a remote URL, which is perfectly\n fine and often done in PHP. If you're connecting to an HTTPS\n website, but you're spelling the HTTPS in the URL in\n uppercase, it may actually connect via HTTP instead. Have\n to look at the code and see what exactly happened here.\n But I suspect that HTTPS uppercase is not sort of\n recognized as a valid protocol. And then it's\n defaults back to HTTP. Would be interesting to see if any\n other similar libraries and such that are not in PHP are\n having similar issues. Often you sort of see either code\n being copied or different developers thinking similarly.\n So again, an odd vulnerability. I don't think\n it deserves sort of to be rated critical or anything\n like this, but definitely something that I didn't\n expect. I've got an interesting blog post by HD\n Moore, who is now with Dragos. And what HD Moore did is\n essentially include canary tokens in requests to various\n AI tools. Now canary tokens, honey tokens is another name\n for them, are essentially deception technique where you\n are publishing tokens, API tokens that are basically\n intended to be stolen. And then you monitor if someone\n uses them. Now they did this with over a million, I\n believe, different requests. And well, what they found was\n somewhat enlightening overall. So first of all, they found\n that at least three of the AI providers they used exposed\n these tokens likely because of an internal compromise. For\n example, they had connections to their AWS account using\n these canary tokens. Also inference marketplace\n providers. These are essentially proxies that are\n forwarding your requests and basically attempt to optimize\n your token use and your billing. Well, being a proxy,\n of course, they have an insight into what you're\n sending to these providers. And that's exactly the problem\n that happened here that by inspecting those requests,\n well, they actually were also leaking or using some of that\n tokens. And then finally, there were basically organizations\n that did accept these requests while outright lying in their\n privacy policy. And yes, definitely inspecting and\n using data that was included in the request. I always like\n the idea of canary tokens and definitely recommend that you\n may include some of them with some of the AI providers that\n you're using to see if anything is leaking. And that\n has been a problem where data being submitted to providers\n is either used for training. That's almost sort of the\n least harmful part here. But then as indicated here, may\n also be used then to reach out to resources that you\n mentioned in the prompt without really telling you\n about that. Well, that's it for today. At least that's all\n I had time for today. There was one more vulnerability I\n almost included in vSphere. Apparently, it's already being\n exploited according to a blog by Google and Mandiant. I'll\n add the URL in the show notes in case you're running\n vSphere. You may want to take a look at that. Otherwise,\n hope you like this podcast. Thanks for liking it. Thanks\n for subscribing. Thanks for listening. And next week, of\n course, there will be the Thanksgiving holiday. So we'll\n only have a podcast Monday through Wednesday. Thanks and\n talk to you again on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10186",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
