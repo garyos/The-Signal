@@ -2,6 +2,86 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10190",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10190",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10190.mp3",
+      "title": "Syslog Timestamps; GL.iNet GoodCloud Breach; Ghostscript Upload2Shell RCE (CVE-2026-125396) (Nov 23rd 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Syslog Timestamps; GL.iNet GoodCloud Breach; Ghostscript Upload2Shell RCE (CVE-2026-125396) (Nov 23rd 2026)",
+      "show_notes": [
+        {
+          "heading": "Jim Clausing reviews how syslog timestamps have changed, attackers used a breach of GL.iNet's GoodCloud service to backdoor routers and KVM devices, and a silently patched use-after-free in Ghostscript's Type 1 font loader can lead to code execution in document-conversion pipelines.",
+          "links": []
+        },
+        {
+          "heading": "A Brief History of Syslog Timestamps",
+          "links": []
+        },
+        {
+          "heading": "Jim Clausing compares the older BSD-style syslog timestamp (RFC 3164) with the more modern ISO 8601 format used in RFC 5424, including how time zones are written, which matters when you correlate logs during forensics. On newer Debian and Ubuntu systems, systemd's journald is now the default logger, and rsyslogd may no longer be installed by default.",
+          "links": [
+            "https://isc.sans.edu/diary/33530"
+          ]
+        },
+        {
+          "heading": "GL.iNet GoodCloud Breach",
+          "links": []
+        },
+        {
+          "heading": "Attackers exploited a vulnerability in GL.iNet's GoodCloud remote-access service and installed backdoors on some of the company's travel routers and IP KVM devices. The Friday notice tells customers to look for a process named crond -i /tmp/.log; GL.iNet has blocked the cloud attack path and scheduled stable security firmware for November 22, and it recommends a factory reset or the KVM security beta for devices that are already infected.",
+          "links": [
+            "https://www.gl-inet.com/en-us/blogs/blog/glinet-security-notice-2026-11-20",
+            "https://forum.gl-inet.com/t/2026-11-20-gl-inet-security-notice-goodcloud-kvm-routers/73056"
+          ]
+        },
+        {
+          "heading": "Ghostscript Upload2Shell (CVE-2026-125396)",
+          "links": []
+        },
+        {
+          "heading": "A use-after-free in Ghostscript's Type 1 font loader, found with AI-assisted research and tracked as CVE-2026-125396, can let a crafted document escape the -dSAFER sandbox and run code in the rendering process. The bug was fixed in Ghostscript 10.08.0 without a clear acknowledgment when the patch was released; the main risk is web applications and other tools that convert untrusted uploads, including image pipelines that quietly invoke Ghostscript, and printers can be affected as well.",
+          "links": [
+            "https://pwn.ai/upload2shell"
+          ]
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        },
+        {
+          "heading": "No Podcast",
+          "links": []
+        },
+        {
+          "heading": "There will be no Stormcast Thursday or Friday because of Thanksgiving.",
+          "links": []
+        }
+      ],
+      "published": "2026-11-23T02:00:02+00:00",
+      "duration_seconds": 426,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10190.mp3",
+      "audio_length_bytes": 5978154,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10190",
+      "categories": [
+        "gl.inet",
+        "goodcloud",
+        "ghostscript",
+        "cve-2026-125396",
+        "syslog",
+        "upload2shell",
+        "type 1 font",
+        "rsyslog"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10190",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Monday, November 23rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. Well in Diaries today we have a post by Jim\n about Syslog and Syslog timestamps and how they\n changed over time. So in Syslog we have a couple\n different timestamp options, typically the older BSD style\n one, the more modern ISO timestamp that is often being\n used. And even there have been sort of a couple different\n variations that Jim is covering here. This is of\n course of utmost importance for anybody doing forensics,\n trying to compare timestamps from different systems. Also\n time zones and how they're being indicated of course is a\n problem here for all of those who can't just go with, well,\n what you all should be doing and setting your timestamps to\n UTC. But anyway, so a quite nice comparison here. What you\n have then of course, well, in more modern Unix systems, you\n may not even have a Syslog or rsyslog installed. Instead,\n you're using journald, which of course is sort of the\n default now in many modern, for example, Ubuntu versions\n or Debian versions that no longer even may offer rsyslogd by default. Well, and then we got a severe security\n incident at GL.iNet. GL.iNet is famous for their travel\n routers, for their KVMs. They have some relatively\n affordable products in that space, particularly lately\n with some of the KVMs that they're offering. And I have\n written about some of these sort of low-cost IP KVMs that\n have been sort of a little bit flooding the market lately.\n Well, the problem in this case wasn't necessarily a problem\n with any security of the device itself. Instead, the\n GoodCloud. GoodCloud is a service that GL.iNet offers to\n its customers for remote access to their devices. Well,\n GoodCloud was compromised. And as a result, the attacker was\n able to connect to multiple devices and install back\n doors. Sadly, the security notice published by GL.iNet is\n fairly brief. Really just sort of one sentence, really, as to\n what may have happened here. One of the malware that was\n installed disguised itself as crond. So what they're\n recommending is a simple check of the processes running with\n ps, then looking for crond -i /tmp/.log.\n crond, in this case, is not the actual cron daemon. At least\n that's what I figure. And again, the security advisory\n here from GL.iNet is way too brief to really figure out\n what may have happened here, what may have been stolen. But\n yeah, I believe that crond is really just a name that the\n attacker gave whatever backdoor they're running. So\n take a look for it. Make sure you review your devices. As\n far as the KVM devices go, make also sure that any\n devices connected to the KVM have their own login still\n enabled. So connecting to the KVM should not give you\n immediate access to a shell, but should require an\n additional login. Additional problems, of course, are\n possibly did any attackers install things like keystroke\n loggers or such, or when did the attack start? All of this\n is not defined in the advisory. I hope we'll get a\n little bit more details from GL.iNet in the future on this.\n They also promised to release over the weekend some new\n firmware that to some extent apparently is fixing some\n vulnerabilities in the devices, but may also double\n check if you have anything running on the system that's\n not supposed to be running. It's not clear if the malware\n does survive a reboot or does survive a reinstall of the\n firmware. Maybe just upgrading the firmware itself will\n remove the malware. Again, it would be nice to have some of\n those details outlined in the security notice that was\n published on Friday. And then we got a new vulnerability, at\n least newly disclosed vulnerability in Ghostscript. It\n affects the Type 1 font loader. And yes, it's yet\n another one of those memory handling vulnerabilities found\n via AI. The kind of bad part here is not the vulnerability\n itself so much, but it was patched silently. It wasn't\n really acknowledged as the patch was released. The\n problem or the attack surface here is really if you use\n Ghostscript to render, to convert documents that are being\n uploaded from users. So web applications are a big problem\n here. Could also happen with printers and such, but of\n course they tend to be not as easily accessible. There's a\n lot of, like typically Ghostscript is used for\n PostScript, and PostScript is really not that much used. But\n the same library is often used for other image formats and\n such in order to do things like changing sizes, doing\n conversions. So Ghostscript may certainly be included and\n exploitable in some of these upload pages that do other\n image formats and not necessarily just PostScript\n files that are being uploaded. Really tricky one. I don't\n think it's the most severe vulnerability given the\n exploitability and such of it. But it's also a tricky one to\n sort of pin down given that Ghostscript is included in so\n many software packages without necessarily declaring that\n Ghostscript is being used to, for example, touch and convert\n untrusted files that were uploaded. Well, and that's it\n for today now. Remember, there won't be a podcast Thursday,\n Friday because of Thanksgiving. Also, I'm trying\n really to focus this podcast on stuff that's useful.\n There's so much news these days, so many vulnerabilities,\n but really trying to distill sort of, you know, what's\n useful to you. So one of the best things that you can do to\n help the podcast is actually to let me know if a particular\n news item was useful or was not useful, or if I should\n have covered something else that I missed. Please let me\n know. And thanks and talk to you again tomorrow. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10188",
       "show": "stormcast",
       "show_name": "SANS Stormcast",
