@@ -1,6 +1,95 @@
 {
-  "fetched_at": "2026-11-23T20:47:36.811436+00:00",
+  "fetched_at": "2026-11-24T13:10:22.695610+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10192",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10192",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10192.mp3",
+      "title": "Azure API Management Classic Secrets Leak; iTerm2 Kitty Protocol RCE; binary-parser Code Injection (CVE-2026-134814) (Nov 24th 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Azure API Management Classic Secrets Leak; iTerm2 Kitty Protocol RCE; binary-parser Code Injection (CVE-2026-134814) (Nov 24th 2026)",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers a secret-leaking flaw in Azure API Management Classic exploited against Norwegian energy providers, an iTerm2 command-execution bug triggered by viewing a file with cat via the Kitty image protocol, leftover code injection in the binary-parser npm package (CVE-2026-134814), and the SANS.edu Sentinels' sweep of the Fall 2026 National Cyber League.",
+          "links": []
+        },
+        {
+          "heading": "Azure API Management Flaw Exploited in Norway",
+          "links": []
+        },
+        {
+          "heading": "Norway's National Security Authority (NSM) published an advisory on attacks against Norwegian energy providers, including Equinor and Skagerak Energi, that exploited a flaw in Microsoft Azure API Management, the API gateway for Azure. The issue leaked secrets from Classic instances; Microsoft notified customers and deployed updates, but not all instances may be patched, so operators should confirm they are running a safe version and following Microsoft's guidance. There is no public Microsoft advisory.",
+          "links": [
+            "https://nsm.no/aktuelt/nsm-deler-tiltak-mot-sarbarhet-i-azure-api-management",
+            "https://www.bleepingcomputer.com/news/security/microsoft-azure-flaw-exploited-to-steal-customers-api-credentials/"
+          ]
+        },
+        {
+          "heading": "iTerm2 Arbitrary Command Execution via Kitty Image Protocol",
+          "links": []
+        },
+        {
+          "heading": "Viewing a crafted file with cat in iTerm2 can execute arbitrary commands because the terminal incorrectly handles the Kitty image protocol and interprets control characters in the file. The issue affects iTerm2 3.6.1 through 3.7.8 and is fixed in 3.7.9; similar bugs have appeared in other terminals, including GNOME Terminal, so inspect untrusted files on an isolated system.",
+          "links": [
+            "https://ii4gsp.github.io/iterm2-rce/",
+            "https://iterm2.com/downloads.html"
+          ]
+        },
+        {
+          "heading": "binary-parser Code Injection (CVE-2026-134814)",
+          "links": []
+        },
+        {
+          "heading": "A leftover code-injection bug in the binary-parser npm package can allow arbitrary JavaScript execution in Node.js when an attacker supplies the parser definition, such as a schema- or JSON-driven parser. It is an incomplete fix of CVE-2026-1245; the new issue is CVE-2026-134814 and is patched in version 2.3.1.",
+          "links": [
+            "https://github.com/keichi/binary-parser/security/advisories/GHSA-xmxc-6c22-m377"
+          ]
+        },
+        {
+          "heading": "SANS.edu Sentinels Win Fall 2026 National Cyber League Experienced Division",
+          "links": []
+        },
+        {
+          "heading": "The SANS.edu Sentinels took the number one individual, number one team, and number one power ranking on the experienced leaderboard in the Fall 2026 National Cyber League, and 25 of the top 100 players were Sentinels.",
+          "links": [
+            "https://www.prweb.com/releases/the-national-cyber-league-announces-official-fall-2026-cyber-power-rankings-for-high-schools-and-colleges-302946588.html",
+            "https://cyberskyline.com/data/power-ranking/fall-2026-national"
+          ]
+        },
+        {
+          "heading": "No Podcast on Thursday and Friday (Thanksgiving)",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-24T02:00:03+00:00",
+      "duration_seconds": 422,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10192.mp3",
+      "audio_length_bytes": 5920517,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10192",
+      "categories": [
+        "azure api management",
+        "apim",
+        "iterm2",
+        "kitty",
+        "binary-parser",
+        "cve-2026-134814",
+        "node.js",
+        "npm",
+        "nsm"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10192",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Tuesday, November 24, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Industrial Control System Security. Also, let's start\n out today with some industrial control systems. The Norwegian\n National Security Authority has published an advisory\n regarding some recent attacks against some Norwegian energy\n providers. Sadly, only in Norwegian as far as I can\n tell. But the root cause here goes beyond Norway and beyond\n industrial control system. It's a flaw in the Azure API\n Management, which is basically the API gateway for Azure.\n Apparently, it was leaking secrets. So if you stored\n secrets in Azure using the API Management and you use the\n classic version of it, well, in that case, you may have\n leaked secrets. And apparently, one particular\n threat actor has figured out how to get access to these\n secrets and then use them to access these Norwegian\n systems. There's no public Microsoft advisories as far as\n I'm aware. But apparently, they did notify customers who\n used these systems. Microsoft has deployed updates, but they\n may not have been deployed to all instances. So that's where\n it's important that you double check whether or not you are\n running a safe version. Now, apparently, Microsoft also\n pointed out in its advisory that it sent to customers that\n if you followed Microsoft's guidance in how to use these\n systems, then you shouldn't be affected by these attacks.\n Either way, double check that you're running the patched\n version and then also that you're following Microsoft's\n guidance as it comes to using the Azure API gateway. Well,\n when it comes to looking at possibly malicious files as\n you investigate an incident, one common tool that's sort of\n considered safe to look at files is often cat. Well, we\n have a vulnerability where looking at a malicious file\n with cat may actually execute arbitrary code. And this is\n not the first time this is happening. And that's why I\n mentioned it. And the problem isn't really with cat. It's\n with the terminal software that you're using to then\n actually look at the output. So the terminal here is\n basically software, in this case, iTerm2 that you're using\n to run your shell. So this is not the shell. There are\n really sort of three parts here. There's the terminal\n software, iTerm2. There's the shell, which since iTerm2 is\n on a Mac would probably be zsh, but it could be\n something else. And then there's cat, the tool that\n you're using to really just display the content of the\n file. The problem is control characters that you may have\n in the file that are then being interpreted by the\n software by iTerm2 here. And iTerm2 supports something\n called the Kitty image protocol. Sounds pretty\n harmless, but what happens here is that you essentially\n can display images inside your terminal. Terminals that are\n usually thought as being text only. But yes, there are all\n these extensions and that gets us into trouble here. So the\n Kitty image protocol is not being parsed correctly. In\n this case, leading to arbitrary command execution.\n Like I mentioned, this has happened before. This has\n happened not just with iTerm2, but with other terminal\n software as well. I think the GNOME Terminal had at least an\n issue like this a few years back. So be careful what\n terminal you're using in order to actually then look at\n files. And yes, really hard to find, sort of maybe impossible\n these days to find 100% safe piece of software here. So\n whenever you're looking at potentially malicious files,\n definitely try to do it on an isolated system. But then I\n figured worth sort of at least an honorable mention is a\n vulnerability was fixed in the binary-parser npm package.\n This could lead to arbitrary JavaScript execution, which of\n course means arbitrary code execution in the context of\n Node.js. The reason I mentioned this is it's\n actually a vulnerability that was thought to already be\n fixed early this year. January is when the original fix came\n out. But when they sort of validated some of the fields,\n well, they missed a couple and that's what they fixed. Now, I\n don't see a distinct CVE number for this vulnerability.\n The old CVE number was CVE-2026-1245.\n So definitely make sure that you got this updated. However,\n exploitation doesn't seem to be super straightforward\n because the attacker must be able to supply a parser\n definition. So a schema or some JSON driven parser. Not\n sure how common that is with applications that take\n advantage of binary-parser. And just a special\n announcement. The SANS.edu Sentinels have cleaned out the\n fall National Cyber League as they have done in the past.\n Now, they not only got the number one individual and the\n number one team and the number one power ranking for the\n experienced leaderboard. These are split into two divisions.\n The less experienced and experienced schools. Now, the\n number that I think even impresses me more than like\n these individual number one rankings is that out of the\n top 100 players, 25 were our SANS.edu Sentinels. So\n congratulations for this great accomplishment. Well, and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing and talk to you again\n tomorrow. And remember, tomorrow's podcast will be the\n last one for the week due to the Thanksgiving holiday.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10190",
       "show": "stormcast",
@@ -4208,67 +4297,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10082",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Friday, September 4th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I am recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Nightmare\n Eclipse is added again, this time not targeting Microsoft\n but still sticking to the theme of targeting anti\n -malware products. There are three new vulnerabilities and\n exploits released by Nightmare Eclipse. The first one Falcon\n Flank is targeting CrowdStrike and the second one Hard\n Breacher is targeting Kaspersky's Antivirus and then\n we also have a third one, Pretty Prague, that one is\n targeting Avast Antivirus. Antivirus products have this\n hard task of parsing complex structures as they're trying\n to make sense of files whether or not they're malicious or\n not. And at the same time of course in order to not be\n affected by malware themselves, they usually run\n with very high and elevated privileges. So any\n vulnerability in an anti -malware product immediately\n with that becomes a severe privilege escalation\n vulnerability. And we have seen this with the Microsoft\n exploits of course from Nightmare Eclipse in the past\n but overall this is not a new problem. In the past it has\n often been ignored. So if anything let's hope that these\n sort of more public and more newsworthy kind of exploits\n are actually changing a little bit that people are taking\n some of these privilege escalation vulnerabilities in\n anti-malware products more serious and that they get the\n attention they deserve. And Plex released an advisory\n stating that users should immediately update the latest\n and greatest version of Plex that was released earlier this\n week. Sadly we don't really have any details as to what\n the vulnerabilities are. They haven't been able to get CVE\n numbers for them yet but apparently they consider them\n critical enough where they are releasing this advisory.\n Luckily Plex does a decent job in updating itself so there's\n nothing really that you may need to do. You may still want\n to verify that all worked and that you actually got the\n latest version 143.3 and for desktop it's 1.115. The\n problem cases here with Plex particularly on the server\n side are often sort of various NAS devices and such that come\n with Plex installed. That's usually installed as a package\n from the vendor and as Plex points out the vendor may not\n have released an updated package for it yet. They\n recommend that you should then manually update. They don't\n have one of those devices so not sure how difficult that is\n and if that later may then break additional updates that\n are released by the vendor in the form of a package in case\n they sort of customized anything there. And Cisco\n released a couple of interesting advisories. One\n for iOS XR. This fixes a total of seven vulnerabilities. One\n of them has a CVSS score of 9 .8. This one and then at least\n two more do have some of the standard memory management\n flaws so they do have remote code execution potential.\n There is also an update for the secure email appliances\n from Cisco. That particular vulnerability is only rated as\n a medium and it's a denial of service vulnerability in the S\n MIME feature. So if you're sending encrypted email with S\n MIME there are some denial of service conditions here that\n may be triggered. And Horizon 3 is reporting that they're\n seeing active exploitation against Switchvox\n vulnerability. Switchvox is an enterprise voice over IP\n management system. It comes from Sangoma. Sangoma is also\n known for free PBX and as Horizon 3 said well after a\n few critical vulnerabilities in free PBX they took a closer\n look at Switchvox and found some issues there as well. And\n then also saw at least one of these vulnerabilities already\n being exploited. So certainly make sure that you keep this\n product up to date and properly configured. Well and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing. And we'll talk to\n you again on Tuesday, not on Monday, because Monday is a\n holiday here in the US. So\n you you you you",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10080",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10080",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10080.mp3",
-      "title": "SANS Stormcast Thursday, September 3rd, 2026: SMA1000 0-Day Patch; SSRF Validation Issues; Faronics Abuse",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Thursday, September 3rd, 2026: SMA1000 0-Day Patch; SSRF Validation Issues; Faronics Abuse",
-      "show_notes": [
-        {
-          "heading": "Sonicwall SMA1000 Exploited Vulnerability Patched",
-          "links": [
-            "https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0016"
-          ]
-        },
-        {
-          "heading": "SSRF: The Validator Can Lie",
-          "links": [
-            "https://xclow3n.com/post/the-validator-can-lie/"
-          ]
-        },
-        {
-          "heading": "Git Hijack for AI Agents",
-          "links": [
-            "https://www.manifold.security/blog/ai-coding-agents-git-hijack"
-          ]
-        },
-        {
-          "heading": "Fronics Deploy Abuse",
-          "links": [
-            "https://www.huntress.com/blog/faronics-deploy-abuse"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-09-03T02:00:02+00:00",
-      "duration_seconds": 338,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10080.mp3",
-      "audio_length_bytes": 4736744,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10080",
-      "categories": [
-        "faronics",
-        "deploy",
-        "git",
-        "hijack",
-        "ssrf",
-        "validator",
-        "sonicwall",
-        "sma1000"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10080",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Thursday, September 3rd, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in Cloud\n Security. SonicWall users, be aware there is currently an\n active exploit available for a vulnerability that SonicWall\n just fixed this week. There are actually two\n vulnerabilities that are chained together for this\n particular exploit. The first one is, well, you may have\n guessed it, server-side request forgery yet again.\n Server-side request forgery is being used here to bypass\n authentication. So you essentially use the front-end\n web server here as a proxy to access an internal API. That\n internal API sees the request comes, well, from itself. So\n it doesn't really do any authentication access control\n on the request. The second part is that once you have\n authentication bypassed, you're able to execute\n arbitrary code using the second vulnerability. So two\n vulnerabilities that are being abused here together. And\n again, this is already exploited in the wild.\n Definitely something that you need to address quickly. It\n does affect the SMA-1000 series from SonicWall. And\n given that we do have so many of the server-side request\n forgery vulnerabilities coming up in recent months, well, I\n figure it just makes sense that I point you to a very\n comprehensive blog post was published by xclown.com. This\n blog post goes over many, many of the little nitty-gritty\n details when it comes to URL validation and the problems\n also with different implementations. So where\n different implementations may parse the same URL\n differently. Really interesting blog post if you\n are trying to validate URLs, particularly if you are trying\n to prevent server-side request forgery and highly recommend\n that you take a look at it. Also, if you're trying to\n exploit it, of course, this may give you some interesting\n ideas. And talking about vulnerabilities that keep\n showing up, well, the next story is also about a\n vulnerability or a type of vulnerability we have seen\n before. And that's the fact that your agents will actually\n trust what they find on the Internet. In this particular\n case, yet again, Git repositories. So in order to\n interact with a Git repository, your AI agent will\n often clone or download the content. Well, and as part of\n that, it often will refresh the index to check if there\n were any updates to the files. In order to speed up the index\n refresh, there is a Git option that will run a helper command\n whenever you're trying to refresh the index. This option\n is defined in your .git configuration files. And,\n well, you probably imagine it by now. You can, as an\n attacker, just specify any command here. And that command\n will be executed whenever the agent attempts to refresh the\n index. They tested multiple agents out of the eight. They\n found eight were vulnerable. Four have fixed this issue by\n now. But others are still vulnerable and still have to\n be treated with caution. Well, as I talked about before, you\n really have to be careful what files, what websites your\n agents are visiting as you're giving them tasks. Because,\n well, that could in some cases then lead to remote code\n execution. And Huntress published a blog post showing\n how threat actors are abusing Faronics. Faronics is one of\n those remote management tools. In this case, it's not\n something that the victim would have installed. Of\n course, that's also an option. But the attacker does install\n that tool to then, well, remote administer the host.\n Which means install additional software, share screens, and,\n well, do whatever attackers are doing. The goal, of\n course, here is that Faronics is a normal, valid software.\n And as such, often not detected by endpoint\n protection. It does not match any, like, malware signatures\n per se. But it's definitely software that you must keep an\n eye on. Similar to screen sharing software, like\n TeamViewer and such, which is legitimate software but often\n abused. Definitely make sure that nothing like this all of\n a sudden gets installed on your systems. And Huntress\n does provide some indicators of compromise here that you\n can use to check. Well, and that's it for today. So,\n thanks for listening. Thanks for liking. Thanks for\n subscribing and recommending this podcast. And talk to you\n again tomorrow. Bye.\n Bye. Bye. Bye. Bye. Bye. Bye.",
       "transcript_checked": true
     }
   ]
