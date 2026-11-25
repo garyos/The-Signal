@@ -2,6 +2,82 @@
   "month": "2026-11",
   "episodes": [
     {
+      "id": "stormcast-10194",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10194",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10194.mp3",
+      "title": "Aggressive SSH Scanning from 109.160.32.0/24; VMware VMSA-2026-0011 vCenter Auth Bypass (CVE-2026-123903) (Nov 25th 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Aggressive SSH Scanning from 109.160.32.0/24; VMware VMSA-2026-0011 vCenter Auth Bypass (CVE-2026-123903) (Nov 25th 2026)",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers aggressive SSH brute-force scanning from 109.160.32.0/24 against DShield honeypots, Broadcom's critical VMSA-2026-0011 advisory for vCenter, ESX, Workstation, Fusion, and Avi Load Balancer, and a reminder that DShield was first put together on Thanksgiving 2000.",
+          "links": []
+        },
+        {
+          "heading": "Scanning from Subnet 109.160.32.0/24",
+          "links": []
+        },
+        {
+          "heading": "Guy Bruneau describes SSH brute-force scanning from 109.160.32.0/24, a Romanian VPS range, with 127 unique addresses hitting one DShield sensor and 134 hitting the other; successful logins typically ran uname and then disconnected. Many of the scans began with a static IP ID and an unusually high TTL above 200.",
+          "links": [
+            "https://isc.sans.edu/diary/33550"
+          ]
+        },
+        {
+          "heading": "vCenter and other VMware Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Broadcom published critical advisory VMSA-2026-0011 for VMware ESX, vCenter, Workstation, Fusion, Tools, and Avi Load Balancer, led by a vCenter authentication bypass (CVE-2026-123903, CVSS 9.8). The bulletin also covers a vCenter arbitrary file write, denial-of-service issues, local privilege escalation, a security policy enforcement failure, and Workstation and Fusion escape bugs; patches are available, and these flaws are distinct from last week's VMSA-2026-0009.",
+          "links": [
+            "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/39626"
+          ]
+        },
+        {
+          "heading": "DShield Birthday",
+          "links": []
+        },
+        {
+          "heading": "DShield, the data engine behind the Internet Storm Center, was originally put together over Thanksgiving weekend in 2000.",
+          "links": [
+            "https://isc.sans.edu/diary/30420"
+          ]
+        },
+        {
+          "heading": "No Podcast on Thursday and Friday (Thanksgiving)",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-25T02:00:03+00:00",
+      "duration_seconds": 304,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10194.mp3",
+      "audio_length_bytes": 4271016,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10194",
+      "categories": [
+        "vcenter",
+        "vmware",
+        "vmsa-2026-0011",
+        "cve-2026-123903",
+        "ssh",
+        "109.160.32.0/24",
+        "esx",
+        "avi",
+        "dshield"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10194",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 25th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Well in diaries today we do\n have a diary by Guy talking about one particular subnet\n that was quite aggressively scanning Guy's honeypots with\n around 130 of these IP addresses hitting two of the\n honeypots and that's 130 out of the 254 IP addresses in the\n slash 24 that Guy was focusing in on here. It was basically\n an SSH scanner so trying to brute force SSH username and\n passwords and then just connecting collecting data\n about the host via uname and then disconnecting. So kind of\n just enumerating networks figuring out what IP addresses\n may be responding what's responding on those IP\n addresses so classic reconnaissance. Of course with\n a network like this doing it there is a good chance that\n there is also some correlation happening behind the scenes\n where for example these different IP addresses are\n comparing notes to check if the same usernames and\n passwords work or don't work which of course would be an\n indication of a honeypot being used at this IP address.\n Another interesting thing that Guy pointed out is that the\n scans start with a packet that actually uses an somewhat\n unusual large TTL in the 200 plus range so that could\n indicate some kind of custom tool being used for the\n scanning. Usual tools don't really adjust TTLs like this\n also IP IDs are static for a good number of these scans\n that could also be caused by many of these scans actually\n originating from the same host and that could be one\n explanation why there are so many IP addresses in this\n subnet doing the scanning that the attacker was able to\n compromise a host that actually well has multiple IP\n addresses assigned to it. The Shodan results showed that\n only some of these IP addresses are listening\n themselves on SSH. So in the end not quite clear yet what's\n happening here if anybody has any insight any ideas please\n let us know. And given that this is the day before the\n long weekend here in the US I want to be a little bit\n careful as to you know what more vulnerabilities to cover\n so I really just picked one bulletin. Broadcom, every\n sysadmin's favorite partner has released advisory of\n course to sort of bolster that reputation and it affects\n pretty much sort of everything VMware. VMware ESX, vCenter,\n Workstation, Fusion and the Avi Load Balancer are\n affected. These are new vulnerabilities distinct from\n the ones we talked about sort of last week where we already\n had some exploitation happening. Now the\n vulnerabilities themselves again also look very similar\n to what we had in the past. We have some vCenter\n authentication bypass vulnerabilities. We do have a\n vCenter arbitrary file write vulnerabilities. Both\n certainly something that's exploitable once attackers\n learn a little bit more about it. There is a vCenter denial\n of service vulnerability that's probably the least of\n your problems here and I wouldn't really, sort of, you know,\n stay up the weekend for that. And then we also have local\n privilege escalation vulnerabilities and security\n policy enforcement failures. There is sort of on the VMware\n Fusion part and Workstation part also some escape\n vulnerabilities. So where an attacker could essentially\n that's able to run code on a virtual machine escape to the\n host. Again the vCenter ones are the ones that I'm worried\n about because we have seen so many of them exploited in the\n past and sadly people still insist on exposing this piece\n of wonderful code to the internet. I mean that's really\n all I wanted sort of to point your attention to today. Hope\n everybody has a good long weekend who has been able to\n take advantage of it. This also has every year the\n birthday of DShield which was originally sort of put\n together on Thanksgiving 2000. Thanks and talk to you again\n on Monday. Bye.",
+      "transcript_checked": true
+    },
+    {
       "id": "stormcast-10192",
       "show": "stormcast",
       "show_name": "SANS Stormcast",

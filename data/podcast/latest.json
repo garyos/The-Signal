@@ -1,6 +1,82 @@
 {
-  "fetched_at": "2026-11-24T19:51:10.636451+00:00",
+  "fetched_at": "2026-11-25T11:58:11.408258+00:00",
   "episodes": [
+    {
+      "id": "stormcast-10194",
+      "show": "stormcast",
+      "show_name": "SANS Stormcast",
+      "episode_number": "10194",
+      "guid": "https://traffic.libsyn.com/securitypodcast/10194.mp3",
+      "title": "Aggressive SSH Scanning from 109.160.32.0/24; VMware VMSA-2026-0011 vCenter Auth Bypass (CVE-2026-123903) (Nov 25th 2026)",
+      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. Aggressive SSH Scanning from 109.160.32.0/24; VMware VMSA-2026-0011 vCenter Auth Bypass (CVE-2026-123903) (Nov 25th 2026)",
+      "show_notes": [
+        {
+          "heading": "Today's episode covers aggressive SSH brute-force scanning from 109.160.32.0/24 against DShield honeypots, Broadcom's critical VMSA-2026-0011 advisory for vCenter, ESX, Workstation, Fusion, and Avi Load Balancer, and a reminder that DShield was first put together on Thanksgiving 2000.",
+          "links": []
+        },
+        {
+          "heading": "Scanning from Subnet 109.160.32.0/24",
+          "links": []
+        },
+        {
+          "heading": "Guy Bruneau describes SSH brute-force scanning from 109.160.32.0/24, a Romanian VPS range, with 127 unique addresses hitting one DShield sensor and 134 hitting the other; successful logins typically ran uname and then disconnected. Many of the scans began with a static IP ID and an unusually high TTL above 200.",
+          "links": [
+            "https://isc.sans.edu/diary/33550"
+          ]
+        },
+        {
+          "heading": "vCenter and other VMware Vulnerabilities",
+          "links": []
+        },
+        {
+          "heading": "Broadcom published critical advisory VMSA-2026-0011 for VMware ESX, vCenter, Workstation, Fusion, Tools, and Avi Load Balancer, led by a vCenter authentication bypass (CVE-2026-123903, CVSS 9.8). The bulletin also covers a vCenter arbitrary file write, denial-of-service issues, local privilege escalation, a security policy enforcement failure, and Workstation and Fusion escape bugs; patches are available, and these flaws are distinct from last week's VMSA-2026-0009.",
+          "links": [
+            "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/39626"
+          ]
+        },
+        {
+          "heading": "DShield Birthday",
+          "links": []
+        },
+        {
+          "heading": "DShield, the data engine behind the Internet Storm Center, was originally put together over Thanksgiving weekend in 2000.",
+          "links": [
+            "https://isc.sans.edu/diary/30420"
+          ]
+        },
+        {
+          "heading": "No Podcast on Thursday and Friday (Thanksgiving)",
+          "links": []
+        },
+        {
+          "heading": "My Upcoming Classes",
+          "links": [
+            "https://www.sans.org/profiles/dr-johannes-ullrich"
+          ]
+        }
+      ],
+      "published": "2026-11-25T02:00:03+00:00",
+      "duration_seconds": 304,
+      "audio_url": "https://traffic.libsyn.com/securitypodcast/10194.mp3",
+      "audio_length_bytes": 4271016,
+      "episode_link": "https://isc.sans.edu/podcastdetail/10194",
+      "categories": [
+        "vcenter",
+        "vmware",
+        "vmsa-2026-0011",
+        "cve-2026-123903",
+        "ssh",
+        "109.160.32.0/24",
+        "esx",
+        "avi",
+        "dshield"
+      ],
+      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
+      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10194",
+      "transcript_format": "text",
+      "transcript": "Hello and welcome to the Wednesday, November 25th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Well in diaries today we do\n have a diary by Guy talking about one particular subnet\n that was quite aggressively scanning Guy's honeypots with\n around 130 of these IP addresses hitting two of the\n honeypots and that's 130 out of the 254 IP addresses in the\n slash 24 that Guy was focusing in on here. It was basically\n an SSH scanner so trying to brute force SSH username and\n passwords and then just connecting collecting data\n about the host via uname and then disconnecting. So kind of\n just enumerating networks figuring out what IP addresses\n may be responding what's responding on those IP\n addresses so classic reconnaissance. Of course with\n a network like this doing it there is a good chance that\n there is also some correlation happening behind the scenes\n where for example these different IP addresses are\n comparing notes to check if the same usernames and\n passwords work or don't work which of course would be an\n indication of a honeypot being used at this IP address.\n Another interesting thing that Guy pointed out is that the\n scans start with a packet that actually uses an somewhat\n unusual large TTL in the 200 plus range so that could\n indicate some kind of custom tool being used for the\n scanning. Usual tools don't really adjust TTLs like this\n also IP IDs are static for a good number of these scans\n that could also be caused by many of these scans actually\n originating from the same host and that could be one\n explanation why there are so many IP addresses in this\n subnet doing the scanning that the attacker was able to\n compromise a host that actually well has multiple IP\n addresses assigned to it. The Shodan results showed that\n only some of these IP addresses are listening\n themselves on SSH. So in the end not quite clear yet what's\n happening here if anybody has any insight any ideas please\n let us know. And given that this is the day before the\n long weekend here in the US I want to be a little bit\n careful as to you know what more vulnerabilities to cover\n so I really just picked one bulletin. Broadcom, every\n sysadmin's favorite partner has released advisory of\n course to sort of bolster that reputation and it affects\n pretty much sort of everything VMware. VMware ESX, vCenter,\n Workstation, Fusion and the Avi Load Balancer are\n affected. These are new vulnerabilities distinct from\n the ones we talked about sort of last week where we already\n had some exploitation happening. Now the\n vulnerabilities themselves again also look very similar\n to what we had in the past. We have some vCenter\n authentication bypass vulnerabilities. We do have a\n vCenter arbitrary file write vulnerabilities. Both\n certainly something that's exploitable once attackers\n learn a little bit more about it. There is a vCenter denial\n of service vulnerability that's probably the least of\n your problems here and I wouldn't really, sort of, you know,\n stay up the weekend for that. And then we also have local\n privilege escalation vulnerabilities and security\n policy enforcement failures. There is sort of on the VMware\n Fusion part and Workstation part also some escape\n vulnerabilities. So where an attacker could essentially\n that's able to run code on a virtual machine escape to the\n host. Again the vCenter ones are the ones that I'm worried\n about because we have seen so many of them exploited in the\n past and sadly people still insist on exposing this piece\n of wonderful code to the internet. I mean that's really\n all I wanted sort of to point your attention to today. Hope\n everybody has a good long weekend who has been able to\n take advantage of it. This also has every year the\n birthday of DShield which was originally sort of put\n together on Thanksgiving 2000. Thanks and talk to you again\n on Monday. Bye.",
+      "transcript_checked": true
+    },
     {
       "id": "stormcast-10192",
       "show": "stormcast",
@@ -4233,70 +4309,6 @@
       "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10084",
       "transcript_format": "text",
       "transcript": "Hello and welcome to the Tuesday, September 8, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich, recording today from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Undergraduate Certificate Program in\n Cybersecurity Fundamentals. Well, to start out with, we\n have a diary from Russ about a new tool that Russ discovered,\n Numbat. Numbat was released as open source by Perplexity.\n It's a Go executable, can be downloaded for macOS, Windows\n and Linux. And its main purpose is to monitor what\n your AI agents are up to. So in its simplest form, when you\n start it up, it will enumerate first of all, what AI agents\n are running on a particular system. And then it can log\n what these AI agents are doing. There's also a rule\n language that you can use to further restrict, for example,\n what AI agents are allowed to do or define certain alerts.\n Pretty useful. And Russ is going here through a little\n example where an AI agent runs Nmap. And well, that flags one\n of the rule as the AI agent using a reconnaissance tool.\n Of course, what you consider here a problem or not depends\n on how you're using these AI agents. And the rules are also\n very customizable. So you can adjust them to your own needs.\n But I find just the identifying of the AI agents\n that are running on a particular system, and then\n just logging what they're doing already goes a long way\n to really bring a little bit more accountability to AI\n agents and how they're being used. And late last week or\n this weekend, a new Saturday attack emerged against a micro\n tik routers. A router OS includes, as it turns out, a\n custom SSH daemon. This SSH daemon does not properly\n verify SSH keys. So if you're authenticating with keys,\n you're able to essentially spoof a key and gain access to\n any user's account. This is a pretty odd vulnerability and\n probably, well, you know, one of those reasons that you\n shouldn't code your own crypto. There are sort of\n these two big open source routers, SSH implementations,\n dropbear and openSSH on routers like micro tick\n devices, you often see drop bear, but apparently micro\n tik here went their own way and implemented SSH\n themselves. And that will lead now to this vulnerability\n that's actively being exploited. There is a patch\n available from micro tick as of this weekend. So definitely\n apply it with that patch. You also get some detection\n whether or not your device is already compromised. Micro\n tik implements in the router OS this flagged mechanism. And\n what this refers to is that on boot up MicroTik checks or\n the operating system checks whether or not it was already\n compromised. Of course, it uses sort of some standard\n signatures for that. And if it finds evidence of a\n compromise, it puts the router into the flagged mode, which\n you can then check and basically get used as an alert\n that this device has been compromised. One of the\n commonly noted indicators of compromise for these early\n attacks was the addition of a user account called OPS. OPS.\n So that's also a quick check that you may want to take a\n look at. But of course, that's bound to change. There are no\n public exploits available. So this is only going to get\n worse. And by the time you're listening to this, again,\n assume compromise. But sadly, this is a multi-Saraday\n weekend, not just a long weekend. Style Smuggler is a\n vulnerability that the Sansac has written up on Saturday. It\n affects Magento and Adobe Commerce. This particular\n vulnerability has not been patched yet by Adobe. Now\n there is on Tuesday an upcoming patch Tuesday where\n they may patch it. But this particular vulnerability has\n been exploited at least since Friday, according to Sansac.\n And again, no published patch for this, just some\n workarounds, filters and such that Sansac mentions in their\n blog post. And the noteworthy patch, even though this is not\n yet exploited, the N-Able released the fourth hotfix for\n N-Central. This, I think, the fourth hotfix in a couple\n weeks. And yes, it fixes a critical vulnerability. So\n please get it patched before we have an exploit for this as\n well. N-Central has been a target in the past. So\n definitely something to keep an eye out and also get it\n patched. Well, and this is it for today. So thanks for\n listening. Thanks for liking. Thanks for recommending this\n podcast. And talk to you again tomorrow. Bye.",
-      "transcript_checked": true
-    },
-    {
-      "id": "stormcast-10082",
-      "show": "stormcast",
-      "show_name": "SANS Stormcast",
-      "episode_number": "10082",
-      "guid": "https://traffic.libsyn.com/securitypodcast/10082.mp3",
-      "title": "SANS Stormcast Friday, September 4th, 2026: AV Exploits; Plex Update; Cisco Patches; Sangoma Switchvox Exploited",
-      "summary": "Daily 5 min cyber security news summary. News, patches, vulnerabilities and trends in information and network security. SANS Stormcast Friday, September 4th, 2026: AV Exploits; Plex Update; Cisco Patches; Sangoma Switchvox Exploited",
-      "show_notes": [
-        {
-          "heading": "Nightmare Eclipse Discloses Several Anti-Malware Privilege Escalation Exploits",
-          "links": [
-            "https://github.com/MSNightmare"
-          ]
-        },
-        {
-          "heading": "Plex Update",
-          "links": [
-            "https://forums.plex.tv/t/important-security-update-for-plex-media-server-v1-43-2-and-earlier/942319"
-          ]
-        },
-        {
-          "heading": "Cisco Update",
-          "links": [
-            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-iosxr-qg64NcM",
-            "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-smime-disc-dzw4rEdY"
-          ]
-        },
-        {
-          "heading": "Sangoma Switchvox Exploit",
-          "links": [
-            "https://horizon3.ai/attack-research/disclosures/cve-2026-9586-sangoma-switchvox-rce/"
-          ]
-        },
-        {
-          "heading": "My Upcoming Classes",
-          "links": [
-            "https://www.sans.org/profiles/dr-johannes-ullrich"
-          ]
-        }
-      ],
-      "published": "2026-09-04T02:00:02+00:00",
-      "duration_seconds": 322,
-      "audio_url": "https://traffic.libsyn.com/securitypodcast/10082.mp3",
-      "audio_length_bytes": 4513946,
-      "episode_link": "https://isc.sans.edu/podcastdetail/10082",
-      "categories": [
-        "sangoma",
-        "switchvox",
-        "csicso",
-        "plex",
-        "nightmare",
-        "eclips",
-        "kaspersky",
-        "avast",
-        "crowdstrike",
-        "falcon"
-      ],
-      "artwork_url": "https://isc.sans.edu/images/podcast3000.jpg",
-      "transcript_url": "https://isc.sans.edu/podcasttranscript.html?id=10082",
-      "transcript_format": "text",
-      "transcript": "Hello and welcome to the Friday, September 4th, 2026\n edition of the SANS Internet Storm Center's Stormcast. My\n name is Johannes Ullrich and today I am recording from\n Jacksonville, Florida. And this episode is brought to you\n by the SANS.edu Graduate Certificate Program in\n Penetration Testing and Ethical Hacking. Nightmare\n Eclipse is added again, this time not targeting Microsoft\n but still sticking to the theme of targeting anti\n -malware products. There are three new vulnerabilities and\n exploits released by Nightmare Eclipse. The first one Falcon\n Flank is targeting CrowdStrike and the second one Hard\n Breacher is targeting Kaspersky's Antivirus and then\n we also have a third one, Pretty Prague, that one is\n targeting Avast Antivirus. Antivirus products have this\n hard task of parsing complex structures as they're trying\n to make sense of files whether or not they're malicious or\n not. And at the same time of course in order to not be\n affected by malware themselves, they usually run\n with very high and elevated privileges. So any\n vulnerability in an anti -malware product immediately\n with that becomes a severe privilege escalation\n vulnerability. And we have seen this with the Microsoft\n exploits of course from Nightmare Eclipse in the past\n but overall this is not a new problem. In the past it has\n often been ignored. So if anything let's hope that these\n sort of more public and more newsworthy kind of exploits\n are actually changing a little bit that people are taking\n some of these privilege escalation vulnerabilities in\n anti-malware products more serious and that they get the\n attention they deserve. And Plex released an advisory\n stating that users should immediately update the latest\n and greatest version of Plex that was released earlier this\n week. Sadly we don't really have any details as to what\n the vulnerabilities are. They haven't been able to get CVE\n numbers for them yet but apparently they consider them\n critical enough where they are releasing this advisory.\n Luckily Plex does a decent job in updating itself so there's\n nothing really that you may need to do. You may still want\n to verify that all worked and that you actually got the\n latest version 143.3 and for desktop it's 1.115. The\n problem cases here with Plex particularly on the server\n side are often sort of various NAS devices and such that come\n with Plex installed. That's usually installed as a package\n from the vendor and as Plex points out the vendor may not\n have released an updated package for it yet. They\n recommend that you should then manually update. They don't\n have one of those devices so not sure how difficult that is\n and if that later may then break additional updates that\n are released by the vendor in the form of a package in case\n they sort of customized anything there. And Cisco\n released a couple of interesting advisories. One\n for iOS XR. This fixes a total of seven vulnerabilities. One\n of them has a CVSS score of 9 .8. This one and then at least\n two more do have some of the standard memory management\n flaws so they do have remote code execution potential.\n There is also an update for the secure email appliances\n from Cisco. That particular vulnerability is only rated as\n a medium and it's a denial of service vulnerability in the S\n MIME feature. So if you're sending encrypted email with S\n MIME there are some denial of service conditions here that\n may be triggered. And Horizon 3 is reporting that they're\n seeing active exploitation against Switchvox\n vulnerability. Switchvox is an enterprise voice over IP\n management system. It comes from Sangoma. Sangoma is also\n known for free PBX and as Horizon 3 said well after a\n few critical vulnerabilities in free PBX they took a closer\n look at Switchvox and found some issues there as well. And\n then also saw at least one of these vulnerabilities already\n being exploited. So certainly make sure that you keep this\n product up to date and properly configured. Well and\n that's it for today. So thanks for listening. Thanks for\n liking. Thanks for subscribing. And we'll talk to\n you again on Tuesday, not on Monday, because Monday is a\n holiday here in the US. So\n you you you you",
       "transcript_checked": true
     }
   ]
